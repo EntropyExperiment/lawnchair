@@ -198,7 +198,7 @@ public class DesktopModeStatus {
         if (display.getType() == Display.TYPE_INTERNAL) {
             return canInternalDisplayHostDesktops(context);
         }
-        
+
         boolean ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT;
         if (false) {
             // LC-Ignored: Intentional, all Android desktop flags are disabled
