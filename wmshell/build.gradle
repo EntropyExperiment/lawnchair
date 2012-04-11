@@ -33,6 +33,7 @@ dependencies {
     compileOnly projects.flags
     compileOnly projects.utils
     compileOnly projects.wmshell.shared
+    compileOnly projects.msdllib
 }
 
 ksp {
