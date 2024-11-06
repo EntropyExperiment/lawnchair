@@ -3,7 +3,7 @@
 ## Supported Versions
 
 > [!WARNING]
-> Lawnchair v2 (Play Store version) is **unsupported**. Use the newer versions instead.
+> [Lawnchair Legacy](https://play.google.com/store/apps/details?id=ch.deletescape.lawnchair.plah) is **unsupported**. Use the newer versions instead.
 > See [this FAQ page](https://lawnchair.app/faq#do-you-still-support-the-play-store-version) for additional information.
 
 The latest version of Lawnchair is the only supported version.
@@ -11,12 +11,13 @@ The latest version of Lawnchair is the only supported version.
 | Version        | Supported          |
 | -------------- | ------------------ |
 | Nightly build  | :white_check_mark: |
-| 14             | :white_check_mark: |
+| 15             | :white_check_mark: |
+| 14             | :x:                |
 | 13             | :x:                |
 | 12.1           | :x:                |
 | 12             | :x:                |
 | 11             | :x:                |
-| Older (legacy) | :x:                |
+| Older (Legacy) | :x:                |
 
 ## Reporting Security issues
 

@@ -11,7 +11,7 @@ First and foremost, welcome to the **Lawnchair** Contributing Guidelines!
 ### 💫 Bug reports & feature requests
 
 > [!TIP]
-> We recommend that the Lawnchair [Nightly](https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly)
+> We recommend that Lawnchair [Nightly](https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly)
 > build be used in your report as they contain the latest changes from Lawnchair.
 
 For [bug reports](https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+), please describe the bug in detail to the best of your ability
@@ -33,7 +33,7 @@ For translation, visit [Lawnchair on Crowdin](https://lawnchair.crowdin.com) and
 ### 🧑‍💻 Code
 
 > [!NOTE]
-> For Lawnchair 9 to 13, see the branches with the `9-` to `13-` prefixes respectively.
+> For Lawnchair 9 to 14, see the branches with the `9-` to `14-` prefixes respectively.
 
 For code, it's highly recommended that you use [Android Studio](https://developer.android.com/studio),
 know [Java](https://www.java.com) or preferably [Kotlin](https://kotlinlang.org/), and [Git](https://git-scm.com/).
@@ -51,13 +51,13 @@ run `git submodule update --init --recursive`.
 
 Here are some contribution tips to help you get started:
 
--   Always make sure that you're up-to-date with **Lawnchair** by setting your base branch to `14-dev`.
+-   Always make sure that you're up-to-date with **Lawnchair** by setting your base branch to `15-dev`.
 -   Make sure your code is logical and well-formatted. If using Kotlin, see [“Coding conventions” in the Kotlin documentation](https://kotlinlang.org/docs/coding-conventions.html);
--   [The `lawnchair` package](https://github.com/LawnchairLauncher/lawnchair/tree/14-dev/lawnchair) houses Lawnchair’s own code, whereas [the `src` package](https://github.com/LawnchairLauncher/lawnchair/tree/14-dev/src) includes a clone of the Launcher3 codebase with modifications. Generally, place new files in the former, keeping changes to the latter to a minimum.
+-   [The `lawnchair` package](https://github.com/LawnchairLauncher/lawnchair/tree/15-dev/lawnchair) houses Lawnchair’s own code, whereas [the `src` package](https://github.com/LawnchairLauncher/lawnchair/tree/15-dev/src) includes a clone of the Launcher3 codebase with modifications. Generally, place new files in the former, keeping changes to the latter to a minimum.
 
 #### Additional documentation
 
--   The Lawnchair Wiki ([at Github](https://github.com/LawnchairLauncher/lawnchair/wiki))
+-   The Lawnchair Wiki ([GitHub Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki))
 -   Lawnchair Visual Guidelines ([README.md](/docs/assets/README.md))
 -   Lawnchair Quickstep Compat Lib ([README.md](compatLib/README.md))
 -   Lawnchair Preferences Components ([README.md](lawnchair/src/app/lawnchair/ui/preferences/components/README.md))
