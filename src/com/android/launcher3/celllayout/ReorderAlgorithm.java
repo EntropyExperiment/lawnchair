@@ -21,11 +21,14 @@ import android.view.View;
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.util.CellAndSpan;
 import com.android.launcher3.util.GridOccupancy;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
+
+import app.lawnchair.preferences2.PreferenceManager2;
 
 /**
  * Contains the logic of a reorder.
@@ -36,6 +39,8 @@ import java.util.Map.Entry;
 public class ReorderAlgorithm {
 
     CellLayout mCellLayout;
+
+    PreferenceManager2 mPreferenceManager2;
 
     public ReorderAlgorithm(CellLayout cellLayout) {
         mCellLayout = cellLayout;
@@ -127,6 +132,11 @@ public class ReorderAlgorithm {
         if (cellX < 0 || cellY < 0) return false;
 
         ArrayList<View> intersectingViews = new ArrayList<>();
+        if (PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getAllowWidgetOverlap())) {
+            // let's pretend no intersections exist
+            solution.intersectingViews = new ArrayList<>();
+            return true;
+        }
         Rect occupiedRect = new Rect(cellX, cellY, cellX + spanX, cellY + spanY);
 
         // Mark the desired location of the view currently being dragged.

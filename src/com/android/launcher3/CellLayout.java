@@ -77,12 +77,15 @@ import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.widget.LauncherAppWidgetHostView;
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+
+import app.lawnchair.preferences2.PreferenceManager2;
 
 public class CellLayout extends ViewGroup {
     private static final String TAG = "CellLayout";
@@ -208,6 +211,8 @@ public class CellLayout extends ViewGroup {
 
     CellLayoutContainer mCellLayoutContainer;
 
+    PreferenceManager2 mPreferenceManager2;
+
     public static final FloatProperty<CellLayout> SPRING_LOADED_PROGRESS =
             new FloatProperty<CellLayout>("spring_loaded_progress") {
                 @Override
@@ -243,6 +248,8 @@ public class CellLayout extends ViewGroup {
         setClipChildren(false);
         mActivity = ActivityContext.lookupContext(context);
         DeviceProfile deviceProfile = mActivity.getDeviceProfile();
+
+        mPreferenceManager2 = PreferenceManager2.getInstance(context);
 
         resetCellSizeInternal(deviceProfile);
 
@@ -1853,7 +1860,8 @@ public class CellLayout extends ViewGroup {
 
     public boolean isOccupied(int x, int y) {
         if (x >= 0 && x < mCountX && y >= 0 && y < mCountY) {
-            return mOccupied.cells[x][y];
+            return mOccupied.cells[x][y] 
+                    && !PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getAllowWidgetOverlap());
         }
         if (BuildConfigs.IS_STUDIO_BUILD) {
             throw new RuntimeException("Position exceeds the bound of this CellLayout");
@@ -1936,7 +1944,8 @@ public class CellLayout extends ViewGroup {
     }
 
     public boolean isRegionVacant(int x, int y, int spanX, int spanY) {
-        return mOccupied.isRegionVacant(x, y, spanX, spanY);
+        return mOccupied.isRegionVacant(x, y, spanX, spanY) 
+                || PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getAllowWidgetOverlap());
     }
 
     public void setSpaceBetweenCellLayoutsPx(@Px int spaceBetweenCellLayoutsPx) {
