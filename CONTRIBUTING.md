@@ -57,13 +57,13 @@ Here are some contribution tips to help you get started:
 
 #### Additional documentation
 
--   The Lawnchair ([GitHub Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki))
--   Lawnchair Visual Guidelines ([README.md](/docs/assets/README.md))
--   Lawnchair Quickstep Compat Lib ([README.md](compatLib/README.md))
--   Lawnchair Preferences Components ([README.md](lawnchair/src/app/lawnchair/ui/preferences/components/README.md))
--   SystemUI ViewCapture ([README.md](systemUIViewCapture/README.md))
--   SystemUI Common ([README.md](systemUICommon/README.md))
--   Prebuilt Library ([README.md](prebuilts/libs/README.md))
+-   [The Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki)
+-   [Lawnchair Visual Guidelines](/docs/assets/README.md)
+-   [Lawnchair Quickstep Compat Lib](compatLib/README.md)
+-   [Lawnchair Preferences Components](lawnchair/src/app/lawnchair/ui/preferences/components/README.md)
+-   [SystemUI ViewCapture](systemUIViewCapture/README.md)
+-   [SystemUI Common](systemUICommon/README.md)
+-   [Prebuilt Library](prebuilts/libs/README.md)
 
 #### Versioning scheme
 
