@@ -32,8 +32,48 @@ This branch houses the codebase of Lawnchair 15, which is currently in alpha and
 
 ## Download
 
-See the [releases](https://github.com/LawnchairLauncher/lawnchair/releases) section for the latest
-beta build. For development builds with upcoming features & bug fixes, use the nightly builds.
+<p align="left">
+  <a href="https://play.google.com/store/apps/details?id=app.lawnchair.play">
+    <picture>
+      <!-- Avoid image being clickable with slight workaround -->
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-google-play.png" height="60">
+      <img alt="Get it on Google Play" src="docs/assets/badge-google-play.png" height="60">
+    </picture>
+  </a>
+  <a href="https://apt.izzysoft.de/fdroid/index/apk/app.lawnchair">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-izzyondroid.png" height="60">
+      <img alt="Get it on IzzyOnDroid" src="docs/assets/badge-izzyondroid.png" height="60">
+    </picture>
+  </a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/LawnchairLauncher/lawnchair/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-obtainium.png" height="60">
+      <img alt="Get it on Obtainium" src="docs/assets/badge-obtainium.png" height="60">
+    </picture>
+  </a>
+    <a href="https://github.com/LawnchairLauncher/lawnchair/releases/latest">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-github.png" height="60">
+      <img alt="Get it on GitHub" src="docs/assets/badge-github.png" height="60">
+    </picture>
+  </a>
+</p>
+
+Lawnchair on the Play Store will install as a different app from other sources and features may be restricted to comply with the publishing rules.
+
+**Development builds:** [Obtainium][Obtainium link] • [GitHub][GitHub link]
+
+**Canary builds:** [nightly.link][Nightly link]
+
+### Verification
+
+Lawnchair's certificate hash should match the SHA-256 below:
+
+```py
+Anywhere: "747c3645b357258b2e23e851e53c96747fe0add007e5ba2cd97e8c85572e4dc5"
+Google Play and legacy version: "47ac92631c603513cc8d26dd9cffe0719a8b365544dccec2095824ec256120a7"
+```
 
 ## Contributing
 
@@ -44,6 +84,11 @@ Please visit the [Lawnchair Contributing Guidelines](CONTRIBUTING.md) for inform
 -   [News](https://t.me/lawnchairci)
 -   [Lawnchair on X (formerly Twitter)](https://x.com/lawnchairapp)
 -   [Website](https://lawnchair.app)
--   [_XDA_ thread](https://forum.xda-developers.com/t/lawnchair-customizable-pixel-launcher.3627137/)
+-   [_XDA_ thread](https://xdaforums.com/t/lawnchair-customizable-pixel-launcher.3627137/)
 
 You can view all our links in the [Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki).
+
+<!-- Download link -->
+[Nightly link]: https://nightly.link/LawnchairLauncher/lawnchair/workflows/ci/15-dev
+[Obtainium link]: https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22app.lawnchair.debug%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Flawnchairlauncher%2Flawnchair%22%2C%22author%22%3A%22Lawnchair%20Launcher%22%2C%22name%22%3A%22Lawnchair%20(Debug)%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Atrue%2C%5C%22fallbackToOlderReleases%5C%22%3Afalse%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22Lawnchair%20Nightly%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Afalse%2C%5C%22dontSortReleasesList%5C%22%3Afalse%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%5C%22%2C%5C%22versionDetection%5C%22%3Afalse%2C%5C%22releaseDateAsVersion%5C%22%3Atrue%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22Lawnchair%20is%20a%20free%2C%20open-source%20home%20app%20for%20Android.%20(NOTE%3A%20This%20is%20the%20debug%20version%20of%20Lawnchair%2C%20for%20the%20beta%2Fstable%20versions%20see%20%5C%5C%5C%22Lawnchair%5C%5C%5C%22)%5C%22%7D%22%7D
+[GitHub link]: https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly
