@@ -135,7 +135,7 @@ public class WindowManagerProxy implements ResourceBasedOverride {
      */
     @TargetApi(Build.VERSION_CODES.R)
     public WindowInsets normalizeWindowInsets(Context context, WindowInsets oldInsets,
-                                              Rect outInsets) {
+            Rect outInsets) {
         if (!Utilities.ATLEAST_R || !mTaskbarDrawnInProcess) {
             outInsets.set(oldInsets.getSystemWindowInsetLeft(), oldInsets.getSystemWindowInsetTop(),
                     oldInsets.getSystemWindowInsetRight(), oldInsets.getSystemWindowInsetBottom());

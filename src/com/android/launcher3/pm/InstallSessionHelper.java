@@ -177,6 +177,9 @@ public class InstallSessionHelper {
 
     @NonNull
     public List<SessionInfo> getAllVerifiedSessions() {
+        if (!Utilities.ATLEAST_Q) {
+              return new ArrayList<>();
+        }
         List<SessionInfo> list = new ArrayList<>(Utilities.ATLEAST_Q
                 ? Objects.requireNonNull(mLauncherApps).getAllPackageInstallerSessions()
                 : mInstaller.getAllSessions());

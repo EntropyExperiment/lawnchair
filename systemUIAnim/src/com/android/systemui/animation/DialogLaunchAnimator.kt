@@ -19,9 +19,11 @@ package com.android.systemui.animation
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.annotation.RequiresApi
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Rect
+import android.os.Build
 import android.os.Looper
 import android.util.Log
 import android.util.MathUtils
@@ -573,6 +575,7 @@ private class AnimatedDialog(
 
     private var hasInstrumentedJank = false
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun start() {
         val cuj = controller.cuj
         if (cuj != null) {
@@ -708,7 +711,7 @@ private class AnimatedDialog(
         // the dialog.
         dialog.setDismissOverride(this::onDialogDismissed)
 
-        if (featureFlags.isPredictiveBackQsDialogAnim) {
+        if (featureFlags.isPredictiveBackQsDialogAnim && Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             // TODO(b/265923095) Improve animations for QS dialogs on configuration change
             dialog.registerAnimationOnBackInvoked(targetView = dialogContentWithBackground)
         }

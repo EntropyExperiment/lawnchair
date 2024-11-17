@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Insettable;
 import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.anim.AnimatorListeners;
 import com.android.launcher3.anim.PendingAnimation;
 import com.android.launcher3.config.FeatureFlags;
@@ -172,7 +173,9 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
         if (FeatureFlags.ENABLE_BACK_SWIPE_LAUNCHER_ANIMATION.get()) {
             mAppsView.getAppsRecyclerViewContainer().setOutlineProvider(mViewOutlineProvider);
             mAppsView.getAppsRecyclerViewContainer().setClipToOutline(true);
-            OnBackInvokedDispatcher dispatcher = findOnBackInvokedDispatcher();
+            OnBackInvokedDispatcher dispatcher;
+            if (!Utilities.ATLEAST_U) return;
+                dispatcher = findOnBackInvokedDispatcher();
             if (dispatcher != null) {
                 dispatcher.registerOnBackInvokedCallback(
                         OnBackInvokedDispatcher.PRIORITY_DEFAULT, null);
@@ -187,8 +190,10 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
         if (FeatureFlags.ENABLE_BACK_SWIPE_LAUNCHER_ANIMATION.get()) {
             mAppsView.getAppsRecyclerViewContainer().setOutlineProvider(null);
             mAppsView.getAppsRecyclerViewContainer().setClipToOutline(false);
-            OnBackInvokedDispatcher dispatcher = findOnBackInvokedDispatcher();
-            if (dispatcher != null) {
+            OnBackInvokedDispatcher dispatcher;
+            if (!Utilities.ATLEAST_U) return;
+            dispatcher = findOnBackInvokedDispatcher();
+            if (dispatcher != null && Utilities.ATLEAST_T) {
                 dispatcher.unregisterOnBackInvokedCallback(null);
             }
         }
