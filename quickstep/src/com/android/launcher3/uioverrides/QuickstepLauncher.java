@@ -67,7 +67,9 @@ import android.graphics.RectF;
 import android.hardware.display.DisplayManager;
 import android.media.permission.SafeCloseable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.SystemProperties;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -903,11 +905,17 @@ public class QuickstepLauncher extends Launcher {
 
     /** Receives animation progress from sysui process. */
     private void initRemotelyCalculatedUnfoldAnimation(UnfoldTransitionConfig config) {
+        Handler handler;
+        try {
+            handler = getMainThreadHandler();
+        } catch (Throwable t) {
+            handler = new Handler(Looper.getMainLooper());
+        }
         RemoteUnfoldSharedComponent unfoldComponent = UnfoldTransitionFactory.createRemoteUnfoldSharedComponent(
                 /* context= */ this,
                 config,
                 getMainExecutor(),
-                getMainThreadHandler(),
+                handler,
                 /* backgroundExecutor= */ UI_HELPER_EXECUTOR,
                 /* tracingTagPrefix= */ "launcher",
                 getSystemService(DisplayManager.class));
