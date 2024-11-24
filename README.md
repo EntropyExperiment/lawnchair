@@ -69,8 +69,8 @@ Lawnchair on the Play Store will install as a different app from other sources a
 Lawnchair's certificate hash should match the SHA-256 below:
 
 ```py
-Anywhere: "747c3645b357258b2e23e851e53c96747fe0add007e5ba2cd97e8c85572e4dc5"
-Google Play and legacy version: "47ac92631c603513cc8d26dd9cffe0719a8b365544dccec2095824ec256120a7"
+Anywhere:     "74:7C:36:45:B3:57:25:8B:2E:23:E8:51:E5:3C:96:74:7F:E0:AD:D0:07:E5:BA:2C:D9:7E:8C:85:57:2E:4D:C5"
+Google Play:  "47:AC:92:63:1C:60:35:13:CC:8D:26:DD:9C:FF:E0:71:9A:8B:36:55:44:DC:CE:C2:09:58:24:EC:25:61:20:A7"
 ```
 
 ## Contributing
