@@ -62,9 +62,7 @@ This branch houses the codebase of Lawnchair 15, which is currently in alpha and
 
 Lawnchair on the Play Store will install as a different app from other sources and features may be restricted to comply with the publishing rules.
 
-**Development builds:** [Obtainium][Obtainium link] • [GitHub][GitHub link]
-
-**Canary builds:** [nightly.link][Nightly link]
+**Development builds:** [Obtainium][Obtainium link] • [GitHub][GitHub link] • [nightly.link][Nightly link]
 
 ### Verification
 
