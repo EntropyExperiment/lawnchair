@@ -16,8 +16,6 @@
 package com.android.launcher3.uioverrides;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
-import static android.os.Trace.TRACE_TAG_APP;
-import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_OPTIMIZE_MEASURE;
 import static android.view.accessibility.AccessibilityEvent.TYPE_VIEW_FOCUSED;
 
 import static com.android.app.animation.Interpolators.EMPHASIZED;
@@ -63,8 +61,8 @@ import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
 import static com.android.quickstep.util.AnimUtils.completeRunnableListCallback;
 import static com.android.quickstep.util.SplitAnimationTimings.TABLET_HOME_TO_SPLIT;
 import static com.android.systemui.shared.system.ActivityManagerWrapper.CLOSE_SYSTEM_WINDOWS_REASON_HOME_KEY;
-import static com.android.window.flags.Flags.enableDesktopWindowingMode;
-import static com.android.window.flags.Flags.enableDesktopWindowingWallpaperActivity;
+import static com.android.window.flags2.Flags.enableDesktopWindowingMode;
+import static com.android.window.flags2.Flags.enableDesktopWindowingWallpaperActivity;
 import static com.android.wm.shell.common.split.SplitScreenConstants.SNAP_TO_50_50;
 
 import android.animation.Animator;
@@ -84,7 +82,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IRemoteCallback;
 import android.os.SystemProperties;
-import android.os.Trace;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.HapticFeedbackConstants;
@@ -101,7 +98,6 @@ import android.window.SplashScreen;
 import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.android.app.viewcapture.ViewCaptureFactory;
 import com.android.launcher3.AbstractFloatingView;
@@ -308,7 +304,9 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
         mEnableWidgetDepth = LawnchairApp.isRecentsEnabled() ? SystemProperties.getBoolean("ro.launcher.depth.widget", true) : false;
         getWorkspace().addOverlayCallback(progress ->
                 onTaskbarInAppDisplayProgressUpdate(progress, MINUS_ONE_PAGE_PROGRESS_INDEX));
-        addBackAnimationCallback(mSplitSelectStateController.getSplitBackHandler());
+        if (Utilities.ATLEAST_U) {
+            addBackAnimationCallback(mSplitSelectStateController.getSplitBackHandler());
+        }
     }
 
     @Override
@@ -555,7 +553,9 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
         mHotseatPredictionController.destroy();
         mSplitWithKeyboardShortcutController.onDestroy();
         if (mViewCapture != null) mViewCapture.close();
-        removeBackAnimationCallback(mSplitSelectStateController.getSplitBackHandler());
+        if (Utilities.ATLEAST_U) {
+            removeBackAnimationCallback(mSplitSelectStateController.getSplitBackHandler());
+        }
     }
 
     @Override
@@ -666,7 +666,12 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
         // work, we must opt-in BEFORE registering back dispatcher. So we need to call
         // setEnableOnBackInvokedCallback() before super.onCreate()
         if (Utilities.ATLEAST_U && enablePredictiveBackGesture()) {
-            getApplicationInfo().setEnableOnBackInvokedCallback(true);
+            try {
+                getApplicationInfo().setEnableOnBackInvokedCallback(true);
+            } catch (NoSuchMethodError e) {
+                // Ignore
+            }
+            
         }
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
@@ -894,56 +899,58 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
             super.registerBackDispatcher();
             return;
         }
-        getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
-                OnBackInvokedDispatcher.PRIORITY_DEFAULT,
-                new OnBackAnimationCallback() {
-
-                    @Nullable
-                    OnBackPressedHandler mActiveOnBackPressedHandler;
-
-                    @Override
-                    public void onBackStarted(@NonNull BackEvent backEvent) {
-                        if (mActiveOnBackPressedHandler != null) {
-                            mActiveOnBackPressedHandler.onBackCancelled();
-                        }
-                        mActiveOnBackPressedHandler = getOnBackPressedHandler();
-                        mActiveOnBackPressedHandler.onBackStarted();
-                    }
-
-                    @Override
-                    public void onBackInvoked() {
-                        // Recreate mActiveOnBackPressedHandler if necessary to avoid NPE
-                        // because:
-                        // 1. b/260636433: In 3-button-navigation mode, onBackStarted() is not
-                        // called on ACTION_DOWN before onBackInvoked() is called in ACTION_UP.
-                        // 2. Launcher#onBackPressed() will call onBackInvoked() without calling
-                        // onBackInvoked() beforehand.
-                        if (mActiveOnBackPressedHandler == null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+                    new OnBackAnimationCallback() {
+    
+                        @Nullable
+                        OnBackPressedHandler mActiveOnBackPressedHandler;
+    
+                        @Override
+                        public void onBackStarted(@NonNull BackEvent backEvent) {
+                            if (mActiveOnBackPressedHandler != null) {
+                                mActiveOnBackPressedHandler.onBackCancelled();
+                            }
                             mActiveOnBackPressedHandler = getOnBackPressedHandler();
+                            mActiveOnBackPressedHandler.onBackStarted();
                         }
-                        mActiveOnBackPressedHandler.onBackInvoked();
-                        mActiveOnBackPressedHandler = null;
-                        TestLogging.recordEvent(TestProtocol.SEQUENCE_MAIN, "onBackInvoked");
-                    }
-                    @Override
-                    public void onBackProgressed(@NonNull BackEvent backEvent) {
-                        if (!FeatureFlags.IS_STUDIO_BUILD
-                                && mActiveOnBackPressedHandler == null) {
-                            return;
+    
+                        @Override
+                        public void onBackInvoked() {
+                            // Recreate mActiveOnBackPressedHandler if necessary to avoid NPE
+                            // because:
+                            // 1. b/260636433: In 3-button-navigation mode, onBackStarted() is not
+                            // called on ACTION_DOWN before onBackInvoked() is called in ACTION_UP.
+                            // 2. Launcher#onBackPressed() will call onBackInvoked() without calling
+                            // onBackInvoked() beforehand.
+                            if (mActiveOnBackPressedHandler == null) {
+                                mActiveOnBackPressedHandler = getOnBackPressedHandler();
+                            }
+                            mActiveOnBackPressedHandler.onBackInvoked();
+                            mActiveOnBackPressedHandler = null;
+                            TestLogging.recordEvent(TestProtocol.SEQUENCE_MAIN, "onBackInvoked");
                         }
-                        mActiveOnBackPressedHandler.onBackProgressed(backEvent.getProgress());
-                    }
-
-                    @Override
-                    public void onBackCancelled() {
-                        if (!FeatureFlags.IS_STUDIO_BUILD
-                                && mActiveOnBackPressedHandler == null) {
-                            return;
+                        @Override
+                        public void onBackProgressed(@NonNull BackEvent backEvent) {
+                            if (!FeatureFlags.IS_STUDIO_BUILD
+                                    && mActiveOnBackPressedHandler == null) {
+                                return;
+                            }
+                            mActiveOnBackPressedHandler.onBackProgressed(backEvent.getProgress());
                         }
-                        mActiveOnBackPressedHandler.onBackCancelled();
-                        mActiveOnBackPressedHandler = null;
-                    }
-                });
+    
+                        @Override
+                        public void onBackCancelled() {
+                            if (!FeatureFlags.IS_STUDIO_BUILD
+                                    && mActiveOnBackPressedHandler == null) {
+                                return;
+                            }
+                            mActiveOnBackPressedHandler.onBackCancelled();
+                            mActiveOnBackPressedHandler = null;
+                        }
+                    });
+        }
     }
 
     private void onTaskbarInAppDisplayProgressUpdate(float progress, int flag) {
@@ -1354,8 +1361,6 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
     @Override
     public void dispatchDeviceProfileChanged() {
         super.dispatchDeviceProfileChanged();
-        Trace.instantForTrack(TRACE_TAG_APP, "QuickstepLauncher#DeviceProfileChanged",
-                getDeviceProfile().toSmallString());
         SystemUiProxy.INSTANCE.get(this).setLauncherAppIconSize(mDeviceProfile.iconSizePx);
         TaskbarManager taskbarManager = mTISBindHelper.getTaskbarManager();
         if (taskbarManager != null) {

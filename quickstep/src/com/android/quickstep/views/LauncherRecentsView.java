@@ -26,7 +26,7 @@ import static com.android.launcher3.LauncherState.OVERVIEW_MODAL_TASK;
 import static com.android.launcher3.LauncherState.OVERVIEW_SPLIT_SELECT;
 import static com.android.launcher3.LauncherState.SPRING_LOADED;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_SPLIT_SELECTION_EXIT_HOME;
-import static com.android.window.flags.Flags.enableDesktopWindowingWallpaperActivity;
+import static com.android.window.flags2.Flags.enableDesktopWindowingWallpaperActivity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -39,6 +39,7 @@ import androidx.annotation.Nullable;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherState;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.desktop.DesktopRecentsTransitionController;
 import com.android.launcher3.logging.StatsLogManager;
@@ -292,8 +293,8 @@ public class LauncherRecentsView extends RecentsView<QuickstepLauncher, Launcher
             // TODO: b/333533253 - Remove after flag rollout
             desktopVisibilityController.setRecentsGestureEnd(endTarget);
         }
-        if (showDesktopApps) {
-            SystemUiProxy.INSTANCE.get(mContainer).showDesktopApps(mContainer.getDisplayId(),
+        if (showDesktopApps && Utilities.ATLEAST_R) {
+            SystemUiProxy.INSTANCE.get(mContainer).showDesktopApps(mContainer.getDisplay().getDisplayId(),
                     null /* transition */);
         }
     }

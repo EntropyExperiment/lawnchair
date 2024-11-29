@@ -23,8 +23,8 @@ import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
 import static com.android.launcher3.util.SplitConfigurationOptions.StagePosition;
 import static com.android.quickstep.util.ActiveGestureErrorDetector.GestureEvent.RECENT_TASKS_MISSING;
 import static com.android.quickstep.util.LogUtils.splitFailureMessage;
-import static com.android.window.flags.Flags.enableDesktopWindowingMode;
-import static com.android.window.flags.Flags.enableDesktopWindowingTaskbarRunningApps;
+import static com.android.window.flags2.Flags.enableDesktopWindowingMode;
+import static com.android.window.flags2.Flags.enableDesktopWindowingTaskbarRunningApps;
 
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -64,7 +64,6 @@ import androidx.annotation.WorkerThread;
 import com.android.internal.logging.InstanceId;
 import com.android.internal.util.ScreenshotRequest;
 import com.android.internal.view.AppearanceRegion;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.util.MainThreadInitializedObject;
 import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.SafeCloseable;
@@ -192,11 +191,9 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
         mContext = context;
         mAsyncHandler = new Handler(UI_HELPER_EXECUTOR.getLooper(), this::handleMessageAsync);
         final Intent baseIntent = new Intent().setPackage(mContext.getPackageName());
-        final ActivityOptions options = ActivityOptions.makeBasic();
-        Utilities.allowBGLaunch(options);
         mRecentsPendingIntent = PendingIntent.getActivity(mContext, 0, baseIntent,
                 PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
-                        | Intent.FILL_IN_COMPONENT, options.toBundle());
+                        | Intent.FILL_IN_COMPONENT);
 
         mUnfoldTransitionProvider =
                 (enableUnfoldStateAnimation() && new ResourceUnfoldTransitionConfig().isEnabled())
