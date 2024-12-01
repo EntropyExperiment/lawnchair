@@ -255,10 +255,7 @@ public class InvariantDeviceProfile implements SafeCloseable {
          * This constructor should NOT have any monitors by design.
          */
         public InvariantDeviceProfile(Context context, String gridName) {
-                String newName = initGrid(context, gridName);
-                if (newName == null || !newName.equals(gridName)) {
-                        throw new IllegalArgumentException("Unknown grid name: " + gridName);
-                }
+                this(context, DeviceProfileOverrides.INSTANCE.get(context).getGridInfo(gridName));
         }
 
         public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
@@ -364,7 +361,7 @@ public class InvariantDeviceProfile implements SafeCloseable {
         }
 
         public static String getCurrentGridName(Context context) {
-                return LauncherPrefs.get(context).get(GRID_NAME);
+                return DeviceProfileOverrides.INSTANCE.get(context).getCurrentGridName();
         }
 
         private String initGrid(Context context, String gridName) {
