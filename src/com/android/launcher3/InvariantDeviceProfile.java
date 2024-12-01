@@ -400,10 +400,10 @@ public class InvariantDeviceProfile implements SafeCloseable {
                         .getOverrides(displayOption.grid);
                 DisplayMetrics metrics = context.getResources().getDisplayMetrics();
                 closestProfile = displayOption.grid;
-                numRows = closestProfile.numRows;
-                numColumns = closestProfile.numColumns;
+                numRows = dbGridInfo.getNumRows();
+                numColumns = dbGridInfo.getNumColumns();
                 numSearchContainerColumns = closestProfile.numSearchContainerColumns;
-                dbFile = closestProfile.dbFile;
+                dbFile = dbGridInfo.getDbFile();
                 defaultLayoutId = closestProfile.defaultLayoutId;
                 demoModeLayoutId = closestProfile.demoModeLayoutId;
 
@@ -434,11 +434,16 @@ public class InvariantDeviceProfile implements SafeCloseable {
                 inlineNavButtonsEndSpacing = closestProfile.inlineNavButtonsEndSpacing;
 
                 iconSize = displayOption.iconSizes;
+                allAppsIconSize = displayOption.allAppsIconSizes;
                 float maxIconSize = iconSize[0];
                 for (int i = 1; i < iconSize.length; i++) {
                         maxIconSize = Math.max(maxIconSize, iconSize[i]);
                 }
-                iconBitmapSize = ResourceUtils.pxFromDp(maxIconSize, metrics);
+                float maxAllAppsIconSize = allAppsIconSize[0];
+                for (int i = 1; i < allAppsIconSize.length; i++) {
+                    maxAllAppsIconSize = Math.max(maxAllAppsIconSize, allAppsIconSize[i]);
+                }
+                iconBitmapSize = ResourceUtils.pxFromDp(Math.max(maxIconSize, maxAllAppsIconSize), metrics);
                 fillResIconDpi = getLauncherIconDensity(iconBitmapSize);
 
                 iconTextSize = displayOption.textSizes;
@@ -449,9 +454,10 @@ public class InvariantDeviceProfile implements SafeCloseable {
 
                 horizontalMargin = displayOption.horizontalMargin;
 
-                numShownHotseatIcons = closestProfile.numHotseatIcons;
+                numShownHotseatIcons = deviceType == TYPE_MULTI_DISPLAY 
+                        ? closestProfile.numHotseatIcons : dbGridInfo.getNumHotseatColumns();
                 numDatabaseHotseatIcons = deviceType == TYPE_MULTI_DISPLAY
-                        ? closestProfile.numDatabaseHotseatIcons : closestProfile.numHotseatIcons;
+                        ? closestProfile.numDatabaseHotseatIcons : numShownHotseatIcons;
                 hotseatBarBottomSpace = displayOption.hotseatBarBottomSpace;
                 hotseatQsbSpace = displayOption.hotseatQsbSpace;
 
