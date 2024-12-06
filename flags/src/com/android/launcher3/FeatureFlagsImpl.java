@@ -109,7 +109,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
             enableSmartspaceRemovalToggle =
                     properties.getBoolean(Flags.FLAG_ENABLE_SMARTSPACE_REMOVAL_TOGGLE, false);
             enableSupportForArchiving =
-                    properties.getBoolean(Flags.FLAG_ENABLE_SUPPORT_FOR_ARCHIVING, false);
+                    properties.getBoolean(Flags.FLAG_ENABLE_SUPPORT_FOR_ARCHIVING, true);
             enableTabletTwoPanePickerV2 =
                     properties.getBoolean(Flags.FLAG_ENABLE_TABLET_TWO_PANE_PICKER_V2, false);
             enableTaskbarCustomization =
@@ -137,7 +137,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
             floatingSearchBar =
                     properties.getBoolean(Flags.FLAG_FLOATING_SEARCH_BAR, false);
             forceMonochromeAppIcons =
-                    properties.getBoolean(Flags.FLAG_FORCE_MONOCHROME_APP_ICONS, false);
+                    properties.getBoolean(Flags.FLAG_FORCE_MONOCHROME_APP_ICONS, true);
             useActivityOverlay =
                     properties.getBoolean(Flags.FLAG_USE_ACTIVITY_OVERLAY, true);
         } catch (NullPointerException e) {

@@ -79,16 +79,16 @@ import android.hardware.display.DisplayManager;
 import android.media.permission.SafeCloseable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.IRemoteCallback;
+import android.os.Looper;
 import android.os.SystemProperties;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AnalogClock;
-import android.widget.TextClock;
 import android.window.BackEvent;
 import android.window.OnBackAnimationCallback;
 import android.window.OnBackInvokedDispatcher;
@@ -169,7 +169,6 @@ import com.android.quickstep.RecentsModel;
 import com.android.quickstep.SystemUiProxy;
 import com.android.quickstep.TaskUtils;
 import com.android.quickstep.TouchInteractionService.TISBinder;
-import com.android.quickstep.util.AsyncClockEventDelegate;
 import com.android.quickstep.util.GroupTask;
 import com.android.quickstep.util.LauncherUnfoldAnimationController;
 import com.android.quickstep.util.QuickstepOnboardingPrefs;
@@ -185,7 +184,6 @@ import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.RecentsViewContainer;
 import com.android.quickstep.views.TaskView;
 import com.android.systemui.shared.recents.model.Task;
-import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.unfold.RemoteUnfoldSharedComponent;
 import com.android.systemui.unfold.UnfoldTransitionFactory;
 import com.android.systemui.unfold.UnfoldTransitionProgressProvider;
@@ -196,6 +194,7 @@ import com.android.systemui.unfold.progress.RemoteUnfoldTransitionReceiver;
 import com.android.systemui.unfold.updates.RotationChangeProvider;
 
 import app.lawnchair.LawnchairApp;
+import app.lawnchair.compat.LawnchairQuickstepCompat;
 import kotlin.Unit;
 
 import java.io.FileDescriptor;
@@ -852,7 +851,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
     public void onUiChangedWhileSleeping() {
         // Remove the snapshot because the content view may have obvious changes.
         UI_HELPER_EXECUTOR.execute(
-                () -> ActivityManagerWrapper.getInstance().invalidateHomeTaskSnapshot(this));
+                () -> LawnchairQuickstepCompat.getActivityManagerCompat().invalidateHomeTaskSnapshot(this));
     }
 
     @Override
@@ -1055,6 +1054,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
 
     /** Receives animation progress from sysui process. */
     private void initRemotelyCalculatedUnfoldAnimation(UnfoldTransitionConfig config) {
+
         RemoteUnfoldSharedComponent unfoldComponent =
                 UnfoldTransitionFactory.createRemoteUnfoldSharedComponent(
                         /* context= */ this,
@@ -1477,18 +1477,6 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer 
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        switch (name) {
-            case "TextClock", "android.widget.TextClock" -> {
-                TextClock tc = new TextClock(context, attrs);
-                tc.setClockEventDelegate(AsyncClockEventDelegate.INSTANCE.get(this));
-                return tc;
-            }
-            case "AnalogClock", "android.widget.AnalogClock" -> {
-                AnalogClock ac = new AnalogClock(context, attrs);
-                ac.setClockEventDelegate(AsyncClockEventDelegate.INSTANCE.get(this));
-                return ac;
-            }
-        }
         return super.onCreateView(parent, name, context, attrs);
     }
 
