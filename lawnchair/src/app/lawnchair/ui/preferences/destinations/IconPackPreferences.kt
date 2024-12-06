@@ -198,7 +198,7 @@ fun IconPackPreferences(
                             )
                             SwitchPreference(
                                 adapter = prefs.tintIconPackBackgrounds.getAdapter(),
-                                label = "Tint with accent color",
+                                label = stringResource(id = R.string.themed_icon_pack_tint),
                             )
                         }
                     }
