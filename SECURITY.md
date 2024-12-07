@@ -34,4 +34,4 @@ To report an issue, please file a [security advisory](https://github.com/Lawncha
 or contact a developer (can be found in the about page of the app) in [Telegram](https://t.me/lccommunity) or [Discord](https://discord.com/invite/3x8qNWxgGZ) and
 state your security vulnerability starting with the words "**SECURITY**".
 
-We'll endeavour to respond quickly, and will keep you updated throughout the process.
+We'll endeavor to respond quickly, and will keep you updated throughout the process.
