@@ -61,8 +61,9 @@ Here are some contribution tips to help you get started:
 -   [Lawnchair Visual Guidelines](/docs/assets/README.md)
 -   [Lawnchair Quickstep Compat Lib](compatLib/README.md)
 -   [Lawnchair Preferences Components](lawnchair/src/app/lawnchair/ui/preferences/components/README.md)
--   [SystemUI ViewCapture](systemUIViewCapture/README.md)
--   [SystemUI Common](systemUICommon/README.md)
+-   [SystemUI Module](systemUI/README.md)
+    -   [ViewCapture](systemUI/viewcapture/README.md)
+    -   [Common](systemUI/common//README.md)
 -   [Prebuilt Library](prebuilts/libs/README.md)
 
 #### Versioning scheme
