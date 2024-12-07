@@ -27,7 +27,7 @@ This branch houses the codebase of Lawnchair 15, which is currently in alpha and
 -   **At a Glance Widget:** Get information *At a Glance* with support for Smartspacer extensions.
 -   **QuickSwitch Support:** Seamlessly integrate itself as recent apps provider (requires root on Android 10 and newer).
 -   **Global Search:** Find apps, contacts, and web results quickly from your home screen.
--   **Highly customizable:** Customize Icons, fonts, and colors
+-   **Highly customizable:** Customize Icons, fonts, and colors to your liking
 -   And more!
 
 ## Download
