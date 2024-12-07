@@ -1,5 +1,11 @@
 # Security Policy
 
+<picture>
+    <!-- Avoid image being clickable with slight workaround --->
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/lawnchair-round.webp" width="100">
+    <img alt="" src="docs/assets/lawnchair-round.webp" width="100">
+</picture>
+
 ## Supported Versions
 
 > [!WARNING]
@@ -25,7 +31,7 @@ We appreciate your efforts to responsibly disclose your findings and will make e
 acknowledge your contributions.
 
 To report an issue, please file a [security advisory](https://github.com/LawnchairLauncher/lawnchair/security/advisories/new)
-or contact a developer (can be found in the about page of the app) in Telegram or Discord and
+or contact a developer (can be found in the about page of the app) in [Telegram](https://t.me/lccommunity) or [Discord](https://discord.com/invite/3x8qNWxgGZ) and
 state your security vulnerability starting with the words "**SECURITY**".
 
 We'll endeavour to respond quickly, and will keep you updated throughout the process.

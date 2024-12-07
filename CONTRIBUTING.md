@@ -6,7 +6,7 @@
     <img alt="" src="docs/assets/lawnchair-round.webp" width="100">
 </picture>
 
-First and foremost, welcome to the **Lawnchair** Contributing Guidelines!
+First and foremost, welcome to the **Lawnchair** Contributing Guidelines! Feel free to reach out to us on [Telegram](https://t.me/lccommunity) or [Discord](https://discord.com/invite/3x8qNWxgGZ) for any further questions.
 
 ### 💫 Bug reports & feature requests
 
@@ -126,3 +126,9 @@ Strings `names` in `strings.xml` should follow this format:
 | Preference choice                                | $1_choice         | `off_choice`               | Off                  |                                                                                                                     |
 | Feature string                                   | (feature_name)_$1 | `colorpicker_hsb`          | HSB                  | Feature strings are strings that are confined to a specific feature. Examples include the gesture and color picker. |
 | Launcher string                                  | $1_launcher       | `device_contacts_launcher` | Contacts from device | Strings that are specific to the Launcher area                                                                      |
+
+#### Updating locally stored font listing
+
+Lawnchair uses a locally stored JSON file (`google_fonts.json`) to list available fonts from Google Fonts. This file should be updated periodically or before release to include the latest fonts.
+
+To update the font listing on Lawnchair, follow a step to [acquire your Google Fonts Developer API key](https://developers.google.com/fonts/docs/developer_api#APIKey), once you've got your API key, append `?key=API_KEY` to https://www.googleapis.com/webfonts/v1/webfonts then replace the content of [`google_fonts.json`](lawnchair/assets/google_fonts.json) with the response of the API.
