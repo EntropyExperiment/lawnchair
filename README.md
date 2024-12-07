@@ -64,7 +64,7 @@ Lawnchair on the Play Store will install as a different app from other sources a
 
 ### Development builds
 
-Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build, these build offered the latest features and bug fixes at a cost of being slower and *might* introduce new bugs that have never been seen in stable. If you'd like to join in the fun, don't forget to make backup(s) and proceed with cautions.
+Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build, these builds offer the latest features and bug fixes at a cost of being slower and *might* introduce new bugs that have never been seen in stable. If you'd like to join in the fun, don't forget to make backup(s) and proceed with cautions.
 
 **Download:** [Obtainium][Obtainium link] • [GitHub][GitHub link] • [nightly.link][Nightly link]
 
