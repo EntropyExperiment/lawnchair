@@ -202,11 +202,15 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
                         ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
             }
 
-            mRecentsPendingIntent = LawnchairQuickstepCompat.ATLEAST_V ? PendingIntent.getActivity(mContext, 0, baseIntent,
-                    PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
-                            | Intent.FILL_IN_COMPONENT, options.toBundle()) :  PendingIntent.getActivity(mContext, 0, baseIntent,
-                    PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
-                            | Intent.FILL_IN_COMPONENT) ;
+            if (LawnchairQuickstepCompat.ATLEAST_V) {
+                mRecentsPendingIntent = PendingIntent.getActivity(mContext, 0, baseIntent,
+                        PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
+                                | Intent.FILL_IN_COMPONENT, options.toBundle());
+            } else {
+                mRecentsPendingIntent = PendingIntent.getActivity(mContext, 0, baseIntent,
+                        PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
+                                | Intent.FILL_IN_COMPONENT)
+            }
 
             mUnfoldTransitionProvider =
                     (enableUnfoldStateAnimation() && new ResourceUnfoldTransitionConfig().isEnabled())
