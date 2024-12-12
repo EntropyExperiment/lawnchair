@@ -131,4 +131,7 @@ Strings `names` in `strings.xml` should follow this format:
 
 Lawnchair uses a locally stored JSON file (`google_fonts.json`) to list available fonts from Google Fonts. This file should be updated periodically or before release to include the latest fonts.
 
-To update the font listing on Lawnchair, follow a step to [acquire your Google Fonts Developer API key](https://developers.google.com/fonts/docs/developer_api#APIKey), once you've got your API key, append `?key=API_KEY` to https://www.googleapis.com/webfonts/v1/webfonts then replace the content of [`google_fonts.json`](lawnchair/assets/google_fonts.json) with the response of the API.
+To update Lawnchair's font listing, follow these steps:
+1. Acquire a [Google Fonts Developer API key](https://developers.google.com/fonts/docs/developer_api#APIKey).
+2. Download the JSON file from `https://www.googleapis.com/webfonts/v1/webfonts?key=API_KEY`, replacing `API_KEY` with the API key from step 1.
+3. Replace the content of [`google_fonts.json`](lawnchair/assets/google_fonts.json) with the API response.

@@ -24,10 +24,10 @@ This branch houses the codebase of Lawnchair 15, which is currently in alpha and
 ## Features
 
 -   **Material You Theming:** Adapts to your wallpaper and system theme.
--   **At a Glance Widget:** Get information *At a Glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer) extensions.
--   **QuickSwitch Support:** Seamlessly integrate itself as recent apps provider (requires root on Android 10 and newer).
--   **Global Search:** Find apps, contacts, and web results quickly from your home screen.
--   **Highly customizable:** Customize Icons, fonts, and colors to your liking
+-   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer) extensions.
+-   **QuickSwitch Support:** Integrates with Android Recents on Android 10 and newer. (requires root)
+-   **Global Search:** Allows quick access to apps, contacts, and web results from the home screen.
+-   **Customization Options:** Provides options to tweak icons, fonts, and colors to your liking.
 -   And more!
 
 ## Download
@@ -60,11 +60,13 @@ This branch houses the codebase of Lawnchair 15, which is currently in alpha and
   </a>
 </p>
 
-Lawnchair on the Play Store will install as a different app from other sources and features may be restricted to comply with the publishing rules.
+Lawnchair on Play Store will install as a different app from other sources. Sone features may be restricted to comply with Google Play's publishing rules.
 
 ### Development builds
 
-Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build, these builds offer the latest features and bug fixes at a cost of being slower and *might* introduce new bugs that have never been seen in stable. If you'd like to join in the fun, don't forget to make backup(s) and proceed with cautions.
+Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build!
+
+These builds offer the latest features and bug fixes at a cost of being slower and introducing new bugs. Ensure that you make backups before installing!
 
 **Download:** [Obtainium][Obtainium link] • [GitHub][GitHub link] • [nightly.link][Nightly link]
 
