@@ -1,11 +1,5 @@
 # Security Policy
 
-<picture>
-    <!-- Avoid image being clickable with slight workaround --->
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/lawnchair-round.webp" width="100">
-    <img alt="" src="docs/assets/lawnchair-round.webp" width="100">
-</picture>
-
 ## Supported Versions
 
 > [!WARNING]

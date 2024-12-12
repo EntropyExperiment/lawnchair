@@ -106,6 +106,7 @@ The table below shows release phase used by Lawnchair:
 
 | Status            | Stage |
 | ----------------- | ----- |
+| Development       | 00    |
 | Alpha             | 01    |
 | Beta              | 02    |
 | Release Candidate | 03    |
