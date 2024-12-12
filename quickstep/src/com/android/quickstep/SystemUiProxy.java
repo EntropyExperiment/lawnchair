@@ -209,7 +209,7 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
             } else {
                 mRecentsPendingIntent = PendingIntent.getActivity(mContext, 0, baseIntent,
                         PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT
-                                | Intent.FILL_IN_COMPONENT)
+                                | Intent.FILL_IN_COMPONENT);
             }
 
             mUnfoldTransitionProvider =
