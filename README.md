@@ -60,13 +60,13 @@ This branch houses the codebase of Lawnchair 15, which is currently in developme
   </a>
 </p>
 
-Lawnchair on Play Store will install as a different app from other sources. Sone features may be restricted to comply with Google Play's publishing rules.
+Lawnchair on Play Store will install as a different app from other sources. Some features may be restricted to comply with Google Play's publishing rules.
 
 ### Development builds
 
 Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build!
 
-These builds offer the latest features and bug fixes at a cost of being slower and introducing new bugs. Ensure that you make backups before installing!
+These builds offer the latest features and bug fixes at a cost of being slower and introducing new bugs. Ensure that you make backups before installing.
 
 **Download:** [Obtainium][Obtainium link] • [GitHub][GitHub link] • [nightly.link][Nightly link]
 

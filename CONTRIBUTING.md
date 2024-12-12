@@ -6,33 +6,34 @@
     <img alt="" src="docs/assets/lawnchair-round.webp" width="100">
 </picture>
 
-First and foremost, welcome to the **Lawnchair** Contributing Guidelines! Feel free to reach out to us on [Telegram](https://t.me/lccommunity) or [Discord](https://discord.com/invite/3x8qNWxgGZ) for any further questions.
+Welcome to the **Lawnchair** Project, we appreciate your interest in contributing. 
+Feel free to reach out to us on [Telegram](https://t.me/lccommunity) or [Discord](https://discord.com/invite/3x8qNWxgGZ) for any further questions.
 
 ### 💫 Bug reports & feature requests
 
 > [!TIP]
-> We recommend that Lawnchair [Nightly](https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly)
-> build be used in your report as they contain the latest changes from Lawnchair.
+> Using Lawnchair [Nightly](https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly) is recommended for bug reports and feature requests 
+> as it contains the latest changes from Lawnchair.
 
-For [bug reports](https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+), please describe the bug in detail to the best of your ability
+For [bug reports](https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+), describe the bug in detail to the best of your ability
 with steps on how to reproduce it. If applicable, attach log files.
 
-For [feature requests](https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=feature%2Cenhancement&projects=&template=feature_request.yaml&title=%5BFEATURE%5D+), please describe the feature you'd like to see added to Lawnchair.
+For [feature requests](https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=feature%2Cenhancement&projects=&template=feature_request.yaml&title=%5BFEATURE%5D+), describe the feature you'd like to see added to Lawnchair.
 If applicable, attach log files.
 
-Please make sure to be civil during the discussion of your contribution as outlined by the [Code of Conduct](CODE_OF_CONDUCT.md).
+Make sure to be civil during the discussion of your contribution as outlined by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### 🌐 Translation
 
 For translation, visit [Lawnchair on Crowdin](https://lawnchair.crowdin.com) and follow these tips:
 
--   When using quotation marks, insert the symbols specific to the target language, as listed in this [this summary table](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table);
+-   When using quotation marks, insert the symbols specific to the target language, as listed in this [summary table](https://en.wikipedia.org/wiki/Quotation_mark#Summary_table);
 -   Some English terminology may have not have commonly-used equivalents in other languages. In such cases, use short descriptive phrases—for example, the equivalent of _bottom row_ for _dock_;
 -   Some languages (e.g. French) have variations of words depending on if it's masculine or feminine (gender-specific); we recommend opting for gender-neutral words instead.
 
 ### 🧑‍💻 Code
 
-> [!NOTE]
+> [!TIP]
 > For Lawnchair 9 to 14, see the branches with the `9-` to `14-` prefixes respectively.
 
 For code, it's highly recommended that you use [Android Studio](https://developer.android.com/studio),
