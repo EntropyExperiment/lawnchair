@@ -308,7 +308,9 @@
         <item name="android:importantForAccessibility">no</item>
     </style>
 
-    <style name="BaseIconRoot" parent="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"/>
+    <style name="BaseIconRoot" parent="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle">
+        <item name="customFontType">@id/font_base_icon</item>
+    </style>
 
     <style name="BaseIconUnBounded" parent="BaseIconRoot">
         <item name="android:layout_width">match_parent</item>
@@ -384,7 +386,9 @@
 
     <style name="PrimaryHeadline" parent="@android:style/TextAppearance.DeviceDefault.DialogWindowTitle"/>
 
-    <style name="TextTitle" parent="@android:style/TextAppearance.DeviceDefault" />
+    <style name="TextTitle" parent="@android:style/TextAppearance.DeviceDefault">
+        <item name="customFontType">@id/font_heading</item>
+    </style>
 
     <style name="Button.TopRounded.Bordered" parent="@android:style/Widget.Material.Button">
         <item name="android:background">@drawable/button_top_rounded_bordered_ripple</item>
