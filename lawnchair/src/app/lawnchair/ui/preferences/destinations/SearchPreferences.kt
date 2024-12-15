@@ -29,6 +29,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
+import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
@@ -89,10 +90,16 @@ fun SearchPreferences() {
                         label = stringResource(R.string.search_pref_result_apps_and_shortcuts_title),
                         maxCountLabel = stringResource(R.string.max_apps_result_count_title),
                     ) {
+                        if (prefs2.enableTrieSearch.getAdapter().state.value) {
+                            WarningPreference(
+                                text = stringResource(id = R.string.trie_weighted_levenshtein_override),
+                            )
+                        }
                         SwitchPreference(
                             adapter = prefs2.enableFuzzySearch.getAdapter(),
                             label = stringResource(id = R.string.fuzzy_search_title),
                             description = stringResource(id = R.string.fuzzy_search_desc),
+                            enabled = prefs2.enableTrieSearch.getAdapter().state.value.not()
                         )
                     }
                 }

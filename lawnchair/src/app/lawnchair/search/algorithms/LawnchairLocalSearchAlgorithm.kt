@@ -66,6 +66,9 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
 
     private var searchApps = true
     private var enableFuzzySearch = false
+    private var enableTrieSearch = false
+    private var trieSearchMaxLevenshteinDistance = 2.0f
+    private var shouldSearchComponent = false
     private var useWebSuggestions = true
     private var webSuggestionsProvider = ""
 
@@ -85,6 +88,15 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
     init {
         pref2.enableFuzzySearch.onEach(launchIn = coroutineScope) {
             enableFuzzySearch = it
+        }
+        pref2.enableTrieSearch.onEach(launchIn = coroutineScope) {
+            enableTrieSearch = it
+        }
+        pref2.trieSearchMaxLevenshteinDistance.onEach(launchIn = coroutineScope) {
+            trieSearchMaxLevenshteinDistance = it
+        }
+        pref2.shouldSearchComponent.onEach(launchIn = coroutineScope) {
+            shouldSearchComponent = it
         }
         pref2.hiddenApps.onEach(launchIn = coroutineScope) {
             hiddenApps = it
@@ -293,7 +305,9 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
     private fun performAppSearch(
         apps: MutableList<AppInfo>,
         query: String,
-    ) = if (enableFuzzySearch) {
+    ) = if (enableTrieSearch) {
+        SearchUtils.trieWeightedLevenshteinSearch(apps, query, maxAppResultsCount, hiddenApps, hiddenAppsInSearch, trieSearchMaxLevenshteinDistance, shouldSearchComponent)
+    } else if (enableFuzzySearch) {
         SearchUtils.fuzzySearch(apps, query, maxAppResultsCount, hiddenApps, hiddenAppsInSearch)
     } else {
         SearchUtils.normalSearch(apps, query, maxAppResultsCount, hiddenApps, hiddenAppsInSearch)

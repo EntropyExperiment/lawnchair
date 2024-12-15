@@ -414,6 +414,21 @@ class PreferenceManager2 private constructor(private val context: Context) : Pre
         defaultValue = context.resources.getBoolean(R.bool.config_default_enable_fuzzy_search),
     )
 
+    val enableTrieSearch = preference(
+        key = booleanPreferencesKey(name = "enable_trie_search"),
+        defaultValue = context.resources.getBoolean(R.bool.config_default_enable_trie_search)
+    )
+
+    val trieSearchMaxLevenshteinDistance = preference(
+        key = floatPreferencesKey(name = "trie_search_max_levenshtein_distance"),
+        defaultValue = 2.0f,
+    )
+
+    val shouldSearchComponent = preference(
+        key = booleanPreferencesKey(name = "should_search_component"),
+        defaultValue = false,
+    )
+
     val matchHotseatQsbStyle = preference(
         key = booleanPreferencesKey(name = "use_drawer_search_icon"),
         defaultValue = false,

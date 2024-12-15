@@ -33,6 +33,9 @@ class LawnchairAppSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm(c
 
     private var hiddenAppsInSearch = ""
     private var enableFuzzySearch = false
+    private var enableTrieSearch = false
+    private var trieSearchMaxLevenshteinDistance = 2.0f
+    private var shouldSearchComponent = false
     private var maxResultsCount = 5
 
     private val prefs2 = PreferenceManager2.getInstance(context)
@@ -42,6 +45,15 @@ class LawnchairAppSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm(c
     init {
         prefs2.enableFuzzySearch.onEach(launchIn = coroutineScope) {
             enableFuzzySearch = it
+        }
+        prefs2.enableTrieSearch.onEach(launchIn = coroutineScope) {
+            enableTrieSearch = it
+        }
+        prefs2.trieSearchMaxLevenshteinDistance.onEach(launchIn = coroutineScope) {
+            trieSearchMaxLevenshteinDistance = it
+        }
+        prefs2.shouldSearchComponent.onEach(launchIn = coroutineScope) {
+            shouldSearchComponent = it
         }
         prefs2.hiddenApps.onEach(launchIn = coroutineScope) {
             hiddenApps = it
@@ -75,7 +87,9 @@ class LawnchairAppSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm(c
         apps: MutableList<AppInfo>,
         query: String,
     ): ArrayList<BaseAllAppsAdapter.AdapterItem> {
-        val appResults = if (enableFuzzySearch) {
+        val appResults = if (enableTrieSearch) {
+            SearchUtils.trieWeightedLevenshteinSearch(apps, query, maxResultsCount, hiddenApps, hiddenAppsInSearch, trieSearchMaxLevenshteinDistance, shouldSearchComponent)
+        } else if (enableFuzzySearch) {
             SearchUtils.fuzzySearch(apps, query, maxResultsCount, hiddenApps, hiddenAppsInSearch)
         } else {
             SearchUtils.normalSearch(apps, query, maxResultsCount, hiddenApps, hiddenAppsInSearch)
