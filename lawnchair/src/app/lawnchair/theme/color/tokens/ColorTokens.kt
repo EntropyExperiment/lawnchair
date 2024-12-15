@@ -148,8 +148,6 @@ object ColorTokens {
 
     @JvmField val WidgetAddButtonBackgroundColor = PrimaryButton
 
-    @JvmField val slotPlateColor = Accent1_300
-
     val SwitchThumbOn = Accent1_100
     val SwitchThumbOff = DayNightColorToken(Neutral2_300, Neutral1_400)
     val SwitchThumbDisabled = DayNightColorToken(Neutral2_100, Neutral1_700)
