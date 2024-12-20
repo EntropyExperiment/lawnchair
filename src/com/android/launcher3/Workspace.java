@@ -348,18 +348,6 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         setMotionEventSplittingEnabled(true);
         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
         mStatsLogManager = StatsLogManager.newInstance(context);
-
-        if (mPreferenceManger.getEnableWallpaperBlur().get() && mWallpaperManager.getDrawable() != null) {
-            var blurWallpaper = mPreferenceManger.getWallpaperBlur().get();
-            var blurThreshold = mPreferenceManger.getWallpaperBlurFactorThreshold().get();
-            var wallpaperBitmap = mWallpaperManager.getDrawable();
-            try {
-                mWallpaperManager.setBitmap(LawnchairUtilsKt.blurBitmap(toBitmap(wallpaperBitmap),blurWallpaper, blurThreshold), null, true, WallpaperManager.FLAG_SYSTEM);
-                mWallpaperManager.forgetLoadedWallpaper();
-            } catch (Exception ex) {
-                Log.e(TAG, "error failed bluring wallpaper");
-            }
-        }
     }
 
     @Override
