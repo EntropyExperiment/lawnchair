@@ -1530,7 +1530,10 @@ public class Launcher extends StatefulActivity<LauncherState>
 
         if (appWidgetInfo == null) {
             appWidgetInfo = mAppWidgetManager.getLauncherAppWidgetInfo(appWidgetId);
-            if (appWidgetInfo == null) return;
+            if (appWidgetInfo == null){
+                mAppWidgetHolder.deleteAppWidgetId(appWidgetId);
+                return;
+            }
         }
 
         if (hostView == null) {
