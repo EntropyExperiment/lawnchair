@@ -28,7 +28,7 @@ allprojects {
             compileSdk 35
             defaultConfig {
                 minSdk 26
-                targetSdk 34
+                targetSdk 35
                 vectorDrawables.useSupportLibrary = true
             }
             lint {
@@ -124,20 +124,20 @@ final def ciRef = System.getenv("GITHUB_REF") ?: ""
 final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
-final def version = "14"
-final def releaseName = "Beta 3"
+final def version = "15"
+final def releaseName = "Beta 1"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
 final def quickstepMinSdk = "29"
-final def quickstepMaxSdk = "34"
+final def quickstepMaxSdk = "35"
 
 android {
     namespace "com.android.launcher3"
     defaultConfig {
-        // Lawnchair Launcher 14.0 Beta 3
+        // Lawnchair Launcher 15.0 Beta 1
         // See CONTRIBUTING.md#versioning-scheme
-        versionCode 14_00_02_03
+        versionCode 15_00_02_01
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
@@ -361,7 +361,7 @@ dependencies {
     baselineProfile projects.baselineProfile
 
     implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.3.2"
+    implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation "androidx.preference:preference-ktx:1.2.1"
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1'
@@ -421,7 +421,7 @@ dependencies {
     implementation 'sh.calvin.reorderable:reorderable:2.4.2'
 
     // Smartspacer
-    implementation('com.kieronquinn.smartspacer:sdk-client:1.0.11') {
+    implementation('com.kieronquinn.smartspacer:sdk-client:1.1') {
         exclude group: "com.github.skydoves", module: "balloon"
     }
 
