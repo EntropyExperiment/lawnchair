@@ -72,7 +72,7 @@ These builds offer the latest features and bug fixes at a cost of being slower a
 
 ### Verification
 
-Verify the integrity of your Lawnchair download using these SHA-256 hashes:
+The integrity of your Lawnchair's certificate must match these SHA-256 hashes in the table below.
 
 | Source      | SHA-256 Hash                                                                                      |
 | ----------- | ------------------------------------------------------------------------------------------------- |
