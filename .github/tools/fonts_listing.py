@@ -6,7 +6,7 @@ import sys
 
 
 google_api_token = (
-    os.getenv("GOOGLE_API_TOKEN") or "AIzaSyDg_miPhEzyu59tUZMw-LB5Cu_5cTHuAlU"
+    os.getenv("GOOGLE_API_TOKEN") or ""  # Add your API key here!
 )
 repository = os.getenv("GITHUB_REPOSITORY") or os.getenv("CI_REPOSITORY_URL")
 job_name = "Update Google Fonts' Listing"
