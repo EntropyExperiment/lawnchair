@@ -48,7 +48,7 @@ CATEGORIES = [
     "SHOPPING",
 ]
 ADDITIONAL_URLS = [
-    BASE_URL,
+    # BASE_URL,
     # f"{BASE_URL}/store/apps/editorial",  This seems to disappear?
     # f"{BASE_URL}/store/apps/top",  Cannot find replacement
     f"{DETAIL_URL}app.lawnchair.play",
@@ -163,7 +163,7 @@ PACKAGE_BLACKLIST = [
 ]
 
 
-SCROLL_TIMES = 5
+SCROLL_TIMES = 10
 ID_MATCHER = r"\?id=(.*)"
 CATEGORY_MATCHER = r"/category/(.*)"
 
