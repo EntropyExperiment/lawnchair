@@ -1,2 +1,1 @@
-requests-html>=0.10.0
-lxml[html_clean]>=0.4.1
+playwright>=1.50.0
