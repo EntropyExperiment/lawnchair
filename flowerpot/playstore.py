@@ -51,6 +51,8 @@ ADDITIONAL_URLS = [
     BASE_URL,
     # f"{BASE_URL}/store/apps/editorial",  This seems to disappear?
     # f"{BASE_URL}/store/apps/top",  Cannot find replacement
+    f"{DETAIL_URL}app.lawnchair.play",
+    f"{DETAIL_URL}app.lawnchair.lawnicons.play",
     f"{DETAIL_URL}ch.deletescape.lawnchair.plah",
     f"{DETAIL_URL}amirz.rootless.nexuslauncher",
     f"{DETAIL_URL}com.edzondm.linebit",
