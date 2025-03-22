@@ -63,28 +63,28 @@ fun DockPreferences(modifier: Modifier = Modifier) {
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
-        val isHotseatEnabled = prefs2.isHotseatEnabled.getAdapter()
-        val isHotseatBgEnabled = prefs.hotseatBG.getAdapter().state.value
+        val hotseatBgAdapter = prefs.hotseatBG.getAdapter()
 
-        MainSwitchPreference(adapter = isHotseatEnabled, label = stringResource(id = R.string.show_hotseat_title)) {
+        MainSwitchPreference(adapter = prefs2.isHotseatEnabled.getAdapter(), label = stringResource(id = R.string.show_hotseat_title)) {
             DockPreferencesPreview()
-
-            PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-                DividerColumn {
-                    SwitchPreference(
-                        adapter = prefs.hotseatBG.getAdapter(),
-                        label = stringResource(id = R.string.hotseat_background),
-                    )
-                    ExpandAndShrink(visible = isHotseatBgEnabled) {
-                        HotseatBackgroundSettings(prefs, prefs2)
-                    }
+            PreferenceGroup(heading = stringResource(id = R.string.style)) {
+                SwitchPreference(
+                    adapter = hotseatBgAdapter,
+                    label = stringResource(id = R.string.hotseat_background),
+                )
+                ExpandAndShrink(visible = hotseatBgAdapter.state.value) {
+                    HotseatBackgroundSettings(prefs, prefs2)
                 }
             }
-
-            SearchBarPreference(0)
-
+            SearchBarPreference(SearchRoute.DOCK_SEARCH)
             PreferenceGroup(heading = stringResource(id = R.string.grid)) {
                 GridSettings(prefs, prefs2)
+            }
+            PreferenceGroup(heading = stringResource(id = R.string.icons)) {
+                SwitchPreference(
+                    adapter = prefs2.enableLabelInDock.getAdapter(),
+                    label = stringResource(id = R.string.show_labels),
+                )
             }
         }
     }
@@ -171,6 +171,7 @@ fun ColumnScope.DockPreferencesPreview(modifier: Modifier = Modifier) {
             prefs.hotseatQsbStrokeWidth.getAdapter(),
             prefs2.hotseatBottomFactor.getAdapter(),
             prefs2.strokeColorStyle.getAdapter(),
+            prefs2.enableLabelInDock.getAdapter(),
             prefs.hotseatBG.getAdapter(),
             prefs.hotseatBGHorizontalInsetLeft.getAdapter(),
             prefs.hotseatBGVerticalInsetTop.getAdapter(),

@@ -16,14 +16,28 @@
 
 package app.lawnchair.ui.preferences.destinations
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
@@ -33,6 +47,7 @@ import app.lawnchair.ui.preferences.components.SuggestionsPreference
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
+import app.lawnchair.ui.preferences.components.controls.SwitchPreferenceWithPreview
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
@@ -52,20 +67,27 @@ fun AppDrawerPreferences(
     val context = LocalContext.current
     val resources = context.resources
 
-    var selectedOption by remember { mutableStateOf(prefs.drawerList.get()) }
-
     PreferenceLayout(
         label = stringResource(id = R.string.app_drawer_label),
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
-        AppDrawerLayoutSettings(onOptionSelect = { isSelected -> selectedOption = isSelected })
-        ExpandAndShrink(visible = selectedOption) {
-            DividerColumn {
-                AppDrawerFolderPreferences()
-            }
+        val drawerListAdapter = prefs.drawerList.getAdapter()
+        DrawerLayoutPreference(drawerListAdapter)
+        ExpandAndShrink(visible = drawerListAdapter.state.value) {
+            AppDrawerFolderPreferenceItem()
         }
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
+            val hiddenApps = prefs2.hiddenApps.getAdapter().state.value
+            NavigationActionPreference(
+                label = stringResource(id = R.string.hidden_apps_label),
+                subtitle = resources.getQuantityString(R.plurals.apps_count, hiddenApps.size, hiddenApps.size),
+                destination = AppDrawerRoutes.HIDDEN_APPS,
+            )
+            SearchBarPreference(SearchRoute.DRAWER_SEARCH, showLabel = false)
+            SuggestionsPreference()
+        }
+        PreferenceGroup(heading = stringResource(R.string.style)) {
             ColorPreference(preference = prefs2.appDrawerBackgroundColor)
             SliderPreference(
                 label = stringResource(id = R.string.background_opacity),
@@ -73,30 +95,6 @@ fun AppDrawerPreferences(
                 step = 0.1f,
                 valueRange = 0F..1F,
                 showAsPercentage = true,
-            )
-            SwitchPreference(
-                label = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_title),
-                description = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_description),
-                adapter = prefs.allAppBulkIconLoading.getAdapter(),
-            )
-            SwitchPreference(
-                label = stringResource(id = R.string.pref_all_apps_remember_position_title),
-                description = stringResource(id = R.string.pref_all_apps_remember_position_description),
-                adapter = prefs2.rememberPosition.getAdapter(),
-            )
-            SwitchPreference(
-                label = stringResource(id = R.string.pref_all_apps_show_scrollbar_title),
-                adapter = prefs2.showScrollbar.getAdapter(),
-            )
-            SuggestionsPreference()
-        }
-        SearchBarPreference(1)
-        PreferenceGroup(heading = stringResource(id = R.string.hidden_apps_label)) {
-            val hiddenApps = prefs2.hiddenApps.getAdapter().state.value
-            NavigationActionPreference(
-                label = stringResource(id = R.string.hidden_apps_label),
-                subtitle = resources.getQuantityString(R.plurals.apps_count, hiddenApps.size, hiddenApps.size),
-                destination = AppDrawerRoutes.HIDDEN_APPS,
             )
         }
         PreferenceGroup(heading = stringResource(id = R.string.grid)) {
@@ -150,5 +148,98 @@ fun AppDrawerPreferences(
                 }
             }
         }
+        PreferenceGroup(heading = stringResource(id = R.string.advanced)) {
+            SwitchPreference(
+                label = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_title),
+                description = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_description),
+                adapter = prefs.allAppBulkIconLoading.getAdapter(),
+            )
+            SwitchPreference(
+                label = stringResource(id = R.string.pref_all_apps_remember_position_title),
+                description = stringResource(id = R.string.pref_all_apps_remember_position_description),
+                adapter = prefs2.rememberPosition.getAdapter(),
+            )
+            SwitchPreference(
+                label = stringResource(id = R.string.pref_all_apps_show_scrollbar_title),
+                adapter = prefs2.showScrollbar.getAdapter(),
+            )
+        }
     }
+}
+
+@Composable
+private fun DrawerLayoutPreference(drawerListAdapter: PreferenceAdapter<Boolean>) {
+    SwitchPreferenceWithPreview(
+        label = stringResource(id = R.string.layout),
+        checked = !drawerListAdapter.state.value,
+        onCheckedChange = { drawerListAdapter.onChange(!it) },
+        disabledLabel = stringResource(id = R.string.feed_default),
+        disabledContent = {
+            Box(
+                modifier = Modifier
+                    .height(24.dp)
+                    .fillMaxWidth(0.8f)
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant,
+                        RoundedCornerShape(16.dp),
+                    ),
+            )
+
+            Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    repeat(4) {
+                        Box(
+                            modifier = Modifier
+                                .size(20.dp)
+                                .background(
+                                    MaterialTheme.colorScheme.surfaceVariant,
+                                    CircleShape,
+                                ),
+                        )
+                    }
+                }
+            }
+        },
+        enabledLabel = stringResource(id = R.string.caddy_beta),
+        enabledContent = {
+            Box(
+                modifier = Modifier
+                    .height(24.dp)
+                    .fillMaxWidth(0.8f)
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant,
+                        RoundedCornerShape(16.dp),
+                    ),
+            )
+            Row(modifier = Modifier, horizontalArrangement = Arrangement.SpaceBetween) {
+                repeat(2) {
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column(modifier = Modifier) {
+                        repeat(2) {
+                            Row(
+                                modifier = Modifier,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                repeat(2) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(16.dp)
+                                            .background(
+                                                MaterialTheme.colorScheme.surfaceVariant,
+                                                CircleShape,
+                                            ),
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+            }
+        },
+    )
 }
