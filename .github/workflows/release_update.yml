@@ -12,7 +12,7 @@ on:
         type: string
         required: true
       prerelease:
-        description: Prerelease
+        description: Pre-release
         type: boolean
         required: true
       releaseName:
