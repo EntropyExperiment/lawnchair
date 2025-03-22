@@ -59,7 +59,6 @@ Here are some contribution tips to help you get started:
 #### Additional documentation
 
 -   [The Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki)
--   [Lawnchair Visual Guidelines](/docs/assets/README.md)
 -   [Lawnchair Quickstep Compat Library](compatLib/README.md)
 -   [Lawnchair Preferences Components](lawnchair/src/app/lawnchair/ui/preferences/components/README.md)
 -   [SystemUI Module](systemUI/README.md)
