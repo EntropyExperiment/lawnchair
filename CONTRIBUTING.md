@@ -135,4 +135,4 @@ Lawnchair uses a locally stored JSON file (`google_fonts.json`) to list availabl
 To update Lawnchair's font listing, follow these steps:
 1. Acquire a [Google Fonts Developer API key](https://developers.google.com/fonts/docs/developer_api#APIKey).
 2. Download the JSON file from `https://www.googleapis.com/webfonts/v1/webfonts?key=API_KEY`, replacing `API_KEY` with the API key from step 1.
-3. Replace the content of [`google_fonts.json`](lawnchair/assets/google_fonts.json) with the API response.
+3. Minify, and replace the content of [`google_fonts.json`](lawnchair/assets/google_fonts.json) with the API response.
