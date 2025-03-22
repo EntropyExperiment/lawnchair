@@ -25,7 +25,7 @@ This branch houses the codebase of Lawnchair 15, which is currently in developme
 
 -   **Material You Theming:** Adapts to your wallpaper and system theme.
 -   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer) extensions.
--   **QuickSwitch Support:** Integrates with Android Recents on Android 10 and newer. (requires root)
+-   **QuickSwitch Support:** Integrates with Android Recents screen on Android 10 and newer. (requires root)
 -   **Global Search:** Allows quick access to apps, contacts, and web results from the home screen.
 -   **Customization Options:** Provides options to tweak icons, fonts, and colors to your liking.
 -   And more!
