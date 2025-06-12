@@ -23,7 +23,6 @@ import android.app.ActivityTaskManager;
 import android.app.IActivityTaskManagerHidden;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.Pair;
@@ -31,20 +30,19 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.window.SplashScreen;
 
-import com.android.launcher3.Utilities;
 import com.android.launcher3.logging.StatsLogManager;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.util.ActivityOptionsWrapper;
 import com.android.launcher3.widget.LauncherAppWidgetHostView;
 
-import app.lawnchair.LawnchairApp;
-import dev.rikka.tools.refine.Refine;
+import java.util.function.Consumer;
 
-/**
- * Provides a Quickstep specific animation when launching an activity from an
- * app widget.
- */
-public class QuickstepInteractionHandler implements RemoteViews.InteractionHandler {
+import dev.rikka.tools.refine.Refine;
+import app.lawnchair.LawnchairApp;
+
+/** Provides a Quickstep specific animation when launching an activity from an app widget. */
+class QuickstepInteractionHandler implements RemoteViews.InteractionHandler,
+        Consumer<LauncherAppWidgetHostView> {
 
     private static final String TAG = "QuickstepInteractionHandler";
 
@@ -54,10 +52,15 @@ public class QuickstepInteractionHandler implements RemoteViews.InteractionHandl
         mLauncher = launcher;
     }
 
+    @Override
+    public void accept(LauncherAppWidgetHostView host) {
+        host.setInteractionHandler(this);
+    }
+
     @SuppressWarnings("NewApi")
     @Override
     public boolean onInteraction(View view, PendingIntent pendingIntent,
-                                 RemoteViews.RemoteResponse remoteResponse) {
+            RemoteViews.RemoteResponse remoteResponse) {
         LauncherAppWidgetHostView hostView = findHostViewAncestor(view);
         if (hostView == null) {
             Log.e(TAG, "View did not have a LauncherAppWidgetHostView ancestor.");
@@ -73,7 +76,7 @@ public class QuickstepInteractionHandler implements RemoteViews.InteractionHandl
         }
         Pair<Intent, ActivityOptions> options = remoteResponse.getLaunchOptions(view);
         ActivityOptionsWrapper activityOptions = mLauncher.getAppTransitionManager()
-                .getActivityLaunchOptions(hostView);
+                .getActivityLaunchOptions(hostView, (ItemInfo) hostView.getTag());
         if (!pendingIntent.isActivity()) {
             // In the event this pending intent eventually launches an activity, i.e. a trampoline,
             // use the Quickstep transition animation.
@@ -110,7 +113,6 @@ public class QuickstepInteractionHandler implements RemoteViews.InteractionHandl
 
     /**
      * Logs that the app was launched from the widget.
-     * 
      * @param itemInfo the widget info.
      */
     private void logAppLaunch(Object itemInfo) {
@@ -123,8 +125,7 @@ public class QuickstepInteractionHandler implements RemoteViews.InteractionHandl
 
     private LauncherAppWidgetHostView findHostViewAncestor(View v) {
         while (v != null) {
-            if (v instanceof LauncherAppWidgetHostView)
-                return (LauncherAppWidgetHostView) v;
+            if (v instanceof LauncherAppWidgetHostView) return (LauncherAppWidgetHostView) v;
             v = (View) v.getParent();
         }
         return null;

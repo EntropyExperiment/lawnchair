@@ -105,9 +105,7 @@ public class FloatingSurfaceView extends AbstractFloatingView implements
     private void removeViewImmediate() {
         // Cancel any pending remove
         Executors.MAIN_EXECUTOR.getHandler().removeCallbacks(mRemoveViewRunnable);
-        if (isAttachedToWindow()) {
-            removeViewFromParent();
-        }
+        removeViewFromParent();
     }
 
     /**
@@ -161,9 +159,8 @@ public class FloatingSurfaceView extends AbstractFloatingView implements
         if (mContract == null) {
             return;
         }
-        View icon = mLauncher.getFirstMatchForAppClose(null /* StableViewInfo */,
-                mContract.componentName.getPackageName(), mContract.user,
-                false /* supportsAllAppsState */);
+        View icon = mLauncher.getFirstHomeElementForAppClose(null /* StableViewInfo */,
+                mContract.componentName.getPackageName(), mContract.user);
 
         boolean iconChanged = mIcon != icon;
         if (iconChanged) {
@@ -214,7 +211,7 @@ public class FloatingSurfaceView extends AbstractFloatingView implements
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder,
-                               int format, int width, int height) {
+            int format, int width, int height) {
         drawOnSurface();
     }
 
@@ -228,17 +225,11 @@ public class FloatingSurfaceView extends AbstractFloatingView implements
 
     private void drawOnSurface() {
         SurfaceHolder surfaceHolder = mSurfaceView.getHolder();
-        if (!surfaceHolder.getSurface().isValid()) return;
 
-        synchronized (this) {
-            Canvas c = surfaceHolder.lockHardwareCanvas();
-            if (c != null) {
-                try {
-                    mPicture.draw(c);
-                } finally {
-                    surfaceHolder.unlockCanvasAndPost(c);
-                }
-            }
+        Canvas c = surfaceHolder.lockHardwareCanvas();
+        if (c != null) {
+            mPicture.draw(c);
+            surfaceHolder.unlockCanvasAndPost(c);
         }
     }
 

@@ -27,8 +27,11 @@ import androidx.annotation.Nullable;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.R;
+import com.android.launcher3.pageindicators.Direction;
 import com.android.launcher3.pageindicators.PageIndicator;
 import com.android.launcher3.views.ActivityContext;
+
+import java.util.function.Consumer;
 
 import app.lawnchair.font.FontManager;
 import app.lawnchair.theme.color.tokens.ColorStateListTokens;
@@ -51,6 +54,7 @@ public class PersonalWorkSlidingTabStrip extends LinearLayout implements PageInd
         typedArray.recycle();
     }
 
+    // Lawnchair: This function theme the work mode tab and toggle
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -99,6 +103,11 @@ public class PersonalWorkSlidingTabStrip extends LinearLayout implements PageInd
     }
 
     @Override
+    public void setArrowClickListener(Consumer<Direction> listener) {
+        // No-Op. All Apps doesn't need accessibility arrows for single click navigation.
+    }
+
+    @Override
     public boolean hasOverlappingRendering() {
         return false;
     }
@@ -124,8 +133,7 @@ public class PersonalWorkSlidingTabStrip extends LinearLayout implements PageInd
     }
 
     /**
-     * Interface definition for a callback to be invoked when an active page has
-     * been changed.
+     * Interface definition for a callback to be invoked when an active page has been changed.
      */
     public interface OnActivePageChangedListener {
         /** Called when the active page has been changed. */

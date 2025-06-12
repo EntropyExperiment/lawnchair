@@ -58,7 +58,7 @@ public class SessionCommitReceiver extends BroadcastReceiver {
     @WorkerThread
     private static void processIntent(Context context, Intent intent) {
         UserHandle user = intent.getParcelableExtra(Intent.EXTRA_USER);
-        if (!isEnabled(context)) {
+        if (!isEnabled(context, user)) {
             // User has decided to not add icons on homescreen.
             return;
         }
@@ -71,17 +71,21 @@ public class SessionCommitReceiver extends BroadcastReceiver {
         }
 
         InstallSessionHelper packageInstallerCompat = InstallSessionHelper.INSTANCE.get(context);
-        boolean alreadyAddedPromiseIcon = packageInstallerCompat.promiseIconAddedForId(info.getSessionId());
+        boolean alreadyAddedPromiseIcon =
+                packageInstallerCompat.promiseIconAddedForId(info.getSessionId());
         if (TextUtils.isEmpty(info.getAppPackageName())
                 || info.getInstallReason() != PackageManager.INSTALL_REASON_USER
                 || alreadyAddedPromiseIcon) {
             FileLog.d(LOG,
                     String.format(Locale.ENGLISH,
-                            "Removing PromiseIcon for package: %s, install reason: %d,"
+                            "Removing unneeded PromiseIcon for package: %s"
+                                    + ", install reason: %d,"
                                     + " alreadyAddedPromiseIcon: %s",
-                            info.getAppPackageName(),
-                            info.getInstallReason(),
-                            alreadyAddedPromiseIcon));
+                    info.getAppPackageName(),
+                    info.getInstallReason(),
+                    alreadyAddedPromiseIcon
+                )
+            );
             packageInstallerCompat.removePromiseIconId(info.getSessionId());
             return;
         }

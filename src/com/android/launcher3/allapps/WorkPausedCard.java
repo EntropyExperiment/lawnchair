@@ -20,6 +20,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,6 +39,7 @@ import app.lawnchair.theme.color.tokens.ColorTokens;
  */
 public class WorkPausedCard extends LinearLayout implements View.OnClickListener {
 
+    private static final String TAG = "WorkPausedCard";
     private final ActivityContext mActivityContext;
 
     public WorkPausedCard(Context context) {
@@ -78,7 +80,7 @@ public class WorkPausedCard extends LinearLayout implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        setEnabled(false);
+        Log.d(TAG, "WorkPausedCard clicked.");
         mActivityContext.getAppsView().getWorkManager().setWorkProfileEnabled(true);
         mActivityContext.getStatsLogManager().logger().log(LAUNCHER_TURN_ON_WORK_APPS_TAP);
     }

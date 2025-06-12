@@ -20,61 +20,84 @@ import android.app.ActivityThread
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.provider.DeviceConfig
+import android.provider.DeviceConfig.OnPropertiesChangedListener
+import android.provider.DeviceConfig.Properties
 import androidx.annotation.WorkerThread
+import com.android.launcher3.BuildConfig
+import com.android.launcher3.util.Executors
+import java.util.concurrent.CopyOnWriteArrayList
 
 /** Utility class to manage a set of device configurations */
 class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> ConfigType) {
 
     var config: ConfigType
         private set
+
     private val allKeys: Set<String>
+    private val propertiesListener = OnPropertiesChangedListener { onDevicePropsChanges(it) }
     private val sharedPrefChangeListener = OnSharedPreferenceChangeListener { _, _ ->
         recreateConfig()
     }
 
-    private val changeListeners = mutableListOf<Runnable>()
+    private val changeListeners = CopyOnWriteArrayList<Runnable>()
 
+    // Lawnchair-TODO: Investigate propertiesListener due to earlier 14-15-dev branch remove it
     init {
         // Initialize the default config once.
         allKeys = HashSet()
-        config = factory(
-            PropReader(
-                object : PropProvider {
-                    override fun <T : Any> get(key: String, fallback: T): T {
-                        val prefs = prefs
-                        allKeys.add(key)
-                        return when (fallback) {
-                            is Int -> prefs.getInt(key, fallback) as T
-                            is Boolean -> prefs.getBoolean(key, fallback) as T
-                            else -> fallback
+        config =
+            factory(
+                PropReader(
+                    object : PropProvider {
+                        override fun <T : Any> get(key: String, fallback: T): T {
+                            if (fallback is Int) {
+                                allKeys.add(key)
+                                return DeviceConfig.getInt(NAMESPACE_LAUNCHER, key, fallback) as T
+                            } else if (fallback is Boolean) {
+                                allKeys.add(key)
+                                return DeviceConfig.getBoolean(NAMESPACE_LAUNCHER, key, fallback)
+                                    as T
+                            } else return fallback
                         }
                     }
-                }
+                )
             )
-        )
 
-        prefs.registerOnSharedPreferenceChangeListener(sharedPrefChangeListener)
+        DeviceConfig.addOnPropertiesChangedListener(
+            NAMESPACE_LAUNCHER,
+            Executors.UI_HELPER_EXECUTOR,
+            propertiesListener
+        )
+        if (BuildConfig.IS_DEBUG_DEVICE) {
+            prefs.registerOnSharedPreferenceChangeListener(sharedPrefChangeListener)
+        }
     }
 
     @WorkerThread
-    private fun onDevicePropsChanges() {
+    private fun onDevicePropsChanges(properties: Properties) {
+        if (NAMESPACE_LAUNCHER != properties.namespace) return
+        if (!allKeys.any(properties.keyset::contains)) return
         recreateConfig()
     }
 
     private fun recreateConfig() {
-        config = factory(
-            PropReader(
-                object : PropProvider {
-                    override fun <T : Any> get(key: String, fallback: T): T {
-                        return when (fallback) {
-                            is Int -> prefs.getInt(key, fallback) as T
-                            is Boolean -> prefs.getBoolean(key, fallback) as T
-                            else -> fallback
+        val myProps =
+            DeviceConfig.getProperties(NAMESPACE_LAUNCHER, *allKeys.toTypedArray<String>())
+        config =
+            factory(
+                PropReader(
+                    object : PropProvider {
+                        override fun <T : Any> get(key: String, fallback: T): T {
+                            if (fallback is Int) return myProps.getInt(key, fallback) as T
+                            else if (fallback is Boolean)
+                                return myProps.getBoolean(key, fallback) as T
+                            else return fallback
                         }
                     }
-                }
+                )
             )
-        )
+        Executors.MAIN_EXECUTOR.execute { changeListeners.forEach(Runnable::run) }
     }
 
     /** Adds a listener for property changes */
@@ -84,7 +107,10 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
     fun removeChangeListener(r: Runnable) = changeListeners.remove(r)
 
     fun close() {
-        prefs.unregisterOnSharedPreferenceChangeListener(sharedPrefChangeListener)
+        DeviceConfig.removeOnPropertiesChangedListener(propertiesListener)
+        if (BuildConfig.IS_DEBUG_DEVICE) {
+            prefs.unregisterOnSharedPreferenceChangeListener(sharedPrefChangeListener)
+        }
     }
 
     internal interface PropProvider {
@@ -97,7 +123,7 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
         @JvmOverloads
         fun <T : Any> get(key: String, fallback: T, desc: String? = null): T {
             val v = f.get(key, fallback)
-            if (desc != null) {
+            if (BuildConfig.IS_DEBUG_DEVICE && desc != null) {
                 if (v is Int) {
                     allProps[key] = DebugInfo(key, desc, true, fallback)
                     return prefs.getInt(key, v) as T
