@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    buildToolsVersion "36.0.0"
     namespace "com.android.systemui.shared"
     buildFeatures {
         aidl true

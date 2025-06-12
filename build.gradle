@@ -23,10 +23,11 @@ plugins {
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
         android {
-            compileSdk 35
+            buildToolsVersion "36.0.0"
+            compileSdk 36
             defaultConfig {
                 minSdk 26
-                targetSdk 35
+                targetSdk 36
                 vectorDrawables.useSupportLibrary = true
             }
             lint {
@@ -131,8 +132,8 @@ final def ciRef = System.getenv("GITHUB_REF") ?: ""
 final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
-final def version = "15"
-final def releaseName = "Beta 1"
+final def version = "16"
+final def releaseName = "Development 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
@@ -142,9 +143,9 @@ final def quickstepMaxSdk = "35"
 android {
     namespace "com.android.launcher3"
     defaultConfig {
-        // Lawnchair Launcher 15.0 Beta 1
+        // Lawnchair Launcher 16.0 Development 0
         // See CONTRIBUTING.md#versioning-scheme
-        versionCode 15_00_02_01
+        versionCode 16_00_00_00
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
@@ -402,20 +403,24 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.2.1"
     implementation "androidx.palette:palette-ktx:1.0.0"
     implementation "androidx.slice:slice-core:1.1.0-alpha02"
+
     def accompanistVersion = '0.37.3'
     implementation "com.google.accompanist:accompanist-adaptive:$accompanistVersion"
     implementation "com.google.accompanist:accompanist-drawablepainter:$accompanistVersion"
     implementation "com.google.accompanist:accompanist-permissions:$accompanistVersion"
+
     implementation "com.google.android.material:material:1.12.0"
     implementation "io.github.fornewid:material-motion-compose-core:1.2.1"
     implementation 'dev.kdrag0n:colorkt:1.0.5'
     implementation 'io.coil-kt:coil-compose:2.7.0'
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
+
     def optoVersion = "1.0.18"
     implementation "com.patrykmichalik.opto:domain:$optoVersion"
     implementation "com.patrykmichalik.opto:core:$optoVersion"
     implementation "com.patrykmichalik.opto:compose:$optoVersion"
     implementation "androidx.datastore:datastore-preferences:1.1.7"
+
     def retrofitVersion = "3.0.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-kotlinx-serialization:$retrofitVersion"
