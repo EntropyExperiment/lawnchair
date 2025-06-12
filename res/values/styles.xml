@@ -304,7 +304,7 @@
     <style name="WidgetListHeader.Title.Selected" parent="WidgetListHeader.Title">
         <!-- Title / Medium / Emphasized -->
         <item name="android:textFontWeight">
-            @integer/widget_picker_header_selected_app_title_font_weight
+            @integer/widget_picker_header_app_subtitle_font_weight
         </item>
     </style>
 
@@ -319,7 +319,7 @@
     <style name="WidgetListHeader.SubTitle.Selected" parent="WidgetListHeader.SubTitle">
         <!-- Title / Small / Emphasized -->
         <item name="android:textFontWeight">
-            @integer/widget_picker_header_selected_app_subtitle_font_weight
+            @integer/widget_picker_header_app_subtitle_font_weight
         </item>
     </style>
 
