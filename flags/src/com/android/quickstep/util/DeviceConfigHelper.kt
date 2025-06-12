@@ -24,8 +24,6 @@ import android.provider.DeviceConfig
 import android.provider.DeviceConfig.OnPropertiesChangedListener
 import android.provider.DeviceConfig.Properties
 import androidx.annotation.WorkerThread
-import com.android.launcher3.BuildConfig
-import com.android.launcher3.util.Executors
 import java.util.concurrent.CopyOnWriteArrayList
 
 /** Utility class to manage a set of device configurations */
@@ -42,7 +40,6 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
 
     private val changeListeners = CopyOnWriteArrayList<Runnable>()
 
-    // Lawnchair-TODO: Investigate propertiesListener due to earlier 14-15-dev branch remove it
     init {
         // Initialize the default config once.
         allKeys = HashSet()
@@ -63,15 +60,7 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
                     }
                 )
             )
-
-        DeviceConfig.addOnPropertiesChangedListener(
-            NAMESPACE_LAUNCHER,
-            Executors.UI_HELPER_EXECUTOR,
-            propertiesListener
-        )
-        if (BuildConfig.IS_DEBUG_DEVICE) {
-            prefs.registerOnSharedPreferenceChangeListener(sharedPrefChangeListener)
-        }
+        prefs.registerOnSharedPreferenceChangeListener(sharedPrefChangeListener)
     }
 
     @WorkerThread
@@ -97,7 +86,6 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
                     }
                 )
             )
-        Executors.MAIN_EXECUTOR.execute { changeListeners.forEach(Runnable::run) }
     }
 
     /** Adds a listener for property changes */
@@ -108,9 +96,7 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
 
     fun close() {
         DeviceConfig.removeOnPropertiesChangedListener(propertiesListener)
-        if (BuildConfig.IS_DEBUG_DEVICE) {
-            prefs.unregisterOnSharedPreferenceChangeListener(sharedPrefChangeListener)
-        }
+        prefs.unregisterOnSharedPreferenceChangeListener(sharedPrefChangeListener)
     }
 
     internal interface PropProvider {
@@ -123,7 +109,7 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
         @JvmOverloads
         fun <T : Any> get(key: String, fallback: T, desc: String? = null): T {
             val v = f.get(key, fallback)
-            if (BuildConfig.IS_DEBUG_DEVICE && desc != null) {
+            if (desc != null) {
                 if (v is Int) {
                     allProps[key] = DebugInfo(key, desc, true, fallback)
                     return prefs.getInt(key, v) as T
