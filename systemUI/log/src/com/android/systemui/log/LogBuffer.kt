@@ -193,7 +193,7 @@ constructor(
             logcatEchoTracker.isBufferLoggable(name, message.level) ||
                 logcatEchoTracker.isTagLoggable(message.tag, message.level)
 
-        val includeInSystrace = systrace && Trace.isTagEnabled(Trace.TRACE_TAG_APP)
+        val includeInSystrace = systrace && false
 
         if (includeInLogcat || includeInSystrace) {
             val strMessage = message.messagePrinter(message)
@@ -244,11 +244,6 @@ constructor(
     }
 
     private fun echoToSystrace(level: LogLevel, tag: String, strMessage: String) {
-        Trace.instantForTrack(
-            Trace.TRACE_TAG_APP,
-            "UI Events",
-            "$name - ${level.shortString} $tag: $strMessage"
-        )
     }
 
     private fun echoToLogcat(message: LogMessage, strMessage: String) {
