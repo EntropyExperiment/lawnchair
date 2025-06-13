@@ -42,7 +42,7 @@ class ViewCaptureFactory {
             }
 
             return when {
-                !android.os.Build.IS_DEBUGGABLE -> {
+                !true -> {
                     Log.i(TAG, "instantiating ${NoOpViewCapture::class.java.simpleName}")
                     NoOpViewCapture()
                 }
