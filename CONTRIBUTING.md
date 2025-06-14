@@ -34,7 +34,7 @@ For translation, visit [Lawnchair on Crowdin](https://lawnchair.crowdin.com) and
 ### 🧑‍💻 Code
 
 > [!TIP]
-> For Lawnchair 9 to 14, see the branches with the `9-` to `14-` prefixes respectively.
+> For Lawnchair 9 to 15, see the branches with the `9-` to `15-` prefixes respectively.
 
 For code, it's highly recommended that you use [Android Studio](https://developer.android.com/studio),
 know [Java](https://www.java.com) or preferably [Kotlin](https://kotlinlang.org/), and [Git](https://git-scm.com/).
