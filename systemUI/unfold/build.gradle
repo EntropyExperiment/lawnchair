@@ -21,7 +21,7 @@ android {
     }
 }
 
-addFrameworkJar('framework-15.jar')
+addFrameworkJar('framework-16.jar')
 compileOnlyCommonJars()
 
 dependencies {
