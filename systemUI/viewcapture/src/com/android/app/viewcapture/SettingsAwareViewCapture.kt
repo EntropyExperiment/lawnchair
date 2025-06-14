@@ -76,9 +76,10 @@ internal constructor(private val context: Context, executor: Executor)
             val launcherApps = context.getSystemService(LauncherApps::class.java)
             if (mDumpCallback != null) {
                 if (isEnabled) {
-                    launcherApps?.registerDumpCallback(mDumpCallback)
+                    // Lawnchair-TODO-Postmerge: This is not supported in A16?
+                    //launcherApps?.registerDumpCallback(mDumpCallback)
                 } else {
-                    launcherApps?.unRegisterDumpCallback(mDumpCallback)
+                    //launcherApps?.unRegisterDumpCallback(mDumpCallback)
                 }
             }
         }

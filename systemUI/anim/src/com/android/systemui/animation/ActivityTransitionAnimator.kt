@@ -151,7 +151,7 @@ constructor(
             )
 
         // TODO(b/288507023): Remove this flag.
-        @JvmField val DEBUG_TRANSITION_ANIMATION = Build.IS_DEBUGGABLE
+        @JvmField val DEBUG_TRANSITION_ANIMATION = false
 
         /** Durations & interpolators for the navigation bar fading in & out. */
         private const val ANIMATION_DURATION_NAV_FADE_IN = 266L
