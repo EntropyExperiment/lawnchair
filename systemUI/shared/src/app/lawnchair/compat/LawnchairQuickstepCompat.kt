@@ -39,10 +39,6 @@ object LawnchairQuickstepCompat {
     @JvmField
     val ATLEAST_V: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM
 
-    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
-    @JvmField
-    val ATLEAST_BAKLAVA: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
-
     @JvmStatic
     val factory: QuickstepCompatFactory = when {
         ATLEAST_V -> QuickstepCompatFactoryVV()
