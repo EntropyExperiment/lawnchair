@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    buildToolsVersion "36.0.0"
+    buildToolsVersion "35.0.1"
     namespace "com.android.systemui.animation"
     buildFeatures {
         aidl true
