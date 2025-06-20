@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    buildToolsVersion "35.0.1"
     namespace "androidx.dynamicanimation.animation"
     sourceSets {
         main {
