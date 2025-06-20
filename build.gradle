@@ -118,7 +118,7 @@ allprojects {
                 compileOnly projects.compatLib.compatLibVT
                 compileOnly projects.compatLib.compatLibVU
                 compileOnly projects.compatLib.compatLibVV
-                compileOnly projects.compatLib.compatLibVB
+                compileOnly projects.compatLib.compatLibVBaklava
             }
         }
     }
@@ -365,7 +365,7 @@ dependencies {
     withQuickstepImplementation projects.compatLib.compatLibVT
     withQuickstepImplementation projects.compatLib.compatLibVU
     withQuickstepImplementation projects.compatLib.compatLibVV
-    withQuickstepImplementation projects.compatLib.compatLibVB
+    withQuickstepImplementation projects.compatLib.compatLibVBaklava
     withQuickstepImplementation projects.wmshell
     withQuickstepImplementation projects.flags
     implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'

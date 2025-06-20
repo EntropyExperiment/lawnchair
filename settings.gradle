@@ -89,7 +89,7 @@ include ':compatLib:compatLibVS'
 include ':compatLib:compatLibVT'
 include ':compatLib:compatLibVU'
 include ':compatLib:compatLibVV'
-include ':compatLib:compatLibVB'
+include ':compatLib:compatLibVBaklava'
 
 include ':baseline-profile'
 

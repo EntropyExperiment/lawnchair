@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi;
 import app.lawnchair.compatlib.fifteen.ActivityOptionsCompatVV;
 
 @RequiresApi(36)
-public class ActivityOptionsCompatVB extends ActivityOptionsCompatVV {
+public class ActivityOptionsCompatVBaklava extends ActivityOptionsCompatVV {
     @NonNull
     @Override
     public ActivityOptions makeCustomAnimation(

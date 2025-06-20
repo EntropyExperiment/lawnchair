@@ -9,18 +9,18 @@ import app.lawnchair.compatlib.RemoteTransitionCompat;
 import app.lawnchair.compatlib.fifteen.QuickstepCompatFactoryVV;
 
 @RequiresApi(36)
-public class QuickstepCompatFactoryVB extends QuickstepCompatFactoryVV {
+public class QuickstepCompatFactoryVBaklava extends QuickstepCompatFactoryVV {
 
     @NonNull
     @Override
     public ActivityManagerCompat getActivityManagerCompat() {
-        return new ActivityManagerCompatVB();
+        return new ActivityManagerCompatVBaklava();
     }
 
     @NonNull
     @Override
     public ActivityOptionsCompat getActivityOptionsCompat() {
-        return new ActivityOptionsCompatVB();
+        return new ActivityOptionsCompatVBaklava();
     }
 
     @NonNull

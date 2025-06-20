@@ -4,4 +4,4 @@ import androidx.annotation.RequiresApi;
 import app.lawnchair.compatlib.fifteen.ActivityManagerCompatVV;
 
 @RequiresApi(36)
-public class ActivityManagerCompatVB extends ActivityManagerCompatVV {}
+public class ActivityManagerCompatVBaklava extends ActivityManagerCompatVV {}

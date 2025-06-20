@@ -9,7 +9,7 @@ import app.lawnchair.compatlib.RemoteTransitionCompat
 import app.lawnchair.compatlib.eleven.QuickstepCompatFactoryVR
 import app.lawnchair.compatlib.fifteen.QuickstepCompatFactoryVV
 import app.lawnchair.compatlib.fourteen.QuickstepCompatFactoryVU
-import app.lawnchair.compatlib.sixteen.QuickstepCompatFactoryVB
+import app.lawnchair.compatlib.sixteen.QuickstepCompatFactoryVBaklava
 import app.lawnchair.compatlib.ten.QuickstepCompatFactoryVQ
 import app.lawnchair.compatlib.thirteen.QuickstepCompatFactoryVT
 import app.lawnchair.compatlib.twelve.QuickstepCompatFactoryVS
@@ -46,7 +46,7 @@ object LawnchairQuickstepCompat {
 
     @JvmStatic
     val factory: QuickstepCompatFactory = when {
-        ATLEAST_BAKLAVA -> QuickstepCompatFactoryVB()
+        ATLEAST_BAKLAVA -> QuickstepCompatFactoryVBaklava()
         ATLEAST_V -> QuickstepCompatFactoryVV()
         ATLEAST_U -> QuickstepCompatFactoryVU()
         ATLEAST_T -> QuickstepCompatFactoryVT()
