@@ -21,10 +21,12 @@ import static android.view.RemoteAnimationTarget.MODE_CHANGING;
 import static android.view.RemoteAnimationTarget.MODE_CLOSING;
 import static android.view.RemoteAnimationTarget.MODE_OPENING;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
+import static android.view.WindowManager.LayoutParams.LAST_SYSTEM_WINDOW;
 import static android.view.WindowManager.LayoutParams.TYPE_DOCK_DIVIDER;
 import static android.view.WindowManager.TRANSIT_CHANGE;
 import static android.view.WindowManager.TRANSIT_CLOSE;
 import static android.view.WindowManager.TRANSIT_KEYGUARD_GOING_AWAY;
+import static android.view.WindowManager.TRANSIT_PREPARE_BACK_NAVIGATION;
 import static android.view.WindowManager.TRANSIT_OPEN;
 import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
@@ -41,7 +43,6 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.WindowConfiguration;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.ArrayMap;
 import android.util.SparseBooleanArray;
 import android.view.RemoteAnimationTarget;
@@ -55,12 +56,22 @@ import java.util.function.Predicate;
 public class TransitionUtil {
     /** Flag applied to a transition change to identify it as a divider bar for animation. */
     public static final int FLAG_IS_DIVIDER_BAR = FLAG_FIRST_CUSTOM;
+    public static final int FLAG_IS_DIM_LAYER = FLAG_FIRST_CUSTOM << 1;
+
+    /** Flag applied to a transition change to identify it as a desktop wallpaper activity. */
+    public static final int FLAG_IS_DESKTOP_WALLPAPER_ACTIVITY = FLAG_FIRST_CUSTOM << 2;
+
+    /**
+     * Applied to a {@link RemoteAnimationTarget} to identify dim layers for animation in Launcher.
+     */
+    public static final int TYPE_SPLIT_SCREEN_DIM_LAYER = LAST_SYSTEM_WINDOW + 1;
 
     /** @return true if the transition was triggered by opening something vs closing something */
     public static boolean isOpeningType(@WindowManager.TransitionType int type) {
         return type == TRANSIT_OPEN
-                || type == TRANSIT_TO_FRONT
-                || type == TRANSIT_KEYGUARD_GOING_AWAY;
+            || type == TRANSIT_TO_FRONT
+            || type == TRANSIT_KEYGUARD_GOING_AWAY
+            || type == TRANSIT_PREPARE_BACK_NAVIGATION;
     }
 
     /** @return true if the transition was triggered by closing something vs opening something */
@@ -97,15 +108,15 @@ public class TransitionUtil {
     /** Returns `true` if `change` is a wallpaper. */
     public static boolean isWallpaper(TransitionInfo.Change change) {
         return (change.getTaskInfo() == null)
-                && change.hasFlags(FLAG_IS_WALLPAPER)
-                && !change.hasFlags(FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY);
+            && change.hasFlags(FLAG_IS_WALLPAPER)
+            && !change.hasFlags(FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY);
     }
 
     /** Returns `true` if `change` is not an app window or wallpaper. */
     public static boolean isNonApp(TransitionInfo.Change change) {
         return (change.getTaskInfo() == null)
-                && !change.hasFlags(FLAG_IS_WALLPAPER)
-                && !change.hasFlags(FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY);
+            && !change.hasFlags(FLAG_IS_WALLPAPER)
+            && !change.hasFlags(FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY);
     }
 
     /** Returns `true` if `change` is the divider. */
@@ -113,13 +124,58 @@ public class TransitionUtil {
         return isNonApp(change) && change.hasFlags(FLAG_IS_DIVIDER_BAR);
     }
 
+    /** Returns `true` if `change` is an app's dim layer. */
+    public static boolean isDimLayer(TransitionInfo.Change change) {
+        return isNonApp(change) && change.hasFlags(FLAG_IS_DIM_LAYER);
+    }
+
     /** Returns `true` if `change` is only re-ordering. */
     public static boolean isOrderOnly(TransitionInfo.Change change) {
         return change.getMode() == TRANSIT_CHANGE
-                && (change.getFlags() & FLAG_MOVED_TO_TOP) != 0
-                && change.getStartAbsBounds().equals(change.getEndAbsBounds())
-                && (change.getLastParent() == null
-                        || change.getLastParent().equals(change.getParent()));
+            && (change.getFlags() & FLAG_MOVED_TO_TOP) != 0
+            && change.getStartAbsBounds().equals(change.getEndAbsBounds())
+            && (change.getLastParent() == null
+            || change.getLastParent().equals(change.getParent()));
+    }
+
+    /**
+     * Check if all changes in this transition are only ordering changes. If so, we won't animate.
+     */
+    public static boolean isAllOrderOnly(TransitionInfo info) {
+        for (int i = info.getChanges().size() - 1; i >= 0; --i) {
+            if (!isOrderOnly(info.getChanges().get(i))) return false;
+        }
+        return true;
+    }
+
+    /**
+     * Look through a transition and see if all non-closing changes are no-animation. If so, no
+     * animation should play.
+     */
+    public static boolean isAllNoAnimation(TransitionInfo info) {
+        if (isClosingType(info.getType())) {
+            // no-animation is only relevant for launching (open) activities.
+            return false;
+        }
+        boolean hasNoAnimation = false;
+        final int changeSize = info.getChanges().size();
+        for (int i = changeSize - 1; i >= 0; --i) {
+            final TransitionInfo.Change change = info.getChanges().get(i);
+            if (isClosingType(change.getMode())) {
+                // ignore closing apps since they are a side-effect of the transition and don't
+                // animate.
+                continue;
+            }
+            if (change.hasFlags(TransitionInfo.FLAG_NO_ANIMATION)) {
+                hasNoAnimation = true;
+            } else if (!isOrderOnly(change) && !change.hasFlags(TransitionInfo.FLAG_IS_OCCLUDED)) {
+                // Ignore the order only or occluded changes since they shouldn't be visible during
+                // animation. For anything else, we need to animate if at-least one relevant
+                // participant *is* animated,
+                return false;
+            }
+        }
+        return hasNoAnimation;
     }
 
     /**
@@ -162,8 +218,8 @@ public class TransitionUtil {
      */
     @SuppressLint("NewApi")
     private static void setupLeash(@NonNull SurfaceControl leash,
-            @NonNull TransitionInfo.Change change, int layer,
-            @NonNull TransitionInfo info, @NonNull SurfaceControl.Transaction t) {
+        @NonNull TransitionInfo.Change change, int layer,
+        @NonNull TransitionInfo info, @NonNull SurfaceControl.Transaction t) {
         final boolean isOpening = TransitionUtil.isOpeningType(info.getType());
         // Put animating stuff above this line and put static stuff below it.
         int zSplitLine = info.getChanges().size();
@@ -173,9 +229,9 @@ public class TransitionUtil {
         final int rootIdx = TransitionUtil.rootIndexFor(change, info);
         t.reparent(leash, info.getRoot(rootIdx).getLeash());
         final Rect absBounds =
-                (mode == TRANSIT_OPEN) ? change.getEndAbsBounds() : change.getStartAbsBounds();
+            (mode == TRANSIT_OPEN) ? change.getEndAbsBounds() : change.getStartAbsBounds();
         t.setPosition(leash, absBounds.left - info.getRoot(rootIdx).getOffset().x,
-                absBounds.top - info.getRoot(rootIdx).getOffset().y);
+            absBounds.top - info.getRoot(rootIdx).getOffset().y);
 
         if (isDividerBar(change)) {
             if (isOpeningType(mode)) {
@@ -186,6 +242,14 @@ public class TransitionUtil {
             t.setPosition(leash, 0, 0);
             t.setLayer(leash, Integer.MAX_VALUE);
             return;
+        }
+        if (isDimLayer(change)) {
+            // When a dim layer gets reparented onto the transition root, we need to zero out its
+            // position so that it's in line with everything else on the transition root. Also,
+            // we need to set a crop because we don't want it applying MATCH_PARENT on the whole
+            // root surface.
+            t.setPosition(leash, 0, 0);
+            t.setCrop(leash, change.getEndAbsBounds());
         }
 
         // Put all the OPEN/SHOW on top
@@ -222,7 +286,7 @@ public class TransitionUtil {
 
     @SuppressLint("NewApi")
     private static SurfaceControl createLeash(TransitionInfo info, TransitionInfo.Change change,
-            int order, SurfaceControl.Transaction t) {
+        int order, SurfaceControl.Transaction t) {
         // TODO: once we can properly sync transactions across process, then get rid of this leash.
         if (change.getParent() != null && (change.getFlags() & FLAG_IS_WALLPAPER) != 0) {
             // Special case for wallpaper atm. Normally these are left alone; but, a quirk of
@@ -231,23 +295,28 @@ public class TransitionUtil {
         }
         final int rootIdx = TransitionUtil.rootIndexFor(change, info);
         SurfaceControl leashSurface = new SurfaceControl.Builder()
-                .setName(change.getLeash().toString() + "_transition-leash")
-                .setContainerLayer()
-                // Initial the surface visible to respect the visibility of the original surface.
-                .setHidden(false)
-                .setParent(info.getRoot(rootIdx).getLeash())
-                .build();
+            .setName(change.getLeash().toString() + "_transition-leash")
+            .setContainerLayer()
+            // Initial the surface visible to respect the visibility of the original surface.
+            .setHidden(false)
+            .setParent(info.getRoot(rootIdx).getLeash())
+            .build();
         // Copied Transitions setup code (which expects bottom-to-top order, so we swap here)
         setupLeash(leashSurface, change, info.getChanges().size() - order, info, t);
         t.reparent(change.getLeash(), leashSurface);
-        t.setAlpha(change.getLeash(), 1.0f);
-        t.show(change.getLeash());
+        if (!isDimLayer(change)) {
+            // Most leashes going onto the transition root should have their alpha set here to make
+            // them visible. But dim layers should be left untouched (their alpha value is their
+            // actual dim value).
+            t.setAlpha(change.getLeash(), 1.0f);
+        }
         if (!isDividerBar(change)) {
             // For divider, don't modify its inner leash position when creating the outer leash
             // for the transition. In case the position being wrong after the transition finished.
             t.setPosition(change.getLeash(), 0, 0);
         }
         t.setLayer(change.getLeash(), 0);
+        t.show(change.getLeash());
         return leashSurface;
     }
 
@@ -255,8 +324,8 @@ public class TransitionUtil {
      * Creates a new RemoteAnimationTarget from the provided change info
      */
     public static RemoteAnimationTarget newTarget(TransitionInfo.Change change, int order,
-            TransitionInfo info, SurfaceControl.Transaction t,
-            @Nullable ArrayMap<SurfaceControl, SurfaceControl> leashMap) {
+        TransitionInfo info, SurfaceControl.Transaction t,
+        @Nullable ArrayMap<SurfaceControl, SurfaceControl> leashMap) {
         return newTarget(change, order, false /* forceTranslucent */, info, t, leashMap);
     }
 
@@ -264,8 +333,8 @@ public class TransitionUtil {
      * Creates a new RemoteAnimationTarget from the provided change info
      */
     public static RemoteAnimationTarget newTarget(TransitionInfo.Change change, int order,
-            boolean forceTranslucent, TransitionInfo info, SurfaceControl.Transaction t,
-            @Nullable ArrayMap<SurfaceControl, SurfaceControl> leashMap) {
+        boolean forceTranslucent, TransitionInfo info, SurfaceControl.Transaction t,
+        @Nullable ArrayMap<SurfaceControl, SurfaceControl> leashMap) {
         final SurfaceControl leash = createLeash(info, change, order, t);
         if (leashMap != null) {
             leashMap.put(change.getLeash(), leash);
@@ -277,7 +346,7 @@ public class TransitionUtil {
      * Creates a new RemoteAnimationTarget from the provided change and leash
      */
     public static RemoteAnimationTarget newTarget(TransitionInfo.Change change, int order,
-            SurfaceControl leash) {
+        SurfaceControl leash) {
         return newTarget(change, order, leash, false /* forceTranslucent */);
     }
 
@@ -285,9 +354,12 @@ public class TransitionUtil {
      * Creates a new RemoteAnimationTarget from the provided change and leash
      */
     public static RemoteAnimationTarget newTarget(TransitionInfo.Change change, int order,
-            SurfaceControl leash, boolean forceTranslucent) {
+        SurfaceControl leash, boolean forceTranslucent) {
         if (isDividerBar(change)) {
             return getDividerTarget(change, leash);
+        }
+        if (isDimLayer(change)) {
+            return getDimLayerTarget(change, leash);
         }
 
         int taskId;
@@ -310,43 +382,100 @@ public class TransitionUtil {
         localBounds.offsetTo(change.getEndRelOffset().x, change.getEndRelOffset().y);
 
         RemoteAnimationTarget target = new RemoteAnimationTarget(
-                taskId,
-                newModeToLegacyMode(change.getMode()),
-                // TODO: once we can properly sync transactions across process,
-                // then get rid of this leash.
-                leash,
-                forceTranslucent || (change.getFlags() & TransitionInfo.FLAG_TRANSLUCENT) != 0,
-                null,
-                // TODO(shell-transitions): we need to send content insets? evaluate how its used.
-                new Rect(0, 0, 0, 0),
-                order,
-                null,
-                localBounds,
-                new Rect(change.getEndAbsBounds()),
-                windowConfiguration,
-                isNotInRecents,
-                null,
-                new Rect(change.getStartAbsBounds()),
-                taskInfo,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && change.isAllowEnterPip(),
-                INVALID_WINDOW_TYPE
+            taskId,
+            newModeToLegacyMode(change.getMode()),
+            // TODO: once we can properly sync transactions across process,
+            // then get rid of this leash.
+            leash,
+            forceTranslucent || (change.getFlags() & TransitionInfo.FLAG_TRANSLUCENT) != 0,
+            null,
+            // TODO(shell-transitions): we need to send content insets? evaluate how its used.
+            new Rect(0, 0, 0, 0),
+            order,
+            null,
+            localBounds,
+            new Rect(change.getEndAbsBounds()),
+            windowConfiguration,
+            isNotInRecents,
+            null,
+            new Rect(change.getStartAbsBounds()),
+            taskInfo,
+            change.isAllowEnterPip(),
+            INVALID_WINDOW_TYPE
         );
         target.setWillShowImeOnTarget(
-                (change.getFlags() & TransitionInfo.FLAG_WILL_IME_SHOWN) != 0);
+            (change.getFlags() & TransitionInfo.FLAG_WILL_IME_SHOWN) != 0);
         target.setRotationChange(change.getEndRotation() - change.getStartRotation());
         target.backgroundColor = change.getBackgroundColor();
         return target;
     }
 
+    /**
+     * Creates a new RemoteAnimationTarget from the provided change and leash
+     */
+    public static RemoteAnimationTarget newSyntheticTarget(ActivityManager.RunningTaskInfo taskInfo,
+        SurfaceControl leash, @TransitionInfo.TransitionMode int mode, int order,
+        boolean isTranslucent) {
+        int taskId;
+        boolean isNotInRecents;
+        WindowConfiguration windowConfiguration;
+
+        if (taskInfo != null) {
+            taskId = taskInfo.taskId;
+            isNotInRecents = !taskInfo.isRunning;
+            windowConfiguration = taskInfo.configuration.windowConfiguration;
+        } else {
+            taskId = INVALID_TASK_ID;
+            isNotInRecents = true;
+            windowConfiguration = new WindowConfiguration();
+        }
+
+        Rect bounds = windowConfiguration.getBounds();
+        RemoteAnimationTarget target = new RemoteAnimationTarget(
+            taskId,
+            newModeToLegacyMode(mode),
+            // TODO: once we can properly sync transactions across process,
+            // then get rid of this leash.
+            leash,
+            isTranslucent,
+            null,
+            // TODO(shell-transitions): we need to send content insets? evaluate how its used.
+            new Rect(0, 0, 0, 0),
+            order,
+            null,
+            bounds,
+            bounds,
+            windowConfiguration,
+            isNotInRecents,
+            null,
+            bounds,
+            taskInfo,
+            false,
+            INVALID_WINDOW_TYPE
+        );
+        return target;
+    }
+
     private static RemoteAnimationTarget getDividerTarget(TransitionInfo.Change change,
-            SurfaceControl leash) {
+        SurfaceControl leash) {
         return new RemoteAnimationTarget(-1 /* taskId */, newModeToLegacyMode(change.getMode()),
-                leash, false /* isTranslucent */, null /* clipRect */,
-                null /* contentInsets */, Integer.MAX_VALUE /* prefixOrderIndex */,
-                new android.graphics.Point(0, 0) /* position */, change.getStartAbsBounds(),
-                change.getStartAbsBounds(), new WindowConfiguration(), true, null /* startLeash */,
-                null /* startBounds */, null /* taskInfo */, false /* allowEnterPip */,
-                TYPE_DOCK_DIVIDER);
+            leash, false /* isTranslucent */, null /* clipRect */,
+            null /* contentInsets */, Integer.MAX_VALUE /* prefixOrderIndex */,
+            new android.graphics.Point(0, 0) /* position */, change.getStartAbsBounds(),
+            change.getStartAbsBounds(), new WindowConfiguration(), true, null /* startLeash */,
+            null /* startBounds */, null /* taskInfo */, false /* allowEnterPip */,
+            TYPE_DOCK_DIVIDER);
+    }
+
+    private static RemoteAnimationTarget getDimLayerTarget(TransitionInfo.Change change,
+        SurfaceControl leash) {
+        return new RemoteAnimationTarget(-1 /* taskId */, newModeToLegacyMode(change.getMode()),
+            leash, false /* isTranslucent */, null /* clipRect */,
+            null /* contentInsets */, Integer.MAX_VALUE /* prefixOrderIndex */,
+            new android.graphics.Point(0, 0) /* position */, change.getStartAbsBounds(),
+            change.getStartAbsBounds(), new WindowConfiguration(), true, null /* startLeash */,
+            null /* startBounds */, null /* taskInfo */, false /* allowEnterPip */,
+            TYPE_SPLIT_SCREEN_DIM_LAYER);
     }
 
     /**
@@ -355,7 +484,7 @@ public class TransitionUtil {
      * transition. There MUST be at-least 1 root in the transition (ie. it's not a no-op).
      */
     public static int rootIndexFor(@NonNull TransitionInfo.Change change,
-            @NonNull TransitionInfo info) {
+        @NonNull TransitionInfo info) {
         int rootIdx = info.findRootIndex(change.getEndDisplayId());
         if (rootIdx >= 0) return rootIdx;
         rootIdx = info.findRootIndex(change.getStartDisplayId());
@@ -369,7 +498,7 @@ public class TransitionUtil {
      */
     @NonNull
     public static TransitionInfo.Root getRootFor(@NonNull TransitionInfo.Change change,
-            @NonNull TransitionInfo info) {
+        @NonNull TransitionInfo info) {
         return info.getRoot(rootIndexFor(change, info));
     }
 }

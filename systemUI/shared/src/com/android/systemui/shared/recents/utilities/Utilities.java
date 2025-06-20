@@ -16,9 +16,9 @@
 
 package com.android.systemui.shared.recents.utilities;
 
-import static android.app.StatusBarManager.NAVIGATION_HINT_BACK_ALT;
-import static android.app.StatusBarManager.NAVIGATION_HINT_IME_SHOWN;
-import static android.app.StatusBarManager.NAVIGATION_HINT_IME_SWITCHER_SHOWN;
+import static android.app.StatusBarManager.NAVBAR_BACK_DISMISS_IME;
+import static android.app.StatusBarManager.NAVBAR_IME_SWITCHER_BUTTON_VISIBLE;
+import static android.app.StatusBarManager.NAVBAR_IME_VISIBLE;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -113,24 +113,24 @@ public class Utilities {
             case InputMethodService.BACK_DISPOSITION_WILL_NOT_DISMISS:
             case InputMethodService.BACK_DISPOSITION_WILL_DISMISS:
                 if (imeShown) {
-                    hints |= NAVIGATION_HINT_BACK_ALT;
+                    hints |= NAVBAR_BACK_DISMISS_IME;
                 } else {
-                    hints &= ~NAVIGATION_HINT_BACK_ALT;
+                    hints &= ~NAVBAR_BACK_DISMISS_IME;
                 }
                 break;
             case InputMethodService.BACK_DISPOSITION_ADJUST_NOTHING:
-                hints &= ~NAVIGATION_HINT_BACK_ALT;
+                hints &= ~NAVBAR_BACK_DISMISS_IME;
                 break;
         }
         if (imeShown) {
-            hints |= NAVIGATION_HINT_IME_SHOWN;
+            hints |= NAVBAR_IME_VISIBLE;
         } else {
-            hints &= ~NAVIGATION_HINT_IME_SHOWN;
+            hints &= ~NAVBAR_IME_VISIBLE;
         }
         if (showImeSwitcher) {
-            hints |= NAVIGATION_HINT_IME_SWITCHER_SHOWN;
+            hints |= NAVBAR_IME_SWITCHER_BUTTON_VISIBLE;
         } else {
-            hints &= ~NAVIGATION_HINT_IME_SWITCHER_SHOWN;
+            hints &= ~NAVBAR_IME_SWITCHER_BUTTON_VISIBLE;
         }
 
         return hints;

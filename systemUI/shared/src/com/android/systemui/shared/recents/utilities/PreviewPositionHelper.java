@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.android.systemui.shared.recents.model.ThumbnailData;
-import com.android.wm.shell.util.SplitBounds;
+import com.android.wm.shell.shared.split.SplitBounds;
 
 /**
  * Utility class to position the thumbnail in the TaskView
