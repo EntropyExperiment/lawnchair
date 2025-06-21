@@ -5,7 +5,7 @@ To build Lawnchair, you have to build AOSP and obtain these JARs.
 
 ## Usage
 
-Lawnchair rely on these JAR:
+Lawnchair relies on these JARs:
 
 | File                       | Command                 |
 |----------------------------|-------------------------|
