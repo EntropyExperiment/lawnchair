@@ -29,3 +29,5 @@ Location of the generated JARs:
 | SystemUI-StatsD     | ./soong/.intermediates/frameworks/base/packages/SystemUI/shared/SystemUI-statsd/android_common/javac/SystemUI-statsd.jar         |
 | WindowManager-Shell | ./soong/.intermediates/frameworks/base/libs/WindowManager/Shell/WindowManager-Shell/android_common/javac/WindowManager-Shell.jar |
 | SystemUI-Core       | ./soong/.intermediates/frameworks/base/packages/SystemUI/SystemUI-core/android_common/javac/SystemUI-core.jar                    |
+
+Any other JARs not listed here are kept for historical or reference purposes.
