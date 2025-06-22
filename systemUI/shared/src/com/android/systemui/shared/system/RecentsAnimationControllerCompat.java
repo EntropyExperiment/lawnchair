@@ -55,8 +55,8 @@ public class RecentsAnimationControllerCompat {
      * @param overlay the surface control for an overlay being shown above the pip (can be null)
      */
     public void setFinishTaskTransaction(int taskId,
-        PictureInPictureSurfaceTransaction finishTransaction,
-        SurfaceControl overlay) {
+            PictureInPictureSurfaceTransaction finishTransaction,
+            SurfaceControl overlay) {
         try {
             mAnimationController.setFinishTaskTransaction(taskId, finishTransaction, overlay);
         } catch (RemoteException e) {

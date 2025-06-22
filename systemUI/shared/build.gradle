@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    buildToolsVersion "35.0.1"
+    buildToolsVersion "36.0.0"
     namespace "com.android.systemui.shared"
     buildFeatures {
         aidl true
@@ -13,7 +13,7 @@ android {
     sourceSets {
         main {
             java.srcDirs = ['src']
-            aidl.srcDirs = ['src']
+            aidl.srcDirs = ['systemUI/shared/src/com/android/systemui/shared/recents']
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }

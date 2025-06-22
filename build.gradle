@@ -23,7 +23,7 @@ plugins {
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
         android {
-            buildToolsVersion "35.0.1"
+            buildToolsVersion "36.0.0"
             compileSdk 36
             defaultConfig {
                 minSdk 26
@@ -144,9 +144,9 @@ final def quickstepMaxSdk = "36"
 android {
     namespace "com.android.launcher3"
     defaultConfig {
-        // Lawnchair Launcher 16.0 Development 0
+        // Lawnchair Launcher 16.0 Development 0 Release 0
         // See CONTRIBUTING.md#versioning-scheme
-        versionCode 16_00_00_00
+        versionCode 16_00_00_00_00
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""

@@ -98,10 +98,10 @@ public class Task {
 
         public TaskKey(TaskInfo t) {
             ComponentName sourceComponent = t.origActivity != null
-                // Activity alias if there is one
-                ? t.origActivity
-                // The real activity if there is no alias (or the target if there is one)
-                : t.realActivity;
+                    // Activity alias if there is one
+                    ? t.origActivity
+                    // The real activity if there is no alias (or the target if there is one)
+                    : t.realActivity;
             this.id = t.taskId;
             this.windowingMode = t.configuration.windowConfiguration.getWindowingMode();
             this.baseIntent = t.baseIntent;
@@ -117,7 +117,7 @@ public class Task {
         }
 
         public TaskKey(int id, int windowingMode, @NonNull Intent intent,
-            ComponentName sourceComponent, int userId, long lastActiveTime) {
+                ComponentName sourceComponent, int userId, long lastActiveTime) {
             this.id = id;
             this.windowingMode = windowingMode;
             this.baseIntent = intent;
@@ -129,9 +129,9 @@ public class Task {
         }
 
         public TaskKey(int id, int windowingMode, @NonNull Intent intent,
-            ComponentName sourceComponent, int userId, long lastActiveTime, int displayId,
-            @Nullable ComponentName baseActivity, int numActivities,
-            boolean isTopActivityNoDisplay, boolean isActivityStackTransparent) {
+                ComponentName sourceComponent, int userId, long lastActiveTime, int displayId,
+                @Nullable ComponentName baseActivity, int numActivities,
+                boolean isTopActivityNoDisplay, boolean isActivityStackTransparent) {
             this.id = id;
             this.windowingMode = windowingMode;
             this.baseIntent = intent;
@@ -173,8 +173,8 @@ public class Task {
             }
             TaskKey otherKey = (TaskKey) o;
             return id == otherKey.id
-                && windowingMode == otherKey.windowingMode
-                && userId == otherKey.userId;
+                    && windowingMode == otherKey.windowingMode
+                    && userId == otherKey.userId;
         }
 
         @Override
@@ -185,7 +185,7 @@ public class Task {
         @Override
         public String toString() {
             return "id=" + id + " windowingMode=" + windowingMode + " user=" + userId
-                + " lastActiveTime=" + lastActiveTime;
+                    + " lastActiveTime=" + lastActiveTime;
         }
 
         private void updateHashCode() {
@@ -193,17 +193,17 @@ public class Task {
         }
 
         public static final Parcelable.Creator<TaskKey> CREATOR =
-            new Parcelable.Creator<TaskKey>() {
-                @Override
-                public TaskKey createFromParcel(Parcel source) {
-                    return TaskKey.readFromParcel(source);
-                }
+                new Parcelable.Creator<TaskKey>() {
+                    @Override
+                    public TaskKey createFromParcel(Parcel source) {
+                        return TaskKey.readFromParcel(source);
+                    }
 
-                @Override
-                public TaskKey[] newArray(int size) {
-                    return new TaskKey[size];
-                }
-            };
+                    @Override
+                    public TaskKey[] newArray(int size) {
+                        return new TaskKey[size];
+                    }
+                };
 
         @Override
         public final void writeToParcel(Parcel parcel, int flags) {
@@ -234,8 +234,8 @@ public class Task {
             boolean isActivityStackTransparent = parcel.readBoolean();
 
             return new TaskKey(id, windowingMode, baseIntent, sourceComponent, userId,
-                lastActiveTime, displayId, baseActivity, numActivities, isTopActivityNoDisplay,
-                isActivityStackTransparent);
+                    lastActiveTime, displayId, baseActivity, numActivities, isTopActivityNoDisplay,
+                    isActivityStackTransparent);
         }
 
         @Override
@@ -299,14 +299,14 @@ public class Task {
         // Also consider undefined activity type to include tasks in overview right after rebooting
         // the device.
         final boolean isDockable = taskInfo.supportsMultiWindow
-            && ArrayUtils.contains(
-            CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE, taskInfo.getWindowingMode())
-            && (taskInfo.getActivityType() == ACTIVITY_TYPE_UNDEFINED
-            || ArrayUtils.contains(CONTROLLED_ACTIVITY_TYPES, taskInfo.getActivityType()));
+                && ArrayUtils.contains(
+                        CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE, taskInfo.getWindowingMode())
+                && (taskInfo.getActivityType() == ACTIVITY_TYPE_UNDEFINED
+                || ArrayUtils.contains(CONTROLLED_ACTIVITY_TYPES, taskInfo.getActivityType()));
         return new Task(taskKey,
-            td != null ? td.getPrimaryColor() : 0,
-            td != null ? td.getBackgroundColor() : 0, isDockable , isLocked, td,
-            taskInfo.topActivity);
+                td != null ? td.getPrimaryColor() : 0,
+                td != null ? td.getBackgroundColor() : 0, isDockable , isLocked, td,
+                taskInfo.topActivity);
     }
 
     /**
@@ -323,7 +323,7 @@ public class Task {
 
     public Task(Task other) {
         this(other.key, other.colorPrimary, other.colorBackground, other.isDockable,
-            other.isLocked, other.taskDescription, other.topActivity);
+                other.isLocked, other.taskDescription, other.topActivity);
         positionInParent = other.positionInParent;
         appBounds = other.appBounds;
         isVisible = other.isVisible;
@@ -335,8 +335,8 @@ public class Task {
      */
     @Deprecated
     public Task(TaskKey key, int colorPrimary, int colorBackground,
-        boolean isDockable, boolean isLocked, TaskDescription taskDescription,
-        ComponentName topActivity) {
+            boolean isDockable, boolean isLocked, TaskDescription taskDescription,
+            ComponentName topActivity) {
         this.key = key;
         this.colorPrimary = colorPrimary;
         this.colorBackground = colorBackground;
@@ -351,8 +351,8 @@ public class Task {
      */
     public ComponentName getTopComponent() {
         return topActivity != null
-            ? topActivity
-            : key.baseIntent.getComponent();
+                ? topActivity
+                : key.baseIntent.getComponent();
     }
 
     public TaskKey getKey() {
