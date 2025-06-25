@@ -7,7 +7,6 @@ plugins {
 }
 
 android {
-    buildToolsVersion "35.0.1"
     namespace 'app.lawnchair.baseline'
 
     defaultConfig {

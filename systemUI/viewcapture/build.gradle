@@ -5,7 +5,6 @@ plugins {
 }
 
 android {
-    buildToolsVersion "35.0.1"
     namespace "com.android.app.viewcapture"
     sourceSets {
         main {
