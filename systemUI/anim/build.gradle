@@ -1,6 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+}
+
+def frameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
+tasks.withType(KotlinCompile).configureEach {
+    libraries.from(files(frameworkJar))
 }
 
 // TODO: Pull out surfaceeffects outside of src and have separate build files there.
