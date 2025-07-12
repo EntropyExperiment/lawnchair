@@ -45,7 +45,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.updateLayoutParams
 import com.android.app.animation.Interpolators
-import com.android.app.tracing.traceSection
 import com.android.launcher3.AbstractFloatingView
 import com.android.launcher3.Flags.enableCursorHoverStates
 import com.android.launcher3.Flags.enableDesktopExplodedView
@@ -785,8 +784,7 @@ constructor(
             ?.inflate()
     }
 
-    override fun onAttachedToWindow() =
-        traceSection("TaskView.onAttachedToWindow") {
+    override fun onAttachedToWindow() = {
             super.onAttachedToWindow()
             if (enableRefactorTaskThumbnail()) {
                 // The TaskView lifecycle is starts the ViewModel during onBind, and cleans it in
@@ -799,8 +797,7 @@ constructor(
             }
         }
 
-    private fun updateTaskViewState(state: TaskTileUiState) =
-        traceSection("TaskView.updateTaskViewState") {
+    private fun updateTaskViewState(state: TaskTileUiState) = {
             sysUiStatusNavFlags = state.sysUiStatusNavFlags
 
             // Updating containers
@@ -882,8 +879,7 @@ constructor(
         container: TaskContainer,
         width: Int,
         height: Int,
-    ): ThumbnailPosition? =
-        traceSection("TaskView.updateThumbnailMatrix") {
+    ): ThumbnailPosition? = {
             val thumbnailPosition =
                 viewModel?.getThumbnailPosition(container.thumbnailData, width, height, isLayoutRtl)
                     ?: return null
@@ -891,8 +887,7 @@ constructor(
             return thumbnailPosition
         }
 
-    override fun onDetachedFromWindow() =
-        traceSection("TaskView.onDetachedFromWindow") {
+    override fun onDetachedFromWindow() = {
             super.onDetachedFromWindow()
             if (enableRefactorTaskThumbnail()) {
                 // The jobs are being cancelled in the background thread. So we make a copy of the
@@ -901,10 +896,8 @@ constructor(
                 val coroutineJobsToCancel = coroutineJobs.toList()
                 coroutineJobs.clear()
                 coroutineScope.launch(dispatcherProvider.background) {
-                    traceSection("TaskView.onDetachedFromWindow.cancellingJobs") {
-                        coroutineJobsToCancel.forEach {
-                            it.cancel("TaskView detaching from window")
-                        }
+                    coroutineJobsToCancel.forEach {
+                        it.cancel("TaskView detaching from window")
                     }
                 }
             }
@@ -933,24 +926,21 @@ constructor(
         onBind(orientedState)
     }
 
-    protected open fun onBind(orientedState: RecentsOrientedState) =
-        traceSection("TaskView.onBind") {
-            traceSection("TaskView.onBind.createViewModel") {
-                if (enableRefactorTaskThumbnail()) {
-                    val scopeId = context
-                    Log.d(TAG, "onBind $scopeId ${orientedState.containerInterface}")
-                    viewModel =
-                        TaskViewModel(
-                                taskViewType = type,
-                                recentsViewData = RecentsDependencies.get(scopeId),
-                                getTaskUseCase = RecentsDependencies.get(scopeId),
-                                getSysUiStatusNavFlagsUseCase = RecentsDependencies.get(scopeId),
-                                isThumbnailValidUseCase = RecentsDependencies.get(scopeId),
-                                getThumbnailPositionUseCase = RecentsDependencies.get(scopeId),
-                                dispatcherProvider = RecentsDependencies.get(scopeId),
-                            )
-                            .apply { bind(*taskIds) }
-                }
+    protected open fun onBind(orientedState: RecentsOrientedState) = {
+            if (enableRefactorTaskThumbnail()) {
+                val scopeId = context
+                Log.d(TAG, "onBind $scopeId ${orientedState.containerInterface}")
+                viewModel =
+                    TaskViewModel(
+                            taskViewType = type,
+                            recentsViewData = RecentsDependencies.get(scopeId),
+                            getTaskUseCase = RecentsDependencies.get(scopeId),
+                            getSysUiStatusNavFlagsUseCase = RecentsDependencies.get(scopeId),
+                            isThumbnailValidUseCase = RecentsDependencies.get(scopeId),
+                            getThumbnailPositionUseCase = RecentsDependencies.get(scopeId),
+                            dispatcherProvider = RecentsDependencies.get(scopeId),
+                        )
+                        .apply { bind(*taskIds) }
             }
 
             taskContainers.forEach { container ->
@@ -991,8 +981,7 @@ constructor(
         @IdRes digitalWellbeingBannerId: Int,
         @StagePosition stagePosition: Int,
         taskOverlayFactory: TaskOverlayFactory,
-    ): TaskContainer =
-        traceSection("TaskView.createTaskContainer") {
+    ): TaskContainer = {
             val iconView = findViewById<View>(iconViewId) as TaskViewIcon
             return TaskContainer(
                 this,
@@ -1018,8 +1007,7 @@ constructor(
     /** Check if given `taskId` is tracked in this view */
     fun containsTaskId(taskId: Int) = getTaskContainerById(taskId) != null
 
-    open fun setOrientationState(orientationState: RecentsOrientedState) =
-        traceSection("TaskView.setOrientationState") {
+    open fun setOrientationState(orientationState: RecentsOrientedState) = {
             this.orientedState = orientationState
             taskContainers.forEach { it.iconView.setIconOrientation(orientationState, isGridTask) }
             setThumbnailOrientation(orientationState)
@@ -1170,16 +1158,14 @@ constructor(
     protected open fun needsUpdate(@TaskDataChanges dataChange: Int, @TaskDataChanges flag: Int) =
         (dataChange and flag) == flag
 
-    protected open fun cancelPendingLoadTasks() =
-        traceSection("TaskView.cancelPendingLoadTasks") {
+    protected open fun cancelPendingLoadTasks() = {
             pendingThumbnailLoadRequests.forEach { it.cancel() }
             pendingThumbnailLoadRequests.clear()
             pendingIconLoadRequests.forEach { it.cancel() }
             pendingIconLoadRequests.clear()
         }
 
-    protected open fun setIconState(container: TaskContainer, state: TaskData?) =
-        traceSection("TaskView.setIconState") {
+    protected open fun setIconState(container: TaskContainer, state: TaskData?) = {
             if (enableOverviewIconMenu()) {
                 if (state is TaskData.Data) {
                     setIcon(container.iconView, state.icon)

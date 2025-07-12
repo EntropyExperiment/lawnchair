@@ -21,7 +21,6 @@ import android.graphics.Matrix
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import com.android.app.tracing.traceSection
 import com.android.launcher3.Flags.enableOverviewIconMenu
 import com.android.launcher3.Flags.enableRefactorTaskThumbnail
 import com.android.launcher3.model.data.TaskViewItemInfo
@@ -100,16 +99,14 @@ class TaskContainer(
     val itemInfo: TaskViewItemInfo
         get() = TaskViewItemInfo(taskView, this)
 
-    fun bind() =
-        traceSection("TaskContainer.bind") {
+    fun bind() = {
             digitalWellBeingToast?.bind(task, taskView, snapshotView, stagePosition)
             if (!enableRefactorTaskThumbnail()) {
                 thumbnailViewDeprecated.bind(task, overlay, taskView)
             }
         }
 
-    fun destroy() =
-        traceSection("TaskContainer.destroy") {
+    fun destroy() = {
             digitalWellBeingToast?.destroy()
             snapshotView.scaleX = 1f
             snapshotView.scaleY = 1f
@@ -143,8 +140,7 @@ class TaskContainer(
         }
     }
 
-    fun refreshOverlay(thumbnailPosition: ThumbnailPosition?) =
-        traceSection("TaskContainer.refreshOverlay") {
+    fun refreshOverlay(thumbnailPosition: ThumbnailPosition?) = {
             this.thumbnailPosition = thumbnailPosition
             when {
                 !overlayEnabledStatus -> overlay.reset()
@@ -175,8 +171,7 @@ class TaskContainer(
         liveTile: Boolean,
         hasHeader: Boolean,
         clickCloseListener: OnClickListener?,
-    ) =
-        traceSection("TaskContainer.setState") {
+    ) = {
             thumbnailView.setState(
                 TaskUiStateMapper.toTaskThumbnailUiState(
                     state,

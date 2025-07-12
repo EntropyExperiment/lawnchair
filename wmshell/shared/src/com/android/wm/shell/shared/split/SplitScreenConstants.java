@@ -64,9 +64,9 @@ public class SplitScreenConstants {
      * respectively. For now they can be used interchangeably, the underlying ints are the same.
      */
     @IntDef(prefix = {"SPLIT_POSITION_"}, value = {
-        SPLIT_POSITION_UNDEFINED,
-        SPLIT_POSITION_TOP_OR_LEFT,
-        SPLIT_POSITION_BOTTOM_OR_RIGHT,
+            SPLIT_POSITION_UNDEFINED,
+            SPLIT_POSITION_TOP_OR_LEFT,
+            SPLIT_POSITION_BOTTOM_OR_RIGHT,
     })
     public @interface SplitPosition {
     }
@@ -81,11 +81,11 @@ public class SplitScreenConstants {
     public static final int SPLIT_INDEX_3 = 3;
 
     @IntDef(prefix = {"SPLIT_INDEX_"}, value = {
-        SPLIT_INDEX_UNDEFINED,
-        SPLIT_INDEX_0,
-        SPLIT_INDEX_1,
-        SPLIT_INDEX_2,
-        SPLIT_INDEX_3
+            SPLIT_INDEX_UNDEFINED,
+            SPLIT_INDEX_0,
+            SPLIT_INDEX_1,
+            SPLIT_INDEX_2,
+            SPLIT_INDEX_3
     })
     public @interface SplitIndex {
     }
@@ -163,14 +163,14 @@ public class SplitScreenConstants {
      * {@link SnapPosition}.
      */
     @IntDef(prefix = { "SNAP_TO_" }, value = {
-        SNAP_TO_2_33_66,
-        SNAP_TO_2_50_50,
-        SNAP_TO_2_66_33,
-        SNAP_TO_2_90_10,
-        SNAP_TO_2_10_90,
-        SNAP_TO_3_33_33_33,
-        SNAP_TO_3_45_45_10,
-        SNAP_TO_3_10_45_45,
+            SNAP_TO_2_33_66,
+            SNAP_TO_2_50_50,
+            SNAP_TO_2_66_33,
+            SNAP_TO_2_90_10,
+            SNAP_TO_2_10_90,
+            SNAP_TO_3_33_33_33,
+            SNAP_TO_3_45_45_10,
+            SNAP_TO_3_10_45_45,
     })
     public @interface PersistentSnapPosition {}
 
@@ -179,16 +179,16 @@ public class SplitScreenConstants {
      * {@link PersistentSnapPosition} + {@link #NOT_IN_SPLIT}.
      */
     @IntDef(value = {
-        NOT_IN_SPLIT, // user is not in split screen
-        SNAP_TO_NONE, // in "free snap mode," where apps are fully resizable
-        SNAP_TO_2_33_66,
-        SNAP_TO_2_50_50,
-        SNAP_TO_2_66_33,
-        SNAP_TO_2_90_10,
-        SNAP_TO_2_10_90,
-        SNAP_TO_3_33_33_33,
-        SNAP_TO_3_45_45_10,
-        SNAP_TO_3_10_45_45,
+            NOT_IN_SPLIT, // user is not in split screen
+            SNAP_TO_NONE, // in "free snap mode," where apps are fully resizable
+            SNAP_TO_2_33_66,
+            SNAP_TO_2_50_50,
+            SNAP_TO_2_66_33,
+            SNAP_TO_2_90_10,
+            SNAP_TO_2_10_90,
+            SNAP_TO_3_33_33_33,
+            SNAP_TO_3_45_45_10,
+            SNAP_TO_3_10_45_45,
     })
     public @interface SplitScreenState {}
 
@@ -214,13 +214,13 @@ public class SplitScreenConstants {
      */
     public static boolean isPersistentSnapPosition(@SnapPosition int snapPosition) {
         return snapPosition == SNAP_TO_2_33_66
-            || snapPosition == SNAP_TO_2_50_50
-            || snapPosition == SNAP_TO_2_66_33
-            || snapPosition == SNAP_TO_2_90_10
-            || snapPosition == SNAP_TO_2_10_90
-            || snapPosition == SNAP_TO_3_33_33_33
-            || snapPosition == SNAP_TO_3_45_45_10
-            || snapPosition == SNAP_TO_3_10_45_45;
+                || snapPosition == SNAP_TO_2_50_50
+                || snapPosition == SNAP_TO_2_66_33
+                || snapPosition == SNAP_TO_2_90_10
+                || snapPosition == SNAP_TO_2_10_90
+                || snapPosition == SNAP_TO_3_33_33_33
+                || snapPosition == SNAP_TO_3_45_45_10
+                || snapPosition == SNAP_TO_3_10_45_45;
     }
 
     /** The divider doesn't snap to any target and is freely placeable. */
@@ -236,18 +236,18 @@ public class SplitScreenConstants {
     public static final int SNAP_TO_MINIMIZE = 13;
 
     @IntDef(prefix = { "SNAP_TO_" }, value = {
-        SNAP_TO_2_33_66,
-        SNAP_TO_2_50_50,
-        SNAP_TO_2_66_33,
-        SNAP_TO_2_90_10,
-        SNAP_TO_2_10_90,
-        SNAP_TO_3_33_33_33,
-        SNAP_TO_3_45_45_10,
-        SNAP_TO_3_10_45_45,
-        SNAP_TO_NONE,
-        SNAP_TO_START_AND_DISMISS,
-        SNAP_TO_END_AND_DISMISS,
-        SNAP_TO_MINIMIZE,
+            SNAP_TO_2_33_66,
+            SNAP_TO_2_50_50,
+            SNAP_TO_2_66_33,
+            SNAP_TO_2_90_10,
+            SNAP_TO_2_10_90,
+            SNAP_TO_3_33_33_33,
+            SNAP_TO_3_45_45_10,
+            SNAP_TO_3_10_45_45,
+            SNAP_TO_NONE,
+            SNAP_TO_START_AND_DISMISS,
+            SNAP_TO_END_AND_DISMISS,
+            SNAP_TO_MINIMIZE,
     })
     public @interface SnapPosition {}
 
@@ -255,9 +255,9 @@ public class SplitScreenConstants {
 
     public static final int[] CONTROLLED_ACTIVITY_TYPES = {ACTIVITY_TYPE_STANDARD};
     public static final int[] CONTROLLED_WINDOWING_MODES =
-        {WINDOWING_MODE_FULLSCREEN, WINDOWING_MODE_UNDEFINED};
+            {WINDOWING_MODE_FULLSCREEN, WINDOWING_MODE_UNDEFINED};
     public static final int[] CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE =
-        {WINDOWING_MODE_FULLSCREEN, WINDOWING_MODE_UNDEFINED, WINDOWING_MODE_MULTI_WINDOW,
+            {WINDOWING_MODE_FULLSCREEN, WINDOWING_MODE_UNDEFINED, WINDOWING_MODE_MULTI_WINDOW,
             WINDOWING_MODE_FREEFORM};
 
     /** Flag applied to a transition change to identify it as a divider bar for animation. */

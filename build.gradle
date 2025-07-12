@@ -19,6 +19,14 @@ plugins {
     id 'com.diffplug.spotless' version '7.0.4'
 }
 
+// LC-Build-TODO: addFrameworkJar() doesn't work, what???
+def localFrameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
+tasks.withType(JavaCompile).configureEach {
+    classpath = files(localFrameworkJar)
+}
+tasks.withType(KotlinCompile).configureEach {
+    libraries.from(files(localFrameworkJar))
+}
 
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
@@ -389,6 +397,10 @@ dependencies {
 
     implementation "androidx.recyclerview:recyclerview:1.4.0"
     implementation "androidx.preference:preference-ktx:1.2.1"
+
+    implementation "androidx.graphics:graphics-core:1.0.3"
+    implementation "androidx.graphics:graphics-path:1.0.1"
+    implementation "androidx.graphics:graphics-shapes:1.1.0-alpha01"
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1'
