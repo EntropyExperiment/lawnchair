@@ -390,10 +390,10 @@ class TransitionAnimator(
             // frame time immediately, but if we're not inside a frame this will throw an exception.
             // We must then post a callback to be run at the beginning of the next frame.
             try {
-                initAndStartSprings(JavaClassToKotlin.getInstanceFrameTime)
+                initAndStartSprings(Choreographer.getInstance().frameTime)
             } catch (_: IllegalStateException) {
                 Choreographer.getInstance().postFrameCallback { frameTimeNanos ->
-                    initAndStartSprings(frameTimeNanos / JavaClassToKotlin.NANOS_PER_MS)
+                    initAndStartSprings(frameTimeNanos / TimeUtils.NANOS_PER_MS)
                 }
             }
         }

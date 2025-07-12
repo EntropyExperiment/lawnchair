@@ -28,7 +28,6 @@ import com.android.app.animation.Interpolators
 import com.android.internal.dynamicanimation.animation.DynamicAnimation
 import com.android.internal.dynamicanimation.animation.FlingAnimation
 import com.android.internal.dynamicanimation.animation.FloatValueHolder
-import com.android.systemui.animation.JavaClassToKotlin
 import com.android.window.flags.Flags.predictiveBackTimestampApi
 
 private const val FLING_FRICTION = 6f
@@ -144,7 +143,7 @@ abstract class FlingOnBackAnimationCallback(
                         it.start()
                         // do an animation-frame immediately to prevent idle frame
                         it.doAnimationFrame(
-                            JavaClassToKotlin.lastFrameTimeNanos / JavaClassToKotlin.NANOS_PER_MS
+                            Choreographer.getInstance().lastFrameTimeNanos / TimeUtils.NANOS_PER_MS
                         )
                     }
         } else {

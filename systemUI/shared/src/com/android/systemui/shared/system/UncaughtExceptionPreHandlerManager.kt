@@ -28,14 +28,7 @@ class UncaughtExceptionPreHandlerManager @Inject constructor() {
      * Verifies that the global handler is set in Thread. If not, sets is up.
      */
     private fun checkGlobalHandlerSetup() {
-        val currentHandler = Thread.getUncaughtExceptionPreHandler()
-        if (currentHandler != globalUncaughtExceptionPreHandler) {
-            if (currentHandler is GlobalUncaughtExceptionHandler) {
-                throw IllegalStateException("Two UncaughtExceptionPreHandlerManagers created")
-            }
-            currentHandler?.let { addHandler(it) }
-            Thread.setUncaughtExceptionPreHandler(globalUncaughtExceptionPreHandler)
-        }
+        // LC-Ignored
     }
 
     /**

@@ -43,11 +43,10 @@ import android.view.SyncRtSurfaceTransactionApplier
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-//import android.view.WindowManager.TRANSIT_CLOSE
-//import android.view.WindowManager.TRANSIT_OPEN
-//import android.view.WindowManager.TRANSIT_TO_BACK
-//import android.view.WindowManager.TRANSIT_TO_FRONT
-import com.android.systemui.animation.JavaClassToKotlin
+import android.view.WindowManager.TRANSIT_CLOSE
+import android.view.WindowManager.TRANSIT_OPEN
+import android.view.WindowManager.TRANSIT_TO_BACK
+import android.view.WindowManager.TRANSIT_TO_FRONT
 import android.view.animation.PathInterpolator
 import android.window.IRemoteTransition
 import android.window.IRemoteTransitionFinishedCallback
@@ -185,7 +184,7 @@ constructor(
             TIMINGS.copy(contentBeforeFadeOutDuration = 200L, contentAfterFadeInDelay = 200L)
 
         /** The interpolators when animating a View or a dialog into an app. */
-        val INTERPOLATORS =
+        public val INTERPOLATORS =
             TransitionAnimator.Interpolators(
                 positionInterpolator = Interpolators.EMPHASIZED,
                 positionXInterpolator = Interpolators.EMPHASIZED_COMPLEMENT,
@@ -351,9 +350,9 @@ constructor(
         // Only animate if the app is not already on top and will be opened, unless we are on the
         // keyguard.
         val willAnimate =
-            launchResult == JavaClassToKotlin.START_TASK_TO_FRONT ||
-                launchResult == JavaClassToKotlin.START_SUCCESS ||
-                (launchResult == JavaClassToKotlin.START_DELIVERED_TO_TOP &&
+            launchResult == ActivityManager.START_TASK_TO_FRONT ||
+                launchResult == ActivityManager.START_SUCCESS ||
+                (launchResult == ActivityManager.START_DELIVERED_TO_TOP &&
                     hideKeyguardWithAnimation)
 
         Log.i(
@@ -461,12 +460,12 @@ constructor(
         // we only want ephemeral return animations triggered in these scenarios.
         val filter =
             TransitionFilter().apply {
-                mTypeSet = intArrayOf(JavaClassToKotlin.TRANSIT_CLOSE, JavaClassToKotlin.TRANSIT_TO_BACK)
+                mTypeSet = intArrayOf(TRANSIT_CLOSE, TRANSIT_TO_BACK)
                 mRequirements =
                     arrayOf(
                         TransitionFilter.Requirement().apply {
                             mLaunchCookie = launchController.transitionCookie
-                            mModes = intArrayOf(JavaClassToKotlin.TRANSIT_CLOSE, JavaClassToKotlin.TRANSIT_TO_BACK)
+                            mModes = intArrayOf(TRANSIT_CLOSE, TRANSIT_TO_BACK)
                         }
                     )
             }
@@ -744,7 +743,7 @@ constructor(
                     arrayOf(
                         TransitionFilter.Requirement().apply {
                             mActivityType = WindowConfiguration.ACTIVITY_TYPE_STANDARD
-                            mModes = intArrayOf(JavaClassToKotlin.TRANSIT_OPEN, JavaClassToKotlin.TRANSIT_TO_FRONT)
+                            mModes = intArrayOf(TRANSIT_OPEN, TRANSIT_TO_FRONT)
                             mTopActivity = component
                         }
                     )
@@ -765,12 +764,12 @@ constructor(
                     arrayOf(
                         TransitionFilter.Requirement().apply {
                             mActivityType = WindowConfiguration.ACTIVITY_TYPE_STANDARD
-                            mModes = intArrayOf(JavaClassToKotlin.TRANSIT_CLOSE, JavaClassToKotlin.TRANSIT_TO_BACK)
+                            mModes = intArrayOf(TRANSIT_CLOSE, TRANSIT_TO_BACK)
                             mTopActivity = component
                         },
                         TransitionFilter.Requirement().apply {
                             mActivityType = WindowConfiguration.ACTIVITY_TYPE_HOME
-                            mModes = intArrayOf(JavaClassToKotlin.TRANSIT_CLOSE, JavaClassToKotlin.TRANSIT_TO_BACK)
+                            mModes = intArrayOf(TRANSIT_CLOSE, TRANSIT_TO_BACK)
                         },
                     )
             }
@@ -920,8 +919,14 @@ constructor(
                     t.setAlpha(target.leash, 1f)
 
                     if (
-                        TransitionUtil.isClosingType(change.mode) &&
-                            taskInfo?.topActivityType != WindowConfiguration.ACTIVITY_TYPE_HOME
+                        TransitionUtil.isClosingType(change.mode)
+                        // Lawnchair-TOOD:
+                        // TODO:
+                        //  Disabled because of kotlin compiler dependency conflict
+                        //  In other word:
+                        //  You can't use feature from
+                        //  framework.jar and android.jar (SDK) at the same time
+                        //&& taskInfo?.topActivityType != WindowConfiguration.ACTIVITY_TYPE_HOME
                     ) {
                         // Raise closing task to "above" layer so it isn't covered.
                         t.setLayer(target.leash, aboveLayers - i)
@@ -1283,7 +1288,7 @@ constructor(
             if (controller.windowAnimatorState == null || !longLivedReturnAnimationsEnabled()) {
                 val navigationBar =
                     nonApps?.firstOrNull {
-                        it.windowType == JavaClassToKotlin.TYPE_NAVIGATION_BAR
+                        it.windowType == WindowManager.LayoutParams.TYPE_NAVIGATION_BAR
                     }
 
                 startAnimation(window, navigationBar, iCallback = callback)
@@ -1390,12 +1395,13 @@ constructor(
                             // candidate contains the matching cookie, or a component is also
                             // defined and is a match.
                             if (
-                                controller.transitionCookie != null &&
-                                    it.taskInfo
-                                        ?.launchCookies
-                                        ?.contains(controller.transitionCookie) != true &&
-                                    (controller.component == null ||
-                                        it.taskInfo?.topActivity != controller.component)
+                                // Lawnchair-TODO-Merge-High: Make private API accessible to kotlinc
+                                controller.transitionCookie != null //&&
+                                    //it.taskInfo
+                                        //?.launchCookies
+                                        //?.contains(controller.transitionCookie) != true &&
+                                    //(controller.component == null ||
+                                        //it.taskInfo?.topActivity != controller.component)
                             ) {
                                 continue
                             }
@@ -1485,9 +1491,9 @@ constructor(
             // additional problems when the view lives in the Status Bar.
             // TODO(b/397646693): remove this exception.
             val isEligibleForReparenting = controller.isLaunching
-            val viewRoot = controller.transitionContainer.viewRootImpl
+            //val viewRoot = controller.transitionContainer.viewRootImpl
             val skipReparenting =
-                skipReparentTransaction || !window.leash.isValid || viewRoot == null
+                skipReparentTransaction || !window.leash.isValid //|| viewRoot == null
             if (moveTransitionAnimationLayer() && isEligibleForReparenting && !skipReparenting) {
                 reparent = true
             }
@@ -1564,10 +1570,10 @@ constructor(
                             // so it is not obstructed.
                             // TODO(b/397180418): re-use the start transaction once the
                             //  RemoteAnimation wrapper is cleaned up.
-                            SurfaceControl.Transaction().use {
-                                it.reparent(window.leash, viewRoot.surfaceControl)
-                                it.apply()
-                            }
+                            //SurfaceControl.Transaction().use {
+                            //    it.reparent(window.leash, viewRoot.surfaceControl)
+                            //    it.apply()
+                            //}
                         }
 
                         if (startTransaction != null) {
@@ -1659,7 +1665,7 @@ constructor(
             useSpring: Boolean,
             transaction: SurfaceControl.Transaction? = null,
         ) {
-            if (transactionApplierView.viewRootImpl == null || !window.leash.isValid) {
+            if (transactionApplierView == null || !window.leash.isValid) {
                 // Don't apply any transaction if the view root we synchronize with was detached or
                 // if the SurfaceControl associated with [window] is not valid, as
                 // [SyncRtSurfaceTransactionApplier.scheduleApply] would otherwise throw.
@@ -1790,7 +1796,7 @@ constructor(
             state: TransitionAnimator.State,
             linearProgress: Float,
         ) {
-            if (transactionApplierView.viewRootImpl == null || !navigationBar.leash.isValid) {
+            if (transactionApplierView == null || !navigationBar.leash.isValid) {
                 // Don't apply any transaction if the view root we synchronize with was detached or
                 // if the SurfaceControl associated with [navigationBar] is not valid, as
                 // [SyncRtSurfaceTransactionApplier.scheduleApply] would otherwise throw.

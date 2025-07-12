@@ -1,8 +1,20 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
 }
+
+// LC-Build-TODO: addFrameworkJar() doesn't work, what???
+def frameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
+tasks.withType(JavaCompile).configureEach {
+    classpath = files(frameworkJar, classpath)
+}
+tasks.withType(KotlinCompile).configureEach {
+    libraries.from(files(frameworkJar))
+}
+compileOnlyCommonJars()
 
 android {
     buildToolsVersion "36.0.0"

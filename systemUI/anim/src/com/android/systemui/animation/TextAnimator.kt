@@ -30,8 +30,6 @@ import android.util.LruCache
 import androidx.annotation.VisibleForTesting
 import com.android.app.animation.Interpolators
 
-import com.android.systemui.animation.JavaClassToKotlin
-
 typealias GlyphCallback = (TextAnimator.PositionedGlyph, Float) -> Unit
 
 interface TypefaceVariantCache {

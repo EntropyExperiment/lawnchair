@@ -23,7 +23,6 @@ import android.window.BackEvent
 import android.window.OnBackAnimationCallback
 import android.window.OnBackInvokedDispatcher
 import com.android.app.animation.Interpolators
-import com.android.systemui.animation.JavaClassToKotlin
 
 /**
  * Generates an [OnBackAnimationCallback] given a [backAnimationSpec]. [onBackProgressed] will be
@@ -80,7 +79,7 @@ fun onBackAnimationCallbackFrom(
 fun View.registerOnBackInvokedCallbackOnViewAttached(
     onBackInvokedDispatcher: OnBackInvokedDispatcher,
     onBackAnimationCallback: OnBackAnimationCallback,
-    @JavaClassToKotlin.Priority @IntRange(from = 0) priority: Int = OnBackInvokedDispatcher.PRIORITY_DEFAULT,
+    @OnBackInvokedDispatcher.Priority @IntRange(from = 0) priority: Int = OnBackInvokedDispatcher.PRIORITY_DEFAULT,
 ) {
     addOnAttachStateChangeListener(
         object : View.OnAttachStateChangeListener {
