@@ -9,7 +9,7 @@ plugins {
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
 def frameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
 tasks.withType(JavaCompile).configureEach {
-    classpath = files(frameworkJar, classpath)
+    classpath = files(frameworkJar)
 }
 tasks.withType(KotlinCompile).configureEach {
     libraries.from(files(frameworkJar))
@@ -45,6 +45,7 @@ dependencies {
     compileOnly projects.plugincore
     compileOnly projects.flags
     compileOnly projects.wmshell
+    compileOnly projects.animationlib
 
     implementation "com.google.dagger:hilt-android:$daggerVersion"
     ksp "com.google.dagger:hilt-compiler:$daggerVersion"
