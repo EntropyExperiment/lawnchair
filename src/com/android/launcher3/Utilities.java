@@ -149,6 +149,10 @@ public final class Utilities {
     public static final boolean ATLEAST_V = Build.VERSION.SDK_INT
             >= VERSION_CODES.VANILLA_ICE_CREAM;
 
+    @ChecksSdkIntAtLeast(api = VERSION_CODES.BAKLAVA)
+    public static final boolean ATLEAST_BAKLAVA = Build.VERSION.SDK_INT
+        >= VERSION_CODES.BAKLAVA;
+
     /**
      * Set on a motion event dispatched from the nav bar. See {@link MotionEvent#setEdgeFlags(int)}.
      */
