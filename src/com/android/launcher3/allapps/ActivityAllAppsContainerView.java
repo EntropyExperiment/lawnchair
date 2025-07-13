@@ -334,8 +334,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         };
         if (Flags.allAppsBlur()) {
             // Lawnchair-TODO-Colour-M3E: Colour A1800, A1100
-            int resId = Utilities.isDarkTheme(getContext())
-                    ? android.R.color.system_accent1_800 : android.R.color.system_accent1_100;
+            int resId = ColorTokens.ExpressiveAllApps.resolveColor(getContext());
             int layerAbove = ColorUtils.setAlphaComponent(getResources().getColor(resId, null),
                     (int) (0.4f * 255));
             int layerBelow = ColorUtils.setAlphaComponent(Color.WHITE, (int) (0.1f * 255));

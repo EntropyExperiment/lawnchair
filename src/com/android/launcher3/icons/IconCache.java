@@ -35,6 +35,8 @@ import android.content.pm.PackageInstaller;
 import android.content.pm.ShortcutInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Looper;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -167,10 +169,12 @@ public class IconCache extends BaseIconCache {
     public synchronized void updateIconsForPkg(@NonNull final String packageName,
             @NonNull final UserHandle user) {
         List<LauncherActivityInfo> apps = mLauncherApps.getActivityList(packageName, user);
-        if (Flags.restoreArchivedAppIconsFromDb()
-                && apps.stream().anyMatch(app -> app.getApplicationInfo().isArchived)) {
-            // When archiving app icon, don't delete old icon so it can be re-used.
-            return;
+        if (Utilities.ATLEAST_V) {
+            if (Flags.restoreArchivedAppIconsFromDb()
+                    && apps.stream().anyMatch(app -> app.getApplicationInfo().isArchived)) {
+                // When archiving app icon, don't delete old icon so it can be re-used.
+                return;
+            }
         }
         removeIconsForPkg(packageName, user);
         long userSerial = mUserManager.getSerialNumberForUser(user);

@@ -36,6 +36,7 @@ object ColorTokens {
     val Accent1_500 = SwatchColorToken(Swatch.Accent1, Shade.S500)
     val Accent1_600 = SwatchColorToken(Swatch.Accent1, Shade.S600)
     val Accent1_700 = SwatchColorToken(Swatch.Accent1, Shade.S700)
+    val Accent1_800 = SwatchColorToken(Swatch.Accent1, Shade.S800)
     val Accent1_900 = SwatchColorToken(Swatch.Accent1, Shade.S900)
 
     val Accent2_50 = SwatchColorToken(Swatch.Accent2, Shade.S50)
@@ -148,12 +149,17 @@ object ColorTokens {
 
     @JvmField val WidgetAddButtonBackgroundColor = PrimaryButton
 
+    @JvmField val PredictedPlateColor = Accent1_300
+
     val SwitchThumbOn = Accent1_100
     val SwitchThumbOff = DayNightColorToken(Neutral2_300, Neutral1_400)
     val SwitchThumbDisabled = DayNightColorToken(Neutral2_100, Neutral1_700)
 
     val SwitchTrackOn = DayNightColorToken(Accent1_600, Accent2_500.setLStar(51.0))
     val SwitchTrackOff = DayNightColorToken(Neutral2_500.setLStar(45.0), Neutral1_700)
+
+    // Material 3 Expressive
+    @JvmField val ExpressiveAllApps = DayNightColorToken(Accent1_100, Accent1_800)
 }
 
 @Composable

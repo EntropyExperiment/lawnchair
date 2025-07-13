@@ -28,6 +28,8 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -135,8 +137,11 @@ public class WorkUtilityView extends LinearLayout implements Insettable,
         mWorkUtilityView = findViewById(R.id.work_utility_view);
         setSelected(true);
         KeyboardInsetAnimationCallback keyboardInsetAnimationCallback =
-                new KeyboardInsetAnimationCallback(this);
-        setWindowInsetsAnimationCallback(keyboardInsetAnimationCallback);
+            null;
+        if (Utilities.ATLEAST_R) {
+            keyboardInsetAnimationCallback = new KeyboardInsetAnimationCallback(this);
+            setWindowInsetsAnimationCallback(keyboardInsetAnimationCallback);
+        }
         // Expand is the default state upon initialization.
         addFlag(FLAG_IS_EXPAND);
         setInsets(mActivityContext.getDeviceProfile().getInsets());
