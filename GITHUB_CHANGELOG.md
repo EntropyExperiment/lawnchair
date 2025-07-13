@@ -1,5 +1,24 @@
-Lawnchair 16 Development 0 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 Development 0 SNAPSHOT 2 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
+
+### Snapshot 3 (Upcoming)
+
+* Finish correctly implementing all Dagger functions (?)
+
+### Snapshot 2
+
+This is a developer-focused change log:
+
+This snapshot milestone marked the first time Lawnchair now able to compile all supplementary 
+modules, `src` + `lawn` will be in Snapshot 5 or Development 1 milestone.
+
+* Merge flags
+* Fix some issues with launcher3 sources.
+* A temporary workaround with framworks.jar not adding in anim module.
+* Shared not having access to animationlib.
+* **Switch from javac variant to turbine-combined variant for prebuilt SystemUI-core-16**.
+
+### From Initial snapshot 0 and 1
 
 This is a developer-focused change log:
 * Prebuilt updated to Android 16-0.0_r2 (Android 16.0.0 Release 2)
