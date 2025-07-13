@@ -161,8 +161,8 @@ public class InvariantDeviceProfile {
     public float[] iconTextSize;
     public int iconBitmapSize;
     public int fillResIconDpi;
-    public @DeviceType int deviceType;
-    public Info displayInfo;
+    public static @DeviceType int deviceType;
+    public static Info displayInfo;
 
     public PointF[] minCellSize;
 
@@ -250,7 +250,7 @@ public class InvariantDeviceProfile {
     /**
      * Fixed landscape mode is the landscape on the phones.
      */
-    public boolean isFixedLandscape = false;
+    public static boolean isFixedLandscape = false;
 
     @GridType
     public int gridType;
@@ -736,7 +736,7 @@ public class InvariantDeviceProfile {
     /**
      * @return all the grid options that can be shown on the device
      */
-    public List<GridOption> parseAllGridOptions(Context context) {
+    public static List<GridOption> parseAllGridOptions(Context context) {
         return parseAllDefinedGridOptions(context, displayInfo)
                 .stream()
                 .filter(go -> go.isEnabled(deviceType))
