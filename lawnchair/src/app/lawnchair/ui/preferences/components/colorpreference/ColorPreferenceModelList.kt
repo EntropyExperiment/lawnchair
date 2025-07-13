@@ -2,9 +2,12 @@ package app.lawnchair.ui.preferences.components.colorpreference
 
 import android.content.Context
 import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.util.MainThreadInitializedObject
 import com.android.launcher3.R
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.util.DaggerSingletonObject
 
+@LauncherAppSingleton
 class ColorPreferenceModelList(context: Context) {
     private val models = mutableMapOf<String, ColorPreferenceModel>()
 
@@ -68,6 +71,6 @@ class ColorPreferenceModelList(context: Context) {
     }
 
     companion object {
-        val INSTANCE = MainThreadInitializedObject(::ColorPreferenceModelList)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getColorPreferenceModelList)
     }
 }

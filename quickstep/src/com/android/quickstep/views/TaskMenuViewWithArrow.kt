@@ -30,7 +30,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import app.lawnchair.theme.color.tokens.ColorTokens
-import com.android.launcher3.BaseDraggingActivity
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.InsettableFrameLayout
 import com.android.launcher3.R

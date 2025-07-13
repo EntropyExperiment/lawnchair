@@ -24,11 +24,14 @@ import app.lawnchair.font.FontCache
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 
+@LauncherAppSingleton
 class PreferenceManager private constructor(private val context: Context) :
     BasePreferenceManager(context),
     SafeCloseable {
@@ -149,7 +152,7 @@ class PreferenceManager private constructor(private val context: Context) :
         private const val CURRENT_VERSION = 2
 
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::PreferenceManager)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getPreferenceManager)
 
         @JvmStatic
         fun getInstance(context: Context) = INSTANCE.get(context)!!

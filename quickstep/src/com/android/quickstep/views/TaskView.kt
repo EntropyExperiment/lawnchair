@@ -879,7 +879,7 @@ constructor(
         container: TaskContainer,
         width: Int,
         height: Int,
-    ): ThumbnailPosition? = {
+    ): ThumbnailPosition? {
             val thumbnailPosition =
                 viewModel?.getThumbnailPosition(container.thumbnailData, width, height, isLayoutRtl)
                     ?: return null

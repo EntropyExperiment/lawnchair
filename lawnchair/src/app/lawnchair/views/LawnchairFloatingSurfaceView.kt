@@ -40,6 +40,7 @@ import com.android.launcher3.Utilities
 import com.android.launcher3.util.Executors
 import com.android.launcher3.util.MultiPropertyFactory
 import com.android.launcher3.util.window.RefreshRateTracker
+import com.android.launcher3.util.window.RefreshRateTracker.Companion.getSingleFrameMs
 import com.android.launcher3.views.FloatingIconView.getLocationBoundsForView
 import com.android.launcher3.views.FloatingIconViewCompanion.setPropertiesVisible
 import java.util.function.Consumer
@@ -218,11 +219,13 @@ class LawnchairFloatingSurfaceView @JvmOverloads constructor(
             duration = CONTENT_SCALE_DURATION.toLong() * 2
             interpolator = Interpolators.DECELERATE_2
             onEnd?.let {
-                addListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        it()
-                    }
-                })
+                addListener(
+                    object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            it()
+                        }
+                    },
+                )
             }
         }
     }
@@ -409,11 +412,13 @@ class LawnchairFloatingSurfaceView @JvmOverloads constructor(
             val launcherContentAnimator: Pair<AnimatorSet?, Runnable?> =
                 view.getLauncherContentAnimator(startDelay)
             anim.playTogether(launcherContentAnimator.first, view.getBackgroundAnimator())
-            anim.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    launcherContentAnimator.second!!.run()
-                }
-            })
+            anim.addListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        launcherContentAnimator.second!!.run()
+                    }
+                },
+            )
 
             view.removeViewImmediate()
             launcher.dragLayer.addView(view)

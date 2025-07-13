@@ -412,27 +412,32 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
      */
     fun notifyTaskbarAutohideSuspend(suspend: Boolean) =
         executeWithErrorLog({ "Failed call notifyTaskbarAutohideSuspend with arg: $suspend" }) {
-            systemUiProxy?.notifyTaskbarAutohideSuspend(suspend)
+            // LC-Ignored
+            //systemUiProxy?.notifyTaskbarAutohideSuspend(suspend)
         }
 
     fun takeScreenshot(request: ScreenshotRequest) =
         executeWithErrorLog({ "Failed call takeScreenshot" }) {
-            systemUiProxy?.takeScreenshot(request)
+            // LC-Ignored
+            //systemUiProxy?.takeScreenshot(request)
         }
 
     fun expandNotificationPanel() =
         executeWithErrorLog({ "Failed call expandNotificationPanel" }) {
-            systemUiProxy?.expandNotificationPanel()
+            // LC-Ignored
+            //systemUiProxy?.expandNotificationPanel()
         }
 
     fun toggleNotificationPanel() =
         executeWithErrorLog({ "Failed call toggleNotificationPanel" }) {
-            systemUiProxy?.toggleNotificationPanel()
+            // LC-Ignored
+            //systemUiProxy?.toggleNotificationPanel()
         }
 
     fun toggleQuickSettingsPanel() =
         executeWithErrorLog({ "Failed call toggleQuickSettingsPanel" }) {
-            systemUiProxy?.toggleQuickSettingsPanel()
+            // LC-Ignored
+            //systemUiProxy?.toggleQuickSettingsPanel()
         }
 
     //
@@ -954,10 +959,11 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
         controller: ILauncherUnlockAnimationController?,
     ) {
         executeWithErrorLog({ "Failed call setLauncherUnlockAnimationController" }) {
-            sysuiUnlockAnimationController?.apply {
-                setLauncherUnlockController(activityClass, controller)
-                controller?.dispatchSmartspaceStateToSysui()
-            }
+            // LC-Ignored
+//            sysuiUnlockAnimationController?.apply {
+//                setLauncherUnlockController(activityClass, controller)
+//                controller?.dispatchSmartspaceStateToSysui()
+//            }
         }
         launcherActivityClass = activityClass
         launcherUnlockAnimationController = controller
@@ -969,7 +975,8 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
      */
     fun notifySysuiSmartspaceStateUpdated(state: SmartspaceState?) =
         executeWithErrorLog({ "Failed call notifySysuiSmartspaceStateUpdated" }) {
-            sysuiUnlockAnimationController?.onLauncherSmartspaceStateUpdated(state)
+            // LC-Ignored
+            //sysuiUnlockAnimationController?.onLauncherSmartspaceStateUpdated(state)
         }
 
     //
@@ -1212,7 +1219,8 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
                 RecentsAnimationListenerStub(listener),
             )
                 ?: run {
-                    ActiveGestureProtoLogProxy.logRecentTasksMissing()
+                    // LC-Ignored
+                    //ActiveGestureProtoLogProxy.logRecentTasksMissing()
                     return false
                 }
             return true

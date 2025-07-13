@@ -28,7 +28,6 @@ import android.window.TransitionInfo
 import androidx.annotation.BinderThread
 import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
-import com.android.app.tracing.traceSection
 import com.android.internal.jank.Cuj
 import com.android.launcher3.Flags.enableAltTabKqsOnConnectedDisplays
 import com.android.launcher3.Flags.enableLargeDesktopWindowingTile
@@ -53,8 +52,6 @@ import com.android.quickstep.OverviewCommandHelper.CommandType.SHOW
 import com.android.quickstep.OverviewCommandHelper.CommandType.TOGGLE
 import com.android.quickstep.fallback.window.RecentsDisplayModel
 import com.android.quickstep.fallback.window.RecentsWindowFlags.Companion.enableOverviewInWindow
-import com.android.quickstep.util.ActiveGestureLog
-import com.android.quickstep.util.ActiveGestureProtoLogProxy
 import com.android.quickstep.views.RecentsView
 import com.android.quickstep.views.TaskView
 import com.android.systemui.shared.recents.model.ThumbnailData
@@ -178,12 +175,11 @@ constructor(
      * completion (returns false).
      */
     @UiThread
-    private fun processNextCommand(): Unit =
-        traceSection("OverviewCommandHelper.processNextCommand") {
+    private fun processNextCommand() {
             val command: CommandInfo? = commandQueue.firstOrNull()
             if (command == null) {
                 Log.d(TAG, "no pending commands to be executed.")
-                return@traceSection
+                return
             }
 
             command.status = CommandStatus.PROCESSING
@@ -191,12 +187,10 @@ constructor(
 
             if (enableOverviewCommandHelperTimeout()) {
                 coroutineScope.launch(dispatcherProvider.main) {
-                    traceSection("OverviewCommandHelper.executeCommandWithTimeout") {
-                        withTimeout(QUEUE_WAIT_DURATION_IN_MS) {
-                            executeCommandSuspended(command)
-                            ensureActive()
-                            onCommandFinished(command)
-                        }
+                    withTimeout(QUEUE_WAIT_DURATION_IN_MS) {
+                        executeCommandSuspended(command)
+                        ensureActive()
+                        onCommandFinished(command)
                     }
                 }
             } else {
@@ -389,7 +383,7 @@ constructor(
                 }
 
             HOME -> {
-                ActiveGestureProtoLogProxy.logExecuteHomeCommand()
+                //ActiveGestureProtoLogProxy.logExecuteHomeCommand()
                 // Although IActivityTaskManager$Stub$Proxy.startActivity is a slow binder call,
                 // we should still call it on main thread because launcher is waiting for
                 // ActivityTaskManager to resume it. Also calling startActivity() on bg thread
@@ -502,9 +496,9 @@ constructor(
             recentsDisplayModel.getTaskAnimationManager(command.displayId)
                 ?: run {
                     Log.e(TAG, "No TaskAnimationManager found for display ${command.displayId}")
-                    ActiveGestureProtoLogProxy.logOnTaskAnimationManagerNotAvailable(
-                        command.displayId
-                    )
+                    //ActiveGestureProtoLogProxy.logOnTaskAnimationManagerNotAvailable(
+                    //    command.displayId
+                    //)
                     return false
                 }
         if (taskAnimationManager.isRecentsAnimationRunning) {
@@ -518,16 +512,17 @@ constructor(
             command.addListener(recentAnimListener)
             taskAnimationManager.notifyRecentsAnimationState(recentAnimListener)
         } else {
+            // LC-TODO: What name to put in intent here?
             val intent =
                 Intent(interactionHandler.getLaunchIntent())
-                    .putExtra(ActiveGestureLog.INTENT_EXTRA_LOG_TRACE_ID, gestureState.gestureId)
+                    .putExtra("Something", gestureState.gestureId)
             command.setAnimationCallbacks(
                 taskAnimationManager.startRecentsAnimation(gestureState, intent, interactionHandler)
             )
             interactionHandler.onGestureStarted(false /*isLikelyToStartNewTask*/)
             command.addListener(recentAnimListener)
         }
-        Trace.beginAsyncSection(TRANSITION_NAME, 0)
+        //Trace.beginAsyncSection(TRANSITION_NAME, 0)
         Log.d(TAG, "switching via recents animation - onGestureStarted: $command")
         return false
     }

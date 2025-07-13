@@ -25,12 +25,15 @@ import android.graphics.Region
 import android.graphics.drawable.AdaptiveIconDrawable
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.Utilities
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.icons.GraphicsUtils
 import com.android.launcher3.icons.IconProvider
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import com.patrykmichalik.opto.core.firstBlocking
 
+@LauncherAppSingleton
 class IconShapeManager(private val context: Context) : SafeCloseable {
 
     private val systemIconShape = getSystemShape()
@@ -91,7 +94,7 @@ class IconShapeManager(private val context: Context) : SafeCloseable {
 
     companion object {
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::IconShapeManager)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getIconShapeManager)
 
         fun getSystemIconShape(context: Context) = INSTANCE.get(context).systemIconShape
 

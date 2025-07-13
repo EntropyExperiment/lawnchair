@@ -8,7 +8,9 @@ import app.lawnchair.ui.preferences.PreferenceActivity
 import app.lawnchair.ui.preferences.navigation.Smartspace
 import app.lawnchair.util.dropWhileBusy
 import com.android.launcher3.R
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,6 +18,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 
+@LauncherAppSingleton
 class SmartspaceProvider private constructor(context: Context) : SafeCloseable {
 
     val dataSources = listOf(
@@ -71,6 +74,6 @@ class SmartspaceProvider private constructor(context: Context) : SafeCloseable {
     }
 
     companion object {
-        @JvmField val INSTANCE = MainThreadInitializedObject(::SmartspaceProvider)
+        @JvmField val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getSmartspaceProvider)
     }
 }

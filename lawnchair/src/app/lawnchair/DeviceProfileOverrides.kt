@@ -1,18 +1,23 @@
 package app.lawnchair
 
 import android.content.Context
-import app.lawnchair.preferences.PreferenceManager
-import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.preferences2.firstBlocking
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.InvariantDeviceProfile.INDEX_LANDSCAPE
 import com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_LANDSCAPE
 import com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_PORTRAIT
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+
+import app.lawnchair.preferences.PreferenceManager
+import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstBlocking
+
 import com.patrykmichalik.opto.core.firstBlocking
 
+@LauncherAppSingleton
 class DeviceProfileOverrides(context: Context) : SafeCloseable {
     private val prefs = PreferenceManager.getInstance(context)
     private val preferenceManager2 = PreferenceManager2.getInstance(context)
@@ -147,6 +152,6 @@ class DeviceProfileOverrides(context: Context) : SafeCloseable {
 
     companion object {
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::DeviceProfileOverrides)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getDPO)
     }
 }

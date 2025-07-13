@@ -22,7 +22,6 @@ import app.lawnchair.override.CustomizeAppDialog
 import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.views.ComposeBottomSheet
 import com.android.launcher3.AbstractFloatingView
-import com.android.launcher3.BaseDraggingActivity
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_APPLICATION
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_TASK
 import com.android.launcher3.R
@@ -33,8 +32,10 @@ import com.android.launcher3.model.data.ItemInfo
 import com.android.launcher3.popup.SystemShortcut
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.PackageManagerHelper
-import com.patrykmichalik.opto.core.firstBlocking
+import com.android.launcher3.views.ActivityContext
 import java.net.URISyntaxException
+
+import com.patrykmichalik.opto.core.firstBlocking
 
 class LawnchairShortcut {
 
@@ -57,7 +58,7 @@ class LawnchairShortcut {
         }
 
         val UNINSTALL =
-            SystemShortcut.Factory { activity: BaseDraggingActivity, itemInfo: ItemInfo, view: View ->
+            SystemShortcut.Factory { activity: ActivityContext, itemInfo: ItemInfo, view: View ->
                 if (itemInfo.targetComponent == null) {
                     return@Factory null
                 }
@@ -164,8 +165,8 @@ class LawnchairShortcut {
         }
     }
 
-    class UnInstall(private var target: BaseDraggingActivity?, private var itemInfo: ItemInfo?, originalView: View?) :
-        SystemShortcut<BaseDraggingActivity>(
+    class UnInstall(private var target: ActivityContext?, private var itemInfo: ItemInfo?, originalView: View?) :
+        SystemShortcut<ActivityContext>(
             R.drawable.ic_uninstall_no_shadow,
             R.string.uninstall_drop_target_label,
             target,

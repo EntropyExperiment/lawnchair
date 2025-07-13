@@ -56,10 +56,12 @@ import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.graphics.IconShape as L3IconShape
 import com.android.launcher3.util.ComponentKey
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.DynamicResource
-import com.android.launcher3.util.MainThreadInitializedObject
 import com.android.launcher3.util.SafeCloseable
 import com.patrykmichalik.opto.core.PreferenceManager
 import com.patrykmichalik.opto.core.firstBlocking
@@ -72,6 +74,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
+@LauncherAppSingleton
 class PreferenceManager2 private constructor(private val context: Context) :
     PreferenceManager,
     SafeCloseable {
@@ -790,7 +793,7 @@ class PreferenceManager2 private constructor(private val context: Context) :
         )
 
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::PreferenceManager2)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getPreferenceManager2)
 
         @JvmStatic
         fun getInstance(context: Context) = INSTANCE.get(context)!!

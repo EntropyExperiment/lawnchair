@@ -275,7 +275,7 @@ public class LauncherWidgetHolder {
         }
     }
 
-    private void handleInvalidWidgetId(BaseDraggingActivity activity, int widgetId, int requestCode) {
+    private void handleInvalidWidgetId(BaseActivity activity, int widgetId, int requestCode) {
         // Remove the invalid widget
         deleteAppWidgetId(widgetId);
 

@@ -16,14 +16,14 @@
 
 package com.android.launcher3.taskbar.bubbles.flyout
 
+import android.animation.ValueAnimator
 import android.graphics.Rect
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.animation.ValueAnimator
+import androidx.core.animation.addListener
 import com.android.app.animation.InterpolatorsAndroidX
 import com.android.launcher3.R
-import com.android.systemui.util.addListener
 
 /** Creates and manages the visibility of the [BubbleBarFlyoutView]. */
 class BubbleBarFlyoutController
