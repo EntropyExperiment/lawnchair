@@ -62,6 +62,8 @@ import com.android.launcher3.util.SafeCloseable;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.DoubleShadowBubbleTextView;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
+
 /**
  * A BubbleTextView with a ring around it's drawable
  */
@@ -198,7 +200,7 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
     public void applyIconAndLabel(ItemInfoWithIcon info) {
         super.applyIconAndLabel(info);
         if (getIcon().isThemed()) {
-            mPlateColor.endColor = getResources().getColor(android.R.color.system_accent1_300);
+            mPlateColor.endColor = ColorTokens.PredictedPlateColor.resolveColor(getContext());
         } else {
             float[] hctPlateColor = new float[3];
             ColorUtils.colorToM3HCT(mDotParams.appColor, hctPlateColor);
