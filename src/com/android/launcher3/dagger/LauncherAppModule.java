@@ -16,7 +16,9 @@
 
 package com.android.launcher3.dagger;
 
+import android.content.Context;
 import dagger.Module;
+import dagger.Provides;
 
 @Module(includes = {
         WindowManagerProxyModule.class,
@@ -27,4 +29,9 @@ import dagger.Module;
         AppModule.class
 })
 public class LauncherAppModule {
+    @Provides
+    @LauncherAppSingleton
+    public Context provideContext(@ApplicationContext Context context) {
+        return context;
+    }
 }

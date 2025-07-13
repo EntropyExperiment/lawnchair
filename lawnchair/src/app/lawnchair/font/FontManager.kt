@@ -12,14 +12,18 @@ import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.util.lookupLifecycleOwner
 import app.lawnchair.util.runOnMainThread
 import com.android.launcher3.R
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @LauncherAppSingleton
-class FontManager private constructor(private val context: Context) : SafeCloseable {
+class FontManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : SafeCloseable {
 
     private val fontCache = FontCache.INSTANCE.get(context)
 

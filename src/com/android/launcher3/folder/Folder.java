@@ -405,11 +405,6 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         });
     }
 
-            mLauncherDelegate.beginDragShared(v, this, options);
-        }
-        return true;
-    }
-
     @Override
     public void onDragStart(DropTarget.DragObject dragObject, DragOptions options) {
         if (dragObject.dragSource != this) {

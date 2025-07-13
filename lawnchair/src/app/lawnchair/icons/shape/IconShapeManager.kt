@@ -25,6 +25,7 @@ import android.graphics.Region
 import android.graphics.drawable.AdaptiveIconDrawable
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.Utilities
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.icons.GraphicsUtils
@@ -32,9 +33,12 @@ import com.android.launcher3.icons.IconProvider
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import com.patrykmichalik.opto.core.firstBlocking
+import javax.inject.Inject
 
 @LauncherAppSingleton
-class IconShapeManager(private val context: Context) : SafeCloseable {
+class IconShapeManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : SafeCloseable {
 
     private val systemIconShape = getSystemShape()
 

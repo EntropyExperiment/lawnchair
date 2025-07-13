@@ -10,10 +10,12 @@ import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.content.edit
 import com.android.launcher3.Utilities
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.awaitClose
@@ -26,7 +28,9 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.plus
 
 @LauncherAppSingleton
-class HeadlessWidgetsManager(private val context: Context) : SafeCloseable {
+class HeadlessWidgetsManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : SafeCloseable {
 
     private val scope = MainScope() + CoroutineName("HeadlessWidgetsManager")
     private val prefs = Utilities.getDevicePrefs(context)

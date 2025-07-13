@@ -17,6 +17,10 @@ plugins {
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
     id 'com.diffplug.spotless' version '7.0.4'
+
+    // Thanks Dagger!
+    id 'org.jetbrains.kotlin.kapt' version '2.2.0'
+    id 'com.google.dagger.hilt.android' version '2.56.2'
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -407,6 +411,12 @@ dependencies {
     implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
     implementation 'dev.rikka.tools.refine:runtime:4.4.0'
 
+    implementation 'javax.inject:javax.inject:1'
+
+    kapt 'com.google.dagger:dagger-compiler:2.55'
+    implementation "com.google.dagger:hilt-android:2.56.2"
+    ksp "com.google.dagger:hilt-compiler:2.56.2"
+
     implementation platform("androidx.compose:compose-bom:2025.06.01")
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-util"
@@ -476,6 +486,7 @@ ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.generateKotlin", "true")
     arg("room.incremental", "true")
+    arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
 }
 
 

@@ -9,14 +9,18 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.lawnchair.ui.preferences.data.liveinfo.model.AnnouncementId
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
 import com.android.launcher3.R
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.patrykmichalik.opto.core.PreferenceManager
+import javax.inject.Inject
 import kotlinx.serialization.json.Json
 
 @LauncherAppSingleton
-class LiveInformationManager private constructor(context: Context) : PreferenceManager {
+class LiveInformationManager@Inject constructor(
+    @ApplicationContext private val context: Context,
+) : PreferenceManager {
 
     companion object {
         private val Context.preferencesDataStore by preferencesDataStore(

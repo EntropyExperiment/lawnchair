@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.service.notification.StatusBarNotification
 import app.lawnchair.util.checkPackagePermission
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.notification.NotificationListener
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +19,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @LauncherAppSingleton
-class NotificationManager(@Suppress("UNUSED_PARAMETER") context: Context) : SafeCloseable {
+class NotificationManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : SafeCloseable {
 
     private val scope = MainScope()
     private val notificationsMap = mutableMapOf<String, StatusBarNotification>()

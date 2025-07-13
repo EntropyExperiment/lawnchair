@@ -21,10 +21,12 @@ import android.content.Context
 import android.content.res.Resources
 import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.util.toArrayList
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +35,9 @@ import kotlinx.coroutines.flow.first
 import org.json.JSONObject
 
 @LauncherAppSingleton
-class GoogleFontsListing private constructor(private val context: Context) : SafeCloseable {
+class GoogleFontsListing @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : SafeCloseable {
     private val scope = CoroutineScope(CoroutineName("GoogleFontsListing"))
 
     private val dataProvider = MockDataProvider(context.resources)

@@ -56,9 +56,10 @@ import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
+import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
-import com.android.launcher3.graphics.IconShape as L3IconShape
+import com.android.launcher3.graphics.ThemeManager as L3ThemeManager
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.DynamicResource
@@ -66,6 +67,7 @@ import com.android.launcher3.util.SafeCloseable
 import com.patrykmichalik.opto.core.PreferenceManager
 import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.core.setBlocking
+import javax.inject.Inject
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -75,8 +77,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @LauncherAppSingleton
-class PreferenceManager2 private constructor(private val context: Context) :
-    PreferenceManager,
+class PreferenceManager2 @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : PreferenceManager,
     SafeCloseable {
 
     private val scope = MainScope()
@@ -737,7 +740,7 @@ class PreferenceManager2 private constructor(private val context: Context) :
             .distinctUntilChanged()
             .onEach { shape ->
                 initializeIconShape(shape)
-                L3IconShape.INSTANCE.get(context)
+                L3ThemeManager.INSTANCE.get(context)
                 LauncherAppState.getInstance(context).reloadIcons()
             }
             .launchIn(scope)
