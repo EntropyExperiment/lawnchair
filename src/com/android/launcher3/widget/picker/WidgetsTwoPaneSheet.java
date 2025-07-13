@@ -379,7 +379,9 @@ public class WidgetsTwoPaneSheet extends WidgetsFullSheet {
                 // is likely a programmatic header click.
                 if (mSelectedHeader != null && !mOpenCloseAnimation.getAnimationPlayer().isRunning()
                         && !getAccessibilityInitialFocusView().isAccessibilityFocused()) {
-                    mRightPaneScrollView.setAccessibilityPaneTitle(suggestionsRightPaneTitle);
+                    if (Utilities.ATLEAST_P) {
+                        mRightPaneScrollView.setAccessibilityPaneTitle(suggestionsRightPaneTitle);
+                    }
                     focusOnFirstWidgetCell(mWidgetRecommendationsView);
                 }
                 // If switching from another header, unselect any WidgetCells. This is necessary
