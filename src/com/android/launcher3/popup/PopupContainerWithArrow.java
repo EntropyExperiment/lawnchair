@@ -19,6 +19,7 @@ package com.android.launcher3.popup;
 import static android.multiuser.Flags.enableMovingContentIntoPrivateSpace;
 
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_SHORTCUTS;
+import static com.android.launcher3.Utilities.ATLEAST_P;
 import static com.android.launcher3.Utilities.squaredHypot;
 import static com.android.launcher3.Utilities.squaredTouchSlop;
 import static com.android.launcher3.allapps.AlphabeticalAppsList.PRIVATE_SPACE_PACKAGE;
@@ -277,7 +278,9 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
      * Animates and loads shortcuts on background thread for this popup container
      */
     private void loadAppShortcuts(ItemInfo originalItemInfo) {
-        setAccessibilityPaneTitle(getTitleForAccessibility());
+        if (ATLEAST_P) {
+            setAccessibilityPaneTitle(getTitleForAccessibility());
+        }
         mOriginalIcon.setForceHideDot(true);
         // All views are added. Animate layout from now on.
         setLayoutTransition(new LayoutTransition());
