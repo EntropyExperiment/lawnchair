@@ -16,6 +16,7 @@
 
 package com.android.launcher3.taskbar.bubbles.flyout
 
+import android.animation.ArgbEvaluator
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
