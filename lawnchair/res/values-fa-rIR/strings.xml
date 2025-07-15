@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">خودداری از استفاده از آیکون‌های ذخیره شده در آیکون پک‌ها</string>
     <string name="icon_swipe_gestures">Icon swipe gestures</string>
     <string name="icon_swipe_gestures_description">Perform actions when swiping left or right on icons instead of moving the home screen</string>
+    <string name="show_deck_layout">Deck layout</string>
+    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
     <string name="recents_lock_unlock">قفل/بازکردن</string>
     <string name="recents_lock_unlock_description">جلوگیری از بسته شدن برنامه انتخابی با فشار دادن «پاک کردن همه»</string>
     <!--Overlay-->
@@ -609,4 +611,5 @@
     <string name="warn_contact_permission_content">برای جستجوی مخاطبین، مجوزهای تماس و تلفن را به Lawnchair بدهید</string>
     <string name="warn_files_permission_content">برای جستجوی فایل های خود، مجوزهای ذخیره‌سازی را به Lawnchair بدهید</string>
     <string name="grant_requested_permissions">اعطای مجوز</string>
+    <string name="custom_search_label">Custom search engine name</string>
 </resources>

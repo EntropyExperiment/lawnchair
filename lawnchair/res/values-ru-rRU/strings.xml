@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">Избегать использования кэшированных иконок из наборов иконок</string>
     <string name="icon_swipe_gestures">Свайп-жесты по иконкам</string>
     <string name="icon_swipe_gestures_description">Выполнять действия при смахивании влево или вправо по иконкам вместо прокрутки экрана</string>
+    <string name="show_deck_layout">Deck layout</string>
+    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
     <string name="recents_lock_unlock">Блокировка/разблокировка</string>
     <string name="recents_lock_unlock_description">Запретить закрытие выбранного приложения при нажатии кнопки \"Очистить всё\"</string>
     <!--Overlay-->
@@ -611,4 +613,5 @@
     <string name="warn_contact_permission_content">Для поиска контактов, предоставьте доступ к контактам и телефону для приложения Lawnchair</string>
     <string name="warn_files_permission_content">Чтобы искать файлы, предоставьте доступ к хранилищу для приложения Lawnchair</string>
     <string name="grant_requested_permissions">Предоставить доступ</string>
+    <string name="custom_search_label">Custom search engine name</string>
 </resources>

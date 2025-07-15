@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">Undvik att använda cachade ikoner från ikonpaket</string>
     <string name="icon_swipe_gestures">Svepgester för ikoner</string>
     <string name="icon_swipe_gestures_description">Utför åtgärder när du sveper åt vänster eller höger på ikoner i stället för att flytta startskärmen</string>
+    <string name="show_deck_layout">Kortlekslayout</string>
+    <string name="show_deck_layout_description">Visa ett layoutalternativ för att dölja applådan och automatiskt lägga till nya appar på startskärmen</string>
     <string name="recents_lock_unlock">Lås/lås upp</string>
     <string name="recents_lock_unlock_description">Förhindra att vald app stängs när \"Rensa alla\" används</string>
     <!--Overlay-->
@@ -233,7 +235,7 @@
     <string name="pref_fonts_add_fonts">Lägg till typsnitt</string>
     <string name="pref_fonts_add_fonts_summary">OTF- och TTF-typsnitt stöds</string>
     <string name="pref_fonts_missing_font">Typsnittet hittades inte</string>
-    <string name="font_label">Typsnitt (experimentellt)</string>
+    <string name="font_label">Typsnitt (experimentell)</string>
     <string name="fontWorkspace">Allmänt</string>
     <string name="fontHeading">Rubriker</string>
     <string name="fontHeadingMedium">Rubriker (medium)</string>
@@ -539,7 +541,7 @@
     <string name="override_window_corner_radius_label">Anpassad skärmhörnsradie</string>
     <string name="window_corner_radius_description">När du sveper uppåt för att öppna Senaste-skärmen, följer den aktuella appen med ditt finger och krymper till ett kort. Använd detta reglage för att justera kortets hörnradie när det nästan fyller hela skärmen så att den matchar hörnen på din skärm.</string>
     <string name="taskbar_label">Aktivitetsfält</string>
-    <string name="enable_taskbar_experimental">Visa aktivitetsfält (experimentellt)</string>
+    <string name="enable_taskbar_experimental">Visa aktivitetsfält (experimentell)</string>
     <!--
 
     All Apps search
@@ -579,8 +581,8 @@
     <string name="search_algorithm_app_search">Appsökning</string>
     <string name="search_algorithm_global_search_on_device">Global sökning (på enheten)</string>
     <string name="search_algorithm_global_search_via_asi">Global sökning (via ASI)</string>
-    <string name="custom_search_url">Anpassad sökmotor-URL</string>
-    <string name="custom_search_suggestions_url">Anpassad sökförslags-URL</string>
+    <string name="custom_search_url">URL för anpassad sökmotor</string>
+    <string name="custom_search_suggestions_url">URL för anpassade sökförslag</string>
     <string name="custom_search_input_hint">&#37;s kommer att ersättas med sökfrågan</string>
     <!-- Labels of each search result types -->
     <string name="show_search_result_types">Visa i sökresultat</string>
@@ -609,4 +611,5 @@
     <string name="warn_contact_permission_content">För att söka efter kontakter, bevilja kontakter- och telefonbehörigheter till Lawnchair</string>
     <string name="warn_files_permission_content">För att söka bland dina filer, bevilja lagringsbehörigheter till Lawnchair</string>
     <string name="grant_requested_permissions">Bevilja behörigheter</string>
+    <string name="custom_search_label">Namn på anpassad sökmotor</string>
 </resources>

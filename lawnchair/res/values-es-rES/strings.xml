@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">Evitar el uso de iconos en caché de paquetes de iconos</string>
     <string name="icon_swipe_gestures">Gestos al deslizar el dedo sobre iconos</string>
     <string name="icon_swipe_gestures_description">Realiza acciones al deslizar a la izquierda o derecha en los iconos en lugar de mover la pantalla de inicio</string>
+    <string name="show_deck_layout">Deck layout</string>
+    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
     <string name="recents_lock_unlock">Bloqueo/desbloqueo</string>
     <string name="recents_lock_unlock_description">Evita que la aplicación seleccionada se cierre al presionar «Borrar todo»</string>
     <!--Overlay-->
@@ -610,4 +612,5 @@
     <string name="warn_contact_permission_content">Para buscar contactos tienes que otorgar a Lawnchair los permisos de ver contactos y teléfono</string>
     <string name="warn_files_permission_content">Para buscar en tus archivos tienes que otorgar a Lawnchair el permiso para leer el almacenamiento</string>
     <string name="grant_requested_permissions">Conceder permisos</string>
+    <string name="custom_search_label">Custom search engine name</string>
 </resources>

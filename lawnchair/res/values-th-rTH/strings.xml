@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">หลีกเลี่ยงการแคชจากชุดไอคอน</string>
     <string name="icon_swipe_gestures">Icon swipe gestures</string>
     <string name="icon_swipe_gestures_description">Perform actions when swiping left or right on icons instead of moving the home screen</string>
+    <string name="show_deck_layout">Deck layout</string>
+    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
     <string name="recents_lock_unlock">ล็อก/ปลดล็อก</string>
     <string name="recents_lock_unlock_description">ป้องกันไม่ให้แอปที่เลือกปิดตัวลงเมื่อกด \"ล้างทั้งหมด\"</string>
     <!--Overlay-->
@@ -608,4 +610,5 @@
     <string name="warn_contact_permission_content">เพื่อค้นหารายชื่อติดต่อ, ให้สิทธิ Lawnchair ในการเข้าถึงรายชื่อติดต่อ และการโทร</string>
     <string name="warn_files_permission_content">เพื่อค้นหาไฟล์, ให้สิทธิ Lawnchair ในการเข้าถึงที่เก็บข้อมูล</string>
     <string name="grant_requested_permissions">ให้สิทธิ์</string>
+    <string name="custom_search_label">Custom search engine name</string>
 </resources>

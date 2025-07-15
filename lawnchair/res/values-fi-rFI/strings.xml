@@ -44,7 +44,7 @@
     <string name="loading">Ladataan…</string>
     <string name="download_update">Download update</string>
     <string name="install_update">Install update</string>
-    <string name="pro_updated">You\'re up-to-date!</string>
+    <string name="pro_updated">Olet ajan tasalla!</string>
     <string name="managed_by_lawnchair">Lawnchairin hallinnoima</string>
     <!-- When mentioning settings UI -->
     <string name="smartspace_preferences">Asetukset</string>
@@ -92,7 +92,7 @@
     <string name="apply_label">Käytä</string>
     <string name="delete_label">Poista</string>
     <string name="folder_list_note">Swipe left to edit, swipe right to delete, or tap to update items</string>
-    <string name="apps_in_folder_label">Hide folder apps</string>
+    <string name="apps_in_folder_label">Piilota kansion sovelluksia</string>
     <string name="apps_in_folder_description">Apps assigned to folders are excluded from app lists</string>
     <string name="folders_filter_duplicates">Only show unique apps</string>
     <string name="my_folder_label">My folder</string>
@@ -139,6 +139,8 @@
     <string name="always_reload_icons_description">Vältä välimuistissa olevien kuvakkeiden käyttöä kuvakepakkauksissa</string>
     <string name="icon_swipe_gestures">Icon swipe gestures</string>
     <string name="icon_swipe_gestures_description">Perform actions when swiping left or right on icons instead of moving the home screen</string>
+    <string name="show_deck_layout">Deck layout</string>
+    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
     <string name="recents_lock_unlock">Lock/unlock</string>
     <string name="recents_lock_unlock_description">Prevent selected app from closing when pressing \"Clear all\"</string>
     <!--Overlay-->
@@ -609,4 +611,5 @@
     <string name="warn_contact_permission_content">To search for contacts, grant contacts and phone permissions to Lawnchair</string>
     <string name="warn_files_permission_content">To search your files, grant storage permissions to Lawnchair</string>
     <string name="grant_requested_permissions">Grant permissions</string>
+    <string name="custom_search_label">Custom search engine name</string>
 </resources>
