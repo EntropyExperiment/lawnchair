@@ -50,7 +50,7 @@
             android:gravity="center"
             android:fontFamily="google-sans-text"
             android:text="@string/desktop_mode_maximize_menu_maximize_text"
-            android:textColor="?androidprv:attr/materialColorOnSurface"
+            android:textColor="?android:attr/materialColorOnSurface"
             android:alpha="0"/>
     </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:fontFamily="google-sans-text"
             android:text="@string/desktop_mode_maximize_menu_snap_text"
-            android:textColor="?androidprv:attr/materialColorOnSurface"
+            android:textColor="?android:attr/materialColorOnSurface"
             android:alpha="0"/>
     </LinearLayout>
 </LinearLayout>

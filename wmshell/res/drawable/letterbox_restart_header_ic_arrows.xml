@@ -27,6 +27,6 @@
         android:translateY="8">
         <path
             android:pathData="M0,36V24.5H3V30.85L10.4,23.45L12.55,25.6L5.15,33H11.5V36H0ZM24.5,36V33H30.85L23.5,25.65L25.65,23.5L33,30.85V24.5H36V36H24.5ZM10.35,12.5L3,5.15V11.5H0V0H11.5V3H5.15L12.5,10.35L10.35,12.5ZM25.65,12.5L23.5,10.35L30.85,3H24.5V0H36V11.5H33V5.15L25.65,12.5Z"
-            android:fillColor="?androidprv:attr/colorAccentPrimaryVariant"/>
+            android:fillColor="?android:attr/colorAccentPrimaryVariant"/>
     </group>
 </vector>
