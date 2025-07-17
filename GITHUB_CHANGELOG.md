@@ -4,6 +4,11 @@ older (i.e., Lawnchair `15-dev`).
 ### Snapshot 3 (Upcoming)
 
 * Finish correctly implementing all Dagger functions (?)
+* Merge Lawnchair 15 Beta 1 into Bubble Tea
+  * Support for 16-kb page size devices
+* Repository rebased and dropped commit
+  * Switch back from turbine-combined variant to javac variant for prebuilt SystemUI-core-16 because issues with LFS
+* Publish platform_frameworks_libs_systemui to pe 16-dev branch
 
 ### Snapshot 2
 
