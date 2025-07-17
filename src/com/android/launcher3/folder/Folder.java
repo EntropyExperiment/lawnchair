@@ -410,7 +410,11 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         if (dragObject.dragSource != this) {
             return;
         }
-        if (isInAppDrawer()) close(true);
+        if (isInAppDrawer()) {
+            close(true);
+            // LC-Note: Do not remove item
+            return;
+        }
         
         mContent.removeItem(mCurrentDragView);
         mItemsInvalidated = true;
@@ -600,6 +604,7 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             mFolderName.setText("");
             mFolderName.setHint(R.string.folder_hint_text);
         }
+            }
     }
 
     /**
@@ -1104,6 +1109,10 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
     };
 
     public void completeDragExit() {
+        if (isInAppDrawer()) {
+            // LC: 
+            return;
+        }
         if (mIsOpen) {
             close(true);
             mRearrangeOnClose = true;
@@ -1573,6 +1582,9 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         }
 
         if (!mSuppressContentUpdate) {
+            if (isInAppDrawer()) {
+                return;
+            }
             mItemsInvalidated = true;
             itemArray.forEach(item -> mContent.removeItem(getViewForInfo(item)));
             if (mState == STATE_ANIMATING) {
