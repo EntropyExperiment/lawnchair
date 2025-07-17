@@ -40,6 +40,7 @@ dependencies {
     ksp "com.google.dagger:hilt-compiler:$daggerVersion"
     implementation 'androidx.core:core-animation:1.0.0'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
+    implementation projects.iconloaderlib
 }
 
 ksp {
