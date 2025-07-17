@@ -24,10 +24,10 @@ android {
     }
     sourceSets {
         main {
-            java.srcDirs = ['shared/src', 'src']
+            java.srcDirs = ['src', 'shared/src']
             //aidl.srcDirs = ['shared/src/com/android/wm/shell/shared/', 'shared/src/com/android/wm/shell/shared/bubbles/']
             manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['shared']
+            res.srcDirs = ['res', 'shared/res']
         }
     }
 }
