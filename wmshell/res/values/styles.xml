@@ -43,8 +43,8 @@
     <style name="DesktopModeHandleMenuActionButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">52dp</item>
-        <item name="android:textColor">@android:color/materialColorOnSurface</item>
-        <item name="android:drawableTint">@android:color/materialColorOnSurface</item>
+        <item name="android:textColor">@color/materialColorOnSurface</item>
+        <item name="android:drawableTint">@color/materialColorOnSurface</item>
         <item name="android:importantForAccessibility">yes</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:paddingHorizontal">16dp</item>
@@ -66,7 +66,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:lineHeight">20sp</item>
         <item name="android:textFontWeight">500</item>
-        <item name="android:textColor">@android:color/materialColorOnSurface</item>
+        <item name="android:textColor">@color/materialColorOnSurface</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:scrollHorizontally">true</item>
         <item name="android:singleLine">true</item>
@@ -101,35 +101,37 @@
 
     <style name="RestartDialogTitleText">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@android:color/materialColorOnSurface</item>
+        <item name="android:textColor">@color/materialColorOnSurface</item>
         <item name="android:lineSpacingExtra">8sp</item>
-        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <!-- LC-Postmerge-TODO: This private thingy -->
+<!--        <item name="android:fontFamily">@android:string/config_headlineFontFamily</item>-->
     </style>
 
     <style name="RestartDialogBodyStyle">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
+        <!-- LC-Postmerge-TODO: This private thingy -->
+<!--        <item name="android:fontFamily">@android:string/config_bodyFontFamily</item>-->
     </style>
 
     <style name="RestartDialogBodyText" parent="RestartDialogBodyStyle">
         <item name="android:letterSpacing">0.02</item>
-        <item name="android:textColor">@android:color/materialColorOnSurfaceVariant</item>
+        <item name="android:textColor">@color/materialColorOnSurfaceVariant</item>
         <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="RestartDialogCheckboxText" parent="RestartDialogBodyStyle">
-        <item name="android:textColor">@android:color/materialColorOnSurface</item>
+        <item name="android:textColor">@color/materialColorOnSurface</item>
         <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="RestartDialogDismissButton" parent="RestartDialogBodyStyle">
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:textColor">@android:color/materialColorPrimary</item>
+        <item name="android:textColor">@color/materialColorPrimary</item>
     </style>
 
     <style name="RestartDialogConfirmButton" parent="RestartDialogBodyStyle">
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:textColor">@android:color/materialColorOnPrimary</item>
+        <item name="android:textColor">@color/materialColorOnPrimary</item>
     </style>
 
     <style name="ReachabilityEduHandLayout" parent="Theme.AppCompat.Light">
@@ -140,9 +142,10 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-        <item name="android:textAppearance">
-            @android:style/TextAppearance.DeviceDefault.Body2
-        </item>
+        <!-- LC-Postmerge-TODO: This private thingy -->
+<!--        <item name="android:textAppearance">-->
+<!--            @android:style/TextAppearance.DeviceDefault.Body2-->
+<!--        </item>-->
     </style>
 
 </resources>

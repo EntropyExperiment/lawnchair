@@ -24,10 +24,10 @@ android {
     }
     sourceSets {
         main {
-            java.srcDirs = ['src', 'shared/src']
+            java.srcDirs = ['shared/src']
             //aidl.srcDirs = ['shared/src/com/android/wm/shell/shared/', 'shared/src/com/android/wm/shell/shared/bubbles/']
             manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['res', 'shared/res']
+            res.srcDirs = ['res', 'shared']
         }
     }
 }
@@ -41,6 +41,8 @@ dependencies {
     implementation 'androidx.core:core-animation:1.0.0'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
     implementation projects.iconloaderlib
+    implementation projects.flags
+    implementation projects.utils
 }
 
 ksp {

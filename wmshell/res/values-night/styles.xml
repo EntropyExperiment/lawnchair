@@ -25,9 +25,10 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textAppearance">
-            @*android:style/TextAppearance.DeviceDefault.Body2
-        </item>
+        <!-- LC-Postmerge-TODO: This private thingy -->
+<!--        <item name="android:textAppearance">-->
+<!--            @android:style/TextAppearance.DeviceDefault.Body2-->
+<!--        </item>-->
     </style>
 
 </resources>
