@@ -376,6 +376,7 @@ dependencies {
     withQuickstepCompileOnly projects.plugin
     withQuickstepImplementation projects.plugincore
     withQuickstepCompileOnly projects.common
+    withQuickstepCompileOnly projects.utils
 
     // QuickSwitch Compat
     withQuickstepImplementation projects.compatLib

@@ -81,6 +81,9 @@ project(':unfold').projectDir = new File(rootDir, 'systemUI/unfold')
 include ':viewcapture'
 project(':viewcapture').projectDir = new File(rootDir, 'systemUI/viewcapture')
 
+include ':utils'
+project(':utils').projectDir = new File(rootDir, 'systemUI/utils')
+
 
 include ':compatLib'
 include ':compatLib:compatLibVQ'
