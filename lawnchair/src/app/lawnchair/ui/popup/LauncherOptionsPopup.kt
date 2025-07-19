@@ -49,6 +49,7 @@ object LauncherOptionsPopup {
         onLockToggle: (View) -> Boolean,
         onStartSystemSettings: (View) -> Boolean,
         onStartEditMode: (View) -> Boolean,
+        onStartAllApps: (View) -> Boolean,
         onStartWallpaperPicker: (View) -> Boolean,
         onStartWidgetsMenu: (View) -> Boolean,
         onStartHomeSettings: (View) -> Boolean,
@@ -84,6 +85,13 @@ object LauncherOptionsPopup {
                 R.drawable.enter_home_gardening_icon,
                 LauncherEvent.LAUNCHER_SETTINGS_BUTTON_TAP_OR_LONGPRESS,
                 onStartEditMode,
+            ),
+            "all_apps" to OptionItem(
+                launcher,
+                R.string.all_apps_button_label,
+                R.drawable.ic_apps,
+                LauncherEvent.LAUNCHER_ALL_APPS_TAP_OR_LONGPRESS,
+                onStartAllApps,
             ),
             "wallpaper" to OptionItem(
                 launcher,

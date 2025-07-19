@@ -17,27 +17,23 @@
 package com.android.launcher3.model;
 
 import static com.android.launcher3.InvariantDeviceProfile.DeviceType;
-import static com.android.launcher3.InvariantDeviceProfile.TYPE_PHONE;
 import static com.android.launcher3.LauncherPrefs.DB_FILE;
 import static com.android.launcher3.LauncherPrefs.DEVICE_TYPE;
 import static com.android.launcher3.LauncherPrefs.GRID_TYPE;
 import static com.android.launcher3.LauncherPrefs.HOTSEAT_COUNT;
 import static com.android.launcher3.LauncherPrefs.WORKSPACE_SIZE;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import app.lawnchair.LawnchairProto;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherPrefs;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent;
 
 import java.util.Locale;
 import java.util.Objects;
-
-import app.lawnchair.LawnchairProto;
 
 /**
  * Utility class representing persisted grid properties.
@@ -53,7 +49,7 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
     private final String mGridSizeString;
     private final int mNumHotseat;
     private final @DeviceType int mDeviceType;
-    private String mDbFile;
+    private final String mDbFile;
     private final int mGridType;
 
     public DeviceGridState(int columns, int row, int numHotseat, int deviceType, String dbFile,
@@ -83,13 +79,6 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
         mDeviceType = lp.get(DEVICE_TYPE);
         mDbFile = lp.get(DB_FILE);
         mGridType = lp.get(GRID_TYPE);
-    }
-
-    @SuppressLint("WrongConstant")
-    public DeviceGridState(LawnchairProto.GridState protoGridState) {
-        mGridSizeString = protoGridState.getGridSize();
-        mNumHotseat = protoGridState.getHotseatCount();
-        mDeviceType = protoGridState.getDeviceType();
     }
 
     /**
@@ -135,7 +124,7 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
 
 
     public void writeToPrefs(Context context, boolean commit) {
-        SharedPreferences.Editor editor = Utilities.getPrefs(context).edit()
+        SharedPreferences.Editor editor = LauncherPrefs.getPrefs(context).edit()
                 .putString(KEY_WORKSPACE_SIZE, mGridSizeString)
                 .putInt(KEY_HOTSEAT_COUNT, mNumHotseat)
                 .putInt(KEY_DEVICE_TYPE, mDeviceType);

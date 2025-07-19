@@ -3,7 +3,7 @@ package com.android.launcher3.model;
 
 import static android.appwidget.AppWidgetProviderInfo.WIDGET_FEATURE_HIDE_FROM_PICKER;
 
-import static com.android.launcher3.BuildConfig.WIDGETS_ENABLED;
+import static com.android.launcher3.BuildConfigs.WIDGETS_ENABLED;
 import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 import static com.android.launcher3.pm.ShortcutConfigActivityInfo.queryList;
 import static com.android.launcher3.widget.WidgetSections.NO_CATEGORY;
@@ -75,7 +75,7 @@ public class WidgetsModel {
     private final Map<PackageItemInfo, List<WidgetItem>> mWidgetsByPackageItem = new HashMap<>();
     @Nullable private WidgetValidityCheckForPicker mWidgetValidityCheckForPicker = null;
 
-    private static final Context mContext;
+    private static Context mContext = null;
     private final InvariantDeviceProfile mIdp;
     private final IconCache mIconCache;
     private final AppFilter mAppFilter;
@@ -142,16 +142,16 @@ public class WidgetsModel {
         return mWidgetsByPackageItem.entrySet().stream()
                 .collect(
                         Collectors.toMap(
-                                Map.Entry::getKey,
+                                Entry::getKey,
                                 entry -> entry.getValue().stream()
                                         .filter(widgetItem ->
                                                 mWidgetValidityCheckForPicker.test(widgetItem))
-                                        .collect(Collectors.toList())
+                                        .collect(toList())
                         )
                 )
                 .entrySet().stream()
                 .filter(entry -> !entry.getValue().isEmpty())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
     /**

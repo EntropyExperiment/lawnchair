@@ -547,14 +547,6 @@ public class ItemInfo {
         return getComponentKey();
     }
 
-    /**
-     * Returns a string ID that is stable for a user session, but may not be persisted
-     */
-    @Nullable
-    public Object getStableId() {
-        return getComponentKey();
-    }
-
     private int getUserType(UserIconInfo info) {
         if (info == null) {
             return SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_UNKNOWN;

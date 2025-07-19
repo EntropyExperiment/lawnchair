@@ -64,6 +64,7 @@ import com.android.launcher3.provider.LauncherDbUtils;
 import com.android.launcher3.provider.LauncherDbUtils.SQLiteTransaction;
 import com.android.launcher3.provider.RestoreDbTask;
 import com.android.launcher3.util.IntArray;
+import com.android.launcher3.util.SandboxContext;
 import com.android.launcher3.widget.LauncherWidgetHolder;
 
 import java.io.File;

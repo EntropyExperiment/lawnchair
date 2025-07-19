@@ -8,7 +8,10 @@ older (i.e., Lawnchair `15-dev`).
   * Support for 16-kb page size devices
 * Repository rebased and dropped commit
   * Switch back from turbine-combined variant to javac variant for prebuilt SystemUI-core-16 because issues with LFS
-* Publish platform_frameworks_libs_systemui to pe 16-dev branch
+    * MORE MORE fixes regarding turbine-combined to javac
+* Publish `platform_frameworks_libs_systemui` to pe 16-dev branch
+* ATLEAST check to almost every launcher3 source file
+* `Utils` module (stripped)
 
 ### Snapshot 2
 

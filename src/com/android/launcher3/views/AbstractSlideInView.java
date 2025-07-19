@@ -305,7 +305,7 @@ public abstract class AbstractSlideInView<T extends Context & ActivityContext>
 //    @Override
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     public void onBackStarted(BackEvent backEvent) {
-        super.onBackStarted();
+        super.onBackStarted(backEvent);
         mViewToAnimateInSwipeToDismiss = shouldAnimateContentViewInBackSwipe() ? mContent : this;
     }
 

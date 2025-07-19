@@ -263,7 +263,7 @@ public class DatabaseHelper extends NoLocaleSQLiteHelper implements
                         Favorites.SCREEN, IntArray.wrap(-777, -778)), null);
             }
             case 30: {
-                if (FeatureFlags.topQsbOnFirstScreenEnabled(mContext)) {
+                if (FeatureFlags.QSB_ON_FIRST_SCREEN) {
                     // Clean up first row in screen 0 as it might contain junk data.
                     Log.d(TAG, "Cleaning up first row");
                     db.delete(Favorites.TABLE_NAME,

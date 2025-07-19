@@ -727,7 +727,7 @@ public class LoaderTask implements Runnable {
         // Clear the list of apps
         mBgAllAppsList.clear();
 
-        var pref = PreferenceManager.getInstance(mApp.getContext());
+        var pref = PreferenceManager.getInstance(mContext);
         var enableBulkLoading = pref.getAllAppBulkIconLoading().get();
         
         List<IconRequestInfo<AppInfo>> allAppsItemRequestInfos = new ArrayList<>();

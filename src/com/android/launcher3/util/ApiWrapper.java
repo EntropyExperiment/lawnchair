@@ -113,7 +113,7 @@ public class ApiWrapper {
                         serial);
 
                 try {
-                    if (Utilities.ATLEAST_U && launcherApps != null) {
+                    if (Utilities.ATLEAST_V && launcherApps != null) {
                         LauncherUserInfo userInfo = launcherApps.getLauncherUserInfo(user);
                         if (userInfo != null) {
                             var userType = userInfo.getUserType();

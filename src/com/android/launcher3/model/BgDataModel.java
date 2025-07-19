@@ -44,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dagger.LauncherAppSingleton;
@@ -191,7 +192,7 @@ public class BgDataModel {
     }
 
     public synchronized void removeItem(Context context, List<? extends ItemInfo> items) {
-        if (BuildConfig.IS_STUDIO_BUILD) {
+        if (BuildConfigs.IS_STUDIO_BUILD) {
             items.stream()
                     .filter(item -> item.itemType == ITEM_TYPE_FOLDER
                             || item.itemType == ITEM_TYPE_APP_PAIR)
@@ -214,7 +215,7 @@ public class BgDataModel {
         if (newItem && item.itemType == ITEM_TYPE_DEEP_SHORTCUT) {
             updateShortcutPinnedState(context, item.user);
         }
-        if (BuildConfig.IS_DEBUG_DEVICE
+        if (BuildConfigs.IS_DEBUG_DEVICE
                 && newItem
                 && item.container != CONTAINER_DESKTOP
                 && item.container != CONTAINER_HOTSEAT

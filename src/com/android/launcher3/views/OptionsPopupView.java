@@ -15,7 +15,7 @@
  */
 package com.android.launcher3.views;
 
-import static com.android.launcher3.BuildConfig.WIDGETS_ENABLED;
+import static com.android.launcher3.BuildConfigs.WIDGETS_ENABLED;
 import static com.android.launcher3.LauncherState.EDIT_MODE;
 import static com.android.launcher3.config.FeatureFlags.MULTI_SELECT_EDIT_MODE;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.IGNORE;

@@ -32,6 +32,7 @@ import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherSettings.Favorites
 import com.android.launcher3.backuprestore.LauncherRestoreEventLogger.RestoreError
+import com.android.launcher3.Utilities
 import com.android.launcher3.icons.CacheableShortcutInfo
 import com.android.launcher3.icons.IconCache
 import com.android.launcher3.icons.cache.CacheLookupFlag.Companion.DEFAULT_LOOKUP_FLAG

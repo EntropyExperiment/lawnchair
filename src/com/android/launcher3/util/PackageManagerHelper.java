@@ -16,6 +16,7 @@
 
 package com.android.launcher3.util;
 
+import static com.android.launcher3.Utilities.ATLEAST_R;
 import static com.android.launcher3.model.data.ItemInfoWithIcon.FLAG_INSTALL_SESSION_ACTIVE;
 
 import android.annotation.SuppressLint;
@@ -29,6 +30,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Process;
 import android.os.UserHandle;
@@ -89,7 +92,11 @@ public class PackageManagerHelper {
      */
     public String getAppInstallerPackage(@NonNull final String packageName) {
         try {
-            return mPm.getInstallSourceInfo(packageName).getInstallingPackageName();
+            if (ATLEAST_R) {
+                return mPm.getInstallSourceInfo(packageName).getInstallingPackageName();
+            } else {
+                return null;
+            }
         } catch (NameNotFoundException e) {
             Log.e(TAG, "Failed to get installer package for app package:" + packageName, e);
             return null;

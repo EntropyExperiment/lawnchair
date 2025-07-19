@@ -6,4 +6,4 @@ Upstream source code: https://android.googlesource.com/platform/frameworks/base/
 
 ## `utils` Module
 
-A stripped-down version to only include WindowManager-related code to be use by `wmshell`.
+A stripped-down version to only include WindowManagerUtils code to be use by `wmshell`.

@@ -22,7 +22,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.LauncherApps
 import android.content.pm.LauncherApps.ArchiveCompatibilityParams
-import com.android.launcher3.BuildConfig
+import com.android.launcher3.BuildConfigs
 import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.OnIDPChangeListener
@@ -106,7 +106,7 @@ constructor(
         lifeCycle.addCloseable { dpUpdateReceiver.unregisterReceiverSafely() }
 
         // Development helper
-        if (BuildConfig.IS_STUDIO_BUILD) {
+        if (BuildConfigs.IS_STUDIO_BUILD) {
             val reloadReceiver =
                 SimpleBroadcastReceiver(context, UI_HELPER_EXECUTOR) { model.forceReload() }
             reloadReceiver.register(Context.RECEIVER_EXPORTED, ACTION_FORCE_RELOAD)

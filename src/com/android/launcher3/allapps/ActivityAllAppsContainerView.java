@@ -786,16 +786,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
     }
 
-    /**
-     * Force header height update with an offset. Used by {@link UniversalSearchInputView} to
-     * request {@link FloatingHeaderView} to update its maxTranslation for multiline search bar.
-     */
-    public void forceUpdateHeaderHeight(int offset) {
-        if (Flags.multilineSearchBar()) {
-            mHeader.updateSearchBarOffset(offset);
-        }
-    }
-
     @Override
     public void addChildrenForAccessibility(ArrayList<View> arrayList) {
         super.addChildrenForAccessibility(arrayList);
@@ -843,7 +833,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     protected int getHeaderColor(float blendRatio) {
         var opacity = pref.getDrawerOpacity().get();
         var colorOptions = PreferenceExtensionsKt.firstBlocking(pref2.getAppDrawerBackgroundColor());
-        var color = colorOptions.getColorPreferenceEntry().getLightColor().invoke(mContext);
+        var color = colorOptions.getColorPreferenceEntry().getLightColor().invoke(mActivityContext);
         if (color != 0) {
             mScrimColor = color;
         }
@@ -1422,18 +1412,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             // counter scale applied in dispatchDraw.
             invalidate(20, getHeight() - mNavBarScrimHeight, getWidth(), getHeight());
         }
-    }
-
-    /**
-     * Set {@link Animator.AnimatorListener} on {@link mAllAppsTransitionController} to observe
-     * animation of backing out of all apps search view to all apps view.
-     */
-    public void setAllAppsSearchBackAnimatorListener(Animator.AnimatorListener listener) {
-        Preconditions.assertNotNull(mAllAppsTransitionController);
-        if (mAllAppsTransitionController == null) {
-            return;
-        }
-        mAllAppsTransitionController.setAllAppsSearchBackAnimationListener(listener);
     }
 
     public void setScrimView(ScrimView scrimView) {
