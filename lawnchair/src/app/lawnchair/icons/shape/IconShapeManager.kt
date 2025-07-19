@@ -28,8 +28,8 @@ import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.icons.GraphicsUtils
-import com.android.launcher3.icons.IconProvider
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import com.patrykmichalik.opto.core.firstBlocking
@@ -56,7 +56,7 @@ class IconShapeManager @Inject constructor(
             override fun toString() = "system"
 
             override fun getHashString(): String {
-                val resId = IconProvider.CONFIG_ICON_MASK_RES_ID
+                val resId = ThemeManager.CONFIG_ICON_MASK_RES_ID
                 if (resId == 0) {
                     return "system-path"
                 }

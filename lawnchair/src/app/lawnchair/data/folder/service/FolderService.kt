@@ -81,7 +81,7 @@ class FolderService @Inject constructor(
                 // Consider caching toItemInfo results if componentKey lookups are slow
                 // and items don't change frequently without folder data changing
                 toItemInfo(itemEntity.componentKey)?.let { appInfo ->
-                    domainFolderInfo.add(appInfo, false)
+                    domainFolderInfo.add(appInfo)
                 }
             }
             domainFolderInfo

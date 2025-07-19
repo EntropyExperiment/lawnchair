@@ -22,6 +22,7 @@ import com.android.launcher3.icons.BaseIconFactory
 import com.android.launcher3.icons.BitmapInfo
 import com.android.launcher3.icons.IconProvider
 import com.android.launcher3.icons.LauncherIcons
+import com.android.launcher3.icons.cache.CacheLookupFlag.Companion.DEFAULT_LOOKUP_FLAG
 import com.android.launcher3.model.data.ItemInfoWithIcon
 import com.android.launcher3.model.data.PackageItemInfo
 import com.android.launcher3.model.data.SearchActionItemInfo
@@ -161,7 +162,7 @@ class SearchResultIcon(context: Context, attrs: AttributeSet?) :
             isVisible = false
             return
         }
-        icon = appInfo.newIcon(context, false)
+        icon = appInfo.newIcon(context, 0)
     }
 
     private fun bindFromApp(componentName: ComponentName, user: UserHandle) {
@@ -209,7 +210,7 @@ class SearchResultIcon(context: Context, attrs: AttributeSet?) :
                 info.hasFlags(SearchActionItemInfo.FLAG_PRIMARY_ICON_FROM_TITLE) ->
                     li.createIconBitmap("${info.title}", packageIcon.color)
                 icon == null -> packageIcon
-                else -> icon.loadDrawable(context)?.let { li.createBadgedIconBitmap(it, BaseIconFactory.IconOptions().setUser(info.user)) }
+                else -> icon.loadDrawable(context)?.let { li.createBadgedIconBitmap(it, BaseIconFactory.IconOptions().setUser(info.user)) } ?: packageIcon
             }
             if (info.hasFlags(SearchActionItemInfo.FLAG_BADGE_WITH_COMPONENT_NAME) && target.extras.containsKey("class")) {
                 try {
@@ -233,7 +234,7 @@ class SearchResultIcon(context: Context, attrs: AttributeSet?) :
         val las = LauncherAppState.getInstance(context)
         val info = PackageItemInfo(packageName, user)
         info.user = user
-        las.iconCache.getTitleAndIcon(info, false)
+        las.iconCache.getTitleAndIcon(info, DEFAULT_LOOKUP_FLAG)
         return info.bitmap
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import app.lawnchair.data.AppDatabase
 import app.lawnchair.icons.IconPickerItem
 import com.android.launcher3.LauncherAppState
+import com.android.launcher3.LauncherModel
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -70,14 +71,9 @@ class IconOverrideRepository @Inject constructor(
     }
 
     private fun updatePackageIcons(target: ComponentKey) {
-        val model = LauncherAppState.getInstance(context).model
-        model.onPackageStateChanged(
-            PackageInstallInfo.fromState(
-                STATUS_INSTALLED,
-                target.componentName.packageName,
-                target.user,
-            ),
-        )
+        val model = LauncherAppState.INSTANCE.get(context).getModel()
+
+        model.onPackageIconsUpdated(hashSetOf(target.componentName.packageName), target.user)
     }
 
     override fun close() {

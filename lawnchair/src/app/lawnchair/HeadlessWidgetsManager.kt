@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.content.edit
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
@@ -33,7 +34,7 @@ class HeadlessWidgetsManager @Inject constructor(
 ) : SafeCloseable {
 
     private val scope = MainScope() + CoroutineName("HeadlessWidgetsManager")
-    private val prefs = Utilities.getDevicePrefs(context)
+    private val prefs = LauncherPrefs.getDevicePrefs(context)
     private val widgetManager = AppWidgetManager.getInstance(context)
     private val host = HeadlessAppWidgetHost(context)
     private val widgetsMap = mutableMapOf<String, Widget>()

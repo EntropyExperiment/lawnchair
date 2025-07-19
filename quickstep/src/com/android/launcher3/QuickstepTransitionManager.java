@@ -1279,7 +1279,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
         unregisterRemoteTransitions();
         mLauncher.removeOnDeviceProfileChangeListener(this);
         SystemUiProxy.INSTANCE.get(mLauncher).setStartingWindowListener(null);
-        if (BuildConfig.IS_STUDIO_BUILD && !mRegisteredTaskStackChangeListener.isEmpty()) {
+        if (BuildConfigs.IS_STUDIO_BUILD && !mRegisteredTaskStackChangeListener.isEmpty()) {
             Log.e(TAG, "IllegalState: Failed to run onEndCallback created from"
                     + " getActivityLaunchOptions()");
         }
