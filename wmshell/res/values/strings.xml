@@ -280,8 +280,8 @@
     <string name="maximize_button_text">Maximize <xliff:g id="app_name" example="Chrome">%1$s</xliff:g></string>
     <!-- Accessibility text for the restore window button [CHAR LIMIT=NONE] -->
     <string name="restore_button_text">Restore <xliff:g id="app_name" example="Chrome">%1$s</xliff:g></string>
-    <!-- Accessibility text for the minimize window button [CHAR LIMIT=NONE] -->
-    <string name="minimize_button_text">Minimize <xliff:g id="app_name" example="Chrome">%1$s</xliff:g></string>
+     <!-- Accessibility text for the minimize window button [CHAR LIMIT=NONE] -->
+     <string name="minimize_button_text">Minimize <xliff:g id="app_name" example="Chrome">%1$s</xliff:g></string>
     <!-- Accessibility text for the close window button [CHAR LIMIT=NONE] -->
     <string name="close_button_text">Close <xliff:g id="app_name" example="Chrome">%1$s</xliff:g></string>
     <!-- Accessibility text for the caption back button [CHAR LIMIT=NONE] -->
