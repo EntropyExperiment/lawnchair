@@ -858,7 +858,9 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
             final int scrollX = getScrollX();
             final int scrollY = getScrollY();
             canvas.translate(scrollX, scrollY);
-            mDotRenderer.draw(canvas, mDotParams, mDotInfo == null ? -1 : mDotInfo.getNotificationCount());
+//           LC-Postmerge-TODO: Notification dot
+//            mDotRenderer.draw(canvas, mDotParams, mDotInfo == null ? -1 : mDotInfo.getNotificationCount());
+            mDotRenderer.draw(canvas, mDotParams);
             canvas.translate(-scrollX, -scrollY);
         }
     }
@@ -1514,13 +1516,6 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         setForceHideDot(true);
         return () -> {
         };
-    }
-
-    @Override
-    public void resetIconScale(boolean shouldReset) {
-        if (shouldReset) {
-            resetIconScale();
-        }
     }
 
     private void resetIconScale() {

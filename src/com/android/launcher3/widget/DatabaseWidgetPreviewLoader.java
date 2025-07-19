@@ -30,6 +30,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
@@ -115,13 +117,15 @@ public class DatabaseWidgetPreviewLoader {
             }
         }
 
-        if (result.providerInfo == null && widgetInfo != null
-                && widgetInfo.previewLayout != Resources.ID_NULL) {
-            result.providerInfo = fromProviderInfo(mContext, widgetInfo.clone());
-            // A hack to force the initial layout to be the preview layout since there is no API for
-            // rendering a preview layout for work profile apps yet. For non-work profile layout, a
-            // proper solution is to use RemoteViews(PackageName, LayoutId).
-            result.providerInfo.initialLayout = item.widgetInfo.previewLayout;
+        if (Utilities.ATLEAST_S) {
+            if (result.providerInfo == null && widgetInfo != null
+                    && widgetInfo.previewLayout != Resources.ID_NULL) {
+                result.providerInfo = fromProviderInfo(mContext, widgetInfo.clone());
+                // A hack to force the initial layout to be the preview layout since there is no API for
+                // rendering a preview layout for work profile apps yet. For non-work profile layout, a
+                // proper solution is to use RemoteViews(PackageName, LayoutId).
+                result.providerInfo.initialLayout = item.widgetInfo.previewLayout;
+            }
         }
 
         if (result.providerInfo == null) {

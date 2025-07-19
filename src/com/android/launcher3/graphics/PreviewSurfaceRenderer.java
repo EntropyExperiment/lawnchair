@@ -310,7 +310,7 @@ public class PreviewSurfaceRenderer {
             if (configuration.screenHeightDp > configuration.screenWidthDp) {
                 configuration.screenWidthDp = height;
                 configuration.screenHeightDp = width;
-                configuration.orientation = Surface.ROTATION_90;
+                configuration.orientation = Configuration.ORIENTATION_PORTRAIT;
             }
             context = context.createConfigurationContext(configuration);
         }

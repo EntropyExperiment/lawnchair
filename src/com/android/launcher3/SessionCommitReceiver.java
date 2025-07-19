@@ -99,9 +99,19 @@ public class SessionCommitReceiver extends BroadcastReceiver {
                 .queueItem(info.getAppPackageName(), user);
     }
 
-    public static boolean isEnabled(Context context) {
-        if (PreferenceExtensionsKt.firstBlocking(PreferenceManager2.getInstance(context).getLockHomeScreen()))
+    /**
+     * Returns whether adding Installed App Icons to home screen is allowed or not.
+     * Not allowed when:
+     * - User belongs to {@link com.android.launcher3.util.UserIconInfo.TYPE_PRIVATE} or
+     * - Home Settings preference to add App Icons on Home Screen is set as disabled
+     */
+    public static boolean isEnabled(Context context, UserHandle user) {
+        if (Flags.privateSpaceRestrictItemDrag() 
+            && PreferenceExtensionsKt.firstBlocking(PreferenceManager2.getInstance(context).getLockHomeScreen())
+            && user != null
+            && UserCache.getInstance(context).getUserInfo(user).isPrivate()) {
             return false;
-        return Utilities.getPrefs(context).getBoolean(ADD_ICON_PREFERENCE_KEY, true);
+        }
+        return LauncherPrefs.getPrefs(context).getBoolean(ADD_ICON_PREFERENCE_KEY, true);
     }
 }

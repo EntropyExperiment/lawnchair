@@ -52,6 +52,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 
+import app.lawnchair.DeviceProfileOverrides.TextFactors;
 import com.android.launcher3.CellLayout.ContainerType;
 import com.android.launcher3.DevicePaddings.DevicePadding;
 import com.android.launcher3.folder.ClippedFolderIconLayoutRule;
@@ -394,11 +395,13 @@ public class DeviceProfile {
         mTransientTaskbarClaimedSpace = 0;
         startAlignTaskbar = false;
         isTransientTaskbar = false;
+        mTextFactors = new TextFactors(0,0,0);
+        preferenceManager2 = null;
     }
 
-    private final DeviceProfileOverrides.TextFactors mTextFactors;
+    private final TextFactors mTextFactors;
     private float allAppsCellHeightMultiplier;
-    private final PreferenceManager2 preferenceManager2;
+    private PreferenceManager2 preferenceManager2 = null;
 
     /** TODO: Once we fully migrate to staged split, remove "isMultiWindowMode" */
     DeviceProfile(Context context, InvariantDeviceProfile inv, Info info,

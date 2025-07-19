@@ -16,7 +16,7 @@
 
 package com.android.launcher3;
 
-import static com.android.launcher3.BuildConfig.WIDGET_ON_FIRST_SCREEN;
+import static com.android.launcher3.BuildConfigs.WIDGET_ON_FIRST_SCREEN;
 import static com.android.launcher3.Flags.enableSmartspaceAsAWidget;
 import static com.android.launcher3.graphics.ShapeDelegate.DEFAULT_PATH_SIZE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_THEMED;
@@ -54,6 +54,7 @@ import android.os.DeadObjectException;
 import android.os.Handler;
 import android.os.Message;
 import android.os.TransactionTooLargeException;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -165,7 +166,7 @@ public final class Utilities {
      */
     @Deprecated
     // Lawnchair-TODO-High: Override BuildConfig.IS_DEBUG_DEVICE to true instead of variable true
-    public static final boolean IS_DEBUG_DEVICE = BuildConfig.IS_DEBUG_DEVICE;
+    public static final boolean IS_DEBUG_DEVICE = false;
 
     public static final int TRANSLATE_UP = 0;
     public static final int TRANSLATE_DOWN = 1;
@@ -197,12 +198,6 @@ public final class Utilities {
     }
 
     // Lawnchair-TODO-Merge: AOSP remove this
-    public static boolean isDevelopersOptionsEnabled(Context context) {
-        return Settings.Global.getInt(context.getApplicationContext().getContentResolver(),
-                Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) != 0;
-    }
-
-    // Lawnchair-TODO-Merge: AOSP remove this
     public static Drawable loadFullDrawableWithoutTheme(Context context, ItemInfo info,
                                                         int width, int height, Object[] outObj) {
         ActivityContext activity = ActivityContext.lookupContext(context);
@@ -219,7 +214,7 @@ public final class Utilities {
             return activityInfo == null ? null
                     : LauncherAppState.getInstance(context)
                     .getIconProvider().getIcon(
-                            activityInfo, activity.getDeviceProfile().inv.fillResIconDpi);
+                            activityInfo.getActivityInfo(), activity.getDeviceProfile().inv.fillResIconDpi);
         } else if (info.itemType == LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT) {
             List<ShortcutInfo> si = ShortcutKey.fromItemInfo(info)
                     .buildRequest(context)
@@ -1082,7 +1077,7 @@ public final class Utilities {
      * <p>Debug devices by default include -eng and -userdebug builds, but not -user builds.
      */
     public static void debugLog(String tag, String message) {
-        if (BuildConfig.IS_DEBUG_DEVICE) {
+        if (false) {
             Log.d(tag, message);
         }
     }

@@ -29,6 +29,8 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Process;
@@ -56,6 +58,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.annotation.VisibleForTesting;
+import androidx.collection.SparseArrayCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -927,9 +930,16 @@ public class WidgetsFullSheet extends BaseWidgetSheet
     }
 
     private void restoreAdapterStates(SparseArray<AdapterHolder> adapters) {
-        if (adapters.contains(AdapterHolder.WORK)) {
-            mAdapters.get(AdapterHolder.WORK).mWidgetsListAdapter.restoreState(
+        if (Utilities.ATLEAST_R) {
+            if (adapters.contains(AdapterHolder.WORK)) {
+                mAdapters.get(AdapterHolder.WORK).mWidgetsListAdapter.restoreState(
+                        adapters.get(AdapterHolder.WORK).mWidgetsListAdapter);
+            }
+        } else {
+            if (adapters.indexOfKey(AdapterHolder.WORK) >= 0) {
+                mAdapters.get(AdapterHolder.WORK).mWidgetsListAdapter.restoreState(
                     adapters.get(AdapterHolder.WORK).mWidgetsListAdapter);
+            }
         }
         mAdapters.get(AdapterHolder.PRIMARY).mWidgetsListAdapter.restoreState(
                 adapters.get(AdapterHolder.PRIMARY).mWidgetsListAdapter);

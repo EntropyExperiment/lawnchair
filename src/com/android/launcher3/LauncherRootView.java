@@ -69,7 +69,7 @@ public class LauncherRootView extends InsettableFrameLayout {
     }
 
     private void setUpBlur(Context context) {
-        var display = mActivity.getDeviceProfile();
+        var display = mStatefulContainer.getDeviceProfile();
         int width = display.widthPx;
         int height = display.heightPx;
 

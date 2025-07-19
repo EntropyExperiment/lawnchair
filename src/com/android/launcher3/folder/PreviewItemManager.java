@@ -467,7 +467,7 @@ public class PreviewItemManager {
             p.drawable = AppPairIconGraphic.composeDrawable(api, appPairParams);
             p.drawable.setBounds(0, 0, mIconSize, mIconSize);
         } else if (item instanceof ItemInfoWithIcon withIcon){
-            var isThemed = PreferenceManager.getInstance(mContext).getDrawerThemedIcons().get();
+            var isThemed = PreferenceManager.getInstance(mContext).getDrawerThemedIcons().get() ? 0 : FLAG_THEMED;
             p.drawable = withIcon.newIcon(mContext, isThemed);
             p.drawable.setBounds(0, 0, mIconSize, mIconSize);
         }

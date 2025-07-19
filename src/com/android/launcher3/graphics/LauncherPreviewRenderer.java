@@ -28,6 +28,8 @@ import static com.android.launcher3.Hotseat.ALPHA_CHANNEL_PREVIEW_RENDERER;
 import static com.android.launcher3.LauncherPrefs.GRID_NAME;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT_PREDICTION;
+import static com.android.launcher3.Utilities.ATLEAST_O_MR1;
+import static com.android.launcher3.Utilities.ATLEAST_S;
 import static com.android.launcher3.Utilities.SHOULD_SHOW_FIRST_PAGE_WIDGET;
 import static com.android.launcher3.graphics.ThemeManager.PREF_ICON_SHAPE;
 import static com.android.launcher3.model.ModelUtils.currentScreenContentFilter;
@@ -44,6 +46,8 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -306,17 +310,23 @@ public class LauncherPreviewRenderer extends BaseContext
                 mWallpaperColorResources = LocalColorExtractor.newInstance(
                     context).generateColorsOverride(wallpaperColorsOverride);
             } else {
-                WallpaperColors wallpaperColors = WallpaperManager.getInstance(
-                    context).getWallpaperColors(FLAG_SYSTEM);
+                WallpaperColors wallpaperColors = null;
+                if (ATLEAST_O_MR1) {
+                    wallpaperColors = WallpaperManager.getInstance(
+                        context).getWallpaperColors(FLAG_SYSTEM);
+                }
                 mWallpaperColorResources = wallpaperColors != null
                     ? LocalColorExtractor.newInstance(context).generateColorsOverride(
                     wallpaperColors)
                     : null;
             }
         } else {
-            WallpaperColors wallpaperColors = wallpaperColorsOverride != null
-                ? wallpaperColorsOverride
-                : WallpaperManager.getInstance(context).getWallpaperColors(FLAG_SYSTEM);
+            WallpaperColors wallpaperColors = null;
+            if (ATLEAST_O_MR1) {
+                wallpaperColors = wallpaperColorsOverride != null
+                    ? wallpaperColorsOverride
+                    : WallpaperManager.getInstance(context).getWallpaperColors(FLAG_SYSTEM);
+            }
             mWallpaperColorResources = wallpaperColors != null
                 ? LocalColorExtractor.newInstance(context).generateColorsOverride(
                 wallpaperColors)
@@ -494,7 +504,9 @@ public class LauncherPreviewRenderer extends BaseContext
             mContext, info.appWidgetId, providerInfo);
 
         if (mWallpaperColorResources != null) {
-            view.setColorResources(mWallpaperColorResources);
+            if (ATLEAST_S) {
+                view.setColorResources(mWallpaperColorResources);
+            }
         }
 
         view.setTag(info);

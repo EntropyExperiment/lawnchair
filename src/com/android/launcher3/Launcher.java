@@ -72,6 +72,8 @@ import static com.android.launcher3.LauncherState.NORMAL;
 import static com.android.launcher3.LauncherState.NO_OFFSET;
 import static com.android.launcher3.LauncherState.NO_SCALE;
 import static com.android.launcher3.LauncherState.SPRING_LOADED;
+import static com.android.launcher3.Utilities.ATLEAST_Q;
+import static com.android.launcher3.Utilities.ATLEAST_R;
 import static com.android.launcher3.Utilities.postAsyncCallback;
 import static com.android.launcher3.Workspace.mapOverCellLayouts;
 import static com.android.launcher3.anim.AnimatorListeners.forEndCallback;
@@ -134,6 +136,8 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.StrictMode;
@@ -155,7 +159,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowInsets;
+import android.view.WindowInsets.Type;
 import android.view.WindowInsetsAnimation;
+import android.view.WindowInsetsAnimation.Callback;
 import android.view.WindowManager.LayoutParams;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.OvershootInterpolator;
@@ -1147,23 +1153,25 @@ public class Launcher extends StatefulActivity<LauncherState>
         mAppWidgetHolder.setActivityResumed(true);
 
         // Listen for IME changes to keep state up to date.
-        getRootView().setWindowInsetsAnimationCallback(
-                new WindowInsetsAnimation.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
-                    @Override
-                    public WindowInsets onProgress(WindowInsets windowInsets,
-                            List<WindowInsetsAnimation> windowInsetsAnimations) {
-                        return windowInsets;
-                    }
-
-                    @Override
-                    public void onEnd(WindowInsetsAnimation animation) {
-                        WindowInsets insets = getRootView().getRootWindowInsets();
-                        boolean isImeVisible =
-                                insets != null && insets.isVisible(WindowInsets.Type.ime());
-                        getStatsLogManager().keyboardStateManager().setKeyboardState(
-                                isImeVisible ? SHOW : HIDE);
-                    }
-                });
+        if (ATLEAST_R) {
+            getRootView().setWindowInsetsAnimationCallback(
+                    new Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
+                        @Override
+                        public WindowInsets onProgress(WindowInsets windowInsets,
+                                List<WindowInsetsAnimation> windowInsetsAnimations) {
+                            return windowInsets;
+                        }
+    
+                        @Override
+                        public void onEnd(WindowInsetsAnimation animation) {
+                            WindowInsets insets = getRootView().getRootWindowInsets();
+                            boolean isImeVisible =
+                                    insets != null && insets.isVisible(Type.ime());
+                            getStatsLogManager().keyboardStateManager().setKeyboardState(
+                                    isImeVisible ? SHOW : HIDE);
+                        }
+                    });
+        }
     }
 
     private void logStopAndResume(boolean isResume) {
@@ -1355,7 +1363,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         LauncherState[] stateValues = LauncherState.values();
         LauncherState state = stateValues[stateOrdinal];
 
-        NonConfigInstance lastInstance = (NonConfigInstance) getLastCustomNonConfigurationInstance();
+        NonConfigInstance lastInstance = (NonConfigInstance) getLastNonConfigurationInstance();
         boolean forceRestore = lastInstance != null
                 && ((lastInstance.config.diff(mOldConfig) & CONFIG_UI_MODE) != 0
                 || savedState.getBoolean(RUNTIME_STATE_RECREATE_TO_UPDATE_THEME));
@@ -1629,14 +1637,6 @@ public class Launcher extends StatefulActivity<LauncherState>
         super.onDetachedFromWindow();
         mOverlayManager.onDetachedFromWindow();
         closeContextMenu();
-    }
-
-    @Nullable
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        NonConfigInstance instance = new NonConfigInstance();
-        instance.config = new Configuration(mOldConfig);
-        return instance;
     }
 
     @Override
@@ -2434,8 +2434,10 @@ public class Launcher extends StatefulActivity<LauncherState>
         mModelCallbacks.onInitialBindComplete(boundPages, pendingTasks, onCompleteSignal,
                 workspaceItemCount, isBindSync);
         if (mIsColdStartupAfterReboot) {
-            Trace.endAsyncSection(COLD_STARTUP_TRACE_METHOD_NAME,
-                    COLD_STARTUP_TRACE_COOKIE);
+            if (ATLEAST_Q) {
+                Trace.endAsyncSection(COLD_STARTUP_TRACE_METHOD_NAME,
+                        COLD_STARTUP_TRACE_COOKIE);
+            }
         }
     }
 
