@@ -46,21 +46,21 @@
                 android:id="@+id/bubble_flyout_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@android:string/config_bodyFontFamilyMedium"
+                android:fontFamily="@*android:string/config_bodyFontFamilyMedium"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="?android:attr/materialColorOnSurface"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Body2"/>
+                android:textColor="?android:attr/textColorPrimary"
+                android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body2"/>
 
             <TextView
                 android:id="@+id/bubble_flyout_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@android:string/config_bodyFontFamily"
+                android:fontFamily="@*android:string/config_bodyFontFamily"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="?android:attr/materialColorOnSurfaceVariant"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Body2"/>
+                android:textColor="?android:attr/textColorSecondary"
+                android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body2"/>
 
         </LinearLayout>
 

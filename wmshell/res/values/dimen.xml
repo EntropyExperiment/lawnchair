@@ -632,14 +632,14 @@
     <!-- The vertical inset to apply to the app chip's ripple drawable -->
     <dimen name="desktop_mode_header_app_chip_ripple_inset_vertical">4dp</dimen>
 
-    <!-- The corner radius of the windowing actions pill buttons's ripple drawable -->
-    <dimen name="desktop_mode_handle_menu_icon_button_ripple_radius">24dp</dimen>
-    <!-- The horizontal/vertical inset to apply to the ripple drawable effect of windowing
-    actions pill central buttons -->
-    <dimen name="desktop_mode_handle_menu_icon_button_ripple_inset_base">2dp</dimen>
-    <!-- The horizontal/vertical vertical inset to apply to the ripple drawable effect of windowing
-    actions pill edge buttons -->
-    <dimen name="desktop_mode_handle_menu_icon_button_ripple_inset_shift">4dp</dimen>
+     <!-- The corner radius of the windowing actions pill buttons's ripple drawable -->
+     <dimen name="desktop_mode_handle_menu_icon_button_ripple_radius">24dp</dimen>
+     <!-- The horizontal/vertical inset to apply to the ripple drawable effect of windowing
+     actions pill central buttons -->
+     <dimen name="desktop_mode_handle_menu_icon_button_ripple_inset_base">2dp</dimen>
+     <!-- The horizontal/vertical vertical inset to apply to the ripple drawable effect of windowing
+     actions pill edge buttons -->
+     <dimen name="desktop_mode_handle_menu_icon_button_ripple_inset_shift">4dp</dimen>
 
     <!-- The corner radius of the minimize button's ripple drawable -->
     <dimen name="desktop_mode_header_minimize_ripple_radius">18dp</dimen>

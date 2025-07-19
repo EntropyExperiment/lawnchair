@@ -43,8 +43,8 @@
     <style name="DesktopModeHandleMenuActionButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">52dp</item>
-        <item name="android:textColor">@color/materialColorOnSurface</item>
-        <item name="android:drawableTint">@color/materialColorOnSurface</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:drawableTint">?android:attr/textColorPrimary</item>
         <item name="android:importantForAccessibility">yes</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:paddingHorizontal">16dp</item>
@@ -54,23 +54,23 @@
     </style>
 
     <style name="DesktopModeHandleMenuActionButtonImage">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">20dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-    </style>
+       <item name="android:layout_width">20dp</item>
+       <item name="android:layout_height">20dp</item>
+       <item name="android:layout_marginEnd">16dp</item>
+   </style>
 
     <style name="DesktopModeHandleMenuActionButtonTextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineHeight">20sp</item>
-        <item name="android:textFontWeight">500</item>
-        <item name="android:textColor">@color/materialColorOnSurface</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:singleLine">true</item>
-    </style>
+       <item name="android:layout_width">0dp</item>
+       <item name="android:layout_height">wrap_content</item>
+       <item name="android:layout_weight">1</item>
+       <item name="android:textSize">14sp</item>
+       <item name="android:lineHeight">20sp</item>
+       <item name="android:textFontWeight">500</item>
+       <item name="android:textColor">?android:attr/textColorPrimary</item>
+       <item name="android:ellipsize">marquee</item>
+       <item name="android:scrollHorizontally">true</item>
+       <item name="android:singleLine">true</item>
+   </style>
 
     <style name="DesktopModeHandleMenuWindowingButton">
         <item name="android:layout_width">48dp</item>
@@ -101,37 +101,35 @@
 
     <style name="RestartDialogTitleText">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/materialColorOnSurface</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:lineSpacingExtra">8sp</item>
-        <!-- LC-Postmerge-TODO: This private thingy -->
-<!--        <item name="android:fontFamily">@android:string/config_headlineFontFamily</item>-->
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
     </style>
 
     <style name="RestartDialogBodyStyle">
         <item name="android:textSize">14sp</item>
-        <!-- LC-Postmerge-TODO: This private thingy -->
-<!--        <item name="android:fontFamily">@android:string/config_bodyFontFamily</item>-->
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
     </style>
 
     <style name="RestartDialogBodyText" parent="RestartDialogBodyStyle">
         <item name="android:letterSpacing">0.02</item>
-        <item name="android:textColor">@color/materialColorOnSurfaceVariant</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="RestartDialogCheckboxText" parent="RestartDialogBodyStyle">
-        <item name="android:textColor">@color/materialColorOnSurface</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:lineSpacingExtra">6sp</item>
     </style>
 
     <style name="RestartDialogDismissButton" parent="RestartDialogBodyStyle">
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:textColor">@color/materialColorPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="RestartDialogConfirmButton" parent="RestartDialogBodyStyle">
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:textColor">@color/materialColorOnPrimary</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
     </style>
 
     <style name="ReachabilityEduHandLayout" parent="Theme.AppCompat.Light">
@@ -142,10 +140,9 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-        <!-- LC-Postmerge-TODO: This private thingy -->
-<!--        <item name="android:textAppearance">-->
-<!--            @android:style/TextAppearance.DeviceDefault.Body2-->
-<!--        </item>-->
+        <item name="android:textAppearance">
+            @*android:style/TextAppearance.DeviceDefault.Body2
+        </item>
     </style>
 
 </resources>

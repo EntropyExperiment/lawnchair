@@ -46,6 +46,7 @@ dependencies {
     compileOnly projects.flags
     compileOnly projects.wmshell
     compileOnly projects.animationlib
+    compileOnly projects.utils
 
     implementation "com.google.dagger:hilt-android:$daggerVersion"
     ksp "com.google.dagger:hilt-compiler:$daggerVersion"

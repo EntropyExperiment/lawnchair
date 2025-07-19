@@ -42,7 +42,7 @@
         android:textAlignment="viewStart"
         android:textColor="@android:color/system_neutral1_900"
         android:text="@string/bubbles_user_education_manage_title"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Headline"/>
+        android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Headline"/>
 
     <TextView
         android:id="@+id/user_education_description"
@@ -56,8 +56,8 @@
         android:gravity="start"
         android:textAlignment="viewStart"
         android:textColor="@android:color/system_neutral1_900"
-        android:fontFamily="@android:string/config_bodyFontFamily"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Body2"/>
+        android:fontFamily="@*android:string/config_bodyFontFamily"
+        android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body2"/>
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:layout_height="@dimen/bubble_manage_button_height"
             android:focusable="true"
             android:text="@string/bubbles_user_education_got_it"
-            android:textSize="@android:dimen/text_size_body_2_material"
+            android:textSize="@*android:dimen/text_size_body_2_material"
             android:textColor="@android:color/system_neutral1_900"
             android:background="@drawable/bubble_manage_btn_bg"
             />
