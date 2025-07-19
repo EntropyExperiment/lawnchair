@@ -54,8 +54,6 @@ import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
-import com.android.launcher3.icons.LauncherIcons.IconPool;
-import com.android.launcher3.icons.LauncherIcons.LauncherIconsFactory;
 import com.android.launcher3.icons.cache.BaseIconCache;
 import com.android.launcher3.icons.cache.CacheLookupFlag;
 import com.android.launcher3.icons.cache.CachedObject;
