@@ -54,6 +54,7 @@ import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
+import com.android.launcher3.icons.LauncherIcons.IconPool;
 import com.android.launcher3.icons.LauncherIcons.LauncherIconsFactory;
 import com.android.launcher3.icons.cache.BaseIconCache;
 import com.android.launcher3.icons.cache.CacheLookupFlag;
@@ -118,14 +119,13 @@ public class IconCache extends BaseIconCache {
 
     // Lawnchair: Apply 3p icon pack
     public IconCache(Context context, InvariantDeviceProfile idp, LauncherIcons.IconPool iconPool, DaggerSingletonTracker lifecycle) {
-        // Call the MAIN constructor with ALL the required arguments.
         this(
-            context,                                    // Context context
-            idp,                                        // InvariantDeviceProfile idp
-            LauncherFiles.APP_ICONS_DB,                 // String dbFileName
-            UserCache.INSTANCE.get(context),            // UserCache userCache (This is a guess, find the correct way to get this singleton)
-            new LawnchairIconProvider(context),         // LauncherIconProvider iconProvider
-            InstallSessionHelper.INSTANCE.get(context), // InstallSessionHelper (Another guess)
+            context,
+            idp,
+            LauncherFiles.APP_ICONS_DB,
+            UserCache.INSTANCE.get(context),
+            new LawnchairIconProvider(context),
+            InstallSessionHelper.INSTANCE.get(context),
             iconPool,
             lifecycle
         );
@@ -137,8 +137,33 @@ public class IconCache extends BaseIconCache {
         InvariantDeviceProfile idp,
         @Nullable @Named("ICONS_DB") String dbFileName,
         UserCache userCache,
-// TODO: Lawnchair stuff
-//        LauncherIconProvider iconProvider,
+        LauncherIconProvider iconProvider,
+        // TODO: Lawnchair stuff
+        //       IconProvider iconProvider,
+        InstallSessionHelper installSessionHelper,
+        LauncherIcons.IconPool iconPool,
+        DaggerSingletonTracker lifecycle) {
+        super(context, dbFileName, MODEL_EXECUTOR.getLooper(),
+            idp.fillResIconDpi, idp.iconBitmapSize, true /* inMemoryCache */, iconProvider);
+        mLauncherApps = context.getSystemService(LauncherApps.class);
+        mUserManager = userCache;
+        mInstallSessionHelper = installSessionHelper;
+        mIconPool = iconPool;
+
+        mInstantAppResolver = InstantAppResolver.newInstance(context);
+        mWidgetCategoryBitmapInfos = new SparseArray<>();
+
+        mCancelledTask = new CancellableTask(() -> null, MAIN_EXECUTOR, c -> { });
+        mCancelledTask.cancel();
+
+        lifecycle.addCloseable(this::close);
+    }
+
+    public IconCache(
+        @ApplicationContext Context context,
+        InvariantDeviceProfile idp,
+        @Nullable @Named("ICONS_DB") String dbFileName,
+        UserCache userCache,
         IconProvider iconProvider,
         InstallSessionHelper installSessionHelper,
         LauncherIcons.IconPool iconPool,
