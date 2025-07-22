@@ -16,7 +16,7 @@ plugins {
     id 'com.google.protobuf' version "0.9.5"
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
-    id 'com.diffplug.spotless' version '7.2.0'
+    id 'com.diffplug.spotless' version '7.2.1'
 
     // Thanks Dagger!
     id 'org.jetbrains.kotlin.kapt' version '2.2.0'
@@ -507,7 +507,7 @@ spotless {
     kotlin {
         target("lawnchair/src/**/*.kt")
         ktlint().customRuleSets([
-            "io.nlopez.compose.rules:ktlint:0.4.24",
+            "io.nlopez.compose.rules:ktlint:0.4.25",
         ]).editorConfigOverride([
             "ktlint_compose_compositionlocal-allowlist": "disabled",
             "ktlint_compose_lambda-param-event-trailing": "disabled",

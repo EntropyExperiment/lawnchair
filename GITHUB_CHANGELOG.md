@@ -1,4 +1,4 @@
-Lawnchair 16 Development 0 SNAPSHOT 2 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 Development 0 SNAPSHOT 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
 ### Snapshot 3
@@ -17,6 +17,8 @@ Not a lot of errors left to go!
 * ATLEAST check to almost every launcher3 source file
 * `Utils` module (stripped)
 * Fix Dagger duplicated classes (because of Dagger dependency ksp/kapt mixing)
+* Build reproducibility improvements by specifying dependencies in `build.gradle` files
+* Fix some of the issues in both `lawn` and `src` modules
 
 ### Snapshot 2
 
