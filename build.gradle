@@ -12,7 +12,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.compose' version "2.2.0"
     id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.0"
     id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.0"
-    id "com.google.devtools.ksp" version "2.1.21-2.0.2"
+    id "com.google.devtools.ksp" version "2.2.0-2.0.2"
     id 'com.google.protobuf' version "0.9.5"
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
@@ -20,7 +20,7 @@ plugins {
 
     // Thanks Dagger!
     id 'org.jetbrains.kotlin.kapt' version '2.2.0'
-    id 'com.google.dagger.hilt.android' version '2.56.2'
+    id 'com.google.dagger.hilt.android' version '2.57'
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -52,7 +52,7 @@ allprojects {
             }
         }
         dependencies {
-            implementation 'androidx.core:core-ktx:1.16.0'
+            implementation 'androidx.core:core-ktx:1.17.0-beta01'
         }
     }
 
@@ -97,7 +97,7 @@ allprojects {
 
     ext {
         FRAMEWORK_PREBUILTS_DIR = "$rootDir/prebuilts/libs"
-        daggerVersion = '2.55'
+        daggerVersion = '2.57'
 
         addFrameworkJar = { String name ->
             def frameworkJar = new File(FRAMEWORK_PREBUILTS_DIR, name)
@@ -419,17 +419,17 @@ dependencies {
     ksp "com.google.dagger:hilt-compiler:2.56.2"
 
     implementation platform("androidx.compose:compose-bom:2025.07.00")
-    implementation "androidx.compose.ui:ui"
-    implementation "androidx.compose.ui:ui-util"
-    debugImplementation "androidx.compose.ui:ui-tooling"
-    implementation "androidx.compose.ui:ui-tooling-preview"
-    implementation "androidx.compose.ui:ui-text-google-fonts"
-    implementation "androidx.compose.foundation:foundation"
+    implementation "androidx.compose.ui:ui:1.8.3"
+    implementation "androidx.compose.ui:ui-util:1.8.3"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.8.3"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.8.3"
+    implementation "androidx.compose.ui:ui-text-google-fonts:1.8.3"
+    implementation "androidx.compose.foundation:foundation:1.8.3"
     implementation "androidx.compose.material:material-icons-extended"
-    implementation "androidx.compose.material:material"
-    implementation "androidx.compose.runtime:runtime-livedata"
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material3:material3-window-size-class'
+    implementation "androidx.compose.material:material:1.9.0-beta03"
+    implementation "androidx.compose.runtime:runtime-livedata:1.9.0-beta03"
+    implementation 'androidx.compose.material3:material3:1.4.0-alpha18'
+    implementation 'androidx.compose.material3:material3-window-size-class:1.4.0-alpha18'
     implementation "androidx.activity:activity-compose:1.10.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2"
     implementation "androidx.navigation:navigation-compose:2.9.2"
@@ -443,7 +443,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-permissions:$accompanistVersion"
 
     implementation "com.google.android.material:material:1.12.0"
-    implementation "io.github.fornewid:material-motion-compose-core:1.2.1"
+    implementation "io.github.fornewid:material-motion-compose-core:2.0.1"
     implementation 'dev.kdrag0n:colorkt:1.0.5'
     implementation 'io.coil-kt:coil-compose:2.7.0'
     implementation 'me.xdrop:fuzzywuzzy:1.4.0'
