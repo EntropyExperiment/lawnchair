@@ -1,7 +1,11 @@
 Lawnchair 16 Development 0 SNAPSHOT 2 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### Snapshot 3 (Upcoming)
+### Snapshot 3
+
+This is a developer-focused change log:
+
+Not a lot of errors left to go!
 
 * Finish correctly implementing all Dagger functions (?)
 * Merge Lawnchair 15 Beta 1 into Bubble Tea
@@ -12,6 +16,7 @@ older (i.e., Lawnchair `15-dev`).
 * Publish `platform_frameworks_libs_systemui` to pe 16-dev branch
 * ATLEAST check to almost every launcher3 source file
 * `Utils` module (stripped)
+* Fix Dagger duplicated classes (because of Dagger dependency ksp/kapt mixing)
 
 ### Snapshot 2
 
