@@ -217,7 +217,7 @@ class LawnchairLauncher : QuickstepLauncher() {
         }
         val isWorkspaceDarkText = Themes.getAttrBoolean(this, R.attr.isWorkspaceDarkText)
         preferenceManager2.darkStatusBar.onEach(launchIn = lifecycleScope) { darkStatusBar ->
-            systemUiController.updateUiState(UI_STATE_BASE_WINDOW, isWorkspaceDarkText || darkStatusBar)
+            systemUiController?.updateUiState(UI_STATE_BASE_WINDOW, isWorkspaceDarkText || darkStatusBar)
         }
         preferenceManager2.backPressGestureHandler.onEach(launchIn = lifecycleScope) { handler ->
             hasBackGesture = handler !is GestureHandlerConfig.NoOp

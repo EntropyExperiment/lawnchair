@@ -97,7 +97,7 @@ public class ModelDbController {
     private final LayoutParserFactory mLayoutParserFactory;
 
     @Inject
-    ModelDbController(
+    public ModelDbController(
             @ApplicationContext Context context,
             InvariantDeviceProfile idp,
             LauncherPrefs prefs,

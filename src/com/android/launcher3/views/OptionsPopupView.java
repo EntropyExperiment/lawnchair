@@ -77,7 +77,7 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
     private static final String EXTRA_WALLPAPER_LAUNCH_SOURCE =
             "com.android.wallpaper.LAUNCH_SOURCE";
 
-    private final ArrayMap<View, OptionItem> mItemMap = new ArrayMap<>();
+    public final ArrayMap<View, OptionItem> mItemMap = new ArrayMap<>();
     private RectF mTargetRect;
     private boolean mShouldAddArrow;
 
