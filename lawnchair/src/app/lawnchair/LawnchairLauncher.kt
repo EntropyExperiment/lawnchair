@@ -350,7 +350,7 @@ class LawnchairLauncher : QuickstepLauncher() {
             view.iconView.setBackgroundDrawable(item.icon)
             view.bubbleText.text = item.label
             view.setOnClickListener(popup)
-            view.onLongClickListener = popup
+            view.setOnLongClickListener = popup
             popup.mItemMap[view] = item
         }
 

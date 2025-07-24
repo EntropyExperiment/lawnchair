@@ -270,7 +270,7 @@ public class InvariantDeviceProfile {
     private final List<OnIDPChangeListener> mChangeListeners = new CopyOnWriteArrayList<>();
 
     @Inject
-    InvariantDeviceProfile(
+    public InvariantDeviceProfile(
             @ApplicationContext Context context,
             LauncherPrefs prefs,
             DisplayController dc,

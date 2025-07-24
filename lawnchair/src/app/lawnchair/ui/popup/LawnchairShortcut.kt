@@ -30,6 +30,7 @@ import com.android.launcher3.icons.BitmapInfo
 import com.android.launcher3.model.data.AppInfo as ModelAppInfo
 import com.android.launcher3.model.data.ItemInfo
 import com.android.launcher3.popup.SystemShortcut
+import com.android.launcher3.util.ApplicationInfoWrapper
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.PackageManagerHelper
 import com.android.launcher3.views.ActivityContext
@@ -62,11 +63,11 @@ class LawnchairShortcut {
                 if (itemInfo.targetComponent == null) {
                     return@Factory null
                 }
-                if (PackageManagerHelper.isSystemApp(
-                        activity,
+                if (ApplicationInfoWrapper(
+                        activity.asContext(),
                         itemInfo.targetComponent!!.packageName,
-                    )
-                ) {
+                        itemInfo.user).isSystem()
+                    ) {
                     return@Factory null
                 }
                 UnInstall(activity, itemInfo, view)
@@ -76,7 +77,11 @@ class LawnchairShortcut {
             val targetCmp = itemInfo.targetComponent
             val packageName = targetCmp?.packageName ?: return@Factory null
 
-            if (PackageManagerHelper(activity).isAppSuspended(packageName, itemInfo.user)) return@Factory null
+            if (ApplicationInfoWrapper(
+                    activity.asContext(),
+                    packageName,
+                    itemInfo.user
+                ).isSuspended()) return@Factory null
 
             PauseApps(activity, itemInfo, originalView)
         }
@@ -126,15 +131,10 @@ class LawnchairShortcut {
         @SuppressLint("NewApi")
         override fun onClick(view: View) {
             val context = view.context
-            val appLabel = PackageManagerHelper(context).getApplicationInfo(
+            val appLabel = ApplicationInfoWrapper(
+                context,
                 mItemInfo.targetComponent?.packageName ?: "",
-                mItemInfo.user,
-                0,
-            )?.let {
-                context.packageManager.getApplicationLabel(
-                    it,
-                )
-            }
+                mItemInfo.user).toString()
             AlertDialog.Builder(context)
                 .setIcon(R.drawable.ic_hourglass_top)
                 .setTitle(context.getString(R.string.pause_apps_dialog_title, appLabel))
