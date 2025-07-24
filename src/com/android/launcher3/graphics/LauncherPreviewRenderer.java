@@ -33,6 +33,7 @@ import static com.android.launcher3.Utilities.ATLEAST_S;
 import static com.android.launcher3.Utilities.SHOULD_SHOW_FIRST_PAGE_WIDGET;
 import static com.android.launcher3.graphics.ThemeManager.PREF_ICON_SHAPE;
 import static com.android.launcher3.model.ModelUtils.currentScreenContentFilter;
+import static com.android.launcher3.util.ResourceBasedOverride.Overrides.getObject;
 import static com.android.launcher3.widget.LauncherWidgetHolder.APPWIDGET_HOST_ID;
 
 import android.app.Fragment;
@@ -106,9 +107,11 @@ import com.android.launcher3.model.data.LauncherAppWidgetInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.util.BaseContext;
 import com.android.launcher3.util.ComponentKey;
+import com.android.launcher3.util.DaggerSingletonObject;
 import com.android.launcher3.util.DisplayController;
 import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
+import com.android.launcher3.util.MainThreadInitializedObject;
 import com.android.launcher3.util.SandboxContext;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.WindowBounds;
@@ -137,6 +140,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import app.lawnchair.DeviceProfileOverrides;
+import app.lawnchair.data.iconoverride.IconOverrideRepository;
+import app.lawnchair.font.FontCache;
+import app.lawnchair.font.FontManager;
+import app.lawnchair.icons.IconPackProvider;
+import app.lawnchair.preferences.PreferenceManager;
+import app.lawnchair.preferences2.PreferenceManager2;
+import app.lawnchair.smartspace.provider.SmartspaceProvider;
+import app.lawnchair.theme.ThemeProvider;
+
 /**
  * Utility class for generating the preview of Launcher for a given InvariantDeviceProfile.
  * Steps:
@@ -149,7 +162,7 @@ import java.util.stream.IntStream;
 // Lawnchair-TODO-Merge: Merge Lawnchair back, (reason: merge-method: theirs)
 
 public class LauncherPreviewRenderer extends BaseContext
-    implements ActivityContext, WorkspaceLayoutManager, LayoutInflater.Factory2 {
+    implements ActivityContext, WorkspaceLayoutManager, LayoutInflater.Factory2, LocalColorExtractor.Listener {
 
     /**
      * Context used just for preview. It also provides a few objects (e.g. UserCache) just for
@@ -165,6 +178,13 @@ public class LauncherPreviewRenderer extends BaseContext
             this(base, gridName, shapeKey, APPWIDGET_HOST_ID, null);
         }
 
+        /**
+         * TODO: This is dumb, not actually using brain, because how do I convert this????
+         */
+        private void putBaseInstance(DaggerSingletonObject daggerSingletonObject) {
+            getObject(null, getBaseContext(), APPWIDGET_HOST_ID);
+        }
+
         public PreviewContext(Context base, String gridName, String shapeKey,
             int widgetHostId, @Nullable String layoutXml) {
             super(base);
@@ -174,6 +194,17 @@ public class LauncherPreviewRenderer extends BaseContext
                 new ProxyPrefs(this, getSharedPreferences(mPrefName, MODE_PRIVATE));
             prefs.put(GRID_NAME, gridName);
             prefs.put(PREF_ICON_SHAPE, shapeKey);
+
+            putBaseInstance(PreferenceManager.INSTANCE);
+            putBaseInstance(PreferenceManager2.INSTANCE);
+            putBaseInstance(FontCache.INSTANCE);
+            putBaseInstance(FontManager.INSTANCE);
+            putBaseInstance(ThemeProvider.INSTANCE);
+            putBaseInstance(IconPackProvider.INSTANCE);
+            putBaseInstance(IconOverrideRepository.INSTANCE);
+            putBaseInstance(SmartspaceProvider.INSTANCE);
+            putBaseInstance(DeviceProfileOverrides.INSTANCE);
+
 
             PreviewAppComponent.Builder builder =
                 DaggerLauncherPreviewRenderer_PreviewAppComponent.builder().bindPrefs(prefs);
@@ -232,6 +263,15 @@ public class LauncherPreviewRenderer extends BaseContext
     private final AppWidgetHost mAppWidgetHost;
     private final SparseIntArray mWallpaperColorResources;
     private final SparseArray<Size> mLauncherWidgetSpanInfo;
+
+    /**
+     * Lawnchair
+     * <p> 
+     * Default search container layout.
+     * 
+     * @implNote Launcher3 A16_r2 uses [R.layout.qsb_preview]
+     */
+    private int mWorkspaceSearchContainer = R.layout.smartspace_container;
 
     public LauncherPreviewRenderer(Context context,
         InvariantDeviceProfile idp,
@@ -621,7 +661,7 @@ public class LauncherPreviewRenderer extends BaseContext
         if (FeatureFlags.QSB_ON_FIRST_SCREEN && dataModel.isFirstPagePinnedItemEnabled
             && !SHOULD_SHOW_FIRST_PAGE_WIDGET) {
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
-            View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen, false);
+            View qsb = mHomeElementInflater.inflate(mWorkspaceSearchContainer, firstScreen, false);
             // TODO: set bgHandler on qsb when it is BaseTemplateCard, which requires API changes.
             CellLayoutLayoutParams lp = new CellLayoutLayoutParams(
                 0, 0, firstScreen.getCountX(), 1);
@@ -634,6 +674,17 @@ public class LauncherPreviewRenderer extends BaseContext
         measureView(mRootView, mDp.widthPx, mDp.heightPx);
         // Additional measure for views which use auto text size API
         measureView(mRootView, mDp.widthPx, mDp.heightPx);
+    }
+    
+    /**
+     * Lawnchair
+     * <p> 
+     * Set custom search container for workspace.
+     *
+     * @param resId True to hide and false to show.
+     */
+    public void setWorkspaceSearchContainer(int resId) {
+        mWorkspaceSearchContainer = resId;
     }
 
     private static void measureView(View view, int width, int height) {
@@ -664,6 +715,11 @@ public class LauncherPreviewRenderer extends BaseContext
         @Override
         protected boolean shouldAllowDirectClick() {
             return false;
+        }
+
+        @Override
+        public void onColorsChanged(SparseIntArray colors) {
+            post(() -> setColorResources(colors));
         }
     }
 
