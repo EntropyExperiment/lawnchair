@@ -55,6 +55,9 @@ project(':searchuilib').projectDir = new File(rootDir, 'platform_frameworks_libs
 include ':animationlib'
 project(':animationlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/animationlib')
 
+include ':msdllib'
+project(':msdllib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/msdllib')
+
 include ':hidden-api'
 
 include ':shared'
