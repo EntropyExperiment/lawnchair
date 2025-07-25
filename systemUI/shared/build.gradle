@@ -25,7 +25,7 @@ android {
     sourceSets {
         main {
             java.srcDirs = ['src']
-            aidl.srcDirs = ['systemUI/shared/src/com/android/systemui/shared/recents']
+            aidl.srcDirs = ['src']
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }
