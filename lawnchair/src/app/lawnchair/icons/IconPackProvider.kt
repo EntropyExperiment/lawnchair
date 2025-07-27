@@ -14,7 +14,7 @@ import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.icons.ClockDrawableWrapper
-import com.android.launcher3.icons.ThemedIconDrawable
+import com.android.launcher3.icons.mono.ThemedIconDrawable
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import javax.inject.Inject
@@ -95,7 +95,7 @@ class IconPackProvider @Inject constructor(
         iconEntry: IconEntry,
         drawable: Drawable,
     ): Drawable? {
-        val themedColors: IntArray = ThemedIconDrawable.getThemedColors(context)
+        val themedColors: IntArray = ThemedIconDrawable.getColors(context)
         try {
             val res = packageManager.getResourcesForApplication(iconEntry.packPackageName)
 

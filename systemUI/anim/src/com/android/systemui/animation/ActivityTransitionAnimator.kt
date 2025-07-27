@@ -1395,13 +1395,12 @@ constructor(
                             // candidate contains the matching cookie, or a component is also
                             // defined and is a match.
                             if (
-                                // Lawnchair-TODO-Merge-High: Make private API accessible to kotlinc
-                                controller.transitionCookie != null //&&
-                                    //it.taskInfo
-                                        //?.launchCookies
-                                        //?.contains(controller.transitionCookie) != true &&
-                                    //(controller.component == null ||
-                                        //it.taskInfo?.topActivity != controller.component)
+                                controller.transitionCookie != null &&
+                                    it.taskInfo
+                                        ?.launchCookies
+                                        ?.contains(controller.transitionCookie) != true &&
+                                    (controller.component == null ||
+                                        it.taskInfo?.topActivity != controller.component)
                             ) {
                                 continue
                             }

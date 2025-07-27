@@ -6,7 +6,7 @@ import androidx.arch.core.util.Function
 import app.lawnchair.bugreport.LawnchairBugReporter
 import app.lawnchair.theme.color.tokens.ColorTokens
 import com.android.launcher3.Utilities
-import com.android.launcher3.icons.ThemedIconDrawable
+import com.android.launcher3.icons.mono.ThemedIconDrawable
 import com.android.quickstep.QuickstepProcessInitializer
 
 @Keep

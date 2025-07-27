@@ -241,11 +241,10 @@ class LawnchairFloatingSurfaceView @JvmOverloads constructor(
     }
 
     fun getIcon(): View? {
-        return mLauncher.getFirstMatchForAppClose(
+        return mLauncher.getFirstHomeElementForAppClose(
             null, /* StableViewInfo */
             mContract!!.componentName.packageName,
             mContract!!.user,
-            false, /* supportsAllAppsState */
         )
     }
 

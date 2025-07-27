@@ -35,7 +35,7 @@ import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.icons.IconProvider
-import com.android.launcher3.icons.ThemedIconDrawable
+import com.android.launcher3.icons.mono.ThemedIconDrawable
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.SafeCloseable
 import java.util.function.Supplier
@@ -222,7 +222,7 @@ class LawnchairIconProvider @JvmOverloads constructor(
     }
 
     override fun getSystemStateForPackage(systemState: String, packageName: String): String {
-        return super.getSystemStateForPackage(systemState, packageName) + ",$isThemeEnabled"
+        return super.getSystemStateForPackage(systemState, packageName) + ",${isThemeEnabled()}"
     }
 
     override fun getSystemIconState(): String {
@@ -352,7 +352,7 @@ class LawnchairIconProvider @JvmOverloads constructor(
         }
 
         override fun onReceive(context: Context, intent: Intent) {
-            if (isThemeEnabled) {
+            if (isThemeEnabled()) {
                 setIconThemeSupported(true)
             }
             callback.onSystemIconStateChanged(systemIconState)

@@ -333,7 +333,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 0 // Bottom left
         };
         if (Flags.allAppsBlur()) {
-            // Lawnchair-TODO-Colour-M3E: Colour A1800, A1100
             int resId = ColorTokens.ExpressiveAllApps.resolveColor(getContext());
             int layerAbove = ColorUtils.setAlphaComponent(getResources().getColor(resId, null),
                     (int) (0.4f * 255));

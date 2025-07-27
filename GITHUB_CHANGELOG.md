@@ -6,7 +6,8 @@ older (i.e., Lawnchair `15-dev`).
 This is a developer-focused change log:
 
 * Add `MSDLLib` to `platform_frameworks_libs_systemui` 
-* Fix some issues in both `lawn` and `src` modules
+* Add `contextualeducationlib` to `platform_frameworks_libs_systemui`
+* Fix issues in both `lawn` and `src` modules
 * Fix AIDL sources
 
 ### Snapshot 3

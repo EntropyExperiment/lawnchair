@@ -4,12 +4,9 @@ import android.content.Context
 import app.lawnchair.data.AppDatabase
 import app.lawnchair.icons.IconPickerItem
 import com.android.launcher3.LauncherAppState
-import com.android.launcher3.LauncherModel
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
-import com.android.launcher3.pm.PackageInstallInfo
-import com.android.launcher3.pm.PackageInstallInfo.STATUS_INSTALLED
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
@@ -67,11 +64,11 @@ class IconOverrideRepository @Inject constructor(
 
     suspend fun deleteAll() {
         dao.deleteAll()
-        LauncherAppState.getInstance(context).reloadIcons()
+        LauncherAppState.getInstance(context).model.reloadIfActive()
     }
 
     private fun updatePackageIcons(target: ComponentKey) {
-        val model = LauncherAppState.INSTANCE.get(context).getModel()
+        val model = LauncherAppState.INSTANCE.get(context).model
 
         model.onPackageIconsUpdated(hashSetOf(target.componentName.packageName), target.user)
     }
