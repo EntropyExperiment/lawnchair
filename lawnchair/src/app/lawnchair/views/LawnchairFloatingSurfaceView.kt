@@ -90,7 +90,7 @@ class LawnchairFloatingSurfaceView @JvmOverloads constructor(
         // Remove after some time, to avoid flickering
         Executors.MAIN_EXECUTOR.handler.postDelayed(
             mRemoveViewRunnable,
-            RefreshRateTracker.getSingleFrameMs(mLauncher).toLong(),
+            mLauncher.getSingleFrameMs().toLong(),
         )
     }
 
@@ -408,7 +408,7 @@ class LawnchairFloatingSurfaceView @JvmOverloads constructor(
             view.mIsOpen = true
 
             val anim = AnimatorSet()
-            val startDelay = RefreshRateTracker.getSingleFrameMs(launcher)
+            val startDelay = launcher.getSingleFrameMs()
             val launcherContentAnimator: Pair<AnimatorSet?, Runnable?> =
                 view.getLauncherContentAnimator(startDelay)
             anim.playTogether(launcherContentAnimator.first, view.getBackgroundAnimator())

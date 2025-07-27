@@ -38,7 +38,7 @@ class LawnchairWidgetHolder(context: Context, intConsumer: IntConsumer?) : Launc
             appWidgetRemovedCallback: IntConsumer?,
             interactionHandler: RemoteViews.InteractionHandler?,
         ): LauncherWidgetHolder {
-            return if (!FeatureFlags.ENABLE_WIDGET_HOST_IN_BACKGROUND.get()) {
+            return if (true) { // Lawnchair: Used to be ENABLE_WIDGET_HOST_IN_BACKGROUND
                 object : LauncherWidgetHolder(context, appWidgetRemovedCallback) {
                     override fun createHost(
                         context: Context,

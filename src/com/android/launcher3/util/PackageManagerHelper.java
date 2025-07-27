@@ -24,6 +24,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
@@ -120,6 +121,22 @@ public class PackageManagerHelper {
             @NonNull final UserHandle user) {
         List<LauncherActivityInfo> activities = mLauncherApps.getActivityList(pkg, user);
         return activities.isEmpty() ? null : activities.get(0);
+    }
+
+    /**
+     * Creates a new market search intent.
+     */
+    public static Intent getMarketSearchIntent(Context context, String query) {
+        try {
+            Intent intent = Intent.parseUri(context.getString(R.string.market_search_intent), 0);
+            if (!TextUtils.isEmpty(query)) {
+                intent.setData(
+                    intent.getData().buildUpon().appendQueryParameter("q", query).build());
+            }
+            return intent;
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

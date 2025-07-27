@@ -7,7 +7,7 @@ import app.lawnchair.util.RecentHelper
 import app.lawnchair.util.TaskUtilLockState
 import com.android.quickstep.TaskOverlayFactory
 import com.android.quickstep.views.OverviewActionsView
-import com.android.quickstep.views.TaskView.TaskContainer
+import com.android.quickstep.views.TaskContainer
 import com.android.systemui.shared.recents.model.Task
 import com.android.systemui.shared.recents.model.ThumbnailData
 

@@ -68,7 +68,6 @@ fun SelectIconPreference(componentKey: ComponentKey) {
                                 it.setResult(Activity.RESULT_OK)
                                 it.finish()
                                 model.onAppIconChanged(componentKey.componentName.packageName, componentKey.user)
-                                LauncherAppState.INSTANCE.get(context).reloadIcons()
                             }
                         }
                     },

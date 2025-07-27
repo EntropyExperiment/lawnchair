@@ -4,14 +4,14 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import app.lawnchair.views.CustomTextView
-import com.android.launcher3.views.DoubleShadowBubbleTextView.ShadowInfo
+import com.android.launcher3.views.ShadowInfo.Companion.fromContext
 
 open class DoubleShadowTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : CustomTextView(context, attrs) {
 
-    private val shadowInfo = ShadowInfo(context, attrs, 0)
+    private val shadowInfo = fromContext(context, attrs, 0);
 
     init {
         setShadowLayer(shadowInfo.ambientShadowBlur, 0f, 0f, shadowInfo.ambientShadowColor)

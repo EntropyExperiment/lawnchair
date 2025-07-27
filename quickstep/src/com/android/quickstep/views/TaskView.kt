@@ -784,7 +784,7 @@ constructor(
             ?.inflate()
     }
 
-    override fun onAttachedToWindow() = {
+    override fun onAttachedToWindow() {
             super.onAttachedToWindow()
             if (enableRefactorTaskThumbnail()) {
                 // The TaskView lifecycle is starts the ViewModel during onBind, and cleans it in
@@ -797,7 +797,7 @@ constructor(
             }
         }
 
-    private fun updateTaskViewState(state: TaskTileUiState) = {
+    private fun updateTaskViewState(state: TaskTileUiState) {
             sysUiStatusNavFlags = state.sysUiStatusNavFlags
 
             // Updating containers
@@ -887,7 +887,7 @@ constructor(
             return thumbnailPosition
         }
 
-    override fun onDetachedFromWindow() = {
+    override fun onDetachedFromWindow() {
             super.onDetachedFromWindow()
             if (enableRefactorTaskThumbnail()) {
                 // The jobs are being cancelled in the background thread. So we make a copy of the
@@ -926,7 +926,7 @@ constructor(
         onBind(orientedState)
     }
 
-    protected open fun onBind(orientedState: RecentsOrientedState) = {
+    protected open fun onBind(orientedState: RecentsOrientedState) {
             if (enableRefactorTaskThumbnail()) {
                 val scopeId = context
                 Log.d(TAG, "onBind $scopeId ${orientedState.containerInterface}")
@@ -981,7 +981,7 @@ constructor(
         @IdRes digitalWellbeingBannerId: Int,
         @StagePosition stagePosition: Int,
         taskOverlayFactory: TaskOverlayFactory,
-    ): TaskContainer = {
+    ): TaskContainer {
             val iconView = findViewById<View>(iconViewId) as TaskViewIcon
             return TaskContainer(
                 this,
@@ -1007,7 +1007,7 @@ constructor(
     /** Check if given `taskId` is tracked in this view */
     fun containsTaskId(taskId: Int) = getTaskContainerById(taskId) != null
 
-    open fun setOrientationState(orientationState: RecentsOrientedState) = {
+    open fun setOrientationState(orientationState: RecentsOrientedState) {
             this.orientedState = orientationState
             taskContainers.forEach { it.iconView.setIconOrientation(orientationState, isGridTask) }
             setThumbnailOrientation(orientationState)
@@ -1158,14 +1158,14 @@ constructor(
     protected open fun needsUpdate(@TaskDataChanges dataChange: Int, @TaskDataChanges flag: Int) =
         (dataChange and flag) == flag
 
-    protected open fun cancelPendingLoadTasks() = {
+    protected open fun cancelPendingLoadTasks() {
             pendingThumbnailLoadRequests.forEach { it.cancel() }
             pendingThumbnailLoadRequests.clear()
             pendingIconLoadRequests.forEach { it.cancel() }
             pendingIconLoadRequests.clear()
         }
 
-    protected open fun setIconState(container: TaskContainer, state: TaskData?) = {
+    protected open fun setIconState(container: TaskContainer, state: TaskData?) {
             if (enableOverviewIconMenu()) {
                 if (state is TaskData.Data) {
                     setIcon(container.iconView, state.icon)

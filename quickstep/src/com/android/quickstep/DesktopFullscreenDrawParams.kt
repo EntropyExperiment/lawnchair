@@ -17,7 +17,7 @@
 package com.android.quickstep
 
 import android.content.Context
-import com.android.launcher3.R
+import com.android.wm.shell.shared.R
 
 // DesktopTaskView thumbnail's corner radius is independent of fullscreenProgress.
 open class DesktopFullscreenDrawParams

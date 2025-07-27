@@ -1,6 +1,14 @@
 Lawnchair 16 Development 0 SNAPSHOT 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
+### Snapshot 4 (Draft)
+
+This is a developer-focused change log:
+
+* Add `MSDLLib` to `platform_frameworks_libs_systemui` 
+* Fix some issues in both `lawn` and `src` modules
+* Fix AIDL sources
+
 ### Snapshot 3
 
 This is a developer-focused change log:

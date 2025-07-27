@@ -58,6 +58,9 @@ project(':animationlib').projectDir = new File(rootDir, 'platform_frameworks_lib
 include ':msdllib'
 project(':msdllib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/msdllib')
 
+include ':contextualeducationlib'
+project(':contextualeducationlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/contextualeducationlib')
+
 include ':hidden-api'
 
 include ':shared'
