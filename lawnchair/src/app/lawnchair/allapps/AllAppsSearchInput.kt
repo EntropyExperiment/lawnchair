@@ -86,6 +86,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
 
     private lateinit var apps: LawnchairAlphabeticalAppsList<*>
     private lateinit var appsView: ActivityAllAppsContainerView<*>
+    private var searchAlgorithm: LawnchairSearchAlgorithm? = null
 
     private var focusedResultTitle = ""
     private var canShowHint = false
@@ -133,19 +134,12 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
         micIcon.isVisible = shouldShowIcons && voiceIntent != null
         lensIcon.isVisible = shouldShowIcons && supportsLens && lensIntent != null
 
-        with(input) {
-            addTextChangedListener {
-                actionButton.isVisible = !it.isNullOrEmpty()
-                micIcon.isVisible = shouldShowIcons && voiceIntent != null && it.isNullOrEmpty()
-                lensIcon.isVisible = shouldShowIcons && supportsLens && lensIntent != null && it.isNullOrEmpty()
-            }
-        }
-
         actionButton = ViewCompat.requireViewById(this, R.id.action_btn)
         with(actionButton) {
             isVisible = false
             setOnClickListener {
                 input.reset()
+                searchAlgorithm?.doZeroStateSearch(this@AllAppsSearchInput)
                 updateHint()
             }
         }
@@ -197,6 +191,10 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
                     input.setHint(R.string.all_apps_search_bar_hint)
                 }
 
+                if (input.text.toString().isEmpty()) {
+                    searchAlgorithm?.doZeroStateSearch(this)
+                }
+
                 setBackgroundVisibility(false, 0f)
                 animateHintVisibility(true)
                 animatePadding(currentPaddingLeft / 2, currentPaddingRight / 2)
@@ -225,11 +223,18 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
             },
             afterTextChanged = {
                 updateHint()
+                if (input.text.isNullOrEmpty()) {
+                    searchAlgorithm?.doZeroStateSearch(this)
+                }
                 if (input.text.toString() == "/lawnchairdebug") {
                     val enableDebugMenu = prefs.enableDebugMenu
                     enableDebugMenu.set(!enableDebugMenu.get())
                     launcher.stateManager.goToState(LauncherState.NORMAL)
                 }
+
+                actionButton.isVisible = !it.isNullOrEmpty()
+                micIcon.isVisible = shouldShowIcons && voiceIntent != null && it.isNullOrEmpty()
+                lensIcon.isVisible = shouldShowIcons && supportsLens && lensIntent != null && it.isNullOrEmpty()
             },
         )
 
@@ -337,8 +342,10 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
     override fun initializeSearch(appsView: ActivityAllAppsContainerView<*>) {
         apps = appsView.searchResultList as LawnchairAlphabeticalAppsList<*>
         this.appsView = appsView
+        val algorithm = LawnchairSearchAlgorithm.create(context)
+        this.searchAlgorithm = algorithm
         searchBarController.initialize(
-            LawnchairSearchAlgorithm.create(context),
+            algorithm,
             input,
             launcher,
             this,

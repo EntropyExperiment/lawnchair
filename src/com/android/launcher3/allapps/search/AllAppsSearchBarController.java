@@ -98,7 +98,6 @@ public class AllAppsSearchBarController
     public void afterTextChanged(final Editable s) {
         mQuery = s.toString();
         if (mQuery.isEmpty()) {
-            mSearchAlgorithm.cancel(true);
             mCallback.clearSearchResult();
         } else {
             mSearchAlgorithm.cancel(false);
