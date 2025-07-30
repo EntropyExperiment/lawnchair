@@ -566,7 +566,7 @@ open class IconShape(
             return "sevensidedcookie"
         }
     }
-    
+
     object Arch : IconShape(
         // Placeholder
         Corner.fullArc,
