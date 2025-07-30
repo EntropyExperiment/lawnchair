@@ -25,9 +25,8 @@ import android.graphics.Path
 import android.graphics.PointF
 import android.util.Log
 import android.util.PathParser
-import com.android.launcher3.Utilities
-
 import app.lawnchair.util.unsafeLazy
+import com.android.launcher3.Utilities
 
 open class IconShape(
     val topLeft: Corner,
@@ -675,4 +674,3 @@ open class IconShape(
         }
     }
 }
-
