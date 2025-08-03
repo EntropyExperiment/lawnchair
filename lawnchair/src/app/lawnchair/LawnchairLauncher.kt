@@ -97,7 +97,11 @@ class LawnchairLauncher : QuickstepLauncher() {
     private val defaultOverlay by unsafeLazy { OverlayCallbackImpl(this) }
     private val prefs by unsafeLazy { PreferenceManager.getInstance(this) }
     private val preferenceManager2 by unsafeLazy { PreferenceManager2.getInstance(this) }
-    private val insetsController by unsafeLazy { launcher.window?.let { WindowInsetsControllerCompat(it, rootView) } }
+    private val insetsController: WindowInsetsControllerCompat by lazy {
+        val window = launcher.window
+            ?: throw Exception("WindowInsetsControllerCompat not available.")
+        WindowInsetsControllerCompat(window, rootView)
+    }
     private val themeProvider by unsafeLazy { ThemeProvider.INSTANCE.get(this) }
     private val noStatusBarStateListener = object : StateManager.StateListener<LauncherState> {
         override fun onStateTransitionStart(toState: LauncherState) {
@@ -142,14 +146,6 @@ class LawnchairLauncher : QuickstepLauncher() {
     val gestureController by unsafeLazy { GestureController(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (!Utilities.ATLEAST_Q) {
-            enableEdgeToEdge(
-                navigationBarStyle = SystemBarStyle.auto(
-                    Color.TRANSPARENT,
-                    Color.TRANSPARENT,
-                ),
-            )
-        }
         layoutInflater.factory2 = LawnchairLayoutFactory(this)
         super.onCreate(savedInstanceState)
 
@@ -359,7 +355,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     override fun createAppWidgetHolder(): LauncherWidgetHolder {
-        val factory = LauncherWidgetHolder.HolderFactory.newFactory(this) as LawnchairWidgetHolder.LawnchairHolderFactory
+        val factory = LauncherWidgetHolder.newInstance(this) as LawnchairWidgetHolder.LawnchairHolderFactory
         return factory.newInstance(
             this,
         ) { appWidgetId: Int ->
@@ -487,7 +483,7 @@ class LawnchairLauncher : QuickstepLauncher() {
         if (
             preferenceManager2.alwaysReloadIcons.firstBlocking()
         ) {
-            LauncherAppState.getInstance(this).reloadIcons()
+            LauncherAppState.getInstance(this).model.reloadIfActive()
         }
     }
 
@@ -497,7 +493,7 @@ class LawnchairLauncher : QuickstepLauncher() {
 
         var sRestartFlags = 0
 
-        val instance get() = LauncherAppState.getInstanceNoCreate()?.launcher as? LawnchairLauncher
+        val instance get() = LauncherAppState.getInstanceNoCreate()
     }
 }
 

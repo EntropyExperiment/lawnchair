@@ -8,7 +8,7 @@ import com.android.launcher3.config.FeatureFlags
 import com.android.launcher3.widget.LauncherWidgetHolder
 import java.util.function.IntConsumer
 
-class LawnchairWidgetHolder(context: Context, intConsumer: IntConsumer?) : LauncherWidgetHolder(context, intConsumer) {
+class LawnchairWidgetHolder(context: Context, hostId: Int) : LauncherWidgetHolder(context, hostId) {
 
     @Keep
     class LawnchairHolderFactory
@@ -35,12 +35,12 @@ class LawnchairWidgetHolder(context: Context, intConsumer: IntConsumer?) : Launc
          */
         fun newInstance(
             context: Context,
-            appWidgetRemovedCallback: IntConsumer?,
+            appWidgetRemovedCallback: Int,
             interactionHandler: RemoteViews.InteractionHandler?,
         ): LauncherWidgetHolder {
             return if (true) { // Lawnchair: Used to be ENABLE_WIDGET_HOST_IN_BACKGROUND
                 object : LauncherWidgetHolder(context, appWidgetRemovedCallback) {
-                    override fun createHost(
+                    override fun createView(
                         context: Context,
                         appWidgetRemovedCallback: IntConsumer?,
                     ): AppWidgetHost {

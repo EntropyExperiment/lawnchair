@@ -225,8 +225,8 @@ class LawnchairIconProvider @JvmOverloads constructor(
         return super.getSystemStateForPackage(systemState, packageName) + ",${isThemeEnabled()}"
     }
 
-    override fun getSystemIconState(): String {
-        return super.getSystemIconState() + ",pack:${iconPackPref.get()}/${themedIconPackPref.get()},ver:$iconPackVersion"
+    override fun onSystemIconStateChanged(): String {
+        return super.onSystemIconStateChanged() + ",pack:${iconPackPref.get()}/${themedIconPackPref.get()},ver:$iconPackVersion"
     }
 
     override fun registerIconChangeListener(
