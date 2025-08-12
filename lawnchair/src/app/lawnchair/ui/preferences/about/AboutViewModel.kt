@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
+import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,9 +17,11 @@ class AboutViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
 
+    private val api: GitHubService = gitHubApiRetrofit.create()
+
     private val nightlyBuildsRepository = NightlyBuildsRepository(
         applicationContext = application,
-        api = gitHubApiRetrofit.create(),
+        api = api,
     )
 
     private val _uiState = MutableStateFlow(AboutUiState())
@@ -32,7 +35,8 @@ class AboutViewModel(
                 commitHash = BuildConfig.COMMIT_HASH,
                 coreTeam = team,
                 supportAndPr = supportAndPr,
-                links = links,
+                topLinks = topLinks,
+                bottomLinks = bottomLinks,
             )
         }
 
@@ -55,11 +59,12 @@ class AboutViewModel(
         }
     }
 
-    fun onEvent(event: AboutEvent) {
-        when (event) {
-            is AboutEvent.OnDownloadClicked -> nightlyBuildsRepository.downloadUpdate()
-            is AboutEvent.OnInstallClicked -> nightlyBuildsRepository.installUpdate(event.file)
-        }
+    fun downloadUpdate() {
+        nightlyBuildsRepository.downloadUpdate()
+    }
+
+    fun installUpdate(file: File) {
+        nightlyBuildsRepository.installUpdate(file)
     }
 
     private suspend fun fetchActiveContributors(): Set<String> {
@@ -69,6 +74,7 @@ class AboutViewModel(
                 .toSet()
         }.getOrDefault(emptySet())
     }
+
     companion object {
         private val team = listOf(
             TeamMember(
@@ -155,7 +161,7 @@ class AboutViewModel(
             ),
         )
 
-        private val links = listOf(
+        private val topLinks = listOf(
             Link(
                 iconResId = R.drawable.ic_new_releases,
                 labelResId = R.string.news,
@@ -164,12 +170,7 @@ class AboutViewModel(
             Link(
                 iconResId = R.drawable.ic_help,
                 labelResId = R.string.support,
-                url = "https://t.me/lccommunity",
-            ),
-            Link(
-                iconResId = R.drawable.ic_x_twitter,
-                labelResId = R.string.x_twitter,
-                url = "https://x.com/lawnchairapp",
+                url = "https://lawnchair.app/support",
             ),
             Link(
                 iconResId = R.drawable.ic_github,
@@ -177,9 +178,32 @@ class AboutViewModel(
                 url = "https://github.com/LawnchairLauncher/lawnchair",
             ),
             Link(
+                iconResId = R.drawable.ic_translate,
+                labelResId = R.string.translate,
+                url = "https://lawnchair.crowdin.com/lawnchair",
+            ),
+            Link(
+                iconResId = R.drawable.ic_donate,
+                labelResId = R.string.donate,
+                url = "https://opencollective.com/lawnchair",
+            ),
+        )
+
+        private val bottomLinks = listOf(
+            Link(
+                iconResId = R.drawable.ic_telegram,
+                labelResId = R.string.telegram,
+                url = "https://t.me/lccommunity",
+            ),
+            Link(
                 iconResId = R.drawable.ic_discord,
                 labelResId = R.string.discord,
                 url = "https://discord.com/invite/3x8qNWxgGZ",
+            ),
+            Link(
+                iconResId = R.drawable.ic_x_twitter,
+                labelResId = R.string.x_twitter,
+                url = "https://x.com/lawnchairapp",
             ),
         )
 
