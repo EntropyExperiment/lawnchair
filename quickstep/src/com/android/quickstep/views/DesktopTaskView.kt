@@ -167,8 +167,7 @@ class DesktopTaskView @JvmOverloads constructor(context: Context, attrs: Attribu
                 cornerRadius = contentViewFullscreenParams.currentCornerRadius
                 backgroundView = findViewById(R.id.background)
                 backgroundView.setBackgroundColor(
-                    // Lawnchair-TODO-Colour: ColorTokens.Neutral2_300.resolveColor(context)
-                    resources.getColor(android.R.color.system_neutral2_300, context.theme)
+                    resources.getColor(ColorTokens.Neutral2_300.resolveColor(context), context.theme)
                 )
             }
     }

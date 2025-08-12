@@ -822,7 +822,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     }
 
     private boolean isOptimizationEnabled() {
-        // LC-TODO: Maybe make it true for r8
         return false;
     }
 

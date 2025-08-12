@@ -18,13 +18,16 @@ package com.android.systemui.shared.system;
 
 import static android.app.ActivityManager.LOCK_TASK_MODE_LOCKED;
 import static android.app.ActivityManager.LOCK_TASK_MODE_NONE;
+import static android.app.ActivityManager.RECENT_IGNORE_UNAVAILABLE;
 import static android.app.ActivityTaskManager.getService;
+import static app.lawnchair.compat.LawnchairQuickstepCompat.ATLEAST_R;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Activity;
 import android.app.ActivityClient;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RecentTaskInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ActivityOptions;
 import android.app.ActivityTaskManager;
@@ -36,6 +39,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Bundle;
+import android.os.DeadSystemException;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -74,13 +78,17 @@ public class ActivityManagerWrapper {
     /**
      * @return the current user's id.
      */
-    public int getCurrentUserId() {
+    public int getCurrentUserId() throws DeadSystemException {
         UserInfo ui;
         try {
             ui = ActivityManager.getService().getCurrentUser();
             return ui != null ? ui.id : 0;
         } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            if (ATLEAST_R) {
+                throw e.rethrowFromSystemServer();
+            } else {
+                throw new DeadSystemException();
+            }
         }
     }
 
