@@ -27,7 +27,7 @@ android {
             java.srcDirs = ['shared/src']
             aidl.srcDirs = ['shared/src']
             manifest.srcFile 'AndroidManifest.xml'
-            res.srcDirs = ['shared']
+            res.srcDirs = ['shared', 'shared/res']
         }
     }
 }
