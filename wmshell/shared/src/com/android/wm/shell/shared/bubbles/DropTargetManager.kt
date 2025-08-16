@@ -16,7 +16,6 @@
 
 package com.android.wm.shell.shared.bubbles
 
-import android.R
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.RectF
@@ -25,6 +24,7 @@ import android.widget.FrameLayout
 import androidx.core.animation.Animator
 import androidx.core.animation.AnimatorListenerAdapter
 import androidx.core.animation.ValueAnimator
+import com.android.wm.shell.R
 
 /**
  * Manages animating drop targets in response to dragging bubble icons or bubble expanded views
@@ -61,8 +61,7 @@ class DropTargetManager(
         if (dropTargetView.parent != null) container.removeView(dropTargetView)
         container.addView(dropTargetView, 0)
         dropTargetView.alpha = 0f
-        // Lawnchair-TODO-Merge: Reinstate drop_target_elevation res for wmshell shared
-        //dropTargetView.elevation = context.resources.getDimension(R.dimen.drop_target_elevation)
+        dropTargetView.elevation = context.resources.getDimension(R.dimen.drop_target_elevation)
         // Match parent and the target is drawn within the view
         dropTargetView.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
     }

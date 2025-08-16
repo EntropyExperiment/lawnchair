@@ -165,7 +165,6 @@ public final class Utilities {
      * @deprecated Use {@link BuildConfig#IS_DEBUG_DEVICE} directly
      */
     @Deprecated
-    // Lawnchair-TODO-High: Override BuildConfig.IS_DEBUG_DEVICE to true instead of variable true
     public static final boolean IS_DEBUG_DEVICE = false;
 
     public static final int TRANSLATE_UP = 0;

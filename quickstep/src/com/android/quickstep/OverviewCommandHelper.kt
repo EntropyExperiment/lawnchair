@@ -512,7 +512,7 @@ constructor(
             command.addListener(recentAnimListener)
             taskAnimationManager.notifyRecentsAnimationState(recentAnimListener)
         } else {
-            // LC-TODO: What name to put in intent here?
+            // Lawnchair-TODO: What name to put in intent here?
             val intent =
                 Intent(interactionHandler.getLaunchIntent())
                     .putExtra("Something", gestureState.gestureId)

@@ -34,6 +34,7 @@ import android.view.View.SCALE_Y
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.window.TaskSnapshot
+import com.android.wm.shell.R
 
 /**
  * View for the All Windows menu option, used by both Desktop Windowing and Taskbar.
@@ -169,10 +170,9 @@ abstract class ManageWindowsViewContainer(
                 val appSnapshotButton = SurfaceView(context)
                 appSnapshotButton.cornerRadius = iconRadius
                 appSnapshotButton.setZOrderOnTop(true)
-                // Lawnchair-TODO-Merge: Reinstate manage_windows_icon_text res for wmshell shared
-                //appSnapshotButton.contentDescription = context.resources.getString(
-                //    R.string.manage_windows_icon_text, iconCount + 1
-                //)
+                appSnapshotButton.contentDescription = context.resources.getString(
+                    R.string.manage_windows_icon_text, iconCount + 1
+                )
                 appSnapshotButton.setOnClickListener {
                     onIconClickListener?.invoke(taskId)
                 }
