@@ -1,5 +1,21 @@
-Lawnchair 16 Development 0 SNAPSHOT 3 is here! Contributors are encouraged to target this branch instead of
+Lawnchair 16 Development 0 SNAPSHOT 4 is here! Contributors are encouraged to target this branch instead of
 older (i.e., Lawnchair `15-dev`).
+
+### Snapshot 4
+
+This is a developer-focused change log:
+
+This snapshot marks the first time Lawnchair 16 is able to compile all Launcher3 sources!
+
+* Add `MSDLLib` to `platform_frameworks_libs_systemui`
+* Add `contextualeducationlib` to `platform_frameworks_libs_systemui`
+* Fix issues in both `lawn` and `src` modules
+* Fix AIDL sources
+* Resolve Lawnchair/LC-TODO lists
+* Merge `wmshell.shared` res with res from `wmshell`
+* Consistent build reproducibility by specifying dependencies in `build.gradle`
+* Some ASM Instrumentation issues (and re-add some…)
+* Update documentations
 
 ### Snapshot 3
 
