@@ -52,8 +52,8 @@ allprojects {
             }
         }
         dependencies {
-            implementation 'androidx.core:core-ktx:1.17.0'
-            implementation 'androidx.core:core-animation:1.0.0'
+            implementation libs.androidx.core.ktx
+            implementation libs.androidx.core.animation
         }
     }
 
@@ -76,7 +76,7 @@ allprojects {
             }
         }
         dependencies {
-            implementation "com.google.protobuf:protobuf-javalite:$protocVersion"
+            implementation libs.protobuf.javalite
         }
     }
 
@@ -147,7 +147,7 @@ final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
 final def version = "16"
-final def releaseName = "Development 0"
+final def releaseName = "Development 0 Release 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
@@ -157,8 +157,10 @@ final def quickstepMaxSdk = "36"
 android {
     namespace "com.android.launcher3"
     defaultConfig {
-        // Lawnchair Launcher 16.0 Development 0 Release 0
-        // See CONTRIBUTING.md#versioning-scheme
+        /*
+         * Lawnchair Launcher 16.0 Development 0 Release 0
+         * see CONTRIBUTING.md#versioning-scheme
+         */
         versionCode 16_00_00_00_00
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
@@ -392,99 +394,74 @@ dependencies {
     withQuickstepImplementation projects.compatLib.compatLibVBaklava
     withQuickstepImplementation projects.wmshell
     withQuickstepImplementation projects.flags
-    implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
-
     implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-statsd-16.jar')
     implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'WindowManager-Shell-16.jar')
     withQuickstepCompileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'framework-16.jar')
-
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
-
-    implementation 'androidx.profileinstaller:profileinstaller:1.4.1'
     baselineProfile projects.baselineProfile
 
-    implementation "androidx.recyclerview:recyclerview:1.4.0"
-    implementation "androidx.preference:preference-ktx:1.2.1"
+    coreLibraryDesugaring libs.android.desugarJdkLibs
+    implementation libs.javax.inject
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.serialization.json
 
-    implementation "androidx.graphics:graphics-core:1.0.3"
-    implementation "androidx.graphics:graphics-path:1.0.1"
-    implementation "androidx.graphics:graphics-shapes:1.1.0-beta01"
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.dynamicanimation
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.palette.ktx
+    implementation libs.androidx.preference.ktx
+    implementation libs.androidx.profileinstaller
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.slice.core
+    implementation libs.androidx.window
+    implementation libs.bundles.graphics
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0'
-    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
-    implementation 'dev.rikka.tools.refine:runtime:4.4.0'
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.ui
+    implementation libs.compose.ui.util
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.compose.ui.google.fonts
+    implementation libs.compose.foundation
+    implementation libs.compose.material
+    implementation libs.compose.material.icons
+    implementation libs.compose.runtime.livedata
+    implementation libs.compose.material3
+    implementation libs.compose.material3.windowSizeClass
 
-    implementation 'javax.inject:javax.inject:1'
+    kapt libs.dagger.compiler
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
 
-    kapt 'com.google.dagger:dagger-compiler:2.57'
-    implementation "com.google.dagger:hilt-android:2.57"
-    kapt "com.google.dagger:hilt-compiler:2.57"
+    implementation libs.bundles.room
+    ksp libs.room.compiler
 
-    implementation platform("androidx.compose:compose-bom:2025.08.00")
-    implementation "androidx.compose.ui:ui:1.9.0"
-    implementation "androidx.compose.ui:ui-util:1.9.0"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.9.0"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.9.0"
-    implementation "androidx.compose.ui:ui-text-google-fonts:1.9.0"
-    implementation "androidx.compose.foundation:foundation:1.9.0"
-    implementation "androidx.compose.material:material-icons-extended:1.7.8"
-    implementation "androidx.compose.material:material:1.9.0"
-    implementation "androidx.compose.runtime:runtime-livedata:1.9.0"
-    implementation 'androidx.compose.material3:material3:1.4.0-beta02'
-    implementation 'androidx.compose.material3:material3-window-size-class:1.4.0-beta02'
-    implementation "androidx.activity:activity-compose:1.10.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2"
-    implementation "androidx.navigation:navigation-compose:2.9.3"
-    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
-    implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation "androidx.slice:slice-core:1.1.0-alpha02"
+    implementation libs.bundles.retrofit
 
-    def accompanistVersion = '0.37.3'
-    implementation "com.google.accompanist:accompanist-adaptive:$accompanistVersion"
-    implementation "com.google.accompanist:accompanist-drawablepainter:$accompanistVersion"
-    implementation "com.google.accompanist:accompanist-permissions:$accompanistVersion"
+    implementation libs.bundles.opto
 
-    implementation "com.google.android.material:material:1.12.0"
-    implementation "io.github.fornewid:material-motion-compose-core:2.0.1"
-    implementation 'dev.kdrag0n:colorkt:1.0.5'
-    implementation 'io.coil-kt:coil-compose:2.7.0'
-    implementation 'me.xdrop:fuzzywuzzy:1.4.0'
+    implementation libs.bundles.accompanist
 
-    def optoVersion = "1.0.18"
-    implementation "com.patrykmichalik.opto:domain:$optoVersion"
-    implementation "com.patrykmichalik.opto:core:$optoVersion"
-    implementation "com.patrykmichalik.opto:compose:$optoVersion"
-    implementation "androidx.datastore:datastore-preferences:1.1.7"
+    implementation libs.google.material
+    implementation libs.material.motion.compose
+    implementation libs.airbnb.lottie
+    implementation libs.coil.compose
+    implementation libs.hoko.blur
+    implementation libs.reorderable
 
-    def retrofitVersion = "3.0.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-kotlinx-serialization:$retrofitVersion"
-    implementation "com.squareup.okhttp3:okhttp:5.1.0"
-
-    def roomVersion = '2.7.2'
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-    ksp "androidx.room:room-compiler:$roomVersion"
-
-    implementation "com.github.topjohnwu.libsu:service:6.0.0"
-
-    // Persian Date
-    implementation 'com.github.samanzamani:PersianDate:1.7.1'
-
-    implementation 'com.airbnb.android:lottie:6.6.7'
-
-    // Compose drag and drop library
-    implementation 'sh.calvin.reorderable:reorderable:2.5.1'
+    implementation libs.chickenhook.restrictionbypass
+    implementation libs.rikka.refine.runtime
+    implementation libs.libsu.service
+    implementation libs.persian.date
+    implementation libs.kdrag0n.colorkt
+    implementation libs.xdrop.fuzzywuzzy
 
     // Smartspacer
-    implementation('com.kieronquinn.smartspacer:sdk-client:1.1.2') {
+    implementation(libs.smartspacer.sdk) {
         exclude group: "com.github.skydoves", module: "balloon"
     }
-
-    implementation 'io.github.hokofly:hoko-blur:1.5.5'
-
-    implementation "androidx.window:window:1.4.0"
 }
 
 ksp {
