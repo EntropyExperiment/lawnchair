@@ -15,8 +15,8 @@
     <!-- ❤️ Credit to Lawrence Kayku for the current mockup on Unsplash 
             https://unsplash.com/photos/photography-of-green-leaves-ZVKr8wADhpc 
     -->
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/device-frame.png" width="250px">
-    <img alt="Google Pixel running Lawnchair Launcher with green wallpaper" src="docs/assets/device-frame.png" width="250px">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/device-frame.webp" width="250px">
+    <img alt="Google Pixel running Lawnchair Launcher with green wallpaper" src="docs/assets/device-frame.webp" width="250px">
 </picture>
 
 Lawnchair is a free, open-source home app for Android. Taking Launcher3—Android’s default home app—as a starting point, it ports Pixel Launcher features and introduces rich customization options.
@@ -27,7 +27,7 @@ This branch houses the codebase of Lawnchair 16, which is currently in beta and 
 
 -   **Material You Theming:** Adapts to your wallpaper and system theme.
 -   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer).
--   **QuickSwitch Support:** Integrates with Android Recents on Android 10 and newer. (requires root)
+-   **QuickSwitch Support:** Integrates with Android Recents on Android 10-15. (requires root)
 -   **Global Search:** Allows quick access to apps, contacts, and web results from the home screen.
 -   **Customization Options:** Provides options to tweak icons, fonts, and colors to your liking.
 -   And more!
@@ -88,7 +88,7 @@ Check that your download is using the official Lawnchair certification using the
 
 ## Contributing
 
-Please visit the [Lawnchair Contributing Guidelines](CONTRIBUTING.md) for information and tips on contributing to Lawnchair.
+Please visit the [Lawnchair contributing guidelines](CONTRIBUTING.md) for information and tips on contributing to Lawnchair.
 
 ## Supporting Lawnchair
 

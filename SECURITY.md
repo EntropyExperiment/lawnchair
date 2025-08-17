@@ -12,7 +12,7 @@ The latest version of Lawnchair is the only supported version.
 |----------------|--------------------|
 | Nightly build  | :white_check_mark: |
 | 16             | :white_check_mark: |
-| 15             | :x:                |
+| 15             | :white_check_mark: |
 | 14             | :x:                |
 | 13             | :x:                |
 | 12.1           | :x:                |
