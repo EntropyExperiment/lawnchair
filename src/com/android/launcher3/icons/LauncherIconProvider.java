@@ -49,9 +49,10 @@ import javax.inject.Inject;
 @LauncherAppSingleton
 public class LauncherIconProvider extends IconProvider {
 
-    private static final String TAG_ICON = "icon";
-    private static final String ATTR_PACKAGE = "package";
-    private static final String ATTR_DRAWABLE = "drawable";
+    public static final String TAG_ICON = "icon";
+    public static final String ATTR_PACKAGE = "package";
+    public static final String ATTR_DRAWABLE = "drawable";
+    public static final String ATTR_COMPONENT = "component";
 
     private static final String TAG = "LIconProvider";
     private static final Map<String, ThemeData> DISABLED_MAP = Collections.emptyMap();

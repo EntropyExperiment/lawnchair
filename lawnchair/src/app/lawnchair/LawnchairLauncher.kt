@@ -20,7 +20,6 @@ import android.animation.AnimatorSet
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -29,8 +28,6 @@ import android.view.Display
 import android.view.View
 import android.view.ViewTreeObserver
 import android.window.SplashScreen
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
@@ -76,6 +73,7 @@ import com.android.launcher3.util.RunnableList
 import com.android.launcher3.util.SystemUiController.UI_STATE_BASE_WINDOW
 import com.android.launcher3.util.Themes
 import com.android.launcher3.util.TouchController
+import com.android.launcher3.util.WallpaperThemeManager
 import com.android.launcher3.views.ActivityContext
 import com.android.launcher3.views.OptionsPopupView
 import com.android.launcher3.views.OptionsPopupView.OptionItem
@@ -252,11 +250,11 @@ class LawnchairLauncher : QuickstepLauncher() {
         ),
     )
 
-    override fun updateTheme() {
+    fun updateTheme() {
         if (themeProvider.colorScheme != colorScheme) {
             recreate()
         } else {
-            super.updateTheme()
+            WallpaperThemeManager(this).updateTheme()
         }
     }
 
@@ -354,7 +352,7 @@ class LawnchairLauncher : QuickstepLauncher() {
         return popup
     }
 
-    override fun createAppWidgetHolder(): LauncherWidgetHolder {
+    fun createAppWidgetHolder(): LauncherWidgetHolder {
         val factory = LauncherWidgetHolder.newInstance(this) as LawnchairWidgetHolder.LawnchairHolderFactory
         return factory.newInstance(
             this,

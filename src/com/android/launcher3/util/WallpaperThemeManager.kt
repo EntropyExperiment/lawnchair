@@ -20,11 +20,12 @@ import android.app.Activity
 import android.content.ComponentCallbacks
 import android.content.res.Configuration
 import android.os.Bundle
+import app.lawnchair.theme.ThemeProvider
 import com.android.launcher3.LauncherConstants.SavedInstanceKeys.RUNTIME_STATE_RECREATE_TO_UPDATE_THEME
 import com.android.launcher3.R
 
 /** Utility class to manage activity's theme in case it is wallpaper dependent */
-class WallpaperThemeManager private constructor(private val activity: Activity) :
+class WallpaperThemeManager(private val activity: Activity) :
     OnColorHintListener, ActivityLifecycleCallbacksAdapter, ComponentCallbacks {
 
     private var themeRes: Int = R.style.AppTheme
@@ -56,7 +57,7 @@ class WallpaperThemeManager private constructor(private val activity: Activity) 
 
     override fun onColorHintsChanged(colorHints: Int) = updateTheme()
 
-    private fun updateTheme() {
+    fun updateTheme() {
         if (themeRes != Themes.getActivityThemeRes(activity)) {
             recreateToUpdateTheme = true
             activity.recreate()

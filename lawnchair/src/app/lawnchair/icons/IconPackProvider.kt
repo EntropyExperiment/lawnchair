@@ -14,6 +14,7 @@ import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.icons.ClockDrawableWrapper
+import com.android.launcher3.icons.IconProvider
 import com.android.launcher3.icons.mono.ThemedIconDrawable
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
@@ -102,7 +103,7 @@ class IconPackProvider @Inject constructor(
             @SuppressLint("DiscouragedApi")
             val resId = res.getIdentifier(iconEntry.name, "drawable", iconEntry.packPackageName)
             val bg: Drawable = ColorDrawable(themedColors[0])
-            val td = ThemedIconDrawable.ThemeData(res, iconEntry.packPackageName, resId)
+            val td = IconProvider.ThemeData(res, iconEntry.packPackageName, resId)
 
             return if (drawable is AdaptiveIconDrawable) {
                 if (context.shouldTransparentBGIcons() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && drawable.monochrome != null) {
