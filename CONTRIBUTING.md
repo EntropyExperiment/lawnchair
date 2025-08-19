@@ -17,6 +17,10 @@ feel free to reach out on [Telegram][telegram] or [Discord][discord].
 > Use the [Lawnchair Nightly builds][nightly] when reporting bugs, as your issue may have already
 > been fixed.
 
+> [!WARNING]
+> For [security vulnerability][security-report], please do not open an issue. Instead, follow
+> the instructions in our [Security Policy][security-policy].
+
 - For **[bug reports][bug-reports]**, please be as detailed as possible and provide clear steps to
   reproduce the issue.
 - For **[feature requests][feature-requests]**, clearly describe the feature and its potential
@@ -40,8 +44,8 @@ For translations, please visit **[Lawnchair on Crowdin][crowdin]**.
 2. Open the project in Android Studio.
 3. Select the `lawnWithQuickstepGithubDebug` build variant.
 
-If you encounter errors with the `iconloaderlib` or `searchuilib` modules, run
-`git submodule update --init --recursive`.
+If you encounter errors with modules that ends with `lib` suffix like `iconloaderlib` or `searchuilib`,
+run `git submodule update --init --recursive`.
 
 Here are some contribution tips to help you get started:
 
@@ -88,7 +92,7 @@ We follow the **[Conventional Commits specification][conventional-commits]**.
 
 ### Versioning scheme
 
-As of Lawnchair 15 Beta 1, Lawnchair’s version code is composed of four parts, separated by
+As of Lawnchair 15 Beta 1, Lawnchair’s version code is composed of five parts, separated by
 underscores:
 
 <p align="center">
@@ -101,39 +105,21 @@ underscores:
 
 1. Android major version
 2. Android minor version
-3. Lawnchair development status
+3. Lawnchair development stage
 4. Lawnchair development version
+5. Release number
 
-#### Android major & minor versions
+#### Lawnchair development stage
 
-These represent the Android version in which Lawnchair is based on.
-They make up the first two parts of the version code:
+This table show list of development stages in use by Lawnchair:
 
-- Major version: Indicates the main Android version.
-- Minor version: Reflects any point release or update within the major version.
-
-Example: Android 11 will be `11_00_XX_XX` while Android 12.1 will be `12_01_XX_XX`.
-
-#### Development status & version
-
-The third and fourth parts of the version code refer to Lawnchair's development stage
-and the specific version within that stage:
-
-- Development status: Shows the current development stage of the Lawnchair build (e.g., Alpha,
-  Beta).
-- Development version: Specifies the incremental version within the same development stage.
-
-The table below shows release phase used by Lawnchair:
-
-| Status            | Stage |
-|-------------------|-------|
-| Development       | 00    |
-| Alpha             | 01    |
-| Beta              | 02    |
-| Release Candidate | 03    |
-| Release           | 04    |
-
-Example: Alpha 5 will be `XX_XX_01_05` and Beta 3 will be `XX_XX_02_03`.
+| Stage             | Denote |
+|-------------------|--------|
+| Development       | 00     |
+| Alpha             | 01     |
+| Beta              | 02     |
+| Release Candidate | 03     |
+| Release           | 04     |
 
 ### String naming
 
@@ -165,12 +151,15 @@ To update Lawnchair's font listing, follow these steps:
 
 #### Writing or updating Lawnchair documentation
 
-Lawnchair's documentations are written in Markdown and follow a style guides from [Google developer documentation style guide](https://developers.google.com/style).
+Lawnchair's documentations are written in Markdown and follow a style guides from 
+[Google developer documentation style guide](https://developers.google.com/style).
 
 <!-- Links -->
 [telegram]: https://t.me/lccommunity
 [discord]: https://discord.com/invite/3x8qNWxgGZ
 [nightly]: https://github.com/LawnchairLauncher/lawnchair/releases/tag/nightly
+[security-report]: https://github.com/LawnchairLauncher/lawnchair/security/advisories/new
+[security-policy]: https://github.com/LawnchairLauncher/lawnchair/security/policy
 [bug-reports]: https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+
 [feature-requests]: https://github.com/LawnchairLauncher/lawnchair/issues/new?assignees=&labels=feature%2Cenhancement&projects=&template=feature_request.yaml&title=%5BFEATURE%5D+
 [code-of-conduct]: CODE_OF_CONDUCT.md

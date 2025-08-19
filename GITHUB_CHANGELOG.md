@@ -5,7 +5,9 @@ older (i.e., Lawnchair `15-dev`).
 
 This is a developer-focused change log:
 
-* Fix `lawn`
+* Fix MORE MORE MORE `lawn` issues
+* Use version catalog for consistent dependency version across all modules
+* Magically fix ASM Instrumentation issues (I didn't do anything, it just works now)
 
 ### Snapshot 4
 

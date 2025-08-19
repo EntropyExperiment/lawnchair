@@ -38,26 +38,26 @@ This branch houses the codebase of Lawnchair 16, which is currently in beta and 
   <a href="https://play.google.com/store/apps/details?id=app.lawnchair.play">
     <picture>
       <!-- Avoid image being clickable with slight workaround -->
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-google-play.png" height="60">
-      <img alt="Get it on Google Play" src="docs/assets/badge-google-play.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-google-play.webp" height="60">
+      <img alt="Get it on Google Play" src="docs/assets/badge-google-play.webp" height="60">
     </picture>
   </a>
   <a href="https://apt.izzysoft.de/fdroid/index/apk/app.lawnchair">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-izzyondroid.png" height="60">
-      <img alt="Get it on IzzyOnDroid" src="docs/assets/badge-izzyondroid.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-izzyondroid.webp" height="60">
+      <img alt="Get it on IzzyOnDroid" src="docs/assets/badge-izzyondroid.webp" height="60">
     </picture>
   </a>
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/LawnchairLauncher/lawnchair/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-obtainium.png" height="60">
-      <img alt="Get it on Obtainium" src="docs/assets/badge-obtainium.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-obtainium.webp" height="60">
+      <img alt="Get it on Obtainium" src="docs/assets/badge-obtainium.webp" height="60">
     </picture>
   </a>
     <a href="https://github.com/LawnchairLauncher/lawnchair/releases">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-github.png" height="60">
-      <img alt="Get it on GitHub" src="docs/assets/badge-github.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-github.webp" height="60">
+      <img alt="Get it on GitHub" src="docs/assets/badge-github.webp" height="60">
     </picture>
   </a>
 </p>
