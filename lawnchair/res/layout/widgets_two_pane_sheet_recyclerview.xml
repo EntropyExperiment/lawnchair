@@ -50,6 +50,20 @@
                 launcher:layout_sticky="true">
 
                 <include layout="@layout/widgets_search_bar" />
+
+                <ImageButton
+                    android:id="@+id/widget_picker_widget_options_menu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/full_rounded_transparent_ripple"
+                    android:contentDescription="@string/widget_picker_widget_options_button_description"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_more_vert_dots"
+                    android:visibility="gone"
+                    android:tint="?attr/widgetPickerWidgetOptionsMenuColor" />
             </FrameLayout>
 
             <LinearLayout
