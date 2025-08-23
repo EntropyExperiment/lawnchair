@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2023 The Android Open Source Project
+     Copyright (C) 2024 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.launcher3.taskbar.allapps.TaskbarAllAppsSlideInView
+<com.android.quickstep.views.AddDesktopButton
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:accessibilityPaneTitle="@string/all_apps_label">
-
-    <include
-        android:id="@+id/apps_view"
-        layout="@layout/taskbar_all_apps" />
-</com.android.launcher3.taskbar.allapps.TaskbarAllAppsSlideInView>
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_desktop_button"
+    android:layout_width="@dimen/add_desktop_button_size"
+    android:layout_height="@dimen/add_desktop_button_size"
+    android:src="@drawable/ic_desktop_add"
+    android:background="@drawable/bg_overview_add_desktop_button"
+    launcher:focusBorderColor="@color/materialColorOutline"
+    android:padding="10dp" />
