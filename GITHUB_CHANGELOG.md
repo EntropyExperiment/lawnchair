@@ -1,6 +1,12 @@
 Lawnchair 16 Development 0 SNAPSHOT 5 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
+### Snapshot 6 (Draft)
+
+This is a developer-focused change log:
+
+* Fix all issues with Java files in both `lawn` and `src`
+
 ### Snapshot 5
 
 This is a developer-focused change log:
