@@ -224,7 +224,7 @@ public class InstallSessionHelper {
     @WorkerThread
     void tryQueuePromiseAppIcon(@Nullable final PackageInstaller.SessionInfo sessionInfo) {
         if (sessionInfo != null
-                && SessionCommitReceiver.isEnabled(mAppContext)
+                && SessionCommitReceiver.isEnabled(mAppContext, getUserHandle(sessionInfo))
                 && verifySessionInfo(sessionInfo)
                 && !promiseIconAddedForId(sessionInfo.getSessionId())) {
             // In case of unarchival, we do not want to add a workspace promise icon if one is

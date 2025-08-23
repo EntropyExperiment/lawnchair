@@ -16,8 +16,10 @@
 package com.android.launcher3.model.data;
 
 import static com.android.launcher3.LauncherSettings.Favorites.EXTENDED_CONTAINERS;
+import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.os.Process;
@@ -135,14 +137,14 @@ public class SearchActionItemInfo extends ItemInfoWithIcon {
         return new SearchActionItemInfo(this);
     }
 
-    public ItemInfo buildProto(FolderInfo fInfo) {
+    public ItemInfo buildProto(FolderInfo fInfo, Context context) {
         SearchActionItem.Builder itemBuilder = SearchActionItem.newBuilder()
                 .setPackageName(mFallbackPackageName);
 
         if (!mIsPersonalTitle) {
             itemBuilder.setTitle(title.toString());
         }
-        return getDefaultItemInfoBuilder()
+        return getDefaultItemInfoBuilder(context)
                 .setSearchActionItem(itemBuilder)
                 .setContainerInfo(getContainerInfo())
                 .build();
@@ -174,8 +176,8 @@ public class SearchActionItemInfo extends ItemInfoWithIcon {
 
                 model.updateAndBindWorkspaceItem(() -> {
                     PackageItemInfo pkgInfo = new PackageItemInfo(getIntentPackageName(), user);
-                    app.getApp().getIconCache().getTitleAndIconForApp(pkgInfo, false);
-                    try (LauncherIcons li = LauncherIcons.obtain(app.getApp().getContext())) {
+                    app.getIconCache().getTitleAndIconForApp(pkgInfo, DEFAULT_LOOKUP_FLAG);
+                    try (LauncherIcons li = LauncherIcons.obtain(app.getContext())) {
                         info.bitmap = li.badgeBitmap(info.bitmap.icon, pkgInfo.bitmap);
                     }
                     return info;

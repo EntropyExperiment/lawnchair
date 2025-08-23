@@ -35,7 +35,6 @@ import app.lawnchair.LawnchairApp.Companion.showQuickstepWarningIfNecessary
 import app.lawnchair.compat.LawnchairQuickstepCompat
 import app.lawnchair.data.AppDatabase
 import app.lawnchair.data.wallpaper.service.WallpaperService
-import app.lawnchair.factory.LawnchairWidgetHolder
 import app.lawnchair.gestures.GestureController
 import app.lawnchair.gestures.VerticalSwipeTouchController
 import app.lawnchair.gestures.config.GestureHandlerConfig
@@ -353,14 +352,11 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     fun createAppWidgetHolder(): LauncherWidgetHolder {
-        val factory = LauncherWidgetHolder.newInstance(this) as LawnchairWidgetHolder.LawnchairHolderFactory
-        return factory.newInstance(
-            this,
-        ) { appWidgetId: Int ->
-            workspace.removeWidget(
-                appWidgetId,
-            )
+        val holder = LauncherWidgetHolder.newInstance(this)
+        holder.setAppWidgetRemovedCallback { appWidgetId ->
+            workspace.removeWidget(appWidgetId)
         }
+        return holder
     }
 
     override fun makeDefaultActivityOptions(splashScreenStyle: Int): ActivityOptionsWrapper {

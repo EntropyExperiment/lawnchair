@@ -37,6 +37,7 @@ import static com.android.launcher3.LauncherState.NO_OFFSET;
 import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.LauncherState.OVERVIEW_MODAL_TASK;
 import static com.android.launcher3.LauncherState.OVERVIEW_SPLIT_SELECT;
+import static com.android.launcher3.Utilities.ATLEAST_T;
 import static com.android.launcher3.Utilities.isRtl;
 import static com.android.launcher3.compat.AccessibilityManagerCompat.sendCustomAccessibilityEvent;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_APP_LAUNCH_TAP;
@@ -78,10 +79,11 @@ import android.graphics.RectF;
 import android.hardware.display.DisplayManager;
 import android.media.permission.SafeCloseable;
 import android.os.Build;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.IRemoteCallback;
 import android.os.SystemProperties;
-import android.os.Trace;
 import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -110,7 +112,6 @@ import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.LauncherState;
-import com.android.launcher3.OnBackPressedHandler;
 import com.android.launcher3.QuickstepAccessibilityDelegate;
 import com.android.launcher3.QuickstepTransitionManager;
 import com.android.launcher3.R;
@@ -179,7 +180,6 @@ import com.android.quickstep.TaskUtils;
 import com.android.quickstep.TouchInteractionService.TISBinder;
 import com.android.quickstep.util.ActiveGestureProtoLogProxy;
 import com.android.quickstep.util.AsyncClockEventDelegate;
-import com.android.quickstep.util.GroupTask;
 import com.android.quickstep.util.LauncherUnfoldAnimationController;
 import com.android.quickstep.util.QuickstepOnboardingPrefs;
 import com.android.quickstep.util.SplitSelectStateController;
@@ -196,7 +196,6 @@ import com.android.quickstep.views.RecentsViewContainer;
 import com.android.quickstep.views.TaskView;
 import com.android.systemui.animation.back.FlingOnBackAnimationCallback;
 import com.android.systemui.shared.recents.model.Task;
-import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.unfold.RemoteUnfoldSharedComponent;
 import com.android.systemui.unfold.UnfoldTransitionFactory;
 import com.android.systemui.unfold.UnfoldTransitionProgressProvider;
@@ -1254,12 +1253,14 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
             activityOptions.options.setSourceInfo(ActivityOptions.SourceInfo.TYPE_LAUNCHER,
                     mLastTouchUpTime);
         }
-        if (item != null && (item.animationType == DEFAULT_NO_ICON
+        if (ATLEAST_T) {
+            if (item != null && (item.animationType == DEFAULT_NO_ICON
                 || item.animationType == VIEW_BACKGROUND)) {
-            activityOptions.options.setSplashScreenStyle(
+                activityOptions.options.setSplashScreenStyle(
                     SplashScreen.SPLASH_SCREEN_STYLE_SOLID_COLOR);
-        } else {
-            activityOptions.options.setSplashScreenStyle(SplashScreen.SPLASH_SCREEN_STYLE_ICON);
+            } else {
+                activityOptions.options.setSplashScreenStyle(SplashScreen.SPLASH_SCREEN_STYLE_ICON);
+            }
         }
         activityOptions.options.setLaunchDisplayId(
                 (v != null && v.getDisplay() != null) ? v.getDisplay().getDisplayId()
@@ -1272,9 +1273,11 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     public ActivityOptionsWrapper makeDefaultActivityOptions(int splashScreenStyle) {
         RunnableList callbacks = new RunnableList();
         ActivityOptions options = ActivityOptions.makeCustomAnimation(this, 0, 0);
-        options.setSplashScreenStyle(splashScreenStyle);
+        if (ATLEAST_T) {
+            options.setSplashScreenStyle(splashScreenStyle);
+        }
         Utilities.allowBGLaunch(options);
-        IRemoteCallback endCallback = completeRunnableListCallback(callbacks);
+        IRemoteCallback endCallback = completeRunnableListCallback(callbacks, this);
         options.setOnAnimationAbortListener(endCallback);
         options.setOnAnimationFinishedListener(endCallback);
         return new ActivityOptionsWrapper(options, callbacks);
@@ -1284,60 +1287,6 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     @BinderThread
     public void enterStageSplitFromRunningApp(boolean leftOrTop) {
         mSplitWithKeyboardShortcutController.enterStageSplit(leftOrTop);
-    }
-
-    /**
-     * Adds a new launch cookie for the activity launch if supported.
-     *
-     * @param info the item info for the launch
-     * @param opts the options to set the launchCookie on.
-     */
-    public void addLaunchCookie(ItemInfo info, ActivityOptions opts) {
-        IBinder launchCookie = getLaunchCookie(info);
-        if (launchCookie != null) {
-            opts.setLaunchCookie(launchCookie);
-        }
-    }
-
-    /**
-     * Return a new launch cookie for the activity launch if supported.
-     *
-     * @param info the item info for the launch
-     */
-    public IBinder getLaunchCookie(ItemInfo info) {
-        if (info == null) {
-            return null;
-        }
-        switch (info.container) {
-            case Favorites.CONTAINER_DESKTOP:
-            case Favorites.CONTAINER_HOTSEAT:
-            case Favorites.CONTAINER_PRIVATESPACE:
-                // Fall through and continue it's on the workspace (we don't support swiping back
-                // to other containers like all apps or the hotseat predictions (which can change)
-                break;
-            default:
-                if (info.container >= 0) {
-                    // Also allow swiping to folders
-                    break;
-                }
-                // Reset any existing launch cookies associated with the cookie
-                return ObjectWrapper.wrap(NO_MATCHING_ID);
-        }
-        switch (info.itemType) {
-            case Favorites.ITEM_TYPE_APPLICATION:
-            case Favorites.ITEM_TYPE_DEEP_SHORTCUT:
-            case Favorites.ITEM_TYPE_APPWIDGET:
-                // Fall through and continue if it's an app, shortcut, or widget
-                break;
-            default:
-                // Reset any existing launch cookies associated with the cookie
-                return ObjectWrapper.wrap(NO_MATCHING_ID);
-        }
-        return ObjectWrapper.wrap(new Integer(info.id));
-    }
-
-    public void setHintUserWillBeActive() {
-        addActivityFlags(ACTIVITY_STATE_USER_WILL_BE_ACTIVE);
     }
 
     @Override

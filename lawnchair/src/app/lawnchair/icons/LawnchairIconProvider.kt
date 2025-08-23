@@ -35,8 +35,6 @@ import com.android.launcher3.R
 import com.android.launcher3.config.FeatureFlags
 import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.icons.IconProvider
-import com.android.launcher3.icons.LauncherIconProvider
-import com.android.launcher3.icons.LauncherIconProvider.ATTR_COMPONENT
 import com.android.launcher3.icons.LauncherIconProvider.ATTR_DRAWABLE
 import com.android.launcher3.icons.LauncherIconProvider.ATTR_PACKAGE
 import com.android.launcher3.icons.LauncherIconProvider.TAG_ICON
@@ -336,7 +334,7 @@ class LawnchairIconProvider @JvmOverloads constructor(
         fun updateMapFromResources(resources: Resources, packageName: String) {
             try {
                 @SuppressLint("DiscouragedApi")
-                val xmlId = resources.getIdentifier(THEMED_ICON_MAP_FILE, "xml", packageName)
+                val xmlId = resources.getIdentifier("grayscale_icon_map", "xml", packageName)
                 if (xmlId != 0) {
                     val parser = resources.getXml(xmlId)
                     val depth = parser.depth
@@ -348,10 +346,9 @@ class LawnchairIconProvider @JvmOverloads constructor(
                         if (type != XmlPullParser.START_TAG) continue
                         if (TAG_ICON == parser.name) {
                             val pkg = parser.getAttributeValue(null, ATTR_PACKAGE)
-                            val cmp = parser.getAttributeValue(null, ATTR_COMPONENT).orEmpty()
                             val iconId = parser.getAttributeResourceValue(null, ATTR_DRAWABLE, 0)
-                            if (iconId != 0 && pkg.isNotEmpty()) {
-                                map[ComponentName(pkg, cmp)] = ThemeData(resources, packageName, iconId)
+                            if (iconId != 0 && !pkg.isNullOrEmpty()) {
+                                map[pkg] = ThemeData(resources, iconId)
                             }
                         }
                     }
@@ -371,7 +368,7 @@ class LawnchairIconProvider @JvmOverloads constructor(
                 packageName = themeMapName,
             )
             if (isOlderLawniconsInstalled) {
-                updateMapWithDynamicIcons(context, map)
+                //updateMapWithDynamicIcons(context, map)
             }
         }
 

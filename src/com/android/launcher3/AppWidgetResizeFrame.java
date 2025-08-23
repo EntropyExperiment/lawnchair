@@ -232,7 +232,7 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
         DragLayer dl = launcher.getDragLayer();
         AppWidgetResizeFrame frame = (AppWidgetResizeFrame) launcher.getLayoutInflater()
                 .inflate(R.layout.app_widget_resize_frame, dl, false);
-        frame.setupForWidget(widget, cellLayout, dl);
+        frame.setupForWidget(widget, cellLayout, dl, force, unlimited);
         // Save widget item info as tag on resize frame; so that, the accessibility delegate can
         // attach actions that typically happen on widget (e.g. resize, move) also on the resize
         // frame.
@@ -267,28 +267,47 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
     }
 
     private void setupForWidget(LauncherAppWidgetHostView widgetView, CellLayout cellLayout,
-            DragLayer dragLayer) {
+            DragLayer dragLayer, boolean force, boolean unlimited) {
         mCellLayout = cellLayout;
         mWidgetView = widgetView;
         LauncherAppWidgetProviderInfo info = (LauncherAppWidgetProviderInfo)
                 widgetView.getAppWidgetInfo();
         mDragLayer = dragLayer;
+        InvariantDeviceProfile idp = LauncherAppState.getIDP(cellLayout.getContext());
 
-        mMinHSpan = info.minSpanX;
-        mMinVSpan = info.minSpanY;
-        mMaxHSpan = info.maxSpanX;
-        mMaxVSpan = info.maxSpanY;
+        int resizeMode;
+        if (force) {
+            resizeMode = AppWidgetProviderInfo.RESIZE_BOTH;
+        } else {
+            resizeMode = info.resizeMode;
+        }
+
+
+        if (unlimited) {
+            mMinHSpan = 1;
+            mMinVSpan = 1;
+            mMaxHSpan = idp.numColumns;
+            mMaxVSpan = idp.numRows;
+            // If widget is resizable in any direction, make it resizable in both
+            if (resizeMode != AppWidgetProviderInfo.RESIZE_NONE) {
+                resizeMode = AppWidgetProviderInfo.RESIZE_BOTH;
+            }
+        } else {
+            mMinHSpan = info.minSpanX;
+            mMinVSpan = info.minSpanY;
+            mMaxHSpan = info.maxSpanX;
+            mMaxVSpan = info.maxSpanY;
+        }
 
         // Only show resize handles for the directions in which resizing is possible.
-        InvariantDeviceProfile idp = LauncherAppState.getIDP(cellLayout.getContext());
-        mVerticalResizeActive = (info.resizeMode & AppWidgetProviderInfo.RESIZE_VERTICAL) != 0
+        mVerticalResizeActive = (resizeMode & AppWidgetProviderInfo.RESIZE_VERTICAL) != 0
                 && mMinVSpan < idp.numRows && mMaxVSpan > 1
                 && mMinVSpan < mMaxVSpan;
         if (!mVerticalResizeActive) {
             mDragHandles[INDEX_TOP].setVisibility(GONE);
             mDragHandles[INDEX_BOTTOM].setVisibility(GONE);
         }
-        mHorizontalResizeActive = (info.resizeMode & AppWidgetProviderInfo.RESIZE_HORIZONTAL) != 0
+        mHorizontalResizeActive = (resizeMode & AppWidgetProviderInfo.RESIZE_HORIZONTAL) != 0
                 && mMinHSpan < idp.numColumns && mMaxHSpan > 1
                 && mMinHSpan < mMaxHSpan;
         if (!mHorizontalResizeActive) {

@@ -925,12 +925,12 @@ public abstract class RecentsView<
                 .inflate(R.layout.overview_clear_all_button, this, false);
         mClearAllButton.setOnClickListener(this::dismissAllTasks);
 
-        if (DesktopModeStatus.enableMultipleDesktops(mContext)) {
+        if (DesktopModeStatus.enableMultipleDesktops(context)) {
             mAddDesktopButton = (AddDesktopButton) LayoutInflater.from(context).inflate(
                     R.layout.overview_add_desktop_button, this, false);
             mAddDesktopButton.setOnClickListener(this::createDesk);
 
-            mDesktopVisibilityController = DesktopVisibilityController.INSTANCE.get(mContext);
+            mDesktopVisibilityController = DesktopVisibilityController.INSTANCE.get(context);
         }
 
         mTaskViewPool = new ViewPool<>(context, this, R.layout.task, 20 /* max size */,
@@ -938,7 +938,7 @@ public abstract class RecentsView<
         int groupedViewPoolInitialSize = enableRefactorTaskThumbnail() ? 2 : 10;
         mGroupedTaskViewPool = new ViewPool<>(context, this,
                 R.layout.task_grouped, 20 /* max size */, groupedViewPoolInitialSize);
-        int desktopViewPoolInitialSize = DesktopModeStatus.canEnterDesktopMode(mContext) ? 1 : 0;
+        int desktopViewPoolInitialSize = DesktopModeStatus.canEnterDesktopMode(context) ? 1 : 0;
         mDesktopTaskViewPool = new ViewPool<>(context, this, R.layout.task_desktop,
                 5 /* max size */, desktopViewPoolInitialSize);
 

@@ -23,6 +23,7 @@ import static com.android.launcher3.LauncherPrefs.GRID_TYPE;
 import static com.android.launcher3.LauncherPrefs.HOTSEAT_COUNT;
 import static com.android.launcher3.LauncherPrefs.WORKSPACE_SIZE;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -67,6 +68,14 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
         mDeviceType = idp.deviceType;
         mDbFile = idp.dbFile;
         mGridType = idp.gridType;
+    }
+
+    // Lawnchair@2038c6722c1ebd977290492881023675e1cddecd: Backup creation
+    @SuppressLint("WrongConstant")
+    public DeviceGridState(LawnchairProto.GridState protoGridState) {
+        mGridSizeString = protoGridState.getGridSize();
+        mNumHotseat = protoGridState.getHotseatCount();
+        mDeviceType = protoGridState.getDeviceType();
     }
 
     public DeviceGridState(Context context) {

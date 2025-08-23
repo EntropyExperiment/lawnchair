@@ -1420,14 +1420,8 @@ public class BubbleBarView extends FrameLayout {
         return super.onInterceptTouchEvent(ev);
     }
 
-    /** Whether a new bubble is currently animating. */
-    public boolean isAnimatingNewBubble() {
-        return mIsAnimatingNewBubble;
-    }
-
-
-    private boolean hasOverview() {
-        // Overview is always the last bubble
+    private boolean hasOverflow() {
+        // Overflow is always the last bubble
         View lastChild = getChildAt(getChildCount() - 1);
         if (lastChild instanceof BubbleView bubbleView) {
             return bubbleView.getBubble() instanceof BubbleBarOverflow;

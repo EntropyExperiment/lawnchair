@@ -1,12 +1,9 @@
 package app.lawnchair.icons
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.InsetDrawable
 import android.os.Build
 import android.os.Process
 import android.os.UserHandle
@@ -15,7 +12,6 @@ import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.icons.ClockDrawableWrapper
 import com.android.launcher3.icons.IconProvider
-import com.android.launcher3.icons.mono.ThemedIconDrawable
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import javax.inject.Inject
@@ -95,30 +91,21 @@ class IconPackProvider @Inject constructor(
         packageManager: PackageManager,
         iconEntry: IconEntry,
         drawable: Drawable,
-    ): Drawable? {
-        val themedColors: IntArray = ThemedIconDrawable.getColors(context)
-        try {
-            val res = packageManager.getResourcesForApplication(iconEntry.packPackageName)
+    ): Drawable {
+        val res = packageManager.getResourcesForApplication(iconEntry.packPackageName)
+        val resId = res.getIdentifier(iconEntry.name, "drawable", iconEntry.packPackageName)
+        val td = IconProvider.ThemeData(res, resId)
 
-            @SuppressLint("DiscouragedApi")
-            val resId = res.getIdentifier(iconEntry.name, "drawable", iconEntry.packPackageName)
-            val bg: Drawable = ColorDrawable(themedColors[0])
-            val td = IconProvider.ThemeData(res, iconEntry.packPackageName, resId)
-
-            return if (drawable is AdaptiveIconDrawable) {
-                if (context.shouldTransparentBGIcons() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && drawable.monochrome != null) {
-                    drawable.monochrome?.apply { setTint(themedColors[1]) }
-                } else {
-                    val foregroundDr = drawable.foreground.apply { setTint(themedColors[1]) }
-                    CustomAdaptiveIconDrawable(bg, foregroundDr)
-                }
-            } else {
-                val iconFromPack = InsetDrawable(drawable, .3f).apply { setTint(themedColors[1]) }
-                td.wrapDrawable(CustomAdaptiveIconDrawable(bg, iconFromPack), 0)
-            }
-        } catch (_: Exception) {
-            return drawable
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+            && drawable is AdaptiveIconDrawable
+            && drawable.monochrome == null) {
+            return AdaptiveIconDrawable(
+                drawable.background,
+                drawable.foreground,
+                td.loadPaddedDrawable()
+            )
         }
+        return drawable
     }
 
     override fun close() {

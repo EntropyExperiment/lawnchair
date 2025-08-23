@@ -321,6 +321,11 @@ public class InvariantDeviceProfile {
         lifeCycle.addCloseable(() -> localeReceiver.unregisterReceiverSafely());
     }
 
+    public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
+        String gridName = DeviceProfileOverrides.INSTANCE.get(context).getGridName(dbGridInfo);
+        initGrid(context, gridName);
+    }
+
     private String initGrid(Context context, String gridName) {
         Info displayInfo = mDisplayController.getInfo();
         List<DisplayOption> allOptions = getPredefinedDeviceProfiles(

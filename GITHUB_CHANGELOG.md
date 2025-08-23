@@ -1,13 +1,19 @@
-Lawnchair 16 Development 0 SNAPSHOT 4 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 Development 0 SNAPSHOT 5 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### Snapshot 5 (Draft)
+### Snapshot 5
 
 This is a developer-focused change log:
 
+This snapshot now able to compile all sources (Kotlin files only)
+
 * Fix MORE MORE MORE `lawn` issues
-* Use version catalog for consistent dependency version across all modules
+* Use Gradle Version Catalog for consistent dependency version across all modules (Full implementation @ LawnchairLauncher/Lawnchair#5753)
 * Magically fix ASM Instrumentation issues (I didn't do anything, it just works now)
+* Fix ALL the issues in kotlin stage (`compileLawnWithQuickstepNightlyDebugKotlin`)
+* Reintroduce some features from Lawnchair
+* Add compatibility checks and workarounds for them
+* Fix most issues with Java files in both `lawn` and `src`
 
 ### Snapshot 4
 

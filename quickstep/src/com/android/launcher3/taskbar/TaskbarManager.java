@@ -91,7 +91,7 @@ import com.android.quickstep.fallback.window.RecentsWindowManager;
 import com.android.quickstep.util.ContextualSearchInvoker;
 import com.android.quickstep.util.GroupTask;
 import com.android.quickstep.views.RecentsViewContainer;
-import com.android.server.am.Flags;
+//import com.android.server.am.Flags;
 import com.android.systemui.shared.recents.model.Task;
 import com.android.systemui.shared.statusbar.phone.BarTransitions;
 import com.android.systemui.shared.system.ActivityManagerWrapper;
@@ -135,6 +135,11 @@ public class TaskbarManager implements DisplayDecorationListener {
             | ActivityInfo.CONFIG_SCREEN_LAYOUT
             | ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE;
     
+    private static final Uri USER_SETUP_COMPLETE_URI = Settings.Secure.getUriFor(
+        Settings.Secure.USER_SETUP_COMPLETE);
+
+    private static final Uri NAV_BAR_KIDS_MODE = Settings.Secure.getUriFor(
+        Settings.Secure.NAV_BAR_KIDS_MODE);
 
     private final Context mBaseContext;
     private final int mPrimaryDisplayId;
@@ -474,15 +479,10 @@ public class TaskbarManager implements DisplayDecorationListener {
         } else {
             mGrowthBroadcastReceiver = null;
         }
-        if (LawnchairApp.isRecentsEnabled ()) {
-            final Uri USER_SETUP_COMPLETE_URI = Settings.Secure.getUriFor(
-                Settings.Secure.USER_SETUP_COMPLETE);
-
-            final Uri NAV_BAR_KIDS_MODE = Settings.Secure.getUriFor(
-                Settings.Secure.NAV_BAR_KIDS_MODE);
-            SettingsCache.INSTANCE.get(mContext)
+        if (LawnchairApp.isRecentsEnabled()) {
+            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .register(USER_SETUP_COMPLETE_URI, mOnSettingsChangeListener);
-            SettingsCache.INSTANCE.get(mContext)
+            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .register(NAV_BAR_KIDS_MODE, mOnSettingsChangeListener);
         }
         UI_HELPER_EXECUTOR.execute(() -> {
@@ -1115,14 +1115,9 @@ public class TaskbarManager implements DisplayDecorationListener {
                     mRecreationListener);
         }
         if (LawnchairApp.isRecentsEnabled()) {
-            final Uri USER_SETUP_COMPLETE_URI = Settings.Secure.getUriFor(
-                Settings.Secure.USER_SETUP_COMPLETE);
-            final Uri NAV_BAR_KIDS_MODE = Settings.Secure.getUriFor(
-                Settings.Secure.NAV_BAR_KIDS_MODE);
-
-            SettingsCache.INSTANCE.get(mContext)
+            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .unregister(USER_SETUP_COMPLETE_URI, mOnSettingsChangeListener);
-            SettingsCache.INSTANCE.get(mContext)
+            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .unregister(NAV_BAR_KIDS_MODE, mOnSettingsChangeListener);
         }
         SystemDecorationChangeObserver.getINSTANCE().get(mPrimaryWindowContext)
@@ -1146,8 +1141,10 @@ public class TaskbarManager implements DisplayDecorationListener {
         // - isAndroidPC is set per device (in this case, desktop devices)
         // - supportsFreeformWindowsManagement is dynamic, and is to be used for the use-case where
         // user plugs in their device to external displays
-        return Flags.perceptibleTasks()
-                && (mIsAndroidPC || mSupportsFreeformWindowsManagement);
+        // Lawnchair-TODO: AM Flags, perceptibleTasks
+        //return Flags.perceptibleTasks()
+        //        && (mIsAndroidPC || mSupportsFreeformWindowsManagement);
+        return false;
     }
 
     public @Nullable TaskbarActivityContext getCurrentActivityContext() {

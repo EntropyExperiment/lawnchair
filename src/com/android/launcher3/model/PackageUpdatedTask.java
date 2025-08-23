@@ -52,6 +52,7 @@ import com.android.launcher3.pm.PackageInstallInfo;
 import com.android.launcher3.pm.UserCache;
 import com.android.launcher3.shortcuts.ShortcutRequest;
 import com.android.launcher3.util.ApiWrapper;
+import com.android.launcher3.util.ApplicationInfoWrapper;
 import com.android.launcher3.util.FlagOp;
 import com.android.launcher3.util.IntSet;
 import com.android.launcher3.util.ItemInfoMatcher;
@@ -180,7 +181,8 @@ public class PackageUpdatedTask implements ModelUpdateTask {
                                     new Intent(context.getResources().getString(R.string.icon_packs_intent_name)),
                                     PackageManager.GET_RESOLVED_FILTER)
                             .stream().map(it -> it.activityInfo.packageName)
-                            .noneMatch(it -> packageManagerHelper.isAppInstalled(it, mUser));
+                            .noneMatch(it -> new ApplicationInfoWrapper(context, it, mUser)
+                                .isInstalled());
                     if (isThemedIconsAvailable) {
                         pm.getThemedIcons().set(false);
                     }

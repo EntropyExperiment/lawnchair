@@ -132,7 +132,7 @@ public final class FallbackWindowInterface extends BaseWindowInterface{
 
     @Override
     protected int getOverviewScrimColorForState(RecentsWindowManager container,
-            RecentsState state) {
+        RecentsState state) {
         return state.getScrimColor(container.asContext());
     }
 

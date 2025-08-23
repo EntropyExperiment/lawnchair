@@ -32,6 +32,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
+import android.content.pm.ResolveInfo;
 import android.content.pm.ShortcutInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -777,11 +778,6 @@ public final class Utilities {
             }
             mainIcon =  icon;
             badge = icon.getBadge();
-        }
-
-        // Lawnchair-TODO-Merge: From LC, maybe heavily affected by L3, Allow 3p icon
-        if (useTheme && mainIcon instanceof BitmapInfo.Extender) {
-            mainIcon = ((BitmapInfo.Extender) mainIcon).getThemedDrawable(context);
         }
 
         if (mainIcon == null) {

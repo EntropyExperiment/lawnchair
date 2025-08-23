@@ -45,6 +45,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
+import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.os.Bundle;
 import android.os.UserHandle;
@@ -376,7 +377,7 @@ public class QuickstepModelDelegate extends ModelDelegate {
             return;
         }
 
-        int usagePerm = mApp.getContext().checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS);
+        int usagePerm = mContext.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS);
         if (usagePerm != PackageManager.PERMISSION_GRANTED)
             return;
 

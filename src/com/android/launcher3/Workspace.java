@@ -664,6 +664,14 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         // Add the first page
         CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
         if (mFirstPagePinnedItem == null) {
+            SmartspaceMode smartspaceMode = PreferenceExtensionsKt
+                .firstBlocking(mPreferenceManager2.getSmartspaceMode());
+            if (!smartspaceMode.isAvailable(this.mLauncher)) {
+                // The current smartspace mode is not available,
+                // setting the smartspace mode to one that is always available
+                smartspaceMode = LawnchairSmartspace.INSTANCE;
+                PreferenceExtensionsKt.setBlocking(mPreferenceManager2.getSmartspaceMode(), smartspaceMode);
+            }
             // In transposed layout, we add the first page pinned widget in the Grid.
             // As workspace does not touch the edges, we do not need a full
             // width first page pinned item.
@@ -2272,7 +2280,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
                         // We post this call so that the widget has a chance to be placed
                         // in its final location
                         onCompleteRunnable = getWidgetResizeFrameRunnable(options,
-                                (LauncherAppWidgetHostView) cell, dropTargetLayout);
+                                (LauncherAppWidgetHostView) cell, dropTargetLayout, forceWidgetResize);
                     }
                     mLauncher.getModelWriter().modifyItemInDatabase(info, container, screenId,
                             lp.getCellX(), lp.getCellY(), item.spanX, item.spanY);
@@ -2301,7 +2309,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
                     if (pageIsVisible) {
                         onCompleteRunnable = getWidgetResizeFrameRunnable(options,
-                                (LauncherAppWidgetHostView) cell, cellLayout);
+                                (LauncherAppWidgetHostView) cell, cellLayout, forceWidgetResize);
                     }
                 }
             }
@@ -2376,7 +2384,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
 
     @Nullable
     private Runnable getWidgetResizeFrameRunnable(DragOptions options,
-            LauncherAppWidgetHostView hostView, CellLayout cellLayout) {
+            LauncherAppWidgetHostView hostView, CellLayout cellLayout, boolean force) {
         AppWidgetProviderInfo pInfo = hostView.getAppWidgetInfo();
         boolean shouldResize = (pInfo.resizeMode != AppWidgetProviderInfo.RESIZE_NONE) || force;
         if (pInfo != null && shouldResize && !options.isAccessibleDrag) {

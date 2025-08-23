@@ -110,6 +110,11 @@ public class ModelDbController {
         mLayoutParserFactory = layoutParserFactory;
     }
 
+    // Lawnchair: ModelDbController
+    public ModelDbController(Context context) {
+        mContext = context;
+    }
+
     private void printDBs(String prefix) {
         try {
             File directory = new File(mContext.getDatabasePath(mIdp.dbFile).getParent());
