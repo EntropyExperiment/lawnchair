@@ -8,7 +8,6 @@ import androidx.core.util.contains
 import app.lawnchair.allapps.views.SearchItemDecorator
 import app.lawnchair.allapps.views.SearchResultView
 import app.lawnchair.search.adapter.SearchAdapterItem
-import app.lawnchair.search.model.SearchResultActionCallBack
 import com.android.app.search.LayoutType
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.R
@@ -36,6 +35,8 @@ class LawnchairSearchAdapterProvider(
         append(SEARCH_RESULT_SETTINGS_TILE, R.layout.search_result_small_icon_row)
         append(SEARCH_RESULT_RECENT_TILE, R.layout.search_result_small_icon_row)
         append(SEARCH_RESULT_CALCULATOR, R.layout.search_result_tall_icon_row_calculator)
+        append(SEARCH_RESULT_EMPTY_STATE, R.layout.search_result_empty_state)
+        append(SEARCH_RESULT_SEARCH_SETTINGS, R.layout.search_result_search_settings)
     }
     private var quickLaunchItem: SearchResultView? = null
         set(value) {
@@ -52,11 +53,6 @@ class LawnchairSearchAdapterProvider(
         itemView.bind(
             adapterItem.searchTarget,
             emptyList(),
-            object : SearchResultActionCallBack {
-                override fun action() {
-                    appsView.searchUiManager.refreshResults()
-                }
-            },
         )
         if (itemView.isQuickLaunch) {
             quickLaunchItem = itemView
@@ -108,6 +104,8 @@ class LawnchairSearchAdapterProvider(
         private const val SEARCH_RESULT_SETTINGS_TILE = 1 shl 18
         private const val SEARCH_RESULT_RECENT_TILE = 1 shl 19
         private const val SEARCH_RESULT_CALCULATOR = 1 shl 20
+        private const val SEARCH_RESULT_EMPTY_STATE = 1 shl 21
+        private const val SEARCH_RESULT_SEARCH_SETTINGS = 1 shl 22
 
         val viewTypeMap = mapOf(
             LayoutType.ICON_SINGLE_VERTICAL_TEXT to SEARCH_RESULT_ICON,
@@ -121,6 +119,8 @@ class LawnchairSearchAdapterProvider(
             LayoutType.ICON_SLICE to SEARCH_RESULT_SETTINGS_TILE,
             LayoutType.WIDGET_LIVE to SEARCH_RESULT_RECENT_TILE,
             LayoutType.CALCULATOR to SEARCH_RESULT_CALCULATOR,
+            LayoutType.EMPTY_STATE to SEARCH_RESULT_EMPTY_STATE,
+            LayoutType.SEARCH_SETTINGS to SEARCH_RESULT_SEARCH_SETTINGS,
         )
     }
 }

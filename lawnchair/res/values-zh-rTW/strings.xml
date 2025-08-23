@@ -42,9 +42,25 @@
     <string name="deselect_all">取消全選</string>
     <string name="inverse_selection">反向選取</string>
     <string name="loading">正在載入…</string>
+    <string name="dismiss">Dismiss</string>
     <string name="download_update">下載更新</string>
     <string name="install_update">安裝更新</string>
+    <string name="view_changes">View changes</string>
     <string name="pro_updated">您的軟體為最新版本！</string>
+    <!-- Changes dialog strings -->
+    <string name="changes_dialog_title">Updates</string>
+    <string name="changes_dialog_error">Failed to load changes</string>
+    <string name="changes_dialog_no_changes">No changes found</string>
+    <string name="changes_dialog_build_format">Build #%1$d → #%2$d</string>
+    <string name="changes_dialog_commit_info">by %1$s • %2$s • %3$s</string>
+    <!-- Time ago strings -->
+    <string name="time_just_now">just now</string>
+    <string name="time_minutes_ago">%dm</string>
+    <string name="time_hours_ago">%dh</string>
+    <string name="time_days_ago">%dd</string>
+    <string name="time_weeks_ago">%dw</string>
+    <string name="time_months_ago">%dmo</string>
+    <string name="time_years_ago">%dy</string>
     <string name="managed_by_lawnchair">由 Lawnchair 管理</string>
     <!-- When mentioning settings UI -->
     <string name="smartspace_preferences">偏好設定</string>
@@ -71,6 +87,7 @@
     <string name="grid">網格</string>
     <string name="layout">版面</string>
     <!-- Generic styling options -->
+    <string name="show_wallpaper">Show wallpaper</string>
     <string name="wallpaper">桌布</string>
     <string name="style">樣式</string>
     <string name="background_opacity">背景不透明度</string>
@@ -139,8 +156,8 @@
     <string name="always_reload_icons_description">避免使用圖示套件中已快取的圖示</string>
     <string name="icon_swipe_gestures">滑動圖示手勢</string>
     <string name="icon_swipe_gestures_description">配置於圖示上向左/右滑動時的動作以取代移動主畫面</string>
-    <string name="show_deck_layout">Deck layout</string>
-    <string name="show_deck_layout_description">Show a layout option to hide the app drawer and automatically add new apps to the home screen</string>
+    <string name="show_deck_layout">平面模式</string>
+    <string name="show_deck_layout_description">顯示版面選項以隱藏應用程式抽屜並自動將項目加到主畫面</string>
     <string name="recents_lock_unlock">鎖定/解鎖</string>
     <string name="recents_lock_unlock_description">按下 \"全部清除\" 時略過已選取的應用程式</string>
     <!--Overlay-->
@@ -161,8 +178,6 @@
     <string name="notification_dots_text_color">通知數量顏色</string>
     <string name="notification_dots_color_contrast_warning_always">警告： 通知圓點與通知數量的顏色對比不夠明顯</string>
     <string name="notification_dots_color_contrast_warning_sometimes">警告： 通知圓點與通知數量的顏色對比在某些情況下可能不夠明顯</string>
-    <string name="missing_notification_access_label">需要通知存取權</string>
-    <string name="missing_notification_access_desc">要使用通知圓點，請為 <xliff:g id="name" example="My App">%1$s</xliff:g> 啟用通知</string>
     <!--
 
     Icons
@@ -206,6 +221,10 @@
     <string name="icon_shape_square">方形</string>
     <string name="icon_shape_squircle">方圓形</string>
     <string name="icon_shape_teardrop">水滴形</string>
+    <!-- Icon shape (Material 3 Expressive) -->
+    <string name="icon_shape_four_sided_cookie">Four-sided cookie</string>
+    <string name="icon_shape_seven_sided_cookie">Seven-sided cookie</string>
+    <string name="icon_shape_arch">Arch</string>
     <!-- Custom icon shapes -->
     <string name="custom_icon_shape">自訂圖示形狀</string>
     <string name="custom_icon_shape_create">建立自訂圖示形狀</string>
@@ -339,17 +358,23 @@
     About the app
 
     -->
-    <string name="news">新聞</string>
     <string name="support">支援</string>
+    <string name="translate">翻譯</string>
+    <string name="donate">捐贈</string>
     <string name="product">產品</string>
     <string name="design_and_development">開發與設計</string>
     <string name="development">開發</string>
     <string name="quickswitch_maintenance">QuickSwitch 維護</string>
     <string name="devops">DevOps</string>
     <string name="support_and_pr">支援與提取</string>
+    <string name="community">Community</string>
+    <string name="telegram">Telegram</string>
+    <string name="news">新聞</string>
+    <string name="legal">Legal</string>
     <string name="acknowledgements">銘謝</string>
-    <string name="translate">翻譯</string>
-    <string name="donate">捐贈</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="contributor_status_active">Active</string>
+    <string name="update_check_failed">Failed to check for updates</string>
     <!--
 
     Backup and restore
@@ -441,7 +466,7 @@
     <string name="show_dot_pagination_label">顯示圓點頁面指示器</string>
     <string name="show_dot_pagination_description">以小圓點取代線狀頁面指示器</string>
     <string name="show_material_u_popup_label">使用新的彈出樣式</string>
-    <string name="show_material_u_popup_description">使用 Material You 輕巧彈性的選單樣式</string>
+    <string name="show_material_u_popup_description">使用 Material You 輕彈的選單樣式</string>
     <string name="popup_menu">彈出選單</string>
     <string name="popup_menu_items">彈出選單項目</string>
     <string name="edit_menu_items">編輯彈出選單項目</string>
@@ -547,7 +572,7 @@
 
     -->
     <!-- Launcher strings used -->
-    <string name="all_apps_device_search_hint">搜尋</string>
+    <string name="all_apps_device_search_hint">Search apps, web, and more</string>
     <string name="all_apps_search_bar_hint">搜尋應用程式</string>
     <string name="all_apps_no_search_results">找不到與 \"<xliff:g example="Android" id="query">%1$s</xliff:g>\" 相符的應用程式</string>
     <string name="all_apps_search_result_suggestions">網路搜尋結果</string>
@@ -580,9 +605,11 @@
     <string name="search_algorithm_app_search">應用程式搜尋</string>
     <string name="search_algorithm_global_search_on_device">全域搜尋 (僅裝置)</string>
     <string name="search_algorithm_global_search_via_asi">全域搜尋 (透過 ASI)</string>
-    <string name="custom_search_url">自訂搜尋引擎 URL</string>
-    <string name="custom_search_suggestions_url">自訂搜尋建議 URL</string>
+    <string name="custom_search_label">Search engine name</string>
+    <string name="custom_search_url">Search engine URL</string>
+    <string name="custom_search_suggestions_url">Dearch suggestions URL</string>
     <string name="custom_search_input_hint">&#37;s 將會由搜尋字詞取代</string>
+    <string name="custom_search_suggestions_hint">&#37;s will be replaced with the search query. Results must be in JSON OpenSearch format.</string>
     <!-- Labels of each search result types -->
     <string name="show_search_result_types">在搜尋結果中顯示</string>
     <string name="search_pref_result_apps_and_shortcuts_title">應用程式和捷徑</string>
@@ -591,10 +618,17 @@
     <string name="search_pref_result_tips_title">Pixel 使用提示</string>
     <string name="search_pref_result_settings_title">Android 設定</string>
     <string name="search_pref_result_files_title">檔案</string>
+    <string name="search_pref_result_visual_media_title">Photos and videos</string>
+    <string name="search_pref_result_audio_media_title">Audio files</string>
+    <string name="search_pref_result_all_files_title">All files</string>
     <string name="search_pref_result_web_title">網頁建議</string>
     <string name="search_pref_result_history_title">搜尋記錄</string>
     <string name="all_apps_search_result_calculator">計算</string>
+    <string name="search_empty_state_title">Start searching</string>
+    <string name="search_empty_state_no_history_subtitle">Find apps, contacts, and more. Your recent searches will appear here.</string>
+    <string name="search_empty_state_history_disabled_subtitle">Find apps, contacts, and more.</string>
     <!-- Description for each search result type -->
+    <string name="search_pref_files_search_on">Search on</string>
     <string name="search_pref_result_files_description">媒體、檔案、更多項目</string>
     <string name="search_pref_result_contacts_description">聯絡人與其他項目</string>
     <string name="search_pref_result_web_provider_description">透過 <xliff:g id="web_search_provider">%1$s</xliff:g></string>
@@ -606,9 +640,36 @@
     <string name="max_recent_result_count_title">最大搜尋記錄項目</string>
     <string name="max_suggestion_result_count_title">最大建議數量</string>
     <string name="max_web_suggestion_delay">最大網路建議延遲</string>
-    <!-- Permission warnings -->
-    <string name="warn_contact_permission_content">如要搜尋聯絡人，請授予 Lawnchair 存取聯絡人和電話權限</string>
-    <string name="warn_files_permission_content">如要搜尋您的檔案，請授予 Lawnchair 儲存空間權限</string>
+    <!-- Permission management -->
+    <string name="missing_notification_access_label">需要通知存取權</string>
+    <string name="missing_notification_access_desc">要使用通知圓點，請為 <xliff:g id="name" example="My App">%1$s</xliff:g> 啟用通知</string>
+    <string name="warn_contact_permission_title">Contacts permission needed</string>
+    <string name="warn_contact_permission_content">To search for contacts, grant contacts and phone permissions to <xliff:g id="name" example="My App">%1$s</xliff:g></string>
+    <string name="permissions_music_audio">Music and audio access needed</string>
+    <string name="permissions_music_audio_description">To search your music and other audio files, <xliff:g id="name" example="My App">%1$s</xliff:g> needs permission to access your media library.</string>
+    <!-- Photos and videos -->
+    <string name="permissions_photos_videos">Photos and videos access needed</string>
+    <string name="permissions_photos_videos_description">To search your photos and videos, <xliff:g id="name" example="My App">%1$s</xliff:g> needs permission to access your media library.</string>
+    <string name="permissions_photos_videos_full">Access your full media library?</string>
+    <string name="permissions_photos_videos_full_description">To search all your photos and videos, <xliff:g id="name" example="My App">%1$s</xliff:g> needs full access to your media library.</string>
+    <string name="permissions_photos_videos_grant_full">Grant full media permissions</string>
+    <string name="permissions_photos_videos_manage_selected">Manage selected items</string>
+    <!-- External storage -->
+    <string name="permissions_external_storage">External storage access needed</string>
+    <string name="permissions_external_storage_description">To search your files, <xliff:g id="name" example="My App">%1$s</xliff:g> needs permission to access your device\'s external storage.</string>
+    <string name="permissions_manage_storage">Manage storage access needed</string>
+    <string name="permissions_manage_storage_description">To display your files in search results, <xliff:g id="name" example="My App">%1$s</xliff:g> requires permission to manage all files on your device. This permission is used solely to list files and will not be used to read or change the content of your personal files.</string>
+    <string name="permission_desc_wallpaper_base">To display wallpaper previews and include them in backups, <xliff:g id="name" example="My App">%1$s</xliff:g> requires permission %2$s. This is due to system limitations for accessing wallpaper data.</string>
+    <string name="permission_desc_ending_read_all_files">to read all files on your device</string>
+    <string name="permission_desc_ending_manage_all_files">to manage all files on your device</string>
+    <string name="permission_desc_wallpaper_multiple">Multiple permissions needed</string>
+    <string name="permission_desc_wallpaper_multiple_desc">To display wallpaper previews and include them in backups, <xliff:g id="name" example="My App">%1$s</xliff:g> requires the following permissions. This is due to system limitations for accessing wallpaper data.</string>
+    <string name="permission_label_manage_all_files">Manage all files on device</string>
+    <string name="permission_label_read_photos_videos">Read photos and videos</string>
+    <string name="manage_storage_access_denied_title">Cannot enable manage storage access</string>
+    <string name="manage_storage_access_denied_description">Due to Play Store policy, <xliff:g id="name" example="My App">%1$s</xliff:g> cannot request full storage access here. To access all files, please download <xliff:g id="name" example="My App">%1$s</xliff:g> from GitHub. Alternatively, you can grant access to photos, videos, and audio files individually in settings.</string>
+    <string name="open_permission_settings">開啟設定</string>
     <string name="grant_requested_permissions">授予權限</string>
-    <string name="custom_search_label">自訂搜尋引擎名稱</string>
+    <string name="permissions_needed">Permissions needed</string>
+    <string name="grant_requested_permissions_tap">Tap to grant permissions</string>
 </resources>

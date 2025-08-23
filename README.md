@@ -6,6 +6,8 @@
 [![OpenCollective](https://img.shields.io/opencollective/all/lawnchair?label=financial%20contributors&logo=open-collective)](https://opencollective.com/lawnchair)
 [![Telegram](https://img.shields.io/endpoint?url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Flccommunity)](https://t.me/lccommunity)
 [![Discord](https://img.shields.io/discord/803299970169700402?label=server&logo=discord)](https://discord.gg/3x8qNWxgGZ)
+[![GitHub Downloads](https://img.shields.io/github/downloads/LawnchairLauncher/lawnchair/total.svg?label=GitHub%20Downloads&logo=github)](https://github.com/LawnchairLauncher/lawnchair/releases)
+[![Play Store Installs](https://img.shields.io/endpoint?color=green&logo=googleplay&logoColor=green&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dapp.lawnchair.play%26l%3DPlay%2520Store%2520Installs%26m%3D%24shortinstalls)](https://play.google.com/store/apps/details?id=app.lawnchair.play)
 
 <picture>
     <!-- Avoid image being clickable with slight workaround -->
@@ -19,12 +21,12 @@
 
 Lawnchair is a free, open-source home app for Android. Taking Launcher3—Android’s default home app—as a starting point, it ports Pixel Launcher features and introduces rich customization options.
 
-This branch houses the codebase of Lawnchair 15, which is currently in development and is based on Launcher3 from Android 15. For Lawnchair 9 to 14, see the branches with the `9-` to `14-` prefixes, respectively.
+This branch houses the codebase of Lawnchair 15, which is currently in beta and is based on Launcher3 from Android 15. For Lawnchair 9 to 14, see the branches with the `9-` to `14-` prefixes, respectively.
 
 ## Features
 
 -   **Material You Theming:** Adapts to your wallpaper and system theme.
--   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer) extensions.
+-   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer).
 -   **QuickSwitch Support:** Integrates with Android Recents on Android 10 and newer. (requires root)
 -   **Global Search:** Allows quick access to apps, contacts, and web results from the home screen.
 -   **Customization Options:** Provides options to tweak icons, fonts, and colors to your liking.
@@ -64,7 +66,7 @@ Lawnchair on Play Store will install as a different app from other sources. Some
 
 ### Development builds
 
-Interested in keeping yourself up-to-date with every Lawnchair development? Try our development build!
+Interested in keeping yourself up-to-date with every Lawnchair development? Try our development builds!
 
 These builds offer the latest features and bug fixes at a cost of being slower and introducing new bugs. Ensure that you make backups before installing.
 
@@ -88,11 +90,23 @@ Verify the integrity of your Lawnchair download using these SHA-256 hashes:
 
 Please visit the [Lawnchair Contributing Guidelines](CONTRIBUTING.md) for information and tips on contributing to Lawnchair.
 
+## Supporting Lawnchair
+
+If you love what we do, consider [supporting us on Open Collective](https://opencollective.com/lawnchair)! Your contributions help keep Lawnchair independent and enable us to develop faster.
+
+A huge thank you to our **Core Backers ($5+)**:
+*(These backers directly fund our Project Velocity Fund)*
+
+[![Core Backers](https://opencollective.com/lawnchair/tiers/backer.svg?avatarHeight=64&width=890&button=false)](https://opencollective.com/lawnchair)
+
+[Become a supporter](https://opencollective.com/lawnchair) to help us cover our operational costs, or become a Core Backer to be featured here!
+
 ## Quick links
 
--   [News](https://t.me/lawnchairci)
--   [Lawnchair on X (formerly Twitter)](https://x.com/lawnchairapp)
 -   [Website](https://lawnchair.app)
+-   [News on Telegram](https://t.me/lawnchairci)
+-   [Discord](https://discord.com/invite/3x8qNWxgGZ)
+-   [Lawnchair on X (formerly Twitter)](https://x.com/lawnchairapp)
 -   [_XDA_ thread](https://xdaforums.com/t/lawnchair-customizable-pixel-launcher.3627137/)
 
 You can view all our links in the [Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki).
