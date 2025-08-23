@@ -22,21 +22,18 @@ composeMaterial = "1.9.0"
 composeMaterial3 = "1.4.0-beta02"
 composeMaterialIcons = "1.7.8"
 constraintlayout = "2.2.1"
-dagger = "2.57"
+dagger = "2.55"
 datastore = "1.1.7"
 dynamicanimation = "1.1.0"
 fuzzywuzzy = "1.4.0"
 googleMaterial = "1.12.0"
-graphicsCore = "1.0.3"
-graphicsPath = "1.0.1"
-graphicsShapes = "1.0.1"
 hokoBlur = "1.5.5"
 kdrag0nColorkt = "1.0.5"
 kotlinxCoroutines = "1.10.2"
-kotlinxSerialization = "2.1.10"
+kotlinxSerialization = "1.8.1"
 libsu = "6.0.0"
 lifecycle = "2.9.2"
-materialMotionCompose = "2.0.1"
+materialMotionCompose = "1.2.1"
 navigationCompose = "2.9.3"
 okhttp = "5.1.0"
 palette = "1.0.0"
@@ -60,13 +57,12 @@ protobuf = "0.9.5"
 licensee = "1.13.0"
 refine = "4.4.0"
 spotless = "7.2.1"
-develocity = "4.1.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
-android-baselineprofile = { id = "com.android.baselineprofile", version.ref = "baselineprofile" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
@@ -77,7 +73,6 @@ google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 cash-licensee = { id = "app.cash.licensee", version.ref = "licensee" }
 rikka-refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 diffplug-spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-gradle-develocity = { id = "com.gradle.develocity", version.ref = "develocity" }
 
 [libraries]
 # AndroidX

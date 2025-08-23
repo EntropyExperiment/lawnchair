@@ -13,7 +13,8 @@ pluginManagement {
 
 // https://docs.gradle.com/enterprise/gradle-plugin/
 plugins {
-    alias(libs.plugins.gradle.develocity)
+    // Version catalog isn't exposed to settings.gradle so this is applied without it.
+    id 'com.gradle.develocity' version '4.1.1'
 }
 
 def isCI = providers.environmentVariable('CI').present
