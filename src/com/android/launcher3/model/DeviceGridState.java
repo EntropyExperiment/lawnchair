@@ -50,8 +50,8 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
     private final String mGridSizeString;
     private final int mNumHotseat;
     private final @DeviceType int mDeviceType;
-    private final String mDbFile;
-    private final int mGridType;
+    private String mDbFile;
+    private int mGridType;
 
     public DeviceGridState(int columns, int row, int numHotseat, int deviceType, String dbFile,
             int gridType) {

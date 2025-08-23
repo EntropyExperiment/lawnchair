@@ -91,10 +91,10 @@ public class ModelDbController {
     protected DatabaseHelper mOpenHelper;
 
     private final Context mContext;
-    private final InvariantDeviceProfile mIdp;
-    private final LauncherPrefs mPrefs;
-    private final UserCache mUserCache;
-    private final LayoutParserFactory mLayoutParserFactory;
+    private InvariantDeviceProfile mIdp;
+    private LauncherPrefs mPrefs;
+    private UserCache mUserCache;
+    private LayoutParserFactory mLayoutParserFactory;
 
     @Inject
     public ModelDbController(

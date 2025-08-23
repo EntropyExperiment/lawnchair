@@ -898,8 +898,8 @@ public class DeviceProfile {
         int countColor = counterColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         // This is done last, after iconSizePx is calculated above.
-        mDotRendererWorkSpace = createDotRenderer(themeManager, iconSizePx, dotRendererCache);
-        mDotRendererAllApps = createDotRenderer(themeManager, allAppsIconSizePx, dotRendererCache);
+        mDotRendererWorkSpace = createDotRenderer(themeManager, iconSizePx, dotRendererCache, showNotificationCount, typeface, dotColor, countColor);
+        mDotRendererAllApps = createDotRenderer(themeManager, allAppsIconSizePx, dotRendererCache, showNotificationCount, typeface, dotColor, countColor);
     }
 
     /**
@@ -929,6 +929,25 @@ public class DeviceProfile {
                     size,
                     themeManager.getIconShape().getPath(DEFAULT_DOT_SIZE),
                     DEFAULT_DOT_SIZE);
+            cache.put(size, renderer);
+        }
+        return renderer;
+    }
+
+    // Lawnchair
+    private static DotRenderer createDotRenderer(
+        @NonNull ThemeManager themeManager, int size, @NonNull SparseArray<DotRenderer> cache, boolean showNotificationCount, Typeface typeface, int dotColor, int countColor) {
+        DotRenderer renderer = cache.get(size);
+
+        if (renderer == null) {
+            renderer = new DotRenderer(
+                size,
+                themeManager.getIconShape().getPath(DEFAULT_DOT_SIZE),
+                DEFAULT_DOT_SIZE,
+                showNotificationCount,
+                typeface,
+                dotColor,
+                countColor);
             cache.put(size, renderer);
         }
         return renderer;

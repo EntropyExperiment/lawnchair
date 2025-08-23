@@ -141,10 +141,10 @@ public class InvariantDeviceProfile {
     private static final String RES_GRID_NUM_COLUMNS = "grid_num_columns";
     private static final String RES_GRID_ICON_SIZE_DP = "grid_icon_size_dp";
 
-    private final DisplayController mDisplayController;
-    private final WindowManagerProxy mWMProxy;
-    private final LauncherPrefs mPrefs;
-    private final ThemeManager mThemeManager;
+    private DisplayController mDisplayController;
+    private WindowManagerProxy mWMProxy;
+    private LauncherPrefs mPrefs;
+    private ThemeManager mThemeManager;
 
     /**
      * Number of icons per row and column in the workspace.

@@ -162,7 +162,7 @@ import app.lawnchair.theme.ThemeProvider;
 // Lawnchair-TODO-Merge: Merge Lawnchair back, (reason: merge-method: theirs)
 
 public class LauncherPreviewRenderer extends BaseContext
-    implements ActivityContext, WorkspaceLayoutManager, LayoutInflater.Factory2, LocalColorExtractor.Listener {
+    implements ActivityContext, WorkspaceLayoutManager, LayoutInflater.Factory2 {
 
     /**
      * Context used just for preview. It also provides a few objects (e.g. UserCache) just for

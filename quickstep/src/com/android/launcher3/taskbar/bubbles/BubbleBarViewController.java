@@ -230,9 +230,9 @@ public class BubbleBarViewController {
         mDragElevation = res.getDimensionPixelSize(R.dimen.dragged_bubble_elevation);
         mTaskbarTranslationDelta = getBubbleBarTranslationDeltaForTaskbar(activity);
         if (DeviceConfig.isSmallTablet(mActivity)) {
-            mBubbleBarDropTargetSize = res.getDimensionPixelSize(R.dimen.drag_zone_bubble_fold);
+            mBubbleBarDropTargetSize = res.getDimensionPixelSize(com.android.wm.shell.R.dimen.drag_zone_bubble_fold);
         } else {
-            mBubbleBarDropTargetSize = res.getDimensionPixelSize(R.dimen.drag_zone_bubble_tablet);
+            mBubbleBarDropTargetSize = res.getDimensionPixelSize(com.android.wm.shell.R.dimen.drag_zone_bubble_tablet);
         }
         mBubbleBarLeftDropTarget = new BubbleBarLocationDropTarget(BubbleBarLocation.LEFT,
                 mDragListener);

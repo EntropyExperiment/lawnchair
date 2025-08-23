@@ -81,6 +81,7 @@ import com.android.launcher3.dragndrop.FolderAdaptiveIcon;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.graphics.TintedDrawableSpan;
 import com.android.launcher3.icons.BitmapInfo;
+import com.android.launcher3.icons.CacheableShortcutCachingLogic;
 import com.android.launcher3.icons.CacheableShortcutInfo;
 import com.android.launcher3.icons.IconThemeController;
 import com.android.launcher3.icons.LauncherIcons;
@@ -93,6 +94,7 @@ import com.android.launcher3.shortcuts.ShortcutRequest;
 import com.android.launcher3.testing.shared.ResourceUtils;
 import com.android.launcher3.util.FlagOp;
 import com.android.launcher3.util.IntArray;
+import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.BaseDragLayer;
@@ -197,7 +199,6 @@ public final class Utilities {
         return nightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
-    // Lawnchair-TODO-Merge: AOSP remove this
     public static Drawable loadFullDrawableWithoutTheme(Context context, ItemInfo info,
                                                         int width, int height, Object[] outObj) {
         ActivityContext activity = ActivityContext.lookupContext(context);
@@ -223,8 +224,9 @@ public final class Utilities {
                 return null;
             } else {
                 outObj[0] = si.get(0);
-                return ShortcutCachingLogic.getIcon(context, si.get(0),
-                        appState.getInvariantDeviceProfile().fillResIconDpi);
+                BitmapInfo bi = CacheableShortcutCachingLogic.INSTANCE.loadIcon(
+                    context, appState.getIconCache(), new CacheableShortcutInfo(si.get(0), context));
+                return bi.newIcon(context);
             }
         } else if (info.itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER) {
             FolderAdaptiveIcon icon = FolderAdaptiveIcon.createFolderAdaptiveIcon(

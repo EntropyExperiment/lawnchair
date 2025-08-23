@@ -21,6 +21,7 @@ import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_F
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ShortcutInfo;
 import android.graphics.drawable.Icon;
 import android.os.Process;
 import android.os.UserHandle;
@@ -173,15 +174,12 @@ public class SearchActionItemInfo extends ItemInfoWithIcon {
         model.enqueueModelUpdateTask(new LauncherModel.ModelUpdateTask() {
             @Override
             public void execute(ModelTaskController app, BgDataModel dataModel, AllAppsList apps) {
-
-                model.updateAndBindWorkspaceItem(() -> {
-                    PackageItemInfo pkgInfo = new PackageItemInfo(getIntentPackageName(), user);
-                    app.getIconCache().getTitleAndIconForApp(pkgInfo, DEFAULT_LOOKUP_FLAG);
-                    try (LauncherIcons li = LauncherIcons.obtain(app.getContext())) {
-                        info.bitmap = li.badgeBitmap(info.bitmap.icon, pkgInfo.bitmap);
-                    }
-                    return info;
-                });
+                PackageItemInfo pkgInfo = new PackageItemInfo(getIntentPackageName(), user);
+                app.getIconCache().getTitleAndIconForApp(pkgInfo, DEFAULT_LOOKUP_FLAG);
+                
+                // TODO: ShortcutInfo
+                //ShortcutInfo si = getShortcutInfo();
+                model.updateAndBindWorkspaceItem(info, null /* shortcutInfo */);
             }
         });
         return info;
