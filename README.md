@@ -15,8 +15,8 @@
     <!-- ❤️ Credit to Lawrence Kayku for the current mockup on Unsplash 
             https://unsplash.com/photos/photography-of-green-leaves-ZVKr8wADhpc 
     -->
-    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/device-frame.png" width="250px">
-    <img alt="Google Pixel running Lawnchair Launcher with green wallpaper" src="docs/assets/device-frame.png" width="250px">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/device-frame.webp" width="250px">
+    <img alt="Google Pixel running Lawnchair Launcher with green wallpaper" src="docs/assets/device-frame.webp" width="250px">
 </picture>
 
 Lawnchair is a free, open-source home app for Android. Taking Launcher3—Android’s default home app—as a starting point, it ports Pixel Launcher features and introduces rich customization options.
@@ -38,26 +38,26 @@ This branch houses the codebase of Lawnchair 15, which is currently in beta and 
   <a href="https://play.google.com/store/apps/details?id=app.lawnchair.play">
     <picture>
       <!-- Avoid image being clickable with slight workaround -->
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-google-play.png" height="60">
-      <img alt="Get it on Google Play" src="docs/assets/badge-google-play.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-google-play.webp" height="60">
+      <img alt="Get it on Google Play" src="docs/assets/badge-google-play.webp" height="60">
     </picture>
   </a>
   <a href="https://apt.izzysoft.de/fdroid/index/apk/app.lawnchair">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-izzyondroid.png" height="60">
-      <img alt="Get it on IzzyOnDroid" src="docs/assets/badge-izzyondroid.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-izzyondroid.webp" height="60">
+      <img alt="Get it on IzzyOnDroid" src="docs/assets/badge-izzyondroid.webp" height="60">
     </picture>
   </a>
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/LawnchairLauncher/lawnchair/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-obtainium.png" height="60">
-      <img alt="Get it on Obtainium" src="docs/assets/badge-obtainium.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-obtainium.webp" height="60">
+      <img alt="Get it on Obtainium" src="docs/assets/badge-obtainium.webp" height="60">
     </picture>
   </a>
     <a href="https://github.com/LawnchairLauncher/lawnchair/releases">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-github.png" height="60">
-      <img alt="Get it on GitHub" src="docs/assets/badge-github.png" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/badge-github.webp" height="60">
+      <img alt="Get it on GitHub" src="docs/assets/badge-github.webp" height="60">
     </picture>
   </a>
 </p>
