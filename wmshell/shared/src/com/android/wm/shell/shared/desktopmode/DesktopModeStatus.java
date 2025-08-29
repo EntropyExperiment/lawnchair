@@ -22,8 +22,8 @@ import static android.window.DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DES
 import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.app.TaskInfo;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
@@ -257,17 +257,28 @@ public class DesktopModeStatus {
      * Return {@code true} if desktop mode is enabled and can be entered on the current device.
      */
     public static boolean canEnterDesktopMode(@NonNull Context context) {
-        return (isDeviceEligibleForDesktopMode(context)
+        try {
+            return (isDeviceEligibleForDesktopMode(context)
                 && DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODE.isTrue())
                 || isDesktopModeEnabledByDevOption(context);
+        } catch (Throwable e) {
+            // Lawnchair-TODO-Postmerge: All of the LC-Ignored MAY be only accessible to newer APIs.
+            // LC-Ignored
+            return false;
+        }
     }
 
     /**
      * Check if Desktop mode should be enabled because the dev option is shown and enabled.
      */
     private static boolean isDesktopModeEnabledByDevOption(@NonNull Context context) {
-        return DesktopModeFlags.isDesktopModeForcedEnabled()
+        try {
+            return DesktopModeFlags.isDesktopModeForcedEnabled()
                 && canShowDesktopModeDevOption(context);
+        } catch (Throwable e) {
+            // LC-Ignored
+            return false;
+        }
     }
 
     /**
@@ -301,9 +312,14 @@ public class DesktopModeStatus {
      * frontend implementations).
      */
     public static boolean enableMultipleDesktops(@NonNull Context context) {
-        return DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue()
+        try {
+            return DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue()
                 && Flags.enableMultipleDesktopsFrontend()
                 && canEnterDesktopMode(context);
+        } catch (Throwable e) {
+            // LC-Ignored
+            return false;
+        }
     }
 
     /**
@@ -321,8 +337,13 @@ public class DesktopModeStatus {
      * Otherwise if fluid resize is enabled, add a background to freeform tasks.
      */
     public static boolean shouldSetBackground(@NonNull TaskInfo taskInfo) {
-        return taskInfo.isFreeform() && (!DesktopModeStatus.isVeiledResizeEnabled()
+        try {
+            return taskInfo.isFreeform() && (!DesktopModeStatus.isVeiledResizeEnabled()
                 || DesktopModeFlags.ENABLE_OPAQUE_BACKGROUND_FOR_TRANSPARENT_WINDOWS.isTrue());
+        } catch (Throwable e) {
+            // LC-Ignored
+            return false;
+        }
     }
 
     /**
@@ -369,15 +390,20 @@ public class DesktopModeStatus {
         if (!enforceDeviceRestrictions()) {
             return true;
         }
-        // If projected display is enabled, #canInternalDisplayHostDesktops is no longer a
-        // requirement.
-        final boolean desktopModeSupported = ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue()
+        try {
+            // If projected display is enabled, #canInternalDisplayHostDesktops is no longer a
+            // requirement.
+            final boolean desktopModeSupported = ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue()
                 ? isDesktopModeSupported(context) : (isDesktopModeSupported(context)
                 && canInternalDisplayHostDesktops(context));
-        final boolean desktopModeSupportedByDevOptions =
+            final boolean desktopModeSupportedByDevOptions =
                 Flags.enableDesktopModeThroughDevOption()
                     && isDesktopModeDevOptionSupported(context);
-        return desktopModeSupported || desktopModeSupportedByDevOptions;
+            return desktopModeSupported || desktopModeSupportedByDevOptions;
+        } catch (Throwable e) {
+            // LC-Ignored
+            return false;
+        }
     }
 
     /**
@@ -416,9 +442,15 @@ public class DesktopModeStatus {
      * of the display's root [TaskDisplayArea] is set to WINDOWING_MODE_FREEFORM.
      */
     public static boolean enterDesktopByDefaultOnFreeformDisplay(@NonNull Context context) {
-        if (!DesktopExperienceFlags.ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS.isTrue()) {
+        try {
+            if (!DesktopExperienceFlags.ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS.isTrue()) {
+                return false;
+            }
+        } catch (Throwable e) {
+            // LC-Ignored
             return false;
         }
+
         return SystemProperties.getBoolean(ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAY_SYS_PROP,
                 context.getResources().getBoolean(
                         R.bool.config_enterDesktopByDefaultOnFreeformDisplay));
@@ -429,7 +461,12 @@ public class DesktopModeStatus {
      * screen.
      */
     public static boolean shouldMaximizeWhenDragToTopEdge(@NonNull Context context) {
-        if (!DesktopExperienceFlags.ENABLE_DRAG_TO_MAXIMIZE.isTrue()) {
+        try {
+            if (!DesktopExperienceFlags.ENABLE_DRAG_TO_MAXIMIZE.isTrue()) {
+                return false;
+            }
+        } catch (Throwable e) {
+            // LC-Ignored
             return false;
         }
         return SystemProperties.getBoolean(ENABLE_DRAG_TO_MAXIMIZE_SYS_PROP,
