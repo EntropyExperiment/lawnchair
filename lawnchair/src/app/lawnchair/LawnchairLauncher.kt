@@ -487,7 +487,7 @@ class LawnchairLauncher : QuickstepLauncher() {
 
         var sRestartFlags = 0
 
-        val instance get() = LauncherAppState.getInstanceNoCreate() as? LawnchairLauncher
+        val instance get() = LauncherAppState.getInstance(LawnchairApp.instance) as? LawnchairLauncher
     }
 }
 

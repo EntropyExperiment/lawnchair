@@ -42,8 +42,6 @@ constructor(
 
         @JvmStatic fun getInstance(context: Context) = INSTANCE[context]
 
-        @JvmStatic fun getInstanceNoCreate() = INSTANCE[null]
-
         /** Shorthand for [.getInvariantDeviceProfile] */
         @JvmStatic fun getIDP(context: Context) = InvariantDeviceProfile.INSTANCE[context]
     }
