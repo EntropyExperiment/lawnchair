@@ -1,11 +1,15 @@
-Lawnchair 16 Development 0 SNAPSHOT 5 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 Development 0 SNAPSHOT 6 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### Snapshot 6 (Draft)
+### 🥞 Snapshot 6 
 
 This is a developer-focused change log:
 
+This snapshot marks the first time Lawnchair 16 is able to compile and build an APK!
+
 * Fix all issues with Java files in both `lawn` and `src`
+* Make Lawnchair compilable (with instant crash)
+* Move to KSP for Dagger code generation
 
 ### Snapshot 5
 

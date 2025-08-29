@@ -4,23 +4,20 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'com.android.application' version "8.12.1"
-    id 'com.android.library' version "8.12.1" apply false
-    id 'com.android.test' version '8.12.1' apply false
+    id 'com.android.application' version '8.12.2'
+    id 'com.android.library' version '8.12.2' apply false
+    id 'com.android.test' version '8.12.2' apply false
     id 'androidx.baselineprofile' version '1.4.0'
-    id 'org.jetbrains.kotlin.android' version "2.2.0"
-    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.0"
-    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.0"
-    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.0"
+    id 'org.jetbrains.kotlin.android' version "2.2.10"
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10"
+    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10"
+    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10"
     id "com.google.devtools.ksp" version "2.2.0-2.0.2"
     id 'com.google.protobuf' version "0.9.5"
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
     id 'com.diffplug.spotless' version '7.2.1'
-
-    // Thanks Dagger!
-    id 'org.jetbrains.kotlin.kapt' version '2.2.0'
-    id 'com.google.dagger.hilt.android' version '2.57'
+    id 'com.google.dagger.hilt.android' version '2.57.1'
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -439,9 +436,9 @@ dependencies {
     implementation libs.compose.material3
     implementation libs.compose.material3.windowSizeClass
 
-    kapt libs.dagger.compiler
+    ksp libs.dagger.compiler
     implementation libs.hilt.android
-    kapt libs.hilt.compiler
+    ksp libs.hilt.compiler
 
     implementation libs.bundles.room
     ksp libs.room.compiler
@@ -477,12 +474,6 @@ ksp {
     arg("room.generateKotlin", "true")
     arg("room.incremental", "true")
     arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
-}
-
-kapt {
-    arguments {
-        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
-    }
 }
 
 
