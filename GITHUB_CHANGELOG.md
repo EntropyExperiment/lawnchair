@@ -1,6 +1,12 @@
 Lawnchair 16 Development 0 SNAPSHOT 6 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
+### 🏗️ Development 1 (Draft)
+
+Development 1 Milestone
+
+* Make Smartspace preview work
+
 ### 🥞 Snapshot 6 
 
 This is a developer-focused change log:
