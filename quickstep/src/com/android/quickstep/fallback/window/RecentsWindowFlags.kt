@@ -16,28 +16,22 @@
 
 package com.android.quickstep.fallback.window
 
-import android.window.DesktopModeFlags.DesktopModeFlag
-import com.android.launcher3.Flags
-
+// Lawnchair-TODO-Flags: DesktopModeFlag =
+//  DesktopModeFlag(Flags::enableLauncherOverwineInWindow, false)
+// Impl: var.isTrue()
 class RecentsWindowFlags {
     companion object {
         @JvmField
-        val enableLauncherOverviewInWindow: DesktopModeFlag =
-            DesktopModeFlag(Flags::enableLauncherOverviewInWindow, false)
+        val enableLauncherOverviewInWindow = false
 
         @JvmField
-        val enableFallbackOverviewInWindow: DesktopModeFlag =
-            DesktopModeFlag(Flags::enableFallbackOverviewInWindow, false)
+        val enableFallbackOverviewInWindow = false
 
         @JvmField
-        val enableOverviewOnConnectedDisplays: DesktopModeFlag =
-            DesktopModeFlag(Flags::enableOverviewOnConnectedDisplays, false)
+        val enableOverviewOnConnectedDisplays = false
 
         @JvmStatic
         val enableOverviewInWindow
-            get() =
-                enableLauncherOverviewInWindow.isTrue ||
-                    enableFallbackOverviewInWindow.isTrue ||
-                    enableOverviewOnConnectedDisplays.isTrue
+            get() = false
     }
 }
