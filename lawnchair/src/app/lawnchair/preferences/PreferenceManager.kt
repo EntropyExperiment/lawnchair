@@ -24,13 +24,19 @@ import app.lawnchair.font.FontCache
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
+import com.android.launcher3.dagger.ApplicationContext
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 
-class PreferenceManager private constructor(private val context: Context) :
-    BasePreferenceManager(context),
+@LauncherAppSingleton
+class PreferenceManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : BasePreferenceManager(context),
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
     private val reloadIcons = { idp.onPreferencesChanged(context) }
@@ -63,7 +69,6 @@ class PreferenceManager private constructor(private val context: Context) :
     val windowCornerRadius = IntPref("pref_windowCornerRadius", 80, recreate)
     val autoLaunchRoot = BoolPref("pref_autoLaunchRoot", false)
     val wallpaperScrolling = BoolPref("pref_wallpaperScrolling", true)
-    val infiniteScrolling = BoolPref("pref_infiniteScrolling", false)
     val enableDebugMenu = BoolPref("pref_enableDebugMenu", false)
     val customAppName = object : MutableMapPref<ComponentKey, String>("pref_appNameMap", reloadGrid) {
         override fun flattenKey(key: ComponentKey) = key.toString()
@@ -131,7 +136,6 @@ class PreferenceManager private constructor(private val context: Context) :
     val recentsTranslucentBackground = BoolPref("pref_recentsTranslucentBackground", false, recreate)
     val recentsTranslucentBackgroundAlpha = FloatPref("pref_recentTranslucentBackgroundAlpha", .8f, recreate)
 
-
     val hideVersionInfo = BoolPref("pref_hideVersionInfo", false)
     val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
 
@@ -158,7 +162,7 @@ class PreferenceManager private constructor(private val context: Context) :
         private const val CURRENT_VERSION = 2
 
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::PreferenceManager)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getPreferenceManager)
 
         @JvmStatic
         fun getInstance(context: Context) = INSTANCE.get(context)!!
