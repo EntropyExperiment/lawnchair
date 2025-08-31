@@ -1,29 +1,107 @@
-Lawnchair 15 Beta 2 is now available! This is a stability-focused release that addresses numerous bugs from Beta 1, while adding a few quality of life improvements.
+Lawnchair 16 Development 0 SNAPSHOT 6 is here! Contributors are encouraged to target this branch instead of 
+older (i.e., Lawnchair `15-dev`).
 
-Note that this release only supports QuickSwitch from Android 10 to Android 15 QPR0 (initial release).
+### 🏗️ Development 1 (Draft)
 
-This release includes the following improvements:
-* Redesigned the launcher search backend infrastructure, with a cleaner UI for settings
-  * Replace Mull search provider with IronFox (#5780)
-  * Fix launch intent for Kagi search provider (#5800)
-* Added support for infinite scrolling in home screen (#5807);
-* Added support for re-ordering apps inside app drawer folders (via settings) (#6173)
-* Added an option in Settings to clear all items from the home screen (#6125)
-* Added an option to turn off the alpha change behind the search bar when scrolling in the app drawer (#5934)
-* Improved the layout of the About screen, and added a changelog viewer for Nightly builds (##5711)
+Development 1 Milestone
 
-Alongside that, several issues have also been fixed:
-* Fixed an issue that caused the search widget to fail to launch the Google app on Android 14 and above. 
-* Addressed multiple crashes on older Android versions. 
-* Resolved a race condition that could cause a crash when customizing an app that was being uninstalled.
-* Corrected various visual bugs, including:
-  * "Customize" bottom sheet not updating state
-  * Search state would not clear when app drawer is hidden (#5933)
-  * Wrong icon scaling in app drawer when home screen icons are resized (#5932)
-  * Home screen page indicator being partially displayed (#5937)
+* Make Lawnchair Launcher launchable in Android 14, 15, 16
+* Remove two deprecated features (Use Material U Popup, and Use dot pagination)
+* Add pseudonym version in debug settings
+* Adapt Lawnchair code to Launcher3 16
+* Make basic features of Launcher work (App Drawer, Home Screen, Search, Folders, Widgets)
+* Enable Material Expressive Flags (Try swiping through launcher page)
+* Enable All Apps Blur Flags (Try opening All Apps on supported devices)
+* Enable MSDL Haptics Feedback Flags (Try gliding widget or icons across the homescreen)
+* Make Predictive Back Gesture work on Android 14, 15, 16 (Try swiping left or right on gesture-based navigational)
 
-Alongside that, this release contains the usual performance improvements, miscellaneous bug fixes, dependency updates, and new bugs & translations.
+#### Known Bugs
 
-Thanks as well to our new contributors: @lebao3105, @IzzySoft, @foXaCe, @itsaky, @victor-marino, @garghimanshu0786, @VBansal99, @Chaikew, and @abhixv
+* Large screen full sheet widget selector fail to open on large screen devices (tablet/foldable)
+* Android 13 SecurityException (android.permission.READ_DEVICE_CONFIG) on reading device configuration
+* App Icon may sometimes render with less than 0 in height/width causing blank icon to be rendered and crashing ISE on customising icons
+* Lawnchair incorrectly the device system as being in Safe mode causing most of the app to not be launchable
+* Placing or moving/resizing existing configurable widget will crash the launcher with NPE 
+* Any Lawnchair settings using IDP will crash the launcher
+* Icon pack isn't usable
+* Dynamic icons will not be themed by launcher
 
-[Support Lawnchair's development by donating on Open Collective](https://opencollective.com/lawnchair)
+### 🥞 Snapshot 6 
+
+This is a developer-focused change log:
+
+This snapshot marks the first time Lawnchair 16 is able to compile and build an APK!
+
+* Fix all issues with Java files in both `lawn` and `src`
+* Make Lawnchair compilable (with instant crash)
+* Move to KSP for Dagger code generation
+
+### Snapshot 5
+
+This is a developer-focused change log:
+
+This snapshot now able to compile all sources (Kotlin files only)
+
+* Fix MORE MORE MORE `lawn` issues
+* Use Gradle Version Catalog for consistent dependency version across all modules (Full implementation @ LawnchairLauncher/Lawnchair#5753)
+* Magically fix ASM Instrumentation issues (I didn't do anything, it just works now)
+* Fix ALL the issues in kotlin stage (`compileLawnWithQuickstepNightlyDebugKotlin`)
+* Reintroduce some features from Lawnchair
+* Add compatibility checks and workarounds for them
+* Fix most issues with Java files in both `lawn` and `src`
+
+### Snapshot 4
+
+This is a developer-focused change log:
+
+This snapshot marks the first time Lawnchair 16 is able to compile all Launcher3 sources!
+
+* Add `MSDLLib` to `platform_frameworks_libs_systemui` 
+* Add `contextualeducationlib` to `platform_frameworks_libs_systemui`
+* Fix issues in both `lawn` and `src` modules
+* Fix AIDL sources
+* Resolve Lawnchair/LC-TODO lists
+* Merge `wmshell.shared` res with res from `wmshell`
+* Consistent build reproducibility by specifying dependencies in `build.gradle`
+* Some ASM Instrumentation issues (and re-add some…)
+* Update documentations
+
+### Snapshot 3
+
+This is a developer-focused change log:
+
+Not a lot of errors left to go!
+
+* Finish correctly implementing all Dagger functions (?)
+* Merge Lawnchair 15 Beta 1 into Bubble Tea
+  * Support for 16-kb page size devices
+* Repository rebased and dropped commit
+  * Switch back from turbine-combined variant to javac variant for prebuilt SystemUI-core-16 because issues with LFS
+    * MORE MORE fixes regarding turbine-combined to javac
+* Publish `platform_frameworks_libs_systemui` to pe 16-dev branch
+* ATLEAST check to almost every launcher3 source file
+* `Utils` module (stripped)
+* Fix Dagger duplicated classes (because of Dagger dependency ksp/kapt mixing)
+* Build reproducibility improvements by specifying dependencies in `build.gradle` files
+* Fix some of the issues in both `lawn` and `src` modules
+
+### Snapshot 2
+
+This is a developer-focused change log:
+
+This snapshot milestone marked the first time Lawnchair now able to compile all supplementary 
+modules, `src` + `lawn` will be in Snapshot 5 or Development 1 milestone.
+
+* Merge flags
+* Fix some issues with launcher3 sources.
+* A temporary workaround with framworks.jar not adding in anim module.
+* Shared not having access to animationlib.
+* **Switch from javac variant to turbine-combined variant for prebuilt SystemUI-core-16**.
+
+### From Initial snapshot 0 and 1
+
+This is a developer-focused change log:
+* Prebuilt updated to Android 16-0.0_r2 (Android 16.0.0 Release 2)
+* Submodule have also been refreshed to A16r2
+* Baklava Compatlib (QuickSwitch compatibility not guaranteed)
+* Refreshed internal documentation like prebuilt, systemUI
