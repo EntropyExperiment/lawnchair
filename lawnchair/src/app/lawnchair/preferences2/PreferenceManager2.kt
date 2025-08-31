@@ -565,18 +565,6 @@ class PreferenceManager2 @Inject constructor(
         onSet = { reloadHelper.restart() },
     )
 
-    val enableDotPagination = preference(
-        key = booleanPreferencesKey(name = "enable_dot_pagination"),
-        defaultValue = context.resources.getBoolean(R.bool.config_default_enable_dot_pagination),
-        onSet = { reloadHelper.recreate() },
-    )
-
-    val enableMaterialUPopUp = preference(
-        key = booleanPreferencesKey(name = "enable_material_u_popup"),
-        defaultValue = context.resources.getBoolean(R.bool.config_default_enable_material_u_popup),
-        onSet = { reloadHelper.recreate() },
-    )
-
     val twoLineAllApps = preference(
         key = booleanPreferencesKey(name = "two_line_all_apps"),
         defaultValue = context.resources.getBoolean(R.bool.config_default_enable_two_line_allapps),
