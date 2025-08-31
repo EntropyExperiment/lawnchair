@@ -16,50 +16,22 @@
 
 package com.android.quickstep.fallback.window
 
-import android.window.DesktopExperienceFlags.DesktopExperienceFlag
-import com.android.launcher3.Flags
+// Lawnchair-TODO-Flags: DesktopModeFlag =
+//  DesktopModeFlag(Flags::enableLauncherOverwineInWindow, false)
+// Impl: var.isTrue()
+class RecentsWindowFlags {
+    companion object {
+        @JvmField
+        val enableLauncherOverviewInWindow = false
 
-object RecentsWindowFlags {
-    @JvmField
-    val enableLauncherOverviewInWindow: DesktopExperienceFlag =
-        DesktopExperienceFlag(
-            Flags::enableLauncherOverviewInWindow,
-            false,
-            Flags.FLAG_ENABLE_LAUNCHER_OVERVIEW_IN_WINDOW,
-        )
+        @JvmField
+        val enableFallbackOverviewInWindow = false
 
-    @JvmField
-    val enableFallbackOverviewInWindow: DesktopExperienceFlag =
-        DesktopExperienceFlag(
-            Flags::enableFallbackOverviewInWindow,
-            false,
-            Flags.FLAG_ENABLE_FALLBACK_OVERVIEW_IN_WINDOW,
-        )
+        @JvmField
+        val enableOverviewOnConnectedDisplays = false
 
-    @JvmField
-    val enableOverviewOnConnectedDisplays: DesktopExperienceFlag =
-        DesktopExperienceFlag(
-            Flags::enableOverviewOnConnectedDisplays,
-            true,
-            Flags.FLAG_ENABLE_OVERVIEW_ON_CONNECTED_DISPLAYS,
-        )
-
-    @JvmStatic
-    val enableOverviewInWindow
-        get() =
-            enableLauncherOverviewInWindow.isTrue ||
-                enableFallbackOverviewInWindow.isTrue ||
-                enableOverviewOnConnectedDisplays.isTrue
-
-    @JvmStatic
-    val enableDesktopMenuOnSecondaryDisplay: Boolean
-        get() =
-            DesktopExperienceFlag(
-                    Flags::enableDesktopMenuOnSecondaryDisplayBugfix,
-                    false,
-                    Flags.FLAG_ENABLE_DESKTOP_MENU_ON_SECONDARY_DISPLAY_BUGFIX,
-                )
-                .isTrue
-
-    @JvmStatic fun enableOverviewOnConnectedDisplays() = enableOverviewOnConnectedDisplays.isTrue
+        @JvmStatic
+        val enableOverviewInWindow
+            get() = false
+    }
 }
