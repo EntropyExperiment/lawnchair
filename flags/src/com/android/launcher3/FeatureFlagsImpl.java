@@ -13,7 +13,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean allAppsBlur() {
-        return false;
+        return true;
     }
 
     @Override
@@ -258,7 +258,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableLauncherVisualRefresh() {
-        return false;
+        return true;
     }
 
     @Override
@@ -286,7 +286,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableOverviewBackgroundWallpaperBlur() {
-        return false;
+        return true;
     }
 
     @Override
@@ -622,7 +622,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean msdlFeedback() {
-        return false;
+        return true;
     }
 
     @Override
@@ -664,7 +664,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean predictiveBackToHomeBlur() {
-        return false;
+        return true;
     }
 
     @Override
