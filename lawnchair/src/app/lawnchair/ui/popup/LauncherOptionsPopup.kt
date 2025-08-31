@@ -19,6 +19,7 @@ object LauncherOptionsPopup {
         LauncherOptionPopupItem("edit_mode", false),
         LauncherOptionPopupItem("wallpaper", true),
         LauncherOptionPopupItem("widgets", true),
+        LauncherOptionPopupItem("all_apps", true),
         LauncherOptionPopupItem("home_settings", true),
         LauncherOptionPopupItem("sys_settings", false),
     )
@@ -107,6 +108,13 @@ object LauncherOptionsPopup {
                 LauncherEvent.LAUNCHER_WIDGETSTRAY_BUTTON_TAP_OR_LONGPRESS,
                 onStartWidgetsMenu,
             ),
+            "enterAllApps" to OptionItem(
+                launcher,
+                R.string.all_apps_button_label,
+                R.drawable.ic_apps,
+                LauncherEvent.LAUNCHER_ALL_APPS_TAP_OR_LONGPRESS,
+                onStartAllApps,
+            ),
             "home_settings" to OptionItem(
                 launcher,
                 R.string.settings_button_text,
@@ -160,6 +168,10 @@ object LauncherOptionsPopup {
             "widgets" -> LauncherOptionMetadata(
                 label = R.string.widget_button_text,
                 icon = R.drawable.ic_widget,
+            )
+            "all_apps" -> LauncherOptionMetadata(
+                label = R.string.all_apps_button_label,
+                icon = R.drawable.ic_apps,
             )
             "home_settings" -> LauncherOptionMetadata(
                 label = R.string.settings_button_text,
