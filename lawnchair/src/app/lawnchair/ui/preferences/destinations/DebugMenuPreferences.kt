@@ -3,6 +3,7 @@ package app.lawnchair.ui.preferences.destinations
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.datastore.preferences.core.Preferences
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences.getAdapter
@@ -17,9 +18,11 @@ import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.TextPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.search.SearchPopupPreference
 import app.lawnchair.ui.preferences.data.liveinfo.liveInformationManager
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
 import app.lawnchair.ui.preferences.navigation.FeatureFlags
+import com.android.launcher3.R
 import com.patrykmichalik.opto.domain.Preference
 import kotlinx.coroutines.runBlocking
 
@@ -65,6 +68,17 @@ fun DebugMenuPreferences(
                             liveInfoManager.dismissedAnnouncementIds.set(emptySet())
                         }
                     },
+                )
+                SwitchPreference(
+                    label = "Hide version info in About screen",
+                    adapter = prefs.hideVersionInfo.getAdapter(),
+                )
+                SearchPopupPreference(
+                    title = "Set custom pseudonym version",
+                    initialValue = prefs.pseudonymVersion.get(),
+                    placeholder = stringResource(R.string.custom),
+                    onConfirm = prefs.pseudonymVersion.getAdapter()::onChange,
+                    isErrorCheck = { it.isEmpty() },
                 )
             }
 
