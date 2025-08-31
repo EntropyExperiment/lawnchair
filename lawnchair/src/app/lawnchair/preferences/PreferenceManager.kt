@@ -137,6 +137,10 @@ class PreferenceManager @Inject constructor(
     val recentsTranslucentBackground = BoolPref("pref_recentsTranslucentBackground", false, recreate)
     val recentsTranslucentBackgroundAlpha = FloatPref("pref_recentTranslucentBackgroundAlpha", .8f, recreate)
 
+
+    val hideVersionInfo = BoolPref("pref_hideVersionInfo", false)
+    val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
+
     override fun close() {
         TODO("Not yet implemented")
     }
