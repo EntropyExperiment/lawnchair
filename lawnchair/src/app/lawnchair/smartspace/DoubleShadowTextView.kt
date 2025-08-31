@@ -12,7 +12,7 @@ open class DoubleShadowTextView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
 ) : CustomTextView(context, attrs) {
 
-    private val shadowInfo = fromContext(context, attrs, 0);
+    private val shadowInfo = fromContext(context, attrs, 0)
 
     init {
         setShadowLayer(shadowInfo.ambientShadowBlur, 0f, 0f, shadowInfo.ambientShadowColor)

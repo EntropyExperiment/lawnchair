@@ -22,7 +22,6 @@ import androidx.core.content.edit
 import app.lawnchair.font.FontCache
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherPrefs
-import com.android.launcher3.Utilities
 import java.util.concurrent.CopyOnWriteArraySet
 import org.json.JSONObject
 

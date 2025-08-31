@@ -32,11 +32,9 @@ import com.android.launcher3.model.data.ItemInfo
 import com.android.launcher3.popup.SystemShortcut
 import com.android.launcher3.util.ApplicationInfoWrapper
 import com.android.launcher3.util.ComponentKey
-import com.android.launcher3.util.PackageManagerHelper
 import com.android.launcher3.views.ActivityContext
-import java.net.URISyntaxException
-
 import com.patrykmichalik.opto.core.firstBlocking
+import java.net.URISyntaxException
 
 class LawnchairShortcut {
 
@@ -66,8 +64,9 @@ class LawnchairShortcut {
                 if (ApplicationInfoWrapper(
                         activity.asContext(),
                         itemInfo.targetComponent!!.packageName,
-                        itemInfo.user).isSystem()
-                    ) {
+                        itemInfo.user,
+                    ).isSystem()
+                ) {
                     return@Factory null
                 }
                 UnInstall(activity, itemInfo, view)
@@ -80,8 +79,11 @@ class LawnchairShortcut {
             if (ApplicationInfoWrapper(
                     activity.asContext(),
                     packageName,
-                    itemInfo.user
-                ).isSuspended()) return@Factory null
+                    itemInfo.user,
+                ).isSuspended()
+            ) {
+                return@Factory null
+            }
 
             PauseApps(activity, itemInfo, originalView)
         }
@@ -99,7 +101,7 @@ class LawnchairShortcut {
             var icon = Utilities.loadFullDrawableWithoutTheme(launcher, appInfo, 0, 0, outObj)
             if (mItemInfo.screenId != NO_ID && icon is BitmapInfo.Extender) {
                 // Lawnchair-TODO-BubbleTea: Fix getThemedDrawable
-                //icon = icon.getThemedDrawable(launcher)
+                // icon = icon.getThemedDrawable(launcher)
             }
             val launcherActivityInfo = outObj[0] as LauncherActivityInfo
             val defaultTitle = launcherActivityInfo.label.toString()
@@ -135,7 +137,8 @@ class LawnchairShortcut {
             val appLabel = ApplicationInfoWrapper(
                 context,
                 mItemInfo.targetComponent?.packageName ?: "",
-                mItemInfo.user).toString()
+                mItemInfo.user,
+            ).toString()
             AlertDialog.Builder(context)
                 .setIcon(R.drawable.ic_hourglass_top)
                 .setTitle(context.getString(R.string.pause_apps_dialog_title, appLabel))

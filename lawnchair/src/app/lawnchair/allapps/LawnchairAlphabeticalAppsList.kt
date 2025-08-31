@@ -36,7 +36,7 @@ class LawnchairAlphabeticalAppsList<T>(
     private val prefs = PreferenceManager.getInstance(context)
 
     // Lawnchair-TODO-Featureset: observeFolder vM
-    //private val viewModel: FolderViewModel by (context as ComponentActivity).viewModels()
+    // private val viewModel: FolderViewModel by (context as ComponentActivity).viewModels()
     private var folderList = mutableListOf<FolderInfo>()
     private val filteredList = mutableListOf<AppInfo>()
 

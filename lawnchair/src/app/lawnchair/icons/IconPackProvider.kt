@@ -96,13 +96,14 @@ class IconPackProvider @Inject constructor(
         val resId = res.getIdentifier(iconEntry.name, "drawable", iconEntry.packPackageName)
         val td = IconProvider.ThemeData(res, resId)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-            && drawable is AdaptiveIconDrawable
-            && drawable.monochrome == null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            drawable is AdaptiveIconDrawable &&
+            drawable.monochrome == null
+        ) {
             return AdaptiveIconDrawable(
                 drawable.background,
                 drawable.foreground,
-                td.loadPaddedDrawable()
+                td.loadPaddedDrawable(),
             )
         }
         return drawable

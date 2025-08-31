@@ -36,8 +36,7 @@ import javax.inject.Inject
 @LauncherAppSingleton
 class PreferenceManager @Inject constructor(
     @ApplicationContext private val context: Context,
-) :
-    BasePreferenceManager(context),
+) : BasePreferenceManager(context),
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
     private val reloadIcons = { idp.onPreferencesChanged(context) }
@@ -136,7 +135,6 @@ class PreferenceManager @Inject constructor(
     val recentsActionLocked = BoolPref("pref_lockedAsAction", false)
     val recentsTranslucentBackground = BoolPref("pref_recentsTranslucentBackground", false, recreate)
     val recentsTranslucentBackgroundAlpha = FloatPref("pref_recentTranslucentBackgroundAlpha", .8f, recreate)
-
 
     val hideVersionInfo = BoolPref("pref_hideVersionInfo", false)
     val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
