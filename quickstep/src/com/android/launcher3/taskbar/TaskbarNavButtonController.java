@@ -142,7 +142,13 @@ public class TaskbarNavButtonController implements TaskbarControllers.LoggableTa
         if (buttonType == BUTTON_SPACE) {
             return;
         }
-        if (predictiveBackThreeButtonNav() && mLastSentBackAction == ACTION_DOWN) {
+        boolean predictiveBackThreeButtonNav;
+        try {
+            predictiveBackThreeButtonNav = predictiveBackThreeButtonNav();
+        } catch (Throwable t) {
+            predictiveBackThreeButtonNav = false;
+        }
+        if (predictiveBackThreeButtonNav && mLastSentBackAction == ACTION_DOWN) {
             Log.i(TAG, "Button click ignored while back button is pressed");
             // prevent interactions with other buttons while back button is pressed
             return;
@@ -184,7 +190,13 @@ public class TaskbarNavButtonController implements TaskbarControllers.LoggableTa
         if (buttonType == BUTTON_SPACE) {
             return false;
         }
-        if (predictiveBackThreeButtonNav() && mLastSentBackAction == ACTION_DOWN
+        boolean predictiveBackThreeButtonNav;
+        try {
+            predictiveBackThreeButtonNav = predictiveBackThreeButtonNav();
+        } catch (Throwable t) {
+            predictiveBackThreeButtonNav = false;
+        }
+        if (predictiveBackThreeButtonNav && mLastSentBackAction == ACTION_DOWN
                 && buttonType != BUTTON_BACK && buttonType != BUTTON_RECENTS) {
             // prevent interactions with other buttons while back button is pressed (except back
             // and recents button for screen-unpin action).
@@ -196,7 +208,7 @@ public class TaskbarNavButtonController implements TaskbarControllers.LoggableTa
         // The haptic feedback from long pressing on the home button is handled by circle to search.
         // There are no haptics for long pressing the back button if predictive back is enabled
         if (buttonType != BUTTON_HOME
-                && (!predictiveBackThreeButtonNav() || buttonType != BUTTON_BACK)) {
+                && (!predictiveBackThreeButtonNav || buttonType != BUTTON_BACK)) {
             view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
         }
         switch (buttonType) {

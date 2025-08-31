@@ -2760,12 +2760,16 @@ public class Launcher extends StatefulActivity<LauncherState>
     }
 
     private void updateDisallowBack() {
-        if (BuildCompat.isAtLeastV()
+        try {
+            if (BuildCompat.isAtLeastV()
                 && Flags.enableDesktopWindowingMode()
                 && !Flags.enableDesktopWindowingWallpaperActivity()
                 && mDeviceProfile.isTablet) {
-            // TODO(b/333533253): Clean up after desktop wallpaper activity flag is rolled out
-            return;
+                // TODO(b/333533253): Clean up after desktop wallpaper activity flag is rolled out
+                return;
+            }
+        } catch (Throwable t) {
+            // LC-Ignored
         }
         LauncherRootView rv = getRootView();
         if (rv != null) {

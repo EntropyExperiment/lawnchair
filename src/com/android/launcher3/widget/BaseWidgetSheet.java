@@ -137,11 +137,15 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
-        if (predictiveBackThreeButtonNav() && mNavBarScrimHeight > 0) {
-            // Call invalidate to prevent navbar scrim from scaling. The navbar scrim is drawn
-            // directly onto the canvas. To prevent it from being scaled with the canvas, there's a
-            // counter scale applied in dispatchDraw.
-            invalidate();
+        try {
+            if (predictiveBackThreeButtonNav() && mNavBarScrimHeight > 0) {
+                // Call invalidate to prevent navbar scrim from scaling. The navbar scrim is drawn
+                // directly onto the canvas. To prevent it from being scaled with the canvas, there's a
+                // counter scale applied in dispatchDraw.
+                invalidate();
+            }
+        } catch (Throwable t) {
+            // LC-Ignored
         }
     }
 

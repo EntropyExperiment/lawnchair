@@ -699,7 +699,13 @@ public class NavbarButtonsViewController implements TaskbarControllers.LoggableT
         if (mBackButton == null) {
             return;
         }
-        if (predictiveBackThreeButtonNav()) {
+        boolean predictiveBackThreeButtonNav;
+        try {
+            predictiveBackThreeButtonNav = predictiveBackThreeButtonNav();
+        } catch (Throwable t) {
+            predictiveBackThreeButtonNav = false;
+        }
+        if (predictiveBackThreeButtonNav) {
             setupBackButtonAccessibility(mBackButton, accessibilityDelegate);
         } else {
             mBackButton.setAccessibilityDelegate(accessibilityDelegate);
@@ -894,7 +900,13 @@ public class NavbarButtonsViewController implements TaskbarControllers.LoggableT
         buttonView.setImageResource(drawableId);
         buttonView.setContentDescription(parent.getContext().getString(
                 navButtonController.getButtonContentDescription(buttonType)));
-        if (predictiveBackThreeButtonNav() && buttonType == BUTTON_BACK) {
+        boolean predictiveBackThreeButtonNav;
+        try {
+            predictiveBackThreeButtonNav = predictiveBackThreeButtonNav();
+        } catch (Throwable t) {
+            predictiveBackThreeButtonNav = false;
+        }
+        if (predictiveBackThreeButtonNav && buttonType == BUTTON_BACK) {
             // set up special touch listener for back button to support predictive back
             setupBackButtonAccessibility(buttonView, null);
             setBackButtonTouchListener(buttonView, navButtonController);

@@ -87,17 +87,26 @@ abstract class FlingOnBackAnimationCallback(
             onBackInvokedCompat()
         }
         reset()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+        try {
             if (predictiveBackTimestampApi()) {
                 downTime = backEvent.frameTimeMillis
             }
+        } catch (t: Throwable) {
+            // LC-Ignored
         }
         onBackStartedCompat(backEvent)
     }
 
     final override fun onBackProgressed(backEvent: BackEvent) {
         val interpolatedProgress = progressInterpolator.getInterpolation(backEvent.progress)
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) && predictiveBackTimestampApi()) {
+        val predictiveBackTimestampApi = try {
+            predictiveBackTimestampApi()
+        } catch (t: Throwable) {
+            // LC-Ignored
+            false
+        }
+
+        if (predictiveBackTimestampApi) {
             downTime?.let { downTime ->
                 velocityTracker.addMovement(
                     MotionEvent.obtain(
@@ -131,7 +140,13 @@ abstract class FlingOnBackAnimationCallback(
     }
 
     final override fun onBackInvoked() {
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) && predictiveBackTimestampApi() && lastBackEvent != null) {
+        val predictiveBackTimestampApi = try {
+            predictiveBackTimestampApi()
+        } catch (t: Throwable) {
+            // LC-Ignored
+            false
+        }
+        if (predictiveBackTimestampApi && lastBackEvent != null) {
             velocityTracker.computeCurrentVelocity(1000)
             backInvokedFlingAnim =
                 FlingAnimation(FloatValueHolder())
