@@ -5,7 +5,26 @@ older (i.e., Lawnchair `15-dev`).
 
 Development 1 Milestone
 
-* Make Smartspace preview work
+* Make Lawnchair Launcher launchable in Android 14, 15, 16
+* Remove two deprecated features (Use Material U Popup, and Use dot pagination)
+* Add pseudonym version in debug settings
+* Adapt Lawnchair code to Launcher3 16
+* Make basic features of Launcher work (App Drawer, Home Screen, Search, Folders, Widgets)
+* Enable Material Expressive Flags (Try swiping through launcher page)
+* Enable All Apps Blur Flags (Try opening All Apps on supported devices)
+* Enable MSDL Haptics Feedback Flags (Try gliding widget or icons across the homescreen)
+* Make Predictive Back Gesture work on Android 14, 15, 16 (Try swiping left or right on gesture-based navigational)
+
+#### Known Bugs
+
+* Large screen full sheet widget selector fail to open on large screen devices (tablet/foldable)
+* Android 13 SecurityException (android.permission.READ_DEVICE_CONFIG) on reading device configuration
+* App Icon may sometimes render with less than 0 in height/width causing blank icon to be rendered and crashing ISE on customising icons
+* Lawnchair incorrectly the device system as being in Safe mode causing most of the app to not be launchable
+* Placing or moving/resizing existing configurable widget will crash the launcher with NPE 
+* Any Lawnchair settings using IDP will crash the launcher
+* Icon pack isn't usable
+* Dynamic icons will not be themed by launcher
 
 ### 🥞 Snapshot 6 
 
