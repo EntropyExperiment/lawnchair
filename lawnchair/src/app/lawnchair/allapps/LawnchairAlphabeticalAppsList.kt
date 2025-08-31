@@ -2,16 +2,12 @@ package app.lawnchair.allapps
 
 import android.content.Context
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import app.lawnchair.data.folder.model.FolderOrderUtils
-import app.lawnchair.data.folder.model.FolderViewModel
+import app.lawnchair.flowerpot.Flowerpot
 import app.lawnchair.launcher
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.util.categorizeAppsWithSystemAndGoogle
 import com.android.launcher3.InvariantDeviceProfile.OnIDPChangeListener
 import com.android.launcher3.allapps.AllAppsStore
 import com.android.launcher3.allapps.AlphabeticalAppsList
@@ -39,11 +35,13 @@ class LawnchairAlphabeticalAppsList<T>(
     private val prefs2 = PreferenceManager2.getInstance(context)
     private val prefs = PreferenceManager.getInstance(context)
 
-    private val viewModel: FolderViewModel by (context as ComponentActivity).viewModels()
+    // Lawnchair-TODO-Featureset: observeFolder vM
+    //private val viewModel: FolderViewModel by (context as ComponentActivity).viewModels()
     private var folderList = mutableListOf<FolderInfo>()
     private val filteredList = mutableListOf<AppInfo>()
 
     private val folderOrder = FolderOrderUtils.stringToIntList(prefs.drawerListOrder.get())
+    private val potsManager = Flowerpot.Manager.getInstance(context)
 
     init {
         context.launcher.deviceProfile.inv.addOnChangeListener(this)
@@ -59,12 +57,12 @@ class LawnchairAlphabeticalAppsList<T>(
     }
 
     private fun observeFolders() {
-        viewModel.foldersLiveData.observe(context as LifecycleOwner) { folders ->
-            folderList = folders
-                .sortedBy { folderOrder.indexOf(it.id) }
-                .toMutableList()
-            updateAdapterItems()
-        }
+//        viewModel.foldersLiveData.observe(context as LifecycleOwner) { folders ->
+//            folderList = folders
+//                .sortedBy { folderOrder.indexOf(it.id) }
+//                .toMutableList()
+//            updateAdapterItems()
+//        }
     }
 
     override fun updateItemFilter(itemFilter: Predicate<ItemInfo>?) {
@@ -82,14 +80,9 @@ class LawnchairAlphabeticalAppsList<T>(
         filteredList.clear()
         var position = startPosition
 
-        // Show app drawer folders only on main profile, to prevent state complexity
-        if (isWorkOrPrivateSpace(appList)) return super.addAppsWithSections(appList, position)
-
         if (!drawerListDefault) {
-            val validApps = appList.mapNotNull { it }
-            val finalCategorizedApps = categorizeAppsWithSystemAndGoogle(validApps, context)
-
-            finalCategorizedApps.forEach { (category, apps) ->
+            val categorizedApps = potsManager.categorizeApps(appList)
+            categorizedApps.forEach { (category, apps) ->
                 if (apps.size == 1) {
                     mAdapterItems.add(AdapterItem.asApp(apps.first()))
                 } else {

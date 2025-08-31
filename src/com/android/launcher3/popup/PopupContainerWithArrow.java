@@ -105,7 +105,6 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
 
     protected PopupItemDragHandler mPopupItemDragHandler;
     protected LauncherAccessibilityDelegate mAccessibilityDelegate;
-    private float mCurrentHeight;
 
     public PopupContainerWithArrow(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -210,7 +209,7 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
         PopupContainerWithArrow<Launcher> container;
         PopupDataProvider popupDataProvider = launcher.getPopupDataProvider();
         int deepShortcutCount = popupDataProvider.getShortcutCountForItem(item);
-        List<SystemShortcut> systemShortcuts = launcher.getSupportedShortcuts(item.container)
+        List<SystemShortcut> systemShortcuts = launcher.getSupportedShortcuts()
                 .map(s -> s.getShortcut(launcher, item, icon))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -218,21 +217,9 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
                 R.layout.popup_container, launcher.getDragLayer(), false);
         container.configureForLauncher(launcher, item);
         
-        /* LC-Note: Fix for missing flags and account for NCDFE */
         boolean shouldHideSystemShortcuts;
         if (ATLEAST_BAKLAVA) {
-            boolean enableMovingContentIntoPrivateSpace = false;
-            try {
-                /* LC-Note: Some devices (Android 16 QPR) doesn't have or expose this flag to user. 
-                 * Let's assume no, because (the flags) enableMovingContentIntoPrivateSpace seems 
-                 * to be False for R8 by default.
-                 * */
-                enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
-            } catch (NoClassDefFoundError e) {
-                /* LC-Ignored: we already set it false by default. */
-            }
-            
-            shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace
+            shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace()
                 && Objects.equals(item.getTargetPackage(), PRIVATE_SPACE_PACKAGE);
         } else {
             shouldHideSystemShortcuts = false;
@@ -330,51 +317,7 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
             return;
         }
 
-        mCurrentHeight = mShortcutHeight + mChildContainerMargin;
-
-        if (Flags.enableLongPressRemoveShortcut()) {
-            collapseEligibleSystemShortcutsIfOverThreshold(systemShortcuts);
-        } else {
-            collapseNonWidgetSystemShortcutsIfOverThreshold(systemShortcuts);
-        }
-        addDeepShortcuts(deepShortcutCount, mCurrentHeight);
-    }
-
-    /**
-     * If the total amount of shortcuts is over threshold, we collapse the shortcuts that are
-     * eligible to be collapsible, and make sure the non-collapsible ones get their own container.
-     *
-     * @param systemShortcuts List of SystemShortcuts
-     */
-    private void collapseEligibleSystemShortcutsIfOverThreshold(
-            List<SystemShortcut> systemShortcuts) {
-        List<SystemShortcut> collapsibleSystemShortcuts =
-                getCollapsibleSystemShortcuts(systemShortcuts);
-        // If total shortcuts over threshold, collapse system shortcuts to single row
-        addSystemShortcutsIconsOnly(collapsibleSystemShortcuts);
-        // May need to recalculate row width
-        mContainerWidth = Math.max(mContainerWidth,
-                collapsibleSystemShortcuts.size() * getResources()
-                        .getDimensionPixelSize(R.dimen.system_shortcut_header_icon_touch_size));
-        List<SystemShortcut> nonCollapsibleSystemShortcuts = systemShortcuts.stream()
-                .filter(shortcut -> !shortcut.mIsCollapsible).toList();
-        if (!nonCollapsibleSystemShortcuts.isEmpty()) {
-            addSystemShortcuts(nonCollapsibleSystemShortcuts,
-                    R.layout.system_shortcut_rows_container,
-                    R.layout.system_shortcut);
-            mCurrentHeight += (mShortcutHeight * nonCollapsibleSystemShortcuts.size())
-                    + mChildContainerMargin;
-        }
-    }
-
-    /**
-     * If the total amount of shortcuts is over threshold, we collapse the shortcuts that are
-     * not the widget shortcut, and make sure widget gets its own container.
-     *
-     * @param systemShortcuts List of SystemShortcuts
-     */
-    private void collapseNonWidgetSystemShortcutsIfOverThreshold(
-            List<SystemShortcut> systemShortcuts) {
+        float currentHeight = mShortcutHeight + mChildContainerMargin;
         List<SystemShortcut> nonWidgetSystemShortcuts =
                 getNonWidgetSystemShortcuts(systemShortcuts);
         // If total shortcuts over threshold, collapse system shortcuts to single row
@@ -389,8 +332,9 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
             mWidgetContainer = inflateAndAdd(R.layout.widget_shortcut_container_material_u,
                     this);
             initializeWidgetShortcut(mWidgetContainer, widgetShortcutOpt.get());
-            mCurrentHeight += mShortcutHeight + mChildContainerMargin;
+            currentHeight += mShortcutHeight + mChildContainerMargin;
         }
+        addDeepShortcuts(deepShortcutCount, currentHeight);
     }
 
     /**
@@ -408,23 +352,9 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
     }
 
     /**
-     * Returns list of [systemShortcuts] without the non-collapsible shortcuts.
-     * @param systemShortcuts list of SystemShortcuts to filter from.
-     * @return systemShortcuts without the Widgets Shortcut.
-     */
-    private static List<SystemShortcut> getCollapsibleSystemShortcuts(
-            List<SystemShortcut> systemShortcuts) {
-
-        return systemShortcuts
-                .stream()
-                .filter(shortcut -> shortcut.mIsCollapsible)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Returns list of [systemShortcuts] without the non-collapsible shortcuts.
-     * @param systemShortcuts list of SystemShortcuts to filter from.
-     * @return systemShortcuts without the Widgets Shortcut.
+     * Returns list of [systemShortcuts] without the Widgets shortcut instance if found
+     * @param systemShortcuts list of SystemShortcuts to filter from
+     * @return systemShortcuts without the Widgets Shortcut
      */
     private static List<SystemShortcut> getNonWidgetSystemShortcuts(
             List<SystemShortcut> systemShortcuts) {
@@ -494,7 +424,7 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
         for (int i = deepShortcutCount; i > 0; i--) {
             currentHeight += mShortcutHeight;
             // when there is limited vertical screen space, limit total popup rows to fit
-            if (currentHeight >= mActivityContext.getDeviceProfile().getDeviceProperties().getAvailableHeightPx()) break;
+            if (currentHeight >= mActivityContext.getDeviceProfile().availableHeightPx) break;
             DeepShortcutView v = inflateAndAdd(R.layout.deep_shortcut,
                     mDeepShortcutContainer);
             v.getLayoutParams().width = mContainerWidth;
