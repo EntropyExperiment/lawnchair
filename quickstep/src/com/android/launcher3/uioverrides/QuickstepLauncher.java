@@ -37,6 +37,7 @@ import static com.android.launcher3.LauncherState.NO_OFFSET;
 import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.LauncherState.OVERVIEW_MODAL_TASK;
 import static com.android.launcher3.LauncherState.OVERVIEW_SPLIT_SELECT;
+import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
 import static com.android.launcher3.Utilities.ATLEAST_T;
 import static com.android.launcher3.Utilities.isRtl;
 import static com.android.launcher3.compat.AccessibilityManagerCompat.sendCustomAccessibilityEvent;
@@ -1048,12 +1049,14 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     public void setResumed() {
         DesktopVisibilityController desktopVisibilityController =
                 DesktopVisibilityController.INSTANCE.get(this);
-        if (!ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue()
+        if (ATLEAST_BAKLAVA) {
+            if (!ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue()
                 && desktopVisibilityController.isInDesktopModeAndNotInOverview(getDisplayId())
                 && !desktopVisibilityController.isRecentsGestureInProgress()) {
-            // Return early to skip setting activity to appear as resumed
-            // TODO: b/333533253 - Remove after flag rollout
-            return;
+                // Return early to skip setting activity to appear as resumed
+                // TODO: b/333533253 - Remove after flag rollout
+                return;
+            }
         }
         super.setResumed();
     }

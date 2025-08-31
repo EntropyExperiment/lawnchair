@@ -186,7 +186,7 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
     override fun supportsMultiInstance(lai: LauncherActivityInfo): Boolean {
         return try {
             super.supportsMultiInstance(lai) || lai.supportsMultiInstance()
-        } catch (e: Exception) {
+        } catch (t: Throwable) {
             false
         }
     }

@@ -195,7 +195,7 @@ public final class OverviewComponentObserver {
 
         if (!mIsHomeDisabled && (defaultHome == null || mIsDefaultHome)) {
             // User default home is same as our home app. Use Overview integrated in Launcher.
-            if (enableLauncherOverviewInWindow.isTrue()) {
+            if (enableLauncherOverviewInWindow) {
                 mDefaultDisplayContainerInterface =
                         mRecentsDisplayModel.getFallbackWindowInterface(DEFAULT_DISPLAY);
             } else {
@@ -209,7 +209,7 @@ public final class OverviewComponentObserver {
             unregisterOtherHomeAppUpdateReceiver();
         } else {
             // The default home app is a different launcher. Use the fallback Overview instead.
-            if (enableFallbackOverviewInWindow.isTrue()) {
+            if (enableFallbackOverviewInWindow) {
                 mDefaultDisplayContainerInterface =
                         mRecentsDisplayModel.getFallbackWindowInterface(DEFAULT_DISPLAY);
             } else {
@@ -302,7 +302,7 @@ public final class OverviewComponentObserver {
     }
 
     public boolean isHomeAndOverviewSameActivity() {
-        return isHomeAndOverviewSame() && !enableLauncherOverviewInWindow.isTrue();
+        return isHomeAndOverviewSame() && !enableLauncherOverviewInWindow;
     }
 
     /**

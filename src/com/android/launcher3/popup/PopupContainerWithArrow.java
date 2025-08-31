@@ -19,6 +19,7 @@ package com.android.launcher3.popup;
 import static android.multiuser.Flags.enableMovingContentIntoPrivateSpace;
 
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_SHORTCUTS;
+import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
 import static com.android.launcher3.Utilities.squaredHypot;
 import static com.android.launcher3.Utilities.squaredTouchSlop;
 import static com.android.launcher3.allapps.AlphabeticalAppsList.PRIVATE_SPACE_PACKAGE;
@@ -215,8 +216,15 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
         container = (PopupContainerWithArrow) launcher.getLayoutInflater().inflate(
                 R.layout.popup_container, launcher.getDragLayer(), false);
         container.configureForLauncher(launcher, item);
-        boolean shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace()
+        
+        boolean shouldHideSystemShortcuts;
+        if (ATLEAST_BAKLAVA) {
+            shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace()
                 && Objects.equals(item.getTargetPackage(), PRIVATE_SPACE_PACKAGE);
+        } else {
+            shouldHideSystemShortcuts = false;
+        }
+        
         container.populateAndShowRows(icon, deepShortcutCount,
                 shouldHideSystemShortcuts ? Collections.emptyList() : systemShortcuts);
         launcher.refreshAndBindWidgetsForPackageUser(PackageUserKey.fromItemInfo(item));
