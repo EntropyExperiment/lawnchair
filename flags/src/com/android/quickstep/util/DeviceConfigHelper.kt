@@ -48,13 +48,13 @@ class DeviceConfigHelper<ConfigType>(private val factory: (PropReader) -> Config
                 PropReader(
                     object : PropProvider {
                         override fun <T : Any> get(key: String, fallback: T): T {
+                            val prefs = prefs
                             if (fallback is Int) {
                                 allKeys.add(key)
-                                return DeviceConfig.getInt(NAMESPACE_LAUNCHER, key, fallback) as T
+                                return prefs.getInt(key, fallback) as T
                             } else if (fallback is Boolean) {
                                 allKeys.add(key)
-                                return DeviceConfig.getBoolean(NAMESPACE_LAUNCHER, key, fallback)
-                                    as T
+                                return prefs.getBoolean(key, fallback) as T
                             } else return fallback
                         }
                     }
