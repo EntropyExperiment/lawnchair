@@ -426,7 +426,7 @@ public interface ActivityContext extends SavedStateRegistryOwner {
             TraceHelper.allowIpcs("isSafeMode", () -> context.getPackageManager().isSafeMode());
         
         if (isSafeModeEnabled
-                && new ApplicationInfoWrapper(context, intent).isSystem()) {
+                && !new ApplicationInfoWrapper(context, intent).isSystem()) {
             Toast.makeText(context, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
             return null;
         }
