@@ -86,6 +86,7 @@ import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.RunnableList;
 import com.android.launcher3.util.SplitConfigurationOptions;
 import com.android.launcher3.util.SystemUiController;
+import com.android.launcher3.util.TraceHelper;
 import com.android.launcher3.util.ViewCache;
 import com.android.launcher3.util.WeakCleanupSet;
 import com.android.launcher3.widget.picker.model.WidgetPickerDataProvider;
@@ -419,8 +420,13 @@ public interface ActivityContext extends SavedStateRegistryOwner {
             View v, Intent intent, @Nullable ItemInfo item) {
         Preconditions.assertUIThread();
         Context context = (Context) this;
-        if (LauncherAppState.getInstance(context).isSafeModeEnabled()
-                && !new ApplicationInfoWrapper(context, intent).isSystem()) {
+        
+        // Lawnchair: Reimplementation of isSafeModeEnabled of LauncherAppState
+        var isSafeModeEnabled = 
+            TraceHelper.allowIpcs("isSafeMode", () -> context.getPackageManager().isSafeMode());
+        
+        if (isSafeModeEnabled
+                && new ApplicationInfoWrapper(context, intent).isSystem()) {
             Toast.makeText(context, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
             return null;
         }
