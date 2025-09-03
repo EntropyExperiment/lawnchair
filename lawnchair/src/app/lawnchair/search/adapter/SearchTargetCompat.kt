@@ -28,8 +28,9 @@ import android.os.UserHandle
 import androidx.annotation.FloatRange
 import androidx.annotation.IntDef
 import app.lawnchair.search.adapter.SearchTargetCompat.SearchResultType
-//import com.android.app.search.LayoutType.SearchLayoutType
 import kotlinx.parcelize.Parcelize
+
+// import com.android.app.search.LayoutType.SearchLayoutType
 
 /**
  * A representation of a search result. Search result can be expressed in one of the following:
