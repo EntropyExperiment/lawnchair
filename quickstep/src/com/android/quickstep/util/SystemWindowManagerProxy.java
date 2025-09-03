@@ -37,6 +37,7 @@ import com.android.quickstep.SystemUiProxy;
 import com.android.window.flags.Flags;
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -134,7 +135,13 @@ public class SystemWindowManagerProxy extends WindowManagerProxy {
         ArrayMap<CachedDisplayInfo, List<WindowBounds>> result = new ArrayMap<>();
         WindowManager windowManager = displayInfoContext.getSystemService(WindowManager.class);
         Set<WindowMetrics> possibleMaximumWindowMetrics =
-                windowManager.getPossibleMaximumWindowMetrics(DEFAULT_DISPLAY);
+            null;
+        try {
+            possibleMaximumWindowMetrics = windowManager.getPossibleMaximumWindowMetrics(DEFAULT_DISPLAY);
+        } catch (Throwable t) {
+            possibleMaximumWindowMetrics = Collections.singleton(
+                windowManager.getMaximumWindowMetrics());
+        }
         for (WindowMetrics windowMetrics : possibleMaximumWindowMetrics) {
             CachedDisplayInfo info = getDisplayInfo(windowMetrics, Surface.ROTATION_0);
             List<WindowBounds> bounds = estimateWindowBounds(displayInfoContext, info);
@@ -146,6 +153,12 @@ public class SystemWindowManagerProxy extends WindowManagerProxy {
     @Override
     protected DisplayCutout rotateCutout(DisplayCutout original, int startWidth, int startHeight,
             int fromRotation, int toRotation) {
-        return original.getRotated(startWidth, startHeight, fromRotation, toRotation);
+        try {
+            return original.getRotated(startWidth, startHeight, fromRotation, toRotation);
+        } catch (Throwable t) {
+            // Lawnchair-TODO: This don't required in LC15??? Reason: Fail A12.1
+            // pE-TODO(CllOXHJv): This don't required in LC15??? Reason: Fail A12.1
+            return original;
+        }
     }
 }
