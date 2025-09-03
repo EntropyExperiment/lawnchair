@@ -16,6 +16,7 @@
 
 package com.android.launcher3.model.data;
 
+import static com.android.launcher3.icons.BitmapInfo.FLAG_NO_BADGE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_THEMED;
 
 import android.content.Context;
@@ -321,15 +322,16 @@ public abstract class ItemInfoWithIcon extends ItemInfo {
      * Returns a FastBitmapDrawable with the icon.
      */
     public FastBitmapDrawable newIcon(Context context) {
-        return newIcon(context, 0);
+        var shouldTheme = PreferenceManager.getInstance(context).getThemedIcons().get();
+        return newIcon(context, shouldTheme ? FLAG_THEMED : FLAG_NO_BADGE);
     }
 
     /**
      * Returns a FastBitmapDrawable with the icon and context theme applied
      */
     public FastBitmapDrawable newIcon(Context context, @DrawableCreationFlags int creationFlags) {
-        ThemeManager themeManager = ThemeManager.INSTANCE.get(context);
-        if (!themeManager.isIconThemeEnabled()) {
+        var shouldTheme = PreferenceManager.getInstance(context).getThemedIcons().get();
+        if (!shouldTheme) {
             creationFlags &= ~FLAG_THEMED;
         }
         FastBitmapDrawable drawable = bitmap.newIcon(
