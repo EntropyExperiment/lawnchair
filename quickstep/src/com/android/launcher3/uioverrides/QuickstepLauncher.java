@@ -731,10 +731,12 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     @Override
     protected boolean initDeviceProfile(InvariantDeviceProfile idp) {
         final boolean ret = super.initDeviceProfile(idp);
-        // Lawnchair-TODO-Merge: LC disabled this, see 16r2 ref below:
-//        mDeviceProfile.isPredictiveBackSwipe =
-//                getApplicationInfo().isOnBackInvokedCallbackEnabled();
-        mDeviceProfile.isPredictiveBackSwipe = false;
+        try {
+            mDeviceProfile.isPredictiveBackSwipe =
+                    getApplicationInfo().isOnBackInvokedCallbackEnabled();
+        } catch (Throwable t) {
+            mDeviceProfile.isPredictiveBackSwipe = false;
+        }
         if (ret) {
             SystemUiProxy.INSTANCE.get(this).setLauncherAppIconSize(mDeviceProfile.iconSizePx);
         }
