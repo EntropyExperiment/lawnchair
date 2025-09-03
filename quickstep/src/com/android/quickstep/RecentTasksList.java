@@ -114,65 +114,66 @@ public class RecentTasksList implements WindowManagerProxy.DesktopVisibilityList
         mKeyguardManager = keyguardManager;
         mChangeId = 1;
         mSysUiProxy = sysUiProxy;
-        // Lawnchair-TODO-Merge-High: This has isRecentsEnabled Check
         mDesktopVisibilityController = desktopVisibilityController;
-        final IRecentTasksListener recentTasksListener = new IRecentTasksListener.Stub() {
-            @Override
-            public void onRecentTasksChanged() throws RemoteException {
-                mMainThreadExecutor.execute(RecentTasksList.this::onRecentTasksChanged);
-            }
+        if (LawnchairApp.isRecentsEnabled()) {
+            final IRecentTasksListener recentTasksListener = new IRecentTasksListener.Stub() {
+                @Override
+                public void onRecentTasksChanged() throws RemoteException {
+                    mMainThreadExecutor.execute(RecentTasksList.this::onRecentTasksChanged);
+                }
 
-            @Override
-            public void onRunningTaskAppeared(RunningTaskInfo taskInfo) {
-                mMainThreadExecutor.execute(() -> {
-                    RecentTasksList.this.onRunningTaskAppeared(taskInfo);
-                });
-            }
+                @Override
+                public void onRunningTaskAppeared(RunningTaskInfo taskInfo) {
+                    mMainThreadExecutor.execute(() -> {
+                        RecentTasksList.this.onRunningTaskAppeared(taskInfo);
+                    });
+                }
 
-            @Override
-            public void onRunningTaskVanished(RunningTaskInfo taskInfo) {
-                mMainThreadExecutor.execute(() -> {
-                    RecentTasksList.this.onRunningTaskVanished(taskInfo);
-                });
-            }
+                @Override
+                public void onRunningTaskVanished(RunningTaskInfo taskInfo) {
+                    mMainThreadExecutor.execute(() -> {
+                        RecentTasksList.this.onRunningTaskVanished(taskInfo);
+                    });
+                }
 
-            @Override
-            public void onRunningTaskChanged(RunningTaskInfo taskInfo) {
-                mMainThreadExecutor.execute(() -> {
-                    RecentTasksList.this.onRunningTaskChanged(taskInfo);
-                });
-            }
+                @Override
+                public void onRunningTaskChanged(RunningTaskInfo taskInfo) {
+                    mMainThreadExecutor.execute(() -> {
+                        RecentTasksList.this.onRunningTaskChanged(taskInfo);
+                    });
+                }
 
-            @Override
-            public void onTaskMovedToFront(GroupedTaskInfo taskToFront) {
-                mMainThreadExecutor.execute(() -> {
-                    topTaskTracker.handleTaskMovedToFront(
+                @Override
+                public void onTaskMovedToFront(GroupedTaskInfo taskToFront) {
+                    mMainThreadExecutor.execute(() -> {
+                        topTaskTracker.handleTaskMovedToFront(
                             taskToFront.getBaseGroupedTask().getTaskInfo1());
-                });
-            }
+                    });
+                }
 
-            @Override
-            public void onTaskInfoChanged(RunningTaskInfo taskInfo) {
-                mMainThreadExecutor.execute(() -> topTaskTracker.onTaskChanged(taskInfo));
-            }
+                @Override
+                public void onTaskInfoChanged(RunningTaskInfo taskInfo) {
+                    mMainThreadExecutor.execute(() -> topTaskTracker.onTaskChanged(taskInfo));
+                }
 
-            @Override
-            public void onVisibleTasksChanged(GroupedTaskInfo[] visibleTasks) {
-                mMainThreadExecutor.execute(() -> {
-                    topTaskTracker.onVisibleTasksChanged(visibleTasks);
-                });
-            }
-        };
+                @Override
+                public void onVisibleTasksChanged(GroupedTaskInfo[] visibleTasks) {
+                    mMainThreadExecutor.execute(() -> {
+                        topTaskTracker.onVisibleTasksChanged(visibleTasks);
+                    });
+                }
+            };
 
-        mSysUiProxy.registerRecentTasksListener(recentTasksListener);
-        tracker.addCloseable(
+            mSysUiProxy.registerRecentTasksListener(recentTasksListener);
+            tracker.addCloseable(
                 () -> mSysUiProxy.unregisterRecentTasksListener(recentTasksListener));
 
-        if (DesktopModeStatus.enableMultipleDesktops(mContext)) {
-            mDesktopVisibilityController.registerDesktopVisibilityListener(
+            if (DesktopModeStatus.enableMultipleDesktops(mContext)) {
+                mDesktopVisibilityController.registerDesktopVisibilityListener(
                     this);
-            tracker.addCloseable(
+                tracker.addCloseable(
                     () -> mDesktopVisibilityController.unregisterDesktopVisibilityListener(this));
+            }
         }
 
         // We may receive onRunningTaskAppeared events later for tasks which have already been
