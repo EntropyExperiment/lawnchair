@@ -20,7 +20,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean allAppsSheetForHandheld() {
-        return false;
+        return true;
     }
 
     @Override
@@ -139,7 +139,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableExpressiveDismissTaskMotion() {
-        return false;
+        return true;
     }
 
     @Override
@@ -524,7 +524,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableUnfoldStateAnimation() {
-        return false;
+        return true;
     }
 
     @Override
@@ -615,7 +615,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean letterFastScroller() {
-        return false;
+        return true;
     }
 
     @Override
