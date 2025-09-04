@@ -421,11 +421,7 @@ public interface ActivityContext extends SavedStateRegistryOwner {
         Preconditions.assertUIThread();
         Context context = (Context) this;
         
-        // Lawnchair: Reimplementation of isSafeModeEnabled of LauncherAppState
-        var isSafeModeEnabled = 
-            TraceHelper.allowIpcs("isSafeMode", () -> context.getPackageManager().isSafeMode());
-        
-        if (isSafeModeEnabled
+        if (LauncherAppState.getInstance(context).isSafeModeEnabled()
                 && !new ApplicationInfoWrapper(context, intent).isSystem()) {
             Toast.makeText(context, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
             return null;
