@@ -122,6 +122,7 @@ object ColorTokens {
     @JvmField val PopupShadeSecond = DayNightColorToken(PopupColorPrimary.setLStar(95.0), PopupColorPrimary.setLStar(15.0))
 
     @JvmField val PopupShadeThird = DayNightColorToken(PopupColorPrimary.setLStar(90.0), PopupColorPrimary.setLStar(10.0))
+    @JvmField val PopupArrow = PopupShadeFirst
 
     @JvmField val QsbIconTintPrimary = DayNightColorToken(Accent3_400, Accent3_100)
 

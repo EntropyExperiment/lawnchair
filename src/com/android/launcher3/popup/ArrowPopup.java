@@ -144,7 +144,7 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
 
         // Initialize arrow view
         final Resources resources = getResources();
-        mArrowColor = getContext().getColor(R.color.materialColorSurfaceContainer);
+        mArrowColor = ColorTokens.PopupArrow.resolveColor(context);
         mChildContainerMargin = resources.getDimensionPixelSize(R.dimen.popup_margin);
         mArrowWidth = resources.getDimensionPixelSize(R.dimen.popup_arrow_width);
         mArrowHeight = resources.getDimensionPixelSize(R.dimen.popup_arrow_height);
@@ -175,8 +175,7 @@ public abstract class ArrowPopup<T extends Context & ActivityContext>
                 ColorTokens.PopupShadeThird.resolveColor(context)
             };
         } else {
-            // Lawnchair-TODO-Colour: materialColorSurfaceContainer
-            mColors = new int[]{getContext().getColor(R.color.materialColorSurfaceContainer)};
+            mColors = new int[]{ColorTokens.PopupArrow.resolveColor(context)};
         }
     }
 
