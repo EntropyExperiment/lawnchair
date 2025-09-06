@@ -566,7 +566,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean expressiveThemeInTaskbarAndNavigation() {
-        return false;
+        return true;
     }
 
     @Override
@@ -615,7 +615,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean letterFastScroller() {
-        return true;
+        return false;
     }
 
     @Override
