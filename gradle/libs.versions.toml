@@ -28,7 +28,7 @@ dagger = "2.57.1"
 datastore = "1.1.7"
 dynamicanimation = "1.1.0"
 fuzzywuzzy = "1.4.0"
-googleMaterial = "1.12.0"
+googleMaterial = "1.13.0"
 graphicsCore = "1.0.3"
 graphicsPath = "1.0.1"
 graphicsShapes = "1.1.0-beta01"
@@ -92,6 +92,7 @@ compose-ui-google-fonts = { group = "androidx.compose.ui", name = "ui-text-googl
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose"}
 
 # Dagger & Hilt
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
