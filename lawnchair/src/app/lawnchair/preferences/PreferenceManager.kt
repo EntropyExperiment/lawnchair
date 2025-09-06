@@ -56,7 +56,7 @@ class PreferenceManager @Inject constructor(
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
     val hotseatColumns = IntPref("pref_hotseatColumns", 4, reloadGrid)
     val workspaceColumns = IntPref("pref_workspaceColumns", 4)
-    val workspaceRows = IntPref("pref_workspaceRows", 5)
+    val workspaceRows = IntPref("pref_workspaceRows", 7)
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
@@ -138,6 +138,9 @@ class PreferenceManager @Inject constructor(
 
     val hideVersionInfo = BoolPref("pref_hideVersionInfo", false)
     val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
+
+    val enableMaterialExpressive = BoolPref("pref_enableMaterialExpressive", false, recreate)
+    val enableGnc = BoolPref("pref_enableGnc", false, recreate)
 
     override fun close() {
         TODO("Not yet implemented")
