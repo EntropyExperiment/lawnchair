@@ -87,7 +87,14 @@ fun PreferencesDashboard(
 ) {
     val context = LocalContext.current
     SyncLiveInformation()
-    val pref2 = preferenceManager2()
+    val prefs = preferenceManager()
+    val prefs2 = preferenceManager2()
+
+    val aboutDescrption = if (prefs.hideVersionInfo.get()) {
+        prefs.pseudonymVersion.get()
+    } else {
+        "${context.getString(R.string.derived_app_name)} ${BuildConfig.MAJOR_VERSION}"
+    }
 
     PreferenceLayout(
         label = stringResource(id = R.string.settings),
@@ -141,7 +148,7 @@ fun PreferencesDashboard(
                 isSelected = currentRoute is Dock,
             )
 
-            val deckLayout = pref2.deckLayout.getAdapter()
+            val deckLayout = prefs2.deckLayout.getAdapter()
             if (!deckLayout.state.value) {
                 PreferenceCategory(
                     label = stringResource(R.string.app_drawer_label),
@@ -188,7 +195,7 @@ fun PreferencesDashboard(
 
             PreferenceCategory(
                 label = stringResource(R.string.about_label),
-                description = "${context.getString(R.string.derived_app_name)} ${BuildConfig.MAJOR_VERSION}",
+                description = aboutDescrption,
                 iconResource = R.drawable.ic_about,
                 onNavigate = { onNavigate(About) },
                 isSelected = currentRoute is About,
