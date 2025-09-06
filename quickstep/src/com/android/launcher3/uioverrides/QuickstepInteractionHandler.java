@@ -75,8 +75,13 @@ class QuickstepInteractionHandler implements RemoteViews.InteractionHandler,
             return true;
         }
         Pair<Intent, ActivityOptions> options = remoteResponse.getLaunchOptions(view);
-        ActivityOptionsWrapper activityOptions = mLauncher.getAppTransitionManager()
-                .getActivityLaunchOptions(hostView, (ItemInfo) hostView.getTag());
+        ActivityOptionsWrapper activityOptions = null;
+        try {
+            activityOptions = mLauncher.getAppTransitionManager()
+                    .getActivityLaunchOptions(hostView, (ItemInfo) hostView.getTag());
+        } catch (Throwable t) {
+            // LC-Ignored
+        }
         if (!pendingIntent.isActivity()) {
             // In the event this pending intent eventually launches an activity, i.e. a trampoline,
             // use the Quickstep transition animation.
@@ -104,11 +109,21 @@ class QuickstepInteractionHandler implements RemoteViews.InteractionHandler,
         } catch (Throwable t) {
             // ignore
         }
-        options = Pair.create(options.first, activityOptions.options);
+        if (activityOptions != null) {
+            // pE-TODO(C7evQZDJ): Remove this fallback
+            options = Pair.create(options.first, activityOptions.options);
+        }
         if (pendingIntent.isActivity()) {
             logAppLaunch(hostView.getTag());
         }
-        return RemoteViews.startPendingIntent(hostView, pendingIntent, options);
+        if (activityOptions != null) {
+            return RemoteViews.startPendingIntent(hostView, pendingIntent, options);
+        } else {
+            // pE-TODO(C7evQZDJ): Remove this fallback
+            Log.d("pE(C7evQZDJ)", "activityOptions is null!");
+            return RemoteViews.startPendingIntent(hostView, pendingIntent,
+                    remoteResponse.getLaunchOptions(view));
+        }
     }
 
     /**
