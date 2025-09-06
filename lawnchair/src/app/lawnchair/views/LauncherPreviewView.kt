@@ -78,10 +78,10 @@ class LauncherPreviewView(
     @WorkerThread
     private fun loadModelData() {
         val widgetHostId = LauncherWidgetHolder.APPWIDGET_HOST_ID
-        val inflationContext = ContextThemeWrapper(appContext, Themes.getActivityThemeRes(appContext))
-        LauncherAppState.getInstance(inflationContext).model.loadAsync { dataModel ->
+        LauncherAppState.getInstance(appContext).model.loadAsync { dataModel ->
             if (dataModel != null) {
                 MAIN_EXECUTOR.execute {
+                    val inflationContext = ContextThemeWrapper(context, Themes.getActivityThemeRes(context))
                     renderView(inflationContext, dataModel, widgetHostId, null)
                 }
             } else {
