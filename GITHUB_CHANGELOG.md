@@ -1,5 +1,33 @@
-Lawnchair 16 Development 1 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 pE Development 1 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
+
+### 🏗️ Development 2 (Draft)
+
+* Enable All Apps Blur Flags on Phone (oops, forgot about the allAppsSheetForHandheld flag)
+* Make Safe Mode check more reliable
+* Resizing workspace should calculate items position more accurately
+* Fix unable to access preview for icon style
+* Enabling GSF flags (Testing)
+* Widget should open normally after a workaround (C7evQZDJ)
+* Show pseudonym version to Settings
+* Link Popup's Arrow Theme to Lawnchair
+* Update Lawnchair default grid size to 4×7 (or 4×6 with smartspace widget)
+* Fix (1) Search bar and Dock, (2) Folders and App Drawer settings didn't open due to init problems
+* Reimplement Hotseat background customisation
+* Make haptic more accurate
+* Lawnchair should hopefully remember what grid they should be using
+
+#### Split Branch
+
+* ProvideComposeSheetHandler now have expressive blur
+* Lawnchair Settings Material 3 Expressive now uses Quicksand (Bold/Medium) for GSF Rounded looks on Heading
+
+#### Known Bugs
+* Icon style preview can't show device wallpaper
+* Workspace theme doesn't refresh until restart
+* Lawnchair Colour can't handle restart causing default colour to be used instead
+* (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
+* Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
 ### 🥞 Development 1
 
