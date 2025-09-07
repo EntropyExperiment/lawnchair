@@ -74,6 +74,7 @@ import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Hotseat;
 import com.android.launcher3.InsettableFrameLayout;
 import com.android.launcher3.InvariantDeviceProfile;
+import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.ProxyPrefs;
@@ -204,6 +205,8 @@ public class LauncherPreviewRenderer extends BaseContext
             putBaseInstance(IconOverrideRepository.INSTANCE);
             putBaseInstance(SmartspaceProvider.INSTANCE);
             putBaseInstance(DeviceProfileOverrides.INSTANCE);
+            putBaseInstance(InvariantDeviceProfile.INSTANCE);
+            putBaseInstance(LauncherAppState.INSTANCE);
 
 
             PreviewAppComponent.Builder builder =
