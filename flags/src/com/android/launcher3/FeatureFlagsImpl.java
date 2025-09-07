@@ -503,7 +503,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableTwoPaneLauncherSettings() {
-        return false;
+        return true;
     }
 
     @Override
@@ -573,7 +573,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean extendibleThemeManager() {
-        return false;
+        return true;
     }
 
     @Override
