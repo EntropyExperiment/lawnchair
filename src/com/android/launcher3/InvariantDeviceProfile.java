@@ -322,6 +322,9 @@ public class InvariantDeviceProfile {
     }
 
     public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
+        this.mPrefs = LauncherPrefs.get(context.getApplicationContext());
+        this.mThemeManager = ThemeManager.INSTANCE.get(context.getApplicationContext());
+        this.mDisplayController = DisplayController.INSTANCE.get(context.getApplicationContext());
         String gridName = DeviceProfileOverrides.INSTANCE.get(context).getGridName(dbGridInfo);
         initGrid(context, gridName);
     }
