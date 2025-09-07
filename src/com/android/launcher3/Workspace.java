@@ -1879,7 +1879,11 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
             child.setVisibility(View.VISIBLE);
 
             if (dragOptions.preDragCondition != null) {
-                mLauncher.getDragLayer().performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                if (Flags.msdlFeedback()) {
+                    mMSDLPlayerWrapper.playToken(MSDLToken.LONG_PRESS);
+                } else {
+                    mLauncher.getDragLayer().performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                }
             }
             return null;
         }
