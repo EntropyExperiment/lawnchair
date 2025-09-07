@@ -41,7 +41,7 @@ import android.content.res.XmlResourceParser;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.os.Trace;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -298,14 +298,12 @@ public class InvariantDeviceProfile {
         LauncherPrefChangeListener prefListener = key -> {
             if (FIXED_LANDSCAPE_MODE.getSharedPrefKey().equals(key)
                     && isFixedLandscape != prefs.get(FIXED_LANDSCAPE_MODE)) {
-                Trace.beginSection("InvariantDeviceProfile#setFixedLandscape");
                 if (isFixedLandscape) {
                     setCurrentGrid(context, prefs.get(NON_FIXED_LANDSCAPE_GRID_NAME));
                 } else {
-                    prefs.put(NON_FIXED_LANDSCAPE_GRID_NAME, mPrefs.get(GRID_NAME));
+                    prefs.put(NON_FIXED_LANDSCAPE_GRID_NAME, getCurrentGridName(context));
                     onConfigChanged(context);
                 }
-                Trace.endSection();
             } else if (ENABLE_TWOLINE_ALLAPPS_TOGGLE.getSharedPrefKey().equals(key)
                     && enableTwoLinesInAllApps != prefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE)) {
                 onConfigChanged(context);
@@ -319,6 +317,10 @@ public class InvariantDeviceProfile {
                 MAIN_EXECUTOR, i -> onConfigChanged(context));
         localeReceiver.register(Intent.ACTION_LOCALE_CHANGED);
         lifeCycle.addCloseable(() -> localeReceiver.unregisterReceiverSafely());
+    }
+
+    public static String getCurrentGridName(Context context) {
+        return DeviceProfileOverrides.INSTANCE.get(context).getCurrentGridName();
     }
 
     public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
@@ -377,7 +379,7 @@ public class InvariantDeviceProfile {
      */
     @Deprecated
     public void reset(Context context) {
-        initGrid(context, mPrefs.get(GRID_NAME));
+        initGrid(context, getCurrentGridName(context));
     }
 
     private void initGrid(Context context, Info displayInfo, DisplayOption displayOption, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
@@ -548,13 +550,9 @@ public class InvariantDeviceProfile {
      */
     @VisibleForTesting
     public void setCurrentGrid(Context context, String newGridName) {
-        // Lawnchair-TODO-Merge-High: We use DPO instead of mPrefs.put
-        //                 DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(gridName);
-        mPrefs.put(GRID_NAME, newGridName);
+        DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(newGridName);
         MAIN_EXECUTOR.execute(() -> {
-            Trace.beginSection("InvariantDeviceProfile#setCurrentGrid");
             onConfigChanged(context.getApplicationContext());
-            Trace.endSection();
         });
     }
 
@@ -570,7 +568,7 @@ public class InvariantDeviceProfile {
         Object[] oldState = toModelState();
 
         // Re-init grid
-        initGrid(context, mPrefs.get(GRID_NAME));
+        initGrid(context, getCurrentGridName(context));
 
         boolean modelPropsChanged = !Arrays.equals(oldState, toModelState());
         for (OnIDPChangeListener listener : mChangeListeners) {
