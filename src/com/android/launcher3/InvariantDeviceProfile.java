@@ -383,6 +383,8 @@ public class InvariantDeviceProfile {
     }
 
     private void initGrid(Context context, Info displayInfo, DisplayOption displayOption, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
+        this.closestProfile = displayOption.grid;
+        
         enableTwoLinesInAllApps = Flags.enableTwolineToggle()
                 && Utilities.isEnglishLanguage(context)
                 && mPrefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE);
