@@ -122,6 +122,7 @@ object ColorTokens {
     @JvmField val PopupShadeSecond = DayNightColorToken(PopupColorPrimary.setLStar(95.0), PopupColorPrimary.setLStar(15.0))
 
     @JvmField val PopupShadeThird = DayNightColorToken(PopupColorPrimary.setLStar(90.0), PopupColorPrimary.setLStar(10.0))
+
     @JvmField val PopupArrow = PopupShadeFirst
 
     @JvmField val QsbIconTintPrimary = DayNightColorToken(Accent3_400, Accent3_100)
@@ -150,14 +151,14 @@ object ColorTokens {
 
     @JvmField val WidgetAddButtonBackgroundColor = PrimaryButton
 
-    @JvmField val PredictedPlateColor = Accent1_300
-
     val SwitchThumbOn = Accent1_100
     val SwitchThumbOff = DayNightColorToken(Neutral2_300, Neutral1_400)
     val SwitchThumbDisabled = DayNightColorToken(Neutral2_100, Neutral1_700)
 
     val SwitchTrackOn = DayNightColorToken(Accent1_600, Accent2_500.setLStar(51.0))
     val SwitchTrackOff = DayNightColorToken(Neutral2_500.setLStar(45.0), Neutral1_700)
+
+    @JvmField val PredictedPlateColor = Accent1_300
 
     // Material 3 Expressive
     @JvmField val ExpressiveAllApps = DayNightColorToken(Accent1_100, Accent1_800)
