@@ -23,7 +23,7 @@ older (i.e., Lawnchair `15-dev`).
 * Lawnchair Settings Material 3 Expressive now uses Quicksand (Bold/Medium) for GSF Rounded looks on Heading
 
 #### Known Bugs
-* Icon style preview can't show device wallpaper
+* Preview can't show device wallpaper
 * Workspace theme doesn't refresh until restart
 * Lawnchair Colour can't handle restart causing default colour to be used instead
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
