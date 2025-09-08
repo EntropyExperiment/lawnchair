@@ -267,7 +267,7 @@ public class LauncherWidgetHolder {
      * @param requestCode The request code
      * @param retryCount  The number of retries attempted
      */
-    private void startConfigActivity(@NonNull BaseDraggingActivity activity, int widgetId,
+    private void startConfigActivity(@NonNull BaseActivity activity, int widgetId,
             int requestCode, int retryCount) {
         if (!WIDGETS_ENABLED) {
             sendActionCancelled(activity, requestCode);
@@ -299,7 +299,7 @@ public class LauncherWidgetHolder {
         handleInvalidWidgetId(activity, widgetId, requestCode, 0);
     }
 
-    private void handleInvalidWidgetId(BaseDraggingActivity activity, int widgetId, int requestCode, int retryCount) {
+    private void handleInvalidWidgetId(BaseActivity activity, int widgetId, int requestCode, int retryCount) {
         // Remove the invalid widget
         deleteAppWidgetId(widgetId);
 
