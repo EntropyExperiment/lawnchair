@@ -14,8 +14,10 @@ older (i.e., Lawnchair `15-dev`).
 * Update Lawnchair default grid size to 4×7 (or 4×6 with smartspace widget)
 * Fix (1) Search bar and Dock, (2) Folders and App Drawer settings didn't open due to init problems
 * Reimplement Hotseat background customisation
-* Make haptic more accurate
+* Make haptic on a locked workspace use MSDL vibration
 * Lawnchair should hopefully remember what grid they should be using
+* Most if not all of Lawnchair settings should be usable without crashes
+* Correct Baseline Profile from old `market` to `play` variant, and now should calculate profile for `nightly`
 
 #### Split Branch
 
@@ -23,9 +25,10 @@ older (i.e., Lawnchair `15-dev`).
 * Lawnchair Settings Material 3 Expressive now uses Quicksand (Bold/Medium) for GSF Rounded looks on Heading
 
 #### Known Bugs
-* Preview can't show device wallpaper
-* Workspace theme doesn't refresh until restart
-* Lawnchair Colour can't handle restart causing default colour to be used instead
+* Preview can't show device wallpaper -> (lIxkAYGg)
+* IDP Preview doesn't refresh on settings change -> workaround is to hit apply and re-open the preview -> (ZbLX3438)
+* Workspace theme doesn't refresh until restart -> (ZbLX3438)
+* Lawnchair Colour can't handle restart causing default colour to be used instead -> Fixed?
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
@@ -46,9 +49,9 @@ First development milestone! Basic launcher functionality should be stable enoug
 
 #### Known Bugs
 
-* App Icon may sometimes render with less than 0 in height/width causing blank icon to be rendered and crashing ISE on customising icons
-* Any Lawnchair settings using IDP will crash the launcher
-* Icon pack isn't usable
+* App Icon may sometimes render with less than 0 in height/width causing blank icon to be rendered and crashing ISE on customising icons -> (31lLEflf)
+* Any Lawnchair settings using IDP will crash the launcher -> Fixed in Lawnchair 16 pE Development 2
+* Icon pack isn't usable -> (DXo69Qzd)
 * Dynamic icons will not be themed by launcher
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
