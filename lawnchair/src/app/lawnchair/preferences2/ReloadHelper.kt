@@ -46,7 +46,7 @@ class ReloadHelper(private val context: Context) {
 
     @Discouraged("This literally reload the models like forceRefresh because the old code has been removed in L3")
     fun reloadIcons() {
-        LauncherAppState.INSTANCE.get(context).model.reloadIfActive()
+        LauncherAppState.INSTANCE.get(context).model.forceReload()
     }
 
     fun reloadTaskbar() {
