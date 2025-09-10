@@ -147,7 +147,7 @@ object ColorTokens {
 
     @JvmField val WallpaperPopupScrim = Neutral1_900
 
-    @JvmField val WidgetsPickerScrim = DayNightColorToken(Neutral1_200, Neutral1_900).setAlpha(0f)
+    @JvmField val WidgetsPickerScrim = DayNightColorToken(Neutral1_200, Neutral1_900).setAlpha(0.8f)
 
     @JvmField val AccentRippleColor = DayNightColorToken(Accent2_50, Accent1_300)
 
