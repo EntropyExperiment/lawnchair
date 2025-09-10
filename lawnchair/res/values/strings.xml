@@ -412,6 +412,8 @@
     <string name="smartspace_icu_date_pattern_persian_date" translatable="false">"j F، "</string>
 
     <!-- Battery labels -->
+    <string name="smartspace_battery_fast_charging">Fast charging</string>
+    <string name="smartspace_battery_slow_charging">Slow charging</string>
     <string name="smartspace_battery_charging">Charging</string>
     <string name="smartspace_battery_full">Charged</string>
     <string name="smartspace_battery_low">Battery low</string>
