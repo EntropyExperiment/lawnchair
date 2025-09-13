@@ -19,6 +19,7 @@ package com.android.launcher3.allapps;
 
 import static android.multiuser.Flags.enableMovingContentIntoPrivateSpace;
 
+import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
 import static com.android.launcher3.allapps.BaseAllAppsAdapter.VIEW_TYPE_BOTTOM_VIEW_TO_SCROLL_TO;
 import static com.android.launcher3.allapps.BaseAllAppsAdapter.VIEW_TYPE_MASK_PRIVATE_SPACE_HEADER;
 import static com.android.launcher3.allapps.SectionDecorationInfo.ROUND_BOTTOM_LEFT;
@@ -395,8 +396,13 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     }
 
     private int addPrivateSpaceApps(int position) {
+        boolean enableMovingContentIntoPrivateSpace = false;
+        if (ATLEAST_BAKLAVA) {
+            enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
+        }
+        
         // Add Install Apps Button first.
-        if (Flags.privateSpaceAppInstallerButton() && !enableMovingContentIntoPrivateSpace()) {
+        if (Flags.privateSpaceAppInstallerButton() && !enableMovingContentIntoPrivateSpace) {
             mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
             position++;
         }
@@ -433,7 +439,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         // Add system apps.
         position = addAppsWithSections(split.get(false), position);
 
-        if (enableMovingContentIntoPrivateSpace()) {
+        if (enableMovingContentIntoPrivateSpace) {
             // Look for the private space app via package and move it after header.
             int headerIndex = -1;
             int privateSpaceAppIndex = -1;
