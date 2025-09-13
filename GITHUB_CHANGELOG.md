@@ -18,6 +18,7 @@ older (i.e., Lawnchair `15-dev`).
 * Lawnchair should hopefully remember what grid they should be using
 * Most if not all of Lawnchair settings should be usable without crashes
 * Correct Baseline Profile from old `market` to `play` variant, and now should calculate profile for `nightly`
+* Smartspace Battery now reports battery charging status of Fast (more than 90% of 20 W) and Slow (less than 90% of 5 W) charging
 
 #### Split Branch
 
