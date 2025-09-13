@@ -402,10 +402,19 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         }
         
         // Add Install Apps Button first.
-        if (Flags.privateSpaceAppInstallerButton() && !enableMovingContentIntoPrivateSpace) {
-            mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
-            position++;
+        if (!ATLEAST_BAKLAVA) {
+            // LC: Baklava added a new behavior for the PS app button. (enableMovingContentIntoPrivateSpace)
+            if (Flags.privateSpaceAppInstallerButton() && !enableMovingContentIntoPrivateSpace) {
+                mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
+                position++;
+            }
+        } else {
+            if (Flags.privateSpaceAppInstallerButton()) {
+                mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
+                position++;
+            }
         }
+
 
         // Split of private space apps into user-installed and system apps.
         Map<Boolean, List<AppInfo>> split = mPrivateApps.stream()

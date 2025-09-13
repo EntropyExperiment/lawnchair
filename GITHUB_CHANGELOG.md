@@ -19,6 +19,7 @@ older (i.e., Lawnchair `15-dev`).
 * Most if not all of Lawnchair settings should be usable without crashes
 * Correct Baseline Profile from old `market` to `play` variant, and now should calculate profile for `nightly`
 * Smartspace Battery now reports battery charging status of Fast (more than 90% of 20 W) and Slow (less than 90% of 5 W) charging
+* Fix Private Space crash when Lawnchair is set as Launcher due to flags only available on A16
 
 #### Split Branch
 
