@@ -7,7 +7,7 @@ plugins {
     id 'com.android.application' version "8.13.0"
     id 'com.android.library' version "8.13.0" apply false
     id 'com.android.test' version '8.13.0' apply false
-    id 'androidx.baselineprofile' version '1.4.0'
+    id 'androidx.baselineprofile' version '1.4.1'
     id 'org.jetbrains.kotlin.android' version "2.2.10"
     id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10"
     id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10"
@@ -55,7 +55,7 @@ allprojects {
     }
 
     plugins.withId('com.google.protobuf') {
-        def protocVersion = '4.32.0'
+        def protocVersion = '4.32.1'
         protobuf {
             // Configure the protoc executable
             protoc {
