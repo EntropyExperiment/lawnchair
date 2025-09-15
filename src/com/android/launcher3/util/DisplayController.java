@@ -658,12 +658,18 @@ public class DisplayController implements DesktopVisibilityListener {
             int type = supportedBounds.stream()
                     .mapToInt(bounds -> isTablet(bounds) ? flagTablet : flagPhone)
                     .reduce(0, (a, b) -> a | b);
+
+            //type = flagTablet;
+            // pE-TODO(n/a): Testing DC!
             if (type == (flagPhone | flagTablet)) {
                 // device has profiles supporting both phone and tablet modes
+                Log.d("LC-DisplayController", "Device has profiles supporting both phone and tablet modes");
                 return TYPE_MULTI_DISPLAY;
             } else if (type == flagTablet) {
+                Log.d("LC-DisplayController", "Device has tablet profile");
                 return TYPE_TABLET;
             } else {
+                Log.d("LC-DisplayController", "Device has phone profile");
                 return TYPE_PHONE;
             }
         }
