@@ -654,7 +654,6 @@ public class InvariantDeviceProfile {
      */
     private static GridSize getGridSize(ResourceHelper resourceHelper, Context context,
             Info displayInfo) {
-        displayInfo = (displayInfo != null) ? displayInfo : ensureDisplayInfo(context);
         ArrayList<GridSize> gridSizes = new ArrayList<>();
 
         try (XmlResourceParser parser = resourceHelper.getXml()) {
