@@ -51,23 +51,23 @@
     </grid-option>
 
     <grid-option
-        launcher:name="4_by_4"
-        launcher:numRows="4"
+        launcher:name="4_by_5"
+        launcher:numRows="5"
         launcher:numColumns="4"
         launcher:numFolderRows="3"
-        launcher:numFolderColumns="4"
+        launcher:numFolderColumns="3"
         launcher:numHotseatIcons="4"
         launcher:numExtendedHotseatIcons="6"
-        launcher:dbFile="launcher_4_by_4.db"
+        launcher:devicePaddingId="@xml/paddings_4x5"
         launcher:inlineNavButtonsEndSpacing="@dimen/taskbar_button_margin_split"
-        launcher:defaultLayoutId="@xml/default_workspace_4x4"
+        launcher:defaultLayoutId="@xml/default_workspace_4x5"
         launcher:deviceCategory="phone|multi_display" >
 
         <display-option
             launcher:name="Short Stubby"
             launcher:minWidthDps="275"
             launcher:minHeightDps="420"
-            launcher:iconImageSize="48"
+            launcher:iconImageSize="65"
             launcher:iconTextSize="13.0"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
@@ -77,7 +77,7 @@
             launcher:name="Stubby"
             launcher:minWidthDps="255"
             launcher:minHeightDps="450"
-            launcher:iconImageSize="48"
+            launcher:iconImageSize="65"
             launcher:iconTextSize="13.0"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
@@ -87,7 +87,7 @@
             launcher:name="Nexus S"
             launcher:minWidthDps="296"
             launcher:minHeightDps="491.33"
-            launcher:iconImageSize="48"
+            launcher:iconImageSize="65"
             launcher:iconTextSize="13.0"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
@@ -97,7 +97,7 @@
             launcher:name="Nexus 4"
             launcher:minWidthDps="359"
             launcher:minHeightDps="567"
-            launcher:iconImageSize="54"
+            launcher:iconImageSize="65"
             launcher:iconTextSize="13.0"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
@@ -107,7 +107,7 @@
             launcher:name="Nexus 5"
             launcher:minWidthDps="335"
             launcher:minHeightDps="567"
-            launcher:iconImageSize="54"
+            launcher:iconImageSize="65"
             launcher:iconTextSize="13.0"
             launcher:allAppsBorderSpace="16"
             launcher:allAppsCellHeight="104"
@@ -123,7 +123,7 @@
         launcher:numFolderColumns="4"
         launcher:numHotseatIcons="5"
         launcher:numExtendedHotseatIcons="6"
-        launcher:dbFile="launcher.db"
+        launcher:dbFile="launcher_5_by_5.db"
         launcher:inlineNavButtonsEndSpacing="@dimen/taskbar_button_margin_split"
         launcher:defaultLayoutId="@xml/default_workspace_5x5"
         launcher:deviceCategory="phone|multi_display" >
@@ -203,47 +203,6 @@
             launcher:allAppsBorderSpaceLandscape="16"
             launcher:hotseatBarBottomSpace="76"
             launcher:hotseatBarBottomSpaceLandscape="40"
-            launcher:canBeDefault="true" />
-
-    </grid-option>
-
-    <grid-option
-        launcher:name="fixed_landscape_mode"
-        launcher:numFolderRows="2"
-        launcher:numFolderColumns="3"
-        launcher:numFolderRowsLandscape="2"
-        launcher:folderStyle="@style/FolderStyleDefault"
-        launcher:numHotseatIcons="4"
-        launcher:numExtendedHotseatIcons="8"
-        launcher:numAllAppsColumns="8"
-        launcher:numExtendedAllAppsColumns="8"
-        launcher:workspaceSpecsId="@xml/spec_handheld_workspace_3_row"
-        launcher:allAppsSpecsId="@xml/spec_handheld_all_apps_3_row"
-        launcher:folderSpecsId="@xml/spec_handheld_folder_3_row"
-        launcher:hotseatSpecsId="@xml/spec_handheld_hotseat_3_row"
-        launcher:workspaceCellSpecsId="@xml/spec_handheld_workspace_cell_3_row"
-        launcher:allAppsCellSpecsId="@xml/spec_all_apps_cell_match_workspace"
-        launcher:isScalable="true"
-        launcher:inlineQsb="landscape"
-        launcher:devicePaddingId="@xml/paddings_3_row"
-        launcher:gridSizeSpecsId="@xml/spec_col_count_3_row"
-        launcher:isFixedLandscape="true"
-        launcher:defaultLayoutId="@xml/default_workspace_8x3"
-        launcher:deviceCategory="phone">
-
-        <display-option
-            launcher:name="Fixed Landscape"
-            launcher:minWidthDps="387"
-            launcher:minHeightDps="750"
-            launcher:minCellHeight="108"
-            launcher:minCellWidth="61"
-            launcher:borderSpace="16"
-            launcher:horizontalMargin="22"
-            launcher:iconImageSize="57"
-            launcher:iconSizeLandscape="59"
-            launcher:iconTextSize="12"
-            launcher:allAppsBorderSpace="16"
-            launcher:allAppsCellHeight="104"
             launcher:canBeDefault="true" />
 
     </grid-option>
