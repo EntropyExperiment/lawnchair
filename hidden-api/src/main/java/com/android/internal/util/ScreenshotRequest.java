@@ -2,12 +2,11 @@ package com.android.internal.util;
 
 import android.content.ComponentName;
 import android.graphics.Bitmap;
-//import android.graphics.Insets;
+import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.core.graphics.Insets; // Insets.NONE compatibility for non API 29 device
 import androidx.annotation.NonNull;
 
 public class ScreenshotRequest implements Parcelable {
