@@ -3,22 +3,28 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🏗️ Development 2 (Draft)
 
+#### Features
+
 * Enable All Apps Blur Flags on Phone (oops, forgot about the allAppsSheetForHandheld flag)
 * Make Safe Mode check more reliable
-* Resizing workspace should calculate items position more accurately
-* Fix unable to access preview for icon style
-* Enabling GSF flags (Testing)
-* Widget should open normally after a workaround (C7evQZDJ)
+* Smartspace Battery now reports battery charging status of Fast (more than 90% of 20 W) and Slow (less than 90% of 5 W) charging
+* ~~Enabling GSF flags (Testing)~~ _To be rework_
 * Show pseudonym version to Settings
+* Resizing workspace should calculate items position more accurately
 * Link Popup's Arrow Theme to Lawnchair
 * Update Lawnchair default grid size to 4×7 (or 4×6 with smartspace widget)
-* Fix (1) Search bar and Dock, (2) Folders and App Drawer settings didn't open due to init problems
 * Reimplement Hotseat background customisation
 * Make haptic on a locked workspace use MSDL vibration
+* Make Launcher3 colour more accurate to upstream Android 16
+
+#### Fixes
+
+* Fix unable to access preview for icon style
+* Widget should open normally after a workaround (C7evQZDJ)
+* Fix (1) Search bar and Dock, (2) Folders and App Drawer settings didn't open due to init problems
 * Lawnchair should hopefully remember what grid they should be using
 * Most if not all of Lawnchair settings should be usable without crashes
 * Correct Baseline Profile from old `market` to `play` variant, and now should calculate profile for `nightly`
-* Smartspace Battery now reports battery charging status of Fast (more than 90% of 20 W) and Slow (less than 90% of 5 W) charging
 * Fix Private Space crash when Lawnchair is set as Launcher due to flags only available on A16
 * Fix crash on a device with strict export receiver requirements on A14
 * Interactable widget crashing due to App Transition Manager being null (C7evQZDJ)
