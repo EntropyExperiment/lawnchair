@@ -41,7 +41,7 @@ import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-//import android.graphics.Insets;
+import android.graphics.Insets;
 import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
@@ -65,8 +65,6 @@ import com.android.wm.shell.splitscreen.SplitScreenController;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
-import androidx.core.graphics.Insets;
 
 /**
  * Coordinates the visible drop targets for the current drag within a single display.

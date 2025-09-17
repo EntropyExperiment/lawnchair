@@ -20,7 +20,7 @@ import static android.view.Display.DEFAULT_DISPLAY;
 
 import android.content.Context;
 import android.content.res.Configuration;
-//import android.graphics.Insets;
+import android.graphics.Insets;
 import android.graphics.Rect;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -46,8 +46,6 @@ import com.android.wm.shell.common.ShellExecutor;
 
 import java.io.PrintWriter;
 import java.util.List;
-
-import androidx.core.graphics.Insets;
 
 /**
  * Manages the display areas of hide display cutout feature.
