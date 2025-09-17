@@ -75,13 +75,12 @@ class QuickstepInteractionHandler implements RemoteViews.InteractionHandler,
             return true;
         }
         Pair<Intent, ActivityOptions> options = remoteResponse.getLaunchOptions(view);
-        ActivityOptionsWrapper activityOptions = null;
-        try {
-            activityOptions = mLauncher.getAppTransitionManager()
-                    .getActivityLaunchOptions(hostView, (ItemInfo) hostView.getTag());
-        } catch (Throwable t) {
-            // LC-Ignored
-        }
+
+        // pE-TODO(C7evQZDJ): Avoid building a new AppTransitionManager each time?
+        var mAppTransitionManager = mLauncher.buildAppTransitionManager();
+
+        ActivityOptionsWrapper activityOptions = mAppTransitionManager
+                .getActivityLaunchOptions(hostView, (ItemInfo) hostView.getTag());
         if (!pendingIntent.isActivity()) {
             // In the event this pending intent eventually launches an activity, i.e. a trampoline,
             // use the Quickstep transition animation.
@@ -109,21 +108,11 @@ class QuickstepInteractionHandler implements RemoteViews.InteractionHandler,
         } catch (Throwable t) {
             // ignore
         }
-        if (activityOptions != null) {
-            // pE-TODO(C7evQZDJ): Remove this fallback
-            options = Pair.create(options.first, activityOptions.options);
-        }
+        options = Pair.create(options.first, activityOptions.options);
         if (pendingIntent.isActivity()) {
             logAppLaunch(hostView.getTag());
         }
-        if (activityOptions != null) {
-            return RemoteViews.startPendingIntent(hostView, pendingIntent, options);
-        } else {
-            // pE-TODO(C7evQZDJ): Remove this fallback
-            Log.d("pE(C7evQZDJ)", "activityOptions is null!");
-            return RemoteViews.startPendingIntent(hostView, pendingIntent,
-                    remoteResponse.getLaunchOptions(view));
-        }
+        return RemoteViews.startPendingIntent(hostView, pendingIntent, options);
     }
 
     /**
