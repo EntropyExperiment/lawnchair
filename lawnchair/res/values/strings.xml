@@ -188,6 +188,12 @@
     <string name="experimental_features_label">Experimental features</string>
 
     <!-- Experimental features -->
+    <string name="workspace_label">Workspace</string>
+    <string name="smartspace_label">Smartspace</string>
+
+    <string name="internal_label">Internal</string>
+    <string name="internal_description">Internal may be more unstable than other experimental group</string>
+
     <string name="font_picker_label">Font customization</string>
     <string name="font_picker_description">Some text remains unchanged</string>
 
@@ -199,6 +205,7 @@
 
     <string name="always_reload_icons_label">Always reload icons</string>
     <string name="always_reload_icons_description">Avoid using cached icons from icon packs</string>
+    <string name="always_reload_icons_warning">Will cause icon to reload regularly, this is not required if icon pack doesn\'t update regularly</string>
 
     <string name="icon_swipe_gestures">Icon swipe gestures</string>
     <string name="icon_swipe_gestures_description">Perform actions when swiping left or right on icons instead of moving the home screen</string>
@@ -211,6 +218,7 @@
 
     <string name="gesturenavcontract_label">GestureNavContract API</string>
     <string name="gesturenavcontract_description">Render launcher animations without root, does not work with heavily modified AOSP</string>
+    <string name="gesturenavcontract_warning_incompatibility">GestureNavContract may cause artifacting during animations</string>
 
 
     <string name="recents_lock_unlock">Lock/unlock</string>

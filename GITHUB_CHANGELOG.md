@@ -16,6 +16,8 @@ older (i.e., Lawnchair `15-dev`).
 * Reimplement Hotseat background customisation
 * Make haptic on a locked workspace use MSDL vibration
 * Make Launcher3 colour more accurate to upstream Android 16
+* ProvideComposeSheetHandler now have expressive blur
+* Lawnchair Settings now uses Material 3 Expressive
 
 #### Fixes
 

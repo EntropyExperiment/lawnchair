@@ -17,11 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.Science
-import androidx.compose.material.icons.outlined.SettingsBackupRestore
-import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.Science
 import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.material.icons.rounded.TipsAndUpdates
 import androidx.compose.material3.DropdownMenuItem
@@ -213,7 +210,7 @@ fun PreferenceCategoryGroup(
 
     Surface(
         modifier = modifier.padding(horizontal = 16.dp),
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.extraLarge,
         color = color,
         tonalElevation = if (isSelectedThemeDark) 1.dp else 0.dp,
     ) {
@@ -222,7 +219,6 @@ fun PreferenceCategoryGroup(
             startIndent = (-16).dp,
             endIndent = (-16).dp,
             color = MaterialTheme.colorScheme.surface,
-            thickness = 2.dp,
         )
     }
 }
