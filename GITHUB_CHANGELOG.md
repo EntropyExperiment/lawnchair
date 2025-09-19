@@ -30,6 +30,7 @@ older (i.e., Lawnchair `15-dev`).
 * Fix Private Space crash when Lawnchair is set as Launcher due to flags only available on A16
 * Fix crash on a device with strict export receiver requirements on A14
 * Interactable widget crashing due to App Transition Manager being null (C7evQZDJ)
+* Icon not responding to mouse cursor
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
