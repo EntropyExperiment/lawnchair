@@ -244,7 +244,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableLauncherIconShapes() {
-        return false;
+        return true;
     }
 
     @Override
@@ -265,7 +265,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableMouseInteractionChanges() {
-        return false;
+        return true;
     }
 
     @Override
