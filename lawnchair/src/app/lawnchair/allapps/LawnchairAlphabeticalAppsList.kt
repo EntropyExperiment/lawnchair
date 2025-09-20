@@ -2,8 +2,11 @@ package app.lawnchair.allapps
 
 import android.content.Context
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import app.lawnchair.data.folder.model.FolderOrderUtils
+import app.lawnchair.data.folder.model.FolderViewModel
 import app.lawnchair.flowerpot.Flowerpot
 import app.lawnchair.launcher
 import app.lawnchair.preferences.PreferenceManager
@@ -35,8 +38,9 @@ class LawnchairAlphabeticalAppsList<T>(
     private val prefs2 = PreferenceManager2.getInstance(context)
     private val prefs = PreferenceManager.getInstance(context)
 
-    // Lawnchair-TODO-Featureset: observeFolder vM
-    // private val viewModel: FolderViewModel by (context as ComponentActivity).viewModels()
+    private val viewModel = FolderViewModel(
+        (context as? ComponentActivity)?.application ?: context.launcher.application,
+    )
     private var folderList = mutableListOf<FolderInfo>()
     private val filteredList = mutableListOf<AppInfo>()
 
@@ -57,12 +61,12 @@ class LawnchairAlphabeticalAppsList<T>(
     }
 
     private fun observeFolders() {
-//        viewModel.foldersLiveData.observe(context as LifecycleOwner) { folders ->
-//            folderList = folders
-//                .sortedBy { folderOrder.indexOf(it.id) }
-//                .toMutableList()
-//            updateAdapterItems()
-//        }
+        viewModel.foldersLiveData.observe(context as LifecycleOwner) { folders ->
+            folderList = folders
+                .sortedBy { folderOrder.indexOf(it.id) }
+                .toMutableList()
+            updateAdapterItems()
+        }
     }
 
     override fun updateItemFilter(itemFilter: Predicate<ItemInfo>?) {
