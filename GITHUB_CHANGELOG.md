@@ -31,6 +31,7 @@ older (i.e., Lawnchair `15-dev`).
 * Fix crash on a device with strict export receiver requirements on A14
 * Interactable widget crashing due to App Transition Manager being null (C7evQZDJ)
 * Icon not responding to mouse cursor
+* Rare NoSuchMethodError crash on IMS canImeRenderGesturalNavButtons
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)

@@ -310,8 +310,13 @@ public class NavbarButtonsViewController implements TaskbarControllers.LoggableT
         }
         mNavButtonsView.setLayoutParams(navButtonsViewLayoutParams);
 
-        mIsImeRenderingNavButtons =
-                InputMethodService.canImeRenderGesturalNavButtons() && mContext.imeDrawsImeNavBar();
+        try {
+            mIsImeRenderingNavButtons =
+                    InputMethodService.canImeRenderGesturalNavButtons() && mContext.imeDrawsImeNavBar();
+        } catch (NoSuchMethodError e) {
+            // LC-Ignored: what?
+            mIsImeRenderingNavButtons = false;
+        }
         if (!mIsImeRenderingNavButtons) {
             // IME switcher
             final int switcherResId = Flags.imeSwitcherRevamp()
