@@ -3,18 +3,26 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🏗️ Development 2 (Draft)
 
+Compatibility list:
+
+| 🏗️ TODO     | 💫 Best effort | 🥞 Fully supported |
+|--------------|----------------|--------------------|
+| Android 8.1  | Android 12.1   | Android 14         |
+| Android 9    | Android 13     | Android 15         |
+| Android 10   |                | Android 16         |
+| Android 11   |                |                    |
+| Android 12.0 |                |                    |
+
 #### Features
 
 * Enable All Apps Blur Flags on Phone (oops, forgot about the allAppsSheetForHandheld flag)
 * Make Safe Mode check more reliable
 * Smartspace Battery now reports battery charging status of Fast (more than 90% of 20 W) and Slow (less than 90% of 5 W) charging
-* ~~Enabling GSF flags (Testing)~~ _To be rework_
 * Show pseudonym version to Settings
-* Resizing workspace should calculate items position more accurately
-* Link Popup's Arrow Theme to Lawnchair
+* Resizing workspace calculate items position more accurately
 * Update Lawnchair default grid size to 4×7 (or 4×6 with smartspace widget)
 * Reimplement Hotseat background customisation
-* Make haptic on a locked workspace use MSDL vibration
+* Make haptic on a locked workspace use Google MSDL vibration
 * Make Launcher3 colour more accurate to upstream Android 16
 * ProvideComposeSheetHandler now have expressive blur
 * Lawnchair Settings now uses Material 3 Expressive
@@ -22,6 +30,7 @@ older (i.e., Lawnchair `15-dev`).
 #### Fixes
 
 * Fix unable to access preview for icon style
+* Popup's Arrow Theme now has the correct theme
 * Widget should open normally after a workaround (C7evQZDJ)
 * Fix (1) Search bar and Dock, (2) Folders and App Drawer settings didn't open due to init problems
 * Lawnchair should hopefully remember what grid they should be using
