@@ -802,26 +802,28 @@ public class LoaderTask implements Runnable {
             }
         }
 
-        Trace.beginSection("LoadAllAppsIconsInBulk");
+        if (enableBulkLoading) {
+            Trace.beginSection("LoadAllAppsIconsInBulk");
 
-        try {
-            mIconCache.getTitlesAndIconsInBulk(allAppsItemRequestInfos);
-            if (Flags.restoreArchivedAppIconsFromDb()) {
-                for (IconRequestInfo<AppInfo> iconRequestInfo : allAppsItemRequestInfos) {
-                    AppInfo appInfo = iconRequestInfo.itemInfo;
-                    if (mIconCache.isDefaultIcon(appInfo.bitmap, appInfo.user)) {
-                        logASplit("LoadAllAppsIconsInBulk: default icon found for "
+            try {
+                mIconCache.getTitlesAndIconsInBulk(allAppsItemRequestInfos);
+                if (Flags.restoreArchivedAppIconsFromDb()) {
+                    for (IconRequestInfo<AppInfo> iconRequestInfo : allAppsItemRequestInfos) {
+                        AppInfo appInfo = iconRequestInfo.itemInfo;
+                        if (mIconCache.isDefaultIcon(appInfo.bitmap, appInfo.user)) {
+                            logASplit("LoadAllAppsIconsInBulk: default icon found for "
                                 + appInfo.getTargetComponent()
                                 + ", will attempt to load from iconBlob: "
                                 + Arrays.toString(iconRequestInfo.iconBlob));
-                        iconRequestInfo.loadIconFromDbBlob(mContext);
+                            iconRequestInfo.loadIconFromDbBlob(mContext);
+                        }
                     }
                 }
-            }
-            allAppsItemRequestInfos.forEach(iconRequestInfo ->
+                allAppsItemRequestInfos.forEach(iconRequestInfo ->
                     mBgAllAppsList.updateSectionName(iconRequestInfo.itemInfo));
-        } finally {
-            Trace.endSection();
+            } finally {
+                Trace.endSection();
+            }
         }
 
         if (Flags.enablePrivateSpace()) {

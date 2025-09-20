@@ -41,6 +41,7 @@ Compatibility list:
 * Interactable widget crashing due to App Transition Manager being null (C7evQZDJ)
 * Icon not responding to mouse cursor
 * Rare NoSuchMethodError crash on IMS canImeRenderGesturalNavButtons
+* [Lawnchair] Reimplement Bulk icons toggle
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
