@@ -20,7 +20,6 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.android.launcher3.R
 
 private val InterFontFamily = FontFamily(
@@ -30,21 +29,33 @@ private val InterFontFamily = FontFamily(
     Font(R.font.inter_bold, FontWeight.Bold),
 )
 
+private val OpenRundeDisplayFontFamily = FontFamily(
+    Font(R.font.openrunde_medium, FontWeight.Medium),
+    Font(R.font.openrunde_semibold, FontWeight.SemiBold),
+)
+
+private val OpenRundeFontFamily = FontFamily(
+    Font(R.font.openrunde_regular, FontWeight.Normal),
+    Font(R.font.openrunde_medium, FontWeight.Medium),
+    Font(R.font.openrunde_semibold, FontWeight.SemiBold),
+    Font(R.font.openrunde_bold, FontWeight.Bold),
+)
+
 private val base = Typography()
 val Typography = Typography(
-    displayLarge = base.displayLarge.copy(fontFamily = InterFontFamily),
-    displayMedium = base.displayMedium.copy(fontFamily = InterFontFamily),
-    displaySmall = base.displaySmall.copy(fontFamily = InterFontFamily),
-    headlineLarge = base.headlineLarge.copy(fontFamily = InterFontFamily),
-    headlineMedium = base.headlineMedium.copy(fontFamily = InterFontFamily),
-    headlineSmall = base.headlineSmall.copy(fontFamily = InterFontFamily),
-    titleLarge = base.titleLarge.copy(fontFamily = InterFontFamily),
-    titleMedium = base.titleMedium.copy(fontFamily = InterFontFamily),
-    titleSmall = base.titleSmall.copy(fontFamily = InterFontFamily),
-    bodyLarge = base.bodyLarge.copy(fontFamily = InterFontFamily, letterSpacing = 0.sp),
-    bodyMedium = base.bodyMedium.copy(fontFamily = InterFontFamily, letterSpacing = 0.1.sp),
-    bodySmall = base.bodySmall.copy(fontFamily = InterFontFamily),
-    labelLarge = base.labelLarge.copy(fontFamily = InterFontFamily),
-    labelMedium = base.labelMedium.copy(fontFamily = InterFontFamily),
-    labelSmall = base.labelSmall.copy(fontFamily = InterFontFamily),
+    displayLarge = base.displayLarge.copy(fontFamily = OpenRundeDisplayFontFamily),
+    displayMedium = base.displayMedium.copy(fontFamily = OpenRundeDisplayFontFamily),
+    displaySmall = base.displaySmall.copy(fontFamily = OpenRundeDisplayFontFamily),
+    headlineLarge = base.headlineLarge.copy(fontFamily = OpenRundeDisplayFontFamily),
+    headlineMedium = base.headlineMedium.copy(fontFamily = OpenRundeDisplayFontFamily),
+    headlineSmall = base.headlineSmall.copy(fontFamily = OpenRundeDisplayFontFamily),
+    titleLarge = base.titleLarge.copy(fontFamily = OpenRundeDisplayFontFamily),
+    titleMedium = base.titleMedium.copy(fontFamily = OpenRundeFontFamily),
+    titleSmall = base.titleSmall.copy(fontFamily = OpenRundeFontFamily),
+    bodyLarge = base.bodyLarge.copy(fontFamily = OpenRundeFontFamily),
+    bodyMedium = base.bodyMedium.copy(fontFamily = OpenRundeFontFamily),
+    bodySmall = base.bodySmall.copy(fontFamily = OpenRundeFontFamily),
+    labelLarge = base.labelLarge.copy(fontFamily = OpenRundeFontFamily),
+    labelMedium = base.labelMedium.copy(fontFamily = OpenRundeFontFamily),
+    labelSmall = base.labelSmall.copy(fontFamily = OpenRundeFontFamily),
 )
