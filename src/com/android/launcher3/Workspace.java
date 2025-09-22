@@ -558,6 +558,10 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     }
 
     private boolean isTwoPanelEnabled() {
+        // pE-TODO(t35AcakE): Foldable support, DC won't report to IDP that deviceType is TYPE_MULTI_DISPLAY
+        Log.d("LC-WorkspaceTwoPanel", "FOLDABLE_SINGLE_PAGE: " + FOLDABLE_SINGLE_PAGE.get() + ", isTwoPanels: " + mLauncher.mDeviceProfile.isTwoPanels);
+        Log.d("LC-Workspace", "isTablet: " + mLauncher.mDeviceProfile.isTablet + ", isMultiDisplay: " + mLauncher.mDeviceProfile.isMultiDisplay);
+        Log.d("LC-Workspace", "IDP is multidisplay?: " + (mLauncher.getDeviceProfile().inv.deviceType == mLauncher.getDeviceProfile().inv.TYPE_MULTI_DISPLAY));
         return !FOLDABLE_SINGLE_PAGE.get() && mLauncher.mDeviceProfile.isTwoPanels;
     }
 
