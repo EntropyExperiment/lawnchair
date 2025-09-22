@@ -8,11 +8,11 @@ plugins {
     id 'com.android.library' version "8.13.0" apply false
     id 'com.android.test' version '8.13.0' apply false
     id 'androidx.baselineprofile' version '1.4.1'
-    id 'org.jetbrains.kotlin.android' version "2.2.10"
-    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10"
-    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10"
-    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10"
-    id "com.google.devtools.ksp" version "2.2.10-2.0.2"
+    id 'org.jetbrains.kotlin.android' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10" // Don't ever update to 2.2.20
+    id "com.google.devtools.ksp" version "2.2.10-2.0.2" // Don't ever update to 2.2.20
     id 'com.google.protobuf' version "0.9.5"
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
@@ -32,7 +32,7 @@ tasks.withType(KotlinCompile).configureEach {
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
         android {
-            buildToolsVersion "36.0.0"
+            buildToolsVersion "36.1.0"
             compileSdk 36
             defaultConfig {
                 minSdk 26
@@ -95,7 +95,6 @@ allprojects {
 
     ext {
         FRAMEWORK_PREBUILTS_DIR = "$rootDir/prebuilts/libs"
-        daggerVersion = '2.57.1'
 
         addFrameworkJar = { String name ->
             def frameworkJar = new File(FRAMEWORK_PREBUILTS_DIR, name)
@@ -144,7 +143,7 @@ final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
 final def version = "16"
-final def releaseName = "Development 1 Release 0"
+final def releaseName = "Development 2 Release 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
@@ -155,7 +154,7 @@ android {
     namespace "com.android.launcher3"
     defaultConfig {
         /*
-         * Lawnchair Launcher 16.0 Development 1 Release 0
+         * Lawnchair Launcher 16.0 Development 2 Release 0
          * see CONTRIBUTING.md#versioning-scheme
          */
         versionCode 16_00_00_01_00
@@ -438,8 +437,8 @@ dependencies {
     implementation libs.compose.material3.windowSizeClass
 
     ksp libs.dagger.compiler
-    implementation libs.hilt.android
-    ksp libs.hilt.compiler
+    implementation libs.dagger.hilt.android
+    ksp libs.dagger.hilt.compiler
 
     implementation libs.bundles.room
     ksp libs.room.compiler

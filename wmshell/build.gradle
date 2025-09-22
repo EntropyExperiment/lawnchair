@@ -17,7 +17,7 @@ tasks.withType(KotlinCompile).configureEach {
 compileOnlyCommonJars()
 
 android {
-    buildToolsVersion "36.0.0"
+    buildToolsVersion "36.1.0"
     namespace "com.android.wm.shell"
     buildFeatures {
         aidl true
@@ -36,8 +36,8 @@ addFrameworkJar('framework-16.jar')
 compileOnlyCommonJars()
 
 dependencies {
-    implementation libs.hilt.android
-    ksp libs.hilt.compiler
+    implementation libs.dagger.hilt.android
+    ksp libs.dagger.hilt.compiler
     implementation libs.androidx.core.animation
     implementation libs.androidx.dynamicanimation
     implementation projects.iconloaderlib
