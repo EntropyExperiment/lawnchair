@@ -53,7 +53,7 @@ jobs:
           fi
         # pE-TODO(KLuQ83eJ): This fail CI, Kotlin daemon is unresponsive in GitHub CI for no reason.
       - name: Build debug APK
-        run: ./gradlew assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug --no-configuration-cache
+        run: ./gradlew assembleLawnWithQuickstepNightlyRelease assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug --no-configuration-cache
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
