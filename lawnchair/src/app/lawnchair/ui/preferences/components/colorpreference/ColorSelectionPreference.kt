@@ -87,7 +87,7 @@ fun ColorSelection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = 16.dp),
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(text = stringResource(id = R.string.action_apply))
                 }

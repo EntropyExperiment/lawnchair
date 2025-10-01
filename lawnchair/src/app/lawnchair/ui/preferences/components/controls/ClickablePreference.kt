@@ -80,7 +80,7 @@ fun PreferenceClickConfirmation(
         buttons = {
             OutlinedButton(
                 onClick = onDismissRequest,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.cancel))
             }
@@ -90,7 +90,7 @@ fun PreferenceClickConfirmation(
                     onDismissRequest()
                     onConfirm()
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.ok))
             }

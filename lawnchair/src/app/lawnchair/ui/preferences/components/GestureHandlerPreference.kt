@@ -91,7 +91,7 @@ fun GestureHandlerPreference(
                     buttons = {
                         OutlinedButton(
                             onClick = { bottomSheetHandler.hide() },
-                            shapes = ButtonDefaults.shapes()
+                            shapes = ButtonDefaults.shapes(),
                         ) {
                             Text(text = stringResource(id = AndroidR.string.cancel))
                         }

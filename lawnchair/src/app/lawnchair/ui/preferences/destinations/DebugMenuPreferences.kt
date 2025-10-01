@@ -111,7 +111,8 @@ fun DebugMenuPreferences(
             PreferenceGroup(heading = "Launcher3 Readiness") {
                 var apmSupport = false
                 if (LocalContext.current.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS)
-                    == PackageManager.PERMISSION_GRANTED) {
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
                     apmSupport = true
                 }
                 PreferenceCategory(

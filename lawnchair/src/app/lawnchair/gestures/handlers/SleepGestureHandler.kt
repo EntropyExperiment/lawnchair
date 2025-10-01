@@ -149,7 +149,7 @@ fun ServiceWarningDialog(
         buttons = {
             OutlinedButton(
                 onClick = handleClose,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.cancel))
             }
@@ -159,7 +159,7 @@ fun ServiceWarningDialog(
                     context.startActivity(settingsIntent)
                     handleClose()
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = R.string.dt2s_recents_warning_open_settings))
             }

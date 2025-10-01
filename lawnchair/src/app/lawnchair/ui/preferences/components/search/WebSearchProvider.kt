@@ -104,7 +104,7 @@ fun SearchPopupPreference(
                         showPopup = false
                         onConfirm(value.text)
                     },
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(text = stringResource(id = android.R.string.ok))
                 }
@@ -114,7 +114,7 @@ fun SearchPopupPreference(
                     onClick = {
                         showPopup = false
                     },
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(text = stringResource(id = android.R.string.cancel))
                 }

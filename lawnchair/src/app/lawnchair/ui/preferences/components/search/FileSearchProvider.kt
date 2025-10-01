@@ -291,7 +291,7 @@ private fun VisualMediaSetting(
                             showPartialAccessDialog = false
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        shapes = ButtonDefaults.shapes()
+                        shapes = ButtonDefaults.shapes(),
                     ) { Text(stringResource(R.string.permissions_photos_videos_grant_full)) }
 
                     TextButton(
@@ -300,13 +300,13 @@ private fun VisualMediaSetting(
                             showPartialAccessDialog = false
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        shapes = ButtonDefaults.shapes()
+                        shapes = ButtonDefaults.shapes(),
                     ) { Text(stringResource(R.string.permissions_photos_videos_manage_selected)) }
 
                     TextButton(
                         onClick = { showPartialAccessDialog = false },
                         modifier = Modifier.fillMaxWidth(),
-                        shapes = ButtonDefaults.shapes()
+                        shapes = ButtonDefaults.shapes(),
                     ) { Text(stringResource(android.R.string.cancel)) }
                 }
             },
@@ -485,7 +485,7 @@ private fun FileAccessPermissionDialog(
                 confirmButton = {
                     FilledTonalButton(
                         onClick = onDismiss,
-                        shapes = ButtonDefaults.shapes()
+                        shapes = ButtonDefaults.shapes(),
                     ) { Text(stringResource(R.string.dismiss)) }
                 },
             )

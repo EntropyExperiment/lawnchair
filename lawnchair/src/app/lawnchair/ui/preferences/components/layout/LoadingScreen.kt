@@ -52,7 +52,7 @@ fun LoadingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 ContainedLoadingIndicator(
-                    modifier = Modifier.size(128.dp)
+                    modifier = Modifier.size(128.dp),
                 )
             }
         } else {

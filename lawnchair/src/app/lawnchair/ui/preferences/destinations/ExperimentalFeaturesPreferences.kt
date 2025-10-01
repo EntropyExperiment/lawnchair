@@ -56,7 +56,8 @@ fun ExperimentalFeaturesPreferences(
                         "Expressive Blur will be ignored because blur effect required at " +
                             "least Android 12 or above, and device need performant GPU to render " +
                             "blur and need to enable support rendering cross window blur by the " +
-                            "device manufacturer.")
+                            "device manufacturer.",
+                    )
                 }
             }
             SwitchPreference(

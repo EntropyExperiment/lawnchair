@@ -266,7 +266,7 @@ fun FolderEditSheet(
         buttons = {
             OutlinedButton(
                 onClick = onDismiss,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(stringResource(android.R.string.cancel))
             }
@@ -276,7 +276,7 @@ fun FolderEditSheet(
                     onRename(folderInfo, textFieldValue.text)
                     onDismiss()
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(stringResource(android.R.string.ok))
             }

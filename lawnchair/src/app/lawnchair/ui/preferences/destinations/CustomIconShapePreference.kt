@@ -92,7 +92,7 @@ fun CustomIconShapePreference(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = 16.dp),
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(
                         text = if (appliedIconShape != null) {
@@ -344,7 +344,7 @@ private fun CornerSlider(
                                 buttons = {
                                     OutlinedButton(
                                         onClick = { bottomSheetHandler.hide() },
-                                        shapes = ButtonDefaults.shapes()
+                                        shapes = ButtonDefaults.shapes(),
                                     ) {
                                         Text(text = stringResource(id = android.R.string.cancel))
                                     }

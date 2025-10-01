@@ -257,14 +257,14 @@ class LawnchairApp : Application() {
                                 openAppInfo(launcher)
                                 close(true)
                             },
-                            shapes = ButtonDefaults.shapes()
+                            shapes = ButtonDefaults.shapes(),
                         ) {
                             Text(text = stringResource(id = R.string.app_info_drop_target_label))
                         }
                         Spacer(modifier = Modifier.requiredWidth(8.dp))
                         Button(
                             onClick = { close(true) },
-                            shapes = ButtonDefaults.shapes()
+                            shapes = ButtonDefaults.shapes(),
                         ) {
                             Text(text = stringResource(id = android.R.string.ok))
                         }

@@ -102,7 +102,7 @@ fun ChangesDialog(
         ) {
             OutlinedButton(
                 onClick = onDismiss,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(android.R.string.cancel))
             }
@@ -112,7 +112,7 @@ fun ChangesDialog(
                     onDownload()
                     onDismiss()
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(R.string.download_update))
             }

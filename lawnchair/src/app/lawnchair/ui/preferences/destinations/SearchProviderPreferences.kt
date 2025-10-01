@@ -214,7 +214,7 @@ private fun SponsorDisclaimer(
         buttons = {
             OutlinedButton(
                 onClick = onAcknowledge,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.ok))
             }

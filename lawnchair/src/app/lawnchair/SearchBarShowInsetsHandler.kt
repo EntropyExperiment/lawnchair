@@ -42,4 +42,3 @@ class SearchBarShowInsetsHandler(private val shiftRange: Float) : WindowInsetsAn
         animationController?.finish(progress.value >= 0.5f)
     }
 }
-

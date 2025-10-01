@@ -97,7 +97,7 @@ fun TextPreferenceDialog(
         buttons = {
             OutlinedButton(
                 onClick = onDismissRequest,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.cancel))
             }
@@ -107,7 +107,7 @@ fun TextPreferenceDialog(
                     onDismissRequest()
                     onConfirm(value)
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = android.R.string.ok))
             }

@@ -99,7 +99,7 @@ fun HomeScreenGridPreferences(
                     .align(Alignment.CenterEnd)
                     .fillMaxWidth(),
                 enabled = columns.intValue != originalColumns || rows.intValue != originalRows,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(text = stringResource(id = R.string.action_apply))
             }

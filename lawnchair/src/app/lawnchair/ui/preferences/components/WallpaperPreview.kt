@@ -70,7 +70,7 @@ fun ColumnScope.WithWallpaper(
         ) {
             FilledTonalButton(
                 onClick = { showPermissionDialog = true },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Wallpaper,

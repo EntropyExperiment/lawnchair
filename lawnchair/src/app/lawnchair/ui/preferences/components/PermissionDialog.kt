@@ -79,7 +79,7 @@ fun PermissionDialog(
                     if (isPermanentlyDenied) onGoToSettings() else onConfirm()
                     onDismiss()
                 },
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) {
                 Text(
                     stringResource(
@@ -91,7 +91,7 @@ fun PermissionDialog(
         dismissButton = {
             TextButton(
                 onClick = onDismiss,
-                shapes = ButtonDefaults.shapes()
+                shapes = ButtonDefaults.shapes(),
             ) { Text(stringResource(android.R.string.cancel)) }
         },
     )
@@ -128,7 +128,7 @@ fun WallpaperAccessPermissionDialog(
                 confirmButton = {
                     FilledTonalButton(
                         onClick = onDismiss,
-                        shapes = ButtonDefaults.shapes()
+                        shapes = ButtonDefaults.shapes(),
                     ) { Text(stringResource(R.string.dismiss)) }
                 },
             )
@@ -176,7 +176,7 @@ fun WallpaperAccessPermissionDialog(
                     confirmButton = {
                         TextButton(
                             onClick = onDismiss,
-                            shapes = ButtonDefaults.shapes()
+                            shapes = ButtonDefaults.shapes(),
                         ) { Text(stringResource(android.R.string.cancel)) }
                     },
                 )

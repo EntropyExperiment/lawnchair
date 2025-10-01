@@ -94,7 +94,7 @@ class BatteryStatusProvider(context: Context) :
         return runCatching {
             val voltageMilliVolts = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
             val currentMicroAmps = batteryManager?.getLongProperty(
-                BatteryManager.BATTERY_PROPERTY_CURRENT_NOW
+                BatteryManager.BATTERY_PROPERTY_CURRENT_NOW,
             ) ?: Long.MIN_VALUE
 
             if (voltageMilliVolts <= 0 || currentMicroAmps == Long.MIN_VALUE) return 0f
@@ -120,14 +120,18 @@ class BatteryStatusProvider(context: Context) :
 
         // 4.5 W = 90% of 5V @ 1A (this is the standard "slow" charging for AOSP)
         const val SLOW = 4.5f
+
         // 6.75 W = 90% of 5V @ 1.5A (this is the old standard for "fast" charging in AOSP)
         // const val OLD_FAST = 6.75f
         // 18 W = 90% of 9V @ 2.22A (this is the new standard for "fast" charging in AOSP)
         const val FAST = 18f
+
         // 32.4 W = 90% of 12V @ 3A
         const val VERY_FAST = 32.4f
+
         // 40.5 W = 90% of 20V @ 3.25A
         const val SUPER_FAST = 40.5f
+
         // 90 W = 90% of 20V @ 5A
         const val EXTREMELY_FAST = 90f
     }

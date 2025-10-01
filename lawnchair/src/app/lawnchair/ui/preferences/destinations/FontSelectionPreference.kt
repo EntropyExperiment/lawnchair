@@ -305,7 +305,7 @@ private fun VariantDropdown(
             onClick = { showVariants = true },
             colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
             contentPadding = VariantButtonContentPadding,
-            shapes = ButtonDefaults.shapes()
+            shapes = ButtonDefaults.shapes(),
         ) {
             AndroidText(
                 modifier = Modifier.wrapContentWidth(),

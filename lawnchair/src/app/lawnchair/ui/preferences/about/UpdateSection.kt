@@ -46,7 +46,7 @@ fun UpdateSection(
             is UpdateState.Available -> {
                 Button(
                     onClick = onViewChanges,
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(text = stringResource(R.string.download_update))
                 }
@@ -68,7 +68,7 @@ fun UpdateSection(
                     onClick = {
                         onInstall(updateState.file)
                     },
-                    shapes = ButtonDefaults.shapes()
+                    shapes = ButtonDefaults.shapes(),
                 ) {
                     Text(text = stringResource(R.string.install_update))
                 }
