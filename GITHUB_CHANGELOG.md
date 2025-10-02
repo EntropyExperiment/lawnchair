@@ -43,6 +43,7 @@ Compatibility list:
 * Icon not responding to mouse cursor
 * Rare NoSuchMethodError crash on IMS canImeRenderGesturalNavButtons
 * [Lawnchair] Reimplement Bulk icons toggle
+* SettingsCache crashing with SecurityException with unreadable keys (@hide) in Android 12 and newer (assume false)
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
