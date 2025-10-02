@@ -41,7 +41,7 @@ Compatibility list:
 * Fix Private Space crash when Lawnchair is set as Launcher due to flags only available on A16
 * Fix crash on a device with strict export receiver requirements on A14
 * Interactable widget crashing due to App Transition Manager being null (C7evQZDJ)
-* Icon not responding to mouse cursor
+* Icon not responding to mouse cursor -> (Backported to Lawnchair 15)
 * Rare NoSuchMethodError crash on IMS canImeRenderGesturalNavButtons
 * [Lawnchair] Reimplement Bulk icons toggle
 * SettingsCache crashing with SecurityException with unreadable keys (@hide) in Android 12 and newer (assume false)
