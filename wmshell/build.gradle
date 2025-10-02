@@ -19,10 +19,9 @@ compileOnlyCommonJars()
 android {
     buildToolsVersion "36.1.0"
     namespace "com.android.wm.shell"
-    // Lawnchair-TODO-Build: IFocusTransitionListener$Default.class conflict from classes.jar and WM-Shell-16.jar
-//    buildFeatures {
-//        aidl true
-//    }
+    buildFeatures {
+        aidl true
+    }
     sourceSets {
         main {
             java.srcDirs = ['shared/src']
