@@ -208,10 +208,18 @@ public class BaseDepthController {
         // SurfaceFlinger will adjust its internal offsets to avoid jank.
         boolean wantsEarlyWakeUp = depth > 0 && depth < 1;
         if (wantsEarlyWakeUp && !mInEarlyWakeUp) {
-            transaction.setEarlyWakeupStart();
+            try {
+                transaction.setEarlyWakeupStart();
+            } catch (NoSuchMethodError e) {
+                // LC-Ignored: wtf?
+            }
             mInEarlyWakeUp = true;
         } else if (!wantsEarlyWakeUp && mInEarlyWakeUp) {
-            transaction.setEarlyWakeupEnd();
+            try {
+                transaction.setEarlyWakeupEnd();
+            } catch (NoSuchMethodError e) {
+                // LC-Ignored: wtf?
+            }
             mInEarlyWakeUp = false;
         }
 

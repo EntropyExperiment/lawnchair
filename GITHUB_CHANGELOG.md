@@ -46,6 +46,7 @@ Compatibility list:
 * [Lawnchair] Reimplement Bulk icons toggle
 * SettingsCache crashing with SecurityException with unreadable keys (@hide) in Android 12 and newer (assume false)
 * Assume flags `enableMovingContentIntoPrivateSpace` is false when ClassNotFoundException on Android 16 devices
+* Rare NoSuchMethodError crash on SurfaceControl setEarlyWakeupStart and setEarlyWakeupEnd
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)

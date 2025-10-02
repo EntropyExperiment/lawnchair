@@ -260,11 +260,19 @@ public final class TaskbarOverlayController {
         boolean wantsEarlyWakeUp = radius > 0 && radius < mMaxBlurRadius;
         if (wantsEarlyWakeUp && !mInEarlyWakeUp) {
             Log.d(TAG, "setBackgroundBlurRadius: setting early wakeup");
-            transaction.setEarlyWakeupStart();
+            try {
+                transaction.setEarlyWakeupStart();
+            } catch (NoSuchMethodError e) {
+                // LC-Ignored: wtf?
+            }
             mInEarlyWakeUp = true;
         } else if (!wantsEarlyWakeUp && mInEarlyWakeUp) {
             Log.d(TAG, "setBackgroundBlurRadius: clearing early wakeup");
-            transaction.setEarlyWakeupEnd();
+            try {
+                transaction.setEarlyWakeupEnd();
+            } catch (NoSuchMethodError e) {
+                // LC-Ignored: wtf?
+            }
             mInEarlyWakeUp = false;
         }
 
