@@ -396,9 +396,19 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     }
 
     private int addPrivateSpaceApps(int position) {
+
+        /* LC-Note: Fix for missing flags and account for NCDFE */
         boolean enableMovingContentIntoPrivateSpace = false;
         if (ATLEAST_BAKLAVA) {
-            enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
+            try {
+                /* LC-Note: Some devices (Android 16 QPR) doesn't have or expose this flag to user.
+                 * Let's assume no, because (the flags) enableMovingContentIntoPrivateSpace seems
+                 * to be False for R8 by default.
+                 * */
+                enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
+            } catch (NoClassDefFoundError e) {
+                /* LC-Ignored: we already set it false by default. */
+            }
         }
         
         // Add Install Apps Button first.

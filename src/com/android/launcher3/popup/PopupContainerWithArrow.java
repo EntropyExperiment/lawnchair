@@ -217,9 +217,21 @@ public class PopupContainerWithArrow<T extends Context & ActivityContext>
                 R.layout.popup_container, launcher.getDragLayer(), false);
         container.configureForLauncher(launcher, item);
         
+        /* LC-Note: Fix for missing flags and account for NCDFE */
         boolean shouldHideSystemShortcuts;
         if (ATLEAST_BAKLAVA) {
-            shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace()
+            boolean enableMovingContentIntoPrivateSpace = false;
+            try {
+                /* LC-Note: Some devices (Android 16 QPR) doesn't have or expose this flag to user. 
+                 * Let's assume no, because (the flags) enableMovingContentIntoPrivateSpace seems 
+                 * to be False for R8 by default.
+                 * */
+                enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
+            } catch (NoClassDefFoundError e) {
+                /* LC-Ignored: we already set it false by default. */
+            }
+            
+            shouldHideSystemShortcuts = enableMovingContentIntoPrivateSpace
                 && Objects.equals(item.getTargetPackage(), PRIVATE_SPACE_PACKAGE);
         } else {
             shouldHideSystemShortcuts = false;

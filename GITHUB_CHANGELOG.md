@@ -5,13 +5,13 @@ older (i.e., Lawnchair `15-dev`).
 
 Compatibility list:
 
-| 🏗️ TODO     | 💫 Best effort | 🥞 Fully supported |
-|--------------|----------------|--------------------|
-| Android 8.1  | Android 12.1   | Android 14         |
-| Android 9    | Android 13     | Android 15         |
-| Android 10   |                | Android 16         |
-| Android 11   |                |                    |
-| Android 12.0 |                |                    |
+| 🏗️ Crash    | 💫 Limited features | 🥞 Fully supported |
+|--------------|---------------------|--------------------|
+| Android 8.1  | Android 12.1        | Android 13         |
+| Android 9    |                     | Android 14         |
+| Android 10   |                     | Android 15         |
+| Android 11   |                     | Android 16         |
+| Android 12.0 |                     |                    |
 
 #### Features
 
@@ -45,6 +45,7 @@ Compatibility list:
 * Rare NoSuchMethodError crash on IMS canImeRenderGesturalNavButtons
 * [Lawnchair] Reimplement Bulk icons toggle
 * SettingsCache crashing with SecurityException with unreadable keys (@hide) in Android 12 and newer (assume false)
+* Assume flags `enableMovingContentIntoPrivateSpace` is false when ClassNotFoundException on Android 16 devices
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
