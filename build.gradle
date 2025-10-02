@@ -467,6 +467,8 @@ dependencies {
     implementation(libs.smartspacer.sdk) {
         exclude group: "com.github.skydoves", module: "balloon"
     }
+
+    debugImplementation libs.leakcanary.android
 }
 
 ksp {

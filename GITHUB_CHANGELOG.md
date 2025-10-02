@@ -27,6 +27,7 @@ Compatibility list:
 * ProvideComposeSheetHandler now have expressive blur
 * Lawnchair Settings now uses Material 3 Expressive
 * Animate keyboard on/off state on app drawer search (Try enabling automatically show keyboard in app drawer settings and swipe up and down or directly tap “Apps list” in popup menu)
+* Add LeakCanary check to all debug variant of the application
 
 #### Fixes
 
