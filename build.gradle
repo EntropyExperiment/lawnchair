@@ -154,10 +154,10 @@ android {
     namespace "com.android.launcher3"
     defaultConfig {
         /*
-         * Lawnchair Launcher 16.0 Development 2 Release 0
+         * Lawnchair Launcher 16.0 Development 2 Release 1
          * see CONTRIBUTING.md#versioning-scheme
          */
-        versionCode 16_00_00_01_00
+        versionCode 16_00_01_02_01
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
