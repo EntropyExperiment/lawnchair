@@ -24,13 +24,19 @@ import app.lawnchair.font.FontCache
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
+import com.android.launcher3.dagger.ApplicationContext
+import com.android.launcher3.dagger.LauncherAppComponent
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
-import com.android.launcher3.util.MainThreadInitializedObject
+import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import javax.inject.Inject
 
-class PreferenceManager private constructor(private val context: Context) :
-    BasePreferenceManager(context),
+@LauncherAppSingleton
+class PreferenceManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : BasePreferenceManager(context),
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
     private val reloadIcons = { idp.onPreferencesChanged(context) }
@@ -50,7 +56,7 @@ class PreferenceManager private constructor(private val context: Context) :
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
     val hotseatColumns = IntPref("pref_hotseatColumns", 4, reloadGrid)
     val workspaceColumns = IntPref("pref_workspaceColumns", 4)
-    val workspaceRows = IntPref("pref_workspaceRows", 5)
+    val workspaceRows = IntPref("pref_workspaceRows", 7)
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
@@ -130,6 +136,12 @@ class PreferenceManager private constructor(private val context: Context) :
     val recentsTranslucentBackground = BoolPref("pref_recentsTranslucentBackground", false, recreate)
     val recentsTranslucentBackgroundAlpha = FloatPref("pref_recentTranslucentBackgroundAlpha", .8f, recreate)
 
+    val hideVersionInfo = BoolPref("pref_hideVersionInfo", false)
+    val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
+
+    val enableMaterialExpressive = BoolPref("pref_enableMaterialExpressive", false, recreate)
+    val enableGnc = BoolPref("pref_enableGnc", false, recreate)
+
     override fun close() {
         TODO("Not yet implemented")
     }
@@ -153,7 +165,7 @@ class PreferenceManager private constructor(private val context: Context) :
         private const val CURRENT_VERSION = 2
 
         @JvmField
-        val INSTANCE = MainThreadInitializedObject(::PreferenceManager)
+        val INSTANCE = DaggerSingletonObject(LauncherAppComponent::getPreferenceManager)
 
         @JvmStatic
         fun getInstance(context: Context) = INSTANCE.get(context)!!

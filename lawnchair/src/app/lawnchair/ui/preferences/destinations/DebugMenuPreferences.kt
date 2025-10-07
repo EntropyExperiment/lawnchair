@@ -1,8 +1,12 @@
 package app.lawnchair.ui.preferences.destinations
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.datastore.preferences.core.Preferences
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences.getAdapter
@@ -13,13 +17,17 @@ import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
+import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.TextPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.search.SearchPopupPreference
 import app.lawnchair.ui.preferences.data.liveinfo.liveInformationManager
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
 import app.lawnchair.ui.preferences.navigation.FeatureFlags
+import com.android.launcher3.R
+import com.android.systemui.shared.system.BlurUtils
 import com.patrykmichalik.opto.domain.Preference
 import kotlinx.coroutines.runBlocking
 
@@ -66,6 +74,17 @@ fun DebugMenuPreferences(
                         }
                     },
                 )
+                SwitchPreference(
+                    label = "Hide version info in About screen",
+                    adapter = prefs.hideVersionInfo.getAdapter(),
+                )
+                SearchPopupPreference(
+                    title = "Set custom pseudonym version",
+                    initialValue = prefs.pseudonymVersion.get(),
+                    placeholder = stringResource(R.string.custom),
+                    onConfirm = prefs.pseudonymVersion.getAdapter()::onChange,
+                    isErrorCheck = { it.isEmpty() },
+                )
             }
 
             PreferenceGroup(heading = "Debug flags") {
@@ -87,6 +106,29 @@ fun DebugMenuPreferences(
                         label = it.key.name,
                     )
                 }
+            }
+
+            PreferenceGroup(heading = "Launcher3 Readiness") {
+                var apmSupport = false
+                if (LocalContext.current.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS)
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
+                    apmSupport = true
+                }
+                PreferenceCategory(
+                    label = "Blur effect",
+                    description = BlurUtils.supportsBlursOnWindows().toString(),
+                    iconResource = R.drawable.ic_search,
+                    onNavigate = { null },
+                    isSelected = false,
+                )
+                PreferenceCategory(
+                    label = "App Prediction",
+                    description = apmSupport.toString(),
+                    iconResource = R.drawable.ic_search,
+                    onNavigate = { null },
+                    isSelected = false,
+                )
             }
         }
     }

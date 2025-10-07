@@ -8,30 +8,35 @@ plugins {
     id 'com.android.library' version "8.13.0" apply false
     id 'com.android.test' version '8.13.0' apply false
     id 'androidx.baselineprofile' version '1.4.1'
-    id 'org.jetbrains.kotlin.android' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.compose' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.serialization' version "2.1.10"
-    id "com.google.devtools.ksp" version "2.1.10-1.0.31"
+    id 'org.jetbrains.kotlin.android' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10" // Don't ever update to 2.2.20
+    id "com.google.devtools.ksp" version "2.2.10-2.0.2" // Don't ever update to 2.2.20
     id 'com.google.protobuf' version "0.9.5"
     id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
-    id 'com.diffplug.spotless' version '8.0.0'
+    id 'com.diffplug.spotless' version '7.2.1'
+    id 'com.google.dagger.hilt.android' version '2.57.1'
 }
 
+// LC-Build-TODO: addFrameworkJar() doesn't work, what???
+def localFrameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
+tasks.withType(JavaCompile).configureEach {
+    classpath = files(localFrameworkJar)
+}
+tasks.withType(KotlinCompile).configureEach {
+    libraries.from(files(localFrameworkJar))
+}
 
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
         android {
             buildToolsVersion "36.1.0"
-            compileSdk {
-                version = release(36) {
-                    minorApiLevel = 1
-                }
-            }
+            compileSdk 36
             defaultConfig {
                 minSdk 26
-                targetSdk 35
+                targetSdk 36
                 vectorDrawables.useSupportLibrary = true
             }
             lint {
@@ -39,12 +44,13 @@ allprojects {
                 checkReleaseBuilds false
             }
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
         }
         dependencies {
-            implementation 'androidx.core:core-ktx:1.17.0'
+            implementation libs.androidx.core.ktx
+            implementation libs.androidx.core.animation
         }
     }
 
@@ -67,14 +73,14 @@ allprojects {
             }
         }
         dependencies {
-            implementation "com.google.protobuf:protobuf-javalite:$protocVersion"
+            implementation libs.protobuf.javalite
         }
     }
 
     plugins.withType(JavaBasePlugin).configureEach {
         java {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
         }
     }
 
@@ -83,13 +89,12 @@ allprojects {
             freeCompilerArgs.add(
                 "-Xjvm-default=all",
             )
-            jvmTarget = JvmTarget.JVM_17
+            jvmTarget = JvmTarget.JVM_21
         }
     }
 
     ext {
         FRAMEWORK_PREBUILTS_DIR = "$rootDir/prebuilts/libs"
-        daggerVersion = '2.55'
 
         addFrameworkJar = { String name ->
             def frameworkJar = new File(FRAMEWORK_PREBUILTS_DIR, name)
@@ -111,9 +116,9 @@ allprojects {
 
         compileOnlyCommonJars = {
             dependencies {
-                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-core.jar')
-                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-statsd.jar')
-                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'WindowManager-Shell-15.jar')
+                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-core-16.jar')
+                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-statsd-16.jar')
+                compileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'WindowManager-Shell-16.jar')
 
                 compileOnly projects.compatLib
                 compileOnly projects.compatLib.compatLibVQ
@@ -122,6 +127,7 @@ allprojects {
                 compileOnly projects.compatLib.compatLibVT
                 compileOnly projects.compatLib.compatLibVU
                 compileOnly projects.compatLib.compatLibVV
+                compileOnly projects.compatLib.compatLibVBaklava
             }
         }
     }
@@ -136,20 +142,22 @@ final def ciRef = System.getenv("GITHUB_REF") ?: ""
 final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
-final def version = "15"
-final def releaseName = "Beta 1"
+final def version = "16"
+final def releaseName = "Development 2 Release 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
-final def quickstepMinSdk = "29"
-final def quickstepMaxSdk = "35"
+def quickstepMinSdk = "29"
+def quickstepMaxSdk = "36"
 
 android {
     namespace "com.android.launcher3"
     defaultConfig {
-        // Lawnchair Launcher 15.0 Beta 1
-        // See CONTRIBUTING.md#versioning-scheme
-        versionCode 15_00_02_01
+        /*
+         * Lawnchair Launcher 16.0 Development 2 Release 1
+         * see CONTRIBUTING.md#versioning-scheme
+         */
+        versionCode 16_00_01_02_01
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
@@ -237,6 +245,14 @@ android {
         debug {
             applicationIdSuffix ".debug"
             resValue("string", "derived_app_name", "Lawnchair (Debug)")
+
+            quickstepMinSdk = "0"
+            quickstepMaxSdk = "100000"
+
+            manifestPlaceholders.quickstepMinSdk = quickstepMinSdk
+            manifestPlaceholders.quickstepMaxSdk = quickstepMaxSdk
+            buildConfigField "int", "QUICKSTEP_MIN_SDK", quickstepMinSdk
+            buildConfigField "int", "QUICKSTEP_MAX_SDK", quickstepMaxSdk
         }
 
         release {
@@ -335,7 +351,7 @@ android {
 
         withQuickstep {
             res.srcDirs = ['quickstep/res', 'quickstep/recents_ui_overrides/res']
-            java.srcDirs = ['quickstep/src', 'quickstep/recents_ui_overrides/src']
+            java.srcDirs = ['quickstep/src', 'quickstep/dagger', 'quickstep/recents_ui_overrides/src', 'quickstep/src_protolog']
             manifest.srcFile "quickstep/AndroidManifest.xml"
         }
     }
@@ -350,12 +366,14 @@ composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_build_reports")
 }
 
-addFrameworkJar('framework-15.jar')
+addFrameworkJar('framework-16.jar')
 
 dependencies {
     implementation projects.iconloaderlib
     implementation projects.searchuilib
     implementation projects.animationlib
+    implementation projects.msdllib
+    implementation projects.contextualeducationlib
 
     // Recents lib dependency
     withQuickstepCompileOnly projects.hiddenApi
@@ -367,6 +385,7 @@ dependencies {
     withQuickstepCompileOnly projects.plugin
     withQuickstepImplementation projects.plugincore
     withQuickstepCompileOnly projects.common
+    withQuickstepCompileOnly projects.utils
 
     // QuickSwitch Compat
     withQuickstepImplementation projects.compatLib
@@ -376,93 +395,87 @@ dependencies {
     withQuickstepImplementation projects.compatLib.compatLibVT
     withQuickstepImplementation projects.compatLib.compatLibVU
     withQuickstepImplementation projects.compatLib.compatLibVV
+    withQuickstepImplementation projects.compatLib.compatLibVBaklava
     withQuickstepImplementation projects.wmshell
     withQuickstepImplementation projects.flags
-    implementation 'androidx.dynamicanimation:dynamicanimation:1.1.0'
-
-    implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-statsd-15.jar')
-    implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'WindowManager-Shell-15.jar')
-    withQuickstepCompileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'framework-15.jar')
-
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
-
-    implementation 'androidx.profileinstaller:profileinstaller:1.4.1'
+    implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'SystemUI-statsd-16.jar')
+    implementation fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'WindowManager-Shell-16.jar')
+    withQuickstepCompileOnly fileTree(dir: FRAMEWORK_PREBUILTS_DIR, include: 'framework-16.jar')
     baselineProfile projects.baselineProfile
 
-    implementation "androidx.recyclerview:recyclerview:1.4.0"
-    implementation "androidx.preference:preference-ktx:1.2.1"
+    coreLibraryDesugaring libs.android.desugarJdkLibs
+    implementation libs.javax.inject
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.serialization.json
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1'
-    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
-    implementation 'dev.rikka.tools.refine:runtime:4.4.0'
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.dynamicanimation
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.palette.ktx
+    implementation libs.androidx.preference.ktx
+    implementation libs.androidx.profileinstaller
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.slice.core
+    implementation libs.androidx.window
+    implementation libs.bundles.graphics
 
-    implementation platform("androidx.compose:compose-bom:2025.09.01")
-    implementation "androidx.compose.ui:ui"
-    implementation "androidx.compose.ui:ui-util"
-    debugImplementation "androidx.compose.ui:ui-tooling"
-    implementation "androidx.compose.ui:ui-tooling-preview"
-    implementation "androidx.compose.ui:ui-text-google-fonts"
-    implementation "androidx.compose.foundation:foundation"
-    implementation "androidx.compose.material:material-icons-extended"
-    implementation "androidx.compose.material:material"
-    implementation "androidx.compose.runtime:runtime-livedata"
-    implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material3:material3-window-size-class'
-    implementation "androidx.activity:activity-compose:1.11.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4"
-    implementation "androidx.navigation:navigation-compose:2.9.5"
-    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
-    implementation "androidx.palette:palette-ktx:1.0.0"
-    implementation "androidx.slice:slice-core:1.1.0-alpha02"
-    def accompanistVersion = '0.37.3'
-    implementation "com.google.accompanist:accompanist-adaptive:$accompanistVersion"
-    implementation "com.google.accompanist:accompanist-drawablepainter:$accompanistVersion"
-    implementation "com.google.accompanist:accompanist-permissions:$accompanistVersion"
-    implementation "com.google.android.material:material:1.13.0"
-    implementation "io.github.fornewid:material-motion-compose-core:1.2.1"
-    implementation 'dev.kdrag0n:colorkt:1.0.5'
-    implementation 'io.coil-kt:coil-compose:2.7.0'
-    implementation 'me.xdrop:fuzzywuzzy:1.4.0'
-    def optoVersion = "1.0.18"
-    implementation "com.patrykmichalik.opto:domain:$optoVersion"
-    implementation "com.patrykmichalik.opto:core:$optoVersion"
-    implementation "com.patrykmichalik.opto:compose:$optoVersion"
-    implementation "androidx.datastore:datastore-preferences:1.1.7"
-    def retrofitVersion = "3.0.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-kotlinx-serialization:$retrofitVersion"
-    implementation "com.squareup.okhttp3:okhttp:5.1.0"
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.ui
+    implementation libs.compose.ui.util
+    implementation libs.compose.ui.graphics
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.compose.ui.google.fonts
+    implementation libs.compose.foundation
+    implementation libs.compose.material
+    implementation libs.compose.material.icons
+    implementation libs.compose.runtime.livedata
+    implementation libs.compose.material3
+    implementation libs.compose.material3.windowSizeClass
 
-    def roomVersion = '2.7.2'
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-    ksp "androidx.room:room-compiler:$roomVersion"
+    ksp libs.dagger.compiler
+    implementation libs.dagger.hilt.android
+    ksp libs.dagger.hilt.compiler
 
-    implementation "com.github.topjohnwu.libsu:service:6.0.0"
+    implementation libs.bundles.room
+    ksp libs.room.compiler
 
-    // Persian Date
-    implementation 'com.github.samanzamani:PersianDate:1.7.1'
+    implementation libs.bundles.retrofit
 
-    implementation 'com.airbnb.android:lottie:6.6.9'
+    implementation libs.bundles.opto
 
-    // Compose drag and drop library
-    implementation 'sh.calvin.reorderable:reorderable:2.5.1'
+    implementation libs.bundles.accompanist
+
+    implementation libs.google.material
+    implementation libs.material.motion.compose
+    implementation libs.airbnb.lottie
+    implementation libs.coil.compose
+    implementation libs.hoko.blur
+    implementation libs.reorderable
+
+    implementation libs.chickenhook.restrictionbypass
+    implementation libs.rikka.refine.runtime
+    implementation libs.libsu.service
+    implementation libs.persian.date
+    implementation libs.kdrag0n.colorkt
+    implementation libs.xdrop.fuzzywuzzy
 
     // Smartspacer
-    implementation('com.kieronquinn.smartspacer:sdk-client:1.1.2') {
+    implementation(libs.smartspacer.sdk) {
         exclude group: "com.github.skydoves", module: "balloon"
     }
 
-    implementation 'io.github.hokofly:hoko-blur:1.5.5'
-
-    implementation "androidx.window:window:1.5.0"
+    debugImplementation libs.leakcanary.android
 }
 
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.generateKotlin", "true")
     arg("room.incremental", "true")
+    arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
 }
 
 
