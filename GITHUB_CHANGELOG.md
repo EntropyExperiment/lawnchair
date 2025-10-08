@@ -5,13 +5,13 @@ older (i.e., Lawnchair `15-dev`).
 
 Compatibility list:
 
-| 🏗️ Crash    | 💫 Limited features | 🥞 Fully supported |
-|--------------|---------------------|--------------------|
-| Android 8.1  | Android 12.1        | Android 13         |
-| Android 9    |                     | Android 14         |
-| Android 10   |                     | Android 15         |
-| Android 11   |                     | Android 16         |
-| Android 12.0 |                     |                    |
+| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
+|-------------|---------------------|--------------------|
+| Android 8.1 | Android 11          | Android 13         |
+| Android 9   | Android 12.0        | Android 14         |
+| Android 10  | Android 12.1        | Android 15         |
+|             |                     | Android 16         |
+|             |                     |                    |
 
 #### Features
 
@@ -49,6 +49,7 @@ Compatibility list:
 * Assume flags `enableMovingContentIntoPrivateSpace` is false when ClassNotFoundException on Android 16 devices
 * Rare NoSuchMethodError crash on SurfaceControl setEarlyWakeupStart and setEarlyWakeupEnd
 * Properly align built-in smartspace in workspace
+* Android 
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)

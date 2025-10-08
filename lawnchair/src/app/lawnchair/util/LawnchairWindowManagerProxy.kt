@@ -15,16 +15,20 @@ import android.view.WindowManager
 import androidx.annotation.Keep
 import androidx.annotation.VisibleForTesting
 import com.android.launcher3.Utilities
+import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.testing.shared.ResourceUtils
 import com.android.launcher3.util.RotationUtils.deltaRotation
 import com.android.launcher3.util.RotationUtils.rotateRect
 import com.android.launcher3.util.WindowBounds
 import com.android.launcher3.util.window.CachedDisplayInfo
 import com.android.launcher3.util.window.WindowManagerProxy
+import javax.inject.Inject
 import kotlin.math.max
 
+
 @Keep
-class LawnchairWindowManagerProxy(context: Context) : WindowManagerProxy(Utilities.ATLEAST_T) {
+@LauncherAppSingleton
+class LawnchairWindowManagerProxy @Inject constructor() : WindowManagerProxy(Utilities.ATLEAST_T) {
 
     override fun estimateInternalDisplayBounds(displayInfoContext: Context): ArrayMap<CachedDisplayInfo, List<WindowBounds>> {
         val info = getDisplayInfo(displayInfoContext).normalize(this)

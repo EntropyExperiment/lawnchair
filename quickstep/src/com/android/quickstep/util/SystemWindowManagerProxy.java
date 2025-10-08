@@ -153,12 +153,6 @@ public class SystemWindowManagerProxy extends WindowManagerProxy {
     @Override
     protected DisplayCutout rotateCutout(DisplayCutout original, int startWidth, int startHeight,
             int fromRotation, int toRotation) {
-        try {
-            return original.getRotated(startWidth, startHeight, fromRotation, toRotation);
-        } catch (Throwable t) {
-            // Lawnchair-TODO: This don't required in LC15??? Reason: Fail A12.1
-            // pE-TODO(CllOXHJv): This don't required in LC15??? Reason: Fail A12.1
-            return original;
-        }
+        return original.getRotated(startWidth, startHeight, fromRotation, toRotation);
     }
 }
