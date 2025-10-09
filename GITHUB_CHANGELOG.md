@@ -49,7 +49,10 @@ Compatibility list:
 * Assume flags `enableMovingContentIntoPrivateSpace` is false when ClassNotFoundException on Android 16 devices
 * Rare NoSuchMethodError crash on SurfaceControl setEarlyWakeupStart and setEarlyWakeupEnd
 * Properly align built-in smartspace in workspace
-* Android 
+* Use WM Proxy from Lawnchair instead of System, fix Android 8.1/9/10/11/12.0/12.1 regarding SE, NSME like SystemBarUtils -> (dWkyIGw9), (reworked CllOXHJv)
+  * Comment regarding estimate bounds on foldable have been added
+  * LawnchairWindowManagerProxy have been migrated to Dagger
+  * SystemWindowManagerProxy have been left unused
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
