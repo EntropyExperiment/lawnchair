@@ -61,10 +61,12 @@ Here are some contribution tips to help you get started:
 ### Additional documentation
 
 - [Lawnchair roadmap](ROADMAP.md)
+- [Lawnchair verification](VERIFICATION.md)
 - [The Lawnchair Wiki](https://github.com/LawnchairLauncher/lawnchair/wiki)
 - [Lawnchair Visual Guidelines](/docs/assets/README.md)
 - [Lawnchair Quickstep Compat Library](compatLib/README.md)
 - [Lawnchair Preferences Components](lawnchair/src/app/lawnchair/ui/preferences/components/README.md)
+- [Lawnchair Platform Frameworks Library SystemUI](platform_frameworks_libs_systemui/README.md)
 - [SystemUI Module](systemUI/README.md)
     - [ViewCapture](systemUI/viewcapture/README.md)
     - [Common](systemUI/common/README.md)
@@ -92,8 +94,7 @@ We follow the **[Conventional Commits specification][conventional-commits]**.
 
 ### Versioning scheme
 
-As of Lawnchair 15 Beta 1, Lawnchair’s version code is composed of five parts, separated by
-underscores:
+Lawnchair’s version code is composed of five parts, separated by underscores:
 
 <p align="center">
     <picture>
