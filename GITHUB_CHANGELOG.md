@@ -58,6 +58,7 @@ Compatibility list:
 * [Lawnchair/Iconloaderlib] Update CustomAdaptiveIconDrawable to latest AOSP 13
 * [Iconloaderlib] Reset most of the changes to favour more AOSP 16_r02 code then Lawnchair (need rewrite)
   * fix icon loaded in monochrome and always monochrome when it is not supposed to
+  * fix notification dots being twice the size with notification count
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
