@@ -1,16 +1,16 @@
-# Lawnchair verification
+# Lawnchair Verification
 
-Lawnchair apk are cryptographically signed and can be verified using two verification systems
+Lawnchair apk are cryptographically signed and can be verified using two verifications system.
 1. GitHub or SLSA attestations
 2. SHA256 of android app certificate
 
 ## SLSA Attestation
 
-> [!NOTE]
-> It is possible to verify without GitHub CLI by cross-referencing check 
-> [GitHub Attestation][github-attestation] with [Sigstore Rekor][sigstore-rekor]
+Lawnchair repository is SLSA-Level 2 compliance and can be verified using a provenance.
 
-Lawnchair repository is SLSA-Level 2 compliance
+> [!NOTE]
+> It is possible to verify without GitHub CLI by cross-referencing check from 
+> [GitHub Attestation][github-attestation] with [Sigstore Rekor][sigstore-rekor]
 
 1. Install GitHub CLI
 2. Download the APK and attestation from [GitHub Attestation][github-attestation]
@@ -26,7 +26,7 @@ Lawnchair have two app certificates, usually:
 * Elsewhere:   
   `74:7C:36:45:B3:57:25:8B:2E:23:E8:51:E5:3C:96:74:7F:E0:AD:D0:07:E5:BA:2C:D9:7E:8C:85:57:2E:4D:C5`
 
-Using a verification app like [AppVerifier][3p-appverifier] can ease up the verifying process.
+On Android, using a verification app like [AppVerifier][3p-appverifier] can ease up the verifying process.
 
 [github-attestation]: https://github.com/LawnchairLauncher/lawnchair/attestations
 [sigstore-rekor]: https://search.sigstore.dev/

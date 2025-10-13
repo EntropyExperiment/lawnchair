@@ -26,9 +26,11 @@ Compatibility list:
 * Make Launcher3 colour more accurate to upstream Android 16
 * ProvideComposeSheetHandler now have expressive blur
 * Lawnchair Settings now uses Material 3 Expressive
-* Animate keyboard on/off state on app drawer search (Try enabling automatically show keyboard in app drawer settings and swipe up and down or directly tap “Apps list” in popup menu) -> (Backported to Lawnchair 15)
+* Animate keyboard on/off state on app drawer search (Try enabling automatically show keyboard in app drawer settings and swipe up and down or directly tap “Apps list” in popup menu) -> (Backport not possible)
 * Add LeakCanary check to all debug variant of the application
 * [DEBUG] Launcher3 feature status diagnostic check in debug menu
+* [Documentation] Add more visibility into both app certificate and SLSA verification for app authenticity check [VERIFICATION.md](VERIFICATION.md)
+* [Documentation] Initial drafting of Improve documentation v6 (pave-path)
 
 #### Fixes
 
@@ -53,6 +55,9 @@ Compatibility list:
   * Comment regarding estimate bounds on foldable have been added
   * LawnchairWindowManagerProxy have been migrated to Dagger
   * SystemWindowManagerProxy have been left unused
+* [Lawnchair/Iconloaderlib] Update CustomAdaptiveIconDrawable to latest AOSP 13
+* [Iconloaderlib] Reset most of the changes to favour more AOSP 16_r02 code then Lawnchair (need rewrite)
+  * fix icon loaded in monochrome and always monochrome when it is not supposed to
 
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
@@ -60,6 +65,7 @@ Compatibility list:
 * Workspace theme doesn't refresh until restart -> (ZbLX3438)
 * Lawnchair Colour can't handle restart causing default colour to be used instead -> Fixed?
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
+* Second hand of clock app missing due to changes in ClockMetadata of Lawnchair
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
 ### 🥞 Development 1

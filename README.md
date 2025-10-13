@@ -25,7 +25,7 @@ This branch houses the codebase of Lawnchair 16, which is currently in beta and 
 
 ## Features
 
--   **Material You Theming:** Adapts to your wallpaper and system theme.
+-   **Material Expressive Theming:** Adapts to your wallpaper and system theme.
 -   **At a Glance Widget:** Displays information *at a glance* with support for [Smartspacer](https://github.com/KieronQuinn/Smartspacer).
 -   **QuickSwitch Support:** Integrates with Android Recents on Android 10-15. (requires root)
 -   **Global Search:** Allows quick access to apps, contacts, and web results from the home screen.
@@ -74,17 +74,7 @@ These builds offer the latest features and bug fixes at a cost of being slower a
 
 ### Verification
 
-Check that your download is using the official Lawnchair certification using these SHA-256 hashes:
-
-###### Google Play
-```
-47:AC:92:63:1C:60:35:13:CC:8D:26:DD:9C:FF:E0:71:9A:8B:36:55:44:DC:CE:C2:09:58:24:EC:25:61:20:A7
-```
-
-###### Elsewhere
-```
-74:7C:36:45:B3:57:25:8B:2E:23:E8:51:E5:3C:96:74:7F:E0:AD:D0:07:E5:BA:2C:D9:7E:8C:85:57:2E:4D:C5
-```
+Please visit [Lawnchair Verification](VERIFICATION.md) on way to verify Lawnchair.
 
 ## Contributing
 
