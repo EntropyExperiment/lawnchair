@@ -108,7 +108,7 @@ fun DebugMenuPreferences(
                 }
             }
 
-            PreferenceGroup(heading = "Launcher3 Readiness") {
+            PreferenceGroup(heading = "Launcher3 Feature Diagnostic") {
                 var apmSupport = false
                 if (LocalContext.current.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS)
                     == PackageManager.PERMISSION_GRANTED
