@@ -440,7 +440,7 @@ public class DeviceProfile {
         mInfo = info;
         isTablet = info.isTablet(windowBounds);
         isPhone = !isTablet;
-        isTwoPanels = isTablet && isMultiDisplay;
+        isTwoPanels = isMultiDisplay;
         boolean isTaskBarEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableTaskbarOnPhone());
         boolean taskbarOrBubbleBarOnPhones = enableTinyTaskbar()
                 || (enableBubbleBar() && enableBubbleBarOnPhones());
@@ -1431,7 +1431,9 @@ public class DeviceProfile {
         if (mIsResponsiveGrid) {
             updateAllAppsWithResponsiveMeasures();
         } else {
-            updateAllAppsIconSize(scale, context.getResources());
+            // LC: All apps should use scale 1.0, not workspace scale
+            // This ensures drawer icons are independent of workspace scaling
+            updateAllAppsIconSize(1.0f, context.getResources());
         }
         updateAllAppsContainerWidth();
         if (isVerticalLayout && !mIsResponsiveGrid) {
@@ -1477,9 +1479,10 @@ public class DeviceProfile {
      * Updates the iconSize for allApps* variants.
      */
     private void updateAllAppsIconSize(float scale, Resources res) {
+        float borderScale = mIsScalableGrid ? 1.0f : scale;
         allAppsBorderSpacePx = new Point(
-                pxFromDp(inv.allAppsBorderSpaces[mTypeIndex].x, mMetrics, scale),
-                pxFromDp(inv.allAppsBorderSpaces[mTypeIndex].y, mMetrics, scale));
+                pxFromDp(inv.allAppsBorderSpaces[mTypeIndex].x, mMetrics, borderScale),
+                pxFromDp(inv.allAppsBorderSpaces[mTypeIndex].y, mMetrics, borderScale));
         // AllApps cells don't have real space between cells,
         // so we add the border space to the cell height
         allAppsCellHeightPx = pxFromDp(inv.allAppsCellSize[mTypeIndex].y, mMetrics)
@@ -1490,8 +1493,8 @@ public class DeviceProfile {
             allAppsIconSizePx = pxFromDp(inv.allAppsIconSize[mTypeIndex], mMetrics);
             allAppsIconTextSizePx = pxFromSp(inv.allAppsIconTextSize[mTypeIndex], mMetrics);
             allAppsIconTextSizePx *= mTextFactors.getAllAppsIconTextSizeFactor();
-            allAppsIconDrawablePaddingPx = getNormalizedIconDrawablePadding();
-            allAppsCellWidthPx = pxFromDp(inv.allAppsCellSize[mTypeIndex].x, mMetrics, scale);
+            allAppsIconDrawablePaddingPx = getNormalizedIconDrawablePadding(allAppsIconSizePx, mIconDrawablePaddingOriginalPx);
+            allAppsCellWidthPx = pxFromDp(inv.allAppsCellSize[mTypeIndex].x, mMetrics);
 
             if (allAppsCellWidthPx < allAppsIconSizePx) {
                 // If allAppsCellWidth no longer fit allAppsIconSize, reduce allAppsBorderSpace to
@@ -1523,8 +1526,7 @@ public class DeviceProfile {
             float invIconTextSizeSp = inv.allAppsIconTextSize[mTypeIndex];
             allAppsIconSizePx = Math.max(1, pxFromDp(invIconSizeDp, mMetrics, scale));
             allAppsIconTextSizePx = (int) (pxFromSp(invIconTextSizeSp, mMetrics) * scale);
-            allAppsIconDrawablePaddingPx = 
-                    res.getDimensionPixelSize(R.dimen.all_apps_icon_drawable_padding);
+            allAppsIconDrawablePaddingPx = getNormalizedIconDrawablePadding(allAppsIconSizePx, mIconDrawablePaddingOriginalPx);;
             allAppsIconTextSizePx *= mTextFactors.getAllAppsIconTextSizeFactor();
             allAppsCellWidthPx = allAppsIconSizePx + (2 * allAppsIconDrawablePaddingPx);
         }

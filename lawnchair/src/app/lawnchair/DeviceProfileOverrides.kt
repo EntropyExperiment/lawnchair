@@ -115,10 +115,14 @@ class DeviceProfileOverrides @Inject constructor(
 
             // apply icon and text size
             idp.iconSize[INDEX_DEFAULT] *= iconSizeFactor
-            idp.allAppsIconSize[INDEX_DEFAULT] *= allAppsIconSizeFactor
             idp.iconSize[INDEX_LANDSCAPE] *= iconSizeFactor
             idp.iconSize[INDEX_TWO_PANEL_PORTRAIT] *= iconSizeFactor
             idp.iconSize[INDEX_TWO_PANEL_LANDSCAPE] *= iconSizeFactor
+
+            idp.allAppsIconSize[INDEX_DEFAULT] *= allAppsIconSizeFactor
+            idp.allAppsIconSize[INDEX_LANDSCAPE] *= allAppsIconSizeFactor
+            idp.allAppsIconSize[INDEX_TWO_PANEL_PORTRAIT] *= allAppsIconSizeFactor
+            idp.allAppsIconSize[INDEX_TWO_PANEL_LANDSCAPE] *= allAppsIconSizeFactor
         }
     }
 

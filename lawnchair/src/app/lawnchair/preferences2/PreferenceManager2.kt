@@ -175,6 +175,12 @@ class PreferenceManager2 @Inject constructor(
         defaultValue = ColorOption.fromString(context.getString(R.string.config_default_app_drawer_bg_color)),
     )
 
+    val appDrawerSearchBarBackground = preference(
+        key = booleanPreferencesKey(name = "all_apps_search_bar_background"),
+        defaultValue = context.resources.getBoolean(R.bool.config_default_search_bar_background),
+        onSet = { reloadHelper.recreate() },
+    )
+
     val notificationDotColor = preference(
         key = stringPreferencesKey(name = "notification_dot_color"),
         parse = ColorOption::fromString,

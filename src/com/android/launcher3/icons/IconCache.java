@@ -167,7 +167,7 @@ public class IconCache extends BaseIconCache {
         LauncherIcons.IconPool iconPool,
         DaggerSingletonTracker lifecycle) {
         super(context, dbFileName, MODEL_EXECUTOR.getLooper(),
-            idp.fillResIconDpi, idp.iconBitmapSize, true /* inMemoryCache */, iconProvider);
+            idp.fillResIconDpi, Math.max(idp.iconBitmapSize, idp.allAppsIconBitmapSize), true /* inMemoryCache */, iconProvider);
         mLauncherApps = context.getSystemService(LauncherApps.class);
         mUserManager = userCache;
         mInstallSessionHelper = installSessionHelper;
