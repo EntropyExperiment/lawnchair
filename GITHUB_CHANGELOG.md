@@ -31,6 +31,7 @@ Compatibility list:
 * [DEBUG] Launcher3 feature status diagnostic check in debug menu
 * [Documentation] Add more visibility into both app certificate and SLSA verification for app authenticity check [VERIFICATION.md](VERIFICATION.md)
 * [Documentation] Initial drafting of Improve documentation v6 (pave-path)
+* [Launcher] Widget animations during resize
 
 #### Fixes
 
@@ -52,7 +53,6 @@ Compatibility list:
 * Rare NoSuchMethodError crash on SurfaceControl setEarlyWakeupStart and setEarlyWakeupEnd
 * Properly align built-in smartspace in workspace
 * Use WM Proxy from Lawnchair instead of System, fix Android 8.1/9/10/11/12.0/12.1 regarding SE, NSME like SystemBarUtils -> (dWkyIGw9), (reworked CllOXHJv)
-  * Comment regarding estimate bounds on foldable have been added
   * LawnchairWindowManagerProxy have been migrated to Dagger
   * SystemWindowManagerProxy have been left unused
 * [Lawnchair/Iconloaderlib] Update CustomAdaptiveIconDrawable to latest AOSP 13
@@ -67,7 +67,6 @@ Compatibility list:
 * Workspace theme doesn't refresh until restart -> (ZbLX3438)
 * Lawnchair Colour can't handle restart causing default colour to be used instead -> Fixed?
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
-* Second hand of clock app missing due to changes in ClockMetadata of Lawnchair
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
 ### 🥞 Development 1

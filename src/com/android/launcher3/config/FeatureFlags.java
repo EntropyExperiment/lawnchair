@@ -165,7 +165,7 @@ public final class FeatureFlags {
 
     // TODO(Block 22): Clean up flags
     public static final BooleanFlag ENABLE_WIDGET_TRANSITION_FOR_RESIZING = getDebugFlag(268553314,
-            "ENABLE_WIDGET_TRANSITION_FOR_RESIZING", DISABLED,
+            "ENABLE_WIDGET_TRANSITION_FOR_RESIZING", ENABLED,
             "Enable widget transition animation when resizing the widgets");
 
     // TODO(Block 27): Clean up flags
