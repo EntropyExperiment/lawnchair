@@ -8,16 +8,16 @@ plugins {
     id 'com.android.library' version "8.13.0" apply false
     id 'com.android.test' version '8.13.0' apply false
     id 'androidx.baselineprofile' version '1.4.1'
-    id 'org.jetbrains.kotlin.android' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.compose' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.1.10"
-    id 'org.jetbrains.kotlin.plugin.serialization' version "2.1.10"
-    id "com.google.devtools.ksp" version "2.1.10-1.0.31"
+    id 'org.jetbrains.kotlin.android' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10" // Don't ever update to 2.2.20
+    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10" // Don't ever update to 2.2.20
+    id "com.google.devtools.ksp" version "2.2.10-2.0.2" // Don't ever update to 2.2.20
     id 'com.google.protobuf' version "0.9.5"
-    id 'app.cash.licensee' version "1.14.1"
+    id 'app.cash.licensee' version "1.13.0"
     id 'dev.rikka.tools.refine' version "4.4.0"
-    id 'com.diffplug.spotless' version '8.0.0'
-    id 'com.google.dagger.hilt.android' version '2.57.2'
+    id 'com.diffplug.spotless' version '7.2.1' // Please don't try to upgrade this
+    id 'com.google.dagger.hilt.android' version '2.57.1' // Please don't try to upgrade this
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -512,5 +512,5 @@ licensee {
     allowUrl("https://opensource.org/licenses/mit-license.php")
 
     bundleAndroidAsset = true
-    androidAssetReportPath = 'licenses.json'
+//    androidAssetReportPath = 'licenses.json'
 }
