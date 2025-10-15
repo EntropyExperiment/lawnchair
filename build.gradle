@@ -151,8 +151,8 @@ final def releaseName = "Development 2 Release 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
-def quickstepMinSdk = "29"
-def quickstepMaxSdk = "36"
+final def quickstepMinSdk = "29"
+final def quickstepMaxSdk = "36"
 
 android {
     namespace "com.android.launcher3"
@@ -250,13 +250,10 @@ android {
             applicationIdSuffix ".debug"
             resValue("string", "derived_app_name", "Lawnchair (Debug)")
 
-            quickstepMinSdk = "0"
-            quickstepMaxSdk = "100000"
-
-            manifestPlaceholders.quickstepMinSdk = quickstepMinSdk
-            manifestPlaceholders.quickstepMaxSdk = quickstepMaxSdk
-            buildConfigField "int", "QUICKSTEP_MIN_SDK", quickstepMinSdk
-            buildConfigField "int", "QUICKSTEP_MAX_SDK", quickstepMaxSdk
+            manifestPlaceholders.quickstepMinSdk = "0"
+            manifestPlaceholders.quickstepMaxSdk = "100000"
+            buildConfigField "int", "QUICKSTEP_MIN_SDK", "0"
+            buildConfigField "int", "QUICKSTEP_MAX_SDK", "100000"
         }
 
         release {
