@@ -39,6 +39,7 @@ object ColorTokens {
     val Accent1_800 = SwatchColorToken(Swatch.Accent1, Shade.S800)
     val Accent1_900 = SwatchColorToken(Swatch.Accent1, Shade.S900)
 
+    val Accent2_10 = SwatchColorToken(Swatch.Accent2, Shade.S10)
     val Accent2_50 = SwatchColorToken(Swatch.Accent2, Shade.S50)
     val Accent2_100 = SwatchColorToken(Swatch.Accent2, Shade.S100)
     val Accent2_200 = SwatchColorToken(Swatch.Accent2, Shade.S200)
@@ -141,9 +142,9 @@ object ColorTokens {
 
     @JvmField val QsbIconTintSecondary = DayNightColorToken(Accent1_500, Accent1_400)
 
-    @JvmField val QsbIconTintTertiary = DayNightColorToken(Accent2_300, Accent1_10)
+    @JvmField val QsbIconTintTertiary = DayNightColorToken(Accent2_300, Accent2_10)
 
-    @JvmField val QsbIconTintQuaternary = DayNightColorToken(Accent1_600, Accent1_100)
+    @JvmField val QsbIconTintQuaternary = DayNightColorToken(Accent1_600, Accent1_200)
 
     @JvmField val WallpaperPopupScrim = Neutral1_900
 
