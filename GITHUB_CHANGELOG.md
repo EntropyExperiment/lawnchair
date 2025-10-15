@@ -1,17 +1,20 @@
-Lawnchair 16 pE Development 1 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 pE Development 2 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### 🏗️ Development 2 (Draft)
+### Development 2
+
+Originally going to launch Dev 2 if comestic bug fixes have been resolved, but hit a 
+stability milestone instead.
 
 Compatibility list:
 
 | 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
 |-------------|---------------------|--------------------|
-| Android 8.1 | Android 11          | Android 13         |
-| Android 9   | Android 12.0        | Android 14         |
-| Android 10  | Android 12.1        | Android 15         |
+| Android 8.1 | Android 12.0        | Android 12.1       |
+| Android 9   |                     | Android 13         |
+| Android 10  |                     | Android 14         |
+| Android 11  |                     | Android 15         |
 |             |                     | Android 16         |
-|             |                     |                    |
 
 #### Features
 
