@@ -1,6 +1,24 @@
 Lawnchair 16 pE Development 2 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
+### 🏗️ Development 3 (Draft)
+
+Compatibility list:
+
+| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
+|-------------|---------------------|--------------------|
+| Android 8.1 | Android 12.0        | Android 12.1       |
+| Android 9   |                     | Android 13         |
+| Android 10  |                     | Android 14         |
+| Android 11  |                     | Android 15         |
+|             |                     | Android 16         |
+
+> [!NOTE]
+> QuickSwitch compatibility have not been tested at any time during the development of Bubble Tea!
+
+#### Fixes
+* Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
+
 ### Development 2
 
 Originally going to launch D2 if comestic bug fixes have been resolved, but hit a 

@@ -94,6 +94,11 @@ public class AutoInstallsLayout {
 
     public static AutoInstallsLayout get(Context context, LauncherWidgetHolder appWidgetHolder,
             LayoutParserCallback callback) {
+        // LC: c51b2a221838aefb610b7146fc4ef7cb34e5e495
+        if (!BuildConfig.ENABLE_AUTO_INSTALLS_LAYOUT) {
+            return null;
+        }
+        
         Partner partner = Partner.get(context.getPackageManager(), ACTION_LAUNCHER_CUSTOMIZATION);
         if (partner == null) {
             return null;
