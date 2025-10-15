@@ -108,7 +108,7 @@ Lawnchair’s version code is composed of five parts, separated by underscores:
 2. Android minor version
 3. Lawnchair development stage
 4. Lawnchair development version
-5. Release number
+5. Revision/Release number
 
 #### Lawnchair development stage
 
@@ -141,7 +141,7 @@ Strings `names` in `strings.xml` should follow this format:
 Lawnchair uses a locally stored JSON file (`google_fonts.json`) to list available fonts from Google
 Fonts. This file should be updated periodically or before release to include the latest fonts.
 
-To update Lawnchair's font listing, follow these steps:
+To update Lawnchair’s font listing, follow these steps:
 
 1. Get
    a [Google Fonts Developer API key][google-fonts-api-key].
@@ -152,7 +152,7 @@ To update Lawnchair's font listing, follow these steps:
 
 #### Writing or updating Lawnchair documentation
 
-Lawnchair's documentations are written in Markdown and follow a style guides from 
+Lawnchair’s documentations are written in Markdown and follow a style guides from 
 [Google developer documentation style guide](https://developers.google.com/style).
 
 <!-- Links -->

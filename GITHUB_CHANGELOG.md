@@ -3,8 +3,30 @@ older (i.e., Lawnchair `15-dev`).
 
 ### Development 2
 
-Originally going to launch Dev 2 if comestic bug fixes have been resolved, but hit a 
+Originally going to launch D2 if comestic bug fixes have been resolved, but hit a 
 stability milestone instead.
+
+This release includes 14 new features, and 20 bug fixes, 
+Lawnchair settings now takes shape of initial material 3 expressive redesign, [(but by no mean finish!)][Lawnget]
+launcher should now render icons better than D1 milestone, with auto-adaptive icons feature reimplemented.
+
+This release have been tested with:
+* ☁️ Pixel 6 (Android 12.0) - Build: Ad-hoc
+* ☁️ Pixel 6a (Android 12.1) - Build: Ad-hoc
+* ☁️ Pixel 7 (Android 13) - Build: Ad-hoc
+* ☁️ Pixel 9 (Android 15, Android 16.0) - Build: Ad-hoc
+* ☁️ Pixel 9 Pro Fold (Android 14, Android 15) - Build: Ad-hoc
+* ☁️ Vivo V40 (Android 15) - Build: Ad-hoc
+* ☁️ Xiaomi MIX (Android 15) - Build: Ad-hoc
+* 📱 Nothing (3a)-series (Android 15) - Build: pE-`15102025`
+* 📱 Pixel 9 Pro XL (Android 16.0 QPR2 Beta 2) - Build: pE-`02102025`
+* 📱 BLU View 5 Pro (Android 14) - Build: pE-`02102025`
+* 📱🔥 Vivo Y21 (Android 12.0) - Build: pE-`08102025`
+
+> [!NOTE]
+> QuickSwitch compatibility have not been tested at any time during the development of Bubble Tea!
+
+[Lawnget]: https://www.google.com/teapot
 
 Compatibility list:
 
@@ -67,8 +89,8 @@ Compatibility list:
 #### Known Bugs
 * Preview can't show device wallpaper -> (lIxkAYGg)
 * IDP Preview doesn't refresh on settings change -> workaround is to hit apply and re-open the preview -> (ZbLX3438)
-* Workspace theme doesn't refresh until restart -> (ZbLX3438)
-* Lawnchair Colour can't handle restart causing default colour to be used instead -> Fixed?
+* Workspace theme doesn't refresh until restart -> (ZbLX3438) -> Fixed as part of (31lLEflf, 1MevNrzp)
+* Lawnchair Colour can't handle restart causing default colour to be used instead -> Fixed? -> Properly fixed as part of (31lLEflf, 1MevNrzp)
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
