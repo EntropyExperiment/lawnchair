@@ -29,7 +29,7 @@ Compatibility list:
 Originally going to launch D2 if most of the comestic bug fixes have been resolved, but hit a 
 stability milestone instead.
 
-This release includes 14 new features, and 20 bug fixes, 
+This release includes 15 new features, and 20 bug fixes, 
 Lawnchair settings now takes shape of initial material 3 expressive redesign, [(but by no mean finish!)][Lawnget]
 launcher should now render icons better than D1 milestone, with auto-adaptive icons feature reimplemented.
 
@@ -80,6 +80,7 @@ Compatibility list:
 * [Documentation] Add more visibility into both app certificate and SLSA verification for app authenticity check [VERIFICATION.md](VERIFICATION.md)
 * [Documentation] Initial drafting of Improve documentation v6 (pave-path)
 * [Launcher] Widget animations during resize
+* [Iconloaderlib] Enable second hand for the clock app
 
 #### Fixes
 
