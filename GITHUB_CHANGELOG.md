@@ -23,6 +23,7 @@ Compatibility list:
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
 * [Lawnchair/Iconloaderlib] Reimplement custom app name
 * [Lawnchair] Reimplement Launcher3 debug page
+* [Lawnchair] Reimplement Caddy and App drawer folder
 
 ### Development 2
 
