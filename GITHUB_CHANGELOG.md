@@ -3,6 +3,9 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🏗️ Development 3 (Draft)
 
+This release have been tested with:
+* 📱 Nothing (3a)-series (Android 15)
+
 Compatibility list:
 
 | 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
@@ -18,10 +21,11 @@ Compatibility list:
 
 #### Fixes
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
+* [Lawnchair/Iconloaderlib] Reimplement custom app name
 
 ### Development 2
 
-Originally going to launch D2 if comestic bug fixes have been resolved, but hit a 
+Originally going to launch D2 if most of the comestic bug fixes have been resolved, but hit a 
 stability milestone instead.
 
 This release includes 14 new features, and 20 bug fixes, 
