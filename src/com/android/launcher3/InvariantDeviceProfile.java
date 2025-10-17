@@ -1344,10 +1344,6 @@ public class InvariantDeviceProfile {
             y = a.getFloat(R.styleable.ProfileDisplayOption_minCellHeightTwoPanelLandscape,
                     minCellSize[INDEX_DEFAULT].y);
             minCellSize[INDEX_TWO_PANEL_LANDSCAPE] = new PointF(x, y);
-            Log.d("LC-IDP", "minCellSize for INDEX_DEFAULT is: " + minCellSize[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "minCellSize for INDEX_LANDSCAPE is: " + minCellSize[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "minCellSize for INDEX_TWO_PANEL_LANDSCAPE is: " + minCellSize[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "minCellSize for INDEX_TWO_PANEL_PORTRAIT is: " + minCellSize[INDEX_TWO_PANEL_PORTRAIT]);
 
             float borderSpace = a.getFloat(R.styleable.ProfileDisplayOption_borderSpace, 0);
             float borderSpaceLandscape = a.getFloat(
@@ -1382,10 +1378,6 @@ public class InvariantDeviceProfile {
                     R.styleable.ProfileDisplayOption_borderSpaceTwoPanelLandscapeVertical,
                     borderSpaceTwoPanelLandscape);
             borderSpaces[INDEX_TWO_PANEL_LANDSCAPE] = new PointF(x, y);
-            Log.d("LC-IDP", "borderSpaces for INDEX_DEFAULT is: " + borderSpaces[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "borderSpaces for INDEX_LANDSCAPE is: " + borderSpaces[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "borderSpaces for INDEX_TWO_PANEL_LANDSCAPE is: " + borderSpaces[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "borderSpaces for INDEX_TWO_PANEL_PORTRAIT is: " + borderSpaces[INDEX_TWO_PANEL_PORTRAIT]);
 
             x = a.getFloat(R.styleable.ProfileDisplayOption_allAppsCellWidth,
                     minCellSize[INDEX_DEFAULT].x);
@@ -1410,10 +1402,6 @@ public class InvariantDeviceProfile {
             y = a.getFloat(R.styleable.ProfileDisplayOption_allAppsCellHeightTwoPanelLandscape,
                     allAppsCellSize[INDEX_DEFAULT].y);
             allAppsCellSize[INDEX_TWO_PANEL_LANDSCAPE] = new PointF(x, y);
-            Log.d("LC-IDP", "allAppsCellSize for INDEX_DEFAULT is: " + allAppsCellSize[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsCellSize for INDEX_LANDSCAPE is: " + allAppsCellSize[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsCellSize for INDEX_TWO_PANEL_LANDSCAPE is: " + allAppsCellSize[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsCellSize for INDEX_TWO_PANEL_PORTRAIT is: " + allAppsCellSize[INDEX_TWO_PANEL_PORTRAIT]);
 
             float allAppsBorderSpace = a.getFloat(
                     R.styleable.ProfileDisplayOption_allAppsBorderSpace, borderSpace);
@@ -1454,10 +1442,6 @@ public class InvariantDeviceProfile {
                     R.styleable.ProfileDisplayOption_allAppsBorderSpaceTwoPanelLandscapeVertical,
                     allAppsBorderSpaceTwoPanelLandscape);
             allAppsBorderSpaces[INDEX_TWO_PANEL_LANDSCAPE] = new PointF(x, y);
-            Log.d("LC-IDP", "allAppsBorderSpaces for INDEX_DEFAULT is: " + allAppsBorderSpaces[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsBorderSpaces for INDEX_LANDSCAPE is: " + allAppsBorderSpaces[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsBorderSpaces for INDEX_TWO_PANEL_LANDSCAPE is: " + allAppsBorderSpaces[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsBorderSpaces for INDEX_TWO_PANEL_PORTRAIT is: " + allAppsBorderSpaces[INDEX_TWO_PANEL_PORTRAIT]);
 
             iconSizes[INDEX_DEFAULT] =
                     a.getFloat(R.styleable.ProfileDisplayOption_iconImageSize, 0);
@@ -1470,10 +1454,6 @@ public class InvariantDeviceProfile {
             iconSizes[INDEX_TWO_PANEL_LANDSCAPE] =
                     a.getFloat(R.styleable.ProfileDisplayOption_iconSizeTwoPanelLandscape,
                             iconSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "iconSizes for INDEX_DEFAULT is: " + iconSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "iconSizes for INDEX_LANDSCAPE is: " + iconSizes[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "iconSizes for INDEX_TWO_PANEL_LANDSCAPE is: " + iconSizes[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "iconSizes for INDEX_TWO_PANEL_PORTRAIT is: " + iconSizes[INDEX_TWO_PANEL_PORTRAIT]);
 
             allAppsIconSizes[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_allAppsIconSize, iconSizes[INDEX_DEFAULT]);
@@ -1486,10 +1466,6 @@ public class InvariantDeviceProfile {
             allAppsIconSizes[INDEX_TWO_PANEL_LANDSCAPE] = a.getFloat(
                     R.styleable.ProfileDisplayOption_allAppsIconSizeTwoPanelLandscape,
                     allAppsIconSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsIconSizes for INDEX_DEFAULT is: " + allAppsIconSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsIconSizes for INDEX_LANDSCAPE is: " + allAppsIconSizes[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsIconSizes for INDEX_TWO_PANEL_LANDSCAPE is: " + allAppsIconSizes[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsIconSizes for INDEX_TWO_PANEL_PORTRAIT is: " + allAppsIconSizes[INDEX_TWO_PANEL_PORTRAIT]);
 
             textSizes[INDEX_DEFAULT] =
                     a.getFloat(R.styleable.ProfileDisplayOption_iconTextSize, 0);
@@ -1502,10 +1478,6 @@ public class InvariantDeviceProfile {
             textSizes[INDEX_TWO_PANEL_LANDSCAPE] =
                     a.getFloat(R.styleable.ProfileDisplayOption_iconTextSizeTwoPanelLandscape,
                             textSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "textSizes for INDEX_DEFAULT is: " + textSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "textSizes for INDEX_LANDSCAPE is: " + textSizes[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "textSizes for INDEX_TWO_PANEL_LANDSCAPE is: " + textSizes[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "textSizes for INDEX_TWO_PANEL_PORTRAIT is: " + textSizes[INDEX_TWO_PANEL_PORTRAIT]);
 
             allAppsIconTextSizes[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_allAppsIconTextSize, textSizes[INDEX_DEFAULT]);
@@ -1516,10 +1488,6 @@ public class InvariantDeviceProfile {
             allAppsIconTextSizes[INDEX_TWO_PANEL_LANDSCAPE] = a.getFloat(
                     R.styleable.ProfileDisplayOption_allAppsIconTextSizeTwoPanelLandscape,
                     allAppsIconTextSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsIconTextSizes for INDEX_DEFAULT is: " + allAppsIconTextSizes[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "allAppsIconTextSizes for INDEX_LANDSCAPE is: " + allAppsIconTextSizes[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsIconTextSizes for INDEX_TWO_PANEL_LANDSCAPE is: " + allAppsIconTextSizes[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "allAppsIconTextSizes for INDEX_TWO_PANEL_PORTRAIT is: " + allAppsIconTextSizes[INDEX_TWO_PANEL_PORTRAIT]);
 
             horizontalMargin[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_horizontalMargin, 0);
@@ -1545,10 +1513,6 @@ public class InvariantDeviceProfile {
             hotseatBarBottomSpace[INDEX_TWO_PANEL_PORTRAIT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatBarBottomSpaceTwoPanelPortrait,
                     hotseatBarBottomSpace[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "hotseatBarBottomSpace for INDEX_DEFAULT is: " + hotseatBarBottomSpace[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "hotseatBarBottomSpace for INDEX_LANDSCAPE is: " + hotseatBarBottomSpace[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "hotseatBarBottomSpace for INDEX_TWO_PANEL_LANDSCAPE is: " + hotseatBarBottomSpace[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "hotseatBarBottomSpace for INDEX_TWO_PANEL_PORTRAIT is: " + hotseatBarBottomSpace[INDEX_TWO_PANEL_PORTRAIT]);
 
             hotseatQsbSpace[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatQsbSpace,
@@ -1562,10 +1526,6 @@ public class InvariantDeviceProfile {
             hotseatQsbSpace[INDEX_TWO_PANEL_PORTRAIT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatQsbSpaceTwoPanelPortrait,
                     hotseatQsbSpace[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "hotseatQsbSpace for INDEX_DEFAULT is: " + hotseatQsbSpace[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "hotseatQsbSpace for INDEX_LANDSCAPE is: " + hotseatQsbSpace[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "hotseatQsbSpace for INDEX_TWO_PANEL_LANDSCAPE is: " + hotseatQsbSpace[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "hotseatQsbSpace for INDEX_TWO_PANEL_PORTRAIT is: " + hotseatQsbSpace[INDEX_TWO_PANEL_PORTRAIT]);
 
             transientTaskbarIconSize[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_transientTaskbarIconSize,
@@ -1579,10 +1539,6 @@ public class InvariantDeviceProfile {
             transientTaskbarIconSize[INDEX_TWO_PANEL_PORTRAIT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_transientTaskbarIconSizeTwoPanelPortrait,
                     transientTaskbarIconSize[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "transientTaskbarIconSize for INDEX_DEFAULT is: " + transientTaskbarIconSize[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "transientTaskbarIconSize for INDEX_LANDSCAPE is: " + transientTaskbarIconSize[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "transientTaskbarIconSize for INDEX_TWO_PANEL_LANDSCAPE is: " + transientTaskbarIconSize[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "transientTaskbarIconSize for INDEX_TWO_PANEL_PORTRAIT is: " + transientTaskbarIconSize[INDEX_TWO_PANEL_PORTRAIT]);
 
             startAlignTaskbar[INDEX_DEFAULT] = a.getBoolean(
                     R.styleable.ProfileDisplayOption_startAlignTaskbar, false);
@@ -1595,11 +1551,6 @@ public class InvariantDeviceProfile {
             startAlignTaskbar[INDEX_TWO_PANEL_PORTRAIT] = a.getBoolean(
                     R.styleable.ProfileDisplayOption_startAlignTaskbarTwoPanelPortrait,
                     startAlignTaskbar[INDEX_DEFAULT]);
-
-            Log.d("LC-IDP", "startAlignTaskbar for INDEX_DEFAULT is: " + startAlignTaskbar[INDEX_DEFAULT]);
-            Log.d("LC-IDP", "startAlignTaskbar for INDEX_LANDSCAPE is: " + startAlignTaskbar[INDEX_LANDSCAPE]);
-            Log.d("LC-IDP", "startAlignTaskbar for INDEX_TWO_PANEL_LANDSCAPE is: " + startAlignTaskbar[INDEX_TWO_PANEL_LANDSCAPE]);
-            Log.d("LC-IDP", "startAlignTaskbar for INDEX_TWO_PANEL_PORTRAIT is: " + startAlignTaskbar[INDEX_TWO_PANEL_PORTRAIT]);
 
             a.recycle();
         }
