@@ -14,10 +14,10 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10" // Don't ever update to 2.2.20
     id "com.google.devtools.ksp" version "2.2.10-2.0.2" // Don't ever update to 2.2.20
     id 'com.google.protobuf' version "0.9.5"
-    id 'app.cash.licensee' version "1.13.0"
+    id 'app.cash.licensee' version "1.14.1"
     id 'dev.rikka.tools.refine' version "4.4.0"
-    id 'com.diffplug.spotless' version '7.2.1' // Please don't try to upgrade this
-    id 'com.google.dagger.hilt.android' version '2.57.1' // Please don't try to upgrade this
+    id 'com.diffplug.spotless' version '8.0.0'
+    id 'com.google.dagger.hilt.android' version '2.57.2'
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -147,7 +147,7 @@ final def ciRunNumber = System.getenv("GITHUB_RUN_NUMBER") ?: ""
 final def isReleaseBuild = ciBuild && ciRef.contains("beta")
 final def devReleaseName = ciBuild ? "Dev.(#${ciRunNumber})" : "Dev.(${buildCommit})"
 final def version = "16"
-final def releaseName = "Development 2 Release 0"
+final def releaseName = "Development 3 Release 0"
 final def versionDisplayName = "${version}.${isReleaseBuild ? releaseName : devReleaseName}"
 final def majorVersion = versionDisplayName.split("\\.")[0]
 
@@ -158,10 +158,10 @@ android {
     namespace "com.android.launcher3"
     defaultConfig {
         /*
-         * Lawnchair Launcher 16.0 Development 2 Release 1
+         * Lawnchair Launcher 16.0 Development 3 Release 1
          * see CONTRIBUTING.md#versioning-scheme
          */
-        versionCode 16_00_01_02_01
+        versionCode 16_00_01_03_01
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
@@ -509,5 +509,5 @@ licensee {
     allowUrl("https://opensource.org/licenses/mit-license.php")
 
     bundleAndroidAsset = true
-//    androidAssetReportPath = 'licenses.json'
+    androidAssetReportPath = 'licenses.json'
 }
