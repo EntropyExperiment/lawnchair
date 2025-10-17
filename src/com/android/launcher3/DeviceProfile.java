@@ -67,6 +67,7 @@ import com.android.launcher3.responsive.ResponsiveCellSpecsProvider;
 import com.android.launcher3.responsive.ResponsiveSpec.Companion.ResponsiveSpecType;
 import com.android.launcher3.responsive.ResponsiveSpec.DimensionType;
 import com.android.launcher3.responsive.ResponsiveSpecsProvider;
+import com.android.launcher3.testing.shared.ResourceUtils;
 import com.android.launcher3.util.CellContentDimensions;
 import com.android.launcher3.util.DisplayController;
 import com.android.launcher3.util.DisplayController.Info;
@@ -434,6 +435,17 @@ public class DeviceProfile {
                 && inv.hotseatSpecsId != INVALID_RESOURCE_HANDLE
                 && inv.workspaceCellSpecsId != INVALID_RESOURCE_HANDLE
                 && inv.allAppsCellSpecsId != INVALID_RESOURCE_HANDLE;
+        
+        Log.d("LC-DP",
+            String.valueOf(inv.workspaceSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP", String.valueOf(inv.allAppsSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP", String.valueOf(inv.folderSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP", String.valueOf(inv.hotseatSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP",
+            String.valueOf(inv.workspaceCellSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP",
+            String.valueOf(inv.allAppsCellSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
+        Log.d("LC-DP", String.valueOf(inv.workspaceSpecsId));
 
         mIsScalableGrid = inv.isScalable && !isVerticalBarLayout() && !isMultiWindowMode;
         // Determine device posture.
@@ -1032,9 +1044,6 @@ public class DeviceProfile {
         hotseatQsbSpace += isLabelInDock ? (iconTextHeight / 2) : 0;
         
         int space = Math.abs(hotseatCellHeightPx / 2) - 16;
-        if (!isLabelInDock) {
-            space -= iconTextHeight;
-        }
 
         hotseatBarBottomSpacePx *= PreferenceExtensionsKt
             .firstBlocking(preferenceManager2.getHotseatBottomFactor());

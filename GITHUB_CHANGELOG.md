@@ -28,6 +28,7 @@ Compatibility list:
 * [Lawnchair] Reimplement Favorite application label
 * [Lawnchair] Hotseat positioning with favorite icon label enabled placed the same even if label is disabled
 * [Lawnchair] Hotseat background now have a reasonably sized margin compared to D2
+* [Lawnchair] Qsb sizing now correctly estimate the width based on workspace
 
 ### Development 2
 
