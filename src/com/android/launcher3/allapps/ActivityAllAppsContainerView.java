@@ -833,7 +833,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected int getHeaderColor(float blendRatio) {
-        var opacity = mSearchContainer.getAlpha();
+        float opacity = 0.0f;
         var showHeaderBackground = PreferenceExtensionsKt.firstBlocking(
             pref2.getAppDrawerSearchBarBackground());
         if (showHeaderBackground) {
