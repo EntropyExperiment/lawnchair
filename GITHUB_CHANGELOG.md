@@ -19,6 +19,9 @@ Compatibility list:
 > [!NOTE]
 > QuickSwitch compatibility have not been tested at any time during the development of Bubble Tea!
 
+#### Features
+* [Lawnchair] Complex Clover icon shape
+
 #### Fixes
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
 * [Lawnchair/Iconloaderlib] Reimplement custom app name

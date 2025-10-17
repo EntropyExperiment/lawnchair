@@ -470,6 +470,50 @@ open class IconShape(
     /**
      * Material 3 Expressive Shape
      */
+    object ComplexClover : IconShape(
+        // Placeholder
+        Corner.fullArc,
+        Corner.fullArc,
+        Corner.fullArc,
+        Corner.fullArc,
+    ) {
+        private val parsedPath: Path = PathParser.createPathFromPathData(ShapesProvider.FOLDER_COMPLEX_CLOVER_PATH)
+
+        private val matrix = Matrix()
+
+        override fun getMaskPath(): Path {
+            return Path().also { addToPath(it, 0f, 0f, 100f, 100f) }
+        }
+
+        override fun addToPath(
+            path: Path,
+            left: Float,
+            top: Float,
+            right: Float,
+            bottom: Float,
+            size: Float,
+            endSize: Float,
+            progress: Float,
+        ) {
+            matrix.reset()
+            val width = right - left
+            val height = bottom - top
+            matrix.setScale(width / 100f, height / 100f)
+            matrix.postTranslate(left, top)
+
+            val tempPath = Path(parsedPath)
+            tempPath.transform(matrix)
+            path.addPath(tempPath)
+        }
+
+        override fun toString(): String {
+            return "complexclover"
+        }
+    }
+
+    /**
+     * Material 3 Expressive Shape
+     */
     object FourSidedCookie : IconShape(
         // Placeholder
         Corner.fullArc,
@@ -620,6 +664,8 @@ open class IconShape(
             "hexagon" -> Hexagon
             "diamond" -> Diamond
             "egg" -> Egg
+            "clover" -> Clover
+            "complexclover" -> ComplexClover
             "foursidedcookie" -> FourSidedCookie
             "sevensidedcookie" -> SevenSidedCookie
             "arch" -> Arch
