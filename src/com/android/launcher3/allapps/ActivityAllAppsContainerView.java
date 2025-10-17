@@ -833,11 +833,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected int getHeaderColor(float blendRatio) {
+        var opacity = mSearchContainer.getAlpha();
         var showHeaderBackground = PreferenceExtensionsKt.firstBlocking(
             pref2.getAppDrawerSearchBarBackground());
-        
-        var opacity = 0.0f;
-        
         if (showHeaderBackground) {
             opacity = pref.getDrawerOpacity().get();
         }
@@ -849,7 +847,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
         return ColorUtils.setAlphaComponent(
                 ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
-                (int) (mSearchContainer.getAlpha() * 255));
+                (int) (opacity * 255));
     }
 
     /**
