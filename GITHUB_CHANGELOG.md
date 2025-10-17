@@ -24,6 +24,10 @@ Compatibility list:
 * [Lawnchair/Iconloaderlib] Reimplement custom app name
 * [Lawnchair] Reimplement Launcher3 debug page
 * [Lawnchair] Reimplement Caddy and App drawer folder
+* [Lawnchair] Reimplement Hotseat toggle
+* [Lawnchair] Reimplement Favorite application label
+* [Lawnchair] Hotseat positioning with favorite icon label enabled placed the same even if label is disabled
+* [Lawnchair] Hotseat background now have a reasonably sized margin compared to D2
 
 ### Development 2
 

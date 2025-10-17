@@ -1024,20 +1024,39 @@ public class DeviceProfile {
 
     /** Updates hotseatCellHeightPx and hotseatBarSizePx */
     private void updateHotseatSizes(int hotseatIconSizePx) {
+        int iconTextHeight = Utilities.calculateTextHeight(iconTextSizePx);
+        boolean isLabelInDock = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableLabelInDock());
         // Ensure there is enough space for folder icons, which have a slightly larger radius.
-        hotseatCellHeightPx = getIconSizeWithOverlap(hotseatIconSizePx);
+        hotseatCellHeightPx = getIconSizeWithOverlap(hotseatIconSizePx * 2) - hotseatIconSizePx / 2;
+        hotseatCellHeightPx += isLabelInDock ? iconTextHeight : 0;
+        hotseatQsbSpace += isLabelInDock ? (iconTextHeight / 2) : 0;
+        
+        int space = Math.abs(hotseatCellHeightPx / 2) - 16;
+        if (!isLabelInDock) {
+            space -= iconTextHeight;
+        }
+
+        hotseatBarBottomSpacePx *= PreferenceExtensionsKt
+            .firstBlocking(preferenceManager2.getHotseatBottomFactor());
 
         if (isVerticalBarLayout()) {
             hotseatBarSizePx = hotseatIconSizePx + mHotseatBarEdgePaddingPx
-                    + mHotseatBarWorkspaceSpacePx;
+                    + mHotseatBarWorkspaceSpacePx
+                    + space;
         } else if (isQsbInline) {
             hotseatBarSizePx = Math.max(hotseatIconSizePx, hotseatQsbVisualHeight)
-                    + hotseatBarBottomSpacePx;
+                    + hotseatBarBottomSpacePx
+                    + space;
         } else {
             hotseatBarSizePx = hotseatIconSizePx
                     + hotseatQsbSpace
                     + hotseatQsbVisualHeight
-                    + hotseatBarBottomSpacePx;
+                    + hotseatBarBottomSpacePx
+                    + space;
+        }
+        var isHotseatEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.isHotseatEnabled());
+        if (!isHotseatEnabled) {
+            hotseatBarSizePx = 0;
         }
     }
 
