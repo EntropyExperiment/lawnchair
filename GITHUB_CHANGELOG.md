@@ -33,6 +33,7 @@ Compatibility list:
 * [Lawnchair] Hotseat background now have a reasonably sized margin compared to D2
 * [Lawnchair] Qsb sizing now correctly estimate the width based on width of the app/widget layout or DeviceProfile on device with inlined Qsb
 * [Lawnchair] Reimplement Allapps opacity configuration
+* [DeviceProfile] Crash from createWindowContext on less than Android 12.0
 
 ### Development 2
 

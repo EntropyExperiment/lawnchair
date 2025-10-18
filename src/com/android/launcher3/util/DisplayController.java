@@ -24,6 +24,7 @@ import static com.android.launcher3.InvariantDeviceProfile.TYPE_PHONE;
 import static com.android.launcher3.InvariantDeviceProfile.TYPE_TABLET;
 import static com.android.launcher3.LauncherPrefs.TASKBAR_PINNING;
 import static com.android.launcher3.LauncherPrefs.TASKBAR_PINNING_KEY;
+import static com.android.launcher3.Utilities.ATLEAST_S;
 import static com.android.launcher3.Utilities.dpiFromPx;
 import static com.android.launcher3.LauncherPrefs.TASKBAR_PINNING_DESKTOP_MODE_KEY;
 import static com.android.launcher3.LauncherPrefs.TASKBAR_PINNING_IN_DESKTOP_MODE;
@@ -454,7 +455,12 @@ public class DisplayController implements DesktopVisibilityListener {
                     String.format("getOrCreatePerDisplayInfo - no cached value found for %d",
                             displayId));
         }
-        Context windowContext = mAppContext.createWindowContext(display, TYPE_APPLICATION, null);
+        Context windowContext;
+        if (ATLEAST_S) {
+            windowContext = mAppContext.createWindowContext(display, TYPE_APPLICATION, null);
+        } else {
+            windowContext = mAppContext.createDisplayContext(display);
+        }
         Info info = new Info(windowContext, mWMProxy,
                 mWMProxy.estimateInternalDisplayBounds(windowContext));
         perDisplayInfo = new PerDisplayInfo(displayId, windowContext, info);
