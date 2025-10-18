@@ -36,6 +36,7 @@ Compatibility list:
 * [DeviceProfile] Crash from createWindowContext on less than Android 12.0
 * [QuickstepLauncher] Ignore trying to set SystemUiProxy icon sizes on less than Android 12.1
 * [Lawnchair/BlankActivity] Apply Material 3 Expressive button animations
+* [Launcher] Disable add widget button if home screen is locked
 
 ### Development 2
 
