@@ -470,6 +470,50 @@ open class IconShape(
     /**
      * Material 3 Expressive Shape
      */
+    object VerySunny : IconShape(
+        // Placeholder
+        Corner.fullArc,
+        Corner.fullArc,
+        Corner.fullArc,
+        Corner.fullArc,
+    ) {
+        private val parsedPath: Path = PathParser.createPathFromPathData("M42.3337 4.6379C45.5777 -0.914451 53.4223 -0.914461 56.6663 4.6379L60.3144 10.882C62.2063 14.12 65.9414 15.7068 69.5115 14.7892L76.396 13.0198C82.5178 11.4463 88.0648 17.1355 86.5307 23.4143L84.8055 30.4753C83.9108 34.137 85.4579 37.9679 88.615 39.9082L94.703 43.6499C100.117 46.977 100.117 55.0228 94.703 58.35L88.615 62.0917C85.4579 64.032 83.9108 67.8629 84.8055 71.5246L86.5307 78.5856C88.0648 84.8644 82.5178 90.5536 76.396 88.9801L69.5115 87.2107C65.9414 86.2931 62.2063 87.8798 60.3144 91.1179L56.6663 97.362C53.4223 102.914 45.5777 102.914 42.3337 97.362L38.6856 91.1179C36.7937 87.8798 33.0586 86.2931 29.4884 87.2107L22.604 88.9801C16.4822 90.5536 10.9352 84.8644 12.4693 78.5856L14.1945 71.5246C15.0892 67.8629 13.5421 64.032 10.3849 62.0917L4.29698 58.35C-1.11657 55.0229 -1.11658 46.9771 4.29697 43.6499L10.3849 39.9082C13.5421 37.9679 15.0892 34.137 14.1945 30.4753L12.4693 23.4143C10.9352 17.1355 16.4822 11.4463 22.604 13.0197L29.4884 14.7892C33.0586 15.7068 36.7937 14.12 38.6856 10.882L42.3337 4.6379Z")
+
+        private val matrix = Matrix()
+
+        override fun getMaskPath(): Path {
+            return Path().also { addToPath(it, 0f, 0f, 100f, 100f) }
+        }
+
+        override fun addToPath(
+            path: Path,
+            left: Float,
+            top: Float,
+            right: Float,
+            bottom: Float,
+            size: Float,
+            endSize: Float,
+            progress: Float,
+        ) {
+            matrix.reset()
+            val width = right - left
+            val height = bottom - top
+            matrix.setScale(width / 100f, height / 100f)
+            matrix.postTranslate(left, top)
+
+            val tempPath = Path(parsedPath)
+            tempPath.transform(matrix)
+            path.addPath(tempPath)
+        }
+
+        override fun toString(): String {
+            return "verysunny"
+        }
+    }
+
+    /**
+     * Material 3 Expressive Shape
+     */
     object ComplexClover : IconShape(
         // Placeholder
         Corner.fullArc,
@@ -664,6 +708,7 @@ open class IconShape(
             "hexagon" -> Hexagon
             "diamond" -> Diamond
             "egg" -> Egg
+            "verysunny" -> VerySunny
             "complexclover" -> ComplexClover
             "foursidedcookie" -> FourSidedCookie
             "sevensidedcookie" -> SevenSidedCookie
