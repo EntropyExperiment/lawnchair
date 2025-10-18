@@ -34,6 +34,7 @@ Compatibility list:
 * [Lawnchair] Qsb sizing now correctly estimate the width based on width of the app/widget layout or DeviceProfile on device with inlined Qsb
 * [Lawnchair] Reimplement Allapps opacity configuration
 * [DeviceProfile] Crash from createWindowContext on less than Android 12.0
+* [QuickstepLauncher] Ignore trying to set SystemUiProxy icon sizes on less than Android 12.1
 
 ### Development 2
 

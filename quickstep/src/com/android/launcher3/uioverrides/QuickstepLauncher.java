@@ -38,6 +38,7 @@ import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.LauncherState.OVERVIEW_MODAL_TASK;
 import static com.android.launcher3.LauncherState.OVERVIEW_SPLIT_SELECT;
 import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
+import static com.android.launcher3.Utilities.ATLEAST_S_V2;
 import static com.android.launcher3.Utilities.ATLEAST_T;
 import static com.android.launcher3.Utilities.isRtl;
 import static com.android.launcher3.compat.AccessibilityManagerCompat.sendCustomAccessibilityEvent;
@@ -737,8 +738,10 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
         } catch (Throwable t) {
             mDeviceProfile.isPredictiveBackSwipe = false;
         }
-        if (ret) {
-            SystemUiProxy.INSTANCE.get(this).setLauncherAppIconSize(mDeviceProfile.iconSizePx);
+        if (ATLEAST_S_V2) {
+            if (ret) {
+                SystemUiProxy.INSTANCE.get(this).setLauncherAppIconSize(mDeviceProfile.iconSizePx);
+            }
         }
         return ret;
     }
