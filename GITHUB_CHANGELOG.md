@@ -38,8 +38,9 @@ Compatibility list:
 * [QuickstepLauncher] Ignore trying to set SystemUiProxy icon sizes on less than Android 12.1
 * [Lawnchair/BlankActivity] Apply Material 3 Expressive button animations
 * [Launcher] Disable add widget button if home screen is locked
+* [Lawnchair/Iconloaderlib] Crash when trying to set `null` monochrome icon on less than Android 12.1
 
-### Development 2
+### 🥞 Development 2
 
 Originally going to launch D2 if most of the comestic bug fixes have been resolved, but hit a 
 stability milestone instead.
@@ -133,7 +134,7 @@ Compatibility list:
 * (Investigating) Work profile switch on widget selector *may* have reverted to Lawnchair 15 style
 * Full lists: https://trello.com/b/8IdvO81K/pe-lawnchair
 
-### 🥞 Development 1
+### Development 1
 
 First development milestone! Basic launcher functionality should be stable enough.
 
