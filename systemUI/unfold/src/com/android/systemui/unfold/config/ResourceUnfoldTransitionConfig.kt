@@ -57,7 +57,7 @@ class ResourceUnfoldTransitionConfig @Inject constructor() : UnfoldTransitionCon
                 .getIdentifier("config_unfoldTransitionHalfFoldedTimeout", "integer", "android")
             Resources.getSystem().getInteger(id)
         } catch (_: Resources.NotFoundException) {
-            0
+            1000
         }
     }
 }
