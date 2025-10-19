@@ -87,10 +87,11 @@
     <string name="grid">Raster</string>
     <string name="layout">Layout</string>
     <!-- Generic styling options -->
-    <string name="show_wallpaper">Show wallpaper</string>
+    <string name="show_wallpaper">Hintergrundbild anzeigen</string>
     <string name="wallpaper">Hintergrund</string>
     <string name="style">Stil</string>
     <string name="background_opacity">Hintergrundtransparenz</string>
+    <string name="pref_all_apps_search_bar_background">Abgegrenzter Suchleisten-Hintergrund</string>
     <!-- Toast text and tips -->
     <string name="copied_toast">In Zwischenablage kopiert</string>
     <string name="calculator_search_result_copied_toast">Ergebnis in Zwischenablage kopiert</string>
@@ -222,8 +223,8 @@
     <string name="icon_shape_squircle">Quadreis</string>
     <string name="icon_shape_teardrop">Tropfen</string>
     <!-- Icon shape (Material 3 Expressive) -->
-    <string name="icon_shape_four_sided_cookie">Four-sided cookie</string>
-    <string name="icon_shape_seven_sided_cookie">Seven-sided cookie</string>
+    <string name="icon_shape_four_sided_cookie">Vierseitiges Cookie</string>
+    <string name="icon_shape_seven_sided_cookie">Siebseitiges Cookie</string>
     <string name="icon_shape_arch">Arch</string>
     <!-- Custom icon shapes -->
     <string name="custom_icon_shape">Eigene Symbolform</string>
@@ -373,8 +374,8 @@
     <string name="legal">Rechtliches</string>
     <string name="acknowledgements">Danksagungen</string>
     <string name="privacy_policy">Datenschutzerklärung</string>
-    <string name="contributor_status_active">Active</string>
-    <string name="update_check_failed">Failed to check for updates</string>
+    <string name="contributor_status_active">Aktiv</string>
+    <string name="update_check_failed">Fehler bei der Suche nach Updates</string>
     <!--
 
     Backup and restore
@@ -608,7 +609,7 @@
     <string name="search_algorithm_global_search_via_asi">Globale Suche (über ASI)</string>
     <string name="custom_search_label">Suchmaschinen-Name</string>
     <string name="custom_search_url">Suchmaschinen-URL</string>
-    <string name="custom_search_suggestions_url">Benutzerdefinierte Suchvorschläge-URL</string>
+    <string name="custom_search_suggestions_url">URL für Suchvorschläge</string>
     <string name="custom_search_input_hint">&#37;s wird durch den Suchbegriff ersetzt</string>
     <string name="custom_search_suggestions_hint">&#37;s wird durch die Suchanfrage ersetzt. Ergebnisse müssen im JSON OpenSearch Format sein.</string>
     <!-- Labels of each search result types -->

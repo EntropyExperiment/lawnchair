@@ -34,7 +34,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 21
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Write sign info
         id: sign-release-apk
         if: github.repository_owner == 'LawnchairLauncher'
@@ -51,7 +51,7 @@ jobs:
       - name: Rename artifact
         run: mv build/outputs/apk/**/**/*.apk "${{ github.event.inputs.artifactName }}"
       - name: Attest
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-path: ${{ github.event.inputs.artifactName }}
       - name: Upload artifact
@@ -92,7 +92,7 @@ jobs:
         with:
           name: Release APK
           path: artifacts/release-apk
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.x
       - name: Install Python packages

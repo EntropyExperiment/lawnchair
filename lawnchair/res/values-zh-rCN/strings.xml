@@ -42,19 +42,19 @@
     <string name="deselect_all">取消全选</string>
     <string name="inverse_selection">逆向全选</string>
     <string name="loading">正在加载…</string>
-    <string name="dismiss">Dismiss</string>
+    <string name="dismiss">撤销</string>
     <string name="download_update">下载更新</string>
     <string name="install_update">安装更新</string>
-    <string name="view_changes">View changes</string>
+    <string name="view_changes">查看更新</string>
     <string name="pro_updated">你已经是最新版！</string>
     <!-- Changes dialog strings -->
-    <string name="changes_dialog_title">Updates</string>
+    <string name="changes_dialog_title">更新</string>
     <string name="changes_dialog_error">Failed to load changes</string>
-    <string name="changes_dialog_no_changes">No changes found</string>
+    <string name="changes_dialog_no_changes">没有发现更改</string>
     <string name="changes_dialog_build_format">Build #%1$d → #%2$d</string>
     <string name="changes_dialog_commit_info">by %1$s • %2$s • %3$s</string>
     <!-- Time ago strings -->
-    <string name="time_just_now">just now</string>
+    <string name="time_just_now">现在</string>
     <string name="time_minutes_ago">%dm</string>
     <string name="time_hours_ago">%dh</string>
     <string name="time_days_ago">%dd</string>
@@ -87,10 +87,11 @@
     <string name="grid">网格</string>
     <string name="layout">布局</string>
     <!-- Generic styling options -->
-    <string name="show_wallpaper">Show wallpaper</string>
+    <string name="show_wallpaper">显示壁纸</string>
     <string name="wallpaper">壁纸</string>
     <string name="style">样式</string>
     <string name="background_opacity">背景不透明度</string>
+    <string name="pref_all_apps_search_bar_background">Separated Search bar background</string>
     <!-- Toast text and tips -->
     <string name="copied_toast">已复制到剪贴板</string>
     <string name="calculator_search_result_copied_toast">内容已经复制到粘贴板</string>
@@ -367,7 +368,7 @@
     <string name="quickswitch_maintenance">QuickSwitch 维护</string>
     <string name="devops">运维</string>
     <string name="support_and_pr">支持和PR</string>
-    <string name="community">Community</string>
+    <string name="community">社区</string>
     <string name="telegram">Telegram</string>
     <string name="news">新闻</string>
     <string name="legal">Legal</string>
@@ -607,7 +608,7 @@
     <string name="search_algorithm_global_search_via_asi">全局搜索 (通过 ASI)</string>
     <string name="custom_search_label">Search engine name</string>
     <string name="custom_search_url">Search engine URL</string>
-    <string name="custom_search_suggestions_url">Dearch suggestions URL</string>
+    <string name="custom_search_suggestions_url">Search suggestions URL</string>
     <string name="custom_search_input_hint">&#37;s 将被替换为搜索内容</string>
     <string name="custom_search_suggestions_hint">&#37;s will be replaced with the search query. Results must be in JSON OpenSearch format.</string>
     <!-- Labels of each search result types -->
@@ -656,20 +657,20 @@
     <string name="permissions_photos_videos_manage_selected">Manage selected items</string>
     <!-- External storage -->
     <string name="permissions_external_storage">External storage access needed</string>
-    <string name="permissions_external_storage_description">To search your files, <xliff:g id="name" example="My App">%1$s</xliff:g> needs permission to access your device\'s external storage.</string>
+    <string name="permissions_external_storage_description">为了搜索文件，<xliff:g id="name" example="My App">%1$s</xliff:g> 需要拥有访问您设备外部存储的权限。</string>
     <string name="permissions_manage_storage">Manage storage access needed</string>
-    <string name="permissions_manage_storage_description">To display your files in search results, <xliff:g id="name" example="My App">%1$s</xliff:g> requires permission to manage all files on your device. This permission is used solely to list files and will not be used to read or change the content of your personal files.</string>
-    <string name="permission_desc_wallpaper_base">To display wallpaper previews and include them in backups, <xliff:g id="name" example="My App">%1$s</xliff:g> requires permission %2$s. This is due to system limitations for accessing wallpaper data.</string>
-    <string name="permission_desc_ending_read_all_files">to read all files on your device</string>
-    <string name="permission_desc_ending_manage_all_files">to manage all files on your device</string>
-    <string name="permission_desc_wallpaper_multiple">Multiple permissions needed</string>
-    <string name="permission_desc_wallpaper_multiple_desc">To display wallpaper previews and include them in backups, <xliff:g id="name" example="My App">%1$s</xliff:g> requires the following permissions. This is due to system limitations for accessing wallpaper data.</string>
-    <string name="permission_label_manage_all_files">Manage all files on device</string>
-    <string name="permission_label_read_photos_videos">Read photos and videos</string>
-    <string name="manage_storage_access_denied_title">Cannot enable manage storage access</string>
-    <string name="manage_storage_access_denied_description">Due to Play Store policy, <xliff:g id="name" example="My App">%1$s</xliff:g> cannot request full storage access here. To access all files, please download <xliff:g id="name" example="My App">%1$s</xliff:g> from GitHub. Alternatively, you can grant access to photos, videos, and audio files individually in settings.</string>
+    <string name="permissions_manage_storage_description">为了在搜索结果中显示你的文件，<xliff:g id="name" example="My App">%1$s</xliff:g> 需要拥有管理您设备上所有文件的权限。这一权限只用于列出文件，而不用于读取或更改您的文件。</string>
+    <string name="permission_desc_wallpaper_base">为了显示壁纸预览并将其包含于备份中，<xliff:g id="name" example="My App">%1$s</xliff:g> 需要 %2$s 权限。这是由于系统对访问壁纸数据的限制。</string>
+    <string name="permission_desc_ending_read_all_files">为了读取设备上所有的文件</string>
+    <string name="permission_desc_ending_manage_all_files">为了管理设备上所有的文件</string>
+    <string name="permission_desc_wallpaper_multiple">需要多个权限</string>
+    <string name="permission_desc_wallpaper_multiple_desc">为了显示壁纸预览并将其包含于备份中，<xliff:g id="name" example="My App">%1$s</xliff:g> 需要下列权限。这是由于系统对访问壁纸数据的限制。</string>
+    <string name="permission_label_manage_all_files">管理设备上所有的文件</string>
+    <string name="permission_label_read_photos_videos">读取照片和视频</string>
+    <string name="manage_storage_access_denied_title">无法启用存储管理权限</string>
+    <string name="manage_storage_access_denied_description">由于 Play 商店政策，<xliff:g id="name" example="My App">%1$s</xliff:g> 不能在此请求完整的存储访问权。要访问所有文件，请从 GitHub 下载 <xliff:g id="name" example="My App">%1$s</xliff:g>。或者，你可以在设置里分别授权访问图片、视频和音频文件。</string>
     <string name="open_permission_settings">打开设置</string>
     <string name="grant_requested_permissions">授予权限</string>
-    <string name="permissions_needed">Permissions needed</string>
-    <string name="grant_requested_permissions_tap">Tap to grant permissions</string>
+    <string name="permissions_needed">需要权限</string>
+    <string name="grant_requested_permissions_tap">点击此处授权</string>
 </resources>
