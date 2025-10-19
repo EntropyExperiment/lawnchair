@@ -22,26 +22,42 @@ import javax.inject.Singleton
 class ResourceUnfoldTransitionConfig @Inject constructor() : UnfoldTransitionConfig {
 
     override val isEnabled: Boolean by lazy {
-        val id = Resources.getSystem()
-            .getIdentifier("config_unfoldTransitionEnabled", "bool", "android")
-        Resources.getSystem().getBoolean(id)
+        try {
+            val id = Resources.getSystem()
+                .getIdentifier("config_unfoldTransitionEnabled", "bool", "android")
+            Resources.getSystem().getBoolean(id)
+        } catch (_: Resources.NotFoundException) {
+            false
+        }
     }
 
     override val isHingeAngleEnabled: Boolean by lazy {
-        val id = Resources.getSystem()
-            .getIdentifier("config_unfoldTransitionHingeAngle", "bool", "android")
-        Resources.getSystem().getBoolean(id)
+        try {
+            val id = Resources.getSystem()
+                .getIdentifier("config_unfoldTransitionHingeAngle", "bool", "android")
+            Resources.getSystem().getBoolean(id)
+        } catch (_: Resources.NotFoundException) {
+            false
+        }
     }
 
     override val isHapticsEnabled: Boolean by lazy {
-        val id = Resources.getSystem()
-            .getIdentifier("config_unfoldTransitionHapticsEnabled", "bool", "android")
-        Resources.getSystem().getBoolean(id)
+        try {
+            val id = Resources.getSystem()
+                .getIdentifier("config_unfoldTransitionHapticsEnabled", "bool", "android")
+            Resources.getSystem().getBoolean(id)
+        } catch (_: Resources.NotFoundException) {
+            false
+        }
     }
 
     override val halfFoldedTimeoutMillis: Int by lazy {
-        val id = Resources.getSystem()
-            .getIdentifier("config_unfoldTransitionHalfFoldedTimeout", "integer", "android")
-        Resources.getSystem().getInteger(id)
+        try {
+            val id = Resources.getSystem()
+                .getIdentifier("config_unfoldTransitionHalfFoldedTimeout", "integer", "android")
+            Resources.getSystem().getInteger(id)
+        } catch (_: Resources.NotFoundException) {
+            0
+        }
     }
 }

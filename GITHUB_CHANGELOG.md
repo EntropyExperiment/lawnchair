@@ -39,6 +39,7 @@ Compatibility list:
 * [Lawnchair/BlankActivity] Apply Material 3 Expressive button animations
 * [Launcher] Disable add widget button if home screen is locked
 * [Lawnchair/Iconloaderlib] Crash when trying to set `null` monochrome icon on less than Android 12.1
+* [SystemUI/Unfold] Crash when getting configuration for foldable-specific resources
 
 ### 🥞 Development 2
 
