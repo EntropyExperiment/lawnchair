@@ -54,7 +54,7 @@ baselineprofile = "1.4.0"
 ksp = "2.1.10-1.0.31"
 kotlin = "2.1.10"
 protobuf = "0.9.5"
-licensee = "1.13.0"
+licensee = "1.14.1"
 refine = "4.4.0"
 spotless = "7.2.1"
 
