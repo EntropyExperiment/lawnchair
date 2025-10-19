@@ -10,10 +10,11 @@ Compatibility list:
 
 | 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
 |-------------|---------------------|--------------------|
-| Android 8.1 | Android 12.0        | Android 12.1       |
-| Android 9   |                     | Android 13         |
-| Android 10  |                     | Android 14         |
-| Android 11  |                     | Android 15         |
+| Android 8.1 |                     | Android 12.0       |
+| Android 9   |                     | Android 12.1       |
+| Android 10  |                     | Android 13         |
+| Android 11  |                     | Android 14         |
+|             |                     | Android 15         |
 |             |                     | Android 16         |
 
 > [!NOTE]
@@ -40,6 +41,7 @@ Compatibility list:
 * [Launcher] Disable add widget button if home screen is locked
 * [Lawnchair/Iconloaderlib] Crash when trying to set `null` monochrome icon on less than Android 12.1
 * [SystemUI/Unfold] Crash when getting configuration for foldable-specific resources
+* [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
 
 ### 🥞 Development 2
 
