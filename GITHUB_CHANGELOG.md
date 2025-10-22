@@ -4,7 +4,10 @@ older (i.e., Lawnchair `15-dev`).
 ### 🏗️ Development 3 (Draft)
 
 This release have been tested with:
+* ☁️ Pixel 6 (Android 12.0)
 * 📱 Nothing (3a)-series (Android 15)
+* 📱 Vivo Y21 (Android 12.0)
+* 📱 HTC Wildfire E3 lite (Android 12.0)
 
 Compatibility list:
 

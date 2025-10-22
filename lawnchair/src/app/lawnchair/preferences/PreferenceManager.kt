@@ -31,6 +31,7 @@ import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
+import com.android.quickstep.RecentsModel
 import javax.inject.Inject
 
 @LauncherAppSingleton
@@ -39,7 +40,8 @@ class PreferenceManager @Inject constructor(
 ) : BasePreferenceManager(context),
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
-    private val reloadIcons = { idp.onPreferencesChanged(context) }
+    private val mRecentsModel get() = RecentsModel.INSTANCE.get(context)
+    private val reloadIcons: () -> Unit = { mRecentsModel.onThemeChanged() }
     private val reloadGrid: () -> Unit = { idp.onPreferencesChanged(context) }
 
     private val recreate = {
@@ -61,7 +63,7 @@ class PreferenceManager @Inject constructor(
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
     val drawerOpacity = FloatPref("pref_drawerOpacity", 1F, recreate)
-    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 0.9F, recreate)
+    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F, recreate)
     val feedProvider = StringPref("pref_feedProvider", "")
     val ignoreFeedWhitelist = BoolPref("pref_ignoreFeedWhitelist", false)
     val launcherTheme = StringPref("pref_launcherTheme", "system")

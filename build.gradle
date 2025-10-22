@@ -4,20 +4,19 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'com.android.application' version "8.13.0"
-    id 'com.android.library' version "8.13.0" apply false
-    id 'com.android.test' version '8.13.0' apply false
-    id 'androidx.baselineprofile' version '1.4.1'
-    id 'org.jetbrains.kotlin.android' version "2.2.10" // Don't ever update to 2.2.20
-    id 'org.jetbrains.kotlin.plugin.compose' version "2.2.10" // Don't ever update to 2.2.20
-    id 'org.jetbrains.kotlin.plugin.parcelize' version "2.2.10" // Don't ever update to 2.2.20
-    id 'org.jetbrains.kotlin.plugin.serialization' version "2.2.10" // Don't ever update to 2.2.20
-    id "com.google.devtools.ksp" version "2.2.10-2.0.2" // Don't ever update to 2.2.20
-    id 'com.google.protobuf' version "0.9.5"
-    id 'app.cash.licensee' version "1.14.1"
-    id 'dev.rikka.tools.refine' version "4.4.0"
-    id 'com.diffplug.spotless' version '8.0.0'
-    id 'com.google.dagger.hilt.android' version '2.57.2'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.androidx.baselineprofile)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.protobuf)
+    alias(libs.plugins.cash.licensee)
+    alias(libs.plugins.rikka.refine)
+    alias(libs.plugins.diffplug.spotless)
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -59,11 +58,10 @@ allprojects {
     }
 
     plugins.withId('com.google.protobuf') {
-        def protocVersion = '4.33.0'
         protobuf {
             // Configure the protoc executable
             protoc {
-                artifact = "com.google.protobuf:protoc:${protocVersion}"
+                artifact = "com.google.protobuf:protoc:${libs.versions.protocVersion.get()}"
             }
             generateProtoTasks {
                 all().configureEach { task ->
@@ -469,6 +467,10 @@ dependencies {
         exclude group: "com.github.skydoves", module: "balloon"
     }
 
+    implementation libs.hoko.blur
+
+    implementation libs.androidx.window
+
     debugImplementation libs.leakcanary.android
 }
 
@@ -502,8 +504,8 @@ licensee {
     allow(SpdxId.Apache_20)
     allow(SpdxId.BSD_3_Clause)
     allow(SpdxId.GPL_20_or_later)
-    allowDependency("com.github.topjohnwu.libsu", "core", "6.0.0")
-    allowDependency("com.github.topjohnwu.libsu", "service", "6.0.0")
+    allowDependency(libs.libsu.core)
+    allowDependency(libs.libsu.service)
     allowUrl("https://github.com/patrykmichalik/opto/blob/master/LICENSE")
     allowUrl("https://github.com/RikkaApps/HiddenApiRefinePlugin/blob/main/LICENSE")
     allowUrl("https://opensource.org/licenses/mit-license.php")
