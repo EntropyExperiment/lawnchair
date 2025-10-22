@@ -26,7 +26,6 @@ import com.android.launcher3.util.window.WindowManagerProxy
 import javax.inject.Inject
 import kotlin.math.max
 
-
 @Keep
 @LauncherAppSingleton
 class LawnchairWindowManagerProxy @Inject constructor() : WindowManagerProxy(Utilities.ATLEAST_T) {

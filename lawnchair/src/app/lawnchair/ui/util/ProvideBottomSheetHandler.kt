@@ -57,6 +57,7 @@ val bottomSheetHandler: BottomSheetHandler
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProvideBottomSheetHandler(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -111,7 +112,7 @@ fun ProvideBottomSheetHandler(
         val animatedFraction by animateFloatAsState(
             targetValue = rawFraction,
             animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
-            label = "BottomSheetBlurFraction"
+            label = "BottomSheetBlurFraction",
         )
 
         // See R.dimen.max_depth_blur_radius_enhanced
@@ -122,7 +123,7 @@ fun ProvideBottomSheetHandler(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .blur(blur)
+                    .blur(blur),
             ) {
                 content()
             }
@@ -131,7 +132,7 @@ fun ProvideBottomSheetHandler(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = scrimAlpha))
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = scrimAlpha)),
                 )
             }
         }
