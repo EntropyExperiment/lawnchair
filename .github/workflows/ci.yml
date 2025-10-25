@@ -51,9 +51,8 @@ jobs:
             echo storeFile='${{ github.workspace }}/key.jks' >> keystore.properties
             echo ${{ secrets.KEYSTORE }} | base64 --decode > ${{ github.workspace }}/key.jks
           fi
-        # pE-TODO(KLuQ83eJ): This fail CI, Kotlin daemon is unresponsive in GitHub CI for no reason.
       - name: Build debug APK
-        run: ./gradlew assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug --no-configuration-cache
+        run: ./gradlew assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug assembleLawnWithQuickstepNightlyRelease --no-configuration-cache
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:

@@ -49,6 +49,7 @@ Compatibility list:
 * [SystemUI/Unfold] Crash when getting configuration for foldable-specific resources
 * [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
 * [Launcher3/AllApps] Allow theming of Expressive allapps
+* [Lawnchair] Lawnchair can now be compiled in release mode
 
 ### 🥞 Development 2
 
