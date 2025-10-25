@@ -33,7 +33,7 @@ import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.animation.ArgbEvaluator // Lawnchair-TODO: Use android.animation.ArgbEvaluator ?
+import androidx.core.animation.ArgbEvaluator
 import com.android.launcher3.R
 import com.android.launcher3.popup.RoundedArrowDrawable
 import com.android.wm.shell.shared.TypefaceUtils
