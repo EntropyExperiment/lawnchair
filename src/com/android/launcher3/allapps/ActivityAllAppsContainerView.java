@@ -333,12 +333,10 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 0 // Bottom left
         };
         if (Flags.allAppsBlur()) {
-            // Lawnchair-TODO-Colour: ExpressiveAllApps
-            // int resId = ColorTokens.ExpressiveAllApps.resolveColor(getContext());
-            int resId = Utilities.isDarkTheme(getContext())
-                ? android.R.color.system_accent1_800 : android.R.color.system_accent1_100;
-            int layerAbove = ColorUtils.setAlphaComponent(getResources().getColor(resId, null),
-                    (int) (0.4f * 255));
+            // LC: Return int color value directly, not a resource ID for custom colours
+            int baseColor = ColorTokens.ExpressiveAllApps.resolveColor(getContext());
+
+            int layerAbove = ColorUtils.setAlphaComponent(baseColor, (int) (0.4f * 255));
             int layerBelow = ColorUtils.setAlphaComponent(Color.WHITE, (int) (0.1f * 255));
             mBottomSheetBackgroundColor = ColorUtils.compositeColors(layerAbove, layerBelow);
         } else {

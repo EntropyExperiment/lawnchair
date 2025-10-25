@@ -48,6 +48,7 @@ Compatibility list:
 * [Lawnchair/Iconloaderlib] Crash when trying to set `null` monochrome icon on less than Android 12.1
 * [SystemUI/Unfold] Crash when getting configuration for foldable-specific resources
 * [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
+* [Launcher3/AllApps] Allow theming of Expressive allapps
 
 ### 🥞 Development 2
 
