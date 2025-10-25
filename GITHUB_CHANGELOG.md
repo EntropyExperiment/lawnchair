@@ -26,6 +26,7 @@ Compatibility list:
 #### Features
 * [Lawnchair] Complex Clover icon shape
 * [Lawnchair] Very Sunny icon shape
+* [Lawnchair/About] Reduce image size from 170kb to 22kb (around 13% of original size)
 
 #### Fixes
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
