@@ -8,6 +8,7 @@ import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
@@ -81,7 +82,10 @@ class LauncherPreviewView(
         LauncherAppState.getInstance(appContext).model.loadAsync { dataModel ->
             if (dataModel != null) {
                 MAIN_EXECUTOR.execute {
-                    val inflationContext = ContextThemeWrapper(context, Themes.getActivityThemeRes(context))
+                    val display = appContext.getSystemService(WindowManager::class.java).defaultDisplay
+                    val themeContext = ContextThemeWrapper(context, Themes.getActivityThemeRes(context))
+
+                    val inflationContext = themeContext.createDisplayContext(display)
                     renderView(inflationContext, dataModel, widgetHostId, null)
                 }
             } else {
