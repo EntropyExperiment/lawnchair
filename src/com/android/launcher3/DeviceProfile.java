@@ -435,17 +435,6 @@ public class DeviceProfile {
                 && inv.hotseatSpecsId != INVALID_RESOURCE_HANDLE
                 && inv.workspaceCellSpecsId != INVALID_RESOURCE_HANDLE
                 && inv.allAppsCellSpecsId != INVALID_RESOURCE_HANDLE;
-        
-        Log.d("LC-DP",
-            String.valueOf(inv.workspaceSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP", String.valueOf(inv.allAppsSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP", String.valueOf(inv.folderSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP", String.valueOf(inv.hotseatSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP",
-            String.valueOf(inv.workspaceCellSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP",
-            String.valueOf(inv.allAppsCellSpecsId != ResourceUtils.INVALID_RESOURCE_HANDLE));
-        Log.d("LC-DP", String.valueOf(inv.workspaceSpecsId));
 
         mIsScalableGrid = inv.isScalable && !isVerticalBarLayout() && !isMultiWindowMode;
         // Determine device posture.
