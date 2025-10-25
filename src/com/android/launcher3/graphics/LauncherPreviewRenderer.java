@@ -179,13 +179,6 @@ public class LauncherPreviewRenderer extends BaseContext
             this(base, gridName, shapeKey, APPWIDGET_HOST_ID, null);
         }
 
-        /**
-         * TODO: This is dumb, not actually using brain, because how do I convert this????
-         */
-        private void putBaseInstance(DaggerSingletonObject daggerSingletonObject) {
-            getObject(null, getBaseContext(), APPWIDGET_HOST_ID);
-        }
-
         public PreviewContext(Context base, String gridName, String shapeKey,
             int widgetHostId, @Nullable String layoutXml) {
             super(base);
@@ -195,18 +188,6 @@ public class LauncherPreviewRenderer extends BaseContext
                 new ProxyPrefs(this, getSharedPreferences(mPrefName, MODE_PRIVATE));
             prefs.put(GRID_NAME, gridName);
             prefs.put(PREF_ICON_SHAPE, shapeKey);
-
-            putBaseInstance(PreferenceManager.INSTANCE);
-            putBaseInstance(PreferenceManager2.INSTANCE);
-            putBaseInstance(FontCache.INSTANCE);
-            putBaseInstance(FontManager.INSTANCE);
-            putBaseInstance(ThemeProvider.INSTANCE);
-            putBaseInstance(IconPackProvider.INSTANCE);
-            putBaseInstance(IconOverrideRepository.INSTANCE);
-            putBaseInstance(SmartspaceProvider.INSTANCE);
-            putBaseInstance(DeviceProfileOverrides.INSTANCE);
-            putBaseInstance(InvariantDeviceProfile.INSTANCE);
-            putBaseInstance(LauncherAppState.INSTANCE);
 
 
             PreviewAppComponent.Builder builder =
