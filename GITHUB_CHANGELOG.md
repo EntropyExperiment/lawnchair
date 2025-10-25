@@ -5,7 +5,7 @@ older (i.e., Lawnchair `15-dev`).
 
 This release have been tested with:
 * ☁️ Pixel 6 (Android 12.0)
-* 📱 Nothing (3a)-series (Android 15)
+* 📱 Nothing (3a)-series (Android 15, Android 16.0)
 * 📱 Vivo Y21 (Android 12.0)
 * 📱 HTC Wildfire E3 lite (Android 12.0)
 
@@ -26,7 +26,8 @@ Compatibility list:
 #### Features
 * [Lawnchair] Complex Clover icon shape
 * [Lawnchair] Very Sunny icon shape
-* [Lawnchair/About] Reduce image size from 170kb to 22kb (around 13% of original size)
+* [Lawnchair/About] Reduce image size from 170kb to 22kb (around 13% of original size, 99% quality)
+* [Lawnchair/Font] Update Google Fonts listing to 25102025
 
 #### Fixes
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
