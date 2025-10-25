@@ -26,7 +26,6 @@ import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
-import java.util.zip.GZIPInputStream
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -87,9 +86,7 @@ class GoogleFontsListing @Inject constructor(
     class MockDataProvider(private val res: Resources) : DataProvider {
 
         override fun getFontListing(): JSONObject {
-            val json = GZIPInputStream(
-                res.assets.open("google_fonts.json.gz"),
-            ).bufferedReader().use { it.readText() }
+            val json = res.assets.open("google_fonts.json").bufferedReader().use { it.readText() }
             return JSONObject(json)
         }
     }
