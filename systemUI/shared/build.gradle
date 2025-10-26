@@ -30,9 +30,10 @@ android {
             res.srcDirs = ['res']
         }
     }
-    ksp {
-        arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
-    }
+}
+
+ksp {
+    arg("dagger.hilt.disableModulesHaveInstallInCheck", "true")
 }
 
 addFrameworkJar('framework-16.jar')
