@@ -485,6 +485,10 @@ dependencies {
 
     implementation libs.androidx.window
 
+    ksp libs.dagger.compiler
+    implementation libs.dagger.hilt.android
+    ksp libs.dagger.hilt.compiler
+
     debugImplementation libs.leakcanary.android
 }
 

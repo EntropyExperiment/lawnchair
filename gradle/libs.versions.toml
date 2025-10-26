@@ -1,5 +1,5 @@
 [versions]
-jdkRelease = "17"
+jdkRelease = "21"
 
 accompanist = "0.37.3"
 benchmarkMacroJunit4 = "1.4.1"
@@ -21,7 +21,7 @@ coil = "2.7.0"
 composeBom = "2025.10.01"
 compose = "1.9.4"
 composeMaterial = "1.9.4"
-composeMaterial3 = "1.5.0-alpha06"
+composeMaterial3 = "1.5.0-alpha07"
 composeMaterialIcons = "1.7.8"
 constraintlayout = "2.2.1"
 dagger = "2.57.2"
@@ -31,7 +31,7 @@ fuzzywuzzy = "1.4.0"
 googleMaterial = "1.13.0"
 graphicsCore = "1.0.3"
 graphicsPath = "1.0.1"
-graphicsShapes = "1.1.0-rc01"
+graphicsShapes = "1.1.0"
 hokoBlur = "1.5.5"
 javaxInject = "1"
 kdrag0nColorkt = "1.0.5"
@@ -148,6 +148,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 # Kotlin
 kotlin-androidExtensionRuntime = { module = "org.jetbrains.kotlin:kotlin-android-extensions-runtime", version.ref = "kotlin" }
 kotlin-parcelizeRuntime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime", version.ref = "kotlin" }
+kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 # KotlinX
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
@@ -157,7 +158,7 @@ android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs
 airbnb-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "airbnbLottie" }
 chickenhook-restrictionbypass = { group = "com.github.ChickenHook", name = "RestrictionBypass", version.ref = "restrictionBypass" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-google-errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "googleErrorProneAnnotations" }
+google-errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
 hoko-blur = { group = "io.github.hokofly", name = "hoko-blur", version.ref = "hokoBlur" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
