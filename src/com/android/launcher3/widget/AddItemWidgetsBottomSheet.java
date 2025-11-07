@@ -26,10 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowInsets;
+import android.view.WindowInsets.Type;
 import android.widget.ScrollView;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.dragndrop.AddItemActivity;
 import com.android.launcher3.views.AbstractSlideInView;
 
