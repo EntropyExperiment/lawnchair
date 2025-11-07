@@ -153,21 +153,28 @@ public class AddItemWidgetsBottomSheet extends AbstractSlideInView<AddItemActivi
     @SuppressLint("NewApi") // Already added API check.
     @Override
     public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
-        Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars());
-        mInsets.set(insets.left, insets.top, insets.right, insets.bottom);
-        mContent.setPadding(mContent.getPaddingStart(), mContent.getPaddingTop(),
-                mContent.getPaddingEnd(), mInsets.bottom);
-
+        Insets insets;
+        if (Utilities.ATLEAST_R) {
+            insets = windowInsets.getInsets(Type.systemBars());
+            mInsets.set(insets.left, insets.top, insets.right, insets.bottom);
+            mContent.setPadding(mContent.getPaddingStart(), mContent.getPaddingTop(),
+                    mContent.getPaddingEnd(), mInsets.bottom);
+        } else {
+            mInsets.set(windowInsets.getSystemWindowInsetLeft(),
+                windowInsets.getSystemWindowInsetTop(),
+                windowInsets.getSystemWindowInsetRight(),
+                windowInsets.getSystemWindowInsetBottom());
+        }
         int contentHorizontalMarginInPx = getResources().getDimensionPixelSize(
-                R.dimen.widget_list_horizontal_margin);
+            R.dimen.widget_list_horizontal_margin);
         if (contentHorizontalMarginInPx != mContentHorizontalMarginInPx) {
             setContentHorizontalMargin(findViewById(R.id.widget_appName),
-                    contentHorizontalMarginInPx);
+                contentHorizontalMarginInPx);
             setContentHorizontalMargin(findViewById(R.id.widget_drag_instruction),
-                    contentHorizontalMarginInPx);
+                contentHorizontalMarginInPx);
             setContentHorizontalMargin(findViewById(R.id.widget_cell), contentHorizontalMarginInPx);
             setContentHorizontalMargin(findViewById(R.id.actions_container),
-                    contentHorizontalMarginInPx);
+                contentHorizontalMarginInPx);
             mContentHorizontalMarginInPx = contentHorizontalMarginInPx;
         }
         return windowInsets;
