@@ -1,10 +1,15 @@
-package app.lawnchair.icons
+package app.lawnchair.icons.iconpack
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.LauncherApps
 import android.graphics.drawable.Drawable
 import android.os.Process
+import app.lawnchair.icons.ClockMetadata
+import app.lawnchair.icons.picker.IconEntry
+import app.lawnchair.icons.picker.IconPickerCategory
+import app.lawnchair.icons.picker.IconPickerItem
+import app.lawnchair.icons.picker.IconType
 import app.lawnchair.util.requireSystemService
 import com.android.launcher3.R
 import com.android.launcher3.pm.UserCache

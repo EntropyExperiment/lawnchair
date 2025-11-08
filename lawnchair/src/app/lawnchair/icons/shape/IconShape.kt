@@ -83,6 +83,9 @@ open class IconShape(
     private val tmpPoint = PointF()
     open val windowTransitionRadius = 1f
 
+    /** The icon scale used by Launcher3 */
+    open val iconScale = 1f
+
     open fun getMaskPath(): Path {
         return Path().also { addToPath(it, 0f, 0f, 100f, 100f, 50f) }
     }
@@ -594,6 +597,8 @@ open class IconShape(
             path.addPath(tempPath)
         }
 
+        override val iconScale = 72f / 83.4f
+
         override fun toString(): String {
             return "foursidedcookie"
         }
@@ -634,6 +639,8 @@ open class IconShape(
             tempPath.transform(matrix)
             path.addPath(tempPath)
         }
+
+        override val iconScale = 72f / 80f
 
         override fun toString(): String {
             return "sevensidedcookie"

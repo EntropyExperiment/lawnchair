@@ -1,4 +1,4 @@
-package app.lawnchair.icons
+package app.lawnchair.icons.picker
 
 data class IconPickerCategory(
     val title: String,

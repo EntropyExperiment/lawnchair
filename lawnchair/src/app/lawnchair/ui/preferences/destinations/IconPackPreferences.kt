@@ -68,7 +68,6 @@ import app.lawnchair.ui.preferences.components.WallpaperPreview
 import app.lawnchair.ui.preferences.components.WithWallpaper
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
-import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.invariantDeviceProfile
 import app.lawnchair.ui.preferences.components.layout.Chip
 import app.lawnchair.ui.preferences.components.layout.NestedScrollStretch
@@ -203,14 +202,6 @@ fun IconPackPreferences(
                                 adapter = iconPackAdapter,
                                 false,
                             )
-                            PreferenceGroup {
-                                Item {
-                                    SwitchPreference(
-                                        adapter = prefs.tintIconPackBackgrounds.getAdapter(),
-                                        label = stringResource(id = R.string.themed_icon_pack_tint),
-                                    )
-                                }
-                            }
                         }
 
                         1 -> {
@@ -280,11 +271,7 @@ fun IconPackGrid(
     val lazyListState = rememberLazyListState()
     val padding = 12.dp
 
-    val iconPacksLocal = if (isThemedIconPack) {
-        themedIconPacks.filter { it.packageName != "" }
-    } else {
-        iconPacks
-    }
+    val iconPacksLocal = iconPacks
 
     val selectedPack = adapter.state.value
     LaunchedEffect(selectedPack) {

@@ -20,24 +20,6 @@ import android.content.Context;
 
 import androidx.annotation.Nullable;
 
-import app.lawnchair.DeviceProfileOverrides;
-import app.lawnchair.HeadlessWidgetsManager;
-import app.lawnchair.NotificationManager;
-import app.lawnchair.data.folder.service.FolderService;
-import app.lawnchair.data.iconoverride.IconOverrideRepository;
-import app.lawnchair.data.wallpaper.service.WallpaperService;
-import app.lawnchair.font.FontCache;
-import app.lawnchair.font.FontManager;
-import app.lawnchair.font.googlefonts.GoogleFontsListing;
-import app.lawnchair.icons.IconPackProvider;
-import app.lawnchair.icons.shape.IconShapeManager;
-import app.lawnchair.preferences.PreferenceManager;
-import app.lawnchair.preferences2.PreferenceManager2;
-import app.lawnchair.smartspace.provider.SmartspaceProvider;
-import app.lawnchair.theme.ThemeProvider;
-import app.lawnchair.ui.preferences.components.colorpreference.ColorPreferenceModelList;
-import app.lawnchair.ui.preferences.data.liveinfo.LiveInformationManager;
-import app.lawnchair.util.LawnchairWindowManagerProxy;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
@@ -73,9 +55,27 @@ import com.android.launcher3.widget.LauncherWidgetHolder.WidgetHolderFactory;
 import com.android.launcher3.widget.custom.CustomWidgetManager;
 import com.android.launcher3.widget.util.WidgetSizeHandler;
 
-import dagger.BindsInstance;
-
 import javax.inject.Named;
+
+import app.lawnchair.DeviceProfileOverrides;
+import app.lawnchair.HeadlessWidgetsManager;
+import app.lawnchair.NotificationManager;
+import app.lawnchair.data.folder.service.FolderService;
+import app.lawnchair.data.iconoverride.IconOverrideRepository;
+import app.lawnchair.data.wallpaper.service.WallpaperService;
+import app.lawnchair.font.FontCache;
+import app.lawnchair.font.FontManager;
+import app.lawnchair.font.googlefonts.GoogleFontsListing;
+import app.lawnchair.icons.iconpack.IconPackProvider;
+import app.lawnchair.icons.shape.IconShapeManager;
+import app.lawnchair.preferences.PreferenceManager;
+import app.lawnchair.preferences2.PreferenceManager2;
+import app.lawnchair.smartspace.provider.SmartspaceProvider;
+import app.lawnchair.theme.ThemeProvider;
+import app.lawnchair.ui.preferences.components.colorpreference.ColorPreferenceModelList;
+import app.lawnchair.ui.preferences.data.liveinfo.LiveInformationManager;
+import app.lawnchair.util.LawnchairWindowManagerProxy;
+import dagger.BindsInstance;
 
 /**
  * Launcher base component for Dagger injection.

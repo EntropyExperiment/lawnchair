@@ -42,7 +42,7 @@ import javax.inject.Inject
 
 /** Centralized class for managing Launcher icon theming */
 @LauncherAppSingleton
-class ThemeManager
+open class ThemeManager
 @Inject
 constructor(
     @ApplicationContext private val context: Context,
@@ -53,8 +53,8 @@ constructor(
 ) {
 
     /** Representation of the current icon state */
-    var iconState = parseIconState(null)
-        private set
+    open var iconState = parseIconState(null)
+        protected set
 
     var isMonoThemeEnabled
         set(value) = prefs.put(THEMED_ICONS, value)
@@ -72,7 +72,7 @@ constructor(
     val folderShape
         get() = iconState.folderShape
 
-    private val listeners = CopyOnWriteArrayList<ThemeChangeListener>()
+    protected val listeners = CopyOnWriteArrayList<ThemeChangeListener>()
 
     init {
         val receiver = SimpleBroadcastReceiver(
@@ -93,7 +93,7 @@ constructor(
         }
     }
 
-    private fun verifyIconState() {
+    protected open fun verifyIconState() {
         val newState = parseIconState(iconState)
         if (newState == iconState) return
         iconState = newState
@@ -105,7 +105,7 @@ constructor(
 
     fun removeChangeListener(listener: ThemeChangeListener) = listeners.remove(listener)
 
-    private fun parseIconState(oldState: IconState?): IconState {
+    protected open fun parseIconState(oldState: IconState?): IconState {
         val shapeModel =
             prefs.get(PREF_ICON_SHAPE).let { shapeOverride ->
                 ShapesProvider.iconShapes.firstOrNull { it.key == shapeOverride }

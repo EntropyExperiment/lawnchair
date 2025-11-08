@@ -29,6 +29,7 @@ import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
+import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
@@ -43,6 +44,7 @@ class PreferenceManager @Inject constructor(
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
     private val mRecentsModel get() = RecentsModel.INSTANCE.get(context)
+    private val themeManager = ThemeManager.INSTANCE.get(context)
     private val reloadIcons: () -> Unit = { mRecentsModel.onThemeChanged() }
     private val reloadGrid: () -> Unit = { idp.onPreferencesChanged(context) }
 

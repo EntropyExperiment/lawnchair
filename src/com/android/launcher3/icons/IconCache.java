@@ -22,7 +22,6 @@ import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 import static com.android.launcher3.util.LooperExecutor.CALLER_ICON_CACHE;
 import static com.android.launcher3.widget.WidgetSections.NO_CATEGORY;
-
 import static java.util.stream.Collectors.groupingBy;
 
 import android.content.ComponentName;
@@ -87,6 +86,8 @@ import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import app.lawnchair.icons.LawnchairIconProvider;
+
 /**
  * Cache of application icons.  Icons can be made from any thread.
  */
@@ -113,16 +114,14 @@ public class IconCache extends BaseIconCache {
     private final SparseArray<BitmapInfo> mWidgetCategoryBitmapInfos;
 
     private int mPendingIconRequestCount = 0;
-
+    
     @Inject
     public IconCache(
             @ApplicationContext Context context,
             InvariantDeviceProfile idp,
             @Nullable @Named("ICONS_DB") String dbFileName,
             UserCache userCache,
-            LauncherIconProvider iconProvider,
-            // TODO: Lawnchair stuff
-            //       IconProvider iconProvider,
+            LawnchairIconProvider iconProvider,
             InstallSessionHelper installSessionHelper,
             LauncherIcons.IconPool iconPool,
             InstantAppResolver instantAppResolver,
@@ -184,6 +183,7 @@ public class IconCache extends BaseIconCache {
         return mIconPool.obtain();
     }
 
+    /**
     /**
      * Updates the entries related to the given package in memory and persistent DB.
      */

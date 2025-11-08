@@ -46,10 +46,10 @@ public class LauncherIconProvider extends IconProvider {
     public static final String ATTR_DRAWABLE = "drawable";
     public static final String ATTR_COMPONENT = "component";
 
-    private static final String TAG = "LIconProvider";
-    private static final Map<String, ThemeData> DISABLED_MAP = Collections.emptyMap();
+    protected static final String TAG = "LIconProvider";
+    protected static final Map<String, ThemeData> DISABLED_MAP = Collections.emptyMap();
 
-    private Map<String, ThemeData> mThemedIconMap;
+    protected Map<String, ThemeData> mThemedIconMap;
 
     protected final ThemeManager mThemeManager;
 
@@ -73,7 +73,7 @@ public class LauncherIconProvider extends IconProvider {
         mSystemState += "," + mThemeManager.getIconState().toUniqueId();
     }
 
-    private Map<String, ThemeData> getThemedIconMap() {
+    protected Map<String, ThemeData> getThemedIconMap() {
         if (mThemedIconMap != null) {
             return mThemedIconMap;
         }

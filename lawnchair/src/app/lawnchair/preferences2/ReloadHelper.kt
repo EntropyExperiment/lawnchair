@@ -17,7 +17,6 @@
 package app.lawnchair.preferences2
 
 import android.content.Context
-import androidx.annotation.Discouraged
 import app.lawnchair.LawnchairLauncher
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherAppState
@@ -44,9 +43,8 @@ class ReloadHelper(private val context: Context) {
         recreate()
     }
 
-    @Discouraged("This literally reload the models like forceRefresh because the old code has been removed in L3")
     fun reloadIcons() {
-        LauncherAppState.INSTANCE.get(context).model.forceReload()
+        LauncherAppState.INSTANCE.get(context).iconCache.clearMemoryCache()
     }
 
     fun reloadTaskbar() {

@@ -21,6 +21,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.LauncherApps
 import android.content.pm.LauncherApps.ArchiveCompatibilityParams
+import app.lawnchair.icons.LawnchairIconProvider
 import com.android.launcher3.BuildConfigs
 import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
@@ -31,7 +32,6 @@ import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.graphics.ThemeManager.ThemeChangeListener
 import com.android.launcher3.icons.IconCache
-import com.android.launcher3.icons.LauncherIconProvider
 import com.android.launcher3.icons.LauncherIcons.IconPool
 import com.android.launcher3.notification.NotificationListener
 import com.android.launcher3.pm.InstallSessionHelper
@@ -57,7 +57,7 @@ constructor(
     private val themeManager: ThemeManager,
     private val userCache: UserCache,
     private val settingsCache: SettingsCache,
-    private val iconProvider: LauncherIconProvider,
+    private val iconProvider: LawnchairIconProvider,
     private val customWidgetManager: CustomWidgetManager,
     private val installSessionHelper: InstallSessionHelper,
     private val lifeCycle: DaggerSingletonTracker,

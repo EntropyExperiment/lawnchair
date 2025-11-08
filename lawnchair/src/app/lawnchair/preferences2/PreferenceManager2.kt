@@ -125,6 +125,9 @@ class PreferenceManager2 @Inject constructor(
                 ?: IconShapeManager.getSystemIconShape(context)
         },
         save = { it.toString() },
+        onSet = {
+            reloadHelper.reloadIcons()
+        },
     )
 
     val customIconShape = preference(

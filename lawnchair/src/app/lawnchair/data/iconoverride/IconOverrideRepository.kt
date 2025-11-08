@@ -2,7 +2,7 @@ package app.lawnchair.data.iconoverride
 
 import android.content.Context
 import app.lawnchair.data.AppDatabase
-import app.lawnchair.icons.IconPickerItem
+import app.lawnchair.icons.picker.IconPickerItem
 import com.android.launcher3.LauncherAppState
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
