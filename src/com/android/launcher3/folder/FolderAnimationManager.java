@@ -37,6 +37,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
+import androidx.annotation.NonNull;
+
 import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
@@ -66,7 +68,7 @@ import app.lawnchair.util.LawnchairUtilsKt;
  * ie. When the user taps on the FolderIcon, we immediately hide the FolderIcon and show the Folder
  * in its place before starting the animation.
  */
-public class FolderAnimationManager {
+public class FolderAnimationManager implements FolderAnimationCreator {
 
     private static final float EXTRA_FOLDER_REVEAL_RADIUS_PERCENTAGE = 0.125F;
     private static final int FOLDER_NAME_ALPHA_DURATION = 32;
@@ -81,7 +83,7 @@ public class FolderAnimationManager {
 
     private Context mContext;
 
-    private final boolean mIsOpening;
+    private boolean mIsOpening;
 
     private final int mDuration;
     private final int mDelay;
@@ -98,7 +100,7 @@ public class FolderAnimationManager {
 
     private DeviceProfile mDeviceProfile;
 
-    public FolderAnimationManager(Folder folder, boolean isOpening) {
+    public FolderAnimationManager(Folder folder) {
         mFolder = folder;
         mContent = folder.mContent;
         mFolderBackground = (GradientDrawable) mFolder.getBackground();
@@ -110,7 +112,7 @@ public class FolderAnimationManager {
         mDeviceProfile = folder.mActivityContext.getDeviceProfile();
         mPreviewVerifier = createFolderGridOrganizer(mDeviceProfile);
 
-        mIsOpening = isOpening;
+        mIsOpening = true;
 
         Resources res = mContent.getResources();
         mDuration = res.getInteger(R.integer.config_materialFolderExpandDuration);
@@ -136,7 +138,10 @@ public class FolderAnimationManager {
     /**
      * Prepares the Folder for animating between open / closed states.
      */
-    public AnimatorSet getAnimator() {
+    @NonNull
+    @Override
+    public AnimatorSet createAnimatorSet(boolean isOpening) {
+        mIsOpening = isOpening;
         final BaseDragLayer.LayoutParams lp =
                 (BaseDragLayer.LayoutParams) mFolder.getLayoutParams();
         mFolderIcon.getPreviewItemManager().recomputePreviewDrawingParams();
@@ -151,7 +156,7 @@ public class FolderAnimationManager {
         float initialSize = (scaledRadius * 2) * scaleRelativeToDragLayer;
 
         // Match size/scale of icons in the preview
-        float previewScale = rule.scaleForItem(itemsInPreview.size());
+        float previewScale = rule.scaleForItem(itemsInPreview.size(), 0);
         float previewSize = rule.getIconSize() * previewScale;
         float baseIconSize = getBubbleTextView(itemsInPreview.get(0)).getIconSize();
         float initialScale = previewSize / baseIconSize * scaleRelativeToDragLayer;
@@ -400,7 +405,7 @@ public class FolderAnimationManager {
             cwc.setupLp(v);
 
             // Match scale of icons in the preview of the items on the first page.
-            float previewScale = rule.scaleForItem(numItemsInFirstPagePreview);
+            float previewScale = rule.scaleForItem(numItemsInFirstPagePreview, 0);
             float previewSize = rule.getIconSize() * previewScale;
             float baseIconSize = getBubbleTextView(v).getIconSize();
             float iconScale = previewSize / baseIconSize;

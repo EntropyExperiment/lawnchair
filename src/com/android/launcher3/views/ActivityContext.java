@@ -44,6 +44,7 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.AccessibilityDelegate;
@@ -62,12 +63,14 @@ import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
 import com.android.launcher3.DropTargetHandler;
+import com.android.launcher3.Flags;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.allapps.ActivityAllAppsContainerView;
 import com.android.launcher3.celllayout.CellPosMapper;
+import com.android.launcher3.dagger.ActivityContextComponent;
 import com.android.launcher3.dot.DotInfo;
 import com.android.launcher3.dragndrop.DragController;
 import com.android.launcher3.folder.FolderIcon;
@@ -75,6 +78,7 @@ import com.android.launcher3.logger.LauncherAtom;
 import com.android.launcher3.logging.InstanceId;
 import com.android.launcher3.logging.InstanceIdSequence;
 import com.android.launcher3.logging.StatsLogManager;
+import com.android.launcher3.model.ModelWriter;
 import com.android.launcher3.model.StringCache;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
@@ -100,6 +104,9 @@ import java.util.List;
 public interface ActivityContext extends SavedStateRegistryOwner {
 
     String TAG = "ActivityContext";
+
+    /** Returns the dagger graph for this UI context */
+    ActivityContextComponent getActivityComponent();
 
     default boolean finishAutoCancelActionMode() {
         return false;
@@ -208,12 +215,37 @@ public interface ActivityContext extends SavedStateRegistryOwner {
         return null;
     }
 
+    /** @return {@code true} if all apps background blur is enabled */
+    default boolean isAllAppsBackgroundBlurEnabled() {
+        return false;
+    }
+
+    /** @return {@code true} if overview background blur is enabled */
+    default boolean isOverviewBackgroundBlurEnabled() {
+        return false;
+    }
+
+    /** @return the resource id of the style to apply for the current blur state in All Apps. */
+    default int getAllAppsBlurStyleResId() {
+        if (!Flags.allAppsBlur()) {
+            // Don't alter the colors provided in the default Launcher themes.
+            return View.NO_ID;
+        }
+        return isAllAppsBackgroundBlurEnabled() ? R.style.AllAppsBlurStyle
+                : R.style.AllAppsBlurFallbackStyle;
+    }
+
+    /** @return the resource id of the style to apply for the current blur state in Overview. */
+    default int getOverviewBlurStyleResId() {
+        return View.NO_ID;
+    }
+
     DeviceProfile getDeviceProfile();
 
     /** Registered {@link OnDeviceProfileChangeListener} instances. */
     List<OnDeviceProfileChangeListener> getOnDeviceProfileChangeListeners();
 
-    /** Notifies listeners of a {@link DeviceProfile} change. */
+    /** Notifies listeners of a {@link deviceprofile} change. */
     default void dispatchDeviceProfileChanged() {
         DeviceProfile deviceProfile = getDeviceProfile();
         List<OnDeviceProfileChangeListener> listeners = getOnDeviceProfileChangeListeners();
@@ -222,12 +254,12 @@ public interface ActivityContext extends SavedStateRegistryOwner {
         }
     }
 
-    /** Register listener for {@link DeviceProfile} changes. */
+    /** Register listener for {@link deviceprofile} changes. */
     default void addOnDeviceProfileChangeListener(OnDeviceProfileChangeListener listener) {
         getOnDeviceProfileChangeListeners().add(listener);
     }
 
-    /** Unregister listener for {@link DeviceProfile} changes. */
+    /** Unregister listener for {@link deviceprofile} changes. */
     default void removeOnDeviceProfileChangeListener(OnDeviceProfileChangeListener listener) {
         getOnDeviceProfileChangeListeners().remove(listener);
     }
@@ -523,6 +555,12 @@ public interface ActivityContext extends SavedStateRegistryOwner {
         return new CellPosMapper(dp.isVerticalBarLayout(), dp.numShownHotseatIcons);
     }
 
+    /** Returns a writer for updating model properties */
+    default ModelWriter getModelWriter() {
+        return LauncherAppState.getInstance(asContext()).getModel().getWriter(
+                false, getCellPosMapper(), null);
+    }
+
     /** Set to manage objects that can be cleaned up along with the context */
     WeakCleanupSet getOwnerCleanupSet();
 
@@ -539,6 +577,14 @@ public interface ActivityContext extends SavedStateRegistryOwner {
     /** Returns the current ActivityContext as context */
     default Context asContext() {
         return (Context) this;
+    }
+
+    /**
+     * Allows the current ActivityContext to intercept KeyEvent dispatches.
+     * <p>
+     * Returns true iff the event has been handled. */
+    default boolean onRootViewDispatchKeyEvent(KeyEvent event) {
+        return false;
     }
 
     /**

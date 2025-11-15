@@ -19,7 +19,6 @@ package com.android.launcher3.model
 import android.app.admin.DevicePolicyManager.ACTION_DEVICE_POLICY_RESOURCE_UPDATED
 import android.content.ComponentName
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.LauncherApps
 import android.content.pm.LauncherApps.ArchiveCompatibilityParams
 import com.android.launcher3.BuildConfigs
@@ -27,7 +26,6 @@ import com.android.launcher3.Flags
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.OnIDPChangeListener
 import com.android.launcher3.LauncherModel
-import com.android.launcher3.LauncherPrefs.Companion.getPrefs
 import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.graphics.ThemeManager
@@ -66,23 +64,7 @@ constructor(
 ) {
 
     fun initialize(model: LauncherModel) {
-        fun refreshAndReloadLauncher() {
-            iconPool.clear()
-            iconCache.updateIconParams(idp.fillResIconDpi, idp.iconBitmapSize)
-            model.forceReload()
-        }
-
-        // IDP changes
-        val idpChangeListener = OnIDPChangeListener { modelChanged ->
-            if (modelChanged) refreshAndReloadLauncher()
-        }
-        idp.addOnChangeListener(idpChangeListener)
-        lifeCycle.addCloseable { idp.removeOnChangeListener(idpChangeListener) }
-
-        // Theme changes
-        val themeChangeListener = ThemeChangeListener { refreshAndReloadLauncher() }
-        themeManager.addChangeListener(themeChangeListener)
-        lifeCycle.addCloseable { themeManager.removeChangeListener(themeChangeListener) }
+        initializeDisplayEvents(model)
 
         // System changes
         val modelCallbacks = model.newModelCallbacks()
@@ -101,7 +83,9 @@ constructor(
 
         // Device profile policy changes
         val dpUpdateReceiver =
-            SimpleBroadcastReceiver(context, UI_HELPER_EXECUTOR) { model.reloadStringCache() }
+            SimpleBroadcastReceiver(context, UI_HELPER_EXECUTOR) {
+                model.enqueueModelUpdateTask(ReloadStringCacheTask())
+            }
         dpUpdateReceiver.register(ACTION_DEVICE_POLICY_RESOURCE_UPDATED)
         lifeCycle.addCloseable { dpUpdateReceiver.unregisterReceiverSafely() }
 
@@ -137,28 +121,36 @@ constructor(
             settingsCache.unregister(NOTIFICATION_BADGING_URI, notificationChanges)
         }
 
-        // removable smartspace
-        if (Flags.enableSmartspaceRemovalToggle()) {
-            val smartSpacePrefChanges =
-                SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                    if (LoaderTask.SMARTSPACE_ON_HOME_SCREEN == key) model.forceReload()
-                }
-            getPrefs(context).registerOnSharedPreferenceChangeListener(smartSpacePrefChanges)
-            lifeCycle.addCloseable {
-                getPrefs(context).unregisterOnSharedPreferenceChangeListener(smartSpacePrefChanges)
-            }
-        }
-
         // Custom widgets
         lifeCycle.addCloseable(customWidgetManager.addWidgetRefreshCallback(model::rebindCallbacks))
+
+        // Install session changes
+        lifeCycle.addCloseable(installSessionHelper.registerInstallTracker(modelCallbacks))
+    }
+
+    fun initializeDisplayEvents(model: LauncherModel) {
+        fun refreshAndReloadLauncher() {
+            iconPool.clear()
+            iconCache.updateIconParams(idp.fillResIconDpi, idp.iconBitmapSize)
+            model.forceReload()
+        }
+
+        // IDP changes
+        val idpChangeListener = OnIDPChangeListener { modelChanged ->
+            if (modelChanged) refreshAndReloadLauncher()
+        }
+        idp.addOnChangeListener(idpChangeListener)
+        lifeCycle.addCloseable { idp.removeOnChangeListener(idpChangeListener) }
+
+        // Theme changes
+        val themeChangeListener = ThemeChangeListener { refreshAndReloadLauncher() }
+        themeManager.addChangeListener(themeChangeListener)
+        lifeCycle.addCloseable { themeManager.removeChangeListener(themeChangeListener) }
 
         // Icon changes
         lifeCycle.addCloseable(
             iconProvider.registerIconChangeListener(model::onAppIconChanged, MODEL_EXECUTOR.handler)
         )
-
-        // Install session changes
-        lifeCycle.addCloseable(installSessionHelper.registerInstallTracker(modelCallbacks))
     }
 
     companion object {

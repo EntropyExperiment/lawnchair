@@ -43,12 +43,13 @@ import androidx.annotation.StringRes;
 import com.android.launcher3.statemanager.BaseState;
 import com.android.launcher3.statemanager.StateManager;
 import com.android.launcher3.states.EditModeState;
-import com.android.launcher3.states.HintState;
 import com.android.launcher3.states.SpringLoadedState;
 import com.android.launcher3.testing.shared.TestProtocol;
 import com.android.launcher3.uioverrides.states.AllAppsState;
+import com.android.launcher3.uioverrides.states.HintState;
 import com.android.launcher3.uioverrides.states.OverviewState;
 import com.android.launcher3.views.ActivityContext;
+import com.android.launcher3.views.ScrimColors;
 
 import java.util.Arrays;
 
@@ -91,6 +92,9 @@ public abstract class LauncherState implements BaseState<LauncherState> {
 
     // Flag indicating that hotseat and its contents are not accessible.
     public static final int FLAG_HOTSEAT_INACCESSIBLE = BaseState.getFlag(7);
+
+    // Flag indicating that this state should not be announced by Talkback when reached
+    public static final int FLAG_SKIP_STATE_ANNOUNCEMENT = BaseState.getFlag(8);
 
 
     public static final float NO_OFFSET = 0;
@@ -229,7 +233,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
     public int getFloatingSearchBarRestingMarginBottom(Launcher launcher) {
         DeviceProfile dp = launcher.getDeviceProfile();
         return areElementsVisible(launcher, FLOATING_SEARCH_BAR) ? dp.getQsbOffsetY()
-                : -dp.hotseatQsbHeight;
+                : -dp.getHotseatProfile().getQsbHeight();
     }
 
     /**
@@ -252,7 +256,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
         DeviceProfile dp = launcher.getDeviceProfile();
         if (dp.isQsbInline) {
             int marginStart = getFloatingSearchBarRestingMarginStart(launcher);
-            return dp.widthPx - marginStart - dp.hotseatQsbWidth;
+            return dp.getDeviceProperties().getWidthPx() - marginStart - dp.hotseatQsbWidth;
         }
 
         boolean isRtl = Utilities.isRtl(launcher.getResources());
@@ -268,7 +272,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
     public int getVisibleElements(Launcher launcher) {
         int elements = HOTSEAT_ICONS | WORKSPACE_PAGE_INDICATOR | VERTICAL_SWIPE_INDICATOR;
         // Floating search bar is visible in normal state except in landscape on phones.
-        if (!(launcher.getDeviceProfile().isPhone && launcher.getDeviceProfile().isLandscape)) {
+        if (!(launcher.getDeviceProfile().getDeviceProperties().isPhone() && launcher.getDeviceProfile().getDeviceProperties().isLandscape())) {
             elements |= FLOATING_SEARCH_BAR;
         }
         return elements;
@@ -327,8 +331,9 @@ public abstract class LauncherState implements BaseState<LauncherState> {
      * What color should the workspace scrim be in when at rest in this state.
      * Return {@link Color#TRANSPARENT} for no scrim.
      */
-    public int getWorkspaceScrimColor(Launcher launcher) {
-        return Color.TRANSPARENT;
+    public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
+        return new ScrimColors(/* backgroundColor */ Color.TRANSPARENT,
+                /* foregroundColor */ Color.TRANSPARENT);
     }
 
     /**
@@ -356,7 +361,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
     public final  <DEVICE_PROFILE_CONTEXT extends Context & ActivityContext>
             float getDepth(DEVICE_PROFILE_CONTEXT context) {
         return getDepth(context,
-                ActivityContext.lookupContext(context).getDeviceProfile().isMultiWindowMode);
+                ActivityContext.lookupContext(context).getDeviceProfile().getDeviceProperties().isMultiWindowMode());
     }
 
     /**
@@ -377,6 +382,16 @@ public abstract class LauncherState implements BaseState<LauncherState> {
         return 0f;
     }
 
+    /**
+     * Returns whether the workspace should be blurred alongside wallpaper depth.
+     *
+     * @param targetState - The target state if a transition is in progress, or current state
+     * @return {@code true} if the workspace should be blurred alongside wallpaper depth.
+     */
+    public boolean shouldBlurWorkspace(LauncherState targetState) {
+        return targetState == ALL_APPS;
+    }
+
     public String getDescription(Launcher launcher) {
         return launcher.getWorkspace().getCurrentPageDescription();
     }
@@ -390,7 +405,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
         boolean shouldFadeAdjacentScreens = (this == NORMAL || this == HINT_STATE)
                 && dp.shouldFadeAdjacentWorkspaceScreens();
         // Avoid showing adjacent screens behind handheld All Apps sheet.
-        if (Flags.allAppsSheetForHandheld() && dp.isPhone && this == ALL_APPS) {
+        if (Flags.allAppsSheetForHandheld() && dp.getDeviceProperties().isPhone() && this == ALL_APPS) {
             shouldFadeAdjacentScreens = true;
         }
         if (!shouldFadeAdjacentScreens) {
@@ -410,7 +425,7 @@ public abstract class LauncherState implements BaseState<LauncherState> {
      */
     public PageTranslationProvider getWorkspacePageTranslationProvider(Launcher launcher) {
         if (!(this == SPRING_LOADED || this == EDIT_MODE)
-                || !launcher.getDeviceProfile().isTwoPanels) {
+                || !launcher.getDeviceProfile().getDeviceProperties().isTwoPanels()) {
             return DEFAULT_PAGE_TRANSLATION_PROVIDER;
         }
         final float quarterPageSpacing = launcher.getWorkspace().getPageSpacing() / 4f;
@@ -447,7 +462,11 @@ public abstract class LauncherState implements BaseState<LauncherState> {
     }
 
     /** Called when predictive back gesture is started. */
-    public void onBackStarted(Launcher launcher) {}
+    public void onBackStarted(Launcher launcher) {
+        StateManager<LauncherState, Launcher> lsm = launcher.getStateManager();
+        LauncherState toState = lsm.getLastState();
+        lsm.onBackStarted(toState);
+    }
 
     /**
      * Called when back action is invoked. This can happen when:

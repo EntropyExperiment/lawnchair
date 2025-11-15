@@ -39,14 +39,11 @@ import android.util.AttributeSet;
 import android.util.FloatProperty;
 import android.util.Log;
 import android.util.Property;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import androidx.core.graphics.ColorUtils;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
-import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.anim.AnimatedFloat;
 import com.android.launcher3.anim.AnimatorListeners;
@@ -94,7 +91,7 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
     private final Paint mIconRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path mRingPath = new Path();
     private final int mNormalizedIconSize;
-    private final Path mShapePath;
+    private Path mShapePath;
     private final Matrix mTmpMatrix = new Matrix();
 
     private final BlurMaskFilter mShadowFilter;
@@ -281,16 +278,6 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
         invalidate();
     }
 
-    /**
-     * prepares prediction icon for usage after bind
-     */
-    public void finishBinding(OnLongClickListener longClickListener) {
-        setOnLongClickListener(longClickListener);
-        ((CellLayoutLayoutParams) getLayoutParams()).canReorder = false;
-        setTextVisibility(false);
-        verifyHighRes();
-    }
-
     @Override
     public void getIconBounds(Rect outBounds) {
         super.getIconBounds(outBounds);
@@ -339,6 +326,9 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
     }
 
     private void updateRingPath() {
+        mShapePath = ThemeManager.INSTANCE.get(mContext)
+                .getIconShape()
+                .getPath(mNormalizedIconSize);
         mRingPath.reset();
         mTmpMatrix.reset();
         mTmpMatrix.setTranslate(getOutlineOffsetX(), getOutlineOffsetY());
@@ -455,19 +445,6 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
             r.close();
             mDrawForDrag = false;
         };
-    }
-
-    /**
-     * Creates and returns a new instance of PredictedAppIcon from WorkspaceItemInfo
-     */
-    public static PredictedAppIcon createIcon(ViewGroup parent, WorkspaceItemInfo info) {
-        PredictedAppIcon icon = (PredictedAppIcon) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.predicted_app_icon, parent, false);
-        icon.applyFromWorkspaceItem(info);
-        Launcher launcher = Launcher.getLauncher(parent.getContext());
-        icon.setOnClickListener(launcher.getItemOnClickListener());
-        icon.setOnFocusChangeListener(launcher.getFocusHandler());
-        return icon;
     }
 
     private class AnimColorHolder {

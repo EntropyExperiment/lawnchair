@@ -35,12 +35,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.AppFilter;
+import com.android.launcher3.Flags;
 import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.icons.IconCache;
-import com.android.launcher3.model.BgDataModel.Callbacks;
 import com.android.launcher3.model.data.AppInfo;
+import com.android.launcher3.model.data.AppsListData;
 import com.android.launcher3.model.data.ItemInfo;
+import com.android.launcher3.model.repository.AppsListRepository;
 import com.android.launcher3.pm.PackageInstallInfo;
 import com.android.launcher3.pm.UserCache;
 import com.android.launcher3.util.ApiWrapper;
@@ -57,6 +59,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 
 /**
@@ -80,17 +83,19 @@ public class AllAppsList {
     @NonNull
     private final AppFilter mAppFilter;
 
+    @NonNull private final Provider<AppsListRepository> mRepo;
+
     private boolean mDataChanged = false;
     private Consumer<AppInfo> mRemoveListener = NO_OP_CONSUMER;
 
     private AlphabeticIndexCompat mIndex;
 
     /**
-     * @see Callbacks#FLAG_HAS_SHORTCUT_PERMISSION
-     * @see Callbacks#FLAG_QUIET_MODE_ENABLED
-     * @see Callbacks#FLAG_QUIET_MODE_CHANGE_PERMISSION
-     * @see Callbacks#FLAG_WORK_PROFILE_QUIET_MODE_ENABLED
-     * @see Callbacks#FLAG_PRIVATE_PROFILE_QUIET_MODE_ENABLED
+     * @see AppsListData#FLAG_HAS_SHORTCUT_PERMISSION
+     * @see AppsListData#FLAG_QUIET_MODE_ENABLED
+     * @see AppsListData#FLAG_QUIET_MODE_CHANGE_PERMISSION
+     * @see AppsListData#FLAG_WORK_PROFILE_QUIET_MODE_ENABLED
+     * @see AppsListData#FLAG_PRIVATE_PROFILE_QUIET_MODE_ENABLED
      */
     private int mFlags;
 
@@ -98,9 +103,12 @@ public class AllAppsList {
      * Boring constructor.
      */
     @Inject
-    public AllAppsList(IconCache iconCache, AppFilter appFilter) {
+    public AllAppsList(@NonNull IconCache iconCache,
+            @NonNull AppFilter appFilter,
+            @NonNull Provider<AppsListRepository> repositoryProvider) {
         mIconCache = iconCache;
         mAppFilter = appFilter;
+        mRepo = repositoryProvider;
         mIndex = new AlphabeticIndexCompat(LocaleList.getDefault());
     }
 
@@ -110,14 +118,18 @@ public class AllAppsList {
     public boolean getAndResetChangeFlag() {
         boolean result = mDataChanged;
         mDataChanged = false;
+
+        if (Flags.modelRepository() && result) {
+            mRepo.get().dispatchChange(getImmutableData());
+        }
         return result;
     }
 
     /**
-     * Helper to checking {@link Callbacks#FLAG_HAS_SHORTCUT_PERMISSION}
+     * Helper to checking {@link AppsListData#FLAG_HAS_SHORTCUT_PERMISSION}
      */
     public boolean hasShortcutHostPermission() {
-        return (mFlags & Callbacks.FLAG_HAS_SHORTCUT_PERMISSION) != 0;
+        return (mFlags & AppsListData.FLAG_HAS_SHORTCUT_PERMISSION) != 0;
     }
 
     /**
@@ -132,13 +144,10 @@ public class AllAppsList {
         mDataChanged = true;
     }
 
-    /**
-     * Returns the model flags
-     */
-    public int getFlags() {
-        return mFlags;
+    /** Returns an immutable representation of the current data */
+    public AppsListData getImmutableData() {
+        return new AppsListData(copyData(), mFlags);
     }
-
 
     /**
      * Add the supplied ApplicationInfo objects to the list, and enqueue it into the
@@ -202,7 +211,8 @@ public class AllAppsList {
     }
 
     /** Updates the given PackageInstallInfo's associated AppInfo's installation info. */
-    public List<AppInfo> updatePromiseInstallInfo(PackageInstallInfo installInfo) {
+    public List<AppInfo> updatePromiseInstallInfo(PackageInstallInfo installInfo,
+            FlagOp runtimeFlagUpdate) {
         List<AppInfo> updatedAppInfos = new ArrayList<>();
         UserHandle user = installInfo.user;
         for (int i = data.size() - 1; i >= 0; i--) {
@@ -224,7 +234,11 @@ public class AllAppsList {
                         continue;
                     }
                     appInfo.setProgressLevel(installInfo);
-
+                    appInfo.runtimeStatusFlags =
+                            runtimeFlagUpdate.apply(appInfo.runtimeStatusFlags);
+                    if (Flags.modelRepository()) {
+                        mRepo.get().dispatchIncrementationUpdate(appInfo);
+                    }
                     updatedAppInfos.add(appInfo);
                 } else if (installInfo.state == PackageInstallInfo.STATUS_FAILED
                         && !appInfo.isAppStartable()) {

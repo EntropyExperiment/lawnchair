@@ -226,6 +226,13 @@ public class StateManager<S extends BaseState<S>, T extends StatefulContainer<S>
         }
     }
 
+    /** Handles back started in predictive back gesture by passing it to state handlers. */
+    public void onBackStarted(S toState) {
+        for (StateHandler<S> handler : getStateHandlers()) {
+            handler.onBackStarted(toState);
+        }
+    }
+
     /** Handles backProgress in predictive back gesture by passing it to state handlers. */
     public void onBackProgressed(
             S toState, @FloatRange(from = 0.0, to = 1.0) float backProgress) {
@@ -258,6 +265,7 @@ public class StateManager<S extends BaseState<S>, T extends StatefulContainer<S>
                 if (listener != null) {
                     listener.onAnimationEnd(new AnimatorSet());
                 }
+                onRepeatStateSetAborted(state);
                 return;
             } else if ((!mConfig.isUserControlled() && animated && mConfig.targetState == state)
                     || mState.shouldPreserveDataStateOnReapply()) {
@@ -266,6 +274,7 @@ public class StateManager<S extends BaseState<S>, T extends StatefulContainer<S>
                 if (listener != null) {
                     mConfig.currentAnimation.addListener(listener);
                 }
+                onRepeatStateSetAborted(state);
                 return;
             }
         }
@@ -444,6 +453,15 @@ public class StateManager<S extends BaseState<S>, T extends StatefulContainer<S>
         for (int i = mListeners.size() - 1; i >= 0; i--) {
             mListeners.get(i).onStateTransitionComplete(state);
         }
+    }
+
+    private void onRepeatStateSetAborted(S state) {
+        if (enableStateManagerProtoLog()) {
+            StateManagerProtoLogProxy.logOnRepeatStateSetAborted(state);
+        } else if (DEBUG) {
+            Log.d(TAG, "onRepeatStateSetAborted - state: " + state);
+        }
+        mContainer.onRepeatStateSetAborted(state);
     }
 
     public S getLastState() {
@@ -686,6 +704,9 @@ public class StateManager<S extends BaseState<S>, T extends StatefulContainer<S>
          */
         void setStateWithAnimation(
                 STATE_TYPE toState, StateAnimationConfig config, PendingAnimation animation);
+
+        /** Handles back started in predictive back gesture for target state. */
+        default void onBackStarted(STATE_TYPE toState) {}
 
         /** Handles backProgress in predictive back gesture for target state. */
         default void onBackProgressed(

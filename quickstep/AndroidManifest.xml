@@ -49,6 +49,9 @@
     <uses-permission android:name="android.permission.ACCESS_HIDDEN_PROFILES_FULL" />
     <uses-permission android:name="android.permission.ACCESS_HIDDEN_PROFILES" />
 
+    <!-- Permission required to listen to recent, all app key gestures. -->
+    <uses-permission android:name="android.permission.MANAGE_KEY_GESTURES" />
+
     <!-- Permission required to start a WidgetPickerActivity. -->
     <permission android:name="${applicationId}.permission.START_WIDGET_PICKER_ACTIVITY"
         android:protectionLevel="signature|privileged" />
@@ -138,6 +141,7 @@
             android:excludeFromRecents="true"
             android:permission="android.permission.REBOOT"
             android:theme="@style/AllSetTheme"
+            android:enableOnBackInvokedCallback="false"
             android:label="@string/allset_title"
             android:exported="true">
             <intent-filter>
@@ -146,13 +150,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.android.launcher3.WidgetPickerActivity"
+        <activity android:name="com.android.launcher3.QuickstepWidgetPickerActivity"
             android:theme="@style/WidgetPickerActivityTheme"
             android:excludeFromRecents="true"
             android:autoRemoveFromRecents="true"
-            android:showOnLockScreen="true"
             android:launchMode="singleTop"
             android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:permission="${applicationId}.permission.START_WIDGET_PICKER_ACTIVITY">
             <intent-filter>
                 <action android:name="android.intent.action.PICK" />

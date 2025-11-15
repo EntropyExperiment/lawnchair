@@ -116,7 +116,7 @@ public class LauncherAppWidgetProviderInfo extends AppWidgetProviderInfo impleme
             // On phones we no longer support regular landscape, only fixed landscape for this
             // reason we don't need to take regular landscape into account in phones
             if (Flags.oneGridSpecs() && dp.inv.deviceType == TYPE_PHONE
-                    && dp.inv.isFixedLandscape != dp.isLandscape) {
+                    && dp.inv.isFixedLandscape != dp.getDeviceProperties().isLandscape()) {
                 continue;
             }
 

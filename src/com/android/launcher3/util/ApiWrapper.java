@@ -23,11 +23,11 @@ import android.app.Person;
 import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.content.pm.LauncherUserInfo;
 import android.content.pm.ShortcutInfo;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -35,21 +35,26 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.util.ArrayMap;
+import android.view.SurfaceControlViewHost;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.android.launcher3.BaseActivity;
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppComponent;
 import com.android.launcher3.dagger.LauncherAppSingleton;
+import com.android.launcher3.icons.BitmapRenderer;
+import com.android.launcher3.util.TouchController;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.inject.Inject;
 
@@ -229,19 +234,12 @@ public class ApiWrapper {
         }
     }
 
-    /**
-     * Returns a hash to uniquely identify a particular version of appInfo
-     */
-    public String getApplicationInfoHash(@NonNull ApplicationInfo appInfo) {
-        // The hashString in source dir changes with every install
-        return appInfo.sourceDir;
-    }
-
-    /**
-     * Returns the round icon resource Id if defined by the app
-     */
-    public int getRoundIconRes(@NonNull ApplicationInfo appInfo) {
-        return 0;
+    @Nullable
+    public TouchController createStatusBarTouchController(
+            BaseActivity launcher,
+            Supplier<Boolean> isEnabledCheck
+    ) {
+        return null;
     }
 
     /**
@@ -249,6 +247,11 @@ public class ApiWrapper {
      */
     public boolean isFileDrawable(@NonNull ShortcutInfo shortcutInfo) {
         return false;
+    }
+
+    /** Captures a snapshot of the host content as a bitmap */
+    public Bitmap captureSnapshot(SurfaceControlViewHost host, int width, int height) {
+        return BitmapRenderer.createHardwareBitmap(width, height, host.getView()::draw);
     }
 
     private static class NoopDrawable extends ColorDrawable {

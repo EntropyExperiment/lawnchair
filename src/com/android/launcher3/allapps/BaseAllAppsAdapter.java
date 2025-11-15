@@ -242,7 +242,7 @@ public abstract class BaseAllAppsAdapter<T extends Context & ActivityContext> ex
                 icon.setOnLongClickListener(mOnIconLongClickListener);
                 // Ensure the all apps icon height matches the workspace icons in portrait mode.
                 icon.getLayoutParams().height =
-                        mActivityContext.getDeviceProfile().allAppsCellHeightPx;
+                        mActivityContext.getDeviceProfile().getAllAppsProfile().getCellHeightPx();
                 return new ViewHolder(icon);
             case VIEW_TYPE_EMPTY_SEARCH:
                 return new ViewHolder(mLayoutInflater.inflate(R.layout.all_apps_empty_search,
@@ -336,14 +336,13 @@ public abstract class BaseAllAppsAdapter<T extends Context & ActivityContext> ex
                     roundRegions |= (ROUND_BOTTOM_LEFT | ROUND_BOTTOM_RIGHT);
                 }
                 adapterItem.decorationInfo =
-                        new SectionDecorationInfo(mActivityContext, roundRegions,
-                                false /* decorateTogether */);
+                        new SectionDecorationInfo(mActivityContext, roundRegions);
                 break;
             case VIEW_TYPE_PRIVATE_SPACE_SYS_APPS_DIVIDER:
                 adapterItem = mApps.getAdapterItems().get(position);
-                adapterItem.decorationInfo = mApps.getPrivateProfileManager().getCurrentState()
-                        == STATE_DISABLED ? null : new SectionDecorationInfo(mActivityContext,
-                        ROUND_NOTHING, true /* decorateTogether */);
+                adapterItem.decorationInfo =
+                        mApps.getPrivateProfileManager().getCurrentState() == STATE_DISABLED ? null
+                                : new SectionDecorationInfo(mActivityContext, ROUND_NOTHING);
                 break;
             case VIEW_TYPE_BOTTOM_VIEW_TO_SCROLL_TO:
             case VIEW_TYPE_ALL_APPS_DIVIDER:

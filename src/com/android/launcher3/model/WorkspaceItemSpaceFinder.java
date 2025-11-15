@@ -15,15 +15,14 @@
  */
 package com.android.launcher3.model;
 
-import static com.android.launcher3.Utilities.SHOULD_SHOW_FIRST_PAGE_WIDGET;
 import static com.android.launcher3.WorkspaceLayoutManager.FIRST_SCREEN_ID;
 
 import android.util.LongSparseArray;
 
+import com.android.launcher3.BuildConfig;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherSettings;
-import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.util.GridOccupancy;
 import com.android.launcher3.util.IntArray;
@@ -55,8 +54,8 @@ public class WorkspaceItemSpaceFinder {
      *
      * @return screenId and the coordinates for the item in an int array of size 3.
      */
-    public int[] findSpaceForItem(
-            IntArray workspaceScreens, IntArray addedWorkspaceScreensFinal, int spanX, int spanY) {
+    public int[] findSpaceForItem(IntArray workspaceScreens, IntArray addedWorkspaceScreensFinal,
+            ArrayList<ItemInfo> addItemsFinal, int spanX, int spanY) {
         LongSparseArray<ArrayList<ItemInfo>> screenItems = new LongSparseArray<>();
 
         // Use sBgItemsIdMap as all the items are already loaded.
@@ -73,6 +72,18 @@ public class WorkspaceItemSpaceFinder {
             }
         }
 
+        // Add items that are due to be added to the database from AddWorkspaceItemsTask#execute.
+        for (ItemInfo info : addItemsFinal) {
+            if (info.container == LauncherSettings.Favorites.CONTAINER_DESKTOP) {
+                ArrayList<ItemInfo> items = screenItems.get(info.screenId);
+                if (items == null) {
+                    items = new ArrayList<>();
+                    screenItems.put(info.screenId, items);
+                }
+                items.add(info);
+            }
+        }
+
         // Find appropriate space for the item.
         int screenId = 0;
         int[] coordinates = new int[2];
@@ -81,7 +92,7 @@ public class WorkspaceItemSpaceFinder {
         int screenCount = workspaceScreens.size();
         // First check the preferred screen.
         IntSet screensToExclude = new IntSet();
-        if (FeatureFlags.QSB_ON_FIRST_SCREEN) {
+        if (BuildConfigs.QSB_ON_FIRST_SCREEN) {
             screensToExclude.add(FIRST_SCREEN_ID);
         }
 
@@ -109,7 +120,7 @@ public class WorkspaceItemSpaceFinder {
                 throw new RuntimeException("Can't find space to add the item");
             }
         }
-        return new int[] { screenId, coordinates[0], coordinates[1] };
+        return new int[]{screenId, coordinates[0], coordinates[1]};
     }
 
     private boolean findNextAvailableIconSpaceInScreen(

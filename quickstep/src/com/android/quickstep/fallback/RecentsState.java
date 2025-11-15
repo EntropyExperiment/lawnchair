@@ -16,11 +16,10 @@
 package com.android.quickstep.fallback;
 
 import static com.android.launcher3.Flags.enableDesktopExplodedView;
-import static com.android.launcher3.Flags.enableDesktopWindowingCarouselDetach;
-import static com.android.launcher3.Flags.enableGridOnlyOverview;
 import static com.android.launcher3.LauncherState.FLAG_CLOSE_POPUPS;
 import static com.android.launcher3.uioverrides.states.BackgroundAppState.getOverviewScaleAndOffsetForBackgroundState;
 import static com.android.launcher3.uioverrides.states.OverviewModalTaskState.getOverviewScaleAndOffsetForModalState;
+import static com.android.launcher3.util.OverviewReleaseFlags.enableGridOnlyOverview;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -31,6 +30,7 @@ import com.android.launcher3.statemanager.BaseState;
 import com.android.quickstep.RecentsActivity;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.views.ActivityContext;
+import com.android.launcher3.views.ScrimColors;
 import com.android.quickstep.views.RecentsViewContainer;
 
 import app.lawnchair.theme.color.tokens.ColorTokens;
@@ -49,9 +49,8 @@ public class RecentsState implements BaseState<RecentsState> {
     private static final int FLAG_LIVE_TILE = BaseState.getFlag(6);
     private static final int FLAG_RECENTS_VIEW_VISIBLE = BaseState.getFlag(7);
     private static final int FLAG_TASK_THUMBNAIL_SPLASH = BaseState.getFlag(8);
-    private static final int FLAG_DETACH_DESKTOP_CAROUSEL = BaseState.getFlag(9);
-    private static final int FLAG_ADD_DESK_BUTTON = BaseState.getFlag(10);
-    private static final int FLAG_SHOW_EXPLODED_DESKTOP_VIEW = BaseState.getFlag(11);
+    private static final int FLAG_ADD_DESK_BUTTON = BaseState.getFlag(9);
+    private static final int FLAG_SHOW_EXPLODED_DESKTOP_VIEW = BaseState.getFlag(10);
 
     public static final int DEFAULT_STATE_ORDINAL = 0;
     public static final int MODAL_TASK_ORDINAL = 1;
@@ -72,8 +71,7 @@ public class RecentsState implements BaseState<RecentsState> {
                     | FLAG_SHOW_EXPLODED_DESKTOP_VIEW);
     public static final RecentsState BACKGROUND_APP = new BackgroundAppState(BACKGROUND_APP_ORDINAL,
             FLAG_DISABLE_RESTORE | FLAG_NON_INTERACTIVE | FLAG_FULL_SCREEN
-                    | FLAG_RECENTS_VIEW_VISIBLE | FLAG_TASK_THUMBNAIL_SPLASH
-                    | FLAG_DETACH_DESKTOP_CAROUSEL);
+                    | FLAG_RECENTS_VIEW_VISIBLE | FLAG_TASK_THUMBNAIL_SPLASH);
     public static final RecentsState HOME = new RecentsState(HOME_STATE_ORDINAL, 0);
     public static final RecentsState BG_LAUNCHER = new LauncherState(BG_LAUNCHER_ORDINAL, 0);
     public static final RecentsState OVERVIEW_SPLIT_SELECT = new RecentsState(
@@ -98,16 +96,17 @@ public class RecentsState implements BaseState<RecentsState> {
         sAllStates[id] = this;
     }
 
+
     @Override
     public String toString() {
         return switch (ordinal) {
-            case DEFAULT_STATE_ORDINAL -> "DEFAULT";
-            case MODAL_TASK_ORDINAL -> "MODAL_TASK";
-            case BACKGROUND_APP_ORDINAL -> "BACKGROUND_APP";
-            case HOME_STATE_ORDINAL -> "HOME";
-            case BG_LAUNCHER_ORDINAL -> "BG_LAUNCHER";
-            case OVERVIEW_SPLIT_SELECT_ORDINAL -> "SPLIT_SELECT";
-            default -> "Unknown Ordinal-" + ordinal;
+            case DEFAULT_STATE_ORDINAL -> "RECENTS_DEFAULT";
+            case MODAL_TASK_ORDINAL -> "RECENTS_MODAL_TASK";
+            case BACKGROUND_APP_ORDINAL -> "RECENTS_BACKGROUND_APP";
+            case HOME_STATE_ORDINAL -> "RECENTS_HOME";
+            case BG_LAUNCHER_ORDINAL -> "RECENTS_BG_LAUNCHER";
+            case OVERVIEW_SPLIT_SELECT_ORDINAL -> "RECENTS_SPLIT_SELECT";
+            default -> "RECENTS Unknown Ordinal-" + ordinal;
         };
     }
 
@@ -127,8 +126,7 @@ public class RecentsState implements BaseState<RecentsState> {
     }
 
     /**
-     * For this state, how modal should over view been shown. 0 modalness means all
-     * tasks drawn,
+     * For this state, how modal should over view been shown. 0 modalness means all tasks drawn,
      * 1 modalness means the current task is show on its own.
      */
     public float getOverviewModalness() {
@@ -170,10 +168,12 @@ public class RecentsState implements BaseState<RecentsState> {
     /**
      * For this state, what color scrim should be drawn behind overview.
      */
-    public int getScrimColor(Context context) {
-        return hasFlag(FLAG_SCRIM)
-            ? Themes.getAttrColor(context, R.attr.overviewScrimColor)
-            : Color.TRANSPARENT;
+    public ScrimColors getScrimColor(Context context) {
+        return new ScrimColors(
+                /* backgroundColor */ hasFlag(FLAG_SCRIM)
+                ? Themes.getAttrColor(context, R.attr.overviewScrimColor)
+                : Color.TRANSPARENT,
+                /* foregroundColor */ Color.TRANSPARENT);
     }
 
     public float[] getOverviewScaleAndOffset(RecentsViewContainer container) {
@@ -184,17 +184,12 @@ public class RecentsState implements BaseState<RecentsState> {
      * For this state, whether tasks should layout as a grid rather than a list.
      */
     public boolean displayOverviewTasksAsGrid(DeviceProfile deviceProfile) {
-        return hasFlag(FLAG_SHOW_AS_GRID) && deviceProfile.isTablet;
+        return hasFlag(FLAG_SHOW_AS_GRID) && deviceProfile.getDeviceProperties().isTablet();
     }
 
     @Override
     public boolean showTaskThumbnailSplash() {
         return hasFlag(FLAG_TASK_THUMBNAIL_SPLASH);
-    }
-
-    @Override
-    public boolean detachDesktopCarousel() {
-        return hasFlag(FLAG_DETACH_DESKTOP_CAROUSEL) && enableDesktopWindowingCarouselDetach();
     }
 
     @Override

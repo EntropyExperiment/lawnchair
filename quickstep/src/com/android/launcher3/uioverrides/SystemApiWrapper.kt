@@ -23,10 +23,11 @@ import android.content.IIntentReceiver
 import android.content.IIntentSender
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
+import android.graphics.Bitmap
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Flags.allowPrivateProfile
@@ -34,23 +35,26 @@ import android.os.IBinder
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.ArrayMap
+import android.view.SurfaceControlViewHost
 import android.widget.Toast
 import android.window.RemoteTransition
+import android.window.ScreenCapture
+import com.android.launcher3.BaseActivity
 import androidx.annotation.RequiresApi
 import com.android.launcher3.Flags.enablePrivateSpace
-import com.android.launcher3.Flags.enablePrivateSpaceInstallShortcut
-import com.android.launcher3.Flags.privateSpaceAppInstallerButton
 import com.android.launcher3.Flags.privateSpaceSysAppsSeparation
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.proxy.ProxyActivityStarter
+import com.android.launcher3.uioverrides.touchcontrollers.StatusBarTouchController
 import com.android.launcher3.util.ApiWrapper
 import com.android.launcher3.util.Executors
 import com.android.launcher3.util.StartActivityParams
 import com.android.launcher3.util.UserIconInfo
 import com.android.quickstep.util.FadeOutRemoteTransition
+import java.util.function.Supplier
 import javax.inject.Inject
 
 import app.lawnchair.LawnchairApp
@@ -123,10 +127,7 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
 
     override fun getAppMarketActivityIntent(packageName: String, user: UserHandle): Intent {
         return try {
-            if (
-                enablePrivateSpace() &&
-                (privateSpaceAppInstallerButton() || enablePrivateSpaceInstallShortcut())
-            )
+            if (allowPrivateProfile() && enablePrivateSpace())
                 ProxyActivityStarter.getLaunchIntent(
                     mContext,
                     StartActivityParams(null as PendingIntent?, 0).apply {
@@ -152,7 +153,7 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
     /** Returns an intent which can be used to open Private Space Settings. */
     override fun getPrivateSpaceSettingsIntent(): Intent? {
         return try {
-            if (enablePrivateSpace())
+            if (allowPrivateProfile() && enablePrivateSpace())
                 ProxyActivityStarter.getLaunchIntent(
                     mContext,
                     StartActivityParams(null as PendingIntent?, 0).apply {
@@ -241,11 +242,24 @@ open class SystemApiWrapper @Inject constructor(@ApplicationContext context: Con
         }
     }
 
-    override fun getApplicationInfoHash(appInfo: ApplicationInfo): String =
-        (appInfo.sourceDir?.hashCode() ?: 0).toString() + " " + appInfo.longVersionCode
-
-    override fun getRoundIconRes(appInfo: ApplicationInfo) = appInfo.roundIconRes
+    override fun createStatusBarTouchController(
+        launcher: BaseActivity,
+        isEnabledCheck: Supplier<Boolean>,
+    ): StatusBarTouchController? {
+        return StatusBarTouchController(launcher, isEnabledCheck)
+    }
 
     override fun isFileDrawable(shortcutInfo: ShortcutInfo) =
         shortcutInfo.hasIconFile() || shortcutInfo.hasIconUri()
+
+    override fun captureSnapshot(host: SurfaceControlViewHost, width: Int, height: Int): Bitmap =
+        ScreenCapture.captureLayers(
+                ScreenCapture.LayerCaptureArgs.Builder(host.surfacePackage!!.surfaceControl)
+                    .setSourceCrop(Rect(0, 0, width, height))
+                    .setAllowProtected(true)
+                    .setHintForSeamlessTransition(true)
+                    .build()
+            )
+            .asBitmap()
+            .copy(Bitmap.Config.ARGB_8888, true)
 }

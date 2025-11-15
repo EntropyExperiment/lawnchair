@@ -20,6 +20,7 @@ import static com.android.launcher3.Flags.enableScalingRevealHomeAnimation;
 import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_ALLAPPS;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.android.internal.jank.Cuj;
 import com.android.launcher3.DeviceProfile;
@@ -29,6 +30,7 @@ import com.android.launcher3.LauncherState;
 import com.android.launcher3.R;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.views.ActivityContext;
+import com.android.launcher3.views.ScrimColors;
 import com.android.quickstep.util.BaseDepthController;
 import com.android.systemui.shared.system.InteractionJankMonitorWrapper;
 
@@ -137,7 +139,7 @@ public class AllAppsState extends LauncherState {
     protected <DEVICE_PROFILE_CONTEXT extends Context & ActivityContext>
             float getDepthUnchecked(DEVICE_PROFILE_CONTEXT context) {
         if (context.getDeviceProfile().shouldShowAllAppsOnSheet()) {
-            return context.getDeviceProfile().bottomSheetDepth;
+            return context.getDeviceProfile().getBottomSheetProfile().getBottomSheetDepth();
         } else {
             // The scrim fades in at approximately 50% of the swipe gesture.
             if (enableScalingRevealHomeAnimation()) {
@@ -149,6 +151,11 @@ public class AllAppsState extends LauncherState {
                 return 2f;
             }
         }
+    }
+
+    @Override
+    public boolean shouldBlurWorkspace(LauncherState targetState) {
+        return targetState == ALL_APPS || targetState == NORMAL;
     }
 
     @Override
@@ -174,8 +181,7 @@ public class AllAppsState extends LauncherState {
     }
 
     private static boolean isWorkspaceVisible(DeviceProfile deviceProfile) {
-        // Currently we hide the workspace with the all apps blur flag for simplicity.
-        return deviceProfile.isTablet && !Flags.allAppsBlur();
+        return deviceProfile.getDeviceProperties().isTablet() || (Flags.allAppsSheetForHandheld() && Flags.allAppsBlur());
     }
 
     @Override
@@ -198,26 +204,24 @@ public class AllAppsState extends LauncherState {
     @Override
     public boolean shouldFloatingSearchBarUsePillWhenUnfocused(Launcher launcher) {
         DeviceProfile dp = launcher.getDeviceProfile();
-        return dp.isPhone && !dp.isLandscape;
+        return dp.getDeviceProperties().isPhone() && !dp.getDeviceProperties().isLandscape();
     }
 
     @Override
-    public LauncherState getHistoryForState(LauncherState previousState) {
-        return previousState == BACKGROUND_APP ? QUICK_SWITCH_FROM_HOME
-                : previousState == OVERVIEW ? OVERVIEW : NORMAL;
-    }
-
-    @Override
-    public int getWorkspaceScrimColor(Launcher launcher) {
+    public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
+        int backgroundColor;
         if (!launcher.getDeviceProfile().shouldShowAllAppsOnSheet()) {
+            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + materialColorSurfaceDim
+            // Always use an opaque scrim if there's no sheet.
+            backgroundColor = launcher.getResources().getColor(R.color.materialColorSurfaceDim);
+        } else if (!Flags.allAppsBlur()) {
+            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + widgets_picker_scrim
+            // If there's a sheet but no blur, use the old scrim color.
+            backgroundColor = launcher.getResources().getColor(R.color.widgets_picker_scrim);
+        } else {
             // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColor
-            return Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+            backgroundColor = Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
         }
-        if (Flags.allAppsBlur()) {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColorOverBlur
-            return Themes.getAttrColor(launcher, R.attr.allAppsScrimColorOverBlur);
-        }
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + widgets_picker_scrim
-        return launcher.getResources().getColor(R.color.widgets_picker_scrim);
+        return new ScrimColors(backgroundColor, /* foregroundColor */ Color.TRANSPARENT);
     }
 }

@@ -46,10 +46,14 @@ class DesktopRecentsTransitionController(
     private val depthController: DepthController?,
 ) {
 
-    /** Launch desktop tasks from recents view */
+    /**
+     * Launch desktop tasks from recents view and activate the new freeform task with id
+     * [taskIdToReorderToFront] if it's provided and already on the given desk.
+     */
     fun launchDesktopFromRecents(
         desktopTaskView: DesktopTaskView,
         animated: Boolean,
+        taskIdToReorderToFront: Int? = null,
         callback: Consumer<Boolean>? = null,
     ) {
         val animRunner =
@@ -62,9 +66,13 @@ class DesktopRecentsTransitionController(
             )
         val transition = RemoteTransition(animRunner, appThread, "RecentsToDesktop")
         if (areMultiDesksFlagsEnabled()) {
-            systemUiProxy.activateDesk(desktopTaskView.deskId, transition)
+            systemUiProxy.activateDesk(desktopTaskView.deskId, transition, taskIdToReorderToFront)
         } else {
-            systemUiProxy.showDesktopApps(desktopTaskView.displayId, transition)
+            systemUiProxy.showDesktopApps(
+                desktopTaskView.displayId,
+                transition,
+                taskIdToReorderToFront,
+            )
         }
     }
 

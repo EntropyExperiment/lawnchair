@@ -59,9 +59,13 @@ class WallpaperThemeManager(private val activity: Activity) :
 
     fun updateTheme() {
         if (themeRes != Themes.getActivityThemeRes(activity)) {
-            recreateToUpdateTheme = true
-            activity.recreate()
+            recreateToUpdateTheme()
         }
+    }
+
+    fun recreateToUpdateTheme() {
+        recreateToUpdateTheme = true
+        activity.recreate()
     }
 
     companion object {

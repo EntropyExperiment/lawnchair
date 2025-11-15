@@ -18,6 +18,7 @@ package com.android.launcher3.folder;
 
 import static com.android.app.animation.Interpolators.ACCELERATE_DECELERATE;
 import static com.android.app.animation.Interpolators.EMPHASIZED_DECELERATE;
+import static com.android.launcher3.folder.ClippedFolderIconLayoutRule.ICON_OVERLAP_FACTOR;
 import static com.android.launcher3.icons.GraphicsUtils.setColorAlphaBound;
 
 import android.animation.Animator;
@@ -403,7 +404,7 @@ public class PreviewBackground extends DelegatedCellDrawing {
 
     public Path getClipPath() {
         mPath.reset();
-        float radius = getScaledRadius() * ClippedFolderIconLayoutRule.getIconOverlapFactor();
+        float radius = getScaledRadius() * ICON_OVERLAP_FACTOR;
         // Find the difference in radius so that the clip path remains centered.
         float radiusDifference = radius - getRadius();
         float offsetX = basePreviewOffsetX - radiusDifference;

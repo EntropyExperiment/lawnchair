@@ -80,10 +80,8 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
 
     private boolean mDisableNavBarScrim = false;
 
-    @Nullable
-    private WidgetCell mWidgetCellWithAddButton = null;
-    @Nullable
-    private WidgetItem mLastSelectedWidgetItem = null;
+    @Nullable private WidgetCell mWidgetCellWithAddButton = null;
+    @Nullable private WidgetItem mLastSelectedWidgetItem = null;
 
     public BaseWidgetSheet(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -95,8 +93,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     }
 
     /**
-     * Returns the margins to be applied to the left and right of the widget apps
-     * list.
+     * Returns the margins to be applied to the left and right of the widget apps list.
      */
     protected int getWidgetListHorizontalMargin() {
         return getResources().getDimensionPixelSize(
@@ -154,7 +151,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
         WidgetCell wc;
         if (v instanceof WidgetCell view) {
             wc = view;
-        } else if (v.getParent() instanceof WidgetCell parent) {
+        }  else if (v.getParent() instanceof WidgetCell parent) {
             wc = parent;
         } else {
             return;
@@ -195,35 +192,30 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
 
     @Override
     protected float getShiftRange() {
-        // We add the extra height added during predictive back / swipe up to the shift
-        // range, so
+        // We add the extra height added during predictive back / swipe up to the shift range, so
         // that the idle interpolator knows to animate the view off fully.
         return mContent.getHeight() + getBottomOffsetPx();
     }
 
     /**
-     * Click handler for tap to add button. This handler assumes we are in the
-     * Launcher activity and
+     * Click handler for tap to add button. This handler assumes we are in the Launcher activity and
      * should not be used when the widget sheet is displayed elsewhere.
      */
     private void addWidget(@NonNull PendingAddItemInfo info) {
-        // Using a boolean flag here to make sure the callback is only run once. This
-        // should never
-        // happen because we close the sheet and it will be reconstructed the next time
-        // it is
+        // Using a boolean flag here to make sure the callback is only run once. This should never
+        // happen because we close the sheet and it will be reconstructed the next time it is
         // needed.
         final AtomicBoolean hasRun = new AtomicBoolean(false);
         addOnCloseListener(() -> {
-            if (hasRun.get())
-                return;
+            if (hasRun.get()) return;
             hasRun.set(true);
 
             // Going to NORMAL state will also dismiss the All Apps view if it is showing.
             Launcher launcher = Launcher.getLauncher(mActivityContext);
             launcher.getStateManager().goToState(NORMAL, forSuccessCallback(() -> {
                 launcher.getAccessibilityDelegate().addToWorkspace(info,
-                        /* accessibility= */ false,
-                        /* finishCallback= */ (success) -> {
+                        /*accessibility=*/ false,
+                        /*finishCallback=*/ (success) -> {
                             mActivityContext.getStatsLogManager()
                                     .logger()
                                     .withItemInfo(info)
@@ -235,8 +227,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     }
 
     /**
-     * Scroll to show the widget cell. If both the bottom and top of the cell are
-     * clipped, this will
+     * Scroll to show the widget cell. If both the bottom and top of the cell are clipped, this will
      * prioritize showing the bottom of the cell (where the add button is).
      */
     private void scrollToWidgetCell(@NonNull WidgetCell wc) {
@@ -268,11 +259,11 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     }
 
     /**
-     * Find the nearest scrollable container of the given WidgetCell, and scroll by
-     * the given
+     * Find the nearest scrollable container of the given WidgetCell, and scroll by the given
      * amount.
      */
     protected abstract void scrollCellContainerByY(WidgetCell wc, int scrollByY);
+
 
     /**
      * Return the top clip of any sticky headers over the given cell.
@@ -282,8 +273,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     }
 
     /**
-     * Returns the component of the widget that is currently showing an add button,
-     * if any.
+     * Returns the component of the widget that is currently showing an add button, if any.
      */
     @Nullable
     protected WidgetItem getLastSelectedWidgetItem() {
@@ -314,8 +304,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     @Override
     public void setInsets(Rect insets) {
         mInsets.set(insets);
-        @Px
-        int contentHorizontalMargin = getWidgetListHorizontalMargin();
+        @Px int contentHorizontalMargin = getWidgetListHorizontalMargin();
         if (contentHorizontalMargin != mContentHorizontalMargin) {
             onContentHorizontalMarginChanged(contentHorizontalMargin);
             mContentHorizontalMargin = contentHorizontalMargin;
@@ -357,8 +346,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     protected abstract void onContentHorizontalMarginChanged(int contentHorizontalMarginInPx);
 
     /**
-     * Measures the dimension of this view and its children by taking system insets,
-     * navigation bar,
+     * Measures the dimension of this view and its children by taking system insets, navigation bar,
      * status bar, into account.
      */
     protected void doMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -366,7 +354,8 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
 
         DeviceProfile deviceProfile = mActivityContext.getDeviceProfile();
         measureChildWithMargins(mContent, widthMeasureSpec,
-                widthUsed, heightMeasureSpec, deviceProfile.bottomSheetTopPadding);
+                widthUsed, heightMeasureSpec,
+                deviceProfile.getBottomSheetProfile().getBottomSheetTopPadding());
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.getSize(heightMeasureSpec));
     }
@@ -377,7 +366,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     protected int getInsetsWidth() {
         int widthUsed;
         DeviceProfile deviceProfile = mActivityContext.getDeviceProfile();
-        if (deviceProfile.isTablet) {
+        if (deviceProfile.getDeviceProperties().isTablet()) {
             widthUsed = Math.max(2 * getTabletHorizontalMargin(deviceProfile),
                     2 * (mInsets.left + mInsets.right));
         } else if (mInsets.bottom > 0) {
@@ -397,9 +386,8 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
 
     @Override
     protected Interpolator getIdleInterpolator() {
-        return mActivityContext.getDeviceProfile().isTablet
-                ? EMPHASIZED
-                : super.getIdleInterpolator();
+        return mActivityContext.getDeviceProfile().getDeviceProperties().isTablet()
+                ? EMPHASIZED : super.getIdleInterpolator();
     }
 
     protected void onCloseComplete() {
@@ -416,7 +404,8 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
         boolean isNavBarDark = Themes.getAttrBoolean(getContext(), R.attr.isMainColorDark);
 
         // In light mode, landscape reverses navbar background color.
-        boolean isPhoneLandscape = !mActivityContext.getDeviceProfile().isTablet && mInsets.bottom == 0;
+        boolean isPhoneLandscape =
+                !mActivityContext.getDeviceProfile().getDeviceProperties().isTablet() && mInsets.bottom == 0;
         if (!isNavBarDark && isPhoneLandscape) {
             isNavBarDark = true;
         }

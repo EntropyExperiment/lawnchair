@@ -84,8 +84,7 @@ public class AllAppsStore<T extends Context & ActivityContext> {
     }
 
     /**
-     * Calling {@link #setApps(AppInfo[], int, Map, boolean)} with shouldPreinflate
-     * set to
+     * Calling {@link #setApps(AppInfo[], int, Map, boolean)} with shouldPreinflate set to
      * {@code true}. This method should be called in launcher (not for taskbar).
      */
     public void setApps(@Nullable AppInfo[] apps, int flags, Map<PackageUserKey, Integer> map) {
@@ -93,19 +92,13 @@ public class AllAppsStore<T extends Context & ActivityContext> {
     }
 
     /**
-     * Sets the current set of apps and sets mapping for {@link PackageUserKey} to
-     * Uid for
+     * Sets the current set of apps and sets mapping for {@link PackageUserKey} to Uid for
      * the current set of apps.
      *
-     * <p>
-     * Note that shouldPreinflate param should be set to {@code false} for taskbar,
-     * because
-     * this method is too late to preinflate all apps, as user will open all apps in
-     * the frame
+     * <p> Note that shouldPreinflate param should be set to {@code false} for taskbar, because
+     * this method is too late to preinflate all apps, as user will open all apps in the frame
      *
-     * <p>
-     * Param: apps are required to be sorted using the comparator
-     * COMPONENT_KEY_COMPARATOR
+     * <p>Param: apps are required to be sorted using the comparator COMPONENT_KEY_COMPARATOR
      * in order to enable binary search on the mApps store
      */
     public void setApps(@Nullable AppInfo[] apps, int flags, Map<PackageUserKey, Integer> map,
@@ -115,8 +108,7 @@ public class AllAppsStore<T extends Context & ActivityContext> {
         mModelFlags = flags;
         notifyUpdate();
         mPackageUserKeytoUidMap = map;
-        // Preinflate all apps RV when apps has changed, which can happen after
-        // unlocking screen,
+        // Preinflate all apps RV when apps has changed, which can happen after unlocking screen,
         // rotating screen, or downloading/upgrading apps.
         if (shouldPreinflate) {
             mAllAppsRecyclerViewPool.preInflateAllAppsViewHolders(mContext);
@@ -128,28 +120,25 @@ public class AllAppsStore<T extends Context & ActivityContext> {
     }
 
     /**
-     * Look up for Uid using package name and user handle for the current set of
-     * apps.
+     * Look up for Uid using package name and user handle for the current set of apps.
      */
     public int lookUpForUid(String packageName, UserHandle user) {
         return mPackageUserKeytoUidMap.getOrDefault(new PackageUserKey(packageName, user), -1);
     }
 
     /**
-     * @see com.android.launcher3.model.BgDataModel.Callbacks#FLAG_QUIET_MODE_ENABLED
-     * @see com.android.launcher3.model.BgDataModel.Callbacks#FLAG_HAS_SHORTCUT_PERMISSION
-     * @see com.android.launcher3.model.BgDataModel.Callbacks#FLAG_QUIET_MODE_CHANGE_PERMISSION
-     * @see com.android.launcher3.model.BgDataModel.Callbacks#FLAG_WORK_PROFILE_QUIET_MODE_ENABLED
-     * @see
-     *      com.android.launcher3.model.BgDataModel.Callbacks#FLAG_PRIVATE_PROFILE_QUIET_MODE_ENABLED
+     * @see com.android.launcher3.model.data.AppsListData#FLAG_QUIET_MODE_ENABLED
+     * @see com.android.launcher3.model.data.AppsListData#FLAG_HAS_SHORTCUT_PERMISSION
+     * @see com.android.launcher3.model.data.AppsListData#FLAG_QUIET_MODE_CHANGE_PERMISSION
+     * @see com.android.launcher3.model.data.AppsListData#FLAG_WORK_PROFILE_QUIET_MODE_ENABLED
+     * @see com.android.launcher3.model.data.AppsListData#FLAG_PRIVATE_PROFILE_QUIET_MODE_ENABLED
      */
     public boolean hasModelFlag(int mask) {
         return (mModelFlags & mask) != 0;
     }
 
     /**
-     * Returns {@link AppInfo} if any apps matches with provided
-     * {@link ComponentKey}, otherwise
+     * Returns {@link AppInfo} if any apps matches with provided {@link ComponentKey}, otherwise
      * null.
      *
      * Uses {@link AppInfo#COMPONENT_KEY_COMPARATOR} as a default comparator.
@@ -160,8 +149,7 @@ public class AllAppsStore<T extends Context & ActivityContext> {
     }
 
     /**
-     * Generic version of {@link #getApp(ComponentKey)} that allows comparator to be
-     * specified.
+     * Generic version of {@link #getApp(ComponentKey)} that allows comparator to be specified.
      */
     @Nullable
     public AppInfo getApp(ComponentKey key, Comparator<AppInfo> comparator) {
@@ -240,10 +228,8 @@ public class AllAppsStore<T extends Context & ActivityContext> {
     /**
      * Sets the AppInfo's associated icon's progress bar.
      *
-     * If this app is installed and supports incremental downloads, the progress bar
-     * will be updated
-     * the app's total download progress. Otherwise, the progress bar will be
-     * updated to the app's
+     * If this app is installed and supports incremental downloads, the progress bar will be updated
+     * the app's total download progress. Otherwise, the progress bar will be updated to the app's
      * installation progress.
      *
      * If this app is fully downloaded, the app icon will be reapplied.
@@ -274,9 +260,7 @@ public class AllAppsStore<T extends Context & ActivityContext> {
         void onAppsUpdated();
     }
 
-    /**
-     * Generate a dumpsys for each app package name and position in the apps list
-     */
+    /** Generate a dumpsys for each app package name and position in the apps list */
     public void dump(String prefix, PrintWriter writer) {
         writer.println(prefix + "\tAllAppsStore Apps[] size: " + mApps.length);
         for (int i = 0; i < mApps.length; i++) {

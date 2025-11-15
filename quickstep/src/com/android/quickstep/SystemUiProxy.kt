@@ -18,6 +18,7 @@ package com.android.quickstep
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningTaskInfo
 import android.app.ActivityOptions
+import android.app.ActivityTaskManager.INVALID_TASK_ID
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
@@ -30,6 +31,9 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.os.RemoteException
+import android.os.Trace
+import android.os.Trace.traceBegin
+import android.os.Trace.traceEnd
 import android.os.UserHandle
 import android.util.Log
 import android.view.IRemoteAnimationRunner
@@ -44,6 +48,7 @@ import android.window.RemoteTransition
 import android.window.TaskSnapshot
 import android.window.TransitionFilter
 import android.window.TransitionInfo
+import android.window.WindowContainerTransaction
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -143,6 +148,10 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     private var desktopTaskListener: IDesktopTaskListener? = null
     private val remoteTransitions = LinkedHashMap<RemoteTransition, TransitionFilter>()
 
+    // Save bubble bar state in case service is not bound yet when it is updated. SysUI relies on
+    // this to suppress the floating bubbles UI.
+    private var hasBubbleBar = false
+
     private val stateChangeCallbacks: MutableList<Runnable> = ArrayList()
 
     private var originalTransactionToken: IBinder? = null
@@ -167,11 +176,11 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     @SystemUiStateFlags var lastSystemUiStateFlags: Long = 0
 
     /**
-     * This is a singleton pending intent that is used to start recents via Shell (which is a
-     * different process). It is bare-bones, so it's expected that the component and options will be
-     * provided via fill-in intent.
+     * This returns a pending intent that is used to start recents via Shell (which is a different
+     * process). It is bare-bones, so it's expected that the component and options will be provided
+     * via fill-in intent.
      */
-    private val recentsPendingIntent by lazy {
+    private fun getRecentsPendingIntent(displayId: Int) =
         PendingIntent.getActivity(
             context,
             0,
@@ -183,9 +192,9 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
                 .setPendingIntentCreatorBackgroundActivityStartMode(
                     ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
                 )
+                .setLaunchDisplayId(displayId)
                 .toBundle(),
         )
-    }
 
     val unfoldTransitionProvider: ProxyUnfoldTransitionProvider? =
         if ((Flags.enableUnfoldStateAnimation() && ResourceUnfoldTransitionConfig().isEnabled))
@@ -264,6 +273,7 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
         this.unfoldAnimation = if (Flags.enableUnfoldStateAnimation()) null else unfoldAnimation
         this.dragAndDrop = dragAndDrop
         linkToDeath()
+        setHasBubbleBar(hasBubbleBar)
         // re-attach the listeners once missing due to setProxy has not been initialized yet.
         setPipAnimationListener(pipAnimationListener)
         setBubblesListener(bubblesListener)
@@ -417,6 +427,14 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
             //systemUiProxy?.notifyTaskbarAutohideSuspend(suspend)
         }
 
+    fun notifyRecentsButtonPositionChanged(bounds: Rect) {
+        executeWithErrorLog({
+            "Failed call notifyRecentsButtonPositionChanged with arg: $bounds"
+        }) {
+            systemUiProxy?.notifyRecentsButtonPositionChanged(bounds)
+        }
+    }
+
     fun takeScreenshot(request: ScreenshotRequest) =
         executeWithErrorLog({ "Failed call takeScreenshot" }) {
             // LC-Ignored
@@ -564,6 +582,14 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     //
     // Bubbles
     //
+    /** Tells SysUI whether bubble bar is used or not. */
+    fun setHasBubbleBar(hasBubbleBar: Boolean) {
+        executeWithErrorLog({ "Failed call setHasBubbleBar" }) {
+            bubbles?.setHasBubbleBar(hasBubbleBar)
+        }
+        this.hasBubbleBar = hasBubbleBar
+    }
+
     /** Sets the listener to be notified of bubble state changes. */
     fun setBubblesListener(listener: IBubblesListener?) {
         executeWithErrorLog({ "Failed call registerBubblesListener" }) {
@@ -579,10 +605,13 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
      * Tells SysUI to show the bubble with the provided key.
      *
      * @param key the key of the bubble to show.
-     * @param top top coordinate of bubble bar on screen
+     * @param bubbleBarTopToScreenBottom distance between the top coordinate of bubble bar and the
+     *   bottom of the screen
      */
-    fun showBubble(key: String?, top: Int) =
-        executeWithErrorLog({ "Failed call showBubble" }) { bubbles?.showBubble(key, top) }
+    fun showBubble(key: String?, bubbleBarTopToScreenBottom: Int) =
+        executeWithErrorLog({ "Failed call showBubble" }) {
+            bubbles?.showBubble(key, bubbleBarTopToScreenBottom)
+        }
 
     /** Tells SysUI to remove all bubbles. */
     fun removeAllBubbles() =
@@ -608,11 +637,12 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
      * expanded.
      *
      * @param location location of the bubble bar
-     * @param top new top coordinate for bubble bar on screen
+     * @param bubbleBarTopToScreenBottom distance between the new top coordinate for bubble bar and
+     *   the bottom of the screen
      */
-    fun stopBubbleDrag(location: BubbleBarLocation?, top: Int) =
+    fun stopBubbleDrag(location: BubbleBarLocation?, bubbleBarTopToScreenBottom: Int) =
         executeWithErrorLog({ "Failed call stopBubbleDrag" }) {
-            bubbles?.stopBubbleDrag(location, top)
+            bubbles?.stopBubbleDrag(location, bubbleBarTopToScreenBottom)
         }
 
     /**
@@ -648,13 +678,12 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
         }
 
     /**
-     * Tells SysUI the top coordinate of bubble bar on screen
-     *
-     * @param topOnScreen top coordinate for bubble bar on screen
+     * Tells SysUI the distance between the top coordinate of the bubble bar and the bottom of the
+     * screen
      */
-    fun updateBubbleBarTopOnScreen(topOnScreen: Int) =
-        executeWithErrorLog({ "Failed call updateBubbleBarTopOnScreen" }) {
-            bubbles?.updateBubbleBarTopOnScreen(topOnScreen)
+    fun updateBubbleBarTopToScreenBottom(bubbleBarTopToScreenBottom: Int) =
+        executeWithErrorLog({ "Failed call updateBubbleBarTopToScreenBottom" }) {
+            bubbles?.updateBubbleBarTopToScreenBottom(bubbleBarTopToScreenBottom)
         }
 
     /**
@@ -689,16 +718,9 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     fun showExpandedView() =
         executeWithErrorLog({ "Failed call showExpandedView" }) { bubbles?.showExpandedView() }
 
-    /** Tells SysUI to show the bubble drop target. */
-    @JvmOverloads
-    fun showBubbleDropTarget(show: Boolean, bubbleBarLocation: BubbleBarLocation? = null) =
-        executeWithErrorLog({ "Failed call showDropTarget" }) {
-            bubbles?.showDropTarget(show, bubbleBarLocation)
-        }
-
     /** Tells SysUI to move the dragged bubble to full screen. */
     fun moveDraggedBubbleToFullscreen(key: String, dropLocation: Point) {
-        executeWithErrorLog({ "Failed to call moveDraggedBubbleToFullscreen"}) {
+        executeWithErrorLog({ "Failed to call moveDraggedBubbleToFullscreen" }) {
             bubbles?.moveDraggedBubbleToFullscreen(key, dropLocation)
         }
     }
@@ -1058,6 +1080,7 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
             throw GetRecentTasksException("null mRecentTasks")
         }
         try {
+            traceBegin(Trace.TRACE_TAG_APP, "getRecentTasks")
             val rawTasks =
                 recentTasks?.getRecentTasks(
                     numTasks,
@@ -1068,6 +1091,8 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
         } catch (e: RemoteException) {
             Log.e(TAG, "Failed call getRecentTasks", e)
             throw GetRecentTasksException("Failed call getRecentTasks", e)
+        } finally {
+            traceEnd(Trace.TRACE_TAG_APP)
         }
     }
 
@@ -1109,11 +1134,18 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
 
     /**
      * Calls shell to activate the desk whose ID is `deskId` on whatever display it exists on. This
-     * will bring all tasks on this desk to the front.
+     * will show all tasks on this desk and bring [taskIdToReorderToFront] to the front if it's
+     * provided and already on the given desk. If the provided [taskIdToReorderToFront]'s value is
+     * null, do not change the windows' activation on the desk.
      */
-    fun activateDesk(deskId: Int, transition: RemoteTransition?) =
+    @JvmOverloads
+    fun activateDesk(
+        deskId: Int,
+        transition: RemoteTransition?,
+        taskIdToReorderToFront: Int? = null,
+    ) =
         executeWithErrorLog({ "Failed call activateDesk" }) {
-            desktopMode?.activateDesk(deskId, transition)
+            desktopMode?.activateDesk(deskId, transition, taskIdToReorderToFront ?: INVALID_TASK_ID)
         }
 
     /** Calls shell to remove the desk whose ID is `deskId`. */
@@ -1124,10 +1156,23 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     fun removeAllDesks() =
         executeWithErrorLog({ "Failed call removeAllDesks" }) { desktopMode?.removeAllDesks() }
 
-    /** Call shell to show all apps active on the desktop */
-    fun showDesktopApps(displayId: Int, transition: RemoteTransition?) =
+    /**
+     * Call shell to show all apps active on the desktop and bring [taskIdToReorderToFront] to front
+     * if it's valid on the default desk on the given display. If the provided
+     * [taskIdToReorderToFront]'s value is null, do not change the windows' activation on the desk.
+     */
+    @JvmOverloads
+    fun showDesktopApps(
+        displayId: Int,
+        transition: RemoteTransition? = null,
+        taskIdToReorderToFront: Int? = null,
+    ) =
         executeWithErrorLog({ "Failed call showDesktopApps" }) {
-            desktopMode?.showDesktopApps(displayId, transition)
+            desktopMode?.showDesktopApps(
+                displayId,
+                transition,
+                taskIdToReorderToFront ?: INVALID_TASK_ID,
+            )
         }
 
     /** If task with the given id is on the desktop, bring it to front */
@@ -1138,6 +1183,17 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
     ) =
         executeWithErrorLog({ "Failed call showDesktopApp" }) {
             desktopMode?.showDesktopApp(taskId, transition, toFrontReason)
+        }
+
+    /** Call shell to move to an existing fullscreen task (given by [taskId]) from desktop. */
+    @JvmOverloads
+    fun moveToFullscreen(
+        taskId: Int,
+        desktopModeTransitionSource: DesktopModeTransitionSource,
+        remoteTransition: RemoteTransition? = null,
+    ) =
+        executeWithErrorLog({ "Failed call moveToFullscreen" }) {
+            desktopMode?.moveToFullscreen(taskId, desktopModeTransitionSource, remoteTransition)
         }
 
     /** Set a listener on shell to get updates about desktop task state */
@@ -1206,16 +1262,19 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
         options: ActivityOptions,
         listener: RecentsAnimationListener,
         useSyntheticRecentsTransition: Boolean,
+        wct: WindowContainerTransaction? = null,
+        displayId: Int,
     ): Boolean {
         executeWithErrorLog({ "Error starting recents via shell" }) {
             recentTasks?.startRecentsTransition(
-                recentsPendingIntent,
+                getRecentsPendingIntent(displayId),
                 intent,
                 options.toBundle().apply {
                     if (useSyntheticRecentsTransition) {
                         putBoolean("is_synthetic_recents_transition", true)
                     }
                 },
+                wct,
                 context.iApplicationThread,
                 RecentsAnimationListenerStub(listener),
             )
@@ -1254,8 +1313,9 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
                 transitionInfo,
             )
 
-        override fun onAnimationCanceled(taskIds: IntArray?, taskSnapshots: Array<TaskSnapshot>?) =
+        override fun onAnimationCanceled(taskIds: IntArray?, taskSnapshots: Array<TaskSnapshot?>?) {
             listener.onAnimationCanceled(wrap(taskIds, taskSnapshots))
+        }
 
         override fun onTasksAppeared(
             apps: Array<RemoteAnimationTarget>?,

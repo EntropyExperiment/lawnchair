@@ -16,22 +16,34 @@
 
 package com.android.quickstep.fallback.window
 
-// Lawnchair-TODO-Flags: DesktopModeFlag =
-//  DesktopModeFlag(Flags::enableLauncherOverwineInWindow, false)
+//import android.window.DesktopExperienceFlags.DesktopExperienceFlag
+import com.android.launcher3.Flags
+
+// Lawnchair-TODO-Flags:     @JvmField
+//    val enableLauncherOverviewInWindow: DesktopExperienceFlag =
+//        DesktopExperienceFlag(
+//            Flags::enableLauncherOverviewInWindow,
+//            false,
+//            Flags.FLAG_ENABLE_LAUNCHER_OVERVIEW_IN_WINDOW,
+//        )
 // Impl: var.isTrue()
-class RecentsWindowFlags {
-    companion object {
-        @JvmField
-        val enableLauncherOverviewInWindow = false
+object RecentsWindowFlags {
+    @JvmField
+    val enableLauncherOverviewInWindow = false
 
-        @JvmField
-        val enableFallbackOverviewInWindow = false
+    @JvmField
+    val enableFallbackOverviewInWindow = false
 
-        @JvmField
-        val enableOverviewOnConnectedDisplays = false
+    @JvmField
+    val enableOverviewOnConnectedDisplays = false
 
-        @JvmStatic
-        val enableOverviewInWindow
-            get() = false
-    }
+    @JvmStatic
+    val enableOverviewInWindow
+        get() = false
+
+    @JvmStatic
+    val enableDesktopMenuOnSecondaryDisplay: Boolean
+        get() = false
+
+    @JvmStatic fun enableOverviewOnConnectedDisplays() = enableOverviewOnConnectedDisplays
 }

@@ -42,18 +42,23 @@ import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.RemoveAnimationSettingsTracker;
+import com.android.launcher3.backuprestore.LauncherRestoreEventLogger;
+import com.android.launcher3.compose.core.widgetpicker.WidgetPickerComposeWrapper;
+import com.android.launcher3.folder.FolderNameSuggestionLoader;
 import com.android.launcher3.graphics.GridCustomizationsProxy;
 import com.android.launcher3.graphics.ThemeManager;
 import com.android.launcher3.icons.LauncherIcons.IconPool;
+import com.android.launcher3.logging.DumpManager;
+import com.android.launcher3.logging.StatsLogManager;
 import com.android.launcher3.model.ItemInstallQueue;
 import com.android.launcher3.model.LoaderCursor.LoaderCursorFactory;
-import com.android.launcher3.model.WidgetsFilterDataProvider;
 import com.android.launcher3.pm.InstallSessionHelper;
 import com.android.launcher3.pm.UserCache;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.DisplayController;
 import com.android.launcher3.util.DynamicResource;
+import com.android.launcher3.util.InstantAppResolver;
 import com.android.launcher3.util.LockedUserState;
 import com.android.launcher3.util.MSDLPlayerWrapper;
 import com.android.launcher3.util.PackageManagerHelper;
@@ -66,6 +71,7 @@ import com.android.launcher3.util.window.RefreshRateTracker;
 import com.android.launcher3.util.window.WindowManagerProxy;
 import com.android.launcher3.widget.LauncherWidgetHolder.WidgetHolderFactory;
 import com.android.launcher3.widget.custom.CustomWidgetManager;
+import com.android.launcher3.widget.util.WidgetSizeHandler;
 
 import dagger.BindsInstance;
 
@@ -104,12 +110,20 @@ public interface LauncherBaseAppComponent {
     IconPool getIconPool();
     RemoveAnimationSettingsTracker getRemoveAnimationSettingsTracker();
     LauncherAppState getLauncherAppState();
-    GridCustomizationsProxy getGridCustomizationsProxy();
-    WidgetsFilterDataProvider getWidgetsFilterDataProvider();
 
+    LauncherRestoreEventLogger getLauncherRestoreEventLogger();
+    GridCustomizationsProxy getGridCustomizationsProxy();
+    FolderNameSuggestionLoader getFolderNameSuggestionLoader();
     LoaderCursorFactory getLoaderCursorFactory();
     WidgetHolderFactory getWidgetHolderFactory();
     RefreshRateTracker getFrameRateProvider();
+    InstantAppResolver getInstantAppResolver();
+    DumpManager getDumpManager();
+    StatsLogManager.StatsLogManagerFactory getStatsLogManagerFactory();
+    ActivityContextComponent.Builder getActivityContextComponentBuilder();
+    WidgetPickerComposeWrapper getWidgetPickerComposeWrapper();
+    WidgetSizeHandler getWidgetSizeHandler();
+
 
     // Lawnchair-specific
     

@@ -46,6 +46,8 @@ import androidx.savedstate.SavedStateRegistry;
 import androidx.savedstate.SavedStateRegistryController;
 
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
+import com.android.launcher3.dagger.ActivityContextComponent;
+import com.android.launcher3.dagger.LauncherComponentProvider;
 import com.android.launcher3.logging.StatsLogManager;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.testing.TestLogging;
@@ -76,7 +78,8 @@ public abstract class BaseActivity extends Activity implements ActivityContext,
         DisplayInfoChangeListener {
 
     private static final String TAG = "BaseActivity";
-    static final boolean DEBUG = false;
+    // TODO(b/406230491): Trun DEBUG back to false once done with investigation.
+    static final boolean DEBUG = true;
 
     public static final int INVISIBLE_BY_STATE_HANDLER = 1 << 0;
     public static final int INVISIBLE_BY_APP_TRANSITIONS = 1 << 1;
@@ -191,6 +194,8 @@ public abstract class BaseActivity extends Activity implements ActivityContext,
 
     private ActionMode mCurrentActionMode;
 
+    private ActivityContextComponent mActivityComponent;
+
     public BaseActivity() {
         mSavedStateRegistryController.performAttach();
         registerActivityLifecycleCallbacks(
@@ -210,6 +215,15 @@ public abstract class BaseActivity extends Activity implements ActivityContext,
     @Override
     public List<OnDeviceProfileChangeListener> getOnDeviceProfileChangeListeners() {
         return mDPChangeListeners;
+    }
+
+    @Override
+    public ActivityContextComponent getActivityComponent() {
+        if (mActivityComponent == null) {
+            mActivityComponent = (ActivityContextComponent) LauncherComponentProvider.get(this)
+                    .getActivityContextComponentBuilder().activityContext(this).build();
+        }
+        return mActivityComponent;
     }
 
     /**

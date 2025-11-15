@@ -104,7 +104,7 @@ import app.lawnchair.compat.LawnchairQuickstepCompat;
  * See {@link com.android.quickstep.views.RecentsView}.
  */
 public final class RecentsActivity extends StatefulActivity<RecentsState> implements
-        RecentsViewContainer {
+        RecentsViewContainer,  InvariantDeviceProfile.OnIDPChangeListener {
     private static final String TAG = "RecentsActivity";
 
     public static final ContextTracker.ActivityTracker<RecentsActivity> ACTIVITY_TRACKER =
@@ -136,6 +136,7 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
      * Init drag layer and overview panel views.
      */
     protected void setupViews() {
+        getTheme().applyStyle(getOverviewBlurStyleResId(), true);
         SystemUiProxy systemUiProxy = SystemUiProxy.INSTANCE.get(this);
         // SplitSelectStateController needs to be created before setContentView()
         mSplitSelectStateController =
@@ -236,6 +237,16 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
 
     public ScrimView getScrimView() {
         return mScrimView;
+    }
+
+    @Override
+    public FallbackActivityInterface getContainerInterface() {
+        return FallbackActivityInterface.INSTANCE;
+    }
+
+    @Override
+    public SplitSelectStateController getSplitSelectStateController() {
+        return mSplitSelectStateController;
     }
 
     @Override
@@ -379,10 +390,10 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setWallpaperDependentTheme(this);
-
         mStateManager = new StateManager<>(this, RecentsState.BG_LAUNCHER);
 
         initDeviceProfile();
+        InvariantDeviceProfile.INSTANCE.get(this).addOnChangeListener(this);
         setupViews();
 
         getSystemUiController().updateUiState(SystemUiController.UI_STATE_BASE_WINDOW,
@@ -468,6 +479,7 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
         mActivityLaunchAnimationRunner = null;
         mSplitSelectStateController.onDestroy();
         mTISBindHelper.onDestroy();
+        InvariantDeviceProfile.INSTANCE.get(this).removeOnChangeListener(this);
     }
 
     @Override
@@ -491,7 +503,7 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
                         this.getIApplicationThread(),
                         "StartHomeFromRecents"),
                 "Lawnchair");
-        startHomeIntentSafely(this, options.toBundle(), TAG);
+        startHomeIntentSafely(this, options.toBundle(), TAG, getDisplayId());
     }
 
     private final RemoteAnimationFactory mAnimationToHomeFactory =
@@ -559,5 +571,15 @@ public final class RecentsActivity extends StatefulActivity<RecentsState> implem
     @Override
     public boolean isRecentsViewVisible() {
         return getStateManager().getState().isRecentsViewVisible();
+    }
+
+    @Override
+    public void onIdpChanged(boolean modelPropertiesChanged) {
+        onHandleConfigurationChanged();
+    }
+
+    @Override
+    public int getOverviewBlurStyleResId() {
+        return R.style.OverviewBlurFallbackStyle;
     }
 }

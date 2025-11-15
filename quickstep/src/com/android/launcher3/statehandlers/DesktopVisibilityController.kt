@@ -23,7 +23,9 @@ import android.util.SparseArray
 import android.view.Display.DEFAULT_DISPLAY
 import android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY
 import androidx.core.util.forEach
+import com.android.internal.util.LatencyTracker
 import com.android.launcher3.LauncherState
+import com.android.launcher3.R
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -175,7 +177,7 @@ constructor(
     private var desktopTaskListener: DesktopTaskListenerImpl?
 
     init {
-        desktopTaskListener = DesktopTaskListenerImpl(this, context, context.displayId)
+        desktopTaskListener = DesktopTaskListenerImpl(this, context)
         systemUiProxy.setDesktopTaskListener(desktopTaskListener)
 
         lifecycleTracker.addCloseable {
@@ -543,9 +545,16 @@ constructor(
             return
         }
 
-        getDisplayDeskConfig(displayId)?.also {
-            check(it.deskIds.add(deskId)) {
-                "Found a duplicate desk Id: $deskId on display: $displayId"
+        // Add the config for the desk if there is nothing yet, as the display can start without any
+        // desks.
+        if (getDisplayDeskConfig(displayId) == null) {
+            displaysDesksConfigsMap[displayId] =
+                DisplayDeskConfig(displayId, INACTIVE_DESK_ID, mutableSetOf(deskId))
+        } else {
+            getDisplayDeskConfig(displayId)!!.also {
+                check(it.deskIds.add(deskId)) {
+                    "Found a duplicate desk Id: $deskId on display: $displayId"
+                }
             }
         }
 
@@ -574,8 +583,6 @@ constructor(
             return
         }
 
-        val wasInDesktopMode = isInDesktopModeAndNotInOverview(displayId)
-
         getDisplayDeskConfig(displayId)?.also {
             check(oldActiveDesk == it.activeDeskId) {
                 "Mismatch between the Shell's oldActiveDesk: $oldActiveDesk, and Launcher's: ${it.activeDeskId}"
@@ -590,8 +597,20 @@ constructor(
             notifyOnActiveDeskChanged(displayId, newActiveDesk, oldActiveDesk)
         }
 
-        if (wasInDesktopMode != isInDesktopModeAndNotInOverview(displayId)) {
-            notifyIsInDesktopModeChanged(displayId, !wasInDesktopMode)
+        if (
+            (newActiveDesk == INACTIVE_DESK_ID || oldActiveDesk == INACTIVE_DESK_ID) &&
+                !launcherAnimationRunning
+        ) {
+            val duration = context.resources.getInteger(R.integer.to_desktop_animation_duration_ms)
+            if (oldActiveDesk == INACTIVE_DESK_ID && newActiveDesk != INACTIVE_DESK_ID) {
+                notifyTaskbarDesktopModeListenersForEntry(duration)
+            } else if (newActiveDesk == INACTIVE_DESK_ID && oldActiveDesk != INACTIVE_DESK_ID) {
+                notifyTaskbarDesktopModeListenersForExit(duration)
+            } else {
+                // do nothing because user switch between two desktop.
+            }
+        } else {
+            isNotifyingDesktopVisibilityPending = true
         }
     }
 
@@ -645,9 +664,9 @@ constructor(
     private class DesktopTaskListenerImpl(
         controller: DesktopVisibilityController,
         @ApplicationContext private val context: Context,
-        private val displayId: Int,
     ) : Stub() {
         private val controller = WeakReference(controller)
+        private val displayId = context.displayId
 
         override fun onListenerConnected(
             displayDeskStates: Array<DisplayDeskState>,
@@ -658,7 +677,9 @@ constructor(
             }
         }
 
+        @Deprecated("Not needed by multi-desks")
         override fun onTasksVisibilityChanged(displayId: Int, visibleTasksCount: Int) {
+            if (enableMultipleDesktops(context)) return
             if (displayId != this.displayId) return
             MAIN_EXECUTOR.execute {
                 controller.get()?.apply {
@@ -688,9 +709,9 @@ constructor(
             }
         }
 
-        // TODO: b/402496827 - The multi-desks backend needs to be updated to call this API only
-        //  once, not between desk switches.
+        @Deprecated("Not needed by multi-desks")
         override fun onEnterDesktopModeTransitionStarted(transitionDuration: Int) {
+            if (enableMultipleDesktops(context)) return
             val controller = controller.get() ?: return
             MAIN_EXECUTOR.execute {
                 Log.d(
@@ -699,18 +720,19 @@ constructor(
                         "duration= " +
                         transitionDuration),
                 )
-                if (enableMultipleDesktops(context)) {
-                    controller.notifyTaskbarDesktopModeListenersForEntry(transitionDuration)
-                } else if (!controller.isInDesktopModeDeprecated) {
+                if (!controller.isInDesktopModeDeprecated) {
                     controller.isInDesktopModeDeprecated = true
                     controller.notifyTaskbarDesktopModeListenersForEntry(transitionDuration)
                 }
             }
         }
 
-        // TODO: b/402496827 - The multi-desks backend needs to be updated to call this API only
-        //  once, not between desk switches.
-        override fun onExitDesktopModeTransitionStarted(transitionDuration: Int) {
+        @Deprecated("Not needed by multi-desks")
+        override fun onExitDesktopModeTransitionStarted(
+            transitionDuration: Int,
+            shouldEndUpAtHome: Boolean,
+        ) {
+            if (enableMultipleDesktops(context)) return
             val controller = controller.get() ?: return
             MAIN_EXECUTOR.execute {
                 Log.d(
@@ -719,9 +741,17 @@ constructor(
                         "duration= " +
                         transitionDuration),
                 )
-                if (enableMultipleDesktops(context)) {
-                    controller.notifyTaskbarDesktopModeListenersForExit(transitionDuration)
-                } else if (controller.isInDesktopModeDeprecated) {
+                // If shouldEndUpAtHome is true, desktop mode is ending from the user
+                // closing/minimizing the last open window. If it's false, the display is
+                // probably transitioning to an app's full screen mode instead so this metric
+                // should not be logged.
+                if (shouldEndUpAtHome) {
+                    LatencyTracker.getInstance(context)
+                        .onActionStart(
+                            LatencyTracker.ACTION_DESKTOP_MODE_EXIT_MODE_ON_LAST_WINDOW_CLOSE
+                        )
+                }
+                if (controller.isInDesktopModeDeprecated) {
                     controller.isInDesktopModeDeprecated = false
                     controller.notifyTaskbarDesktopModeListenersForExit(transitionDuration)
                 }

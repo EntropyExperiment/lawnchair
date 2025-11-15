@@ -22,6 +22,7 @@ import static android.graphics.Paint.FILTER_BITMAP_FLAG;
 
 import static com.android.launcher3.graphics.PreloadIconDrawable.newPendingIcon;
 import static com.android.launcher3.model.data.LauncherAppWidgetInfo.FLAG_PROVIDER_NOT_READY;
+import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 
 import android.appwidget.AppWidgetProviderInfo;
@@ -132,7 +133,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
             info.pendingItemInfo = new PackageItemInfo(info.providerName.getPackageName(),
                     info.user);
             LauncherAppState.getInstance(context).getIconCache()
-                    .updateIconInBackground(this, info.pendingItemInfo);
+                    .updateIconInBackground(this, info.pendingItemInfo, DEFAULT_LOOKUP_FLAG);
         } else {
             reapplyItemInfo(info.pendingItemInfo);
         }
@@ -307,7 +308,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
             //   3) App icon in the center with a setup icon on the top left corner.
         if (mDisabledForSafeMode) {
             FastBitmapDrawable disabledIcon = info.newIcon(getContext());
-            disabledIcon.setIsDisabled(true);
+            disabledIcon.setDisabled(true);
             mCenterDrawable = disabledIcon;
             mSettingIconDrawable = null;
         } else if (isReadyForClickSetup()) {

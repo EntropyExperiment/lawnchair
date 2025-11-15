@@ -577,7 +577,6 @@ public abstract class DragController<T extends ActivityContext>
     private DropTarget findDropTarget(final int x, final int y) {
         mCoordinatesTemp[0] = x;
         mCoordinatesTemp[1] = y;
-
         final Rect r = mRectTemp;
         final ArrayList<DropTarget> dropTargets = mDropTargets;
         final int count = dropTargets.size();
@@ -588,8 +587,11 @@ public abstract class DragController<T extends ActivityContext>
 
             target.getHitRectRelativeToDragLayer(r);
             if (r.contains(x, y)) {
-                mActivity.getDragLayer().mapCoordInSelfToDescendant(target.getDropView(),
-                        mCoordinatesTemp);
+                View dropTargetView = target.getDropView();
+                if (dropTargetView != null) {
+                    mActivity.getDragLayer().mapCoordInSelfToDescendant(dropTargetView,
+                            mCoordinatesTemp);
+                }
                 mDragObject.x = mCoordinatesTemp[0];
                 mDragObject.y = mCoordinatesTemp[1];
                 return target;

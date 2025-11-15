@@ -20,6 +20,7 @@ import static android.content.Intent.EXTRA_COMPONENT_NAME;
 import static android.content.Intent.EXTRA_USER;
 
 import static com.android.app.animation.Interpolators.ACCELERATE;
+import static com.android.launcher3.GestureNavContract.EXTRA_ENABLE_GESTURE_CONTRACT;
 import static com.android.launcher3.GestureNavContract.EXTRA_GESTURE_CONTRACT;
 import static com.android.launcher3.GestureNavContract.EXTRA_ICON_POSITION;
 import static com.android.launcher3.GestureNavContract.EXTRA_ICON_SURFACE;
@@ -107,12 +108,13 @@ public class FallbackSwipeHandler extends
 
     private boolean mAppCanEnterPip;
 
-    public FallbackSwipeHandler(Context context,
-            TaskAnimationManager taskAnimationManager, GestureState gestureState, long touchTimeMs,
+    public FallbackSwipeHandler(Context context, TaskAnimationManager taskAnimationManager,
+            RecentsAnimationDeviceState deviceState, RotationTouchHelper rotationTouchHelper,
+            GestureState gestureState, long touchTimeMs,
             boolean continuingLastGesture, InputConsumerController inputConsumer,
             MSDLPlayerWrapper msdlPlayerWrapper) {
-        super(context, taskAnimationManager, gestureState, touchTimeMs,
-                continuingLastGesture, inputConsumer, msdlPlayerWrapper);
+        super(context, taskAnimationManager, deviceState, rotationTouchHelper, gestureState,
+                touchTimeMs, continuingLastGesture, inputConsumer, msdlPlayerWrapper);
 
         mRunningOverHome = mGestureState.getRunningTask() != null
                 && mGestureState.getRunningTask().isHomeTask();
@@ -203,7 +205,9 @@ public class FallbackSwipeHandler extends
         } else {
             recentsCallback = callback;
         }
-        mRecentsView.cleanupRemoteTargets();
+        if (mRecentsView != null) {
+            mRecentsView.cleanupRemoteTargets();
+        }
         mRecentsAnimationController.finish(
                 mAppCanEnterPip /* toRecents */, recentsCallback, true /* sendUserLeaveHint */);
     }
@@ -236,7 +240,7 @@ public class FallbackSwipeHandler extends
         @Override
         public AnimatorPlaybackController createActivityAnimationToHome() {
             // copied from {@link LauncherSwipeHandlerV2.LauncherHomeAnimationFactory}
-            long accuracy = 2 * Math.max(mDp.widthPx, mDp.heightPx);
+            long accuracy = 2 * Math.max(mDp.getDeviceProperties().getWidthPx(), mDp.getDeviceProperties().getHeightPx());
             return mContainer.getStateManager().createAnimationToNewWorkspace(
                     RecentsState.HOME, accuracy, StateAnimationConfig.SKIP_ALL_ANIMATIONS);
         }
@@ -345,7 +349,7 @@ public class FallbackSwipeHandler extends
                         .setStartValue(mVerticalShiftForScale.value)
                         .setEndValue(0)
                         .setStartVelocity(-velocity / mTransitionDragLength)
-                        .setMinimumVisibleChange(1f / mDp.heightPx)
+                        .setMinimumVisibleChange(1f / mDp.getDeviceProperties().getHeightPx())
                         .setDampingRatio(0.6f)
                         .setStiffness(800)
                         .build(mVerticalShiftForScale, AnimatedFloat.VALUE)
@@ -419,6 +423,7 @@ public class FallbackSwipeHandler extends
                 }
 
                 Bundle gestureNavContract = new Bundle();
+                gestureNavContract.putBoolean(EXTRA_ENABLE_GESTURE_CONTRACT, !mIsSwipeForSplit);
                 gestureNavContract.putParcelable(EXTRA_COMPONENT_NAME, key.getComponent());
                 gestureNavContract.putParcelable(EXTRA_USER, UserHandle.of(key.userId));
                 gestureNavContract.putParcelable(

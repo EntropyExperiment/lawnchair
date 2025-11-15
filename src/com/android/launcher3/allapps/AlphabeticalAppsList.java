@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Modifications copyright 2021, Lawnchair
+ * Modifications copyright 2025, Lawnchair
  */
 package com.android.launcher3.allapps;
 
@@ -74,8 +74,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     private final PrivateProfileManager mPrivateProviderManager;
 
     /**
-     * Info about a fast scroller section, depending if sections are merged, the
-     * fast scroller
+     * Info about a fast scroller section, depending if sections are merged, the fast scroller
      * sections will not be the same set as the section headers.
      */
     public static class FastScrollSectionInfo {
@@ -96,6 +95,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         }
     }
 
+
     private final T mActivityContext;
 
     // The set of apps from the system
@@ -108,8 +108,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     private int mAccessibilityResultsCount = 0;
     // The current set of adapter items
     protected final ArrayList<AdapterItem> mAdapterItems = new ArrayList<>();
-    // The set of sections that we allow fast-scrolling to (includes non-merged
-    // sections)
+    // The set of sections that we allow fast-scrolling to (includes non-merged sections)
     private final List<FastScrollSectionInfo> mFastScrollerSections = new ArrayList<>();
 
     // The of ordered component names as a result of a search query
@@ -169,8 +168,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     }
 
     /**
-     * Returns the current filtered list of applications broken down into their
-     * sections.
+     * Returns the current filtered list of applications broken down into their sections.
      */
     public List<AdapterItem> getAdapterItems() {
         return mAdapterItems;
@@ -262,14 +260,12 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         appSteam = appSteam.sorted(mAppNameComparator);
         privateAppStream = privateAppStream.sorted(mAppNameComparator);
 
-        // As a special case for some languages (currently only Simplified Chinese), we
-        // may need to
+        // As a special case for some languages (currently only Simplified Chinese), we may need to
         // coalesce sections
         Locale curLocale = mActivityContext.getResources().getConfiguration().locale;
         boolean localeRequiresSectionSorting = curLocale.equals(Locale.SIMPLIFIED_CHINESE);
         if (localeRequiresSectionSorting) {
-            // Compute the section headers. We use a TreeMap with the section name
-            // comparator to
+            // Compute the section headers. We use a TreeMap with the section name comparator to
             // ensure that the sections are ordered when we iterate over it later
             appSteam = appSteam.collect(Collectors.groupingBy(
                     info -> info.sectionName,
@@ -289,8 +285,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
     }
 
     /**
-     * Updates the set of filtered apps with the current filter. At this point, we
-     * expect
+     * Updates the set of filtered apps with the current filter. At this point, we expect
      * mCachedSectionNames to have been calculated for the set of all apps in mApps.
      */
     public void updateAdapterItems() {
@@ -301,8 +296,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         mAdapterItems.clear();
         mAccessibilityResultsCount = 0;
 
-        // Recreate the filtered and sectioned apps (for convenience for the grid
-        // layout) from the
+        // Recreate the filtered and sectioned apps (for convenience for the grid layout) from the
         // ordered set of sections
         if (hasSearchResults()) {
             mAdapterItems.addAll(mSearchResults);
@@ -340,8 +334,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
                 .filter(AdapterItem::isCountedForAccessibility).count();
 
         if (mNumAppsPerRowAllApps != 0) {
-            // Update the number of rows in the adapter after we do all the merging
-            // (otherwise, we
+            // Update the number of rows in the adapter after we do all the merging (otherwise, we
             // would have to shift the values again)
             int numAppsInSection = 0;
             int numAppsInRow = 0;
@@ -414,7 +407,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
         // Add Install Apps Button first.
         if (!ATLEAST_BAKLAVA) {
             // LC: Baklava added a new behavior for the PS app button. (enableMovingContentIntoPrivateSpace)
-            if (Flags.privateSpaceAppInstallerButton() && !enableMovingContentIntoPrivateSpace) {
+            if (!enableMovingContentIntoPrivateSpace) {
                 mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
                 position++;
             }
@@ -471,6 +464,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
                         currentItem.itemInfo.getTargetPackage(), PRIVATE_SPACE_PACKAGE)) {
                     currentItem.itemInfo.bitmap = mPrivateProviderManager.preparePSBitmapInfo();
                     currentItem.itemInfo.bitmap.creationFlags |= FLAG_NO_BADGE;
+                    currentItem.itemInfo.title = mPrivateProviderManager.getPSAppTitleOverride();
                     currentItem.itemInfo.contentDescription =
                             mPrivateProviderManager.getPsAppContentDesc();
                     privateSpaceAppIndex = i;
@@ -501,7 +495,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
             if (hasPrivateApps) {
                 mAdapterItems.add(AdapterItem.asAppWithDecorationInfo(info,
                         new SectionDecorationInfo(mActivityContext,
-                                getRoundRegions(i, appList.size()), true /* decorateTogether */)));
+                                getRoundRegions(i, appList.size()))));
             } else {
                 mAdapterItems.add(AdapterItem.asApp(info));
             }

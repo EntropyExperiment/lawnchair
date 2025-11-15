@@ -16,10 +16,10 @@
 
 package com.android.launcher3;
 
-import static com.android.launcher3.BuildConfigs.WIDGET_ON_FIRST_SCREEN;
-import static com.android.launcher3.Flags.enableSmartspaceAsAWidget;
+import static com.android.launcher3.Flags.enableMouseInteractionChanges;
 import static com.android.launcher3.graphics.ShapeDelegate.DEFAULT_PATH_SIZE;
 import static com.android.launcher3.icons.BitmapInfo.FLAG_THEMED;
+import static com.android.launcher3.icons.IconNormalizer.ICON_VISIBLE_AREA_FACTOR;
 import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_POSITION_BOTTOM_OR_RIGHT;
 import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_POSITION_TOP_OR_LEFT;
 import static com.android.launcher3.util.SplitConfigurationOptions.STAGE_TYPE_MAIN;
@@ -171,15 +171,12 @@ public final class Utilities {
      * @deprecated Use {@link BuildConfig#IS_DEBUG_DEVICE} directly
      */
     @Deprecated
-    public static final boolean IS_DEBUG_DEVICE = false;
+    public static final boolean IS_DEBUG_DEVICE = BuildConfig.IS_DEBUG_DEVICE;
 
     public static final int TRANSLATE_UP = 0;
     public static final int TRANSLATE_DOWN = 1;
     public static final int TRANSLATE_LEFT = 2;
     public static final int TRANSLATE_RIGHT = 3;
-
-    public static final boolean SHOULD_SHOW_FIRST_PAGE_WIDGET =
-            enableSmartspaceAsAWidget() && WIDGET_ON_FIRST_SCREEN;
 
     @IntDef({TRANSLATE_UP, TRANSLATE_DOWN, TRANSLATE_LEFT, TRANSLATE_RIGHT})
     public @interface AdjustmentDirection{}
@@ -265,7 +262,7 @@ public final class Utilities {
     public static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
     }
-    
+
     public static boolean showStyleWallpapers(Context context) {
         return existsStyleWallpapers(context) || existsStyleWallpapersAlt(context);
     }
@@ -541,6 +538,25 @@ public final class Utilities {
         return (int) mapRange(interpolator.getInterpolation(progress), toMin, toMax);
     }
 
+    /**
+     * TODO(b/235886078): workaround needed because of this bug
+     * Icons are 10% larger on XML than their visual size, so remove that extra space to get
+     * some dimensions correct.
+     *
+     * When this bug is resolved this method will no longer be needed and we would be able to
+     * replace all instances where this method is called with iconSizePx.
+     */
+    public static int getIconVisibleSizePx(int iconSizePx) {
+        return Math.round(ICON_VISIBLE_AREA_FACTOR * iconSizePx);
+    }
+
+    public static int getNormalizedIconDrawablePadding(int iconSizePx, int iconDrawablePadding) {
+        return Math.max(
+                0,
+                iconDrawablePadding - ((iconSizePx - getIconVisibleSizePx(iconSizePx)) / 2)
+        );
+    }
+
     /** Bounds t between a lower and upper bound and maps the result to a range. */
     public static float mapBoundToRange(float t, float lowerBound, float upperBound,
             float toMin, float toMax, Interpolator interpolator) {
@@ -595,6 +611,11 @@ public final class Utilities {
     /** Converts a dp value to pixels for the current device. */
     public static int dpToPx(float dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    /** Converts a dp value to pixels for the current context. */
+    public static int dpToPx(float dp, Context context) {
+        return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
 
     /** Converts a dp value to pixels for a certain density. */
@@ -810,12 +831,12 @@ public final class Utilities {
             IconThemeController themeController =
                     ThemeManager.INSTANCE.get(context).getThemeController();
             if (themeController != null) {
-                AdaptiveIconDrawable themed = themeController.createThemedAdaptiveIcon(
+                result = themeController.createThemedAdaptiveIcon(
                         context,
                         result,
                         info instanceof ItemInfoWithIcon iiwi ? iiwi.bitmap : null);
-                if (themed != null) {
-                    result = themed;
+                if (result == null) {
+                    return null;
                 }
             }
         }
@@ -948,9 +969,12 @@ public final class Utilities {
      */
     public static List<SplitPositionOption> getSplitPositionOptions(
             DeviceProfile dp) {
-        int splitIconRes = dp.isLeftRightSplit
-                ? R.drawable.ic_split_horizontal
-                : R.drawable.ic_split_vertical;
+        int splitIconRes;
+        if (dp.isLeftRightSplit) {
+            splitIconRes = R.drawable.ic_split_horizontal;
+        } else {
+            splitIconRes = R.drawable.ic_split_vertical;
+        }
         int stagePosition = dp.isLeftRightSplit
                 ? STAGE_POSITION_BOTTOM_OR_RIGHT
                 : STAGE_POSITION_TOP_OR_LEFT;
@@ -1077,8 +1101,17 @@ public final class Utilities {
      * <p>Debug devices by default include -eng and -userdebug builds, but not -user builds.
      */
     public static void debugLog(String tag, String message) {
-        if (false) {
+        if (BuildConfig.IS_DEBUG_DEVICE) {
             Log.d(tag, message);
         }
+    }
+
+    /**
+     * Returns whether mouse interaction changes intended for the desktop form factor should be
+     * enabled.
+     */
+    public static boolean shouldEnableMouseInteractionChanges(Context context) {
+        return enableMouseInteractionChanges() && context.getResources().getBoolean(
+                R.bool.desktop_form_factor);
     }
 }

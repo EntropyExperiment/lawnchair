@@ -25,6 +25,7 @@ import static com.android.launcher3.AbstractFloatingView.TYPE_REBIND_SAFE;
 import static com.android.launcher3.BaseActivity.INVISIBLE_ALL;
 import static com.android.launcher3.BaseActivity.INVISIBLE_BY_PENDING_FLAGS;
 import static com.android.launcher3.BaseActivity.PENDING_INVISIBLE_BY_WALLPAPER_ANIMATION;
+import static com.android.launcher3.Flags.enableOverviewBackgroundWallpaperBlur;
 import static com.android.window.flags.Flags.predictiveBackThreeButtonNav;
 import static com.android.window.flags.Flags.removeDepartTargetFromMotion;
 
@@ -98,7 +99,6 @@ public class LauncherBackAnimationController {
             Flags.predictiveBackToHomePolish() ? 0.75f : 0.85f;
     private static final float MAX_SCRIM_ALPHA_DARK = 0.8f;
     private static final float MAX_SCRIM_ALPHA_LIGHT = 0.2f;
-    private static final int MAX_BLUR_RADIUS = 20;
     private static final int MIN_BLUR_RADIUS_PRE_COMMIT = 10;
 
     private final QuickstepTransitionManager mQuickstepTransitionManager;
@@ -130,6 +130,7 @@ public class LauncherBackAnimationController {
     private ValueAnimator mScrimAlphaAnimator;
     private float mScrimAlpha;
     private boolean mOverridingStatusBarFlags;
+    private int mMaxBlurRadius;
     private int mLastBlurRadius = 0;
 
     private final ComponentCallbacks mComponentCallbacks = new ComponentCallbacks() {
@@ -423,7 +424,7 @@ public class LauncherBackAnimationController {
         final float[] colorComponents = new float[] { 0f, 0f, 0f };
         mScrimAlpha = (isDarkTheme)
                 ? MAX_SCRIM_ALPHA_DARK : MAX_SCRIM_ALPHA_LIGHT;
-        setBlur(MAX_BLUR_RADIUS);
+        setBlur(mMaxBlurRadius);
         mTransaction
                 .setColor(mScrimLayer, colorComponents)
                 .setAlpha(mScrimLayer, mScrimAlpha)
@@ -451,7 +452,7 @@ public class LauncherBackAnimationController {
             // Scrim hasn't been attached yet. Let's attach it.
             addScrimLayer();
         } else {
-            mLastBlurRadius = (int) lerp(MAX_BLUR_RADIUS, MIN_BLUR_RADIUS_PRE_COMMIT, progress);
+            mLastBlurRadius = (int) lerp(mMaxBlurRadius, MIN_BLUR_RADIUS_PRE_COMMIT, progress);
             setBlur(mLastBlurRadius);
         }
         float screenWidth = mStartRect.width();
@@ -611,7 +612,7 @@ public class LauncherBackAnimationController {
             // Scrim hasn't been attached yet. Let's attach it.
             addScrimLayer();
         }
-        mScrimAlphaAnimator = new ValueAnimator().ofFloat(1, 0);
+        mScrimAlphaAnimator = ValueAnimator.ofFloat(1, 0);
         mScrimAlphaAnimator.addUpdateListener(animation -> {
             float value = (Float) animation.getAnimatedValue();
             if (mScrimLayer != null && mScrimLayer.isValid()) {
@@ -627,7 +628,7 @@ public class LauncherBackAnimationController {
             }
         });
         mScrimAlphaAnimator.setDuration(SCRIM_FADE_DURATION).start();
-        backAnim.start();
+        backAnim.start(mLauncher.getStateManager());
     }
 
     private void loadResources() {
@@ -637,8 +638,14 @@ public class LauncherBackAnimationController {
                 R.dimen.swipe_back_window_corner_radius)
                 : 0;
         mWindowScaleStartCornerRadius = QuickStepContract.getWindowCornerRadius(mLauncher);
-//        mStatusBarHeight = SystemBarUtils.getStatusBarHeight(mLauncher);
-        mStatusBarHeight = 24;
+        // pE-TODO(QPR1): mStatusBarHeight is 24
+        mStatusBarHeight = SystemBarUtils.getStatusBarHeight(mLauncher);
+        if (Flags.allAppsBlur() || enableOverviewBackgroundWallpaperBlur()) {
+            mMaxBlurRadius = mLauncher.getResources().getDimensionPixelSize(
+                    R.dimen.max_depth_blur_radius_enhanced);
+        } else {
+            mMaxBlurRadius = mLauncher.getResources().getInteger(R.integer.max_depth_blur_radius);
+        }
     }
 
     /**

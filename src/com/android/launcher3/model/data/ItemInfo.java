@@ -20,7 +20,7 @@ import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APP
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT_PREDICTION;
-import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_PREDICTION;
+import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_ALL_APPS_PREDICTION;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_SETTINGS;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_SHORTCUTS;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_TASKSWITCHER;
@@ -333,7 +333,8 @@ public class ItemInfo {
      * Returns if an Item is a predicted item
      */
     public boolean isPredictedItem() {
-        return container == CONTAINER_HOTSEAT_PREDICTION || container == CONTAINER_PREDICTION;
+        return container == CONTAINER_HOTSEAT_PREDICTION
+                || container == CONTAINER_ALL_APPS_PREDICTION;
     }
 
     /**
@@ -480,7 +481,7 @@ public class ItemInfo {
                         .setWidgetsContainer(
                                 LauncherAtom.WidgetsContainer.getDefaultInstance())
                         .build();
-            case CONTAINER_PREDICTION:
+            case CONTAINER_ALL_APPS_PREDICTION:
                 return ContainerInfo.newBuilder()
                         .setPredictionContainer(PredictionContainer.getDefaultInstance())
                         .build();
