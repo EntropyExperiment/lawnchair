@@ -1,3 +1,14 @@
+# Bubble Tea
+
+## Bubble Tea [QPR1]
+
+### 🏗️ Snapshot 0 (Development 4 Release 1)
+
+This is a developer-focused change log:
+* Codebase updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+
+## Bubble Tea [r2]
+
 Lawnchair 16 pE Development 2 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
