@@ -32,6 +32,7 @@ import android.widget.RemoteViews;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.VisibleForTesting;
 
 import com.android.launcher3.Utilities;
 import com.android.launcher3.logging.FileLog;
@@ -59,8 +60,13 @@ public class WidgetManagerHelper {
     final Context mContext;
 
     public WidgetManagerHelper(Context context) {
+        this(context, AppWidgetManager.getInstance(context));
+    }
+
+    @VisibleForTesting
+    public WidgetManagerHelper(Context context, AppWidgetManager appWidgetManager) {
         mContext = context;
-        mAppWidgetManager = AppWidgetManager.getInstance(context);
+        mAppWidgetManager = appWidgetManager;
     }
 
     /**

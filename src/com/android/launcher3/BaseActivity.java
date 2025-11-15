@@ -16,6 +16,7 @@
 
 package com.android.launcher3;
 
+import static com.android.launcher3.util.DisplayController.CHANGE_ROTATION;
 import static com.android.launcher3.util.FlagDebugUtils.appendFlag;
 import static com.android.launcher3.util.FlagDebugUtils.formatFlagChange;
 import static com.android.launcher3.util.SystemUiController.UI_STATE_FULLSCREEN_TASK;
@@ -31,18 +32,36 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.View;
 import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.ComponentActivity;
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleRegistry;
+import androidx.savedstate.SavedStateRegistry;
+import androidx.savedstate.SavedStateRegistryController;
 
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
+import com.android.launcher3.dagger.ActivityContextComponent;
+import com.android.launcher3.dagger.LauncherComponentProvider;
 import com.android.launcher3.logging.StatsLogManager;
+import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.testing.TestLogging;
 import com.android.launcher3.testing.shared.TestProtocol;
+import com.android.launcher3.util.ActivityOptionsWrapper;
+import com.android.launcher3.util.DisplayController;
+import com.android.launcher3.util.DisplayController.DisplayInfoChangeListener;
+import com.android.launcher3.util.DisplayController.Info;
+import com.android.launcher3.util.LifecycleHelper;
 import com.android.launcher3.util.RunnableList;
 import com.android.launcher3.util.SystemUiController;
 import com.android.launcher3.util.ViewCache;
+import com.android.launcher3.util.WeakCleanupSet;
+import com.android.launcher3.util.WindowBounds;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.views.ScrimView;
 
@@ -55,10 +74,12 @@ import java.util.StringJoiner;
 /**
  * Launcher BaseActivity
  */
-public abstract class BaseActivity extends ComponentActivity implements ActivityContext {
+public abstract class BaseActivity extends Activity implements ActivityContext,
+        DisplayInfoChangeListener {
 
     private static final String TAG = "BaseActivity";
-    static final boolean DEBUG = false;
+    // TODO(b/406230491): Trun DEBUG back to false once done with investigation.
+    static final boolean DEBUG = true;
 
     public static final int INVISIBLE_BY_STATE_HANDLER = 1 << 0;
     public static final int INVISIBLE_BY_APP_TRANSITIONS = 1 << 1;
@@ -88,10 +109,14 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
     private final ArrayList<MultiWindowModeChangedListener> mMultiWindowModeChangedListeners =
             new ArrayList<>();
 
+    private final SavedStateRegistryController mSavedStateRegistryController =
+            SavedStateRegistryController.create(this);
+    private final LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+    private final WeakCleanupSet mCleanupSet = new WeakCleanupSet(this);
+
     protected DeviceProfile mDeviceProfile;
     protected SystemUiController mSystemUiController;
     private StatsLogManager mStatsLogManager;
-
 
     public static final int ACTIVITY_STATE_STARTED = 1 << 0;
     public static final int ACTIVITY_STATE_RESUMED = 1 << 1;
@@ -113,11 +138,6 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
     public static final int ACTIVITY_STATE_USER_ACTIVE = 1 << 4;
 
     /**
-     * State flag indicating if the user will be active shortly.
-     */
-    public static final int ACTIVITY_STATE_USER_WILL_BE_ACTIVE = 1 << 5;
-
-    /**
      * State flag indicating that a state transition is in progress
      */
     public static final int ACTIVITY_STATE_TRANSITION_ACTIVE = 1 << 6;
@@ -133,6 +153,10 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
                     ACTIVITY_STATE_TRANSITION_ACTIVE})
     public @interface ActivityFlags {
     }
+
+    // When starting an action mode, setting this tag will cause the action mode to be cancelled
+    // automatically when user interacts with the launcher.
+    public static final Object AUTO_CANCEL_ACTION_MODE = new Object();
 
     /** Returns a human-readable string for the specified {@link ActivityFlags}. */
     public static String getActivityStateString(@ActivityFlags int flags) {
@@ -168,6 +192,16 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
     private final RunnableList[] mEventCallbacks =
             {new RunnableList(), new RunnableList(), new RunnableList(), new RunnableList()};
 
+    private ActionMode mCurrentActionMode;
+
+    private ActivityContextComponent mActivityComponent;
+
+    public BaseActivity() {
+        mSavedStateRegistryController.performAttach();
+        registerActivityLifecycleCallbacks(
+                new LifecycleHelper(this, mSavedStateRegistryController, mLifecycleRegistry));
+    }
+
     @Override
     public ViewCache getViewCache() {
         return mViewCache;
@@ -183,6 +217,15 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
         return mDPChangeListeners;
     }
 
+    @Override
+    public ActivityContextComponent getActivityComponent() {
+        if (mActivityComponent == null) {
+            mActivityComponent = (ActivityContextComponent) LauncherComponentProvider.get(this)
+                    .getActivityContextComponentBuilder().activityContext(this).build();
+        }
+        return mActivityComponent;
+    }
+
     /**
      * Returns {@link StatsLogManager} for user event logging.
      */
@@ -196,7 +239,7 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
 
     public SystemUiController getSystemUiController() {
         if (mSystemUiController == null) {
-            mSystemUiController = new SystemUiController(getWindow());
+            mSystemUiController = new SystemUiController(getWindow().getDecorView());
         }
         return mSystemUiController;
     }
@@ -214,6 +257,7 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerBackDispatcher();
+        DisplayController.INSTANCE.get(this).addChangeListener(this);
     }
 
     @Override
@@ -261,6 +305,7 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
     protected void onDestroy() {
         super.onDestroy();
         mEventCallbacks[EVENT_DESTROYED].executeAllAndClear();
+        DisplayController.INSTANCE.get(this).removeChangeListener(this);
     }
 
     @Override
@@ -319,7 +364,6 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
      */
     public void setResumed() {
         addActivityFlags(ACTIVITY_STATE_RESUMED | ACTIVITY_STATE_USER_ACTIVE);
-        removeActivityFlags(ACTIVITY_STATE_USER_WILL_BE_ACTIVE);
     }
 
     public boolean isUserActive() {
@@ -394,15 +438,6 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
         mEventCallbacks[event].add(callback);
     }
 
-    @Override
-    public Handler getMainThreadHandler() {
-        try {
-            return new Handler(Looper.getMainLooper());
-        } catch (Throwable t) {
-            return super.getMainThreadHandler();
-        }
-    }
-
     /** Removes a previously added callback */
     public void removeEventCallback(@ActivityEvent int event, Runnable callback) {
         mEventCallbacks[event].remove(callback);
@@ -421,13 +456,83 @@ public abstract class BaseActivity extends ComponentActivity implements Activity
         writer.println(prefix + "mForceInvisible: " + mForceInvisible);
     }
 
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        super.onActionModeStarted(mode);
+        mCurrentActionMode = mode;
+    }
+
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+        mCurrentActionMode = null;
+    }
+
+    protected boolean isInAutoCancelActionMode() {
+        return mCurrentActionMode != null && AUTO_CANCEL_ACTION_MODE == mCurrentActionMode.getTag();
+    }
+
+    @Override
+    public boolean finishAutoCancelActionMode() {
+        if (isInAutoCancelActionMode()) {
+            mCurrentActionMode.finish();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @NonNull
+    public ActivityOptionsWrapper getActivityLaunchOptions(View v, @Nullable ItemInfo item) {
+        ActivityOptionsWrapper wrapper = ActivityContext.super.getActivityLaunchOptions(v, item);
+        addEventCallback(EVENT_RESUMED, wrapper.onEndCallback::executeAllAndDestroy);
+        return wrapper;
+    }
+
+    @Override
+    public ActivityOptionsWrapper makeDefaultActivityOptions(int splashScreenStyle) {
+        ActivityOptionsWrapper wrapper =
+                ActivityContext.super.makeDefaultActivityOptions(splashScreenStyle);
+        addEventCallback(EVENT_RESUMED, wrapper.onEndCallback::executeAllAndDestroy);
+        return wrapper;
+    }
+
+    protected WindowBounds getMultiWindowDisplaySize() {
+        return WindowBounds.fromWindowMetrics(getWindowManager().getCurrentWindowMetrics());
+    }
+
+    @Override
+    public void onDisplayInfoChanged(Context context, Info info, int flags) {
+        if ((flags & CHANGE_ROTATION) != 0 && mDeviceProfile.isVerticalBarLayout()) {
+            reapplyUi();
+        }
+    }
+
+    protected void reapplyUi() {}
+
+    @NonNull
+    @Override
+    public SavedStateRegistry getSavedStateRegistry() {
+        return mSavedStateRegistryController.getSavedStateRegistry();
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycleRegistry;
+    }
+
+    @Override
+    public WeakCleanupSet getOwnerCleanupSet() {
+        return mCleanupSet;
+    }
+
     public static <T extends BaseActivity> T fromContext(Context context) {
         if (context instanceof BaseActivity) {
             return (T) context;
-        } else if (context instanceof ActivityContextDelegate) {
-            return (T) ((ActivityContextDelegate) context).mDelegate;
-        } else if (context instanceof ContextWrapper) {
-            return fromContext(((ContextWrapper) context).getBaseContext());
+        } else if (context instanceof ContextWrapper cw) {
+            return fromContext(cw.getBaseContext());
         } else {
             throw new IllegalArgumentException("Cannot find BaseActivity in parent tree");
         }

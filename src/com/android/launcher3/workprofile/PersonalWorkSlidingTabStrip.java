@@ -78,8 +78,7 @@ public class PersonalWorkSlidingTabStrip extends LinearLayout implements PageInd
     }
 
     @Override
-    public void setScroll(int currentScroll, int totalScroll) {
-    }
+    public void setScroll(int currentScroll, int totalScroll) {}
 
     @Override
     public void setActiveMarker(int activePage) {
@@ -119,7 +118,8 @@ public class PersonalWorkSlidingTabStrip extends LinearLayout implements PageInd
      */
     public static int getTabWidth(Context context, int totalWidth) {
         DeviceProfile grid = ActivityContext.lookupContext(context).getDeviceProfile();
-        int iconPadding = totalWidth / grid.numShownAllAppsColumns - grid.allAppsIconSizePx;
+        int iconPadding = totalWidth / grid.numShownAllAppsColumns
+                - grid.getAllAppsProfile().getIconSizePx();
         return totalWidth - iconPadding;
     }
 

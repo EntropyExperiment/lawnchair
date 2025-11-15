@@ -22,6 +22,8 @@
     <color name="all_apps_label_text_dark">#61FFFFFF</color>
     <color name="all_apps_prediction_row_separator">#3c000000</color>
     <color name="all_apps_prediction_row_separator_dark">#3cffffff</color>
+    <color name="blur_shade_panel_fg">@androidprv:color/shade_panel_fg</color>
+    <color name="blur_shade_panel_bg">@androidprv:color/shade_panel_bg</color>
 
     <!-- Taskbar -->
     <color name="taskbar_nav_icon_selection_ripple">#E0E0E0</color>
@@ -31,7 +33,6 @@
     <color name="taskbar_nav_icon_dark_color_on_home">#99000000</color>
     <color name="taskbar_stashed_handle_light_color">#EBffffff</color>
     <color name="taskbar_stashed_handle_dark_color">#99000000</color>
-    <color name="taskbar_running_app_indicator_color">#646464</color>
 
     <!-- Floating rotation button -->
     <color name="floating_rotation_button_light_color">#ffffff</color>
@@ -76,7 +77,7 @@
     <color name="mock_webpage_top_bar_item">#80868b</color>
     <color name="mock_webpage_page_text">#bdc1c6</color>
 
-    <color name="all_set_page_background">#FFFFFFFF</color>
+    <color name="all_set_page_background">@android:color/system_neutral1_50</color>
 
     <!-- Recents overview -->
     <color name="recents_filter_icon">#333333</color>
@@ -94,7 +95,10 @@
     <color name="lottie_yellow600">#f9ab00</color>
 
     <!-- Turn on work apps button -->
-    <color name="work_turn_on_stroke">?attr/colorAccentPrimary</color>
-    <color name="work_fab_bg_color">?attr/materialColorPrimaryFixedDim</color>
-    <color name="work_fab_icon_color">@color/material_color_on_primary_fixed</color>
+    <color name="work_turn_on_stroke">@color/materialColorPrimary</color>
+
+    <color name="nudge_pill_color1">#4285F4</color>
+    <color name="nudge_pill_color2">#7430E2</color>
+    <color name="nudge_pill_color3">#2A7EC8</color>
+    <color name="nudge_pill_color4">#2DB8BD</color>
 </resources>
