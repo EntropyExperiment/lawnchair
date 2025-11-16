@@ -1,0 +1,17 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace "com.android.launcher3.dagger"
+    sourceSets {
+        main {
+            java.srcDirs = ['src']
+        }
+    }
+}
+
+dependencies {
+    implementation libs.javax.inject
+}
