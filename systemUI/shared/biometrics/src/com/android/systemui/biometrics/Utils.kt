@@ -162,8 +162,10 @@ object Utils {
     fun ActivityTaskManager.isSystemAppOrInBackground(
         context: Context,
         clientPackage: String,
-        clientClassNameIfItIsConfirmDeviceCredentialActivity: String?
+        clientClassNameIfItIsConfirmDeviceCredentialActivity: String?,
     ): Boolean {
+        // TODO (b/409812027): Consolidate and scope out auth requirements for biometric prompt
+
         Log.v(TAG, "Checking if the authenticating is in background, clientPackage:$clientPackage")
         val tasks = getTasks(Int.MAX_VALUE)
         if (tasks == null || tasks.isEmpty()) {
@@ -176,11 +178,74 @@ object Utils {
         val topPackageEqualsToClient = topActivity!!.packageName == clientPackage
         val isClientConfirmDeviceCredentialActivity =
             clientClassNameIfItIsConfirmDeviceCredentialActivity != null
-        // b/339532378: If it's ConfirmDeviceCredentialActivity, we need to check further on
-        // class name.
-        return !(isSystemApp || topPackageEqualsToClient) ||
-            (isClientConfirmDeviceCredentialActivity &&
-                topActivity.className != clientClassNameIfItIsConfirmDeviceCredentialActivity)
+
+        if (
+            !isClientInBackgroundOrNotVisible(
+                isSystemApp,
+                isVisible = true,
+                topPackageEqualsToClient,
+                isClientConfirmDeviceCredentialActivity,
+                clientClassNameIfItIsConfirmDeviceCredentialActivity,
+                topActivity!!.className,
+                isTopPackage = true,
+            )
+        ) {
+            return false
+        }
+
+        for (task in tasks) {
+            val packageName = task.topActivity!!.packageName
+            val className = task.topActivity!!.className
+            val isVisible = task.isVisible
+
+            Log.v(TAG, "Running task, top: $packageName, isVisible: $isVisible")
+
+            if (
+                !isClientInBackgroundOrNotVisible(
+                    isSystemApp = false,
+                    isVisible,
+                    taskPackageEqualsClientPackage = packageName == clientPackage,
+                    isClientConfirmDeviceCredentialActivity,
+                    clientClassNameIfItIsConfirmDeviceCredentialActivity,
+                    className,
+                )
+            ) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    fun isClientInBackgroundOrNotVisible(
+        isSystemApp: Boolean,
+        isVisible: Boolean,
+        taskPackageEqualsClientPackage: Boolean,
+        isClientConfirmDeviceCredentialActivity: Boolean,
+        clientClassNameIfItIsConfirmDeviceCredentialActivity: String?,
+        topActivityClassName: String,
+        isTopPackage: Boolean = false,
+    ): Boolean {
+
+        if (isVisible) {
+            if (isSystemApp || taskPackageEqualsClientPackage) {
+                // b/339532378: If it's ConfirmDeviceCredentialActivity, we need to check further on
+                // class name.
+                if (isClientConfirmDeviceCredentialActivity) {
+                    return !isTopPackage ||
+                        clientClassNameIfItIsConfirmDeviceCredentialActivity != topActivityClassName
+                }
+                return false
+            } else if (
+                isTopPackage &&
+                    isClientConfirmDeviceCredentialActivity &&
+                    clientClassNameIfItIsConfirmDeviceCredentialActivity == topActivityClassName
+            ) {
+                return false
+            }
+        }
+
+        return true
     }
     // LINT.ThenChange(frameworks/base/services/core/java/com/android/server/biometrics/Utils.java)
 }

@@ -42,8 +42,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.StringJoiner;
 
-import app.lawnchair.compat.LawnchairQuickstepCompat;
-
 /**
  * Various shared constants between Launcher and SysUI as part of quickstep
  */
@@ -412,41 +410,22 @@ public class QuickStepContract {
         return mode == NAV_BAR_MODE_3BUTTON;
     }
 
-    // LC-specific
-    public static boolean sRecentsDisabled = false;
-    public static boolean sHasCustomCornerRadius = false;
-    public static float sCustomCornerRadius = 0f;
-    
     /**
      * Corner radius that should be used on windows in order to cover the display.
      * These values are expressed in pixels because they should not respect display or font
      * scaling. The corner radius may change when folding/unfolding the device.
+     *
+     * @param context A display associated context.
      */
     public static float getWindowCornerRadius(Context context) {
-        // LC-Wrapped
-        if (sRecentsDisabled || !LawnchairQuickstepCompat.ATLEAST_S) {
-            return 0;
-        }
-        if (sHasCustomCornerRadius) {
-            return sCustomCornerRadius;
-        }
-        try {
-            return ScreenDecorationsUtils.getWindowCornerRadius(context);
-        } catch (Throwable t) {
-            return 0;
-        }
+        return ScreenDecorationsUtils.getWindowCornerRadius(context);
     }
 
     /**
      * If live rounded corners are supported on windows.
      */
     public static boolean supportsRoundedCornersOnWindows(Resources resources) {
-        // LC-Wrapped
-        try {
-            return ScreenDecorationsUtils.supportsRoundedCornersOnWindows(resources);
-        } catch (Throwable t) {
-            return false;
-        }
+        return ScreenDecorationsUtils.supportsRoundedCornersOnWindows(resources);
     }
 
     /**

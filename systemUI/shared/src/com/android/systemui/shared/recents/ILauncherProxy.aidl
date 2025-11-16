@@ -101,7 +101,7 @@ oneway interface ILauncherProxy {
     /**
      * Sent when split keyboard shortcut is triggered to enter stage split.
      */
-    void enterStageSplitFromRunningApp(boolean leftOrTop) = 25;
+    void enterStageSplitFromRunningApp(int displayId, boolean leftOrTop) = 25;
 
     /**
      * Sent when the task bar stash state is toggled.
@@ -159,4 +159,10 @@ oneway interface ILauncherProxy {
      * Sent when {@link TaskbarDelegate#onDisplayRemoveSystemDecorations} is called.
      */
     void onDisplayRemoveSystemDecorations(int displayId) = 38;
+
+    /**
+     * Sent when active action corner is received in {@link ActionCornerInteractor}. Please refer to
+     * {@link ActionCornerConstants.Action} for all possible actions.
+     */
+    void onActionCornerActivated(int action, int displayId) = 39;
 }

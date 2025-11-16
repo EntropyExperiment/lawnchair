@@ -16,7 +16,6 @@
 
 package com.android.systemui.shared.system;
 
-import android.os.Build;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.RemoteAnimationTarget;
@@ -26,8 +25,6 @@ import android.window.WindowAnimationState;
 
 import com.android.internal.os.IResultReceiver;
 import com.android.wm.shell.recents.IRecentsAnimationController;
-
-import java.lang.reflect.Method;
 
 public class RecentsAnimationControllerCompat {
 
@@ -75,24 +72,7 @@ public class RecentsAnimationControllerCompat {
      */
     public void finish(boolean toHome, boolean sendUserLeaveHint, IResultReceiver finishCb) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                mAnimationController.finish(toHome, sendUserLeaveHint, finishCb);
-            } else {
-                try {
-                    Method finishMethod = mAnimationController.getClass().getMethod(
-                        "finish", boolean.class, boolean.class);
-                    finishMethod.invoke(mAnimationController, toHome, sendUserLeaveHint);
-
-                    if (finishCb != null) {
-                        finishCb.send(0, null);
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "Failed to finish recents animation via reflection", e);
-                    if (finishCb != null) {
-                        finishCb.send(0, null);
-                    }
-                }
-            }
+            mAnimationController.finish(toHome, sendUserLeaveHint, finishCb);
         } catch (RemoteException e) {
             Log.e(TAG, "Failed to finish recents animation", e);
             try {

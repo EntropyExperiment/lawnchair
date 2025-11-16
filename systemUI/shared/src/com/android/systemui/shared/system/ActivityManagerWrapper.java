@@ -18,16 +18,13 @@ package com.android.systemui.shared.system;
 
 import static android.app.ActivityManager.LOCK_TASK_MODE_LOCKED;
 import static android.app.ActivityManager.LOCK_TASK_MODE_NONE;
-import static android.app.ActivityManager.RECENT_IGNORE_UNAVAILABLE;
 import static android.app.ActivityTaskManager.getService;
-import static app.lawnchair.compat.LawnchairQuickstepCompat.ATLEAST_R;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Activity;
 import android.app.ActivityClient;
 import android.app.ActivityManager;
-import android.app.ActivityManager.RecentTaskInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ActivityOptions;
 import android.app.ActivityTaskManager;
@@ -36,12 +33,8 @@ import android.app.WindowConfiguration;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.DeadSystemException;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -55,9 +48,6 @@ import com.android.internal.app.IVoiceInteractionManagerService;
 import com.android.systemui.shared.recents.model.Task;
 import com.android.systemui.shared.recents.model.ThumbnailData;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.List;
 
 public class ActivityManagerWrapper {
@@ -83,17 +73,13 @@ public class ActivityManagerWrapper {
     /**
      * @return the current user's id.
      */
-    public int getCurrentUserId() throws DeadSystemException {
+    public int getCurrentUserId() {
         UserInfo ui;
         try {
             ui = ActivityManager.getService().getCurrentUser();
             return ui != null ? ui.id : 0;
         } catch (RemoteException e) {
-            if (ATLEAST_R) {
-                throw e.rethrowFromSystemServer();
-            } else {
-                throw new DeadSystemException();
-            }
+            throw e.rethrowFromSystemServer();
         }
     }
 
@@ -149,24 +135,9 @@ public class ActivityManagerWrapper {
     public @NonNull ThumbnailData getTaskThumbnail(int taskId, boolean isLowResolution) {
         TaskSnapshot snapshot = null;
         try {
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                Method getTaskSnapshotMethod = getService().getClass().getMethod(
-                    "getTaskSnapshot",
-                    int.class,      // taskId
-                    boolean.class,  // isLowResolution
-                    boolean.class   // isTranslucent (added in Android 14)
-                );
-
-                snapshot = (TaskSnapshot) getTaskSnapshotMethod.invoke(
-                    getService(), taskId, isLowResolution, false);
-                
-            } else {
-                snapshot = getService().getTaskSnapshot(taskId, isLowResolution);
-            }
+            snapshot = getService().getTaskSnapshot(taskId, isLowResolution);
         } catch (RemoteException e) {
             Log.w(TAG, "Failed to retrieve task snapshot", e);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            Log.e(TAG, "Failed to invoke getTaskSnapshot", e);
         }
         if (snapshot != null) {
             return ThumbnailData.fromSnapshot(snapshot);
@@ -335,18 +306,6 @@ public class ActivityManagerWrapper {
         } catch (RemoteException e) {
             return false;
         }
-    }
-
-    /**
-     * Returns true if the system supports freeform multi-window.
-     */
-    public boolean supportsFreeformMultiWindow(Context context) {
-        final boolean freeformDevOption = Settings.Global.getInt(context.getContentResolver(),
-                Settings.Global.DEVELOPMENT_ENABLE_FREEFORM_WINDOWS_SUPPORT, 0) != 0;
-        return ActivityTaskManager.supportsMultiWindow(context)
-                && (context.getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
-                || freeformDevOption);
     }
 
     /**

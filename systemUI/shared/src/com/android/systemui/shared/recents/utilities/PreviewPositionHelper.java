@@ -5,11 +5,18 @@ import static android.view.Surface.ROTATION_180;
 import static android.view.Surface.ROTATION_270;
 import static android.view.Surface.ROTATION_90;
 
+import static com.android.wm.shell.shared.split.SplitScreenConstants.SNAP_TO_2_10_90;
+import static com.android.wm.shell.shared.split.SplitScreenConstants.SPLIT_POSITION_TOP_OR_LEFT;
+import static com.android.wm.shell.shared.split.SplitScreenConstants.SPLIT_POSITION_UNDEFINED;
+
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import androidx.annotation.Nullable;
+
 import com.android.systemui.shared.recents.model.ThumbnailData;
+import com.android.wm.shell.shared.split.SplitBounds;
 
 /**
  * Utility class to position the thumbnail in the TaskView
@@ -18,22 +25,20 @@ public class PreviewPositionHelper {
 
     public static final float MAX_PCT_BEFORE_ASPECT_RATIOS_CONSIDERED_DIFFERENT = 0.1f;
 
-    /**
-     * Specifies that a stage is positioned at the top half of the screen if
-     * in portrait mode or at the left half of the screen if in landscape mode.
-     * TODO(b/254378592): Remove after consolidation
-     */
-    public static final int STAGE_POSITION_TOP_OR_LEFT = 0;
-
-    /**
-     * Specifies that a stage is positioned at the bottom half of the screen if
-     * in portrait mode or at the right half of the screen if in landscape mode.
-     * TODO(b/254378592): Remove after consolidation
-     */
-    public static final int STAGE_POSITION_BOTTOM_OR_RIGHT = 1;
-
     private final Matrix mMatrix = new Matrix();
     private boolean mIsOrientationChanged;
+    /**
+     * Only used when this helper is being used for an app in split screen. Refers to the position
+     * of the app in the pair.
+     * See {@link com.android.wm.shell.shared.split.SplitScreenConstants#@SplitPosition}
+     */
+    private int mSplitPosition = SPLIT_POSITION_UNDEFINED;
+    /**
+     * Guarded by enableFlexibleTwoAppSplit() flag, but this class doesn't have access so the
+     * caller is responsible for checking. If the flag is disabled this will be null
+     */
+    @Nullable
+    private SplitBounds mSplitBounds;
 
     public Matrix getMatrix() {
         return mMatrix;
@@ -160,6 +165,16 @@ public class PreviewPositionHelper {
             }
 
             thumbnailScale = targetW / (croppedWidth * scale);
+
+            if (mSplitBounds != null
+                    && mSplitBounds.snapPosition == SNAP_TO_2_10_90
+                    && mSplitPosition == SPLIT_POSITION_TOP_OR_LEFT) {
+                if (mSplitBounds.appsStackedVertically) {
+                    thumbnailClipHint.top += availableHeight - croppedHeight;
+                } else {
+                    thumbnailClipHint.left += availableWidth - croppedWidth;
+                }
+            }
         }
 
         if (!isRotated) {
@@ -207,6 +222,11 @@ public class PreviewPositionHelper {
                 break;
         }
         mMatrix.postTranslate(translateX, translateY);
+    }
+
+    public void setSplitBounds(SplitBounds splitBounds, int stagePosition) {
+        mSplitBounds = splitBounds;
+        mSplitPosition = stagePosition;
     }
 
     /**

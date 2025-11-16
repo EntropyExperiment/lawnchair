@@ -28,6 +28,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.systemui.log.LogcatOnlyMessageBuffer;
+import com.android.systemui.log.core.LogLevel;
+import com.android.systemui.log.core.Logger;
 import com.android.systemui.plugins.Plugin;
 import com.android.systemui.plugins.PluginFragment;
 import com.android.systemui.plugins.PluginLifecycleManager;
@@ -61,13 +64,14 @@ public class PluginInstance<T extends Plugin>
     private final ComponentName mComponentName;
     private final PluginFactory<T> mPluginFactory;
     private final String mTag;
+    private final Logger mLogger;
 
     private boolean mHasError = false;
     private BiConsumer<String, String> mLogConsumer = null;
     private Context mPluginContext;
     private T mPlugin;
 
-    /** */
+    /** Constructor */
     public PluginInstance(
             Context appContext,
             PluginListener<T> listener,
@@ -79,8 +83,9 @@ public class PluginInstance<T extends Plugin>
         mComponentName = componentName;
         mPluginFactory = pluginFactory;
         mPlugin = plugin;
-        mTag = TAG + "[" + mComponentName.getShortClassName() + "]"
-                + '@' + Integer.toHexString(hashCode());
+        mTag = String.format("%s[%s]@%h", TAG, mComponentName.getShortClassName(), hashCode());
+        mLogger = new Logger(mListener.getLogBuffer() != null ? mListener.getLogBuffer() :
+                new LogcatOnlyMessageBuffer(LogLevel.WARNING), mTag);
 
         if (mPlugin != null) {
             mPluginContext = mPluginFactory.createPluginContext();
@@ -92,24 +97,16 @@ public class PluginInstance<T extends Plugin>
         return mTag;
     }
 
-    /** */
+    /** True if an error has been observed */
     public boolean hasError() {
         return mHasError;
     }
 
-    public void setLogFunc(BiConsumer logConsumer) {
-        mLogConsumer = logConsumer;
-    }
-
-    private void log(String message) {
-        if (mLogConsumer != null) {
-            mLogConsumer.accept(mTag, message);
-        }
-    }
-
     @Override
     public synchronized boolean onFail(String className, String methodName, Throwable failure) {
-        Log.e(TAG, "Failure from " + mPlugin + ". Disabling Plugin.");
+        PluginActionManager.logFmt(mLogger, LogLevel.ERROR,
+                "Failure from %s. Disabling Plugin.", mPlugin.toString(), null);
+
         mHasError = true;
         unloadPlugin();
         mListener.onPluginDetached(this);
@@ -119,31 +116,31 @@ public class PluginInstance<T extends Plugin>
     /** Alerts listener and plugin that the plugin has been created. */
     public synchronized void onCreate() {
         if (mHasError) {
-            log("Previous Fatal Exception detected for plugin class");
+            mLogger.w("Previous Fatal Exception detected for plugin class");
             return;
         }
 
         boolean loadPlugin = mListener.onPluginAttached(this);
         if (!loadPlugin) {
             if (mPlugin != null) {
-                log("onCreate: auto-unload");
+                mLogger.d("onCreate: auto-unload");
                 unloadPlugin();
             }
             return;
         }
 
         if (mPlugin == null) {
-            log("onCreate: auto-load");
+            mLogger.d("onCreate: auto-load");
             loadPlugin();
             return;
         }
 
         if (!checkVersion()) {
-            log("onCreate: version check failed");
+            mLogger.d("onCreate: version check failed");
             return;
         }
 
-        log("onCreate: load callbacks");
+        mLogger.i("onCreate: load callbacks");
         if (!(mPlugin instanceof PluginFragment)) {
             // Only call onCreate for plugins that aren't fragments, as fragments
             // will get the onCreate as part of the fragment lifecycle.
@@ -156,11 +153,11 @@ public class PluginInstance<T extends Plugin>
     public synchronized void onDestroy() {
         if (mHasError) {
             // Detached in error handler
-            log("onDestroy - no-op");
+            mLogger.d("onDestroy - no-op");
             return;
         }
 
-        log("onDestroy");
+        mLogger.i("onDestroy");
         unloadPlugin();
         mListener.onPluginDetached(this);
     }
@@ -171,17 +168,15 @@ public class PluginInstance<T extends Plugin>
         return mHasError ? null : mPlugin;
     }
 
-    /**
-     * Loads and creates the plugin if it does not exist.
-     */
+    /** Loads and creates the plugin if it does not exist. */
     public synchronized void loadPlugin() {
         if (mHasError) {
-            log("Previous Fatal Exception detected for plugin class");
+            mLogger.w("Previous Fatal Exception detected for plugin class");
             return;
         }
 
         if (mPlugin != null) {
-            log("Load request when already loaded");
+            mLogger.d("Load request when already loaded");
             return;
         }
 
@@ -189,16 +184,16 @@ public class PluginInstance<T extends Plugin>
         mPlugin = mPluginFactory.createPlugin(this);
         mPluginContext = mPluginFactory.createPluginContext();
         if (mPlugin == null || mPluginContext == null) {
-            Log.e(mTag, "Requested load, but failed");
+            mLogger.e("Requested load, but failed");
             return;
         }
 
         if (!checkVersion()) {
-            log("loadPlugin: version check failed");
+            mLogger.e("loadPlugin: version check failed");
             return;
         }
 
-        log("Loaded plugin; running callbacks");
+        mLogger.e("Loaded plugin; running callbacks");
         if (!(mPlugin instanceof PluginFragment)) {
             // Only call onCreate for plugins that aren't fragments, as fragments
             // will get the onCreate as part of the fragment lifecycle.
@@ -207,9 +202,7 @@ public class PluginInstance<T extends Plugin>
         mListener.onPluginLoaded(mPlugin, mPluginContext, this);
     }
 
-    /**
-     * Checks the plugin version, and permanently destroys the plugin instance on a failure
-     */
+    /** Checks the plugin version, and permanently destroys the plugin instance on a failure */
     private synchronized boolean checkVersion() {
         if (mHasError) {
             return false;
@@ -237,11 +230,11 @@ public class PluginInstance<T extends Plugin>
      */
     public synchronized void unloadPlugin() {
         if (mPlugin == null) {
-            log("Unload request when already unloaded");
+            mLogger.d("Unload request when already unloaded");
             return;
         }
 
-        log("Unloading plugin, running callbacks");
+        mLogger.i("Unloading plugin, running callbacks");
         mListener.onPluginUnloaded(mPlugin, this);
         if (!(mPlugin instanceof PluginFragment)) {
             // Only call onDestroy for plugins that aren't fragments, as fragments
@@ -397,7 +390,7 @@ public class PluginInstance<T extends Plugin>
     }
 
     /**
-     *  Simple class to create a new instance. Useful for testing.
+     * Simple class to create a new instance. Useful for testing.
      *
      * @param <T> The type of plugin this create.
      **/
