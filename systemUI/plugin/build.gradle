@@ -23,7 +23,8 @@ addFrameworkJar('framework-16.jar')
 compileOnlyCommonJars()
 
 dependencies {
+    implementation libs.androidx.constraintlayout
     compileOnly projects.plugincore
     compileOnly projects.log
-    compileOnly projects.anim
+    compileOnly projects.animation
 }

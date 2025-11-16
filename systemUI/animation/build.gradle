@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 
 // TODO: Pull out surfaceeffects outside of src and have separate build files there.
 android {
+    namespace "com.android.systemui.animation"
     sourceSets {
         main {
             // pE-TODO(QPR1): Investigate

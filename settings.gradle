@@ -58,6 +58,9 @@ project(':msdllib').projectDir = new File(rootDir, 'platform_frameworks_libs_sys
 include ':contextualeducationlib'
 project(':contextualeducationlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/contextualeducationlib')
 
+include ':viewcapturelib'
+project(':viewcapturelib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/viewcapturelib')
+
 include ':hidden-api'
 
 include ':shared'
@@ -75,14 +78,11 @@ project(':common').projectDir = new File(rootDir, 'systemUI/common')
 include ':log'
 project(':log').projectDir = new File(rootDir, 'systemUI/log')
 
-include ':anim'
-project(':anim').projectDir = new File(rootDir, 'systemUI/anim')
+include ':animation'
+project(':animation').projectDir = new File(rootDir, 'systemUI/animation')
 
 include ':unfold'
 project(':unfold').projectDir = new File(rootDir, 'systemUI/unfold')
-
-include ':viewcapture'
-project(':viewcapture').projectDir = new File(rootDir, 'systemUI/viewcapture')
 
 include ':utils'
 project(':utils').projectDir = new File(rootDir, 'systemUI/utils')

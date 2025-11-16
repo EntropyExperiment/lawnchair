@@ -385,9 +385,9 @@ dependencies {
     // Recents lib dependency
     withQuickstepCompileOnly projects.hiddenApi
     withQuickstepImplementation projects.shared
-    withQuickstepImplementation projects.anim
+    withQuickstepImplementation projects.animation
     withQuickstepImplementation projects.unfold
-    withQuickstepImplementation projects.viewcapture
+    withQuickstepImplementation projects.viewcapturelib
     withQuickstepImplementation projects.log
     withQuickstepCompileOnly projects.plugin
     withQuickstepImplementation projects.plugincore

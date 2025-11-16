@@ -18,5 +18,5 @@ compileOnlyCommonJars()
 
 dependencies {
     compileOnly projects.flags
-    compileOnly projects.viewcapture
+    compileOnly projects.viewcapturelib
 }

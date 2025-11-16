@@ -80,7 +80,9 @@ constructor(
     /** [ViewTransitionRegistryImpl] to store the mapping of transitioning view and its token */
     private val transitionRegistry: ViewTransitionRegistry? =
         if (Flags.decoupleViewControllerInAnimlib()) {
-            ViewTransitionRegistryImpl.instance
+            null
+            // LC-Ignored
+//            ViewTransitionRegistryImpl.instance
         } else {
             null
         },

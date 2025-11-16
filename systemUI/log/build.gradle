@@ -22,7 +22,6 @@ addFrameworkJar('framework-16.jar')
 compileOnlyCommonJars()
 
 dependencies {
-    compileOnly projects.plugincore
     compileOnly projects.common
     implementation libs.google.errorprone.annotations
 }
