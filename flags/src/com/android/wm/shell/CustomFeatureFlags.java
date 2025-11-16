@@ -1,6 +1,5 @@
 package com.android.wm.shell;
 
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,13 +17,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     }
     @Override
 
-    public boolean bubbleViewInfoExecutors() {
-        return getValue(Flags.FLAG_BUBBLE_VIEW_INFO_EXECUTORS,
-            FeatureFlags::bubbleViewInfoExecutors);
-    }
-
-    @Override
-
     public boolean enableAutoTaskStackController() {
         return getValue(Flags.FLAG_ENABLE_AUTO_TASK_STACK_CONTROLLER,
             FeatureFlags::enableAutoTaskStackController);
@@ -35,6 +27,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableBubbleAnything() {
         return getValue(Flags.FLAG_ENABLE_BUBBLE_ANYTHING,
             FeatureFlags::enableBubbleAnything);
+    }
+
+    @Override
+
+    public boolean enableBubbleAppCompatFixes() {
+        return getValue(Flags.FLAG_ENABLE_BUBBLE_APP_COMPAT_FIXES,
+            FeatureFlags::enableBubbleAppCompatFixes);
     }
 
     @Override
@@ -56,6 +55,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableBubbleStashing() {
         return getValue(Flags.FLAG_ENABLE_BUBBLE_STASHING,
             FeatureFlags::enableBubbleStashing);
+    }
+
+    @Override
+
+    public boolean enableBubbleSwipeUpCleanup() {
+        return getValue(Flags.FLAG_ENABLE_BUBBLE_SWIPE_UP_CLEANUP,
+            FeatureFlags::enableBubbleSwipeUpCleanup);
     }
 
     @Override
@@ -91,6 +97,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableDynamicInsetsForAppLaunch() {
         return getValue(Flags.FLAG_ENABLE_DYNAMIC_INSETS_FOR_APP_LAUNCH,
             FeatureFlags::enableDynamicInsetsForAppLaunch);
+    }
+
+    @Override
+
+    public boolean enableEnterSplitRemoveBubble() {
+        return getValue(Flags.FLAG_ENABLE_ENTER_SPLIT_REMOVE_BUBBLE,
+            FeatureFlags::enableEnterSplitRemoveBubble);
     }
 
     @Override
@@ -144,6 +157,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enablePipBoxShadows() {
+        return getValue(Flags.FLAG_ENABLE_PIP_BOX_SHADOWS,
+            FeatureFlags::enablePipBoxShadows);
+    }
+
+    @Override
+
     public boolean enablePipUmoExperience() {
         return getValue(Flags.FLAG_ENABLE_PIP_UMO_EXPERIENCE,
             FeatureFlags::enablePipUmoExperience);
@@ -168,13 +188,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableShellTopTaskTracking() {
         return getValue(Flags.FLAG_ENABLE_SHELL_TOP_TASK_TRACKING,
             FeatureFlags::enableShellTopTaskTracking);
-    }
-
-    @Override
-
-    public boolean enableTaskViewControllerCleanup() {
-        return getValue(Flags.FLAG_ENABLE_TASK_VIEW_CONTROLLER_CLEANUP,
-            FeatureFlags::enableTaskViewControllerCleanup);
     }
 
     @Override
@@ -219,6 +232,13 @@ public class CustomFeatureFlags implements FeatureFlags {
             FeatureFlags::taskViewRepository);
     }
 
+    @Override
+
+    public boolean taskViewTransitionsRefactor() {
+        return getValue(Flags.FLAG_TASK_VIEW_TRANSITIONS_REFACTOR,
+            FeatureFlags::taskViewTransitionsRefactor);
+    }
+
     public boolean isFlagReadOnlyOptimized(String flagName) {
         if (mReadOnlyFlagsSet.contains(flagName) &&
             isOptimizationEnabled()) {
@@ -238,17 +258,19 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     public List<String> getFlagNames() {
         return Arrays.asList(
-            Flags.FLAG_BUBBLE_VIEW_INFO_EXECUTORS,
             Flags.FLAG_ENABLE_AUTO_TASK_STACK_CONTROLLER,
             Flags.FLAG_ENABLE_BUBBLE_ANYTHING,
+            Flags.FLAG_ENABLE_BUBBLE_APP_COMPAT_FIXES,
             Flags.FLAG_ENABLE_BUBBLE_BAR,
             Flags.FLAG_ENABLE_BUBBLE_BAR_ON_PHONES,
             Flags.FLAG_ENABLE_BUBBLE_STASHING,
+            Flags.FLAG_ENABLE_BUBBLE_SWIPE_UP_CLEANUP,
             Flags.FLAG_ENABLE_BUBBLE_TASK_VIEW_LISTENER,
             Flags.FLAG_ENABLE_BUBBLE_TO_FULLSCREEN,
             Flags.FLAG_ENABLE_BUBBLES_LONG_PRESS_NAV_HANDLE,
             Flags.FLAG_ENABLE_CREATE_ANY_BUBBLE,
             Flags.FLAG_ENABLE_DYNAMIC_INSETS_FOR_APP_LAUNCH,
+            Flags.FLAG_ENABLE_ENTER_SPLIT_REMOVE_BUBBLE,
             Flags.FLAG_ENABLE_FLEXIBLE_SPLIT,
             Flags.FLAG_ENABLE_FLEXIBLE_TWO_APP_SPLIT,
             Flags.FLAG_ENABLE_GSF,
@@ -256,51 +278,55 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_NEW_BUBBLE_ANIMATIONS,
             Flags.FLAG_ENABLE_OPTIONAL_BUBBLE_OVERFLOW,
             Flags.FLAG_ENABLE_PIP2,
+            Flags.FLAG_ENABLE_PIP_BOX_SHADOWS,
             Flags.FLAG_ENABLE_PIP_UMO_EXPERIENCE,
             Flags.FLAG_ENABLE_RECENTS_BOOKEND_TRANSITION,
             Flags.FLAG_ENABLE_RETRIEVABLE_BUBBLES,
             Flags.FLAG_ENABLE_SHELL_TOP_TASK_TRACKING,
-            Flags.FLAG_ENABLE_TASK_VIEW_CONTROLLER_CLEANUP,
-            Flags.FLAG_ENABLE_TASKBAR_NAVBAR_UNIFICATION,
-            Flags.FLAG_ENABLE_TASKBAR_ON_PHONES,
-            Flags.FLAG_ENABLE_TINY_TASKBAR,
-            Flags.FLAG_FIX_MISSING_USER_CHANGE_CALLBACKS,
-            Flags.FLAG_ONLY_REUSE_BUBBLED_TASK_WHEN_LAUNCHED_FROM_BUBBLE,
-            Flags.FLAG_TASK_VIEW_REPOSITORY
-        );
-    }
-
-    private Set<String> mReadOnlyFlagsSet = new HashSet<>(
-        Arrays.asList(
-            Flags.FLAG_BUBBLE_VIEW_INFO_EXECUTORS,
-            Flags.FLAG_ENABLE_AUTO_TASK_STACK_CONTROLLER,
-            Flags.FLAG_ENABLE_BUBBLE_ANYTHING,
-            Flags.FLAG_ENABLE_BUBBLE_BAR,
-            Flags.FLAG_ENABLE_BUBBLE_BAR_ON_PHONES,
-            Flags.FLAG_ENABLE_BUBBLE_STASHING,
-            Flags.FLAG_ENABLE_BUBBLE_TASK_VIEW_LISTENER,
-            Flags.FLAG_ENABLE_BUBBLE_TO_FULLSCREEN,
-            Flags.FLAG_ENABLE_BUBBLES_LONG_PRESS_NAV_HANDLE,
-            Flags.FLAG_ENABLE_CREATE_ANY_BUBBLE,
-            Flags.FLAG_ENABLE_DYNAMIC_INSETS_FOR_APP_LAUNCH,
-            Flags.FLAG_ENABLE_FLEXIBLE_SPLIT,
-            Flags.FLAG_ENABLE_FLEXIBLE_TWO_APP_SPLIT,
-            Flags.FLAG_ENABLE_GSF,
-            Flags.FLAG_ENABLE_MAGNETIC_SPLIT_DIVIDER,
-            Flags.FLAG_ENABLE_NEW_BUBBLE_ANIMATIONS,
-            Flags.FLAG_ENABLE_OPTIONAL_BUBBLE_OVERFLOW,
-            Flags.FLAG_ENABLE_PIP2,
-            Flags.FLAG_ENABLE_PIP_UMO_EXPERIENCE,
-            Flags.FLAG_ENABLE_RECENTS_BOOKEND_TRANSITION,
-            Flags.FLAG_ENABLE_RETRIEVABLE_BUBBLES,
-            Flags.FLAG_ENABLE_SHELL_TOP_TASK_TRACKING,
-            Flags.FLAG_ENABLE_TASK_VIEW_CONTROLLER_CLEANUP,
             Flags.FLAG_ENABLE_TASKBAR_NAVBAR_UNIFICATION,
             Flags.FLAG_ENABLE_TASKBAR_ON_PHONES,
             Flags.FLAG_ENABLE_TINY_TASKBAR,
             Flags.FLAG_FIX_MISSING_USER_CHANGE_CALLBACKS,
             Flags.FLAG_ONLY_REUSE_BUBBLED_TASK_WHEN_LAUNCHED_FROM_BUBBLE,
             Flags.FLAG_TASK_VIEW_REPOSITORY,
+            Flags.FLAG_TASK_VIEW_TRANSITIONS_REFACTOR
+        );
+    }
+
+    private Set<String> mReadOnlyFlagsSet = new HashSet<>(
+        Arrays.asList(
+            Flags.FLAG_ENABLE_AUTO_TASK_STACK_CONTROLLER,
+            Flags.FLAG_ENABLE_BUBBLE_ANYTHING,
+            Flags.FLAG_ENABLE_BUBBLE_APP_COMPAT_FIXES,
+            Flags.FLAG_ENABLE_BUBBLE_BAR,
+            Flags.FLAG_ENABLE_BUBBLE_BAR_ON_PHONES,
+            Flags.FLAG_ENABLE_BUBBLE_STASHING,
+            Flags.FLAG_ENABLE_BUBBLE_SWIPE_UP_CLEANUP,
+            Flags.FLAG_ENABLE_BUBBLE_TASK_VIEW_LISTENER,
+            Flags.FLAG_ENABLE_BUBBLE_TO_FULLSCREEN,
+            Flags.FLAG_ENABLE_BUBBLES_LONG_PRESS_NAV_HANDLE,
+            Flags.FLAG_ENABLE_CREATE_ANY_BUBBLE,
+            Flags.FLAG_ENABLE_DYNAMIC_INSETS_FOR_APP_LAUNCH,
+            Flags.FLAG_ENABLE_ENTER_SPLIT_REMOVE_BUBBLE,
+            Flags.FLAG_ENABLE_FLEXIBLE_SPLIT,
+            Flags.FLAG_ENABLE_FLEXIBLE_TWO_APP_SPLIT,
+            Flags.FLAG_ENABLE_GSF,
+            Flags.FLAG_ENABLE_MAGNETIC_SPLIT_DIVIDER,
+            Flags.FLAG_ENABLE_NEW_BUBBLE_ANIMATIONS,
+            Flags.FLAG_ENABLE_OPTIONAL_BUBBLE_OVERFLOW,
+            Flags.FLAG_ENABLE_PIP2,
+            Flags.FLAG_ENABLE_PIP_BOX_SHADOWS,
+            Flags.FLAG_ENABLE_PIP_UMO_EXPERIENCE,
+            Flags.FLAG_ENABLE_RECENTS_BOOKEND_TRANSITION,
+            Flags.FLAG_ENABLE_RETRIEVABLE_BUBBLES,
+            Flags.FLAG_ENABLE_SHELL_TOP_TASK_TRACKING,
+            Flags.FLAG_ENABLE_TASKBAR_NAVBAR_UNIFICATION,
+            Flags.FLAG_ENABLE_TASKBAR_ON_PHONES,
+            Flags.FLAG_ENABLE_TINY_TASKBAR,
+            Flags.FLAG_FIX_MISSING_USER_CHANGE_CALLBACKS,
+            Flags.FLAG_ONLY_REUSE_BUBBLED_TASK_WHEN_LAUNCHED_FROM_BUBBLE,
+            Flags.FLAG_TASK_VIEW_REPOSITORY,
+            Flags.FLAG_TASK_VIEW_TRANSITIONS_REFACTOR,
             ""
         )
     );

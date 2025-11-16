@@ -1,18 +1,11 @@
 package com.android.window.flags2;
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
+
 /** @hide */
 public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
     public boolean actionModeEdgeToEdge() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean activityEmbeddingAnimationCustomizationFlag() {
         return true;
     }
 
@@ -54,13 +47,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean allowHideScmButton() {
-        return true;
-    }
-
-    @Override
-
-
     public boolean allowsScreenSizeDecoupledFromStatusBarAndCutout() {
         return true;
     }
@@ -70,6 +56,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean alwaysDrawMagnificationFullscreenBorder() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean alwaysSeqIdLayout() {
+        return false;
     }
 
     @Override
@@ -110,6 +103,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean appCompatRefactoringRoundedCorners() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean appCompatUiFramework() {
         return false;
     }
@@ -139,7 +139,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean backupAndRestoreForUserAspectRatioSettings() {
-        return false;
+        return true;
     }
 
     @Override
@@ -166,21 +166,14 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean balCoverIntentSender() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean balDontBringExistingBackgroundTaskStackToFg() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean balImproveRealCallerVisibilityCheck() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean balImprovedMetrics() {
         return true;
     }
 
@@ -189,13 +182,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean balReduceGracePeriod() {
         return false;
-    }
-
-    @Override
-
-
-    public boolean balRequireOptInByPendingIntentCreator() {
-        return true;
     }
 
     @Override
@@ -243,13 +229,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean cacheWindowStyle() {
-        return true;
-    }
-
-    @Override
-
-
     public boolean cameraCompatForFreeform() {
         return false;
     }
@@ -264,43 +243,8 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean checkDisabledSnapshotsInTaskPersister() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean cleanupDispatchPendingTransactionsRemoteException() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean clearSystemVibrator() {
-        return true;
-    }
-
-    @Override
-
-
     public boolean closeToSquareConfigIncludesStatusBar() {
         return false;
-    }
-
-    @Override
-
-
-    public boolean condenseConfigurationChangeForSimpleMode() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean configurableFontScaleDefault() {
-        return true;
     }
 
     @Override
@@ -313,14 +257,14 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean delayNotificationToMagnificationWhenRecentsWindowToFrontTransition() {
-        return true;
+    public boolean currentAnimatorScaleUsesSharedMemory() {
+        return false;
     }
 
     @Override
 
 
-    public boolean delegateBackGestureToShell() {
+    public boolean defaultDeskWithoutWarmupMigration() {
         return false;
     }
 
@@ -328,13 +272,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean delegateUnhandledDrags() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean deleteCaptureDisplay() {
         return true;
     }
 
@@ -369,22 +306,8 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean doNotCheckIntersectionWhenNonMagnifiableWindowTransitions() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean earlyLaunchHint() {
+    public boolean dispatchFirstKeyguardLockedState() {
         return true;
-    }
-
-    @Override
-
-
-    public boolean edgeToEdgeByDefault() {
-        return false;
     }
 
     @Override
@@ -404,8 +327,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableAppHandlePositionReporting() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableAppHeaderWithTaskDensity() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableBlockNonDesktopDisplayWindowDragBugfix() {
+        return false;
     }
 
     @Override
@@ -418,14 +355,21 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean enableBufferTransformHintFromDisplay() {
-        return true;
+    public boolean enableBoxShadowSettings() {
+        return false;
     }
 
     @Override
 
 
     public boolean enableBugFixesForSecondaryDisplay() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableCameraCompatCheckDeviceRotationBugfix() {
         return false;
     }
 
@@ -488,6 +432,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableCloseLidInteraction() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableCompatUiVisibilityStatus() {
         return true;
     }
@@ -530,6 +481,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableDesktopAppHeaderStateChangeAnnouncements() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableDesktopAppLaunchAlttabTransitions() {
         return false;
     }
@@ -539,6 +497,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean enableDesktopAppLaunchAlttabTransitionsBugfix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopAppLaunchBugfix() {
+        return false;
     }
 
     @Override
@@ -566,6 +531,34 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableDesktopCloseTaskAnimationInDtcBugfix() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopFirstBasedDefaultToDesktopBugfix() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopFirstBasedDragToMaximize() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopFirstFullscreenRefocusBugfix() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopFirstListener() {
         return false;
     }
 
@@ -614,7 +607,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean enableDesktopSwipeBackMinimizeAnimationBugfix() {
+    public boolean enableDesktopSplitscreenTransitionBugfix() {
         return false;
     }
 
@@ -628,8 +621,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableDesktopTabTearingLaunchAnimation() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableDesktopTabTearingMinimizeAnimationBugfix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableDesktopTaskLimitSeparateTransition() {
+        return false;
     }
 
     @Override
@@ -775,6 +782,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableDesktopWindowingPipInOverviewBugfix() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableDesktopWindowingQuickSwitch() {
         return true;
     }
@@ -832,6 +846,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableDeviceStateAutoRotateSettingRefactor() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean enableDisplayCompatMode() {
         return false;
     }
 
@@ -887,7 +908,42 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableDraggingPipAcrossDisplays() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableDynamicRadiusComputationBugfix() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableEmptyDeskOnMinimize() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableExperimentalBubblesController() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableFreeformBoxShadows() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableFreeformDisplayLaunchParams() {
         return false;
     }
 
@@ -896,6 +952,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean enableFullScreenWindowOnRemovingSplitScreenStageBugfix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableFullscreenWindowControls() {
+        return false;
     }
 
     @Override
@@ -915,6 +978,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableHandlersDebuggingMode() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableHoldToDragAppHandle() {
         return true;
     }
@@ -922,8 +992,29 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableIndependentBackInProjected() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableInorderTransitionCallbacksForDesktop() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableInputLayerTransitionFix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableKeyGestureHandlerForSysui() {
+        return false;
     }
 
     @Override
@@ -937,6 +1028,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableModalsFullscreenWithPermission() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean enableModalsFullscreenWithPlatformSignature() {
         return true;
     }
 
@@ -971,8 +1069,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableMultipleDesktopsDefaultActivationInDesktopFirstDisplays() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableMultipleDesktopsFrontend() {
         return false;
+    }
+
+    @Override
+
+
+    public boolean enableNoWindowDecorationForDesks() {
+        return true;
     }
 
     @Override
@@ -985,8 +1097,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableOmitAccelerometerRotationRestore() {
+        return true;
+    }
+
+    @Override
+
+
     public boolean enableOpaqueBackgroundForTransparentWindows() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableOverflowButtonForTaskbarPinnedItems() {
+        return false;
     }
 
     @Override
@@ -1000,13 +1126,20 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enablePerDisplayPackageContextCacheInStatusbarNotif() {
-        return false;
+        return true;
     }
 
     @Override
 
 
     public boolean enablePersistingDisplaySizeForConnectedDisplays() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enablePinningAppWithContextMenu() {
         return false;
     }
 
@@ -1034,8 +1167,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableRejectHomeTransition() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableRequestFullscreenBugfix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableRequestFullscreenRefactor() {
+        return false;
     }
 
     @Override
@@ -1062,6 +1209,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableSeeThroughTaskFragments() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableShellInitialBoundsRegressionBugFix() {
         return true;
     }
@@ -1078,6 +1232,20 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean enableStartLaunchTransitionFromTaskbarBugfix() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableSysDecorsCallbacksViaWm() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableTallAppHeaders() {
+        return false;
     }
 
     @Override
@@ -1105,6 +1273,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableTaskbarOverflow() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean enableTaskbarRecentTasksThrottleBugfix() {
         return false;
     }
 
@@ -1139,7 +1314,21 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableTransitionOnActivitySetRequestedOrientation() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableVisualIndicatorInTransitionBugfix() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean enableWindowContextOverrideType() {
         return true;
     }
 
@@ -1148,6 +1337,20 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean enableWindowContextResourcesUpdateOnConfigChange() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean enableWindowDecorationRefactor() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean enableWindowRepositioningApi() {
+        return false;
     }
 
     @Override
@@ -1174,6 +1377,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean enableWindowingTaskStackOrderBugfix() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean enableWindowingTransitionHandlersObservers() {
         return false;
     }
@@ -1195,20 +1405,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean ensureWallpaperInTransitions() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean ensureWallpaperInWearTransitions() {
-        return true;
-    }
-
-    @Override
-
-
     public boolean enterDesktopByDefaultOnFreeformDisplays() {
         return false;
     }
@@ -1223,14 +1419,35 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean excludeDrawingAppThemeSnapshotFromLock() {
-        return true;
+    public boolean excludeDeskRootsFromDesktopTasks() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean excludeNonMainWindowFromSnapshot() {
+        return false;
     }
 
     @Override
 
 
     public boolean excludeTaskFromRecents() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean extendingPersistenceSnapshotQueueDepth() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean fallbackToFocusedDisplay() {
         return false;
     }
 
@@ -1244,6 +1461,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean fixFullscreenInMultiWindow() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean fixHideOverlayApi() {
         return true;
     }
@@ -1251,14 +1475,28 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean fixLayoutExistingTask() {
-        return true;
+    public boolean fixLayoutRestoredTask() {
+        return false;
     }
 
     @Override
 
 
-    public boolean fixViewRootCallTrace() {
+    public boolean fixMovingUnfocusedTask() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean fixSetAdjacentTaskFragmentsWithParams() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean fixShowWhenLockedSyncTimeout() {
         return false;
     }
 
@@ -1267,6 +1505,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean forceCloseTopTransparentFullscreenTask() {
         return false;
+    }
+
+    @Override
+
+
+    public boolean forceShowSystemBarForBubble() {
+        return true;
     }
 
     @Override
@@ -1281,6 +1526,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean getDimmerOnClosing() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean grantManageKeyGesturesToRecents() {
+        return false;
     }
 
     @Override
@@ -1321,14 +1573,14 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean jankApi() {
+    public boolean interceptMotionFromMoveToCancel() {
         return true;
     }
 
     @Override
 
 
-    public boolean keepAppWindowHideWhileLocked() {
+    public boolean jankApi() {
         return true;
     }
 
@@ -1337,13 +1589,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean keyboardShortcutsToSwitchDesks() {
         return false;
-    }
-
-    @Override
-
-
-    public boolean keyguardGoingAwayTimeout() {
-        return true;
     }
 
     @Override
@@ -1384,28 +1629,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean nestedTasksWithIndependentBounds() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean noConsecutiveVisibilityEvents() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean noDuplicateSurfaceDestroyedEvents() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean noVisibilityEventOnDisplayStateChange() {
+    public boolean nestedTasksWithIndependentBoundsBugfix() {
         return true;
     }
 
@@ -1413,6 +1637,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean offloadColorExtraction() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean parallelCdTransitionsDuringRecents() {
         return false;
     }
 
@@ -1468,21 +1699,14 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean processPriorityPolicyForMultiWindowMode() {
-        return true;
+    public boolean preserveRecentsTaskConfigurationOnRelaunch() {
+        return false;
     }
 
     @Override
 
 
     public boolean rearDisplayDisableForceDesktopSystemDecorations() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean recordTaskSnapshotsBeforeShutdown() {
         return true;
     }
 
@@ -1496,21 +1720,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean reduceKeyguardTransitions() {
-        return true;
-    }
-
-    @Override
-
-
     public boolean reduceTaskSnapshotMemoryUsage() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean reduceUnnecessaryMeasure() {
         return false;
     }
 
@@ -1531,7 +1741,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean releaseUserAspectRatioWm() {
+    public boolean releaseSurfaceOnTransitionFinish() {
         return true;
     }
 
@@ -1545,15 +1755,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean removeDeferHidingClient() {
+    public boolean removeDepartTargetFromMotion() {
         return true;
     }
 
     @Override
 
 
-    public boolean removeDepartTargetFromMotion() {
-        return false;
+    public boolean removeStartingInTransition() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean reparentToDefaultWithDisplayRemoval() {
+        return true;
     }
 
     @Override
@@ -1566,8 +1783,22 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean respectNonTopVisibleFixedOrientation() {
+    public boolean respectFullscreenActivityOptionInDesktopLaunchParams() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean respectHierarchySurfaceVisibility() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean respectLeafTaskBounds() {
+        return false;
     }
 
     @Override
@@ -1575,6 +1806,27 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean respectOrientationChangeForUnresizeable() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean restoreUserAspectRatioSettingsUsingService() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean restrictFreeformHiddenSystemBarsToFillingTasks() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean rootTaskForBubble() {
+        return false;
     }
 
     @Override
@@ -1588,7 +1840,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean safeReleaseSnapshotAggressively() {
-        return false;
+        return true;
     }
 
     @Override
@@ -1608,6 +1860,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean screenBrightnessDimOnEmulator() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean screenRecordingCallbacks() {
         return true;
     }
@@ -1616,6 +1875,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean scrollingFromLetterbox() {
+        return false;
+    }
+
+    @Override
+
+
+    public boolean scvhSurfaceControlLifetimeFix() {
         return false;
     }
 
@@ -1644,7 +1910,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean showDesktopExperienceDevOption() {
-        return false;
+        return true;
     }
 
     @Override
@@ -1671,6 +1937,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean skipDeactivationOfDeskWithNothingInFront() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean skipDecorViewRelayoutWhenClosingBugfix() {
         return true;
     }
@@ -1678,8 +1951,8 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean supportWidgetIntentsOnConnectedDisplay() {
-        return false;
+    public boolean splashScreenViewSyncTransaction() {
+        return true;
     }
 
     @Override
@@ -1721,13 +1994,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean systemUiPostAnimationEnd() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean taskFragmentSystemOrganizerFlag() {
         return true;
     }
 
@@ -1735,13 +2001,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean touchPassThroughOptIn() {
-        return true;
-    }
-
-    @Override
-
-
-    public boolean trackSystemUiContextBeforeWms() {
         return true;
     }
 
@@ -1762,6 +2021,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
+    public boolean transitionHandlerCujTags() {
+        return false;
+    }
+
+    @Override
+
+
     public boolean trustedPresentationListenerForWindow() {
         return true;
     }
@@ -1771,6 +2037,13 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean unifyBackNavigationTransition() {
         return true;
+    }
+
+    @Override
+
+
+    public boolean unifyShellBinders() {
+        return false;
     }
 
     @Override
@@ -1804,14 +2077,21 @@ public final class FeatureFlagsImpl implements FeatureFlags {
     @Override
 
 
-    public boolean useCachedInsetsForDisplaySwitch() {
+    public boolean updateHostInputTransferToken() {
+        return true;
+    }
+
+    @Override
+
+
+    public boolean updateTaskMinDimensionsWithRootActivity() {
         return false;
     }
 
     @Override
 
 
-    public boolean useRtFrameCallbackForSplashScreenTransfer() {
+    public boolean useCachedInsetsForDisplaySwitch() {
         return true;
     }
 
@@ -1820,20 +2100,6 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
     public boolean useTasksDimOnly() {
         return true;
-    }
-
-    @Override
-
-
-    public boolean useVisibleRequestedForProcessTracker() {
-        return false;
-    }
-
-    @Override
-
-
-    public boolean useWindowOriginalTouchableRegionWhenMagnificationRecomputeBounds() {
-        return false;
     }
 
     @Override

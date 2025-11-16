@@ -1,5 +1,4 @@
 package com.android.systemui.shared;
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
 
 /** @hide */
 public interface FeatureFlags {
@@ -31,7 +30,11 @@ public interface FeatureFlags {
 
 
 
-    boolean enableLppSqueezeEffect();
+    boolean enableLppAssistInvocationEffect();
+
+
+
+    boolean enableLppAssistInvocationHapticEffect();
 
 
 
@@ -40,6 +43,10 @@ public interface FeatureFlags {
 
 
     boolean extendedWallpaperEffects();
+
+
+
+    boolean extendibleThemeManager();
 
 
 
@@ -75,10 +82,6 @@ public interface FeatureFlags {
 
 
 
-    boolean smartspaceRemoteviewsIntentHandler();
-
-
-
     boolean smartspaceSportsCardBackground();
 
 
@@ -88,6 +91,10 @@ public interface FeatureFlags {
 
 
     boolean smartspaceUiUpdateResources();
+
+
+
+    boolean smartspaceWeatherUseMonochromeFontIcons();
 
 
 

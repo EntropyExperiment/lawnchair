@@ -1,5 +1,4 @@
 package com.android.systemui.shared;
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
 
 
 /** @hide */
@@ -17,11 +16,15 @@ public final class Flags {
     /** @hide */
     public static final String FLAG_ENABLE_HOME_DELAY = "com.android.systemui.shared.enable_home_delay";
     /** @hide */
-    public static final String FLAG_ENABLE_LPP_SQUEEZE_EFFECT = "com.android.systemui.shared.enable_lpp_squeeze_effect";
+    public static final String FLAG_ENABLE_LPP_ASSIST_INVOCATION_EFFECT = "com.android.systemui.shared.enable_lpp_assist_invocation_effect";
+    /** @hide */
+    public static final String FLAG_ENABLE_LPP_ASSIST_INVOCATION_HAPTIC_EFFECT = "com.android.systemui.shared.enable_lpp_assist_invocation_haptic_effect";
     /** @hide */
     public static final String FLAG_EXAMPLE_SHARED_FLAG = "com.android.systemui.shared.example_shared_flag";
     /** @hide */
     public static final String FLAG_EXTENDED_WALLPAPER_EFFECTS = "com.android.systemui.shared.extended_wallpaper_effects";
+    /** @hide */
+    public static final String FLAG_EXTENDIBLE_THEME_MANAGER = "com.android.systemui.shared.extendible_theme_manager";
     /** @hide */
     public static final String FLAG_LOCKSCREEN_CUSTOM_CLOCKS = "com.android.systemui.shared.lockscreen_custom_clocks";
     /** @hide */
@@ -39,13 +42,13 @@ public final class Flags {
     /** @hide */
     public static final String FLAG_SIDEFPS_CONTROLLER_REFACTOR = "com.android.systemui.shared.sidefps_controller_refactor";
     /** @hide */
-    public static final String FLAG_SMARTSPACE_REMOTEVIEWS_INTENT_HANDLER = "com.android.systemui.shared.smartspace_remoteviews_intent_handler";
-    /** @hide */
     public static final String FLAG_SMARTSPACE_SPORTS_CARD_BACKGROUND = "com.android.systemui.shared.smartspace_sports_card_background";
     /** @hide */
     public static final String FLAG_SMARTSPACE_UI_UPDATE = "com.android.systemui.shared.smartspace_ui_update";
     /** @hide */
     public static final String FLAG_SMARTSPACE_UI_UPDATE_RESOURCES = "com.android.systemui.shared.smartspace_ui_update_resources";
+    /** @hide */
+    public static final String FLAG_SMARTSPACE_WEATHER_USE_MONOCHROME_FONT_ICONS = "com.android.systemui.shared.smartspace_weather_use_monochrome_font_icons";
     /** @hide */
     public static final String FLAG_STATUS_BAR_CONNECTED_DISPLAYS = "com.android.systemui.shared.status_bar_connected_displays";
     /** @hide */
@@ -54,12 +57,10 @@ public final class Flags {
     public static final String FLAG_USE_PREFERRED_IMAGE_EDITOR = "com.android.systemui.shared.use_preferred_image_editor";
 
 
-
     public static boolean ambientAod() {
         
         return FEATURE_FLAGS.ambientAod();
     }
-
 
 
     public static boolean bouncerAreaExclusion() {
@@ -68,12 +69,10 @@ public final class Flags {
     }
 
 
-
     public static boolean clockReactiveSmartspaceLayout() {
         
         return FEATURE_FLAGS.clockReactiveSmartspaceLayout();
     }
-
 
 
     public static boolean clockReactiveVariants() {
@@ -82,12 +81,10 @@ public final class Flags {
     }
 
 
-
     public static boolean cursorHotCorner() {
         
         return FEATURE_FLAGS.cursorHotCorner();
     }
-
 
 
     public static boolean enableHomeDelay() {
@@ -96,12 +93,16 @@ public final class Flags {
     }
 
 
-
-    public static boolean enableLppSqueezeEffect() {
+    public static boolean enableLppAssistInvocationEffect() {
         
-        return FEATURE_FLAGS.enableLppSqueezeEffect();
+        return FEATURE_FLAGS.enableLppAssistInvocationEffect();
     }
 
+
+    public static boolean enableLppAssistInvocationHapticEffect() {
+        
+        return FEATURE_FLAGS.enableLppAssistInvocationHapticEffect();
+    }
 
 
     public static boolean exampleSharedFlag() {
@@ -110,12 +111,16 @@ public final class Flags {
     }
 
 
-
     public static boolean extendedWallpaperEffects() {
         
         return FEATURE_FLAGS.extendedWallpaperEffects();
     }
 
+
+    public static boolean extendibleThemeManager() {
+        
+        return FEATURE_FLAGS.extendibleThemeManager();
+    }
 
 
     public static boolean lockscreenCustomClocks() {
@@ -124,12 +129,10 @@ public final class Flags {
     }
 
 
-
     public static boolean newCustomizationPickerUi() {
         
         return FEATURE_FLAGS.newCustomizationPickerUi();
     }
-
 
 
     public static boolean newTouchpadGesturesTutorial() {
@@ -138,12 +141,10 @@ public final class Flags {
     }
 
 
-
     public static boolean returnAnimationFrameworkLibrary() {
         
         return FEATURE_FLAGS.returnAnimationFrameworkLibrary();
     }
-
 
 
     public static boolean returnAnimationFrameworkLongLived() {
@@ -152,12 +153,10 @@ public final class Flags {
     }
 
 
-
     public static boolean screenshotContextUrl() {
         
         return FEATURE_FLAGS.screenshotContextUrl();
     }
-
 
 
     public static boolean shadeAllowBackGesture() {
@@ -166,19 +165,10 @@ public final class Flags {
     }
 
 
-
     public static boolean sidefpsControllerRefactor() {
         
         return FEATURE_FLAGS.sidefpsControllerRefactor();
     }
-
-
-
-    public static boolean smartspaceRemoteviewsIntentHandler() {
-        
-        return FEATURE_FLAGS.smartspaceRemoteviewsIntentHandler();
-    }
-
 
 
     public static boolean smartspaceSportsCardBackground() {
@@ -187,12 +177,10 @@ public final class Flags {
     }
 
 
-
     public static boolean smartspaceUiUpdate() {
         
         return FEATURE_FLAGS.smartspaceUiUpdate();
     }
-
 
 
     public static boolean smartspaceUiUpdateResources() {
@@ -201,6 +189,11 @@ public final class Flags {
     }
 
 
+    public static boolean smartspaceWeatherUseMonochromeFontIcons() {
+        
+        return FEATURE_FLAGS.smartspaceWeatherUseMonochromeFontIcons();
+    }
+
 
     public static boolean statusBarConnectedDisplays() {
         
@@ -208,12 +201,10 @@ public final class Flags {
     }
 
 
-
     public static boolean threeButtonCornerSwipe() {
         
         return FEATURE_FLAGS.threeButtonCornerSwipe();
     }
-
 
 
     public static boolean usePreferredImageEditor() {

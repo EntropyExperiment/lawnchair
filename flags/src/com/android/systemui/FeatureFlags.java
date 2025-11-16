@@ -1,49 +1,40 @@
 package com.android.systemui;
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
+
 /** @hide */
 public interface FeatureFlags {
-
 
 
 
     boolean activityTransitionUseLargestWindow();
 
 
-
-    boolean addBlackBackgroundForWindowMagnifier();
-
-
-
     boolean alwaysComposeQsUiFragment();
-
 
 
     boolean ambientTouchMonitorListenToDisplayChanges();
 
 
+    boolean animationLibraryDelayLeashCleanup();
+
 
     boolean appClipsBacklinks();
-
-
-
-    boolean appShortcutRemovalFix();
-
 
 
     boolean avalancheReplaceHunWhenCritical();
 
 
 
-    boolean bindKeyguardMediaVisibility();
+    boolean backButtonOnBouncer();
 
+
+
+    boolean bouncerLifecycleFix();
 
 
     boolean bouncerUiRevamp();
 
 
-
     boolean bouncerUiRevamp2();
-
 
 
     boolean bpColors();
@@ -53,29 +44,14 @@ public interface FeatureFlags {
     boolean brightnessSliderFocusState();
 
 
-
-    boolean checkLockscreenGoneTransition();
-
-
-
     boolean classicFlagsMultiUser();
 
 
-
-    boolean clipboardImageTimeout();
-
-
-
-    boolean clipboardNoninteractiveOnLockscreen();
+    boolean clipboardAnnounceLiveRegion();
 
 
 
     boolean clipboardOverlayMultiuser();
-
-
-
-    boolean clipboardSharedTransitions();
-
 
 
     boolean clipboardUseDescriptionMimetype();
@@ -86,16 +62,16 @@ public interface FeatureFlags {
 
 
 
-    boolean communalBouncerDoNotModifyPluginOpen();
+    boolean clockModernization();
 
+
+    boolean communalBouncerDoNotModifyPluginOpen();
 
 
     boolean communalEditWidgetsActivityFinishFix();
 
 
-
     boolean communalHub();
-
 
 
     boolean communalHubUseThreadPoolForWidgets();
@@ -105,21 +81,17 @@ public interface FeatureFlags {
     boolean communalResponsiveGrid();
 
 
-
-    boolean communalSceneKtfRefactor();
+    boolean communalShadeTouchHandlingFixes();
 
 
 
     boolean communalStandaloneSupport();
 
 
-
     boolean communalTimerFlickerFix();
 
 
-
     boolean communalWidgetResizing();
-
 
 
     boolean communalWidgetTrampolineFix();
@@ -133,9 +105,7 @@ public interface FeatureFlags {
     boolean confineNotificationTouchToViewWidth();
 
 
-
     boolean contAuthPlugin();
-
 
 
     boolean contextualTipsAssistantDismissFix();
@@ -146,19 +116,7 @@ public interface FeatureFlags {
 
 
 
-    boolean createWindowlessWindowMagnifier();
-
-
-
-    boolean debugLiveUpdatesPromoteAll();
-
-
-
     boolean decoupleViewControllerInAnimlib();
-
-
-
-    boolean delayShowMagnificationButton();
 
 
 
@@ -166,11 +124,7 @@ public interface FeatureFlags {
 
 
 
-    boolean deviceEntryUdfpsRefactor();
-
-
-
-    boolean disableBlurredShadeVisible();
+    boolean desktopScreenCapture();
 
 
 
@@ -182,52 +136,64 @@ public interface FeatureFlags {
 
 
 
-    boolean disableShadeTrackpadTwoFingerSwipe();
+    boolean disableDoubleClickSwapOnBouncer();
+
+
+
+    boolean doNotUseImmediateCoroutineDispatcher();
 
 
 
     boolean doubleTapToSleep();
 
 
+    boolean dreamBiometricPromptFixes();
+
 
     boolean dreamInputSessionPilferOnce();
-
 
 
     boolean dreamOverlayBouncerSwipeDirectionFiltering();
 
 
+    boolean dreamOverlayUpdatedUi();
 
-    boolean dreamOverlayUpdatedFont();
+
+    boolean dreamPreviewTapDismiss();
+
+
+
+    boolean dreamTransitionFixes();
 
 
 
     boolean edgeBackGestureHandlerThread();
 
 
-
     boolean edgebackGestureHandlerGetRunningTasksBackground();
-
 
 
     boolean enableBackgroundKeyguardOndrawnCallback();
 
 
 
-    boolean enableContextualTipForMuteVolume();
+    boolean enableConstraintLayoutLockscreenOnExternalDisplay();
 
+
+    boolean enableContextualTipForMuteVolume();
 
 
     boolean enableContextualTipForPowerOff();
 
 
-
     boolean enableContextualTipForTakeScreenshot();
-
 
 
     boolean enableContextualTips();
 
+
+
+    boolean enableDesktopGrowth();
 
 
     boolean enableEfficientDisplayRepository();
@@ -238,12 +204,22 @@ public interface FeatureFlags {
 
 
 
+    boolean enableMinmode();
+
+
+
+    boolean enableSuggestedDeviceUi();
+
+
+    boolean enableTopUiController();
+
+
+
     boolean enableUnderlay();
 
 
 
     boolean enableViewCaptureTracing();
-
 
 
     boolean enforceBrightnessBaseUserRestriction();
@@ -253,9 +229,7 @@ public interface FeatureFlags {
     boolean exampleFlag();
 
 
-
     boolean expandCollapsePrivacyDialog();
-
 
 
     boolean expandHeadsUpOnInlineReply();
@@ -269,40 +243,24 @@ public interface FeatureFlags {
     boolean extendedAppsShortcutCategory();
 
 
-
-    boolean faceMessageDeferUpdate();
-
-
-
     boolean faceScanningAnimationNpeFix();
-
-
-
-    boolean fasterUnlockTransition();
-
 
 
     boolean fetchBookmarksXmlKeyboardShortcuts();
 
 
-
-    boolean fixImageWallpaperCrashSurfaceAlreadyReleased();
-
+    boolean fixDialogLaunchAnimationJankLogging();
 
 
     boolean fixScreenshotActionDismissSystemWindows();
 
 
 
+    boolean flashlightStrength();
+
+
+
     boolean floatingMenuAnimatedTuck();
-
-
-
-    boolean floatingMenuDisplayCutoutSupport();
-
-
-
-    boolean floatingMenuDragToEdit();
 
 
 
@@ -317,11 +275,6 @@ public interface FeatureFlags {
     boolean floatingMenuImeDisplacementAnimation();
 
 
-
-    boolean floatingMenuNarrowTargetContentObserver();
-
-
-
     boolean floatingMenuNotifyTargetsChangedOnStrictDiff();
 
 
@@ -332,6 +285,9 @@ public interface FeatureFlags {
 
     boolean floatingMenuRadiiAnimation();
 
+
+
+    boolean floatingMenuRemoveFullscreenTaps();
 
 
     boolean getConnectedDeviceNameUnsynchronized();
@@ -357,17 +313,10 @@ public interface FeatureFlags {
     boolean glanceableHubV2Resources();
 
 
-
-    boolean hapticsForComposeSliders();
-
-
-
     boolean hardwareColorStyles();
 
 
-
     boolean hearingAidsQsTileDialog();
-
 
 
     boolean hearingDevicesDialogRelatedTools();
@@ -377,8 +326,14 @@ public interface FeatureFlags {
     boolean hideRingerButtonInSingleVolumeMode();
 
 
-
     boolean homeControlsDreamHsum();
+
+
+
+    boolean hsuBehaviorChanges();
+
+
+    boolean hubBlurredByShadeFix();
 
 
 
@@ -386,36 +341,26 @@ public interface FeatureFlags {
 
 
 
-    boolean hubmodeFullscreenVerticalSwipe();
-
-
-
-    boolean hubmodeFullscreenVerticalSwipeFix();
-
+    boolean hubEditModeTransition();
 
 
     boolean iconRefresh2025();
 
 
-
-    boolean ignoreTouchesNextToNotificationShelf();
-
-
-
     boolean indicationTextA11yFix();
+
+
+    boolean instantHideShade();
 
 
 
     boolean keyboardDockingIndicator();
 
 
-
     boolean keyboardShortcutHelperRewrite();
 
 
-
     boolean keyboardShortcutHelperShortcutCustomizer();
-
 
 
     boolean keyboardTouchpadContextualEducation();
@@ -426,12 +371,7 @@ public interface FeatureFlags {
 
 
 
-    boolean keyguardWmReorderAtmsCalls();
-
-
-
     boolean keyguardWmStateRefactor();
-
 
 
     boolean lockscreenFont();
@@ -441,12 +381,13 @@ public interface FeatureFlags {
     boolean lowLightClockDream();
 
 
+    boolean lowlightClockSetBrightness();
+
+
+    boolean lowlightClockUsesKeyguardChargingStatus();
+
 
     boolean magneticNotificationSwipes();
-
-
-
-    boolean mediaControlsA11yColors();
 
 
 
@@ -458,40 +399,13 @@ public interface FeatureFlags {
 
 
 
-    boolean mediaControlsDeviceManagerBackgroundExecution();
-
-
-
-    boolean mediaControlsDrawablesReuseBugfix();
-
-
-
-    boolean mediaControlsLockscreenShadeBugFix();
-
+    boolean mediaControlsInCompose();
 
 
     boolean mediaControlsUiUpdate();
 
 
-
-    boolean mediaControlsUmoInflationInBackground();
-
-
-
-    boolean mediaControlsUserInitiatedDeleteintent();
-
-
-
-    boolean mediaLoadMetadataViaMediaDataLoader();
-
-
-
-    boolean mediaLockscreenLaunchAnimation();
-
-
-
     boolean mediaProjectionDialogBehindLockscreen();
-
 
 
     boolean mediaProjectionGreyErrorText();
@@ -505,9 +419,7 @@ public interface FeatureFlags {
     boolean modesUiDialogPaging();
 
 
-
     boolean moveTransitionAnimationLayer();
-
 
 
     boolean msdlFeedback();
@@ -517,9 +429,11 @@ public interface FeatureFlags {
     boolean multiuserWifiPickerTrackerSupport();
 
 
-
     boolean newAodTransition();
 
+
+
+    boolean newDozingKeyguardStates();
 
 
     boolean newVolumePanel();
@@ -541,25 +455,19 @@ public interface FeatureFlags {
     boolean notificationAmbientSuppressionAfterInflation();
 
 
-
     boolean notificationAnimatedActionsTreatment();
-
 
 
     boolean notificationAppearNonlinear();
 
 
-
     boolean notificationAsyncGroupHeaderInflation();
-
 
 
     boolean notificationAsyncHybridViewInflation();
 
 
-
     boolean notificationAvalancheSuppression();
-
 
 
     boolean notificationAvalancheThrottleHun();
@@ -577,7 +485,6 @@ public interface FeatureFlags {
     boolean notificationColorUpdateLogger();
 
 
-
     boolean notificationContentAlphaOptimization();
 
 
@@ -585,32 +492,19 @@ public interface FeatureFlags {
     boolean notificationFooterBackgroundTintOptimization();
 
 
-
-    boolean notificationOverExpansionClippingFix();
-
-
-
-    boolean notificationReentrantDismiss();
-
-
-
     boolean notificationRowAccessibilityExpanded();
-
 
 
     boolean notificationRowContentBinderRefactor();
 
 
-
     boolean notificationRowTransparency();
 
 
-
-    boolean notificationRowUserContext();
-
-
-
     boolean notificationShadeBlur();
+
+
+    boolean notificationShadeCloseWaitsForChildAnimations();
 
 
 
@@ -621,17 +515,10 @@ public interface FeatureFlags {
     boolean notificationSkipSilentUpdates();
 
 
-
     boolean notificationTransparentHeaderFix();
 
 
-
-    boolean notificationViewFlipperPausingV2();
-
-
-
     boolean notificationsBackgroundIcons();
-
 
 
     boolean notificationsFooterVisibilityFix();
@@ -642,47 +529,35 @@ public interface FeatureFlags {
 
 
 
-    boolean notificationsHunSharedAnimationValues();
+    boolean notificationsHunAccessibilityRefactor();
 
+
+    boolean notificationsHunSharedAnimationValues();
 
 
     boolean notificationsIconContainerRefactor();
 
 
-
     boolean notificationsLaunchRadius();
-
 
 
     boolean notificationsLiveDataStoreRefactor();
 
 
-
     boolean notificationsPinnedHunInShade();
-
 
 
     boolean notificationsRedesignFooterView();
 
 
-
-    boolean notificationsRedesignGuts();
-
-
-
     boolean notifyPasswordTextViewUserActivityInBackground();
-
 
 
     boolean notifyPowerManagerUserActivityBackground();
 
 
 
-    boolean onlyShowMediaStreamSliderInSingleVolumeMode();
-
-
-
-    boolean outputSwitcherRedesign();
+    boolean ongoingActivityChipsOnDream();
 
 
 
@@ -693,13 +568,10 @@ public interface FeatureFlags {
     boolean permissionHelperInlineUiRichOngoing();
 
 
-
     boolean permissionHelperUiRichOngoing();
 
 
-
     boolean physicalNotificationMovement();
-
 
 
     boolean pinInputFieldStyledFocusState();
@@ -714,7 +586,7 @@ public interface FeatureFlags {
 
 
 
-    boolean priorityPeopleSection();
+    boolean privacyDotLiveRegion();
 
 
 
@@ -722,15 +594,18 @@ public interface FeatureFlags {
 
 
 
-    boolean pssAppSelectorRecentsSplitScreen();
-
-
-
     boolean pssTaskSwitcher();
 
 
 
-    boolean qsCustomTileClickGuaranteedBugFix();
+    boolean qsComposeFragmentEarlyExpansion();
+
+
+
+    boolean qsEditModeTabs();
+
+
+    boolean qsEditModeTooltip();
 
 
 
@@ -742,28 +617,25 @@ public interface FeatureFlags {
 
 
 
-    boolean qsQuickRebindActiveTiles();
-
-
-
-    boolean qsRegisterSettingObserverOnBgThread();
-
-
-
     boolean qsTileDetailedView();
-
 
 
     boolean qsTileFocusState();
 
 
 
-    boolean qsUiRefactor();
+    boolean qsTileTransitionInteractionRefinement();
 
+
+
+    boolean qsUiRefactor();
 
 
     boolean qsUiRefactorComposeFragment();
 
+
+
+    boolean qsWifiConfig();
 
 
     boolean recordIssueQsTile();
@@ -774,32 +646,31 @@ public interface FeatureFlags {
 
 
 
-    boolean refactorGetCurrentUser();
-
-
-
     boolean registerBatteryControllerReceiversInCorestartable();
-
 
 
     boolean registerContentObserversAsync();
 
 
-
     boolean registerNewWalletCardInBackground();
-
 
 
     boolean registerWallpaperNotifierBackground();
 
 
 
-    boolean relockWithPowerButtonImmediately();
+    boolean rememberViewModelOffMainThread();
 
+
+
+    boolean removeAodCarMode();
 
 
     boolean removeDreamOverlayHideOnTouch();
 
+
+
+    boolean removeNearbyShareTileAnimation();
 
 
     boolean removeUpdateListenerInQsIconViewImpl();
@@ -813,13 +684,14 @@ public interface FeatureFlags {
     boolean restartDreamOnUnocclude();
 
 
+    boolean restrictCommunalAppWidgetHostListening();
+
 
     boolean revampedBouncerMessages();
 
 
 
     boolean runFingerprintDetectOnDismissibleKeyguard();
-
 
 
     boolean saveAndRestoreMagnificationSettingsButtons();
@@ -830,6 +702,9 @@ public interface FeatureFlags {
 
 
 
+    boolean screenReactions();
+
+
     boolean screenshareNotificationHidingBugFix();
 
 
@@ -837,53 +712,47 @@ public interface FeatureFlags {
     boolean screenshotActionDismissSystemWindows();
 
 
+    boolean screenshotAnnounceLiveRegion();
+
+
 
     boolean screenshotMultidisplayFocusChange();
 
 
-
     boolean screenshotPolicySplitAndDesktopMode();
-
 
 
     boolean screenshotScrollCropViewCrashFix();
 
 
 
-    boolean screenshotUiControllerRefactor();
-
-
-
     boolean secondaryUserWidgetHost();
-
 
 
     boolean settingsExtRegisterContentObserverOnBgThread();
 
 
-
     boolean shadeExpandsOnStatusBarLongPress();
 
+
+    boolean shadeHeaderBlurFontColor();
 
 
     boolean shadeHeaderFontUpdate();
 
 
 
-    boolean shadeLaunchAccessibility();
+    boolean shadeQsvisibleLogic();
 
 
 
     boolean shadeWindowGoesAround();
 
 
-
     boolean shaderlibLoadingEffectRefactor();
 
 
-
     boolean shortcutHelperKeyGlyph();
-
 
 
     boolean showAudioSharingSliderInVolumePanel();
@@ -897,73 +766,50 @@ public interface FeatureFlags {
     boolean showLockedByYourWatchKeyguardIndicator();
 
 
-
-    boolean showToastWhenAppControlBrightness();
-
-
-
     boolean simPinBouncerReset();
 
 
-
-    boolean simPinRaceConditionOnRestart();
-
-
-
-    boolean simPinUseSlotId();
-
-
-
     boolean skipHideSensitiveNotifAnimation();
-
-
-
-    boolean sliceBroadcastRelayInBackground();
-
 
 
     boolean sliceManagerBinderCallBackground();
 
 
 
-    boolean smartspaceLockscreenViewmodel();
-
-
-
     boolean smartspaceRelocateToBottom();
-
-
-
-    boolean smartspaceRemoteviewsRenderingFix();
-
 
 
     boolean smartspaceSwipeEventLoggingFix();
 
 
-
     boolean smartspaceViewpager2();
 
 
-
     boolean sounddoseCustomization();
-
 
 
     boolean spatialModelAppPushback();
 
 
 
-    boolean stabilizeHeadsUpGroupV2();
+    boolean spatialModelBouncerPushback();
 
+
+    boolean spatialModelPushbackInShader();
+
+
+    boolean stabilizeHeadsUpGroupV2();
 
 
     boolean statusBarAlwaysCheckUnderlyingNetworks();
 
 
 
-    boolean statusBarAutoStartScreenRecordChip();
+    boolean statusBarAppHandleTracking();
 
+
+
+    boolean statusBarChipToHunAnimation();
 
 
     boolean statusBarChipsModernization();
@@ -973,17 +819,11 @@ public interface FeatureFlags {
     boolean statusBarChipsReturnAnimations();
 
 
-
     boolean statusBarFontUpdates();
 
 
 
     boolean statusBarMobileIconKairos();
-
-
-
-    boolean statusBarMonochromeIconsFix();
-
 
 
     boolean statusBarNoHunBehavior();
@@ -993,17 +833,17 @@ public interface FeatureFlags {
     boolean statusBarPopupChips();
 
 
+    boolean statusBarPrivacyChipAnimationExemption();
+
 
     boolean statusBarRootModernization();
 
 
 
-    boolean statusBarShowAudioOnlyProjectionChip();
-
+    boolean statusBarRudimentaryBattery();
 
 
     boolean statusBarSignalPolicyRefactor();
-
 
 
     boolean statusBarSignalPolicyRefactorEthernet();
@@ -1013,29 +853,24 @@ public interface FeatureFlags {
     boolean statusBarStaticInoutIndicators();
 
 
-
-    boolean statusBarStopUpdatingWindowHeight();
-
-
-
     boolean statusBarSwipeOverChip();
-
 
 
     boolean statusBarSwitchToSpnFromDataSpn();
 
 
 
-    boolean statusBarUiThread();
+    boolean statusBarSystemStatusIconsInCompose();
 
+
+
+    boolean statusBarUiThread();
 
 
     boolean statusBarWindowNoCustomTouch();
 
 
-
-    boolean stoppableFgsSystemApp();
-
+    boolean stuckHearingDevicesQsTileFix();
 
 
     boolean switchUserOnBg();
@@ -1050,64 +885,38 @@ public interface FeatureFlags {
 
 
 
-    boolean transitionRaceCondition();
+    boolean thinScreenRecordingService();
 
 
-
-    boolean translucentOccludingActivityFix();
-
+    boolean transitionRaceConditionPart2();
 
 
     boolean tvGlobalActionsFocus();
 
 
+    boolean udfpsScreenOffUnlockFlicker();
 
-    boolean udfpsViewPerformance();
 
+    boolean uiRichOngoingAodSkeletonBgInflation();
 
 
     boolean unfoldAnimationBackgroundProgress();
 
 
-
-    boolean unfoldLatencyTrackingFix();
-
-
-
     boolean updateCornerRadiusOnDisplayChanged();
 
 
-
     boolean updateUserSwitcherBackground();
-
 
 
     boolean updateWindowMagnifierBottomBoundary();
 
 
 
-    boolean useAadProxSensor();
-
-
-
-    boolean useNotifInflationThreadForFooter();
-
-
-
-    boolean useNotifInflationThreadForRow();
-
-
-
-    boolean useTransitionsForKeyguardOccluded();
-
-
-
-    boolean useVolumeController();
-
+    boolean useAadProxSensorIfPresent();
 
 
     boolean userAwareSettingsRepositories();
-
 
 
     boolean userEncryptedSource();
@@ -1117,9 +926,7 @@ public interface FeatureFlags {
     boolean userSwitcherAddSignOutOption();
 
 
-
     boolean visualInterruptionsRefactor();
-
 
 
     boolean volumeRedesign();

@@ -1,6 +1,6 @@
 package com.android.window.flags2;
 
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,13 +20,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean actionModeEdgeToEdge() {
         return getValue(Flags.FLAG_ACTION_MODE_EDGE_TO_EDGE,
             FeatureFlags::actionModeEdgeToEdge);
-    }
-
-    @Override
-
-    public boolean activityEmbeddingAnimationCustomizationFlag() {
-        return getValue(Flags.FLAG_ACTIVITY_EMBEDDING_ANIMATION_CUSTOMIZATION_FLAG,
-            FeatureFlags::activityEmbeddingAnimationCustomizationFlag);
     }
 
     @Override
@@ -66,13 +59,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean allowHideScmButton() {
-        return getValue(Flags.FLAG_ALLOW_HIDE_SCM_BUTTON,
-            FeatureFlags::allowHideScmButton);
-    }
-
-    @Override
-
     public boolean allowsScreenSizeDecoupledFromStatusBarAndCutout() {
         return getValue(Flags.FLAG_ALLOWS_SCREEN_SIZE_DECOUPLED_FROM_STATUS_BAR_AND_CUTOUT,
             FeatureFlags::allowsScreenSizeDecoupledFromStatusBarAndCutout);
@@ -83,6 +69,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean alwaysDrawMagnificationFullscreenBorder() {
         return getValue(Flags.FLAG_ALWAYS_DRAW_MAGNIFICATION_FULLSCREEN_BORDER,
             FeatureFlags::alwaysDrawMagnificationFullscreenBorder);
+    }
+
+    @Override
+
+    public boolean alwaysSeqIdLayout() {
+        return getValue(Flags.FLAG_ALWAYS_SEQ_ID_LAYOUT,
+            FeatureFlags::alwaysSeqIdLayout);
     }
 
     @Override
@@ -118,6 +111,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean appCompatRefactoring() {
         return getValue(Flags.FLAG_APP_COMPAT_REFACTORING,
             FeatureFlags::appCompatRefactoring);
+    }
+
+    @Override
+
+    public boolean appCompatRefactoringRoundedCorners() {
+        return getValue(Flags.FLAG_APP_COMPAT_REFACTORING_ROUNDED_CORNERS,
+            FeatureFlags::appCompatRefactoringRoundedCorners);
     }
 
     @Override
@@ -178,6 +178,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean balCoverIntentSender() {
+        return getValue(Flags.FLAG_BAL_COVER_INTENT_SENDER,
+            FeatureFlags::balCoverIntentSender);
+    }
+
+    @Override
+
     public boolean balDontBringExistingBackgroundTaskStackToFg() {
         return getValue(Flags.FLAG_BAL_DONT_BRING_EXISTING_BACKGROUND_TASK_STACK_TO_FG,
             FeatureFlags::balDontBringExistingBackgroundTaskStackToFg);
@@ -185,30 +192,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean balImproveRealCallerVisibilityCheck() {
-        return getValue(Flags.FLAG_BAL_IMPROVE_REAL_CALLER_VISIBILITY_CHECK,
-            FeatureFlags::balImproveRealCallerVisibilityCheck);
-    }
-
-    @Override
-
-    public boolean balImprovedMetrics() {
-        return getValue(Flags.FLAG_BAL_IMPROVED_METRICS,
-            FeatureFlags::balImprovedMetrics);
-    }
-
-    @Override
-
     public boolean balReduceGracePeriod() {
         return getValue(Flags.FLAG_BAL_REDUCE_GRACE_PERIOD,
             FeatureFlags::balReduceGracePeriod);
-    }
-
-    @Override
-
-    public boolean balRequireOptInByPendingIntentCreator() {
-        return getValue(Flags.FLAG_BAL_REQUIRE_OPT_IN_BY_PENDING_INTENT_CREATOR,
-            FeatureFlags::balRequireOptInByPendingIntentCreator);
     }
 
     @Override
@@ -255,13 +241,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean cacheWindowStyle() {
-        return getValue(Flags.FLAG_CACHE_WINDOW_STYLE,
-            FeatureFlags::cacheWindowStyle);
-    }
-
-    @Override
-
     public boolean cameraCompatForFreeform() {
         return getValue(Flags.FLAG_CAMERA_COMPAT_FOR_FREEFORM,
             FeatureFlags::cameraCompatForFreeform);
@@ -276,44 +255,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean checkDisabledSnapshotsInTaskPersister() {
-        return getValue(Flags.FLAG_CHECK_DISABLED_SNAPSHOTS_IN_TASK_PERSISTER,
-            FeatureFlags::checkDisabledSnapshotsInTaskPersister);
-    }
-
-    @Override
-
-    public boolean cleanupDispatchPendingTransactionsRemoteException() {
-        return getValue(Flags.FLAG_CLEANUP_DISPATCH_PENDING_TRANSACTIONS_REMOTE_EXCEPTION,
-            FeatureFlags::cleanupDispatchPendingTransactionsRemoteException);
-    }
-
-    @Override
-
-    public boolean clearSystemVibrator() {
-        return getValue(Flags.FLAG_CLEAR_SYSTEM_VIBRATOR,
-            FeatureFlags::clearSystemVibrator);
-    }
-
-    @Override
-
     public boolean closeToSquareConfigIncludesStatusBar() {
         return getValue(Flags.FLAG_CLOSE_TO_SQUARE_CONFIG_INCLUDES_STATUS_BAR,
             FeatureFlags::closeToSquareConfigIncludesStatusBar);
-    }
-
-    @Override
-
-    public boolean condenseConfigurationChangeForSimpleMode() {
-        return getValue(Flags.FLAG_CONDENSE_CONFIGURATION_CHANGE_FOR_SIMPLE_MODE,
-            FeatureFlags::condenseConfigurationChangeForSimpleMode);
-    }
-
-    @Override
-
-    public boolean configurableFontScaleDefault() {
-        return getValue(Flags.FLAG_CONFIGURABLE_FONT_SCALE_DEFAULT,
-            FeatureFlags::configurableFontScaleDefault);
     }
 
     @Override
@@ -325,16 +269,16 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean delayNotificationToMagnificationWhenRecentsWindowToFrontTransition() {
-        return getValue(Flags.FLAG_DELAY_NOTIFICATION_TO_MAGNIFICATION_WHEN_RECENTS_WINDOW_TO_FRONT_TRANSITION,
-            FeatureFlags::delayNotificationToMagnificationWhenRecentsWindowToFrontTransition);
+    public boolean currentAnimatorScaleUsesSharedMemory() {
+        return getValue(Flags.FLAG_CURRENT_ANIMATOR_SCALE_USES_SHARED_MEMORY,
+            FeatureFlags::currentAnimatorScaleUsesSharedMemory);
     }
 
     @Override
 
-    public boolean delegateBackGestureToShell() {
-        return getValue(Flags.FLAG_DELEGATE_BACK_GESTURE_TO_SHELL,
-            FeatureFlags::delegateBackGestureToShell);
+    public boolean defaultDeskWithoutWarmupMigration() {
+        return getValue(Flags.FLAG_DEFAULT_DESK_WITHOUT_WARMUP_MIGRATION,
+            FeatureFlags::defaultDeskWithoutWarmupMigration);
     }
 
     @Override
@@ -342,13 +286,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean delegateUnhandledDrags() {
         return getValue(Flags.FLAG_DELEGATE_UNHANDLED_DRAGS,
             FeatureFlags::delegateUnhandledDrags);
-    }
-
-    @Override
-
-    public boolean deleteCaptureDisplay() {
-        return getValue(Flags.FLAG_DELETE_CAPTURE_DISPLAY,
-            FeatureFlags::deleteCaptureDisplay);
     }
 
     @Override
@@ -381,23 +318,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean doNotCheckIntersectionWhenNonMagnifiableWindowTransitions() {
-        return getValue(Flags.FLAG_DO_NOT_CHECK_INTERSECTION_WHEN_NON_MAGNIFIABLE_WINDOW_TRANSITIONS,
-            FeatureFlags::doNotCheckIntersectionWhenNonMagnifiableWindowTransitions);
-    }
-
-    @Override
-
-    public boolean earlyLaunchHint() {
-        return getValue(Flags.FLAG_EARLY_LAUNCH_HINT,
-            FeatureFlags::earlyLaunchHint);
-    }
-
-    @Override
-
-    public boolean edgeToEdgeByDefault() {
-        return getValue(Flags.FLAG_EDGE_TO_EDGE_BY_DEFAULT,
-            FeatureFlags::edgeToEdgeByDefault);
+    public boolean dispatchFirstKeyguardLockedState() {
+        return getValue(Flags.FLAG_DISPATCH_FIRST_KEYGUARD_LOCKED_STATE,
+            FeatureFlags::dispatchFirstKeyguardLockedState);
     }
 
     @Override
@@ -416,9 +339,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableAppHandlePositionReporting() {
+        return getValue(Flags.FLAG_ENABLE_APP_HANDLE_POSITION_REPORTING,
+            FeatureFlags::enableAppHandlePositionReporting);
+    }
+
+    @Override
+
     public boolean enableAppHeaderWithTaskDensity() {
         return getValue(Flags.FLAG_ENABLE_APP_HEADER_WITH_TASK_DENSITY,
             FeatureFlags::enableAppHeaderWithTaskDensity);
+    }
+
+    @Override
+
+    public boolean enableBlockNonDesktopDisplayWindowDragBugfix() {
+        return getValue(Flags.FLAG_ENABLE_BLOCK_NON_DESKTOP_DISPLAY_WINDOW_DRAG_BUGFIX,
+            FeatureFlags::enableBlockNonDesktopDisplayWindowDragBugfix);
     }
 
     @Override
@@ -430,9 +367,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableBufferTransformHintFromDisplay() {
-        return getValue(Flags.FLAG_ENABLE_BUFFER_TRANSFORM_HINT_FROM_DISPLAY,
-            FeatureFlags::enableBufferTransformHintFromDisplay);
+    public boolean enableBoxShadowSettings() {
+        return getValue(Flags.FLAG_ENABLE_BOX_SHADOW_SETTINGS,
+            FeatureFlags::enableBoxShadowSettings);
     }
 
     @Override
@@ -440,6 +377,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableBugFixesForSecondaryDisplay() {
         return getValue(Flags.FLAG_ENABLE_BUG_FIXES_FOR_SECONDARY_DISPLAY,
             FeatureFlags::enableBugFixesForSecondaryDisplay);
+    }
+
+    @Override
+
+    public boolean enableCameraCompatCheckDeviceRotationBugfix() {
+        return getValue(Flags.FLAG_ENABLE_CAMERA_COMPAT_CHECK_DEVICE_ROTATION_BUGFIX,
+            FeatureFlags::enableCameraCompatCheckDeviceRotationBugfix);
     }
 
     @Override
@@ -500,6 +444,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableCloseLidInteraction() {
+        return getValue(Flags.FLAG_ENABLE_CLOSE_LID_INTERACTION,
+            FeatureFlags::enableCloseLidInteraction);
+    }
+
+    @Override
+
     public boolean enableCompatUiVisibilityStatus() {
         return getValue(Flags.FLAG_ENABLE_COMPAT_UI_VISIBILITY_STATUS,
             FeatureFlags::enableCompatUiVisibilityStatus);
@@ -542,6 +493,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableDesktopAppHeaderStateChangeAnnouncements() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_APP_HEADER_STATE_CHANGE_ANNOUNCEMENTS,
+            FeatureFlags::enableDesktopAppHeaderStateChangeAnnouncements);
+    }
+
+    @Override
+
     public boolean enableDesktopAppLaunchAlttabTransitions() {
         return getValue(Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS,
             FeatureFlags::enableDesktopAppLaunchAlttabTransitions);
@@ -552,6 +510,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableDesktopAppLaunchAlttabTransitionsBugfix() {
         return getValue(Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS_BUGFIX,
             FeatureFlags::enableDesktopAppLaunchAlttabTransitionsBugfix);
+    }
+
+    @Override
+
+    public boolean enableDesktopAppLaunchBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_BUGFIX,
+            FeatureFlags::enableDesktopAppLaunchBugfix);
     }
 
     @Override
@@ -580,6 +545,34 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableDesktopCloseTaskAnimationInDtcBugfix() {
         return getValue(Flags.FLAG_ENABLE_DESKTOP_CLOSE_TASK_ANIMATION_IN_DTC_BUGFIX,
             FeatureFlags::enableDesktopCloseTaskAnimationInDtcBugfix);
+    }
+
+    @Override
+
+    public boolean enableDesktopFirstBasedDefaultToDesktopBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX,
+            FeatureFlags::enableDesktopFirstBasedDefaultToDesktopBugfix);
+    }
+
+    @Override
+
+    public boolean enableDesktopFirstBasedDragToMaximize() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DRAG_TO_MAXIMIZE,
+            FeatureFlags::enableDesktopFirstBasedDragToMaximize);
+    }
+
+    @Override
+
+    public boolean enableDesktopFirstFullscreenRefocusBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_FIRST_FULLSCREEN_REFOCUS_BUGFIX,
+            FeatureFlags::enableDesktopFirstFullscreenRefocusBugfix);
+    }
+
+    @Override
+
+    public boolean enableDesktopFirstListener() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_FIRST_LISTENER,
+            FeatureFlags::enableDesktopFirstListener);
     }
 
     @Override
@@ -626,9 +619,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableDesktopSwipeBackMinimizeAnimationBugfix() {
-        return getValue(Flags.FLAG_ENABLE_DESKTOP_SWIPE_BACK_MINIMIZE_ANIMATION_BUGFIX,
-            FeatureFlags::enableDesktopSwipeBackMinimizeAnimationBugfix);
+    public boolean enableDesktopSplitscreenTransitionBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_SPLITSCREEN_TRANSITION_BUGFIX,
+            FeatureFlags::enableDesktopSplitscreenTransitionBugfix);
     }
 
     @Override
@@ -640,9 +633,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableDesktopTabTearingLaunchAnimation() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_LAUNCH_ANIMATION,
+            FeatureFlags::enableDesktopTabTearingLaunchAnimation);
+    }
+
+    @Override
+
     public boolean enableDesktopTabTearingMinimizeAnimationBugfix() {
         return getValue(Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_MINIMIZE_ANIMATION_BUGFIX,
             FeatureFlags::enableDesktopTabTearingMinimizeAnimationBugfix);
+    }
+
+    @Override
+
+    public boolean enableDesktopTaskLimitSeparateTransition() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_TASK_LIMIT_SEPARATE_TRANSITION,
+            FeatureFlags::enableDesktopTaskLimitSeparateTransition);
     }
 
     @Override
@@ -787,6 +794,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableDesktopWindowingPipInOverviewBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PIP_IN_OVERVIEW_BUGFIX,
+            FeatureFlags::enableDesktopWindowingPipInOverviewBugfix);
+    }
+
+    @Override
+
     public boolean enableDesktopWindowingQuickSwitch() {
         return getValue(Flags.FLAG_ENABLE_DESKTOP_WINDOWING_QUICK_SWITCH,
             FeatureFlags::enableDesktopWindowingQuickSwitch);
@@ -850,6 +864,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableDisplayCompatMode() {
+        return getValue(Flags.FLAG_ENABLE_DISPLAY_COMPAT_MODE,
+            FeatureFlags::enableDisplayCompatMode);
+    }
+
+    @Override
+
     public boolean enableDisplayDisconnectInteraction() {
         return getValue(Flags.FLAG_ENABLE_DISPLAY_DISCONNECT_INTERACTION,
             FeatureFlags::enableDisplayDisconnectInteraction);
@@ -899,6 +920,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableDraggingPipAcrossDisplays() {
+        return getValue(Flags.FLAG_ENABLE_DRAGGING_PIP_ACROSS_DISPLAYS,
+            FeatureFlags::enableDraggingPipAcrossDisplays);
+    }
+
+    @Override
+
     public boolean enableDynamicRadiusComputationBugfix() {
         return getValue(Flags.FLAG_ENABLE_DYNAMIC_RADIUS_COMPUTATION_BUGFIX,
             FeatureFlags::enableDynamicRadiusComputationBugfix);
@@ -906,9 +934,44 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableEmptyDeskOnMinimize() {
+        return getValue(Flags.FLAG_ENABLE_EMPTY_DESK_ON_MINIMIZE,
+            FeatureFlags::enableEmptyDeskOnMinimize);
+    }
+
+    @Override
+
+    public boolean enableExperimentalBubblesController() {
+        return getValue(Flags.FLAG_ENABLE_EXPERIMENTAL_BUBBLES_CONTROLLER,
+            FeatureFlags::enableExperimentalBubblesController);
+    }
+
+    @Override
+
+    public boolean enableFreeformBoxShadows() {
+        return getValue(Flags.FLAG_ENABLE_FREEFORM_BOX_SHADOWS,
+            FeatureFlags::enableFreeformBoxShadows);
+    }
+
+    @Override
+
+    public boolean enableFreeformDisplayLaunchParams() {
+        return getValue(Flags.FLAG_ENABLE_FREEFORM_DISPLAY_LAUNCH_PARAMS,
+            FeatureFlags::enableFreeformDisplayLaunchParams);
+    }
+
+    @Override
+
     public boolean enableFullScreenWindowOnRemovingSplitScreenStageBugfix() {
         return getValue(Flags.FLAG_ENABLE_FULL_SCREEN_WINDOW_ON_REMOVING_SPLIT_SCREEN_STAGE_BUGFIX,
             FeatureFlags::enableFullScreenWindowOnRemovingSplitScreenStageBugfix);
+    }
+
+    @Override
+
+    public boolean enableFullscreenWindowControls() {
+        return getValue(Flags.FLAG_ENABLE_FULLSCREEN_WINDOW_CONTROLS,
+            FeatureFlags::enableFullscreenWindowControls);
     }
 
     @Override
@@ -927,6 +990,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableHandlersDebuggingMode() {
+        return getValue(Flags.FLAG_ENABLE_HANDLERS_DEBUGGING_MODE,
+            FeatureFlags::enableHandlersDebuggingMode);
+    }
+
+    @Override
+
     public boolean enableHoldToDragAppHandle() {
         return getValue(Flags.FLAG_ENABLE_HOLD_TO_DRAG_APP_HANDLE,
             FeatureFlags::enableHoldToDragAppHandle);
@@ -934,9 +1004,30 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableIndependentBackInProjected() {
+        return getValue(Flags.FLAG_ENABLE_INDEPENDENT_BACK_IN_PROJECTED,
+            FeatureFlags::enableIndependentBackInProjected);
+    }
+
+    @Override
+
+    public boolean enableInorderTransitionCallbacksForDesktop() {
+        return getValue(Flags.FLAG_ENABLE_INORDER_TRANSITION_CALLBACKS_FOR_DESKTOP,
+            FeatureFlags::enableInorderTransitionCallbacksForDesktop);
+    }
+
+    @Override
+
     public boolean enableInputLayerTransitionFix() {
         return getValue(Flags.FLAG_ENABLE_INPUT_LAYER_TRANSITION_FIX,
             FeatureFlags::enableInputLayerTransitionFix);
+    }
+
+    @Override
+
+    public boolean enableKeyGestureHandlerForSysui() {
+        return getValue(Flags.FLAG_ENABLE_KEY_GESTURE_HANDLER_FOR_SYSUI,
+            FeatureFlags::enableKeyGestureHandlerForSysui);
     }
 
     @Override
@@ -951,6 +1042,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableModalsFullscreenWithPermission() {
         return getValue(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION,
             FeatureFlags::enableModalsFullscreenWithPermission);
+    }
+
+    @Override
+
+    public boolean enableModalsFullscreenWithPlatformSignature() {
+        return getValue(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE,
+            FeatureFlags::enableModalsFullscreenWithPlatformSignature);
     }
 
     @Override
@@ -983,9 +1081,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableMultipleDesktopsDefaultActivationInDesktopFirstDisplays() {
+        return getValue(Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_DEFAULT_ACTIVATION_IN_DESKTOP_FIRST_DISPLAYS,
+            FeatureFlags::enableMultipleDesktopsDefaultActivationInDesktopFirstDisplays);
+    }
+
+    @Override
+
     public boolean enableMultipleDesktopsFrontend() {
         return getValue(Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND,
             FeatureFlags::enableMultipleDesktopsFrontend);
+    }
+
+    @Override
+
+    public boolean enableNoWindowDecorationForDesks() {
+        return getValue(Flags.FLAG_ENABLE_NO_WINDOW_DECORATION_FOR_DESKS,
+            FeatureFlags::enableNoWindowDecorationForDesks);
     }
 
     @Override
@@ -997,9 +1109,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableOmitAccelerometerRotationRestore() {
+        return getValue(Flags.FLAG_ENABLE_OMIT_ACCELEROMETER_ROTATION_RESTORE,
+            FeatureFlags::enableOmitAccelerometerRotationRestore);
+    }
+
+    @Override
+
     public boolean enableOpaqueBackgroundForTransparentWindows() {
         return getValue(Flags.FLAG_ENABLE_OPAQUE_BACKGROUND_FOR_TRANSPARENT_WINDOWS,
             FeatureFlags::enableOpaqueBackgroundForTransparentWindows);
+    }
+
+    @Override
+
+    public boolean enableOverflowButtonForTaskbarPinnedItems() {
+        return getValue(Flags.FLAG_ENABLE_OVERFLOW_BUTTON_FOR_TASKBAR_PINNED_ITEMS,
+            FeatureFlags::enableOverflowButtonForTaskbarPinnedItems);
     }
 
     @Override
@@ -1025,6 +1151,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enablePinningAppWithContextMenu() {
+        return getValue(Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
+            FeatureFlags::enablePinningAppWithContextMenu);
+    }
+
+    @Override
+
     public boolean enablePresentationForConnectedDisplays() {
         return getValue(Flags.FLAG_ENABLE_PRESENTATION_FOR_CONNECTED_DISPLAYS,
             FeatureFlags::enablePresentationForConnectedDisplays);
@@ -1046,9 +1179,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableRejectHomeTransition() {
+        return getValue(Flags.FLAG_ENABLE_REJECT_HOME_TRANSITION,
+            FeatureFlags::enableRejectHomeTransition);
+    }
+
+    @Override
+
     public boolean enableRequestFullscreenBugfix() {
         return getValue(Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_BUGFIX,
             FeatureFlags::enableRequestFullscreenBugfix);
+    }
+
+    @Override
+
+    public boolean enableRequestFullscreenRefactor() {
+        return getValue(Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_REFACTOR,
+            FeatureFlags::enableRequestFullscreenRefactor);
     }
 
     @Override
@@ -1074,6 +1221,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableSeeThroughTaskFragments() {
+        return getValue(Flags.FLAG_ENABLE_SEE_THROUGH_TASK_FRAGMENTS,
+            FeatureFlags::enableSeeThroughTaskFragments);
+    }
+
+    @Override
+
     public boolean enableShellInitialBoundsRegressionBugFix() {
         return getValue(Flags.FLAG_ENABLE_SHELL_INITIAL_BOUNDS_REGRESSION_BUG_FIX,
             FeatureFlags::enableShellInitialBoundsRegressionBugFix);
@@ -1091,6 +1245,20 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableStartLaunchTransitionFromTaskbarBugfix() {
         return getValue(Flags.FLAG_ENABLE_START_LAUNCH_TRANSITION_FROM_TASKBAR_BUGFIX,
             FeatureFlags::enableStartLaunchTransitionFromTaskbarBugfix);
+    }
+
+    @Override
+
+    public boolean enableSysDecorsCallbacksViaWm() {
+        return getValue(Flags.FLAG_ENABLE_SYS_DECORS_CALLBACKS_VIA_WM,
+            FeatureFlags::enableSysDecorsCallbacksViaWm);
+    }
+
+    @Override
+
+    public boolean enableTallAppHeaders() {
+        return getValue(Flags.FLAG_ENABLE_TALL_APP_HEADERS,
+            FeatureFlags::enableTallAppHeaders);
     }
 
     @Override
@@ -1123,6 +1291,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableTaskbarRecentTasksThrottleBugfix() {
+        return getValue(Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX,
+            FeatureFlags::enableTaskbarRecentTasksThrottleBugfix);
+    }
+
+    @Override
+
     public boolean enableTaskbarRecentsLayoutTransition() {
         return getValue(Flags.FLAG_ENABLE_TASKBAR_RECENTS_LAYOUT_TRANSITION,
             FeatureFlags::enableTaskbarRecentsLayoutTransition);
@@ -1151,6 +1326,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableTransitionOnActivitySetRequestedOrientation() {
+        return getValue(Flags.FLAG_ENABLE_TRANSITION_ON_ACTIVITY_SET_REQUESTED_ORIENTATION,
+            FeatureFlags::enableTransitionOnActivitySetRequestedOrientation);
+    }
+
+    @Override
+
     public boolean enableVisualIndicatorInTransitionBugfix() {
         return getValue(Flags.FLAG_ENABLE_VISUAL_INDICATOR_IN_TRANSITION_BUGFIX,
             FeatureFlags::enableVisualIndicatorInTransitionBugfix);
@@ -1158,9 +1340,30 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableWindowContextOverrideType() {
+        return getValue(Flags.FLAG_ENABLE_WINDOW_CONTEXT_OVERRIDE_TYPE,
+            FeatureFlags::enableWindowContextOverrideType);
+    }
+
+    @Override
+
     public boolean enableWindowContextResourcesUpdateOnConfigChange() {
         return getValue(Flags.FLAG_ENABLE_WINDOW_CONTEXT_RESOURCES_UPDATE_ON_CONFIG_CHANGE,
             FeatureFlags::enableWindowContextResourcesUpdateOnConfigChange);
+    }
+
+    @Override
+
+    public boolean enableWindowDecorationRefactor() {
+        return getValue(Flags.FLAG_ENABLE_WINDOW_DECORATION_REFACTOR,
+            FeatureFlags::enableWindowDecorationRefactor);
+    }
+
+    @Override
+
+    public boolean enableWindowRepositioningApi() {
+        return getValue(Flags.FLAG_ENABLE_WINDOW_REPOSITIONING_API,
+            FeatureFlags::enableWindowRepositioningApi);
     }
 
     @Override
@@ -1186,6 +1389,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableWindowingTaskStackOrderBugfix() {
+        return getValue(Flags.FLAG_ENABLE_WINDOWING_TASK_STACK_ORDER_BUGFIX,
+            FeatureFlags::enableWindowingTaskStackOrderBugfix);
+    }
+
+    @Override
+
     public boolean enableWindowingTransitionHandlersObservers() {
         return getValue(Flags.FLAG_ENABLE_WINDOWING_TRANSITION_HANDLERS_OBSERVERS,
             FeatureFlags::enableWindowingTransitionHandlersObservers);
@@ -1207,20 +1417,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean ensureWallpaperInTransitions() {
-        return getValue(Flags.FLAG_ENSURE_WALLPAPER_IN_TRANSITIONS,
-            FeatureFlags::ensureWallpaperInTransitions);
-    }
-
-    @Override
-
-    public boolean ensureWallpaperInWearTransitions() {
-        return getValue(Flags.FLAG_ENSURE_WALLPAPER_IN_WEAR_TRANSITIONS,
-            FeatureFlags::ensureWallpaperInWearTransitions);
-    }
-
-    @Override
-
     public boolean enterDesktopByDefaultOnFreeformDisplays() {
         return getValue(Flags.FLAG_ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS,
             FeatureFlags::enterDesktopByDefaultOnFreeformDisplays);
@@ -1235,9 +1431,16 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean excludeDrawingAppThemeSnapshotFromLock() {
-        return getValue(Flags.FLAG_EXCLUDE_DRAWING_APP_THEME_SNAPSHOT_FROM_LOCK,
-            FeatureFlags::excludeDrawingAppThemeSnapshotFromLock);
+    public boolean excludeDeskRootsFromDesktopTasks() {
+        return getValue(Flags.FLAG_EXCLUDE_DESK_ROOTS_FROM_DESKTOP_TASKS,
+            FeatureFlags::excludeDeskRootsFromDesktopTasks);
+    }
+
+    @Override
+
+    public boolean excludeNonMainWindowFromSnapshot() {
+        return getValue(Flags.FLAG_EXCLUDE_NON_MAIN_WINDOW_FROM_SNAPSHOT,
+            FeatureFlags::excludeNonMainWindowFromSnapshot);
     }
 
     @Override
@@ -1249,9 +1452,30 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean extendingPersistenceSnapshotQueueDepth() {
+        return getValue(Flags.FLAG_EXTENDING_PERSISTENCE_SNAPSHOT_QUEUE_DEPTH,
+            FeatureFlags::extendingPersistenceSnapshotQueueDepth);
+    }
+
+    @Override
+
+    public boolean fallbackToFocusedDisplay() {
+        return getValue(Flags.FLAG_FALLBACK_TO_FOCUSED_DISPLAY,
+            FeatureFlags::fallbackToFocusedDisplay);
+    }
+
+    @Override
+
     public boolean fifoPriorityForMajorUiProcesses() {
         return getValue(Flags.FLAG_FIFO_PRIORITY_FOR_MAJOR_UI_PROCESSES,
             FeatureFlags::fifoPriorityForMajorUiProcesses);
+    }
+
+    @Override
+
+    public boolean fixFullscreenInMultiWindow() {
+        return getValue(Flags.FLAG_FIX_FULLSCREEN_IN_MULTI_WINDOW,
+            FeatureFlags::fixFullscreenInMultiWindow);
     }
 
     @Override
@@ -1263,16 +1487,30 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean fixLayoutExistingTask() {
-        return getValue(Flags.FLAG_FIX_LAYOUT_EXISTING_TASK,
-            FeatureFlags::fixLayoutExistingTask);
+    public boolean fixLayoutRestoredTask() {
+        return getValue(Flags.FLAG_FIX_LAYOUT_RESTORED_TASK,
+            FeatureFlags::fixLayoutRestoredTask);
     }
 
     @Override
 
-    public boolean fixViewRootCallTrace() {
-        return getValue(Flags.FLAG_FIX_VIEW_ROOT_CALL_TRACE,
-            FeatureFlags::fixViewRootCallTrace);
+    public boolean fixMovingUnfocusedTask() {
+        return getValue(Flags.FLAG_FIX_MOVING_UNFOCUSED_TASK,
+            FeatureFlags::fixMovingUnfocusedTask);
+    }
+
+    @Override
+
+    public boolean fixSetAdjacentTaskFragmentsWithParams() {
+        return getValue(Flags.FLAG_FIX_SET_ADJACENT_TASK_FRAGMENTS_WITH_PARAMS,
+            FeatureFlags::fixSetAdjacentTaskFragmentsWithParams);
+    }
+
+    @Override
+
+    public boolean fixShowWhenLockedSyncTimeout() {
+        return getValue(Flags.FLAG_FIX_SHOW_WHEN_LOCKED_SYNC_TIMEOUT,
+            FeatureFlags::fixShowWhenLockedSyncTimeout);
     }
 
     @Override
@@ -1280,6 +1518,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean forceCloseTopTransparentFullscreenTask() {
         return getValue(Flags.FLAG_FORCE_CLOSE_TOP_TRANSPARENT_FULLSCREEN_TASK,
             FeatureFlags::forceCloseTopTransparentFullscreenTask);
+    }
+
+    @Override
+
+    public boolean forceShowSystemBarForBubble() {
+        return getValue(Flags.FLAG_FORCE_SHOW_SYSTEM_BAR_FOR_BUBBLE,
+            FeatureFlags::forceShowSystemBarForBubble);
     }
 
     @Override
@@ -1294,6 +1539,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean getDimmerOnClosing() {
         return getValue(Flags.FLAG_GET_DIMMER_ON_CLOSING,
             FeatureFlags::getDimmerOnClosing);
+    }
+
+    @Override
+
+    public boolean grantManageKeyGesturesToRecents() {
+        return getValue(Flags.FLAG_GRANT_MANAGE_KEY_GESTURES_TO_RECENTS,
+            FeatureFlags::grantManageKeyGesturesToRecents);
     }
 
     @Override
@@ -1333,6 +1585,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean interceptMotionFromMoveToCancel() {
+        return getValue(Flags.FLAG_INTERCEPT_MOTION_FROM_MOVE_TO_CANCEL,
+            FeatureFlags::interceptMotionFromMoveToCancel);
+    }
+
+    @Override
+
     public boolean jankApi() {
         return getValue(Flags.FLAG_JANK_API,
             FeatureFlags::jankApi);
@@ -1340,23 +1599,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean keepAppWindowHideWhileLocked() {
-        return getValue(Flags.FLAG_KEEP_APP_WINDOW_HIDE_WHILE_LOCKED,
-            FeatureFlags::keepAppWindowHideWhileLocked);
-    }
-
-    @Override
-
     public boolean keyboardShortcutsToSwitchDesks() {
         return getValue(Flags.FLAG_KEYBOARD_SHORTCUTS_TO_SWITCH_DESKS,
             FeatureFlags::keyboardShortcutsToSwitchDesks);
-    }
-
-    @Override
-
-    public boolean keyguardGoingAwayTimeout() {
-        return getValue(Flags.FLAG_KEYGUARD_GOING_AWAY_TIMEOUT,
-            FeatureFlags::keyguardGoingAwayTimeout);
     }
 
     @Override
@@ -1396,30 +1641,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean nestedTasksWithIndependentBounds() {
-        return getValue(Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS,
-            FeatureFlags::nestedTasksWithIndependentBounds);
-    }
-
-    @Override
-
-    public boolean noConsecutiveVisibilityEvents() {
-        return getValue(Flags.FLAG_NO_CONSECUTIVE_VISIBILITY_EVENTS,
-            FeatureFlags::noConsecutiveVisibilityEvents);
-    }
-
-    @Override
-
-    public boolean noDuplicateSurfaceDestroyedEvents() {
-        return getValue(Flags.FLAG_NO_DUPLICATE_SURFACE_DESTROYED_EVENTS,
-            FeatureFlags::noDuplicateSurfaceDestroyedEvents);
-    }
-
-    @Override
-
-    public boolean noVisibilityEventOnDisplayStateChange() {
-        return getValue(Flags.FLAG_NO_VISIBILITY_EVENT_ON_DISPLAY_STATE_CHANGE,
-            FeatureFlags::noVisibilityEventOnDisplayStateChange);
+    public boolean nestedTasksWithIndependentBoundsBugfix() {
+        return getValue(Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS_BUGFIX,
+            FeatureFlags::nestedTasksWithIndependentBoundsBugfix);
     }
 
     @Override
@@ -1427,6 +1651,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean offloadColorExtraction() {
         return getValue(Flags.FLAG_OFFLOAD_COLOR_EXTRACTION,
             FeatureFlags::offloadColorExtraction);
+    }
+
+    @Override
+
+    public boolean parallelCdTransitionsDuringRecents() {
+        return getValue(Flags.FLAG_PARALLEL_CD_TRANSITIONS_DURING_RECENTS,
+            FeatureFlags::parallelCdTransitionsDuringRecents);
     }
 
     @Override
@@ -1480,9 +1711,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean processPriorityPolicyForMultiWindowMode() {
-        return getValue(Flags.FLAG_PROCESS_PRIORITY_POLICY_FOR_MULTI_WINDOW_MODE,
-            FeatureFlags::processPriorityPolicyForMultiWindowMode);
+    public boolean preserveRecentsTaskConfigurationOnRelaunch() {
+        return getValue(Flags.FLAG_PRESERVE_RECENTS_TASK_CONFIGURATION_ON_RELAUNCH,
+            FeatureFlags::preserveRecentsTaskConfigurationOnRelaunch);
     }
 
     @Override
@@ -1494,13 +1725,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean recordTaskSnapshotsBeforeShutdown() {
-        return getValue(Flags.FLAG_RECORD_TASK_SNAPSHOTS_BEFORE_SHUTDOWN,
-            FeatureFlags::recordTaskSnapshotsBeforeShutdown);
-    }
-
-    @Override
-
     public boolean reduceChangedExclusionRectsMsgs() {
         return getValue(Flags.FLAG_REDUCE_CHANGED_EXCLUSION_RECTS_MSGS,
             FeatureFlags::reduceChangedExclusionRectsMsgs);
@@ -1508,23 +1732,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean reduceKeyguardTransitions() {
-        return getValue(Flags.FLAG_REDUCE_KEYGUARD_TRANSITIONS,
-            FeatureFlags::reduceKeyguardTransitions);
-    }
-
-    @Override
-
     public boolean reduceTaskSnapshotMemoryUsage() {
         return getValue(Flags.FLAG_REDUCE_TASK_SNAPSHOT_MEMORY_USAGE,
             FeatureFlags::reduceTaskSnapshotMemoryUsage);
-    }
-
-    @Override
-
-    public boolean reduceUnnecessaryMeasure() {
-        return getValue(Flags.FLAG_REDUCE_UNNECESSARY_MEASURE,
-            FeatureFlags::reduceUnnecessaryMeasure);
     }
 
     @Override
@@ -1543,9 +1753,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean releaseUserAspectRatioWm() {
-        return getValue(Flags.FLAG_RELEASE_USER_ASPECT_RATIO_WM,
-            FeatureFlags::releaseUserAspectRatioWm);
+    public boolean releaseSurfaceOnTransitionFinish() {
+        return getValue(Flags.FLAG_RELEASE_SURFACE_ON_TRANSITION_FINISH,
+            FeatureFlags::releaseSurfaceOnTransitionFinish);
     }
 
     @Override
@@ -1557,16 +1767,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean removeDeferHidingClient() {
-        return getValue(Flags.FLAG_REMOVE_DEFER_HIDING_CLIENT,
-            FeatureFlags::removeDeferHidingClient);
+    public boolean removeDepartTargetFromMotion() {
+        return getValue(Flags.FLAG_REMOVE_DEPART_TARGET_FROM_MOTION,
+            FeatureFlags::removeDepartTargetFromMotion);
     }
 
     @Override
 
-    public boolean removeDepartTargetFromMotion() {
-        return getValue(Flags.FLAG_REMOVE_DEPART_TARGET_FROM_MOTION,
-            FeatureFlags::removeDepartTargetFromMotion);
+    public boolean removeStartingInTransition() {
+        return getValue(Flags.FLAG_REMOVE_STARTING_IN_TRANSITION,
+            FeatureFlags::removeStartingInTransition);
+    }
+
+    @Override
+
+    public boolean reparentToDefaultWithDisplayRemoval() {
+        return getValue(Flags.FLAG_REPARENT_TO_DEFAULT_WITH_DISPLAY_REMOVAL,
+            FeatureFlags::reparentToDefaultWithDisplayRemoval);
     }
 
     @Override
@@ -1578,9 +1795,23 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean respectNonTopVisibleFixedOrientation() {
-        return getValue(Flags.FLAG_RESPECT_NON_TOP_VISIBLE_FIXED_ORIENTATION,
-            FeatureFlags::respectNonTopVisibleFixedOrientation);
+    public boolean respectFullscreenActivityOptionInDesktopLaunchParams() {
+        return getValue(Flags.FLAG_RESPECT_FULLSCREEN_ACTIVITY_OPTION_IN_DESKTOP_LAUNCH_PARAMS,
+            FeatureFlags::respectFullscreenActivityOptionInDesktopLaunchParams);
+    }
+
+    @Override
+
+    public boolean respectHierarchySurfaceVisibility() {
+        return getValue(Flags.FLAG_RESPECT_HIERARCHY_SURFACE_VISIBILITY,
+            FeatureFlags::respectHierarchySurfaceVisibility);
+    }
+
+    @Override
+
+    public boolean respectLeafTaskBounds() {
+        return getValue(Flags.FLAG_RESPECT_LEAF_TASK_BOUNDS,
+            FeatureFlags::respectLeafTaskBounds);
     }
 
     @Override
@@ -1588,6 +1819,27 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean respectOrientationChangeForUnresizeable() {
         return getValue(Flags.FLAG_RESPECT_ORIENTATION_CHANGE_FOR_UNRESIZEABLE,
             FeatureFlags::respectOrientationChangeForUnresizeable);
+    }
+
+    @Override
+
+    public boolean restoreUserAspectRatioSettingsUsingService() {
+        return getValue(Flags.FLAG_RESTORE_USER_ASPECT_RATIO_SETTINGS_USING_SERVICE,
+            FeatureFlags::restoreUserAspectRatioSettingsUsingService);
+    }
+
+    @Override
+
+    public boolean restrictFreeformHiddenSystemBarsToFillingTasks() {
+        return getValue(Flags.FLAG_RESTRICT_FREEFORM_HIDDEN_SYSTEM_BARS_TO_FILLING_TASKS,
+            FeatureFlags::restrictFreeformHiddenSystemBarsToFillingTasks);
+    }
+
+    @Override
+
+    public boolean rootTaskForBubble() {
+        return getValue(Flags.FLAG_ROOT_TASK_FOR_BUBBLE,
+            FeatureFlags::rootTaskForBubble);
     }
 
     @Override
@@ -1620,6 +1872,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean screenBrightnessDimOnEmulator() {
+        return getValue(Flags.FLAG_SCREEN_BRIGHTNESS_DIM_ON_EMULATOR,
+            FeatureFlags::screenBrightnessDimOnEmulator);
+    }
+
+    @Override
+
     public boolean screenRecordingCallbacks() {
         return getValue(Flags.FLAG_SCREEN_RECORDING_CALLBACKS,
             FeatureFlags::screenRecordingCallbacks);
@@ -1630,6 +1889,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean scrollingFromLetterbox() {
         return getValue(Flags.FLAG_SCROLLING_FROM_LETTERBOX,
             FeatureFlags::scrollingFromLetterbox);
+    }
+
+    @Override
+
+    public boolean scvhSurfaceControlLifetimeFix() {
+        return getValue(Flags.FLAG_SCVH_SURFACE_CONTROL_LIFETIME_FIX,
+            FeatureFlags::scvhSurfaceControlLifetimeFix);
     }
 
     @Override
@@ -1683,6 +1949,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean skipDeactivationOfDeskWithNothingInFront() {
+        return getValue(Flags.FLAG_SKIP_DEACTIVATION_OF_DESK_WITH_NOTHING_IN_FRONT,
+            FeatureFlags::skipDeactivationOfDeskWithNothingInFront);
+    }
+
+    @Override
+
     public boolean skipDecorViewRelayoutWhenClosingBugfix() {
         return getValue(Flags.FLAG_SKIP_DECOR_VIEW_RELAYOUT_WHEN_CLOSING_BUGFIX,
             FeatureFlags::skipDecorViewRelayoutWhenClosingBugfix);
@@ -1690,9 +1963,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean supportWidgetIntentsOnConnectedDisplay() {
-        return getValue(Flags.FLAG_SUPPORT_WIDGET_INTENTS_ON_CONNECTED_DISPLAY,
-            FeatureFlags::supportWidgetIntentsOnConnectedDisplay);
+    public boolean splashScreenViewSyncTransaction() {
+        return getValue(Flags.FLAG_SPLASH_SCREEN_VIEW_SYNC_TRANSACTION,
+            FeatureFlags::splashScreenViewSyncTransaction);
     }
 
     @Override
@@ -1739,23 +2012,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean taskFragmentSystemOrganizerFlag() {
-        return getValue(Flags.FLAG_TASK_FRAGMENT_SYSTEM_ORGANIZER_FLAG,
-            FeatureFlags::taskFragmentSystemOrganizerFlag);
-    }
-
-    @Override
-
     public boolean touchPassThroughOptIn() {
         return getValue(Flags.FLAG_TOUCH_PASS_THROUGH_OPT_IN,
             FeatureFlags::touchPassThroughOptIn);
-    }
-
-    @Override
-
-    public boolean trackSystemUiContextBeforeWms() {
-        return getValue(Flags.FLAG_TRACK_SYSTEM_UI_CONTEXT_BEFORE_WMS,
-            FeatureFlags::trackSystemUiContextBeforeWms);
     }
 
     @Override
@@ -1774,6 +2033,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean transitionHandlerCujTags() {
+        return getValue(Flags.FLAG_TRANSITION_HANDLER_CUJ_TAGS,
+            FeatureFlags::transitionHandlerCujTags);
+    }
+
+    @Override
+
     public boolean trustedPresentationListenerForWindow() {
         return getValue(Flags.FLAG_TRUSTED_PRESENTATION_LISTENER_FOR_WINDOW,
             FeatureFlags::trustedPresentationListenerForWindow);
@@ -1784,6 +2050,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean unifyBackNavigationTransition() {
         return getValue(Flags.FLAG_UNIFY_BACK_NAVIGATION_TRANSITION,
             FeatureFlags::unifyBackNavigationTransition);
+    }
+
+    @Override
+
+    public boolean unifyShellBinders() {
+        return getValue(Flags.FLAG_UNIFY_SHELL_BINDERS,
+            FeatureFlags::unifyShellBinders);
     }
 
     @Override
@@ -1816,6 +2089,20 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean updateHostInputTransferToken() {
+        return getValue(Flags.FLAG_UPDATE_HOST_INPUT_TRANSFER_TOKEN,
+            FeatureFlags::updateHostInputTransferToken);
+    }
+
+    @Override
+
+    public boolean updateTaskMinDimensionsWithRootActivity() {
+        return getValue(Flags.FLAG_UPDATE_TASK_MIN_DIMENSIONS_WITH_ROOT_ACTIVITY,
+            FeatureFlags::updateTaskMinDimensionsWithRootActivity);
+    }
+
+    @Override
+
     public boolean useCachedInsetsForDisplaySwitch() {
         return getValue(Flags.FLAG_USE_CACHED_INSETS_FOR_DISPLAY_SWITCH,
             FeatureFlags::useCachedInsetsForDisplaySwitch);
@@ -1823,30 +2110,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean useRtFrameCallbackForSplashScreenTransfer() {
-        return getValue(Flags.FLAG_USE_RT_FRAME_CALLBACK_FOR_SPLASH_SCREEN_TRANSFER,
-            FeatureFlags::useRtFrameCallbackForSplashScreenTransfer);
-    }
-
-    @Override
-
     public boolean useTasksDimOnly() {
         return getValue(Flags.FLAG_USE_TASKS_DIM_ONLY,
             FeatureFlags::useTasksDimOnly);
-    }
-
-    @Override
-
-    public boolean useVisibleRequestedForProcessTracker() {
-        return getValue(Flags.FLAG_USE_VISIBLE_REQUESTED_FOR_PROCESS_TRACKER,
-            FeatureFlags::useVisibleRequestedForProcessTracker);
-    }
-
-    @Override
-
-    public boolean useWindowOriginalTouchableRegionWhenMagnificationRecomputeBounds() {
-        return getValue(Flags.FLAG_USE_WINDOW_ORIGINAL_TOUCHABLE_REGION_WHEN_MAGNIFICATION_RECOMPUTE_BOUNDS,
-            FeatureFlags::useWindowOriginalTouchableRegionWhenMagnificationRecomputeBounds);
     }
 
     @Override
@@ -1890,20 +2156,20 @@ public class CustomFeatureFlags implements FeatureFlags {
     public List<String> getFlagNames() {
         return Arrays.asList(
             Flags.FLAG_ACTION_MODE_EDGE_TO_EDGE,
-            Flags.FLAG_ACTIVITY_EMBEDDING_ANIMATION_CUSTOMIZATION_FLAG,
             Flags.FLAG_ACTIVITY_EMBEDDING_DELAY_TASK_FRAGMENT_FINISH_FOR_ACTIVITY_LAUNCH,
             Flags.FLAG_ACTIVITY_EMBEDDING_INTERACTIVE_DIVIDER_FLAG,
             Flags.FLAG_ACTIVITY_EMBEDDING_METRICS,
             Flags.FLAG_ACTIVITY_EMBEDDING_SUPPORT_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ALLOW_DISABLE_ACTIVITY_RECORD_INPUT_SINK,
-            Flags.FLAG_ALLOW_HIDE_SCM_BUTTON,
             Flags.FLAG_ALLOWS_SCREEN_SIZE_DECOUPLED_FROM_STATUS_BAR_AND_CUTOUT,
             Flags.FLAG_ALWAYS_DRAW_MAGNIFICATION_FULLSCREEN_BORDER,
+            Flags.FLAG_ALWAYS_SEQ_ID_LAYOUT,
             Flags.FLAG_ALWAYS_UPDATE_WALLPAPER_PERMISSION,
             Flags.FLAG_AOD_TRANSITION,
             Flags.FLAG_APP_COMPAT_ASYNC_RELAYOUT,
             Flags.FLAG_APP_COMPAT_PROPERTIES_API,
             Flags.FLAG_APP_COMPAT_REFACTORING,
+            Flags.FLAG_APP_COMPAT_REFACTORING_ROUNDED_CORNERS,
             Flags.FLAG_APP_COMPAT_UI_FRAMEWORK,
             Flags.FLAG_APP_HANDLE_NO_RELAYOUT_ON_EXCLUSION_CHANGE,
             Flags.FLAG_APPLY_LIFECYCLE_ON_PIP_CHANGE,
@@ -1912,44 +2178,36 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_BAL_ADDITIONAL_LOGGING,
             Flags.FLAG_BAL_ADDITIONAL_START_MODES,
             Flags.FLAG_BAL_CLEAR_ALLOWLIST_DURATION,
+            Flags.FLAG_BAL_COVER_INTENT_SENDER,
             Flags.FLAG_BAL_DONT_BRING_EXISTING_BACKGROUND_TASK_STACK_TO_FG,
-            Flags.FLAG_BAL_IMPROVE_REAL_CALLER_VISIBILITY_CHECK,
-            Flags.FLAG_BAL_IMPROVED_METRICS,
             Flags.FLAG_BAL_REDUCE_GRACE_PERIOD,
-            Flags.FLAG_BAL_REQUIRE_OPT_IN_BY_PENDING_INTENT_CREATOR,
             Flags.FLAG_BAL_RESPECT_APP_SWITCH_STATE_WHEN_CHECK_BOUND_BY_FOREGROUND_UID,
             Flags.FLAG_BAL_SEND_INTENT_WITH_OPTIONS,
             Flags.FLAG_BAL_SHOW_TOASTS_BLOCKED,
             Flags.FLAG_BAL_STRICT_MODE_GRACE_PERIOD,
             Flags.FLAG_BAL_STRICT_MODE_RO,
             Flags.FLAG_BETTER_SUPPORT_NON_MATCH_PARENT_ACTIVITY,
-            Flags.FLAG_CACHE_WINDOW_STYLE,
             Flags.FLAG_CAMERA_COMPAT_FOR_FREEFORM,
             Flags.FLAG_CAMERA_COMPAT_FULLSCREEN_PICK_SAME_TASK_ACTIVITY,
-            Flags.FLAG_CHECK_DISABLED_SNAPSHOTS_IN_TASK_PERSISTER,
-            Flags.FLAG_CLEANUP_DISPATCH_PENDING_TRANSACTIONS_REMOTE_EXCEPTION,
-            Flags.FLAG_CLEAR_SYSTEM_VIBRATOR,
             Flags.FLAG_CLOSE_TO_SQUARE_CONFIG_INCLUDES_STATUS_BAR,
-            Flags.FLAG_CONDENSE_CONFIGURATION_CHANGE_FOR_SIMPLE_MODE,
-            Flags.FLAG_CONFIGURABLE_FONT_SCALE_DEFAULT,
             Flags.FLAG_COVER_DISPLAY_OPT_IN,
-            Flags.FLAG_DELAY_NOTIFICATION_TO_MAGNIFICATION_WHEN_RECENTS_WINDOW_TO_FRONT_TRANSITION,
-            Flags.FLAG_DELEGATE_BACK_GESTURE_TO_SHELL,
+            Flags.FLAG_CURRENT_ANIMATOR_SCALE_USES_SHARED_MEMORY,
+            Flags.FLAG_DEFAULT_DESK_WITHOUT_WARMUP_MIGRATION,
             Flags.FLAG_DELEGATE_UNHANDLED_DRAGS,
-            Flags.FLAG_DELETE_CAPTURE_DISPLAY,
             Flags.FLAG_DENSITY_390_API,
             Flags.FLAG_DISABLE_DESKTOP_LAUNCH_PARAMS_OUTSIDE_DESKTOP_BUG_FIX,
             Flags.FLAG_DISABLE_NON_RESIZABLE_APP_SNAP_RESIZING,
             Flags.FLAG_DISABLE_OPT_OUT_EDGE_TO_EDGE,
-            Flags.FLAG_DO_NOT_CHECK_INTERSECTION_WHEN_NON_MAGNIFIABLE_WINDOW_TRANSITIONS,
-            Flags.FLAG_EARLY_LAUNCH_HINT,
-            Flags.FLAG_EDGE_TO_EDGE_BY_DEFAULT,
+            Flags.FLAG_DISPATCH_FIRST_KEYGUARD_LOCKED_STATE,
             Flags.FLAG_ENABLE_ACCESSIBLE_CUSTOM_HEADERS,
             Flags.FLAG_ENABLE_ACTIVITY_EMBEDDING_SUPPORT_FOR_CONNECTED_DISPLAYS,
+            Flags.FLAG_ENABLE_APP_HANDLE_POSITION_REPORTING,
             Flags.FLAG_ENABLE_APP_HEADER_WITH_TASK_DENSITY,
+            Flags.FLAG_ENABLE_BLOCK_NON_DESKTOP_DISPLAY_WINDOW_DRAG_BUGFIX,
             Flags.FLAG_ENABLE_BORDER_SETTINGS,
-            Flags.FLAG_ENABLE_BUFFER_TRANSFORM_HINT_FROM_DISPLAY,
+            Flags.FLAG_ENABLE_BOX_SHADOW_SETTINGS,
             Flags.FLAG_ENABLE_BUG_FIXES_FOR_SECONDARY_DISPLAY,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_CHECK_DEVICE_ROTATION_BUGFIX,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING_OPT_OUT,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING_OPT_OUT_API,
@@ -1958,27 +2216,36 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION,
             Flags.FLAG_ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION_ALWAYS,
             Flags.FLAG_ENABLE_CASCADING_WINDOWS,
+            Flags.FLAG_ENABLE_CLOSE_LID_INTERACTION,
             Flags.FLAG_ENABLE_COMPAT_UI_VISIBILITY_STATUS,
             Flags.FLAG_ENABLE_COMPATUI_SYSUI_LAUNCHER,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_DND,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_PIP,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_WINDOW_DRAG,
             Flags.FLAG_ENABLE_DESKTOP_APP_HANDLE_ANIMATION,
+            Flags.FLAG_ENABLE_DESKTOP_APP_HEADER_STATE_CHANGE_ANNOUNCEMENTS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_CLOSE_SHORTCUT_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_CLOSE_TASK_ANIMATION_IN_DTC_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DRAG_TO_MAXIMIZE,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_FULLSCREEN_REFOCUS_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_LISTENER,
             Flags.FLAG_ENABLE_DESKTOP_IME_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_IMMERSIVE_DRAG_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_INDICATOR_IN_SEPARATE_THREAD_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_MODE_THROUGH_DEV_OPTION,
             Flags.FLAG_ENABLE_DESKTOP_OPENING_DEEPLINK_MINIMIZE_ANIMATION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_RECENTS_TRANSITIONS_CORNERS_BUGFIX,
-            Flags.FLAG_ENABLE_DESKTOP_SWIPE_BACK_MINIMIZE_ANIMATION_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_SPLITSCREEN_TRANSITION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_SYSTEM_DIALOGS_TRANSITIONS,
+            Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_LAUNCH_ANIMATION,
             Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_MINIMIZE_ANIMATION_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_TASK_LIMIT_SEPARATE_TRANSITION,
             Flags.FLAG_ENABLE_DESKTOP_TASKBAR_ON_FREEFORM_DISPLAYS,
             Flags.FLAG_ENABLE_DESKTOP_TRAMPOLINE_CLOSE_ANIMATION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_WALLPAPER_ACTIVITY_FOR_SYSTEM_USER,
@@ -1999,6 +2266,7 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MULTI_INSTANCE_FEATURES,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PIP,
+            Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PIP_IN_OVERVIEW_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_QUICK_SWITCH,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_SCVH_CACHE_BUG_FIX,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_SIZE_CONSTRAINTS,
@@ -2008,6 +2276,7 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY,
             Flags.FLAG_ENABLE_DEVICE_STATE_AUTO_ROTATE_SETTING_LOGGING,
             Flags.FLAG_ENABLE_DEVICE_STATE_AUTO_ROTATE_SETTING_REFACTOR,
+            Flags.FLAG_ENABLE_DISPLAY_COMPAT_MODE,
             Flags.FLAG_ENABLE_DISPLAY_DISCONNECT_INTERACTION,
             Flags.FLAG_ENABLE_DISPLAY_FOCUS_IN_SHELL_TRANSITIONS,
             Flags.FLAG_ENABLE_DISPLAY_RECONNECT_INTERACTION,
@@ -2015,82 +2284,112 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DRAG_RESIZE_SET_UP_IN_BG_THREAD,
             Flags.FLAG_ENABLE_DRAG_TO_DESKTOP_INCOMING_TRANSITIONS_BUGFIX,
             Flags.FLAG_ENABLE_DRAG_TO_MAXIMIZE,
+            Flags.FLAG_ENABLE_DRAGGING_PIP_ACROSS_DISPLAYS,
             Flags.FLAG_ENABLE_DYNAMIC_RADIUS_COMPUTATION_BUGFIX,
+            Flags.FLAG_ENABLE_EMPTY_DESK_ON_MINIMIZE,
+            Flags.FLAG_ENABLE_EXPERIMENTAL_BUBBLES_CONTROLLER,
+            Flags.FLAG_ENABLE_FREEFORM_BOX_SHADOWS,
+            Flags.FLAG_ENABLE_FREEFORM_DISPLAY_LAUNCH_PARAMS,
             Flags.FLAG_ENABLE_FULL_SCREEN_WINDOW_ON_REMOVING_SPLIT_SCREEN_STAGE_BUGFIX,
+            Flags.FLAG_ENABLE_FULLSCREEN_WINDOW_CONTROLS,
             Flags.FLAG_ENABLE_FULLY_IMMERSIVE_IN_DESKTOP,
             Flags.FLAG_ENABLE_HANDLE_INPUT_FIX,
+            Flags.FLAG_ENABLE_HANDLERS_DEBUGGING_MODE,
             Flags.FLAG_ENABLE_HOLD_TO_DRAG_APP_HANDLE,
+            Flags.FLAG_ENABLE_INDEPENDENT_BACK_IN_PROJECTED,
+            Flags.FLAG_ENABLE_INORDER_TRANSITION_CALLBACKS_FOR_DESKTOP,
             Flags.FLAG_ENABLE_INPUT_LAYER_TRANSITION_FIX,
+            Flags.FLAG_ENABLE_KEY_GESTURE_HANDLER_FOR_SYSUI,
             Flags.FLAG_ENABLE_MINIMIZE_BUTTON,
             Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION,
+            Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE,
             Flags.FLAG_ENABLE_MOVE_TO_NEXT_DISPLAY_SHORTCUT,
             Flags.FLAG_ENABLE_MULTI_DISPLAY_SPLIT,
             Flags.FLAG_ENABLE_MULTIDISPLAY_TRACKPAD_BACK_GESTURE,
             Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND,
+            Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_DEFAULT_ACTIVATION_IN_DESKTOP_FIRST_DISPLAYS,
             Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND,
+            Flags.FLAG_ENABLE_NO_WINDOW_DECORATION_FOR_DESKS,
             Flags.FLAG_ENABLE_NON_DEFAULT_DISPLAY_SPLIT,
+            Flags.FLAG_ENABLE_OMIT_ACCELEROMETER_ROTATION_RESTORE,
             Flags.FLAG_ENABLE_OPAQUE_BACKGROUND_FOR_TRANSPARENT_WINDOWS,
+            Flags.FLAG_ENABLE_OVERFLOW_BUTTON_FOR_TASKBAR_PINNED_ITEMS,
             Flags.FLAG_ENABLE_PER_DISPLAY_DESKTOP_WALLPAPER_ACTIVITY,
             Flags.FLAG_ENABLE_PER_DISPLAY_PACKAGE_CONTEXT_CACHE_IN_STATUSBAR_NOTIF,
             Flags.FLAG_ENABLE_PERSISTING_DISPLAY_SIZE_FOR_CONNECTED_DISPLAYS,
+            Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
             Flags.FLAG_ENABLE_PRESENTATION_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE,
             Flags.FLAG_ENABLE_QUICKSWITCH_DESKTOP_SPLIT_BUGFIX,
+            Flags.FLAG_ENABLE_REJECT_HOME_TRANSITION,
             Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_BUGFIX,
+            Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_REFACTOR,
             Flags.FLAG_ENABLE_RESIZING_METRICS,
             Flags.FLAG_ENABLE_RESTART_MENU_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_RESTORE_TO_PREVIOUS_SIZE_FROM_DESKTOP_IMMERSIVE,
+            Flags.FLAG_ENABLE_SEE_THROUGH_TASK_FRAGMENTS,
             Flags.FLAG_ENABLE_SHELL_INITIAL_BOUNDS_REGRESSION_BUG_FIX,
             Flags.FLAG_ENABLE_SIZE_COMPAT_MODE_IMPROVEMENTS_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_START_LAUNCH_TRANSITION_FROM_TASKBAR_BUGFIX,
+            Flags.FLAG_ENABLE_SYS_DECORS_CALLBACKS_VIA_WM,
+            Flags.FLAG_ENABLE_TALL_APP_HEADERS,
             Flags.FLAG_ENABLE_TASK_RESIZING_KEYBOARD_SHORTCUTS,
             Flags.FLAG_ENABLE_TASK_STACK_OBSERVER_IN_SHELL,
             Flags.FLAG_ENABLE_TASKBAR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_TASKBAR_OVERFLOW,
+            Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX,
             Flags.FLAG_ENABLE_TASKBAR_RECENTS_LAYOUT_TRANSITION,
             Flags.FLAG_ENABLE_THEMED_APP_HEADERS,
             Flags.FLAG_ENABLE_TILE_RESIZING,
             Flags.FLAG_ENABLE_TOP_VISIBLE_ROOT_TASK_PER_USER_TRACKING,
+            Flags.FLAG_ENABLE_TRANSITION_ON_ACTIVITY_SET_REQUESTED_ORIENTATION,
             Flags.FLAG_ENABLE_VISUAL_INDICATOR_IN_TRANSITION_BUGFIX,
+            Flags.FLAG_ENABLE_WINDOW_CONTEXT_OVERRIDE_TYPE,
             Flags.FLAG_ENABLE_WINDOW_CONTEXT_RESOURCES_UPDATE_ON_CONFIG_CHANGE,
+            Flags.FLAG_ENABLE_WINDOW_DECORATION_REFACTOR,
+            Flags.FLAG_ENABLE_WINDOW_REPOSITIONING_API,
             Flags.FLAG_ENABLE_WINDOWING_DYNAMIC_INITIAL_BOUNDS,
             Flags.FLAG_ENABLE_WINDOWING_EDGE_DRAG_RESIZE,
             Flags.FLAG_ENABLE_WINDOWING_SCALED_RESIZING,
+            Flags.FLAG_ENABLE_WINDOWING_TASK_STACK_ORDER_BUGFIX,
             Flags.FLAG_ENABLE_WINDOWING_TRANSITION_HANDLERS_OBSERVERS,
             Flags.FLAG_ENFORCE_EDGE_TO_EDGE,
             Flags.FLAG_ENSURE_KEYGUARD_DOES_TRANSITION_STARTING,
-            Flags.FLAG_ENSURE_WALLPAPER_IN_TRANSITIONS,
-            Flags.FLAG_ENSURE_WALLPAPER_IN_WEAR_TRANSITIONS,
             Flags.FLAG_ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS,
             Flags.FLAG_EXCLUDE_CAPTION_FROM_APP_BOUNDS,
-            Flags.FLAG_EXCLUDE_DRAWING_APP_THEME_SNAPSHOT_FROM_LOCK,
+            Flags.FLAG_EXCLUDE_DESK_ROOTS_FROM_DESKTOP_TASKS,
+            Flags.FLAG_EXCLUDE_NON_MAIN_WINDOW_FROM_SNAPSHOT,
             Flags.FLAG_EXCLUDE_TASK_FROM_RECENTS,
+            Flags.FLAG_EXTENDING_PERSISTENCE_SNAPSHOT_QUEUE_DEPTH,
+            Flags.FLAG_FALLBACK_TO_FOCUSED_DISPLAY,
             Flags.FLAG_FIFO_PRIORITY_FOR_MAJOR_UI_PROCESSES,
+            Flags.FLAG_FIX_FULLSCREEN_IN_MULTI_WINDOW,
             Flags.FLAG_FIX_HIDE_OVERLAY_API,
-            Flags.FLAG_FIX_LAYOUT_EXISTING_TASK,
-            Flags.FLAG_FIX_VIEW_ROOT_CALL_TRACE,
+            Flags.FLAG_FIX_LAYOUT_RESTORED_TASK,
+            Flags.FLAG_FIX_MOVING_UNFOCUSED_TASK,
+            Flags.FLAG_FIX_SET_ADJACENT_TASK_FRAGMENTS_WITH_PARAMS,
+            Flags.FLAG_FIX_SHOW_WHEN_LOCKED_SYNC_TIMEOUT,
             Flags.FLAG_FORCE_CLOSE_TOP_TRANSPARENT_FULLSCREEN_TASK,
+            Flags.FLAG_FORCE_SHOW_SYSTEM_BAR_FOR_BUBBLE,
             Flags.FLAG_FORM_FACTOR_BASED_DESKTOP_FIRST_SWITCH,
             Flags.FLAG_GET_DIMMER_ON_CLOSING,
+            Flags.FLAG_GRANT_MANAGE_KEY_GESTURES_TO_RECENTS,
             Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
             Flags.FLAG_IGNORE_CORNER_RADIUS_AND_SHADOWS,
             Flags.FLAG_INCLUDE_TOP_TRANSPARENT_FULLSCREEN_TASK_IN_DESKTOP_HEURISTIC,
             Flags.FLAG_INHERIT_TASK_BOUNDS_FOR_TRAMPOLINE_TASK_LAUNCHES,
             Flags.FLAG_INSETS_DECOUPLED_CONFIGURATION,
+            Flags.FLAG_INTERCEPT_MOTION_FROM_MOVE_TO_CANCEL,
             Flags.FLAG_JANK_API,
-            Flags.FLAG_KEEP_APP_WINDOW_HIDE_WHILE_LOCKED,
             Flags.FLAG_KEYBOARD_SHORTCUTS_TO_SWITCH_DESKS,
-            Flags.FLAG_KEYGUARD_GOING_AWAY_TIMEOUT,
             Flags.FLAG_LETTERBOX_BACKGROUND_WALLPAPER,
             Flags.FLAG_MOVABLE_CUTOUT_CONFIGURATION,
             Flags.FLAG_MOVE_TO_EXTERNAL_DISPLAY_SHORTCUT,
             Flags.FLAG_MULTI_CROP,
             Flags.FLAG_NAV_BAR_TRANSPARENT_BY_DEFAULT,
-            Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS,
-            Flags.FLAG_NO_CONSECUTIVE_VISIBILITY_EVENTS,
-            Flags.FLAG_NO_DUPLICATE_SURFACE_DESTROYED_EVENTS,
-            Flags.FLAG_NO_VISIBILITY_EVENT_ON_DISPLAY_STATE_CHANGE,
+            Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS_BUGFIX,
             Flags.FLAG_OFFLOAD_COLOR_EXTRACTION,
+            Flags.FLAG_PARALLEL_CD_TRANSITIONS_DURING_RECENTS,
             Flags.FLAG_PORT_WINDOW_SIZE_ANIMATION,
             Flags.FLAG_PREDICTIVE_BACK_DEFAULT_ENABLE_SDK_36,
             Flags.FLAG_PREDICTIVE_BACK_PRIORITY_SYSTEM_NAVIGATION_OBSERVER,
@@ -2098,28 +2397,33 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_PREDICTIVE_BACK_SYSTEM_OVERRIDE_CALLBACK,
             Flags.FLAG_PREDICTIVE_BACK_THREE_BUTTON_NAV,
             Flags.FLAG_PREDICTIVE_BACK_TIMESTAMP_API,
-            Flags.FLAG_PROCESS_PRIORITY_POLICY_FOR_MULTI_WINDOW_MODE,
+            Flags.FLAG_PRESERVE_RECENTS_TASK_CONFIGURATION_ON_RELAUNCH,
             Flags.FLAG_REAR_DISPLAY_DISABLE_FORCE_DESKTOP_SYSTEM_DECORATIONS,
-            Flags.FLAG_RECORD_TASK_SNAPSHOTS_BEFORE_SHUTDOWN,
             Flags.FLAG_REDUCE_CHANGED_EXCLUSION_RECTS_MSGS,
-            Flags.FLAG_REDUCE_KEYGUARD_TRANSITIONS,
             Flags.FLAG_REDUCE_TASK_SNAPSHOT_MEMORY_USAGE,
-            Flags.FLAG_REDUCE_UNNECESSARY_MEASURE,
             Flags.FLAG_RELATIVE_INSETS,
             Flags.FLAG_RELEASE_SNAPSHOT_AGGRESSIVELY,
-            Flags.FLAG_RELEASE_USER_ASPECT_RATIO_WM,
+            Flags.FLAG_RELEASE_SURFACE_ON_TRANSITION_FINISH,
             Flags.FLAG_REMOVE_ACTIVITY_STARTER_DREAM_CALLBACK,
-            Flags.FLAG_REMOVE_DEFER_HIDING_CLIENT,
             Flags.FLAG_REMOVE_DEPART_TARGET_FROM_MOTION,
+            Flags.FLAG_REMOVE_STARTING_IN_TRANSITION,
+            Flags.FLAG_REPARENT_TO_DEFAULT_WITH_DISPLAY_REMOVAL,
             Flags.FLAG_REPARENT_WINDOW_TOKEN_API,
-            Flags.FLAG_RESPECT_NON_TOP_VISIBLE_FIXED_ORIENTATION,
+            Flags.FLAG_RESPECT_FULLSCREEN_ACTIVITY_OPTION_IN_DESKTOP_LAUNCH_PARAMS,
+            Flags.FLAG_RESPECT_HIERARCHY_SURFACE_VISIBILITY,
+            Flags.FLAG_RESPECT_LEAF_TASK_BOUNDS,
             Flags.FLAG_RESPECT_ORIENTATION_CHANGE_FOR_UNRESIZEABLE,
+            Flags.FLAG_RESTORE_USER_ASPECT_RATIO_SETTINGS_USING_SERVICE,
+            Flags.FLAG_RESTRICT_FREEFORM_HIDDEN_SYSTEM_BARS_TO_FILLING_TASKS,
+            Flags.FLAG_ROOT_TASK_FOR_BUBBLE,
             Flags.FLAG_SAFE_REGION_LETTERBOXING,
             Flags.FLAG_SAFE_RELEASE_SNAPSHOT_AGGRESSIVELY,
             Flags.FLAG_SCHEDULING_FOR_NOTIFICATION_SHADE,
             Flags.FLAG_SCRAMBLE_SNAPSHOT_FILE_NAME,
+            Flags.FLAG_SCREEN_BRIGHTNESS_DIM_ON_EMULATOR,
             Flags.FLAG_SCREEN_RECORDING_CALLBACKS,
             Flags.FLAG_SCROLLING_FROM_LETTERBOX,
+            Flags.FLAG_SCVH_SURFACE_CONTROL_LIFETIME_FIX,
             Flags.FLAG_SDK_DESIRED_PRESENT_TIME,
             Flags.FLAG_SET_SC_PROPERTIES_IN_CLIENT,
             Flags.FLAG_SHOW_APP_HANDLE_LARGE_SCREENS,
@@ -2127,30 +2431,30 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_SHOW_DESKTOP_WINDOWING_DEV_OPTION,
             Flags.FLAG_SHOW_HOME_BEHIND_DESKTOP,
             Flags.FLAG_SKIP_COMPAT_UI_EDUCATION_IN_DESKTOP_MODE,
+            Flags.FLAG_SKIP_DEACTIVATION_OF_DESK_WITH_NOTHING_IN_FRONT,
             Flags.FLAG_SKIP_DECOR_VIEW_RELAYOUT_WHEN_CLOSING_BUGFIX,
-            Flags.FLAG_SUPPORT_WIDGET_INTENTS_ON_CONNECTED_DISPLAY,
+            Flags.FLAG_SPLASH_SCREEN_VIEW_SYNC_TRANSACTION,
             Flags.FLAG_SUPPORTS_DRAG_ASSISTANT_TO_MULTIWINDOW,
             Flags.FLAG_SUPPORTS_MULTI_INSTANCE_SYSTEM_UI,
             Flags.FLAG_SURFACE_CONTROL_INPUT_RECEIVER,
             Flags.FLAG_SURFACE_TRUSTED_OVERLAY,
             Flags.FLAG_SYNC_SCREEN_CAPTURE,
             Flags.FLAG_SYSTEM_UI_POST_ANIMATION_END,
-            Flags.FLAG_TASK_FRAGMENT_SYSTEM_ORGANIZER_FLAG,
             Flags.FLAG_TOUCH_PASS_THROUGH_OPT_IN,
-            Flags.FLAG_TRACK_SYSTEM_UI_CONTEXT_BEFORE_WMS,
             Flags.FLAG_TRANSIT_READY_TRACKING,
             Flags.FLAG_TRANSIT_TRACKER_PLUMBING,
+            Flags.FLAG_TRANSITION_HANDLER_CUJ_TAGS,
             Flags.FLAG_TRUSTED_PRESENTATION_LISTENER_FOR_WINDOW,
             Flags.FLAG_UNIFY_BACK_NAVIGATION_TRANSITION,
+            Flags.FLAG_UNIFY_SHELL_BINDERS,
             Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT,
             Flags.FLAG_UNTRUSTED_EMBEDDING_ANY_APP_PERMISSION,
             Flags.FLAG_UNTRUSTED_EMBEDDING_STATE_SHARING,
             Flags.FLAG_UPDATE_DIMS_WHEN_WINDOW_SHOWN,
+            Flags.FLAG_UPDATE_HOST_INPUT_TRANSFER_TOKEN,
+            Flags.FLAG_UPDATE_TASK_MIN_DIMENSIONS_WITH_ROOT_ACTIVITY,
             Flags.FLAG_USE_CACHED_INSETS_FOR_DISPLAY_SWITCH,
-            Flags.FLAG_USE_RT_FRAME_CALLBACK_FOR_SPLASH_SCREEN_TRANSFER,
             Flags.FLAG_USE_TASKS_DIM_ONLY,
-            Flags.FLAG_USE_VISIBLE_REQUESTED_FOR_PROCESS_TRACKER,
-            Flags.FLAG_USE_WINDOW_ORIGINAL_TOUCHABLE_REGION_WHEN_MAGNIFICATION_RECOMPUTE_BOUNDS,
             Flags.FLAG_VDM_FORCE_APP_UNIVERSAL_RESIZABLE_API,
             Flags.FLAG_WALLPAPER_OFFSET_ASYNC,
             Flags.FLAG_WLINFO_ONCREATE
@@ -2160,20 +2464,20 @@ public class CustomFeatureFlags implements FeatureFlags {
     private Set<String> mReadOnlyFlagsSet = new HashSet<>(
         Arrays.asList(
             Flags.FLAG_ACTION_MODE_EDGE_TO_EDGE,
-            Flags.FLAG_ACTIVITY_EMBEDDING_ANIMATION_CUSTOMIZATION_FLAG,
             Flags.FLAG_ACTIVITY_EMBEDDING_DELAY_TASK_FRAGMENT_FINISH_FOR_ACTIVITY_LAUNCH,
             Flags.FLAG_ACTIVITY_EMBEDDING_INTERACTIVE_DIVIDER_FLAG,
             Flags.FLAG_ACTIVITY_EMBEDDING_METRICS,
             Flags.FLAG_ACTIVITY_EMBEDDING_SUPPORT_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ALLOW_DISABLE_ACTIVITY_RECORD_INPUT_SINK,
-            Flags.FLAG_ALLOW_HIDE_SCM_BUTTON,
             Flags.FLAG_ALLOWS_SCREEN_SIZE_DECOUPLED_FROM_STATUS_BAR_AND_CUTOUT,
             Flags.FLAG_ALWAYS_DRAW_MAGNIFICATION_FULLSCREEN_BORDER,
+            Flags.FLAG_ALWAYS_SEQ_ID_LAYOUT,
             Flags.FLAG_ALWAYS_UPDATE_WALLPAPER_PERMISSION,
             Flags.FLAG_AOD_TRANSITION,
             Flags.FLAG_APP_COMPAT_ASYNC_RELAYOUT,
             Flags.FLAG_APP_COMPAT_PROPERTIES_API,
             Flags.FLAG_APP_COMPAT_REFACTORING,
+            Flags.FLAG_APP_COMPAT_REFACTORING_ROUNDED_CORNERS,
             Flags.FLAG_APP_COMPAT_UI_FRAMEWORK,
             Flags.FLAG_APP_HANDLE_NO_RELAYOUT_ON_EXCLUSION_CHANGE,
             Flags.FLAG_APPLY_LIFECYCLE_ON_PIP_CHANGE,
@@ -2182,44 +2486,36 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_BAL_ADDITIONAL_LOGGING,
             Flags.FLAG_BAL_ADDITIONAL_START_MODES,
             Flags.FLAG_BAL_CLEAR_ALLOWLIST_DURATION,
+            Flags.FLAG_BAL_COVER_INTENT_SENDER,
             Flags.FLAG_BAL_DONT_BRING_EXISTING_BACKGROUND_TASK_STACK_TO_FG,
-            Flags.FLAG_BAL_IMPROVE_REAL_CALLER_VISIBILITY_CHECK,
-            Flags.FLAG_BAL_IMPROVED_METRICS,
             Flags.FLAG_BAL_REDUCE_GRACE_PERIOD,
-            Flags.FLAG_BAL_REQUIRE_OPT_IN_BY_PENDING_INTENT_CREATOR,
             Flags.FLAG_BAL_RESPECT_APP_SWITCH_STATE_WHEN_CHECK_BOUND_BY_FOREGROUND_UID,
             Flags.FLAG_BAL_SEND_INTENT_WITH_OPTIONS,
             Flags.FLAG_BAL_SHOW_TOASTS_BLOCKED,
             Flags.FLAG_BAL_STRICT_MODE_GRACE_PERIOD,
             Flags.FLAG_BAL_STRICT_MODE_RO,
             Flags.FLAG_BETTER_SUPPORT_NON_MATCH_PARENT_ACTIVITY,
-            Flags.FLAG_CACHE_WINDOW_STYLE,
             Flags.FLAG_CAMERA_COMPAT_FOR_FREEFORM,
             Flags.FLAG_CAMERA_COMPAT_FULLSCREEN_PICK_SAME_TASK_ACTIVITY,
-            Flags.FLAG_CHECK_DISABLED_SNAPSHOTS_IN_TASK_PERSISTER,
-            Flags.FLAG_CLEANUP_DISPATCH_PENDING_TRANSACTIONS_REMOTE_EXCEPTION,
-            Flags.FLAG_CLEAR_SYSTEM_VIBRATOR,
             Flags.FLAG_CLOSE_TO_SQUARE_CONFIG_INCLUDES_STATUS_BAR,
-            Flags.FLAG_CONDENSE_CONFIGURATION_CHANGE_FOR_SIMPLE_MODE,
-            Flags.FLAG_CONFIGURABLE_FONT_SCALE_DEFAULT,
             Flags.FLAG_COVER_DISPLAY_OPT_IN,
-            Flags.FLAG_DELAY_NOTIFICATION_TO_MAGNIFICATION_WHEN_RECENTS_WINDOW_TO_FRONT_TRANSITION,
-            Flags.FLAG_DELEGATE_BACK_GESTURE_TO_SHELL,
+            Flags.FLAG_CURRENT_ANIMATOR_SCALE_USES_SHARED_MEMORY,
+            Flags.FLAG_DEFAULT_DESK_WITHOUT_WARMUP_MIGRATION,
             Flags.FLAG_DELEGATE_UNHANDLED_DRAGS,
-            Flags.FLAG_DELETE_CAPTURE_DISPLAY,
             Flags.FLAG_DENSITY_390_API,
             Flags.FLAG_DISABLE_DESKTOP_LAUNCH_PARAMS_OUTSIDE_DESKTOP_BUG_FIX,
             Flags.FLAG_DISABLE_NON_RESIZABLE_APP_SNAP_RESIZING,
             Flags.FLAG_DISABLE_OPT_OUT_EDGE_TO_EDGE,
-            Flags.FLAG_DO_NOT_CHECK_INTERSECTION_WHEN_NON_MAGNIFIABLE_WINDOW_TRANSITIONS,
-            Flags.FLAG_EARLY_LAUNCH_HINT,
-            Flags.FLAG_EDGE_TO_EDGE_BY_DEFAULT,
+            Flags.FLAG_DISPATCH_FIRST_KEYGUARD_LOCKED_STATE,
             Flags.FLAG_ENABLE_ACCESSIBLE_CUSTOM_HEADERS,
             Flags.FLAG_ENABLE_ACTIVITY_EMBEDDING_SUPPORT_FOR_CONNECTED_DISPLAYS,
+            Flags.FLAG_ENABLE_APP_HANDLE_POSITION_REPORTING,
             Flags.FLAG_ENABLE_APP_HEADER_WITH_TASK_DENSITY,
+            Flags.FLAG_ENABLE_BLOCK_NON_DESKTOP_DISPLAY_WINDOW_DRAG_BUGFIX,
             Flags.FLAG_ENABLE_BORDER_SETTINGS,
-            Flags.FLAG_ENABLE_BUFFER_TRANSFORM_HINT_FROM_DISPLAY,
+            Flags.FLAG_ENABLE_BOX_SHADOW_SETTINGS,
             Flags.FLAG_ENABLE_BUG_FIXES_FOR_SECONDARY_DISPLAY,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_CHECK_DEVICE_ROTATION_BUGFIX,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING_OPT_OUT,
             Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING_OPT_OUT_API,
@@ -2228,27 +2524,36 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION,
             Flags.FLAG_ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION_ALWAYS,
             Flags.FLAG_ENABLE_CASCADING_WINDOWS,
+            Flags.FLAG_ENABLE_CLOSE_LID_INTERACTION,
             Flags.FLAG_ENABLE_COMPAT_UI_VISIBILITY_STATUS,
             Flags.FLAG_ENABLE_COMPATUI_SYSUI_LAUNCHER,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_DND,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_PIP,
             Flags.FLAG_ENABLE_CONNECTED_DISPLAYS_WINDOW_DRAG,
             Flags.FLAG_ENABLE_DESKTOP_APP_HANDLE_ANIMATION,
+            Flags.FLAG_ENABLE_DESKTOP_APP_HEADER_STATE_CHANGE_ANNOUNCEMENTS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_ALTTAB_TRANSITIONS_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS,
             Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_CLOSE_SHORTCUT_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_CLOSE_TASK_ANIMATION_IN_DTC_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_BASED_DRAG_TO_MAXIMIZE,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_FULLSCREEN_REFOCUS_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_FIRST_LISTENER,
             Flags.FLAG_ENABLE_DESKTOP_IME_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_IMMERSIVE_DRAG_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_INDICATOR_IN_SEPARATE_THREAD_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_MODE_THROUGH_DEV_OPTION,
             Flags.FLAG_ENABLE_DESKTOP_OPENING_DEEPLINK_MINIMIZE_ANIMATION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_RECENTS_TRANSITIONS_CORNERS_BUGFIX,
-            Flags.FLAG_ENABLE_DESKTOP_SWIPE_BACK_MINIMIZE_ANIMATION_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_SPLITSCREEN_TRANSITION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_SYSTEM_DIALOGS_TRANSITIONS,
+            Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_LAUNCH_ANIMATION,
             Flags.FLAG_ENABLE_DESKTOP_TAB_TEARING_MINIMIZE_ANIMATION_BUGFIX,
+            Flags.FLAG_ENABLE_DESKTOP_TASK_LIMIT_SEPARATE_TRANSITION,
             Flags.FLAG_ENABLE_DESKTOP_TASKBAR_ON_FREEFORM_DISPLAYS,
             Flags.FLAG_ENABLE_DESKTOP_TRAMPOLINE_CLOSE_ANIMATION_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_WALLPAPER_ACTIVITY_FOR_SYSTEM_USER,
@@ -2269,6 +2574,7 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MULTI_INSTANCE_FEATURES,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PIP,
+            Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PIP_IN_OVERVIEW_BUGFIX,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_QUICK_SWITCH,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_SCVH_CACHE_BUG_FIX,
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_SIZE_CONSTRAINTS,
@@ -2278,6 +2584,7 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY,
             Flags.FLAG_ENABLE_DEVICE_STATE_AUTO_ROTATE_SETTING_LOGGING,
             Flags.FLAG_ENABLE_DEVICE_STATE_AUTO_ROTATE_SETTING_REFACTOR,
+            Flags.FLAG_ENABLE_DISPLAY_COMPAT_MODE,
             Flags.FLAG_ENABLE_DISPLAY_DISCONNECT_INTERACTION,
             Flags.FLAG_ENABLE_DISPLAY_FOCUS_IN_SHELL_TRANSITIONS,
             Flags.FLAG_ENABLE_DISPLAY_RECONNECT_INTERACTION,
@@ -2285,82 +2592,112 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_DRAG_RESIZE_SET_UP_IN_BG_THREAD,
             Flags.FLAG_ENABLE_DRAG_TO_DESKTOP_INCOMING_TRANSITIONS_BUGFIX,
             Flags.FLAG_ENABLE_DRAG_TO_MAXIMIZE,
+            Flags.FLAG_ENABLE_DRAGGING_PIP_ACROSS_DISPLAYS,
             Flags.FLAG_ENABLE_DYNAMIC_RADIUS_COMPUTATION_BUGFIX,
+            Flags.FLAG_ENABLE_EMPTY_DESK_ON_MINIMIZE,
+            Flags.FLAG_ENABLE_EXPERIMENTAL_BUBBLES_CONTROLLER,
+            Flags.FLAG_ENABLE_FREEFORM_BOX_SHADOWS,
+            Flags.FLAG_ENABLE_FREEFORM_DISPLAY_LAUNCH_PARAMS,
             Flags.FLAG_ENABLE_FULL_SCREEN_WINDOW_ON_REMOVING_SPLIT_SCREEN_STAGE_BUGFIX,
+            Flags.FLAG_ENABLE_FULLSCREEN_WINDOW_CONTROLS,
             Flags.FLAG_ENABLE_FULLY_IMMERSIVE_IN_DESKTOP,
             Flags.FLAG_ENABLE_HANDLE_INPUT_FIX,
+            Flags.FLAG_ENABLE_HANDLERS_DEBUGGING_MODE,
             Flags.FLAG_ENABLE_HOLD_TO_DRAG_APP_HANDLE,
+            Flags.FLAG_ENABLE_INDEPENDENT_BACK_IN_PROJECTED,
+            Flags.FLAG_ENABLE_INORDER_TRANSITION_CALLBACKS_FOR_DESKTOP,
             Flags.FLAG_ENABLE_INPUT_LAYER_TRANSITION_FIX,
+            Flags.FLAG_ENABLE_KEY_GESTURE_HANDLER_FOR_SYSUI,
             Flags.FLAG_ENABLE_MINIMIZE_BUTTON,
             Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION,
+            Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE,
             Flags.FLAG_ENABLE_MOVE_TO_NEXT_DISPLAY_SHORTCUT,
             Flags.FLAG_ENABLE_MULTI_DISPLAY_SPLIT,
             Flags.FLAG_ENABLE_MULTIDISPLAY_TRACKPAD_BACK_GESTURE,
             Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND,
+            Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_DEFAULT_ACTIVATION_IN_DESKTOP_FIRST_DISPLAYS,
             Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND,
+            Flags.FLAG_ENABLE_NO_WINDOW_DECORATION_FOR_DESKS,
             Flags.FLAG_ENABLE_NON_DEFAULT_DISPLAY_SPLIT,
+            Flags.FLAG_ENABLE_OMIT_ACCELEROMETER_ROTATION_RESTORE,
             Flags.FLAG_ENABLE_OPAQUE_BACKGROUND_FOR_TRANSPARENT_WINDOWS,
+            Flags.FLAG_ENABLE_OVERFLOW_BUTTON_FOR_TASKBAR_PINNED_ITEMS,
             Flags.FLAG_ENABLE_PER_DISPLAY_DESKTOP_WALLPAPER_ACTIVITY,
             Flags.FLAG_ENABLE_PER_DISPLAY_PACKAGE_CONTEXT_CACHE_IN_STATUSBAR_NOTIF,
             Flags.FLAG_ENABLE_PERSISTING_DISPLAY_SIZE_FOR_CONNECTED_DISPLAYS,
+            Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
             Flags.FLAG_ENABLE_PRESENTATION_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE,
             Flags.FLAG_ENABLE_QUICKSWITCH_DESKTOP_SPLIT_BUGFIX,
+            Flags.FLAG_ENABLE_REJECT_HOME_TRANSITION,
             Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_BUGFIX,
+            Flags.FLAG_ENABLE_REQUEST_FULLSCREEN_REFACTOR,
             Flags.FLAG_ENABLE_RESIZING_METRICS,
             Flags.FLAG_ENABLE_RESTART_MENU_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_RESTORE_TO_PREVIOUS_SIZE_FROM_DESKTOP_IMMERSIVE,
+            Flags.FLAG_ENABLE_SEE_THROUGH_TASK_FRAGMENTS,
             Flags.FLAG_ENABLE_SHELL_INITIAL_BOUNDS_REGRESSION_BUG_FIX,
             Flags.FLAG_ENABLE_SIZE_COMPAT_MODE_IMPROVEMENTS_FOR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_START_LAUNCH_TRANSITION_FROM_TASKBAR_BUGFIX,
+            Flags.FLAG_ENABLE_SYS_DECORS_CALLBACKS_VIA_WM,
+            Flags.FLAG_ENABLE_TALL_APP_HEADERS,
             Flags.FLAG_ENABLE_TASK_RESIZING_KEYBOARD_SHORTCUTS,
             Flags.FLAG_ENABLE_TASK_STACK_OBSERVER_IN_SHELL,
             Flags.FLAG_ENABLE_TASKBAR_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_TASKBAR_OVERFLOW,
+            Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX,
             Flags.FLAG_ENABLE_TASKBAR_RECENTS_LAYOUT_TRANSITION,
             Flags.FLAG_ENABLE_THEMED_APP_HEADERS,
             Flags.FLAG_ENABLE_TILE_RESIZING,
             Flags.FLAG_ENABLE_TOP_VISIBLE_ROOT_TASK_PER_USER_TRACKING,
+            Flags.FLAG_ENABLE_TRANSITION_ON_ACTIVITY_SET_REQUESTED_ORIENTATION,
             Flags.FLAG_ENABLE_VISUAL_INDICATOR_IN_TRANSITION_BUGFIX,
+            Flags.FLAG_ENABLE_WINDOW_CONTEXT_OVERRIDE_TYPE,
             Flags.FLAG_ENABLE_WINDOW_CONTEXT_RESOURCES_UPDATE_ON_CONFIG_CHANGE,
+            Flags.FLAG_ENABLE_WINDOW_DECORATION_REFACTOR,
+            Flags.FLAG_ENABLE_WINDOW_REPOSITIONING_API,
             Flags.FLAG_ENABLE_WINDOWING_DYNAMIC_INITIAL_BOUNDS,
             Flags.FLAG_ENABLE_WINDOWING_EDGE_DRAG_RESIZE,
             Flags.FLAG_ENABLE_WINDOWING_SCALED_RESIZING,
+            Flags.FLAG_ENABLE_WINDOWING_TASK_STACK_ORDER_BUGFIX,
             Flags.FLAG_ENABLE_WINDOWING_TRANSITION_HANDLERS_OBSERVERS,
             Flags.FLAG_ENFORCE_EDGE_TO_EDGE,
             Flags.FLAG_ENSURE_KEYGUARD_DOES_TRANSITION_STARTING,
-            Flags.FLAG_ENSURE_WALLPAPER_IN_TRANSITIONS,
-            Flags.FLAG_ENSURE_WALLPAPER_IN_WEAR_TRANSITIONS,
             Flags.FLAG_ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS,
             Flags.FLAG_EXCLUDE_CAPTION_FROM_APP_BOUNDS,
-            Flags.FLAG_EXCLUDE_DRAWING_APP_THEME_SNAPSHOT_FROM_LOCK,
+            Flags.FLAG_EXCLUDE_DESK_ROOTS_FROM_DESKTOP_TASKS,
+            Flags.FLAG_EXCLUDE_NON_MAIN_WINDOW_FROM_SNAPSHOT,
             Flags.FLAG_EXCLUDE_TASK_FROM_RECENTS,
+            Flags.FLAG_EXTENDING_PERSISTENCE_SNAPSHOT_QUEUE_DEPTH,
+            Flags.FLAG_FALLBACK_TO_FOCUSED_DISPLAY,
             Flags.FLAG_FIFO_PRIORITY_FOR_MAJOR_UI_PROCESSES,
+            Flags.FLAG_FIX_FULLSCREEN_IN_MULTI_WINDOW,
             Flags.FLAG_FIX_HIDE_OVERLAY_API,
-            Flags.FLAG_FIX_LAYOUT_EXISTING_TASK,
-            Flags.FLAG_FIX_VIEW_ROOT_CALL_TRACE,
+            Flags.FLAG_FIX_LAYOUT_RESTORED_TASK,
+            Flags.FLAG_FIX_MOVING_UNFOCUSED_TASK,
+            Flags.FLAG_FIX_SET_ADJACENT_TASK_FRAGMENTS_WITH_PARAMS,
+            Flags.FLAG_FIX_SHOW_WHEN_LOCKED_SYNC_TIMEOUT,
             Flags.FLAG_FORCE_CLOSE_TOP_TRANSPARENT_FULLSCREEN_TASK,
+            Flags.FLAG_FORCE_SHOW_SYSTEM_BAR_FOR_BUBBLE,
             Flags.FLAG_FORM_FACTOR_BASED_DESKTOP_FIRST_SWITCH,
             Flags.FLAG_GET_DIMMER_ON_CLOSING,
+            Flags.FLAG_GRANT_MANAGE_KEY_GESTURES_TO_RECENTS,
             Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
             Flags.FLAG_IGNORE_CORNER_RADIUS_AND_SHADOWS,
             Flags.FLAG_INCLUDE_TOP_TRANSPARENT_FULLSCREEN_TASK_IN_DESKTOP_HEURISTIC,
             Flags.FLAG_INHERIT_TASK_BOUNDS_FOR_TRAMPOLINE_TASK_LAUNCHES,
             Flags.FLAG_INSETS_DECOUPLED_CONFIGURATION,
+            Flags.FLAG_INTERCEPT_MOTION_FROM_MOVE_TO_CANCEL,
             Flags.FLAG_JANK_API,
-            Flags.FLAG_KEEP_APP_WINDOW_HIDE_WHILE_LOCKED,
             Flags.FLAG_KEYBOARD_SHORTCUTS_TO_SWITCH_DESKS,
-            Flags.FLAG_KEYGUARD_GOING_AWAY_TIMEOUT,
             Flags.FLAG_LETTERBOX_BACKGROUND_WALLPAPER,
             Flags.FLAG_MOVABLE_CUTOUT_CONFIGURATION,
             Flags.FLAG_MOVE_TO_EXTERNAL_DISPLAY_SHORTCUT,
             Flags.FLAG_MULTI_CROP,
             Flags.FLAG_NAV_BAR_TRANSPARENT_BY_DEFAULT,
-            Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS,
-            Flags.FLAG_NO_CONSECUTIVE_VISIBILITY_EVENTS,
-            Flags.FLAG_NO_DUPLICATE_SURFACE_DESTROYED_EVENTS,
-            Flags.FLAG_NO_VISIBILITY_EVENT_ON_DISPLAY_STATE_CHANGE,
+            Flags.FLAG_NESTED_TASKS_WITH_INDEPENDENT_BOUNDS_BUGFIX,
             Flags.FLAG_OFFLOAD_COLOR_EXTRACTION,
+            Flags.FLAG_PARALLEL_CD_TRANSITIONS_DURING_RECENTS,
             Flags.FLAG_PORT_WINDOW_SIZE_ANIMATION,
             Flags.FLAG_PREDICTIVE_BACK_DEFAULT_ENABLE_SDK_36,
             Flags.FLAG_PREDICTIVE_BACK_PRIORITY_SYSTEM_NAVIGATION_OBSERVER,
@@ -2368,28 +2705,33 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_PREDICTIVE_BACK_SYSTEM_OVERRIDE_CALLBACK,
             Flags.FLAG_PREDICTIVE_BACK_THREE_BUTTON_NAV,
             Flags.FLAG_PREDICTIVE_BACK_TIMESTAMP_API,
-            Flags.FLAG_PROCESS_PRIORITY_POLICY_FOR_MULTI_WINDOW_MODE,
+            Flags.FLAG_PRESERVE_RECENTS_TASK_CONFIGURATION_ON_RELAUNCH,
             Flags.FLAG_REAR_DISPLAY_DISABLE_FORCE_DESKTOP_SYSTEM_DECORATIONS,
-            Flags.FLAG_RECORD_TASK_SNAPSHOTS_BEFORE_SHUTDOWN,
             Flags.FLAG_REDUCE_CHANGED_EXCLUSION_RECTS_MSGS,
-            Flags.FLAG_REDUCE_KEYGUARD_TRANSITIONS,
             Flags.FLAG_REDUCE_TASK_SNAPSHOT_MEMORY_USAGE,
-            Flags.FLAG_REDUCE_UNNECESSARY_MEASURE,
             Flags.FLAG_RELATIVE_INSETS,
             Flags.FLAG_RELEASE_SNAPSHOT_AGGRESSIVELY,
-            Flags.FLAG_RELEASE_USER_ASPECT_RATIO_WM,
+            Flags.FLAG_RELEASE_SURFACE_ON_TRANSITION_FINISH,
             Flags.FLAG_REMOVE_ACTIVITY_STARTER_DREAM_CALLBACK,
-            Flags.FLAG_REMOVE_DEFER_HIDING_CLIENT,
             Flags.FLAG_REMOVE_DEPART_TARGET_FROM_MOTION,
+            Flags.FLAG_REMOVE_STARTING_IN_TRANSITION,
+            Flags.FLAG_REPARENT_TO_DEFAULT_WITH_DISPLAY_REMOVAL,
             Flags.FLAG_REPARENT_WINDOW_TOKEN_API,
-            Flags.FLAG_RESPECT_NON_TOP_VISIBLE_FIXED_ORIENTATION,
+            Flags.FLAG_RESPECT_FULLSCREEN_ACTIVITY_OPTION_IN_DESKTOP_LAUNCH_PARAMS,
+            Flags.FLAG_RESPECT_HIERARCHY_SURFACE_VISIBILITY,
+            Flags.FLAG_RESPECT_LEAF_TASK_BOUNDS,
             Flags.FLAG_RESPECT_ORIENTATION_CHANGE_FOR_UNRESIZEABLE,
+            Flags.FLAG_RESTORE_USER_ASPECT_RATIO_SETTINGS_USING_SERVICE,
+            Flags.FLAG_RESTRICT_FREEFORM_HIDDEN_SYSTEM_BARS_TO_FILLING_TASKS,
+            Flags.FLAG_ROOT_TASK_FOR_BUBBLE,
             Flags.FLAG_SAFE_REGION_LETTERBOXING,
             Flags.FLAG_SAFE_RELEASE_SNAPSHOT_AGGRESSIVELY,
             Flags.FLAG_SCHEDULING_FOR_NOTIFICATION_SHADE,
             Flags.FLAG_SCRAMBLE_SNAPSHOT_FILE_NAME,
+            Flags.FLAG_SCREEN_BRIGHTNESS_DIM_ON_EMULATOR,
             Flags.FLAG_SCREEN_RECORDING_CALLBACKS,
             Flags.FLAG_SCROLLING_FROM_LETTERBOX,
+            Flags.FLAG_SCVH_SURFACE_CONTROL_LIFETIME_FIX,
             Flags.FLAG_SDK_DESIRED_PRESENT_TIME,
             Flags.FLAG_SET_SC_PROPERTIES_IN_CLIENT,
             Flags.FLAG_SHOW_APP_HANDLE_LARGE_SCREENS,
@@ -2397,30 +2739,30 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_SHOW_DESKTOP_WINDOWING_DEV_OPTION,
             Flags.FLAG_SHOW_HOME_BEHIND_DESKTOP,
             Flags.FLAG_SKIP_COMPAT_UI_EDUCATION_IN_DESKTOP_MODE,
+            Flags.FLAG_SKIP_DEACTIVATION_OF_DESK_WITH_NOTHING_IN_FRONT,
             Flags.FLAG_SKIP_DECOR_VIEW_RELAYOUT_WHEN_CLOSING_BUGFIX,
-            Flags.FLAG_SUPPORT_WIDGET_INTENTS_ON_CONNECTED_DISPLAY,
+            Flags.FLAG_SPLASH_SCREEN_VIEW_SYNC_TRANSACTION,
             Flags.FLAG_SUPPORTS_DRAG_ASSISTANT_TO_MULTIWINDOW,
             Flags.FLAG_SUPPORTS_MULTI_INSTANCE_SYSTEM_UI,
             Flags.FLAG_SURFACE_CONTROL_INPUT_RECEIVER,
             Flags.FLAG_SURFACE_TRUSTED_OVERLAY,
             Flags.FLAG_SYNC_SCREEN_CAPTURE,
             Flags.FLAG_SYSTEM_UI_POST_ANIMATION_END,
-            Flags.FLAG_TASK_FRAGMENT_SYSTEM_ORGANIZER_FLAG,
             Flags.FLAG_TOUCH_PASS_THROUGH_OPT_IN,
-            Flags.FLAG_TRACK_SYSTEM_UI_CONTEXT_BEFORE_WMS,
             Flags.FLAG_TRANSIT_READY_TRACKING,
             Flags.FLAG_TRANSIT_TRACKER_PLUMBING,
+            Flags.FLAG_TRANSITION_HANDLER_CUJ_TAGS,
             Flags.FLAG_TRUSTED_PRESENTATION_LISTENER_FOR_WINDOW,
             Flags.FLAG_UNIFY_BACK_NAVIGATION_TRANSITION,
+            Flags.FLAG_UNIFY_SHELL_BINDERS,
             Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT,
             Flags.FLAG_UNTRUSTED_EMBEDDING_ANY_APP_PERMISSION,
             Flags.FLAG_UNTRUSTED_EMBEDDING_STATE_SHARING,
             Flags.FLAG_UPDATE_DIMS_WHEN_WINDOW_SHOWN,
+            Flags.FLAG_UPDATE_HOST_INPUT_TRANSFER_TOKEN,
+            Flags.FLAG_UPDATE_TASK_MIN_DIMENSIONS_WITH_ROOT_ACTIVITY,
             Flags.FLAG_USE_CACHED_INSETS_FOR_DISPLAY_SWITCH,
-            Flags.FLAG_USE_RT_FRAME_CALLBACK_FOR_SPLASH_SCREEN_TRANSFER,
             Flags.FLAG_USE_TASKS_DIM_ONLY,
-            Flags.FLAG_USE_VISIBLE_REQUESTED_FOR_PROCESS_TRACKER,
-            Flags.FLAG_USE_WINDOW_ORIGINAL_TOUCHABLE_REGION_WHEN_MAGNIFICATION_RECOMPUTE_BOUNDS,
             Flags.FLAG_VDM_FORCE_APP_UNIVERSAL_RESIZABLE_API,
             Flags.FLAG_WALLPAPER_OFFSET_ASYNC,
             Flags.FLAG_WLINFO_ONCREATE,

@@ -1,6 +1,6 @@
 package com.android.launcher3;
 
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -38,30 +38,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean coordinateWorkspaceScale() {
-        return getValue(Flags.FLAG_COORDINATE_WORKSPACE_SCALE,
-            FeatureFlags::coordinateWorkspaceScale);
-    }
-
-    @Override
-
-    public boolean enableActiveGestureProtoLog() {
-        return getValue(Flags.FLAG_ENABLE_ACTIVE_GESTURE_PROTO_LOG,
-            FeatureFlags::enableActiveGestureProtoLog);
-    }
-
-    @Override
-
     public boolean enableAddAppWidgetViaConfigActivityV2() {
         return getValue(Flags.FLAG_ENABLE_ADD_APP_WIDGET_VIA_CONFIG_ACTIVITY_V2,
             FeatureFlags::enableAddAppWidgetViaConfigActivityV2);
-    }
-
-    @Override
-
-    public boolean enableAdditionalHomeAnimations() {
-        return getValue(Flags.FLAG_ENABLE_ADDITIONAL_HOME_ANIMATIONS,
-            FeatureFlags::enableAdditionalHomeAnimations);
     }
 
     @Override
@@ -108,6 +87,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableCoroutineThreadingImprovements() {
+        return getValue(Flags.FLAG_ENABLE_COROUTINE_THREADING_IMPROVEMENTS,
+            FeatureFlags::enableCoroutineThreadingImprovements);
+    }
+
+    @Override
+
     public boolean enableCursorHoverStates() {
         return getValue(Flags.FLAG_ENABLE_CURSOR_HOVER_STATES,
             FeatureFlags::enableCursorHoverStates);
@@ -122,16 +108,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableDesktopTaskAlphaAnimation() {
-        return getValue(Flags.FLAG_ENABLE_DESKTOP_TASK_ALPHA_ANIMATION,
-            FeatureFlags::enableDesktopTaskAlphaAnimation);
-    }
-
-    @Override
-
-    public boolean enableDesktopWindowingCarouselDetach() {
-        return getValue(Flags.FLAG_ENABLE_DESKTOP_WINDOWING_CAROUSEL_DETACH,
-            FeatureFlags::enableDesktopWindowingCarouselDetach);
+    public boolean enableDesktopMenuOnSecondaryDisplayBugfix() {
+        return getValue(Flags.FLAG_ENABLE_DESKTOP_MENU_ON_SECONDARY_DISPLAY_BUGFIX,
+            FeatureFlags::enableDesktopMenuOnSecondaryDisplayBugfix);
     }
 
     @Override
@@ -153,6 +132,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableExpressiveDismissTaskMotion() {
         return getValue(Flags.FLAG_ENABLE_EXPRESSIVE_DISMISS_TASK_MOTION,
             FeatureFlags::enableExpressiveDismissTaskMotion);
+    }
+
+    @Override
+
+    public boolean enableExpressiveFolderExpansion() {
+        return getValue(Flags.FLAG_ENABLE_EXPRESSIVE_FOLDER_EXPANSION,
+            FeatureFlags::enableExpressiveFolderExpansion);
     }
 
     @Override
@@ -199,13 +185,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableGridMigrationFix() {
-        return getValue(Flags.FLAG_ENABLE_GRID_MIGRATION_FIX,
-            FeatureFlags::enableGridMigrationFix);
-    }
-
-    @Override
-
     public boolean enableGridOnlyOverview() {
         return getValue(Flags.FLAG_ENABLE_GRID_ONLY_OVERVIEW,
             FeatureFlags::enableGridOnlyOverview);
@@ -220,23 +199,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableHandleDelayedGestureCallbacks() {
-        return getValue(Flags.FLAG_ENABLE_HANDLE_DELAYED_GESTURE_CALLBACKS,
-            FeatureFlags::enableHandleDelayedGestureCallbacks);
-    }
-
-    @Override
-
     public boolean enableHomeTransitionListener() {
         return getValue(Flags.FLAG_ENABLE_HOME_TRANSITION_LISTENER,
             FeatureFlags::enableHomeTransitionListener);
-    }
-
-    @Override
-
-    public boolean enableHoverOfChildElementsInTaskview() {
-        return getValue(Flags.FLAG_ENABLE_HOVER_OF_CHILD_ELEMENTS_IN_TASKVIEW,
-            FeatureFlags::enableHoverOfChildElementsInTaskview);
     }
 
     @Override
@@ -276,6 +241,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableLongPressRemoveShortcut() {
+        return getValue(Flags.FLAG_ENABLE_LONG_PRESS_REMOVE_SHORTCUT,
+            FeatureFlags::enableLongPressRemoveShortcut);
+    }
+
+    @Override
+
     public boolean enableMouseInteractionChanges() {
         return getValue(Flags.FLAG_ENABLE_MOUSE_INTERACTION_CHANGES,
             FeatureFlags::enableMouseInteractionChanges);
@@ -304,13 +276,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableOverviewCommandHelperTimeout() {
-        return getValue(Flags.FLAG_ENABLE_OVERVIEW_COMMAND_HELPER_TIMEOUT,
-            FeatureFlags::enableOverviewCommandHelperTimeout);
-    }
-
-    @Override
-
     public boolean enableOverviewDesktopTileWallpaperBackground() {
         return getValue(Flags.FLAG_ENABLE_OVERVIEW_DESKTOP_TILE_WALLPAPER_BACKGROUND,
             FeatureFlags::enableOverviewDesktopTileWallpaperBackground);
@@ -328,13 +293,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableOverviewOnConnectedDisplays() {
         return getValue(Flags.FLAG_ENABLE_OVERVIEW_ON_CONNECTED_DISPLAYS,
             FeatureFlags::enableOverviewOnConnectedDisplays);
-    }
-
-    @Override
-
-    public boolean enablePinningAppWithContextMenu() {
-        return getValue(Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
-            FeatureFlags::enablePinningAppWithContextMenu);
     }
 
     @Override
@@ -360,6 +318,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableQsbOnHotseat() {
+        return getValue(Flags.FLAG_ENABLE_QSB_ON_HOTSEAT,
+            FeatureFlags::enableQsbOnHotseat);
+    }
+
+    @Override
+
     public boolean enableRebootUnlockAnimation() {
         return getValue(Flags.FLAG_ENABLE_REBOOT_UNLOCK_ANIMATION,
             FeatureFlags::enableRebootUnlockAnimation);
@@ -381,6 +346,20 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableRefactorDigitalWellbeingToast() {
+        return getValue(Flags.FLAG_ENABLE_REFACTOR_DIGITAL_WELLBEING_TOAST,
+            FeatureFlags::enableRefactorDigitalWellbeingToast);
+    }
+
+    @Override
+
+    public boolean enableRefactorTaskContentView() {
+        return getValue(Flags.FLAG_ENABLE_REFACTOR_TASK_CONTENT_VIEW,
+            FeatureFlags::enableRefactorTaskContentView);
+    }
+
+    @Override
+
     public boolean enableRefactorTaskThumbnail() {
         return getValue(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL,
             FeatureFlags::enableRefactorTaskThumbnail);
@@ -391,6 +370,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean enableResponsiveWorkspace() {
         return getValue(Flags.FLAG_ENABLE_RESPONSIVE_WORKSPACE,
             FeatureFlags::enableResponsiveWorkspace);
+    }
+
+    @Override
+
+    public boolean enableReversibleHomeActionCorner() {
+        return getValue(Flags.FLAG_ENABLE_REVERSIBLE_HOME_ACTION_CORNER,
+            FeatureFlags::enableReversibleHomeActionCorner);
     }
 
     @Override
@@ -409,37 +395,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableSeparateExternalDisplayTasks() {
-        return getValue(Flags.FLAG_ENABLE_SEPARATE_EXTERNAL_DISPLAY_TASKS,
-            FeatureFlags::enableSeparateExternalDisplayTasks);
-    }
-
-    @Override
-
-    public boolean enableShortcutDontSuggestApp() {
-        return getValue(Flags.FLAG_ENABLE_SHORTCUT_DONT_SUGGEST_APP,
-            FeatureFlags::enableShortcutDontSuggestApp);
-    }
-
-    @Override
-
-    public boolean enableShowEnabledShortcutsInAccessibilityMenu() {
-        return getValue(Flags.FLAG_ENABLE_SHOW_ENABLED_SHORTCUTS_IN_ACCESSIBILITY_MENU,
-            FeatureFlags::enableShowEnabledShortcutsInAccessibilityMenu);
-    }
-
-    @Override
-
-    public boolean enableSmartspaceAsAWidget() {
-        return getValue(Flags.FLAG_ENABLE_SMARTSPACE_AS_A_WIDGET,
-            FeatureFlags::enableSmartspaceAsAWidget);
-    }
-
-    @Override
-
-    public boolean enableSmartspaceRemovalToggle() {
-        return getValue(Flags.FLAG_ENABLE_SMARTSPACE_REMOVAL_TOGGLE,
-            FeatureFlags::enableSmartspaceRemovalToggle);
+    public boolean enableSimultaneousOverviewTriggerOnExtendedDesktop() {
+        return getValue(Flags.FLAG_ENABLE_SIMULTANEOUS_OVERVIEW_TRIGGER_ON_EXTENDED_DESKTOP,
+            FeatureFlags::enableSimultaneousOverviewTriggerOnExtendedDesktop);
     }
 
     @Override
@@ -507,6 +465,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean enableTaskbarUiThread() {
+        return getValue(Flags.FLAG_ENABLE_TASKBAR_UI_THREAD,
+            FeatureFlags::enableTaskbarUiThread);
+    }
+
+    @Override
+
     public boolean enableTieredWidgetsByDefaultInPicker() {
         return getValue(Flags.FLAG_ENABLE_TIERED_WIDGETS_BY_DEFAULT_IN_PICKER,
             FeatureFlags::enableTieredWidgetsByDefaultInPicker);
@@ -542,16 +507,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableUnfoldedTwoPanePicker() {
-        return getValue(Flags.FLAG_ENABLE_UNFOLDED_TWO_PANE_PICKER,
-            FeatureFlags::enableUnfoldedTwoPanePicker);
-    }
-
-    @Override
-
-    public boolean enableUseTopVisibleActivityForExcludeFromRecentTask() {
-        return getValue(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK,
-            FeatureFlags::enableUseTopVisibleActivityForExcludeFromRecentTask);
+    public boolean enableWidgetPickerRefactor() {
+        return getValue(Flags.FLAG_ENABLE_WIDGET_PICKER_REFACTOR,
+            FeatureFlags::enableWidgetPickerRefactor);
     }
 
     @Override
@@ -584,9 +542,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean extendibleThemeManager() {
-        return getValue(Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
-            FeatureFlags::extendibleThemeManager);
+    public boolean externalDataAccess() {
+        return getValue(Flags.FLAG_EXTERNAL_DATA_ACCESS,
+            FeatureFlags::externalDataAccess);
     }
 
     @Override
@@ -619,6 +577,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean homeScreenEditImprovements() {
+        return getValue(Flags.FLAG_HOME_SCREEN_EDIT_IMPROVEMENTS,
+            FeatureFlags::homeScreenEditImprovements);
+    }
+
+    @Override
+
     public boolean ignoreThreeFingerTrackpadForNavHandleLongPress() {
         return getValue(Flags.FLAG_IGNORE_THREE_FINGER_TRACKPAD_FOR_NAV_HANDLE_LONG_PRESS,
             FeatureFlags::ignoreThreeFingerTrackpadForNavHandleLongPress);
@@ -633,6 +598,13 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
+    public boolean modelRepository() {
+        return getValue(Flags.FLAG_MODEL_REPOSITORY,
+            FeatureFlags::modelRepository);
+    }
+
+    @Override
+
     public boolean msdlFeedback() {
         return getValue(Flags.FLAG_MSDL_FEEDBACK,
             FeatureFlags::msdlFeedback);
@@ -640,16 +612,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean multilineSearchBar() {
-        return getValue(Flags.FLAG_MULTILINE_SEARCH_BAR,
-            FeatureFlags::multilineSearchBar);
-    }
-
-    @Override
-
-    public boolean navigateToChildPreference() {
-        return getValue(Flags.FLAG_NAVIGATE_TO_CHILD_PREFERENCE,
-            FeatureFlags::navigateToChildPreference);
+    public boolean nudgePill() {
+        return getValue(Flags.FLAG_NUDGE_PILL,
+            FeatureFlags::nudgePill);
     }
 
     @Override
@@ -703,13 +668,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean privateSpaceAppInstallerButton() {
-        return getValue(Flags.FLAG_PRIVATE_SPACE_APP_INSTALLER_BUTTON,
-            FeatureFlags::privateSpaceAppInstallerButton);
-    }
-
-    @Override
-
     public boolean privateSpaceRestrictAccessibilityDrag() {
         return getValue(Flags.FLAG_PRIVATE_SPACE_RESTRICT_ACCESSIBILITY_DRAG,
             FeatureFlags::privateSpaceRestrictAccessibilityDrag);
@@ -734,13 +692,6 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean removeAppsRefreshOnRightClick() {
         return getValue(Flags.FLAG_REMOVE_APPS_REFRESH_ON_RIGHT_CLICK,
             FeatureFlags::removeAppsRefreshOnRightClick);
-    }
-
-    @Override
-
-    public boolean removeExcludeFromScreenMagnificationFlagUsage() {
-        return getValue(Flags.FLAG_REMOVE_EXCLUDE_FROM_SCREEN_MAGNIFICATION_FLAG_USAGE,
-            FeatureFlags::removeExcludeFromScreenMagnificationFlagUsage);
     }
 
     @Override
@@ -773,23 +724,9 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean taskbarOverflow() {
-        return getValue(Flags.FLAG_TASKBAR_OVERFLOW,
-            FeatureFlags::taskbarOverflow);
-    }
-
-    @Override
-
     public boolean taskbarQuietModeChangeSupport() {
         return getValue(Flags.FLAG_TASKBAR_QUIET_MODE_CHANGE_SUPPORT,
             FeatureFlags::taskbarQuietModeChangeSupport);
-    }
-
-    @Override
-
-    public boolean useActivityOverlay() {
-        return getValue(Flags.FLAG_USE_ACTIVITY_OVERLAY,
-            FeatureFlags::useActivityOverlay);
     }
 
     @Override
@@ -821,6 +758,7 @@ public class CustomFeatureFlags implements FeatureFlags {
         return false;
     }
 
+
     private boolean isOptimizationEnabled() {
         return false;
     }
@@ -834,64 +772,58 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ACCESSIBILITY_SCROLL_ON_ALLAPPS,
             Flags.FLAG_ALL_APPS_BLUR,
             Flags.FLAG_ALL_APPS_SHEET_FOR_HANDHELD,
-            Flags.FLAG_COORDINATE_WORKSPACE_SCALE,
-            Flags.FLAG_ENABLE_ACTIVE_GESTURE_PROTO_LOG,
             Flags.FLAG_ENABLE_ADD_APP_WIDGET_VIA_CONFIG_ACTIVITY_V2,
-            Flags.FLAG_ENABLE_ADDITIONAL_HOME_ANIMATIONS,
             Flags.FLAG_ENABLE_ALL_APPS_BUTTON_IN_HOTSEAT,
             Flags.FLAG_ENABLE_ALT_TAB_KQS_FLATENNING,
             Flags.FLAG_ENABLE_ALT_TAB_KQS_ON_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_CATEGORIZED_WIDGET_SUGGESTIONS,
             Flags.FLAG_ENABLE_CONTAINER_RETURN_ANIMATIONS,
             Flags.FLAG_ENABLE_CONTRAST_TILES,
+            Flags.FLAG_ENABLE_COROUTINE_THREADING_IMPROVEMENTS,
             Flags.FLAG_ENABLE_CURSOR_HOVER_STATES,
             Flags.FLAG_ENABLE_DESKTOP_EXPLODED_VIEW,
-            Flags.FLAG_ENABLE_DESKTOP_TASK_ALPHA_ANIMATION,
-            Flags.FLAG_ENABLE_DESKTOP_WINDOWING_CAROUSEL_DETACH,
+            Flags.FLAG_ENABLE_DESKTOP_MENU_ON_SECONDARY_DISPLAY_BUGFIX,
             Flags.FLAG_ENABLE_DISMISS_PREDICTION_UNDO,
             Flags.FLAG_ENABLE_EXPANDING_PAUSE_WORK_BUTTON,
             Flags.FLAG_ENABLE_EXPRESSIVE_DISMISS_TASK_MOTION,
+            Flags.FLAG_ENABLE_EXPRESSIVE_FOLDER_EXPANSION,
             Flags.FLAG_ENABLE_FALLBACK_OVERVIEW_IN_WINDOW,
             Flags.FLAG_ENABLE_FIRST_SCREEN_BROADCAST_ARCHIVING_EXTRAS,
             Flags.FLAG_ENABLE_FOCUS_OUTLINE,
             Flags.FLAG_ENABLE_GENERATED_PREVIEWS,
             Flags.FLAG_ENABLE_GESTURE_NAV_HORIZONTAL_TOUCH_SLOP,
             Flags.FLAG_ENABLE_GESTURE_NAV_ON_CONNECTED_DISPLAYS,
-            Flags.FLAG_ENABLE_GRID_MIGRATION_FIX,
             Flags.FLAG_ENABLE_GRID_ONLY_OVERVIEW,
             Flags.FLAG_ENABLE_GROWTH_NUDGE,
-            Flags.FLAG_ENABLE_HANDLE_DELAYED_GESTURE_CALLBACKS,
             Flags.FLAG_ENABLE_HOME_TRANSITION_LISTENER,
-            Flags.FLAG_ENABLE_HOVER_OF_CHILD_ELEMENTS_IN_TASKVIEW,
             Flags.FLAG_ENABLE_LARGE_DESKTOP_WINDOWING_TILE,
             Flags.FLAG_ENABLE_LAUNCHER_BR_METRICS_FIXED,
             Flags.FLAG_ENABLE_LAUNCHER_ICON_SHAPES,
             Flags.FLAG_ENABLE_LAUNCHER_OVERVIEW_IN_WINDOW,
             Flags.FLAG_ENABLE_LAUNCHER_VISUAL_REFRESH,
+            Flags.FLAG_ENABLE_LONG_PRESS_REMOVE_SHORTCUT,
             Flags.FLAG_ENABLE_MOUSE_INTERACTION_CHANGES,
             Flags.FLAG_ENABLE_MULTI_INSTANCE_MENU_TASKBAR,
             Flags.FLAG_ENABLE_NARROW_GRID_RESTORE,
             Flags.FLAG_ENABLE_OVERVIEW_BACKGROUND_WALLPAPER_BLUR,
-            Flags.FLAG_ENABLE_OVERVIEW_COMMAND_HELPER_TIMEOUT,
             Flags.FLAG_ENABLE_OVERVIEW_DESKTOP_TILE_WALLPAPER_BACKGROUND,
             Flags.FLAG_ENABLE_OVERVIEW_ICON_MENU,
             Flags.FLAG_ENABLE_OVERVIEW_ON_CONNECTED_DISPLAYS,
-            Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
             Flags.FLAG_ENABLE_PREDICTIVE_BACK_GESTURE,
             Flags.FLAG_ENABLE_PRIVATE_SPACE,
             Flags.FLAG_ENABLE_PRIVATE_SPACE_INSTALL_SHORTCUT,
+            Flags.FLAG_ENABLE_QSB_ON_HOTSEAT,
             Flags.FLAG_ENABLE_REBOOT_UNLOCK_ANIMATION,
             Flags.FLAG_ENABLE_RECENTS_IN_TASKBAR,
             Flags.FLAG_ENABLE_RECENTS_WINDOW_PROTO_LOG,
+            Flags.FLAG_ENABLE_REFACTOR_DIGITAL_WELLBEING_TOAST,
+            Flags.FLAG_ENABLE_REFACTOR_TASK_CONTENT_VIEW,
             Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL,
             Flags.FLAG_ENABLE_RESPONSIVE_WORKSPACE,
+            Flags.FLAG_ENABLE_REVERSIBLE_HOME_ACTION_CORNER,
             Flags.FLAG_ENABLE_SCALABILITY_FOR_DESKTOP_EXPERIENCE,
             Flags.FLAG_ENABLE_SCALING_REVEAL_HOME_ANIMATION,
-            Flags.FLAG_ENABLE_SEPARATE_EXTERNAL_DISPLAY_TASKS,
-            Flags.FLAG_ENABLE_SHORTCUT_DONT_SUGGEST_APP,
-            Flags.FLAG_ENABLE_SHOW_ENABLED_SHORTCUTS_IN_ACCESSIBILITY_MENU,
-            Flags.FLAG_ENABLE_SMARTSPACE_AS_A_WIDGET,
-            Flags.FLAG_ENABLE_SMARTSPACE_REMOVAL_TOGGLE,
+            Flags.FLAG_ENABLE_SIMULTANEOUS_OVERVIEW_TRIGGER_ON_EXTENDED_DESKTOP,
             Flags.FLAG_ENABLE_STATE_MANAGER_PROTO_LOG,
             Flags.FLAG_ENABLE_STRICT_MODE,
             Flags.FLAG_ENABLE_SUPPORT_FOR_ARCHIVING,
@@ -901,27 +833,28 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_TASKBAR_FOR_DIRECT_BOOT,
             Flags.FLAG_ENABLE_TASKBAR_NO_RECREATE,
             Flags.FLAG_ENABLE_TASKBAR_PINNING,
+            Flags.FLAG_ENABLE_TASKBAR_UI_THREAD,
             Flags.FLAG_ENABLE_TIERED_WIDGETS_BY_DEFAULT_IN_PICKER,
             Flags.FLAG_ENABLE_TWO_PANE_LAUNCHER_SETTINGS,
             Flags.FLAG_ENABLE_TWOLINE_ALLAPPS,
             Flags.FLAG_ENABLE_TWOLINE_TOGGLE,
             Flags.FLAG_ENABLE_UNFOLD_STATE_ANIMATION,
-            Flags.FLAG_ENABLE_UNFOLDED_TWO_PANE_PICKER,
-            Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK,
+            Flags.FLAG_ENABLE_WIDGET_PICKER_REFACTOR,
             Flags.FLAG_ENABLE_WIDGET_TAP_TO_ADD,
             Flags.FLAG_ENABLE_WORKSPACE_INFLATION,
             Flags.FLAG_ENABLED_FOLDERS_IN_ALL_APPS,
             Flags.FLAG_EXPRESSIVE_THEME_IN_TASKBAR_AND_NAVIGATION,
-            Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
+            Flags.FLAG_EXTERNAL_DATA_ACCESS,
             Flags.FLAG_FLOATING_SEARCH_BAR,
             Flags.FLAG_FORCE_MONOCHROME_APP_ICONS,
             Flags.FLAG_GRID_MIGRATION_REFACTOR,
             Flags.FLAG_GSF_RES,
+            Flags.FLAG_HOME_SCREEN_EDIT_IMPROVEMENTS,
             Flags.FLAG_IGNORE_THREE_FINGER_TRACKPAD_FOR_NAV_HANDLE_LONG_PRESS,
             Flags.FLAG_LETTER_FAST_SCROLLER,
+            Flags.FLAG_MODEL_REPOSITORY,
             Flags.FLAG_MSDL_FEEDBACK,
-            Flags.FLAG_MULTILINE_SEARCH_BAR,
-            Flags.FLAG_NAVIGATE_TO_CHILD_PREFERENCE,
+            Flags.FLAG_NUDGE_PILL,
             Flags.FLAG_ONE_GRID_MOUNTED_MODE,
             Flags.FLAG_ONE_GRID_ROTATION_HANDLING,
             Flags.FLAG_ONE_GRID_SPECS,
@@ -929,19 +862,15 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_PREDICTIVE_BACK_TO_HOME_POLISH,
             Flags.FLAG_PRIVATE_SPACE_ADD_FLOATING_MASK_VIEW,
             Flags.FLAG_PRIVATE_SPACE_ANIMATION,
-            Flags.FLAG_PRIVATE_SPACE_APP_INSTALLER_BUTTON,
             Flags.FLAG_PRIVATE_SPACE_RESTRICT_ACCESSIBILITY_DRAG,
             Flags.FLAG_PRIVATE_SPACE_RESTRICT_ITEM_DRAG,
             Flags.FLAG_PRIVATE_SPACE_SYS_APPS_SEPARATION,
             Flags.FLAG_REMOVE_APPS_REFRESH_ON_RIGHT_CLICK,
-            Flags.FLAG_REMOVE_EXCLUDE_FROM_SCREEN_MAGNIFICATION_FLAG_USAGE,
             Flags.FLAG_RESTORE_ARCHIVED_APP_ICONS_FROM_DB,
             Flags.FLAG_RESTORE_ARCHIVED_SHORTCUTS,
             Flags.FLAG_SHOW_TASKBAR_PINNING_POPUP_FROM_ANYWHERE,
             Flags.FLAG_SYNC_APP_LAUNCH_WITH_TASKBAR_STASH,
-            Flags.FLAG_TASKBAR_OVERFLOW,
             Flags.FLAG_TASKBAR_QUIET_MODE_CHANGE_SUPPORT,
-            Flags.FLAG_USE_ACTIVITY_OVERLAY,
             Flags.FLAG_USE_NEW_ICON_FOR_ARCHIVED_APPS,
             Flags.FLAG_USE_SYSTEM_RADIUS_FOR_APP_WIDGETS,
             Flags.FLAG_WORK_SCHEDULER_IN_WORK_PROFILE
@@ -953,64 +882,58 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ACCESSIBILITY_SCROLL_ON_ALLAPPS,
             Flags.FLAG_ALL_APPS_BLUR,
             Flags.FLAG_ALL_APPS_SHEET_FOR_HANDHELD,
-            Flags.FLAG_COORDINATE_WORKSPACE_SCALE,
-            Flags.FLAG_ENABLE_ACTIVE_GESTURE_PROTO_LOG,
             Flags.FLAG_ENABLE_ADD_APP_WIDGET_VIA_CONFIG_ACTIVITY_V2,
-            Flags.FLAG_ENABLE_ADDITIONAL_HOME_ANIMATIONS,
             Flags.FLAG_ENABLE_ALL_APPS_BUTTON_IN_HOTSEAT,
             Flags.FLAG_ENABLE_ALT_TAB_KQS_FLATENNING,
             Flags.FLAG_ENABLE_ALT_TAB_KQS_ON_CONNECTED_DISPLAYS,
             Flags.FLAG_ENABLE_CATEGORIZED_WIDGET_SUGGESTIONS,
             Flags.FLAG_ENABLE_CONTAINER_RETURN_ANIMATIONS,
             Flags.FLAG_ENABLE_CONTRAST_TILES,
+            Flags.FLAG_ENABLE_COROUTINE_THREADING_IMPROVEMENTS,
             Flags.FLAG_ENABLE_CURSOR_HOVER_STATES,
             Flags.FLAG_ENABLE_DESKTOP_EXPLODED_VIEW,
-            Flags.FLAG_ENABLE_DESKTOP_TASK_ALPHA_ANIMATION,
-            Flags.FLAG_ENABLE_DESKTOP_WINDOWING_CAROUSEL_DETACH,
+            Flags.FLAG_ENABLE_DESKTOP_MENU_ON_SECONDARY_DISPLAY_BUGFIX,
             Flags.FLAG_ENABLE_DISMISS_PREDICTION_UNDO,
             Flags.FLAG_ENABLE_EXPANDING_PAUSE_WORK_BUTTON,
             Flags.FLAG_ENABLE_EXPRESSIVE_DISMISS_TASK_MOTION,
+            Flags.FLAG_ENABLE_EXPRESSIVE_FOLDER_EXPANSION,
             Flags.FLAG_ENABLE_FALLBACK_OVERVIEW_IN_WINDOW,
             Flags.FLAG_ENABLE_FIRST_SCREEN_BROADCAST_ARCHIVING_EXTRAS,
             Flags.FLAG_ENABLE_FOCUS_OUTLINE,
             Flags.FLAG_ENABLE_GENERATED_PREVIEWS,
             Flags.FLAG_ENABLE_GESTURE_NAV_HORIZONTAL_TOUCH_SLOP,
             Flags.FLAG_ENABLE_GESTURE_NAV_ON_CONNECTED_DISPLAYS,
-            Flags.FLAG_ENABLE_GRID_MIGRATION_FIX,
             Flags.FLAG_ENABLE_GRID_ONLY_OVERVIEW,
             Flags.FLAG_ENABLE_GROWTH_NUDGE,
-            Flags.FLAG_ENABLE_HANDLE_DELAYED_GESTURE_CALLBACKS,
             Flags.FLAG_ENABLE_HOME_TRANSITION_LISTENER,
-            Flags.FLAG_ENABLE_HOVER_OF_CHILD_ELEMENTS_IN_TASKVIEW,
             Flags.FLAG_ENABLE_LARGE_DESKTOP_WINDOWING_TILE,
             Flags.FLAG_ENABLE_LAUNCHER_BR_METRICS_FIXED,
             Flags.FLAG_ENABLE_LAUNCHER_ICON_SHAPES,
             Flags.FLAG_ENABLE_LAUNCHER_OVERVIEW_IN_WINDOW,
             Flags.FLAG_ENABLE_LAUNCHER_VISUAL_REFRESH,
+            Flags.FLAG_ENABLE_LONG_PRESS_REMOVE_SHORTCUT,
             Flags.FLAG_ENABLE_MOUSE_INTERACTION_CHANGES,
             Flags.FLAG_ENABLE_MULTI_INSTANCE_MENU_TASKBAR,
             Flags.FLAG_ENABLE_NARROW_GRID_RESTORE,
             Flags.FLAG_ENABLE_OVERVIEW_BACKGROUND_WALLPAPER_BLUR,
-            Flags.FLAG_ENABLE_OVERVIEW_COMMAND_HELPER_TIMEOUT,
             Flags.FLAG_ENABLE_OVERVIEW_DESKTOP_TILE_WALLPAPER_BACKGROUND,
             Flags.FLAG_ENABLE_OVERVIEW_ICON_MENU,
             Flags.FLAG_ENABLE_OVERVIEW_ON_CONNECTED_DISPLAYS,
-            Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU,
             Flags.FLAG_ENABLE_PREDICTIVE_BACK_GESTURE,
             Flags.FLAG_ENABLE_PRIVATE_SPACE,
             Flags.FLAG_ENABLE_PRIVATE_SPACE_INSTALL_SHORTCUT,
+            Flags.FLAG_ENABLE_QSB_ON_HOTSEAT,
             Flags.FLAG_ENABLE_REBOOT_UNLOCK_ANIMATION,
             Flags.FLAG_ENABLE_RECENTS_IN_TASKBAR,
             Flags.FLAG_ENABLE_RECENTS_WINDOW_PROTO_LOG,
+            Flags.FLAG_ENABLE_REFACTOR_DIGITAL_WELLBEING_TOAST,
+            Flags.FLAG_ENABLE_REFACTOR_TASK_CONTENT_VIEW,
             Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL,
             Flags.FLAG_ENABLE_RESPONSIVE_WORKSPACE,
+            Flags.FLAG_ENABLE_REVERSIBLE_HOME_ACTION_CORNER,
             Flags.FLAG_ENABLE_SCALABILITY_FOR_DESKTOP_EXPERIENCE,
             Flags.FLAG_ENABLE_SCALING_REVEAL_HOME_ANIMATION,
-            Flags.FLAG_ENABLE_SEPARATE_EXTERNAL_DISPLAY_TASKS,
-            Flags.FLAG_ENABLE_SHORTCUT_DONT_SUGGEST_APP,
-            Flags.FLAG_ENABLE_SHOW_ENABLED_SHORTCUTS_IN_ACCESSIBILITY_MENU,
-            Flags.FLAG_ENABLE_SMARTSPACE_AS_A_WIDGET,
-            Flags.FLAG_ENABLE_SMARTSPACE_REMOVAL_TOGGLE,
+            Flags.FLAG_ENABLE_SIMULTANEOUS_OVERVIEW_TRIGGER_ON_EXTENDED_DESKTOP,
             Flags.FLAG_ENABLE_STATE_MANAGER_PROTO_LOG,
             Flags.FLAG_ENABLE_STRICT_MODE,
             Flags.FLAG_ENABLE_SUPPORT_FOR_ARCHIVING,
@@ -1020,27 +943,28 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_ENABLE_TASKBAR_FOR_DIRECT_BOOT,
             Flags.FLAG_ENABLE_TASKBAR_NO_RECREATE,
             Flags.FLAG_ENABLE_TASKBAR_PINNING,
+            Flags.FLAG_ENABLE_TASKBAR_UI_THREAD,
             Flags.FLAG_ENABLE_TIERED_WIDGETS_BY_DEFAULT_IN_PICKER,
             Flags.FLAG_ENABLE_TWO_PANE_LAUNCHER_SETTINGS,
             Flags.FLAG_ENABLE_TWOLINE_ALLAPPS,
             Flags.FLAG_ENABLE_TWOLINE_TOGGLE,
             Flags.FLAG_ENABLE_UNFOLD_STATE_ANIMATION,
-            Flags.FLAG_ENABLE_UNFOLDED_TWO_PANE_PICKER,
-            Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK,
+            Flags.FLAG_ENABLE_WIDGET_PICKER_REFACTOR,
             Flags.FLAG_ENABLE_WIDGET_TAP_TO_ADD,
             Flags.FLAG_ENABLE_WORKSPACE_INFLATION,
             Flags.FLAG_ENABLED_FOLDERS_IN_ALL_APPS,
             Flags.FLAG_EXPRESSIVE_THEME_IN_TASKBAR_AND_NAVIGATION,
-            Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
+            Flags.FLAG_EXTERNAL_DATA_ACCESS,
             Flags.FLAG_FLOATING_SEARCH_BAR,
             Flags.FLAG_FORCE_MONOCHROME_APP_ICONS,
             Flags.FLAG_GRID_MIGRATION_REFACTOR,
             Flags.FLAG_GSF_RES,
+            Flags.FLAG_HOME_SCREEN_EDIT_IMPROVEMENTS,
             Flags.FLAG_IGNORE_THREE_FINGER_TRACKPAD_FOR_NAV_HANDLE_LONG_PRESS,
             Flags.FLAG_LETTER_FAST_SCROLLER,
+            Flags.FLAG_MODEL_REPOSITORY,
             Flags.FLAG_MSDL_FEEDBACK,
-            Flags.FLAG_MULTILINE_SEARCH_BAR,
-            Flags.FLAG_NAVIGATE_TO_CHILD_PREFERENCE,
+            Flags.FLAG_NUDGE_PILL,
             Flags.FLAG_ONE_GRID_MOUNTED_MODE,
             Flags.FLAG_ONE_GRID_ROTATION_HANDLING,
             Flags.FLAG_ONE_GRID_SPECS,
@@ -1048,19 +972,15 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_PREDICTIVE_BACK_TO_HOME_POLISH,
             Flags.FLAG_PRIVATE_SPACE_ADD_FLOATING_MASK_VIEW,
             Flags.FLAG_PRIVATE_SPACE_ANIMATION,
-            Flags.FLAG_PRIVATE_SPACE_APP_INSTALLER_BUTTON,
             Flags.FLAG_PRIVATE_SPACE_RESTRICT_ACCESSIBILITY_DRAG,
             Flags.FLAG_PRIVATE_SPACE_RESTRICT_ITEM_DRAG,
             Flags.FLAG_PRIVATE_SPACE_SYS_APPS_SEPARATION,
             Flags.FLAG_REMOVE_APPS_REFRESH_ON_RIGHT_CLICK,
-            Flags.FLAG_REMOVE_EXCLUDE_FROM_SCREEN_MAGNIFICATION_FLAG_USAGE,
             Flags.FLAG_RESTORE_ARCHIVED_APP_ICONS_FROM_DB,
             Flags.FLAG_RESTORE_ARCHIVED_SHORTCUTS,
             Flags.FLAG_SHOW_TASKBAR_PINNING_POPUP_FROM_ANYWHERE,
             Flags.FLAG_SYNC_APP_LAUNCH_WITH_TASKBAR_STASH,
-            Flags.FLAG_TASKBAR_OVERFLOW,
             Flags.FLAG_TASKBAR_QUIET_MODE_CHANGE_SUPPORT,
-            Flags.FLAG_USE_ACTIVITY_OVERLAY,
             Flags.FLAG_USE_NEW_ICON_FOR_ARCHIVED_APPS,
             Flags.FLAG_USE_SYSTEM_RADIUS_FOR_APP_WIDGETS,
             Flags.FLAG_WORK_SCHEDULER_IN_WORK_PROFILE,

@@ -1,13 +1,8 @@
 package com.android.wm.shell;
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
 
 /** @hide */
 public interface FeatureFlags {
 
-
-
-
-    boolean bubbleViewInfoExecutors();
 
 
 
@@ -16,6 +11,10 @@ public interface FeatureFlags {
 
 
     boolean enableBubbleAnything();
+
+
+
+    boolean enableBubbleAppCompatFixes();
 
 
 
@@ -28,6 +27,10 @@ public interface FeatureFlags {
 
 
     boolean enableBubbleStashing();
+
+
+
+    boolean enableBubbleSwipeUpCleanup();
 
 
 
@@ -48,6 +51,10 @@ public interface FeatureFlags {
 
 
     boolean enableDynamicInsetsForAppLaunch();
+
+
+
+    boolean enableEnterSplitRemoveBubble();
 
 
 
@@ -79,6 +86,10 @@ public interface FeatureFlags {
 
 
 
+    boolean enablePipBoxShadows();
+
+
+
     boolean enablePipUmoExperience();
 
 
@@ -92,10 +103,6 @@ public interface FeatureFlags {
 
 
     boolean enableShellTopTaskTracking();
-
-
-
-    boolean enableTaskViewControllerCleanup();
 
 
 
@@ -120,4 +127,8 @@ public interface FeatureFlags {
 
 
     boolean taskViewRepository();
+
+
+
+    boolean taskViewTransitionsRefactor();
 }

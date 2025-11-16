@@ -1,6 +1,5 @@
 package com.android.systemui.shared;
 
-// TODO(b/303773055): Remove the annotation after access issue is resolved.
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -60,9 +59,16 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean enableLppSqueezeEffect() {
-        return getValue(Flags.FLAG_ENABLE_LPP_SQUEEZE_EFFECT,
-            FeatureFlags::enableLppSqueezeEffect);
+    public boolean enableLppAssistInvocationEffect() {
+        return getValue(Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_EFFECT,
+            FeatureFlags::enableLppAssistInvocationEffect);
+    }
+
+    @Override
+
+    public boolean enableLppAssistInvocationHapticEffect() {
+        return getValue(Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_HAPTIC_EFFECT,
+            FeatureFlags::enableLppAssistInvocationHapticEffect);
     }
 
     @Override
@@ -77,6 +83,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean extendedWallpaperEffects() {
         return getValue(Flags.FLAG_EXTENDED_WALLPAPER_EFFECTS,
             FeatureFlags::extendedWallpaperEffects);
+    }
+
+    @Override
+
+    public boolean extendibleThemeManager() {
+        return getValue(Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
+            FeatureFlags::extendibleThemeManager);
     }
 
     @Override
@@ -137,13 +150,6 @@ public class CustomFeatureFlags implements FeatureFlags {
 
     @Override
 
-    public boolean smartspaceRemoteviewsIntentHandler() {
-        return getValue(Flags.FLAG_SMARTSPACE_REMOTEVIEWS_INTENT_HANDLER,
-            FeatureFlags::smartspaceRemoteviewsIntentHandler);
-    }
-
-    @Override
-
     public boolean smartspaceSportsCardBackground() {
         return getValue(Flags.FLAG_SMARTSPACE_SPORTS_CARD_BACKGROUND,
             FeatureFlags::smartspaceSportsCardBackground);
@@ -161,6 +167,13 @@ public class CustomFeatureFlags implements FeatureFlags {
     public boolean smartspaceUiUpdateResources() {
         return getValue(Flags.FLAG_SMARTSPACE_UI_UPDATE_RESOURCES,
             FeatureFlags::smartspaceUiUpdateResources);
+    }
+
+    @Override
+
+    public boolean smartspaceWeatherUseMonochromeFontIcons() {
+        return getValue(Flags.FLAG_SMARTSPACE_WEATHER_USE_MONOCHROME_FONT_ICONS,
+            FeatureFlags::smartspaceWeatherUseMonochromeFontIcons);
     }
 
     @Override
@@ -209,9 +222,11 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_CLOCK_REACTIVE_VARIANTS,
             Flags.FLAG_CURSOR_HOT_CORNER,
             Flags.FLAG_ENABLE_HOME_DELAY,
-            Flags.FLAG_ENABLE_LPP_SQUEEZE_EFFECT,
+            Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_EFFECT,
+            Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_HAPTIC_EFFECT,
             Flags.FLAG_EXAMPLE_SHARED_FLAG,
             Flags.FLAG_EXTENDED_WALLPAPER_EFFECTS,
+            Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
             Flags.FLAG_LOCKSCREEN_CUSTOM_CLOCKS,
             Flags.FLAG_NEW_CUSTOMIZATION_PICKER_UI,
             Flags.FLAG_NEW_TOUCHPAD_GESTURES_TUTORIAL,
@@ -220,10 +235,10 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_SCREENSHOT_CONTEXT_URL,
             Flags.FLAG_SHADE_ALLOW_BACK_GESTURE,
             Flags.FLAG_SIDEFPS_CONTROLLER_REFACTOR,
-            Flags.FLAG_SMARTSPACE_REMOTEVIEWS_INTENT_HANDLER,
             Flags.FLAG_SMARTSPACE_SPORTS_CARD_BACKGROUND,
             Flags.FLAG_SMARTSPACE_UI_UPDATE,
             Flags.FLAG_SMARTSPACE_UI_UPDATE_RESOURCES,
+            Flags.FLAG_SMARTSPACE_WEATHER_USE_MONOCHROME_FONT_ICONS,
             Flags.FLAG_STATUS_BAR_CONNECTED_DISPLAYS,
             Flags.FLAG_THREE_BUTTON_CORNER_SWIPE,
             Flags.FLAG_USE_PREFERRED_IMAGE_EDITOR
@@ -238,9 +253,11 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_CLOCK_REACTIVE_VARIANTS,
             Flags.FLAG_CURSOR_HOT_CORNER,
             Flags.FLAG_ENABLE_HOME_DELAY,
-            Flags.FLAG_ENABLE_LPP_SQUEEZE_EFFECT,
+            Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_EFFECT,
+            Flags.FLAG_ENABLE_LPP_ASSIST_INVOCATION_HAPTIC_EFFECT,
             Flags.FLAG_EXAMPLE_SHARED_FLAG,
             Flags.FLAG_EXTENDED_WALLPAPER_EFFECTS,
+            Flags.FLAG_EXTENDIBLE_THEME_MANAGER,
             Flags.FLAG_LOCKSCREEN_CUSTOM_CLOCKS,
             Flags.FLAG_NEW_CUSTOMIZATION_PICKER_UI,
             Flags.FLAG_NEW_TOUCHPAD_GESTURES_TUTORIAL,
@@ -249,10 +266,10 @@ public class CustomFeatureFlags implements FeatureFlags {
             Flags.FLAG_SCREENSHOT_CONTEXT_URL,
             Flags.FLAG_SHADE_ALLOW_BACK_GESTURE,
             Flags.FLAG_SIDEFPS_CONTROLLER_REFACTOR,
-            Flags.FLAG_SMARTSPACE_REMOTEVIEWS_INTENT_HANDLER,
             Flags.FLAG_SMARTSPACE_SPORTS_CARD_BACKGROUND,
             Flags.FLAG_SMARTSPACE_UI_UPDATE,
             Flags.FLAG_SMARTSPACE_UI_UPDATE_RESOURCES,
+            Flags.FLAG_SMARTSPACE_WEATHER_USE_MONOCHROME_FONT_ICONS,
             Flags.FLAG_STATUS_BAR_CONNECTED_DISPLAYS,
             Flags.FLAG_THREE_BUTTON_CORNER_SWIPE,
             Flags.FLAG_USE_PREFERRED_IMAGE_EDITOR,
