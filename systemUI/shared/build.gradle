@@ -48,6 +48,7 @@ dependencies {
     compileOnly projects.wmshell
     compileOnly projects.animationlib
     compileOnly projects.utils
+    compileOnly projects.log
 
     implementation libs.dagger.hilt.android
     ksp libs.dagger.hilt.compiler
