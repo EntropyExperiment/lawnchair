@@ -2,12 +2,16 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Snapshot 0 (Development 4 Release 1)
+### 🏗️ Snapshot 0 (Development 4 Release 1) (Draft)
 
 This is a developer-focused change log:
 * Codebase updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
 * Prebuilt updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
 * Platform libs updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+  * Move ViewCapture to platform lib
+  * Add Displaylib
+* Flags updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+* Pull concurrent, dagger (the launcher3) as module
 
 ## Bubble Tea [r2]
 

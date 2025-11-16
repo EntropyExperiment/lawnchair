@@ -61,6 +61,9 @@ project(':contextualeducationlib').projectDir = new File(rootDir, 'platform_fram
 include ':viewcapturelib'
 project(':viewcapturelib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/viewcapturelib')
 
+include ':displaylib'
+project(':displaylib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/displaylib')
+
 include ':hidden-api'
 
 include ':shared'
@@ -103,3 +106,4 @@ include ':androidx-lib'
 include ':flags'
 include ':wmshell'
 include ':dagger'
+include ':concurrent'
