@@ -374,15 +374,15 @@
     </style>
 
     <style name="AllAppsBlurStyle">
-        <item name="allAppsScrimColor">@androidprv:color/shade_panel_scrim_color</item>
-        <item name="groupHighlight">@androidprv:color/surface_effect_1</item>
-        <item name="focusHighlight">@androidprv:color/surface_effect_2</item>
-        <item name="allAppsSurfaceLow">@androidprv:color/surface_effect_0</item>
-        <item name="allAppsSurfaceHighest">@androidprv:color/surface_effect_2</item>
-        <item name="allAppsUnselectedTab">@androidprv:color/surface_effect_2</item>
-        <item name="allappsHeaderProtectionColor">@androidprv:color/surface_effect_1</item>
-        <item name="privateSpaceSettingsColor">@androidprv:color/surface_effect_2</item>
-        <item name="privateSpaceDividerColor">@androidprv:color/surface_effect_3</item>
+        <item name="allAppsScrimColor">@color/shade_panel_scrim_color</item>
+        <item name="groupHighlight">@color/surface_effect_1</item>
+        <item name="focusHighlight">@color/surface_effect_2</item>
+        <item name="allAppsSurfaceLow">@color/surface_effect_0</item>
+        <item name="allAppsSurfaceHighest">@color/surface_effect_2</item>
+        <item name="allAppsUnselectedTab">@color/surface_effect_2</item>
+        <item name="allappsHeaderProtectionColor">@color/surface_effect_1</item>
+        <item name="privateSpaceSettingsColor">@color/surface_effect_2</item>
+        <item name="privateSpaceDividerColor">@color/surface_effect_3</item>
         <item name="bottomSheetDragHandleColor">@color/materialColorOnSurface</item>
     </style>
 
