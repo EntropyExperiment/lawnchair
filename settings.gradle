@@ -49,9 +49,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include ':iconloaderlib'
 project(':iconloaderlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/iconloaderlib')
 
-include ':searchuilib'
-project(':searchuilib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/searchuilib')
-
 include ':animationlib'
 project(':animationlib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/animationlib')
 

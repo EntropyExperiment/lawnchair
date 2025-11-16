@@ -378,7 +378,6 @@ addFrameworkJar('framework-16.jar')
 
 dependencies {
     implementation projects.iconloaderlib
-    implementation projects.searchuilib
     implementation projects.animationlib
     implementation projects.msdllib
     implementation projects.contextualeducationlib

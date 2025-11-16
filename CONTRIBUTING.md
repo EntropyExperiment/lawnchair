@@ -44,7 +44,7 @@ For translations, please visit **[Lawnchair on Crowdin][crowdin]**.
 2. Open the project in Android Studio.
 3. Select the `lawnWithQuickstepGithubDebug` build variant.
 
-If you encounter errors with modules that ends with `lib` suffix like `iconloaderlib` or `searchuilib`,
+If you encounter errors with modules that ends with `lib` suffix like `iconloaderlib` or `animationlib`,
 run `git submodule update --init --recursive`.
 
 Here are some contribution tips to help you get started:
