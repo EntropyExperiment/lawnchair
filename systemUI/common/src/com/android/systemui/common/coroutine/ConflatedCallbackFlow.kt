@@ -16,6 +16,31 @@
 
 package com.android.systemui.common.coroutine
 
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow as wrapped
+import kotlin.experimental.ExperimentalTypeInference
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+
 @Deprecated("Use com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow instead")
 object ConflatedCallbackFlow {
+
+    /**
+     * A [callbackFlow] that uses a buffer [Channel] that is "conflated" meaning that, if
+     * backpressure occurs (if the producer that emits new values into the flow is faster than the
+     * consumer(s) of the values in the flow), the values are buffered and, if the buffer fills up,
+     * we drop the oldest values automatically instead of suspending the producer.
+     */
+    @Deprecated(
+        "Use com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow instead",
+        ReplaceWith(
+            "conflatedCallbackFlow",
+            "com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow"
+        )
+    )
+    @OptIn(ExperimentalTypeInference::class)
+    fun <T> conflatedCallbackFlow(
+        @BuilderInference block: suspend ProducerScope<T>.() -> Unit,
+    ): Flow<T> = wrapped(block)
 }
