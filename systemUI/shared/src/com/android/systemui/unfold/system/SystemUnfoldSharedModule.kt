@@ -18,7 +18,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.Process
-import com.android.systemui.dagger.qualifiers.Application
+//import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.dagger.qualifiers.UiBackground
 import com.android.systemui.unfold.config.ResourceUnfoldTransitionConfig
@@ -98,7 +98,8 @@ abstract class SystemUnfoldSharedModule {
         @Singleton
         fun unfoldTrackingContext(
             @UnfoldSingleThreadBg singleThreadBgExecutor: Executor,
-            @Application applicationScope: CoroutineScope,
+            // @Application
+            applicationScope: CoroutineScope,
         ): CoroutineScope {
             // tracking depends on being executed on a single thread so when changing it, ensure all
             // consumers are not accessing shared state

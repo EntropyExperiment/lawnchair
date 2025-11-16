@@ -19,7 +19,6 @@ import android.graphics.Paint
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.forEach
-import com.android.app.tracing.traceSection
 import com.android.systemui.unfold.UnfoldTransitionProgressProvider.TransitionProgressListener
 import java.lang.ref.WeakReference
 
@@ -34,30 +33,22 @@ class DisableSubpixelTextTransitionListener(private val rootView: ViewGroup?) :
 
     override fun onTransitionStarted() {
         isTransitionInProgress = true
-        traceSection("subpixelFlagSetForTextView") {
-            traceSection("subpixelFlagTraverseHierarchy") {
-                getAllChildTextView(rootView, childrenTextViews)
-            }
-            traceSection("subpixelFlagDisableForTextView") {
-                childrenTextViews.forEach { child ->
-                    val childTextView = child.get() ?: return@forEach
-                    childTextView.paintFlags = childTextView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG
-                }
-            }
+        getAllChildTextView(rootView, childrenTextViews)
+        childrenTextViews.forEach { child ->
+            val childTextView = child.get() ?: return@forEach
+            childTextView.paintFlags = childTextView.paintFlags or Paint.SUBPIXEL_TEXT_FLAG
         }
     }
 
     override fun onTransitionFinished() {
         if (!isTransitionInProgress) return
         isTransitionInProgress = false
-        traceSection("subpixelFlagEnableForTextView") {
-            childrenTextViews.forEach { child ->
-                val childTextView = child.get() ?: return@forEach
-                childTextView.paintFlags =
-                    childTextView.paintFlags and Paint.SUBPIXEL_TEXT_FLAG.inv()
-            }
-            childrenTextViews.clear()
+        childrenTextViews.forEach { child ->
+            val childTextView = child.get() ?: return@forEach
+            childTextView.paintFlags =
+                childTextView.paintFlags and Paint.SUBPIXEL_TEXT_FLAG.inv()
         }
+        childrenTextViews.clear()
     }
 
     /**
