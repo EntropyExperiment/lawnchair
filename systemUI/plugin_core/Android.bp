@@ -57,6 +57,7 @@ java_library {
     ],
     static_libs: [
         "PluginAnnotationLib",
+        "SystemUILogCoreLib",
     ],
     optimize: {
         proguard_flags_files: ["proguard.flags"],
@@ -81,10 +82,10 @@ java_library {
     ],
     plugins: ["auto_service_plugin"],
     static_libs: [
-        "androidx.annotation_annotation",
-        "auto_service_annotations",
-        "auto_common",
         "PluginAnnotationLib",
+        "androidx.annotation_annotation",
+        "auto_common",
+        "auto_service_annotations",
         "guava",
         "jsr330",
     ],

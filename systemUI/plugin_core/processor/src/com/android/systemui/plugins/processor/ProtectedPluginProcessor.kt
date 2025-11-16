@@ -148,6 +148,7 @@ class ProtectedPluginProcessor : AbstractProcessor() {
                 val interfaces = "$sourceName, PluginWrapper<$sourceName>"
                 braceBlock("public class $outputName implements $interfaces") {
                     line("private static final String CLASS = \"$sourceName\";")
+                    line("private static final String TAG = \"$outputName\";")
 
                     // Static factory method to prevent wrapping the same object twice
                     parenBlock("public static $outputName protect") {
@@ -178,6 +179,12 @@ class ProtectedPluginProcessor : AbstractProcessor() {
                     }
                     line()
 
+                    // ToString override to help with debugging
+                    line("@Override")
+                    braceBlock("public String toString()") {
+                        line("return String.format(\"$outputName[%s]@%h\", mInstance, hashCode());")
+                    }
+
                     // Wrapped instance getter for version checker
                     braceBlock("public $sourceName getPlugin()") { line("return mInstance;") }
 
@@ -192,9 +199,7 @@ class ProtectedPluginProcessor : AbstractProcessor() {
                         var isFirst = true
                         val isStatic = method.modifiers.contains(Modifier.STATIC)
 
-                        if (!isStatic) {
-                            line("@Override")
-                        }
+                        if (!isStatic) line("@Override")
                         parenBlock("public $returnTypeName $methodName") {
                             // While copying the method signature for the proxy type, we also
                             // accumulate arguments for the nested callsite.
