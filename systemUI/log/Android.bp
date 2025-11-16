@@ -23,14 +23,34 @@ package {
 }
 
 java_library {
+    sdk_version: "current",
+    name: "SystemUILogCoreLib",
+    device_supported: true,
+    srcs: [
+        "src/**/core/*.java",
+        "src/**/core/*.kt",
+    ],
+    static_libs: [
+        "error_prone_annotations",
+    ],
+
+    // Enforce compat with PluginCoreLib
+    java_version: "1.8",
+}
+
+java_library {
     name: "SystemUILogLib",
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
     ],
+    exclude_srcs: [
+        "src/**/core/*.java",
+        "src/**/core/*.kt",
+    ],
     static_libs: [
-        "error_prone_annotations",
         "SystemUICommon",
+        "SystemUILogCoreLib",
     ],
     kotlincflags: ["-Xjvm-default=all"],
 }

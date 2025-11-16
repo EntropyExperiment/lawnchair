@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2017 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,24 @@
  * limitations under the License.
  */
 
-package com.android.systemui.log.core
+package com.android.systemui;
 
-import android.util.Log
+import androidx.annotation.NonNull;
 
-/** Enum version of @Log.Level */
-enum class LogLevel(
-    val nativeLevel: Int,
-    val shortString: String,
-    val logcatFunc: (String, String, Throwable?) -> Unit,
-) {
-    VERBOSE(Log.VERBOSE, "V", Log::v),
-    DEBUG(Log.DEBUG, "D", Log::d),
-    INFO(Log.INFO, "I", Log::i),
-    WARNING(Log.WARN, "W", Log::w),
-    ERROR(Log.ERROR, "E", Log::e),
-    WTF(Log.ASSERT, "WTF", Log::wtf),
+import java.io.PrintWriter;
+
+/**
+ * Implemented by classes who want to be in:
+ *   {@code adb shell dumpsys activity service com.android.systemui}
+ *
+ * @see com.android.systemui.dump.DumpManager
+ */
+public interface Dumpable {
+
+    /**
+     * Called when it's time to dump the internal state
+     * @param pw Where to write your dump to.
+     * @param args Arguments.
+     */
+    void dump(@NonNull PrintWriter pw, @NonNull String[] args);
 }
