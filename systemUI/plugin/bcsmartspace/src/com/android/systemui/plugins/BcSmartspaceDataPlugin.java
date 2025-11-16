@@ -61,21 +61,17 @@ public interface BcSmartspaceDataPlugin extends Plugin {
         throw new UnsupportedOperationException("Not implemented by " + getClass());
     }
 
-    /** Register a SmartspaceEventNotifier. */
-    default void registerSmartspaceEventNotifier(SmartspaceEventNotifier notifier) {
-        throw new UnsupportedOperationException("Not implemented by " + getClass());
-    }
+    /** Sets the event dispatcher for smart space targets. */
+    void setEventDispatcher(SmartspaceEventDispatcher eventDispatcher);
 
-    /** Push a SmartspaceTargetEvent to the SmartspaceEventNotifier. */
-    default void notifySmartspaceEvent(SmartspaceTargetEvent event) {
-        throw new UnsupportedOperationException("Not implemented by " + getClass());
-    }
+    /**
+     * Overrides how Intents/PendingIntents gets launched. Mostly to support auth from
+     * the lockscreen.
+     */
+    void setIntentStarter(IntentStarter intentStarter);
 
-    /** Allows for notifying the SmartspaceSession of SmartspaceTargetEvents. */
-    interface SmartspaceEventNotifier {
-        /** Pushes a given SmartspaceTargetEvent to the SmartspaceSession. */
-        void notifySmartspaceEvent(SmartspaceTargetEvent event);
-    }
+    /** Returns the smartspace event notifier */
+    SmartspaceEventNotifier getEventNotifier();
 
     /**
      * Create a view to be shown within the parent. Do not add the view, as the parent
@@ -172,12 +168,6 @@ public interface BcSmartspaceDataPlugin extends Plugin {
         default void setKeyguardBypassEnabled(boolean enabled) {}
 
         /**
-         * Overrides how Intents/PendingIntents gets launched. Mostly to support auth from
-         * the lockscreen.
-         */
-        void setIntentStarter(IntentStarter intentStarter);
-
-        /**
          * When on the lockscreen, use the FalsingManager to help detect errant touches
          */
         void setFalsingManager(com.android.systemui.plugins.FalsingManager falsingManager);
@@ -257,6 +247,19 @@ public interface BcSmartspaceDataPlugin extends Plugin {
 
         /** Start the PendingIntent */
         void startPendingIntent(View v, PendingIntent pi, boolean showOnLockscreen);
+    }
+
+    /** SmartspaceEventDispatcher which also controls controlling intent launching behavior */
+    interface SmartspaceEventNotifier extends SmartspaceEventDispatcher {
+
+        /** The intent starter for controlling activity launches */
+        @Nullable IntentStarter getIntentStarter();
+    }
+
+    /** Allows for notifying the SmartspaceSession of SmartspaceTargetEvents. */
+    interface SmartspaceEventDispatcher {
+        /** Pushes a given SmartspaceTargetEvent to the SmartspaceSession. */
+        void notifySmartspaceEvent(SmartspaceTargetEvent event);
     }
 
     /** Interface for delegating time updates */

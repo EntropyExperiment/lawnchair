@@ -181,6 +181,13 @@ public interface ActivityStarter {
     void startActivityDismissingKeyguard(Intent intent,
             boolean onlyProvisioned,
             boolean dismissShade,
+            @Nullable String customMessage,
+            Callback callback);
+
+    /** Starts an activity and dismisses keyguard. */
+    void startActivityDismissingKeyguard(Intent intent,
+            boolean onlyProvisioned,
+            boolean dismissShade,
             boolean disallowEnterPictureInPictureWhileLaunching,
             Callback callback,
             int flags,

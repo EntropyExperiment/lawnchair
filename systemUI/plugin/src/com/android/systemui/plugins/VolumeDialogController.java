@@ -41,8 +41,8 @@ import com.android.systemui.plugins.annotations.ProvidesInterface;
 public interface VolumeDialogController {
     int VERSION = 1;
 
-    void setActiveStream(int stream);
-    void setStreamVolume(int stream, int userLevel);
+    void setActiveStream(int stream, boolean sync);
+    void setStreamVolume(int stream, int userLevel, boolean sync);
     void setRingerMode(int ringerModeNormal, boolean external);
 
     boolean hasVibrator();
