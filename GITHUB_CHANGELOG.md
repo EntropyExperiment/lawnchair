@@ -6,6 +6,8 @@
 
 This is a developer-focused change log:
 * Codebase updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+* Prebuilt updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+* Platform libs updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
 
 ## Bubble Tea [r2]
 
