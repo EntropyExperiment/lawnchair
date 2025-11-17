@@ -4,13 +4,14 @@
 
 ### 🏗️ Snapshot 8 (Development 4 Release 1) (Draft)
 
-Build: TBC
+Build: BS8.1711
 
-To be continued
+This is a developer-focused change log:
+* Migrate some functions to new changes
 
 ### 🥞 Snapshot 7 (Development 4 Release 1)
 
-Build: 1711
+Build: BS7.1711
 
 This snapshot marks the first time Bubble Tea QPR1 is able to pass KSP build stage without any 
 hiccups, the next 1 or 2 snapshots will be focusing on compilation stage, which should be the last 
