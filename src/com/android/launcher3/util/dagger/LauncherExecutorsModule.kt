@@ -34,9 +34,6 @@ import dagger.Module
 import dagger.Binds
 import dagger.Provides
 
-import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
-
 /**
  * Module that provides the executors for Launcher3 as per the [ExecutorsModule]
  * interface.
