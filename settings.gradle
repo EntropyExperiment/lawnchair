@@ -28,6 +28,8 @@ develocity {
     }
 }
 
+rootProject.name = "lawnchair"
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -107,3 +109,6 @@ include ':flags'
 include ':wmshell'
 include ':dagger'
 include ':concurrent'
+//include ':compose'
+include ':modules:widgetpicker'
+

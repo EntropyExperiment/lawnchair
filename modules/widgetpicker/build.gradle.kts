@@ -15,18 +15,11 @@
  */
 
 plugins {
-    id(libs.plugins.android.library.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.compose.compiler.get().pluginId)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.kotlin.compose)
 }
-
-// For the screenshot testing lib dependencies
-apply<ResourceFixerPlugin>()
-
-val androidTop = extra["ANDROID_TOP"].toString()
-val robolibBuildDir = project(":RobolectricLib").layout.buildDirectory.toString()
-val widgetPickerDir = "$androidTop/packages/apps/Launcher3/modules/widgetpicker"
 
 android.buildFeatures.compose = true
 
@@ -39,32 +32,24 @@ android {
     }
     sourceSets {
         named("main") {
-            java.setSrcDirs(listOf("$widgetPickerDir/src"))
-            manifest.srcFile("$widgetPickerDir/AndroidManifest.xml")
-            res.setSrcDirs(listOf("$widgetPickerDir/res"))
+            java.setSrcDirs(listOf("src"))
+            manifest.srcFile("AndroidManifest.xml")
+            res.setSrcDirs(listOf("res"))
         }
         named("androidTest") {
             java.setSrcDirs(
                 listOf(
-                    "$widgetPickerDir/tests/multivalentScreenshotTests/src",
-                    "$widgetPickerDir/tests/multivalentTestsForDevice/src",
+                    "tests/multivalentScreenshotTests/src",
+                    "tests/multivalentTestsForDevice/src",
                 )
             )
-            manifest.srcFile("$widgetPickerDir/tests/AndroidManifest.xml")
+            manifest.srcFile("tests/AndroidManifest.xml")
         }
         named("test") {
-            java.setSrcDirs(listOf("$widgetPickerDir/tests/multivalentTests/src"))
-            resources.setSrcDirs(listOf("$widgetPickerDir/tests/config"))
-            manifest.srcFile("$widgetPickerDir/tests/AndroidManifest.xml")
-            res.setSrcDirs(listOf("$widgetPickerDir/tests/multivalentScreenshotTests/res"))
-        }
-    }
-    signingConfigs {
-        getByName("debug") {
-            // This is necessary or the private APIs from the studiow-generate SDK won't work.
-            // Without the platform keystore, it will crash with:
-            // "java.lang.NoSuchMethodError: No static method asyncTraceForTrackBegin"
-            storeFile = file("$androidTop/vendor/google/certs/devkeys/platform.keystore")
+            java.setSrcDirs(listOf("tests/multivalentTests/src"))
+            resources.setSrcDirs(listOf("tests/config"))
+            manifest.srcFile("tests/AndroidManifest.xml")
+            res.setSrcDirs(listOf("tests/multivalentScreenshotTests/res"))
         }
     }
 
@@ -80,8 +65,8 @@ android {
 dependencies {
     implementation(libs.androidx.core)
     implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
-    kapt(libs.dagger.android.processor)
+    ksp(libs.dagger.compiler)
+    ksp(libs.dagger.android.processor)
 
     // Compose UI dependencies
     implementation(libs.compose.ui)
@@ -91,11 +76,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     // Other UI dependencies
-    implementation(libs.androidx.material3.window.size.cls)
+    implementation(libs.compose.material3.windowSizeClass)
     implementation(libs.androidx.window)
 
     // Compose android studio preview support
-    implementation(libs.compose.material.icons.extended)
+    implementation(libs.compose.material.icons)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
 
@@ -120,16 +105,6 @@ dependencies {
     androidTestApi(libs.compose.ui.test.junit4)
     debugApi(libs.compose.ui.test.manifest)
 
-    // Shared testing libs
-    testImplementation(project(":RobolectricLib"))
-    testImplementation(project(":SharedTestLib"))
-    androidTestImplementation(project(":SharedTestLib"))
-    androidTestImplementation(project(":PlatformParameterizedLib"))
-    androidTestImplementation(project(":ScreenshotLib"))
-    androidTestImplementation(project(":ScreenshotComposeLib"))
-}
-
-// Work around for kotlin bug with symlinked source: http://b/316363701
-tasks.matching { it.name.matches(Regex("widgetpicker.*compile.*TestKotlin")) }.configureEach {
-    inputs.dir("$widgetPickerDir/tests/multivalentTests/src")
+    implementation(projects.concurrent)
+    implementation(projects.dagger)
 }

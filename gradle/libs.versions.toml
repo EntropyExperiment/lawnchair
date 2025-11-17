@@ -10,10 +10,16 @@ coreKtx = "1.17.0"
 error_prone_annotations = "2.44.0"
 espressoCore = "3.7.0"
 junit = "1.3.0"
+junitVersion = "4.13.2"
+mockito = "5.14.2"
+mockitoKotlin = "5.4.0"
 opto = "1.0.18"
 protocVersion = "4.33.1"
 retrofit = "3.0.0"
 room = "2.8.3"
+testRules = "1.7.0"
+testRunner = "1.7.0"
+truth = "1.4.5"
 
 activityCompose = "1.11.0"
 airbnbLottie = "6.7.1"
@@ -106,25 +112,33 @@ androidx-preference-ktx = { group = "androidx.preference", name = "preference-kt
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-slice-core = { group = "androidx.slice", name = "slice-core", version.ref = "slice" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunner" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 androidx-window = { group = "androidx.window", name = "window", version.ref = "window" }
 
 # Compose
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "compose" }
 compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
 compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "composeMaterialIcons" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
 compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "composeMaterial3" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose" }
 compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-ui-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose"}
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose" }
 
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+dagger-android-processor = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
 dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger" }
 
@@ -155,6 +169,7 @@ kotlin-parcelizeRuntime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runt
 kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
 # KotlinX
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 # Other
@@ -164,7 +179,14 @@ chickenhook-restrictionbypass = { group = "com.github.ChickenHook", name = "Rest
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 google-errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "googleMaterial" }
+google-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 hoko-blur = { group = "io.github.hokofly", name = "hoko-blur", version.ref = "hokoBlur" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+mockito-robolectric = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-robolectric-bytebuddy = { group = "net.bytebuddy", name = "byte-buddy", version = "1.15.11" }
+mockito-robolectric-bytebuddy-agent = { group = "net.bytebuddy", name = "byte-buddy-agent", version = "1.15.11" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
 kdrag0n-colorkt = { group = "dev.kdrag0n", name = "colorkt", version.ref = "kdrag0nColorkt" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
