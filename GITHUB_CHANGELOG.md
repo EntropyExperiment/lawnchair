@@ -33,16 +33,17 @@ This is a developer-focused change log:
 
 ## Bubble Tea [r2]
 
-Lawnchair 16 pE Development 2 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 pE Development 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### 🏗️ Development 3 (Draft)
+### 🥞 Development 3
 
 This release have been tested with:
 * ☁️ Pixel 6 (Android 12.0)
 * 📱 Nothing (3a)-series (Android 15, Android 16.0)
 * 📱 Vivo Y21 (Android 12.0)
 * 📱 HTC Wildfire E3 lite (Android 12.0)
+* Many more! Unfortunately I only count build from pE Open testing!
 
 Compatibility list:
 
@@ -62,6 +63,7 @@ Compatibility list:
 * [Lawnchair] Complex Clover icon shape
 * [Lawnchair] Very Sunny icon shape
 * [Lawnchair/Font] Update Google Fonts listing to 25102025
+* [Lawnchair/Gesture] Allow Open Quick Settings*
 
 #### Fixes
 * Disable OEM override on launcher settings, (reimplement `ENABLE_AUTO_INSTALLS_LAYOUT` | c51b2a221838aefb610b7146fc4ef7cb34e5e495)
@@ -82,7 +84,21 @@ Compatibility list:
 * [SystemUI/Unfold] Crash when getting configuration for foldable-specific resources
 * [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
 * [Launcher3/AllApps] Allow theming of Expressive allapps
-* [Lawnchair] Lawnchair can now be compiled in release mode
+* ~~[Lawnchair] Lawnchair can now be compiled in release mode~~
+  * [Lawnchair] Fix crashes with WM-Shell
+* [Lawnchair] Bottom sheet blur will only trigger when your device supported blur*
+* [Lawnchair/Lazy] Corner radii of lazy component now matched radius of non-lazy*
+* [Lawnchair/Debug] Cleanup the debug menu*
+* [Lawnchair/Docs] Warn off danger using 16-dev branch*
+* [Launcher3] Crash with predictive back on some device using Android 13/14
+* [Launcher3] WindowInsets crash in Android 11
+* [Launcher3] Widgets crash on some device using Android 12
+* [Launcher3/PrivateSpace] Use custom icons of Private Space lock*
+* [Launcher3/Iconloaderlib] App badges for work profile*
+* [Lawnchair] Update spacing for dock search settings*
+* [Launcher3] Quickstep dispatcher crash on Android 13
+* [Launcher3] Crash due to missing resources for Android 8.0
+* [Lawnchair/Docs] Update screenshot to 16-dev
 
 ### 🥞 Development 2
 
