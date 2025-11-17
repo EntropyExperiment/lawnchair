@@ -2,7 +2,19 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Snapshot 0 (Development 4 Release 1) (Draft)
+### 🏗️ Snapshot 8 (Development 4 Release 1) (Draft)
+
+Build: TBC
+
+To be continued
+
+### 🥞 Snapshot 7 (Development 4 Release 1)
+
+Build: 1711
+
+This snapshot marks the first time Bubble Tea QPR1 is able to pass KSP build stage without any 
+hiccups, the next 1 or 2 snapshots will be focusing on compilation stage, which should be the last 
+stage before we can get started on pE Development 4. 
 
 This is a developer-focused change log:
 * Codebase updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
@@ -12,7 +24,11 @@ This is a developer-focused change log:
   * Add Displaylib
 * Flags updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
 * Pull concurrent, dagger (the launcher3) as module
+  * TODO? We might need to migrate it to build source like compose instead
 * Lots of prebuilt documentations update
+* Add compose as part of launcher3 build source
+  * Removed test because I hate configuration gradle
+  * cc: @validcube fix me, cc: too bad
 
 ## Bubble Tea [r2]
 
