@@ -40,6 +40,16 @@ older (i.e., Lawnchair `15-dev`).
 
 Build: BD3.1711
 
+The biggest change log ever, this marked the end of Bubble Tea [r2] branch as future development 
+switched to Bubble Tea [QPR1]. See you at Snapshot 7 or Development 4!
+
+(Again) Originally going to launch D3 if most of the issue on tracker have been resolved, but hit a 
+stability milestone instead.
+
+This release includes 4 new features, and 33 bug fixes, 
+Reimplemented some of Lawnchair features, better sizing of home screen, updated README.md screenshot 
+and the inclusion of Bubble Tea project into the official Lawnchair repository as 16-dev!
+
 This release have been tested with:
 * ☁️ Pixel 6 (Android 12.0)
 * 📱 Nothing (3a)-series (Android 15, Android 16.0)
