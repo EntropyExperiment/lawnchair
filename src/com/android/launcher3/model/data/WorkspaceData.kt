@@ -21,6 +21,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.util.putAll
 import androidx.core.util.valueIterator
 import com.android.launcher3.BuildConfig
+import com.android.launcher3.BuildConfigs
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP
 import com.android.launcher3.Workspace
 import com.android.launcher3.model.data.WorkspaceChangeEvent.AddEvent
@@ -43,7 +44,7 @@ sealed class WorkspaceData : Iterable<ItemInfo> {
     fun collectWorkspaceScreens(): IntArray {
         val screenSet = IntSet()
         forEach { if (it.container == CONTAINER_DESKTOP) screenSet.add(it.screenId) }
-        if (BuildConfig.QSB_ON_FIRST_SCREEN || screenSet.isEmpty) {
+        if (BuildConfigs.QSB_ON_FIRST_SCREEN || screenSet.isEmpty) {
             screenSet.add(Workspace.FIRST_SCREEN_ID)
         }
         return screenSet.array

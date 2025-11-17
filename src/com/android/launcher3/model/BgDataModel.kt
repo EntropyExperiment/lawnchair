@@ -24,6 +24,7 @@ import android.util.Log
 import android.util.SparseArray
 import androidx.annotation.AnyThread
 import com.android.launcher3.BuildConfig
+import com.android.launcher3.BuildConfigs
 import com.android.launcher3.Flags
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_APP_PAIR
 import com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT
@@ -129,7 +130,7 @@ constructor(
     @Synchronized
     @JvmOverloads
     fun removeItem(context: Context, items: Collection<ItemInfo>, owner: Any? = null) {
-        if (BuildConfig.IS_STUDIO_BUILD) {
+        if (BuildConfigs.IS_STUDIO_BUILD) {
             items
                 .asSequence()
                 .filter { it.itemType == ITEM_TYPE_FOLDER || it.itemType == ITEM_TYPE_APP_PAIR }
@@ -215,7 +216,7 @@ constructor(
      */
     @Synchronized
     fun updateShortcutPinnedState(context: Context, user: UserHandle) {
-        if (!BuildConfig.WIDGETS_ENABLED) {
+        if (!BuildConfigs.WIDGETS_ENABLED) {
             return
         }
 

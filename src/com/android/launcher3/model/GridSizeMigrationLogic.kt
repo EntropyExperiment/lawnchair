@@ -21,6 +21,7 @@ import android.graphics.Point
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.android.launcher3.BuildConfig
+import com.android.launcher3.BuildConfigs
 import com.android.launcher3.Flags
 import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.LauncherPrefs.Companion.get
@@ -501,7 +502,7 @@ class GridSizeMigrationLogic {
         val occupied = GridOccupancy(trgX, trgY)
         val trg = Point(trgX, trgY)
         val next: Point =
-            if (screenId == 0 && BuildConfig.QSB_ON_FIRST_SCREEN) {
+            if (screenId == 0 && BuildConfigs.QSB_ON_FIRST_SCREEN) {
                 Point(0, 1 /* smartspace */)
             } else {
                 Point(0, 0)

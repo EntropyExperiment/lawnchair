@@ -46,7 +46,7 @@ import android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD
 import android.view.WindowManager.LayoutParams.TYPE_VOICE_INTERACTION
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.toRegion
-import com.android.app.tracing.traceSection
+
 import com.android.internal.policy.GestureNavigationSettingsObserver
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.R
@@ -115,8 +115,7 @@ class TaskbarInsetsController(val context: TaskbarActivityContext) : LoggableTas
         gestureNavSettingsObserver.unregister()
     }
 
-    fun onTaskbarOrBubblebarWindowHeightOrInsetsChanged() =
-        traceSection("$TAG.onTaskbarOrBubblebarWindowHeightOrInsetsChanged") {
+    fun onTaskbarOrBubblebarWindowHeightOrInsetsChanged() = {
             val taskbarStashController = controllers.taskbarStashController
             val tappableHeight = taskbarStashController.tappableHeightToReportToApps
             // We only report tappableElement height for unstashed, persistent taskbar,

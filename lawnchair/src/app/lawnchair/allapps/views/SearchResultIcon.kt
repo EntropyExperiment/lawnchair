@@ -53,7 +53,7 @@ class SearchResultIcon(context: Context, attrs: AttributeSet?) :
         setOnLongClickListener(this)
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            launcher.deviceProfile.allAppsCellHeightPx,
+            launcher.deviceProfile.allAppsProfile.cellHeightPx,
         )
     }
 
