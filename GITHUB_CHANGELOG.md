@@ -38,6 +38,8 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🥞 Development 3
 
+Build: BD3.1711
+
 This release have been tested with:
 * ☁️ Pixel 6 (Android 12.0)
 * 📱 Nothing (3a)-series (Android 15, Android 16.0)
