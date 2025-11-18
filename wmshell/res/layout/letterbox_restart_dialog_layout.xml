@@ -50,6 +50,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/letterbox_restart_dialog_title_icon"
                     android:importantForAccessibility="no"
                     android:layout_width="@dimen/letterbox_restart_dialog_title_icon_width"
                     android:layout_height="@dimen/letterbox_restart_dialog_title_icon_height"

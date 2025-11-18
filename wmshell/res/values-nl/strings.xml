@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"Deze app kan maar in 1 venster worden geopend"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"App werkt mogelijk niet op een secundair scherm."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"App kan niet op secundaire displays worden gestart."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"App ondersteunt geen bubbel"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"Scheiding voor gesplitst scherm"</string>
     <string name="divider_title" msgid="1963391955593749442">"Scheiding voor gesplitst scherm"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"Linkerscherm op volledig scherm"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"Vensters beheren"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"Beeldverhouding wijzigen"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"Weergave optimaliseren"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"Fouticoon"</string>
     <string name="close_text" msgid="4986518933445178928">"Sluiten"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Menu sluiten"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (desktopvensterfunctie)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"Scherm maximaliseren"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"Formaat aanpassen"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"Kan de app niet hierheen verplaatsen"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"Nieuw app-venster openen"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"App-venster sluiten"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"App-venster minimaliseren"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (gefocust)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (niet gefocust)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"Immersief"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"Herstellen"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"Maximaliseren"</string>

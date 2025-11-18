@@ -60,6 +60,20 @@
             android:focusable="false"
             tools:text="Gmail"/>
 
+        <ImageView
+            android:id="@+id/expand_menu_error"
+            android:src="@drawable/expand_menu_error"
+            android:layout_width="@dimen/desktop_mode_header_expand_menu_error_image_width"
+            android:layout_height="@dimen/desktop_mode_header_expand_menu_error_image_width"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/desktop_mode_header_expand_menu_error_image_margin"
+            android:clickable="false"
+            android:focusable="false"
+            android:screenReaderFocusable="false"
+            android:importantForAccessibility="no"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"/>
+
         <ImageButton
             android:id="@+id/expand_menu_button"
             android:layout_width="16dp"

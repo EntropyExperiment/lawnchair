@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"Ez az alkalmazás csak egy ablakban nyitható meg"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"Előfordulhat, hogy az alkalmazás nem működik másodlagos kijelzőn."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"Az alkalmazást nem lehet másodlagos kijelzőn elindítani."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"Az alkalmazás nem támogatja a buborékot"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"Elválasztó az osztott képernyős nézetben"</string>
     <string name="divider_title" msgid="1963391955593749442">"Elválasztó az osztott képernyős nézetben"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"Bal oldali teljes képernyőre"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"Ablakok kezelése"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"Méretarány módosítása"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"Nézet optimalizálása"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"Hiba ikon"</string>
     <string name="close_text" msgid="4986518933445178928">"Bezárás"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Menü bezárása"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (Asztali ablakkezelési mód)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"Képernyő méretének maximalizálása"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"Átméretezés"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"Az alkalmazás nem helyezhető át ide"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"Új alkalmazásablak megnyitása…"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"Alkalmazásablak bezárása"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"Alkalmazásablak kis méretre állítása…"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (Fókuszált)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (Nincs fókuszban)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"Magával ragadó"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"Visszaállítás"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"Teljes méret"</string>

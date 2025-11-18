@@ -14,7 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.android.wm.shell.windowdecor.CaptionMenuLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
     android:id="@+id/maximize_menu"
     android:layout_width="wrap_content"
@@ -158,12 +159,4 @@
                 android:alpha="0"/>
         </LinearLayout>
     </LinearLayout>
-
-    <!-- Empty view intentionally placed in front of everything else and matching the menu size
-     used to monitor input events over the entire menu. -->
-    <View
-        android:id="@+id/maximize_menu_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</FrameLayout>
-
+</com.android.wm.shell.windowdecor.CaptionMenuLayout>

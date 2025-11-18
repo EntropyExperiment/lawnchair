@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"ဤအက်ပ်ကို ဝင်းဒိုး ၁ ခုတွင်သာ ဖွင့်နိုင်သည်"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"ဤအက်ပ်အနေဖြင့် ဒုတိယဖန်သားပြင်ပေါ်တွင် အလုပ်လုပ်မည် မဟုတ်ပါ။"</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"ဤအက်ပ်အနေဖြင့် ဖွင့်ရန်စနစ်ကို ဒုတိယဖန်သားပြင်မှ အသုံးပြုရန် ပံ့ပိုးမထားပါ။"</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"အက်ပ်သည် ပူဖောင်းကွက်ကို မပံ့ပိုးပါ"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"မျက်နှာပြင် ခွဲ၍ပြသခြင်း ပိုင်းခြားစနစ်"</string>
     <string name="divider_title" msgid="1963391955593749442">"မျက်နှာပြင် ခွဲ၍ပြသခြင်း ပိုင်းခြားစနစ်"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"ဘယ်ဘက် မျက်နှာပြင်အပြည့်"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"ဝင်းဒိုးများ စီမံရန်"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"အချိုးအစား ပြောင်းရန်"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"မြင်ကွင်းကို ပိုကောင်းအောင်လုပ်ရန်"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"အမှားအယွင်း သင်္ကေတ"</string>
     <string name="close_text" msgid="4986518933445178928">"ပိတ်ရန်"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"မီနူး ပိတ်ရန်"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ဒက်စ်တော့ဝင်းဒိုးမုဒ်)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"စခရင်ကို ချဲ့မည်"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"အရွယ်ပြင်ရန်"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"အက်ပ်ကို ဤနေရာသို့ ရွှေ့၍မရပါ"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"အက်ပ်ဝင်းဒိုးအသစ် ဖွင့်နေသည်"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"အက်ပ်ဝင်းဒိုး ပိတ်ခြင်း"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"အက်ပ်ဝင်းဒိုးကို ချုံ့နေသည်"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (အာရုံပြုထားသည်)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (အာရုံပြုမထားပါ)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"ဘက်ပေါင်းစုံ"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"ပြန်ပြောင်းရန်"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"ချဲ့ရန်"</string>

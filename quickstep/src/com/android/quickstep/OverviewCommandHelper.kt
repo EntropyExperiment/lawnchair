@@ -20,7 +20,6 @@ import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.graphics.PointF
 import android.os.SystemClock
-import android.os.Trace
 import android.util.Log
 import android.view.Display.DEFAULT_DISPLAY
 import android.view.View
@@ -30,7 +29,6 @@ import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
 import com.android.app.displaylib.DisplayRepository
 import com.android.app.displaylib.PerDisplayRepository
-import com.android.app.tracing.traceSection
 import com.android.internal.jank.Cuj
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.PagedView
@@ -200,7 +198,6 @@ constructor(
                         ensureActive()
                         onCommandFinished(command)
                     }
-                }
             }
         }
 
@@ -541,7 +538,6 @@ constructor(
             command.addListener(recentAnimListener)
             taskAnimationManager.notifyRecentsAnimationState(recentAnimListener)
         } else {
-            // Lawnchair-TODO: What name to put in intent here?
             val intent =
                 Intent(interactionHandler.getLaunchIntent())
                     .putExtra(ActiveGestureLog.INTENT_EXTRA_LOG_TRACE_ID, gestureState.gestureId)
@@ -551,7 +547,6 @@ constructor(
             interactionHandler.onGestureStarted(false /*isLikelyToStartNewTask*/)
             command.addListener(recentAnimListener)
         }
-        //Trace.beginAsyncSection(TRANSITION_NAME, 0)
         OverviewCommandHelperProtoLogProxy.logSwitchingViaRecentsAnim(command)
         return false
     }
@@ -569,7 +564,6 @@ constructor(
     ) {
         OverviewCommandHelperProtoLogProxy.logSwitchingViaRecentsAnimComplete(command)
         command.removeListener(handler)
-        Trace.endAsyncSection(TRANSITION_NAME, 0)
         onRecentsViewFocusUpdated(command)
         onCommandResult()
     }

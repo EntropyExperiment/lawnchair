@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"இந்த ஆப்ஸை 1 சாளரத்தில் மட்டுமே திறக்க முடியும்"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"இரண்டாம்நிலைத் திரையில் ஆப்ஸ் வேலை செய்யாமல் போகக்கூடும்."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"இரண்டாம்நிலைத் திரைகளில் பயன்பாட்டைத் தொடங்க முடியாது."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"குமிழை ஆப்ஸ் ஆதரிப்பதில்லை"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"திரைப் பிரிப்பான்"</string>
     <string name="divider_title" msgid="1963391955593749442">"திரைப் பிரிப்பான்"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"இடது புறம் முழுத் திரை"</string>
@@ -97,7 +98,7 @@
     <string name="user_aspect_ratio_settings_button_hint" msgid="734835849600713016">"அமைப்புகளில் இந்த ஆப்ஸின் தோற்ற விகிதத்தை மாற்றும்"</string>
     <string name="user_aspect_ratio_settings_button_description" msgid="4315566801697411684">"தோற்ற விகிதத்தை மாற்றும்"</string>
     <string name="camera_compat_treatment_suggested_button_description" msgid="8103916969024076767">"கேமரா தொடர்பான சிக்கல்களா?\nமீண்டும் பொருத்த தட்டவும்"</string>
-    <string name="camera_compat_treatment_applied_button_description" msgid="2944157113330703897">"சிக்கல்கள் சரிசெய்யப்படவில்லையா?\nமாற்றியமைக்க தட்டவும்"</string>
+    <string name="camera_compat_treatment_applied_button_description" msgid="2944157113330703897">"சிக்கல்கள் சரிசெய்யப்படவில்லையா?\nமுன்போல் மாற்ற தட்டவும்"</string>
     <string name="camera_compat_dismiss_button_description" msgid="2795364433503817511">"கேமரா தொடர்பான சிக்கல்கள் எதுவும் இல்லையா? நிராகரிக்க தட்டவும்."</string>
     <string name="windowing_app_handle_education_tooltip" msgid="2929643449849791854">"ஆப்ஸ் மெனுவை இங்கே பார்க்கலாம்"</string>
     <string name="windowing_desktop_mode_image_button_education_tooltip" msgid="7171915734817051666">"பல ஆப்ஸை ஒன்றாகத் திறக்க டெஸ்க்டாப் சாளரமாக்குதலுக்குச் செல்லலாம்"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"சாளரங்களை நிர்வகிக்கலாம்"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"தோற்ற விகிதத்தை மாற்று"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"காட்சியை மேம்படுத்தும்"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"பிழை ஐகான்"</string>
     <string name="close_text" msgid="4986518933445178928">"மூடும்"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"மெனுவை மூடும்"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (டெஸ்க்டாப் சாளரமாக்குதல்)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"திரையைப் பெரிதாக்கு"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"அளவை மாற்று"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"ஆப்ஸை இங்கே நகர்த்த முடியாது"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"புதிய ஆப்ஸ் சாளரத்தைத் திறக்கிறது"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"ஆப்ஸ் சாளரம் மூடப்படுகிறது"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"ஆப்ஸ் சாளரத்தைக் குறைக்கிறது"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (மையப்படுத்தப்பட்டது)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (மையப்படுத்தப்படவில்லை)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"முழுத்திரையும்"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"மீட்டெடுக்கும்"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"பெரிதாக்கும்"</string>

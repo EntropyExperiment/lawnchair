@@ -30,4 +30,18 @@
         <attr name="android:src" format="reference" />
         <attr name="android:drawableTint" format="color" />
     </declare-styleable>
+
+
+    <declare-styleable name="BoxShadowSettings">
+        <attr name="boxShadowBlurRadius" format="dimension" />
+        <attr name="boxShadowSpreadRadius" format="dimension" />
+        <attr name="boxShadowOffsetX" format="dimension" />
+        <attr name="boxShadowOffsetY" format="dimension" />
+        <attr name="boxShadowColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="BorderSettings">
+        <attr name="borderStrokeWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+    </declare-styleable>
 </resources>

@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"এই এপ্‌টো কেৱল ১ খন ৱিণ্ড’ত খুলিব পাৰি"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"গৌণ ডিছপ্লেত এপে সঠিকভাৱে কাম নকৰিব পাৰে।"</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"গৌণ ডিছপ্লেত এপ্ লঞ্চ কৰিব নোৱাৰি।"</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"এপে বাবল সমৰ্থন নকৰে"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"স্প্লিট স্ক্ৰীনৰ বিভাজক"</string>
     <string name="divider_title" msgid="1963391955593749442">"স্প্লিট স্ক্ৰীনৰ বিভাজক"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"বাওঁফালৰ স্ক্ৰীনখন সম্পূৰ্ণ স্ক্ৰীন কৰক"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"ৱিণ্ড’ পৰিচালনা কৰক"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"আকাৰৰ অনুপাত সলনি কৰক"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"ভিউ অপ্টিমাইজ কৰক"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"আসোঁৱাহৰ চিহ্ন"</string>
     <string name="close_text" msgid="4986518933445178928">"বন্ধ কৰক"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"মেনু বন্ধ কৰক"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ডেস্কটপ ৱিণ্ড’ৱিং)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"স্ক্ৰীন মেক্সিমাইজ কৰক"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"আকাৰ সলনি কৰক"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"ইয়ালৈ এপ্‌টো আনিব নোৱাৰি"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"নতুন এপৰ ৱিণ্ড’ খুলি থকা হৈছে"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"এপৰ ৱিণ্ড’ বন্ধ কৰি থকা হৈছে"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"এপৰ ৱিণ্ড’ মিনিমাইজ কৰা হৈছে"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ফ’কাছ কৰা)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ফ’কাছ কৰা নাই)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"ইমাৰ্ছিভ"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"পুনঃস্থাপন কৰক"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"মেক্সিমাইজ কৰক"</string>

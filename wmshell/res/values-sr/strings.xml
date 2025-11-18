@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"Ова апликација може да се отвори само у једном прозору"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"Апликација можда неће функционисати на секундарном екрану."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"Апликација не подржава покретање на секундарним екранима."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"Апликација не подржава облачић"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"Разделник подељеног екрана"</string>
     <string name="divider_title" msgid="1963391955593749442">"Разделник подељеног екрана"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"Режим целог екрана за леви екран"</string>
@@ -77,14 +78,14 @@
     <string name="bubble_dismiss_text" msgid="8816558050659478158">"Одбаци облачић"</string>
     <string name="bubble_fullscreen_text" msgid="1006758103218086231">"Пребаци на цео екран"</string>
     <string name="bubbles_dont_bubble_conversation" msgid="310000317885712693">"Не користи облачиће за конверзацију"</string>
-    <string name="bubbles_user_education_title" msgid="2112319053732691899">"Ћаскајте у облачићима"</string>
+    <string name="bubbles_user_education_title" msgid="2112319053732691899">"Четујте у облачићима"</string>
     <string name="bubbles_user_education_description" msgid="4215862563054175407">"Нове конверзације се приказују као плутајуће иконе или облачићи. Додирните да бисте отворили облачић. Превуците да бисте га преместили."</string>
     <string name="bubbles_user_education_manage_title" msgid="7042699946735628035">"Контролишите облачиће у било ком тренутку"</string>
     <string name="bubbles_user_education_manage" msgid="3460756219946517198">"Додирните Управљајте да бисте искључили облачиће из ове апликације"</string>
     <string name="bubbles_user_education_got_it" msgid="3382046149225428296">"Важи"</string>
     <string name="bubble_overflow_empty_title" msgid="2397251267073294968">"Нема недавних облачића"</string>
     <string name="bubble_overflow_empty_subtitle" msgid="2627417924958633713">"Овде се приказују недавни и одбачени облачићи"</string>
-    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Ћаскајте у облачићима"</string>
+    <string name="bubble_bar_education_stack_title" msgid="2486903590422497245">"Четујте у облачићима"</string>
     <string name="bubble_bar_education_stack_text" msgid="2446934610817409820">"Нове конверзације се појављују као иконе у доњем углу екрана. Додирните да бисте их проширили или превуците да бисте их одбацили."</string>
     <string name="bubble_bar_education_manage_title" msgid="6148404487810835924">"Контролишите облачиће у сваком тренутку"</string>
     <string name="bubble_bar_education_manage_text" msgid="3199732148641842038">"Додирните овде и одредите које апликације и конверзације могу да имају облачић"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"Управљајте прозорима"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"Промени размеру"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"Оптимизујте приказ"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"Икона грешке"</string>
     <string name="close_text" msgid="4986518933445178928">"Затворите"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Затворите мени"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (приказ рачунарских прозора)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"Повећај екран"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"Прилагоди"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"Апликација не може да се премести овде"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"Отвара се нови прозор апликације"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"Затвара се прозор апликације"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"Умањује се прозор апликације"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (фокусирано)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (није фокусирано)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"Имерзивно"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"Врати"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"Увећај"</string>

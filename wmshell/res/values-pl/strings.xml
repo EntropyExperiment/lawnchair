@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"Ta aplikacja może być otwarta tylko w 1 oknie."</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"Aplikacja może nie działać na dodatkowym ekranie."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"Aplikacja nie obsługuje uruchamiania na dodatkowych ekranach."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"Aplikacja nie obsługuje dymków"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"Linia dzielenia ekranu"</string>
     <string name="divider_title" msgid="1963391955593749442">"Linia dzielenia ekranu"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"Lewa część ekranu na pełnym ekranie"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"Zarządzaj oknami"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"Zmień format obrazu"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"Zoptymalizuj widok"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"Ikona błędu"</string>
     <string name="close_text" msgid="4986518933445178928">"Zamknij"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Zamknij menu"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (tryb okien na pulpicie)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"Maksymalizuj ekran"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"Zmień rozmiar"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"Nie można przenieść aplikacji tutaj"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"Otwarto nowe okno aplikacji"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"Zamykanie okna aplikacji"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"Zminimalizowano okno aplikacji"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (aktywne okno)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (nieaktywne okno)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"Tryb immersyjny"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"Przywróć"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"Maksymalizuj"</string>

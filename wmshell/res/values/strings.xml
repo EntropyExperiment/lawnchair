@@ -74,6 +74,8 @@
     <string name="forced_resizable_secondary_display">App may not work on a secondary display.</string>
     <!-- Warning message when we try to launch a non-resizeable activity on a secondary display and launch it on the primary instead. -->
     <string name="activity_launch_on_secondary_display_failed_text">App does not support launch on secondary displays.</string>
+    <!-- Warning message when we try to bubble a task in an unsupported environment [CHAR LIMIT=NONE] -->
+    <string name="bubble_not_supported_text">App does not support bubble</string>
 
     <!-- Accessibility label and window tile for the divider that separates the windows in split screen mode [CHAR LIMIT=NONE] -->
     <string name="accessibility_divider">Split screen divider</string>
@@ -316,6 +318,8 @@
     <string name="change_aspect_ratio_text">Change aspect ratio</string>
     <!-- Accessibility text for the handle menu restart button [CHAR LIMIT=NONE] -->
     <string name="handle_menu_restart_text">Optimize View</string>
+    <!-- Accessibility text for the handle menu error icon [CHAR LIMIT=NONE] -->
+    <string name="handle_menu_error_icon_text">Error Icon</string>
     <!-- Accessibility text for the handle menu close button [CHAR LIMIT=NONE] -->
     <string name="close_text">Close</string>
     <!-- Accessibility text for the handle menu close menu button [CHAR LIMIT=NONE] -->
@@ -328,6 +332,18 @@
     <string name="desktop_mode_maximize_menu_snap_text">Resize</string>
     <!-- Snap resizing non-resizable string. -->
     <string name="desktop_mode_non_resizable_snap_text">App can\'t be moved here</string>
+
+    <!-- State description for app window opening. -->
+    <string name="desktop_mode_talkback_state_opening">Opening new app window</string>
+    <!-- State description for app window closing. -->
+    <string name="desktop_mode_talkback_state_closing">Closing app window</string>
+    <!-- State description for app window minimizing. -->
+    <string name="desktop_mode_talkback_state_minimizing">Minimizing app window</string>
+    <!-- State description for app window gaining focus. -->
+    <string name="desktop_mode_talkback_state_focused"><xliff:g id="app_name" example="Chrome">%1$s</xliff:g> (Focused)</string>
+    <!-- State description for app window losing focus. -->
+    <string name="desktop_mode_talkback_state_not_focused"><xliff:g id="app_name" example="Chrome">%1$s</xliff:g> (Not Focused)</string>
+
     <!-- Accessibility text for the Maximize Menu's immersive button [CHAR LIMIT=NONE] -->
     <string name="desktop_mode_maximize_menu_immersive_button_text">Immersive</string>
     <!-- Accessibility text for the Maximize Menu's immersive restore button [CHAR LIMIT=NONE] -->

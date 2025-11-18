@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"ఈ యాప్‌ను 1 విండోలో మాత్రమే తెరవవచ్చు"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"ప్రత్యామ్నాయ డిస్‌ప్లేలో యాప్ పని చేయకపోవచ్చు."</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"ప్రత్యామ్నాయ డిస్‌ప్లేల్లో ప్రారంభానికి యాప్ మద్దతు లేదు."</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"యాప్ బబుల్‌ను సపోర్ట్ చేయట్లేదు"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"స్ప్లిట్ స్క్రీన్ డివైడర్"</string>
     <string name="divider_title" msgid="1963391955593749442">"స్ప్లిట్ స్క్రీన్ డివైడర్"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"ఎడమవైపు ఫుల్-స్క్రీన్‌"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"విండోలను మేనేజ్ చేయండి"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"ఆకార నిష్పత్తిని మార్చండి"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"వీక్షణను ఆప్టిమైజ్ చేయండి"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"ఎర్రర్ చిహ్నం"</string>
     <string name="close_text" msgid="4986518933445178928">"మూసివేయండి"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"మెనూను మూసివేయండి"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (డెస్క్‌టాప్ వీక్షణ)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"స్క్రీన్ సైజ్‌ను పెంచండి"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"సైజ్ మార్చండి"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"యాప్‌ను ఇక్కడకి తరలించడం సాధ్యం కాదు"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"కొత్త యాప్ విండోను తెరుస్తోంది"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"యాప్ విండోను మూసివేస్తోంది"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"యాప్ విండోను మినిమైజ్ చేస్తోంది"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ఫోకస్డ్)"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> (ఫోకస్డ్‌గా లేదు)"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"లీనమయ్యే"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"రీస్టోర్ చేయండి"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"మ్యాగ్జిమైజ్ చేయండి"</string>

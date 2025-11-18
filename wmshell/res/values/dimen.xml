@@ -291,9 +291,6 @@
     <!-- Corner radius for expanded view drop target -->
     <dimen name="bubble_bar_expanded_view_drop_target_corner">28dp</dimen>
     <dimen name="bubble_bar_expanded_view_drop_target_padding">24dp</dimen>
-    <dimen name="bubble_bar_expanded_view_drop_target_padding_top">60dp</dimen>
-    <dimen name="bubble_bar_expanded_view_drop_target_padding_bottom">24dp</dimen>
-    <dimen name="bubble_bar_expanded_view_drop_target_padding_horizontal">48dp</dimen>
     <dimen name="bubble_bar_drop_target_width">84dp</dimen>
     <dimen name="bubble_bar_drop_target_height">48dp</dimen>
     <!-- Width of the box around bottom center of the screen where drag only leads to dismiss -->
@@ -306,6 +303,8 @@
     <dimen name="bubble_transform_area_height">140dp</dimen>
     <!-- How much elevation a bubble ui needs when dragged, must be above drop target & dismiss. -->
     <dimen name="dragged_bubble_elevation">3dp</dimen>
+    <!-- Space between the bottom dismiss view and the bottom edge of the screen -->
+    <dimen name="bubble_bar_dismiss_view_bottom_margin">60dp</dimen>
 
     <!-- Bottom and end margin for compat buttons. -->
     <dimen name="compat_button_margin">24dp</dimen>
@@ -661,6 +660,13 @@
     <dimen name="desktop_mode_header_close_ripple_inset_vertical">4dp</dimen>
     <!-- The horizontal inset to apply to the close button's ripple drawable -->
     <dimen name="desktop_mode_header_close_ripple_inset_horizontal">6dp</dimen>
+
+    <!-- The max width of the app name shown on the app header -->
+    <dimen name="desktop_mode_header_app_name_max_width">130dp</dimen>
+    <!-- The width of the expand menu error image on the app header -->
+    <dimen name="desktop_mode_header_expand_menu_error_image_width">16dp</dimen>
+    <!-- The margin added between app name and expand menu error image on the app header -->
+    <dimen name="desktop_mode_header_expand_menu_error_image_margin">8dp</dimen>
 
     <!-- The padding added to all sides of windowing education tooltip -->
     <dimen name="desktop_windowing_education_tooltip_padding">8dp</dimen>

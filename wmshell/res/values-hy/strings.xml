@@ -36,6 +36,7 @@
     <string name="dock_multi_instances_not_supported_text" msgid="5011042177901502928">"Այս հավելվածը հնարավոր է բացել միայն մեկ պատուհանում"</string>
     <string name="forced_resizable_secondary_display" msgid="1768046938673582671">"Հավելվածը կարող է չաշխատել լրացուցիչ էկրանի վրա"</string>
     <string name="activity_launch_on_secondary_display_failed_text" msgid="4226485344988071769">"Հավելվածը չի աջակցում գործարկումը լրացուցիչ էկրանների վրա"</string>
+    <string name="bubble_not_supported_text" msgid="8843806122229754809">"Հավելվածը չի աջակցում ամպիկ"</string>
     <string name="accessibility_divider" msgid="6407584574218956849">"Տրոհված էկրանի բաժանիչ"</string>
     <string name="divider_title" msgid="1963391955593749442">"Տրոհված էկրանի բաժանիչ"</string>
     <string name="accessibility_action_divider_left_full" msgid="1792313656305328536">"Ձախ էկրանը՝ լիաէկրան"</string>
@@ -133,12 +134,18 @@
     <string name="manage_windows_text" msgid="5567366688493093920">"Կառավարել պատուհանները"</string>
     <string name="change_aspect_ratio_text" msgid="9104456064548212806">"Փոխել կողմերի հարաբերակցությունը"</string>
     <string name="handle_menu_restart_text" msgid="3907767216238298098">"Օպտիմալացնել"</string>
+    <string name="handle_menu_error_icon_text" msgid="7200375184879808684">"Սխալի պատկերակ"</string>
     <string name="close_text" msgid="4986518933445178928">"Փակել"</string>
     <string name="collapse_menu_text" msgid="7515008122450342029">"Փակել ընտրացանկը"</string>
     <string name="desktop_mode_app_header_chip_text" msgid="7617377295944971651">"<xliff:g id="APP_NAME">%1$s</xliff:g> (համակարգչային պատուհաններ)"</string>
     <string name="desktop_mode_maximize_menu_maximize_text" msgid="3275717276171114411">"Ծավալել էկրանը"</string>
     <string name="desktop_mode_maximize_menu_snap_text" msgid="5673738963174074006">"Փոխել չափը"</string>
     <string name="desktop_mode_non_resizable_snap_text" msgid="3771776422751387878">"Հավելվածը հնարավոր չէ տեղափոխել այստեղ"</string>
+    <string name="desktop_mode_talkback_state_opening" msgid="8505494249513712682">"Հավելվածի նոր պատուհանը բացվում է"</string>
+    <string name="desktop_mode_talkback_state_closing" msgid="6791583518636526904">"Հավելվածի պատուհանը փակվում է"</string>
+    <string name="desktop_mode_talkback_state_minimizing" msgid="7406911785134757827">"Հավելվածի պատուհանը ծալվում է"</string>
+    <string name="desktop_mode_talkback_state_focused" msgid="6287982923335568236">"Ընտրված է <xliff:g id="APP_NAME">%1$s</xliff:g> հավելվածը"</string>
+    <string name="desktop_mode_talkback_state_not_focused" msgid="4640618691603218929">"<xliff:g id="APP_NAME">%1$s</xliff:g> հավելվածն ընտրված չէ"</string>
     <string name="desktop_mode_maximize_menu_immersive_button_text" msgid="559492223133829481">"Ներկայության էֆեկտով"</string>
     <string name="desktop_mode_maximize_menu_immersive_restore_button_text" msgid="4900114367354709257">"Վերականգնել"</string>
     <string name="desktop_mode_maximize_menu_maximize_button_text" msgid="3090199175564175845">"Ծավալել"</string>
