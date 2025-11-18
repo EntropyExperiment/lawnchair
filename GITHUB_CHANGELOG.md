@@ -2,14 +2,19 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Snapshot 8 (Development 4 Release 1) (Draft)
+### 🥞 Snapshot 8 (Development 4 Release 1)
 
-Build: BS8.1711
+Build: BS8.1811
+
+This snapshot marks the first time Bubble Tea QPR1 is able to compile ALL of the Launcher3 code 
+without errors, that leaves Lawnchair code as the remaining task before successfully compiling 
+Bubble Tea QPR1
 
 This is a developer-focused change log:
 * Migrate some functions to new changes
 * WM-Shell (and WM-Shell Shared) updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
 * Add Mechanics (SystemUI Platform Library)
+* Some unresolved reference in Lawnchair code
 
 ### 🥞 Snapshot 7 (Development 4 Release 1)
 
