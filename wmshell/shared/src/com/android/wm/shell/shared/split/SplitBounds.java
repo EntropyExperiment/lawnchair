@@ -17,7 +17,7 @@ package com.android.wm.shell.shared.split;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 
-import androidx.annotation.NonNull;
+import android.annotation.NonNull;
 import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -17,6 +17,7 @@
 package com.android.wm.shell.shared;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.view.RemoteAnimationTarget.MODE_CHANGING;
 import static android.view.RemoteAnimationTarget.MODE_CLOSING;
 import static android.view.RemoteAnimationTarget.MODE_OPENING;
@@ -122,6 +123,12 @@ public class TransitionUtil {
     /** Returns `true` if `change` is the divider. */
     public static boolean isDividerBar(TransitionInfo.Change change) {
         return isNonApp(change) && change.hasFlags(FLAG_IS_DIVIDER_BAR);
+    }
+
+    /** Returns `true` if `change` is a pinned Task. */
+    private static boolean isPipTask(TransitionInfo.Change change) {
+        return change.getTaskInfo() != null
+                && change.getTaskInfo().getWindowingMode() == WINDOWING_MODE_PINNED;
     }
 
     /** Returns `true` if `change` is an app's dim layer. */
@@ -310,9 +317,10 @@ public class TransitionUtil {
             // actual dim value).
             t.setAlpha(change.getLeash(), 1.0f);
         }
-        if (!isDividerBar(change)) {
-            // For divider, don't modify its inner leash position when creating the outer leash
-            // for the transition. In case the position being wrong after the transition finished.
+        if (!isDividerBar(change) && !isPipTask(change)) {
+            // For certain components such as Divider and PiP, don't modify its inner leash
+            // position when creating the outer leash for the transition. In case the position
+            // being wrong after the transition finished.
             t.setPosition(change.getLeash(), 0, 0);
         }
         t.setLayer(change.getLeash(), 0);

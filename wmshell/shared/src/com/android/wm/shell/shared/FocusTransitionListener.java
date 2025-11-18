@@ -16,6 +16,8 @@
 
 package com.android.wm.shell.shared;
 
+import android.app.ActivityManager;
+
 import com.android.wm.shell.shared.annotations.ExternalThread;
 
 /**
@@ -31,6 +33,6 @@ public interface FocusTransitionListener {
     /**
      * Called when the per-app or system-wide focus state has changed for a task.
      */
-    default void onFocusedTaskChanged(int taskId, boolean isFocusedOnDisplay,
-            boolean isFocusedGlobally) {}
+    default void onFocusedTaskChanged(ActivityManager.RunningTaskInfo taskInfo,
+            boolean isFocusedOnDisplay, boolean isFocusedGlobally) {}
 }

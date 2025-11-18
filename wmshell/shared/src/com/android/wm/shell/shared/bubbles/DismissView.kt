@@ -55,7 +55,13 @@ class DismissView(context: Context) : FrameLayout(context) {
             @DimenRes val targetSizeResId: Int,
             /** dimen resource id of the icon size in the dismiss target */
             @DimenRes val iconSizeResId: Int,
-            /** dimen resource id of the bottom margin for the dismiss target */
+            /**
+             * dimen resource id of the bottom margin for the dismiss target
+             *
+             * By default the margin is applied on top of the bottom navigation bar inset. To ignore
+             * the bottom navigation inset, and apply a margin relative to the bottom edge of the
+             * screen set [applyMarginOverNavBarInset] to `false`.
+             */
             @DimenRes var bottomMarginResId: Int,
             /** dimen resource id of the height for dismiss area gradient */
             @DimenRes val floatingGradientHeightResId: Int,
@@ -64,7 +70,13 @@ class DismissView(context: Context) : FrameLayout(context) {
             /** drawable resource id of the dismiss target background */
             @DrawableRes val backgroundResId: Int,
             /** drawable resource id of the icon for the dismiss target */
-            @DrawableRes val iconResId: Int
+            @DrawableRes val iconResId: Int,
+            /**
+             * Whether the value provided in [bottomMarginResId] should be applied on top of the
+             * bottom navigation bar inset. If this is `false` the margin is relative to the bottom
+             * edge of the screen.
+             */
+            val applyMarginOverNavBarInset: Boolean = true,
     )
 
     companion object {
@@ -95,9 +107,9 @@ class DismissView(context: Context) : FrameLayout(context) {
     }
 
     init {
-        setClipToPadding(false)
-        setClipChildren(false)
-        setVisibility(View.INVISIBLE)
+        clipToPadding = false
+        clipChildren = false
+        visibility = View.INVISIBLE
         addView(circle)
     }
 
@@ -135,10 +147,12 @@ class DismissView(context: Context) : FrameLayout(context) {
 
     /**
      * Animates this view in.
+     *
+     * @return `true` if the view was shown, `false` otherwise
      */
-    fun show() {
-        if (isShowing) return
-        val gradientDrawable = checkExists(gradientDrawable) ?: return
+    fun show(): Boolean {
+        if (isShowing) return false
+        val gradientDrawable = checkExists(gradientDrawable) ?: return false
         isShowing = true
         setVisibility(View.VISIBLE)
         val alphaAnim = ObjectAnimator.ofInt(gradientDrawable, GRADIENT_ALPHA,
@@ -150,6 +164,7 @@ class DismissView(context: Context) : FrameLayout(context) {
         animator
             .spring(DynamicAnimation.TRANSLATION_Y, 0f, spring)
             .start()
+        return true
     }
 
     /**
@@ -209,11 +224,16 @@ class DismissView(context: Context) : FrameLayout(context) {
 
     private fun updatePadding() {
         val config = checkExists(config) ?: return
-        val insets: WindowInsets = wm.getCurrentWindowMetrics().getWindowInsets()
-        val navInset = insets.getInsetsIgnoringVisibility(
-                WindowInsets.Type.navigationBars())
-        setPadding(0, 0, 0, navInset.bottom +
-                resources.getDimensionPixelSize(config.bottomMarginResId))
+        val bottomMargin = resources.getDimensionPixelSize(config.bottomMarginResId)
+        if (config.applyMarginOverNavBarInset) {
+            val insets: WindowInsets = wm.currentWindowMetrics.windowInsets
+            val navInset = insets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.navigationBars()
+            )
+            setPadding(0, 0, 0, navInset.bottom + bottomMargin)
+        } else {
+            setPadding(0, 0, 0, bottomMargin)
+        }
     }
 
     /**

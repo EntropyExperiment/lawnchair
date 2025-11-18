@@ -20,6 +20,7 @@ import android.Manifest.permission.SYSTEM_ALERT_WINDOW
 import android.app.TaskInfo
 import android.content.Context
 import android.content.pm.PackageManager
+import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import com.android.internal.R
 import com.android.internal.policy.DesktopModeCompatUtils
@@ -43,28 +44,56 @@ class DesktopModeCompatPolicy(private val context: Context) {
 
     /**
      * If the top activity should be exempt from desktop windowing and forced back to fullscreen.
-     * Currently includes all system ui, default home and transparent stack activities. However if
-     * the top activity is not being displayed, regardless of its configuration, we will not exempt
-     * it as to remain in the desktop windowing environment.
+     * Currently includes all system ui, default home and transparent stack activities with the
+     * relevant permission or signature. However if the top activity is not being displayed,
+     * regardless of its configuration, we will not exempt it as to remain in the desktop windowing
+     * environment.
      */
-    fun isTopActivityExemptFromDesktopWindowing(task: TaskInfo) =
-        isTopActivityExemptFromDesktopWindowing(task.baseActivity?.packageName,
-            task.numActivities, task.isTopActivityNoDisplay, task.isActivityStackTransparent,
-            task.userId)
+    fun isTopActivityExemptFromDesktopWindowing(task: TaskInfo): Boolean {
+        val packageName = task.baseActivity?.packageName ?: return false
 
-    fun isTopActivityExemptFromDesktopWindowing(
+        return when {
+            !DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODALS_POLICY.isTrue -> false
+            // If activity is not being displayed, window mode change has no visual affect so leave
+            // unchanged.
+            task.isTopActivityNoDisplay -> false
+            // If activity belongs to system ui package, safe to force out of desktop.
+            isSystemUiTask(packageName) -> true
+            // If activity belongs to default home package, safe to force out of desktop.
+            isPartOfDefaultHomePackageOrNoHomeAvailable(packageName) -> true
+            // If all activities in task stack are transparent AND package has the relevant
+            // fullscreen transparent permission OR is signed with platform key, safe to force out
+            // of desktop.
+            isTransparentTask(task.isActivityStackTransparent, task.numActivities) &&
+                    (hasFullscreenTransparentPermission(packageName, task.userId) ||
+                            hasPlatformSignature(task)) -> true
+
+            else -> false
+        }
+    }
+
+    fun shouldDisableDesktopEntryPoints(task: TaskInfo) = shouldDisableDesktopEntryPoints(
+        task.baseActivity?.packageName, task.numActivities, task.isTopActivityNoDisplay,
+        task.isActivityStackTransparent)
+
+    fun shouldDisableDesktopEntryPoints(
         packageName: String?,
         numActivities: Int,
         isTopActivityNoDisplay: Boolean,
         isActivityStackTransparent: Boolean,
-        userId: Int
-    ) =
-        DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODALS_POLICY.isTrue &&
-                ((isSystemUiTask(packageName) ||
-                        isPartOfDefaultHomePackageOrNoHomeAvailable(packageName) ||
-                        (isTransparentTask(isActivityStackTransparent, numActivities) &&
-                                hasFullscreenTransparentPermission(packageName, userId))) &&
-                        !isTopActivityNoDisplay)
+    ) = when {
+        // Activity will not be displayed, no need to show desktop entry point.
+        isTopActivityNoDisplay -> true
+        // If activity belongs to system ui package, hide desktop entry point.
+        isSystemUiTask(packageName) -> true
+        // If activity belongs to default home package, safe to force out of desktop.
+        isPartOfDefaultHomePackageOrNoHomeAvailable(packageName) -> true
+        // If all activities in task stack are transparent AND package has the relevant fullscreen
+        // transparent permission, safe to force out of desktop.
+        isTransparentTask(isActivityStackTransparent, numActivities) -> true
+        else -> false
+    }
+
 
     /** @see DesktopModeCompatUtils.shouldExcludeCaptionFromAppBounds */
     fun shouldExcludeCaptionFromAppBounds(taskInfo: TaskInfo): Boolean =
@@ -86,11 +115,8 @@ class DesktopModeCompatPolicy(private val context: Context) {
     private fun isSystemUiTask(packageName: String?) = packageName == systemUiPackage
 
     // Checks if the app for the given package has the SYSTEM_ALERT_WINDOW permission.
-    private fun hasFullscreenTransparentPermission(packageName: String?, userId: Int): Boolean {
+    private fun hasFullscreenTransparentPermission(packageName: String, userId: Int): Boolean {
         if (DesktopModeFlags.ENABLE_MODALS_FULLSCREEN_WITH_PERMISSIONS.isTrue) {
-            if (packageName == null) {
-                return false
-            }
             return packageInfoCache.getOrPut("$userId@$packageName") {
                 try {
                     val packageInfo = pkgManager.getPackageInfoAsUser(
@@ -104,8 +130,19 @@ class DesktopModeCompatPolicy(private val context: Context) {
                 }
             }
         }
-        // If the flag is disabled we make this condition neutral.
-        return true
+        // If the ENABLE_MODALS_FULLSCREEN_WITH_PERMISSIONS flag is disabled, make neutral condition
+        // dependant on the ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE flag.
+        return !DesktopExperienceFlags.ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE.isTrue
+    }
+
+    // Checks if the app is signed with the platform signature.
+    private fun hasPlatformSignature(task: TaskInfo): Boolean {
+        if (DesktopExperienceFlags.ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE.isTrue) {
+            return task.topActivityInfo?.applicationInfo?.isSignedWithPlatformKey ?: false
+        }
+        // If the ENABLE_MODALS_FULLSCREEN_WITH_PLATFORM_SIGNATURE flag is disabled, make neutral
+        // condition dependant on the ENABLE_MODALS_FULLSCREEN_WITH_PERMISSIONS flag.
+        return !DesktopModeFlags.ENABLE_MODALS_FULLSCREEN_WITH_PERMISSIONS.isTrue
     }
 
     /**

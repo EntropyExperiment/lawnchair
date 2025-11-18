@@ -21,6 +21,8 @@ import android.os.Parcelable
 
 /** Transition source types for Desktop Mode. */
 enum class DesktopModeTransitionSource : Parcelable {
+    /** Transitions that originated from an adb command. */
+    ADB_COMMAND,
     /** Transitions that originated as a consequence of task dragging. */
     TASK_DRAG,
     /** Transitions that originated from an app from Overview. */

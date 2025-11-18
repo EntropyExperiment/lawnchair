@@ -17,6 +17,7 @@
 package com.android.wm.shell.shared.bubbles
 
 import android.graphics.Rect
+import kotlin.math.hypot
 
 /**
  * Represents an invisible area on the screen that determines what happens to a dragged object if it
@@ -30,42 +31,78 @@ import android.graphics.Rect
 sealed interface DragZone {
 
     /** The bounds of this drag zone. */
-    val bounds: Rect
+    val bounds: Bounds
     /** The bounds of the drop target associated with this drag zone. */
-    val dropTarget: Rect?
+    val dropTarget: DropTargetRect?
+
+    /** The bounds of the second drop target associated with this drag zone. */
+    val secondDropTarget: DropTargetRect?
 
     fun contains(x: Int, y: Int) = bounds.contains(x, y)
 
-    /** Represents the bubble drag area on the screen. */
-    sealed class Bubble(override val bounds: Rect, override val dropTarget: Rect) : DragZone {
-        data class Left(override val bounds: Rect, override val dropTarget: Rect) :
-            Bubble(bounds, dropTarget)
+    sealed interface Bounds {
+        fun contains(x: Int, y: Int) =
+            when (this) {
+                is RectZone -> rect.contains(x, y)
+                is CircleZone -> hypot((x - this.x).toFloat(), (y - this.y).toFloat()) < radius
+            }
 
-        data class Right(override val bounds: Rect, override val dropTarget: Rect) :
-            Bubble(bounds, dropTarget)
+        data class RectZone(val rect: Rect) : Bounds
+
+        data class CircleZone(val x: Int, val y: Int, val radius: Int) : Bounds
+    }
+
+    data class DropTargetRect(val rect: Rect, val cornerRadius: Float)
+
+    /** Represents the bubble drag area on the screen. */
+    sealed class Bubble(
+        override val bounds: Bounds.RectZone,
+        override val dropTarget: DropTargetRect?,
+    ) : DragZone {
+        data class Left(
+            override val bounds: Bounds.RectZone,
+            override val dropTarget: DropTargetRect?,
+            override val secondDropTarget: DropTargetRect? = null,
+        ) : Bubble(bounds, dropTarget)
+
+        data class Right(
+            override val bounds: Bounds.RectZone,
+            override val dropTarget: DropTargetRect?,
+            override val secondDropTarget: DropTargetRect? = null,
+        ) : Bubble(bounds, dropTarget)
     }
 
     /** Represents dragging to Desktop Window. */
-    data class DesktopWindow(override val bounds: Rect, override val dropTarget: Rect) : DragZone
+    data class DesktopWindow(
+        override val bounds: Bounds.RectZone,
+        override val dropTarget: DropTargetRect,
+        override val secondDropTarget: DropTargetRect? = null,
+    ) : DragZone
 
     /** Represents dragging to Full Screen. */
-    data class FullScreen(override val bounds: Rect, override val dropTarget: Rect) : DragZone
+    data class FullScreen(
+        override val bounds: Bounds.RectZone,
+        override val dropTarget: DropTargetRect,
+        override val secondDropTarget: DropTargetRect? = null,
+    ) : DragZone
 
     /** Represents dragging to dismiss. */
-    data class Dismiss(override val bounds: Rect) : DragZone {
-        override val dropTarget: Rect? = null
+    data class Dismiss(override val bounds: Bounds.CircleZone) : DragZone {
+        override val dropTarget: DropTargetRect? = null
+        override val secondDropTarget: DropTargetRect? = null
     }
 
     /** Represents dragging to enter Split or replace a Split app. */
-    sealed class Split(override val bounds: Rect) : DragZone {
-        override val dropTarget: Rect? = null
+    sealed class Split(override val bounds: Bounds.RectZone) : DragZone {
+        override val dropTarget: DropTargetRect? = null
+        override val secondDropTarget: DropTargetRect? = null
 
-        data class Left(override val bounds: Rect) : Split(bounds)
+        data class Left(override val bounds: Bounds.RectZone) : Split(bounds)
 
-        data class Right(override val bounds: Rect) : Split(bounds)
+        data class Right(override val bounds: Bounds.RectZone) : Split(bounds)
 
-        data class Top(override val bounds: Rect) : Split(bounds)
+        data class Top(override val bounds: Bounds.RectZone) : Split(bounds)
 
-        data class Bottom(override val bounds: Rect) : Split(bounds)
+        data class Bottom(override val bounds: Bounds.RectZone) : Split(bounds)
     }
 }

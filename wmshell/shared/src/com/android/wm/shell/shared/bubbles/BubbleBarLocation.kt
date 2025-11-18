@@ -60,6 +60,18 @@ enum class BubbleBarLocation : Parcelable {
 
             override fun newArray(size: Int) = arrayOfNulls<BubbleBarLocation>(size)
         }
+
+        /**
+         * Checks whether locations are on the different sides from each other. If any of the
+         * locations is null returns false.
+         */
+        fun isDifferentSides(
+            first: BubbleBarLocation?,
+            second: BubbleBarLocation?,
+            isRtl: Boolean
+        ): Boolean {
+            return first != null && second != null && first.isOnLeft(isRtl) != second.isOnLeft(isRtl)
+        }
     }
 
     /** Define set of constants that allow to determine why location changed. */

@@ -20,6 +20,9 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.TypedValue
 import androidx.annotation.DimenRes
+import com.android.wm.shell.shared.bubbles.DragZone.Bounds.CircleZone
+import com.android.wm.shell.shared.bubbles.DragZone.Bounds.RectZone
+import com.android.wm.shell.shared.bubbles.DragZone.DropTargetRect
 import com.android.wm.shell.shared.bubbles.DragZoneFactory.SplitScreenModeChecker.SplitScreenMode
 
 /** A class for creating drag zones for dragging bubble objects or dragging into bubbles. */
@@ -28,12 +31,14 @@ class DragZoneFactory(
     private val deviceConfig: DeviceConfig,
     private val splitScreenModeChecker: SplitScreenModeChecker,
     private val desktopWindowModeChecker: DesktopWindowModeChecker,
+    private val bubbleBarPropertiesProvider: BubbleBarPropertiesProvider,
 ) {
 
     private val windowBounds: Rect
         get() = deviceConfig.windowBounds
 
-    private var dismissDragZoneSize = 0
+    private var dismissDragZoneRadius = 0
+    private var dismissDragZoneBottomMargin = 0
     private var bubbleDragZoneTabletSize = 0
     private var bubbleDragZoneFoldableSize = 0
     private var fullScreenDragZoneWidth = 0
@@ -42,6 +47,7 @@ class DragZoneFactory(
     private var desktopWindowDragZoneHeight = 0
     private var desktopWindowFromExpandedViewDragZoneWidth = 0
     private var desktopWindowFromExpandedViewDragZoneHeight = 0
+    private var desktopWindowFromExpandedViewDragZoneYOffset = 0
     private var splitFromBubbleDragZoneHeight = 0
     private var splitFromBubbleDragZoneWidth = 0
     private var hSplitFromExpandedViewDragZoneWidth = 0
@@ -57,52 +63,97 @@ class DragZoneFactory(
     private var expandedViewDropTargetHeight = 0
     private var expandedViewDropTargetPaddingBottom = 0
     private var expandedViewDropTargetPaddingHorizontal = 0
+    private var bubbleBarDropTargetPaddingHorizontal = 0
 
-    private val fullScreenDropTarget: Rect
-        get() =
-            Rect(windowBounds).apply {
-                inset(fullScreenDropTargetPadding, fullScreenDropTargetPadding)
-            }
+    private var dropTargetCornerRadius = 0f
 
-    private val desktopWindowDropTarget: Rect
+    private val fullScreenDropTarget: DropTargetRect
         get() =
-            Rect(windowBounds).apply {
-                if (deviceConfig.isLandscape) {
-                    inset(
-                        /* dx= */ desktopWindowDropTargetPaddingLarge,
-                        /* dy= */ desktopWindowDropTargetPaddingSmall
-                    )
-                } else {
-                    inset(
-                        /* dx= */ desktopWindowDropTargetPaddingSmall,
-                        /* dy= */ desktopWindowDropTargetPaddingLarge
-                    )
-                }
-            }
-
-    private val expandedViewDropTargetLeft: Rect
-        get() =
-            Rect(
-                expandedViewDropTargetPaddingHorizontal,
-                windowBounds.bottom -
-                    expandedViewDropTargetPaddingBottom -
-                    expandedViewDropTargetHeight,
-                expandedViewDropTargetWidth + expandedViewDropTargetPaddingHorizontal,
-                windowBounds.bottom - expandedViewDropTargetPaddingBottom
+            DropTargetRect(
+                Rect(windowBounds).apply {
+                    inset(fullScreenDropTargetPadding, fullScreenDropTargetPadding)
+                },
+                dropTargetCornerRadius
             )
 
-    private val expandedViewDropTargetRight: Rect
+    private val desktopWindowDropTarget: DropTargetRect
         get() =
-            Rect(
-                windowBounds.right -
-                    expandedViewDropTargetPaddingHorizontal -
-                    expandedViewDropTargetWidth,
-                windowBounds.bottom -
-                    expandedViewDropTargetPaddingBottom -
-                    expandedViewDropTargetHeight,
-                windowBounds.right - expandedViewDropTargetPaddingHorizontal,
-                windowBounds.bottom - expandedViewDropTargetPaddingBottom
+            DropTargetRect(
+                Rect(windowBounds).apply {
+                    if (deviceConfig.isLandscape) {
+                        inset(
+                            /* dx= */ desktopWindowDropTargetPaddingLarge,
+                            /* dy= */ desktopWindowDropTargetPaddingSmall
+                        )
+                    } else {
+                        inset(
+                            /* dx= */ desktopWindowDropTargetPaddingSmall,
+                            /* dy= */ desktopWindowDropTargetPaddingLarge
+                        )
+                    }
+                },
+                dropTargetCornerRadius
             )
+
+    private val expandedViewDropTargetLeft: DropTargetRect
+        get() =
+            DropTargetRect(
+                Rect(
+                    expandedViewDropTargetPaddingHorizontal,
+                    windowBounds.bottom -
+                        expandedViewDropTargetPaddingBottom -
+                        expandedViewDropTargetHeight,
+                    expandedViewDropTargetWidth + expandedViewDropTargetPaddingHorizontal,
+                    windowBounds.bottom - expandedViewDropTargetPaddingBottom
+                ),
+                dropTargetCornerRadius
+            )
+
+    private val expandedViewDropTargetRight: DropTargetRect
+        get() =
+            DropTargetRect(
+                Rect(
+                    windowBounds.right -
+                        expandedViewDropTargetPaddingHorizontal -
+                        expandedViewDropTargetWidth,
+                    windowBounds.bottom -
+                        expandedViewDropTargetPaddingBottom -
+                        expandedViewDropTargetHeight,
+                    windowBounds.right - expandedViewDropTargetPaddingHorizontal,
+                    windowBounds.bottom - expandedViewDropTargetPaddingBottom
+                ),
+                dropTargetCornerRadius
+            )
+
+    private val bubbleBarDropTargetLeft: DropTargetRect
+        get() {
+            val rect =
+                Rect(
+                    bubbleBarDropTargetPaddingHorizontal,
+                    windowBounds.bottom -
+                        bubbleBarPropertiesProvider.getBottomPadding() -
+                        bubbleBarPropertiesProvider.getHeight(),
+                    bubbleBarDropTargetPaddingHorizontal + bubbleBarPropertiesProvider.getWidth(),
+                    windowBounds.bottom - bubbleBarPropertiesProvider.getBottomPadding()
+                )
+            return DropTargetRect(rect, rect.height() / 2f)
+        }
+
+    private val bubbleBarDropTargetRight: DropTargetRect
+        get() {
+            val rect =
+                Rect(
+                    windowBounds.right -
+                        bubbleBarDropTargetPaddingHorizontal -
+                        bubbleBarPropertiesProvider.getWidth(),
+                    windowBounds.bottom -
+                        bubbleBarPropertiesProvider.getBottomPadding() -
+                        bubbleBarPropertiesProvider.getHeight(),
+                    windowBounds.right - bubbleBarDropTargetPaddingHorizontal,
+                    windowBounds.bottom - bubbleBarPropertiesProvider.getBottomPadding()
+                )
+            return DropTargetRect(rect, rect.height() / 2f)
+        }
 
     init {
         onConfigurationUpdated()
@@ -112,8 +163,8 @@ class DragZoneFactory(
     fun onConfigurationUpdated() {
         // TODO b/396539130: Use the shared xml resources once we can easily access them from
         //  launcher
-        dismissDragZoneSize =
-            if (deviceConfig.isSmallTablet) 140.dpToPx() else 200.dpToPx()
+        dismissDragZoneRadius = 96.dpToPx()
+        dismissDragZoneBottomMargin = 12.dpToPx()
         bubbleDragZoneTabletSize = 200.dpToPx()
         bubbleDragZoneFoldableSize = 140.dpToPx()
         fullScreenDragZoneWidth = 512.dpToPx()
@@ -122,6 +173,7 @@ class DragZoneFactory(
         desktopWindowDragZoneHeight = 300.dpToPx()
         desktopWindowFromExpandedViewDragZoneWidth = 200.dpToPx()
         desktopWindowFromExpandedViewDragZoneHeight = 350.dpToPx()
+        desktopWindowFromExpandedViewDragZoneYOffset = 25.dpToPx()
         splitFromBubbleDragZoneHeight = 100.dpToPx()
         splitFromBubbleDragZoneWidth = 60.dpToPx()
         hSplitFromExpandedViewDragZoneWidth = 60.dpToPx()
@@ -136,6 +188,9 @@ class DragZoneFactory(
         expandedViewDropTargetHeight = 578.dpToPx()
         expandedViewDropTargetPaddingBottom = 108.dpToPx()
         expandedViewDropTargetPaddingHorizontal = 24.dpToPx()
+        bubbleBarDropTargetPaddingHorizontal = 24.dpToPx()
+
+        dropTargetCornerRadius = 28.dpToPx().toFloat()
     }
 
     private fun Context.resolveDimension(@DimenRes dimension: Int) =
@@ -160,7 +215,7 @@ class DragZoneFactory(
         when (draggedObject) {
             is DraggedObject.BubbleBar -> {
                 dragZones.add(createDismissDragZone())
-                dragZones.addAll(createBubbleHalfScreenDragZones())
+                dragZones.addAll(createBubbleHalfScreenDragZones(forBubbleBar = true))
             }
             is DraggedObject.Bubble -> {
                 dragZones.add(createDismissDragZone())
@@ -182,65 +237,80 @@ class DragZoneFactory(
                 } else {
                     dragZones.addAll(createSplitScreenDragZonesForExpandedViewOnTablet())
                 }
-                dragZones.addAll(createBubbleHalfScreenDragZones())
+                dragZones.addAll(createBubbleHalfScreenDragZones(forBubbleBar = false))
+            }
+            is DraggedObject.LauncherIcon -> {
+                val showDropTarget = draggedObject.showDropTarget
+                val showSecondDropTarget = !draggedObject.bubbleBarHasBubbles
+                dragZones.addAll(createBubbleCornerDragZones(showDropTarget, showSecondDropTarget))
             }
         }
         return dragZones
     }
 
-    private fun createDismissDragZone(): DragZone {
-        return DragZone.Dismiss(
-            bounds =
-                Rect(
-                    windowBounds.right / 2 - dismissDragZoneSize / 2,
-                    windowBounds.bottom - dismissDragZoneSize,
-                    windowBounds.right / 2 + dismissDragZoneSize / 2,
-                    windowBounds.bottom
-                )
-        )
-    }
-
-    private fun createBubbleCornerDragZones(): List<DragZone> {
+    fun getBubbleBarDropRect(isLeftSide: Boolean): Rect {
         val dragZoneSize =
             if (deviceConfig.isSmallTablet) {
                 bubbleDragZoneFoldableSize
             } else {
                 bubbleDragZoneTabletSize
             }
+        return Rect(
+            if (isLeftSide) 0 else windowBounds.right - dragZoneSize,
+            windowBounds.bottom - dragZoneSize,
+            if (isLeftSide) dragZoneSize else windowBounds.right,
+            windowBounds.bottom
+        )
+    }
+
+    private fun createDismissDragZone(): DragZone {
+        return DragZone.Dismiss(
+            bounds =
+                CircleZone(
+                    x = windowBounds.right / 2,
+                    y = windowBounds.bottom - dismissDragZoneBottomMargin - dismissDragZoneRadius,
+                    radius = dismissDragZoneRadius
+                )
+        )
+    }
+
+    private fun createBubbleCornerDragZones(
+        showDropTarget: Boolean = true,
+        showSecondDropTarget: Boolean = false
+    ): List<DragZone> {
         return listOf(
             DragZone.Bubble.Left(
-                bounds =
-                    Rect(0, windowBounds.bottom - dragZoneSize, dragZoneSize, windowBounds.bottom),
-                dropTarget = expandedViewDropTargetLeft,
+                bounds = RectZone(getBubbleBarDropRect(isLeftSide = true)),
+                dropTarget = if (showDropTarget) expandedViewDropTargetLeft else null,
+                secondDropTarget = if (showSecondDropTarget) bubbleBarDropTargetLeft else null
             ),
             DragZone.Bubble.Right(
-                bounds =
-                    Rect(
-                        windowBounds.right - dragZoneSize,
-                        windowBounds.bottom - dragZoneSize,
-                        windowBounds.right,
-                        windowBounds.bottom,
-                    ),
-                dropTarget = expandedViewDropTargetRight,
+                bounds = RectZone(getBubbleBarDropRect(isLeftSide = false)),
+                dropTarget = if (showDropTarget) expandedViewDropTargetRight else null,
+                secondDropTarget = if (showSecondDropTarget) bubbleBarDropTargetRight else null
             )
         )
     }
 
-    private fun createBubbleHalfScreenDragZones(): List<DragZone> {
+    private fun createBubbleHalfScreenDragZones(forBubbleBar: Boolean): List<DragZone> {
         return listOf(
             DragZone.Bubble.Left(
-                bounds = Rect(0, 0, windowBounds.right / 2, windowBounds.bottom),
-                dropTarget = expandedViewDropTargetLeft,
+                bounds = RectZone(Rect(0, 0, windowBounds.right / 2, windowBounds.bottom)),
+                dropTarget =
+                    if (forBubbleBar) bubbleBarDropTargetLeft else expandedViewDropTargetLeft,
             ),
             DragZone.Bubble.Right(
                 bounds =
-                    Rect(
-                        windowBounds.right / 2,
-                        0,
-                        windowBounds.right,
-                        windowBounds.bottom,
+                    RectZone(
+                        Rect(
+                            windowBounds.right / 2,
+                            0,
+                            windowBounds.right,
+                            windowBounds.bottom,
+                        ),
                     ),
-                dropTarget = expandedViewDropTargetRight,
+                dropTarget =
+                    if (forBubbleBar) bubbleBarDropTargetRight else expandedViewDropTargetRight,
             )
         )
     }
@@ -248,11 +318,13 @@ class DragZoneFactory(
     private fun createFullScreenDragZone(): DragZone {
         return DragZone.FullScreen(
             bounds =
-                Rect(
-                    windowBounds.right / 2 - fullScreenDragZoneWidth / 2,
-                    0,
-                    windowBounds.right / 2 + fullScreenDragZoneWidth / 2,
-                    fullScreenDragZoneHeight
+                RectZone(
+                    Rect(
+                        windowBounds.right / 2 - fullScreenDragZoneWidth / 2,
+                        0,
+                        windowBounds.right / 2 + fullScreenDragZoneWidth / 2,
+                        fullScreenDragZoneHeight
+                    ),
                 ),
             dropTarget = fullScreenDropTarget
         )
@@ -265,18 +337,22 @@ class DragZoneFactory(
         return DragZone.DesktopWindow(
             bounds =
                 if (deviceConfig.isLandscape) {
-                    Rect(
-                        windowBounds.right / 2 - desktopWindowDragZoneWidth / 2,
-                        windowBounds.bottom / 2 - desktopWindowDragZoneHeight / 2,
-                        windowBounds.right / 2 + desktopWindowDragZoneWidth / 2,
-                        windowBounds.bottom / 2 + desktopWindowDragZoneHeight / 2
+                    RectZone(
+                        Rect(
+                            windowBounds.right / 2 - desktopWindowDragZoneWidth / 2,
+                            windowBounds.bottom / 2 - desktopWindowDragZoneHeight / 2,
+                            windowBounds.right / 2 + desktopWindowDragZoneWidth / 2,
+                            windowBounds.bottom / 2 + desktopWindowDragZoneHeight / 2
+                        )
                     )
                 } else {
-                    Rect(
-                        0,
-                        windowBounds.bottom / 2 - desktopWindowDragZoneHeight / 2,
-                        windowBounds.right,
-                        windowBounds.bottom / 2 + desktopWindowDragZoneHeight / 2
+                    RectZone(
+                        Rect(
+                            0,
+                            windowBounds.bottom / 2 - desktopWindowDragZoneHeight / 2,
+                            windowBounds.right,
+                            windowBounds.bottom / 2 + desktopWindowDragZoneHeight / 2
+                        )
                     )
                 },
             dropTarget = desktopWindowDropTarget
@@ -286,11 +362,15 @@ class DragZoneFactory(
     private fun createDesktopWindowDragZoneForExpandedView(): DragZone {
         return DragZone.DesktopWindow(
             bounds =
-                Rect(
-                    windowBounds.right / 2 - desktopWindowFromExpandedViewDragZoneWidth / 2,
-                    windowBounds.bottom / 2 - desktopWindowFromExpandedViewDragZoneHeight / 2,
-                    windowBounds.right / 2 + desktopWindowFromExpandedViewDragZoneWidth / 2,
-                    windowBounds.bottom / 2 + desktopWindowFromExpandedViewDragZoneHeight / 2
+                RectZone(
+                    Rect(
+                        windowBounds.right / 2 - desktopWindowFromExpandedViewDragZoneWidth / 2,
+                        windowBounds.bottom / 2 - desktopWindowFromExpandedViewDragZoneHeight / 2 -
+                            desktopWindowFromExpandedViewDragZoneYOffset,
+                        windowBounds.right / 2 + desktopWindowFromExpandedViewDragZoneWidth / 2,
+                        windowBounds.bottom / 2 + desktopWindowFromExpandedViewDragZoneHeight / 2 -
+                            desktopWindowFromExpandedViewDragZoneYOffset
+                    ),
                 ),
             dropTarget = desktopWindowDropTarget
         )
@@ -307,15 +387,18 @@ class DragZoneFactory(
                 SplitScreenMode.NONE ->
                     listOf(
                         DragZone.Split.Top(
-                            bounds = Rect(0, 0, windowBounds.right, windowBounds.bottom / 2),
+                            bounds =
+                                RectZone(Rect(0, 0, windowBounds.right, windowBounds.bottom / 2)),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    0,
-                                    windowBounds.bottom / 2,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        windowBounds.bottom / 2,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -323,20 +406,24 @@ class DragZoneFactory(
                     listOf(
                         DragZone.Split.Top(
                             bounds =
-                                Rect(
-                                    0,
-                                    0,
-                                    windowBounds.right,
-                                    windowBounds.bottom - splitFromBubbleDragZoneHeight
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        0,
+                                        windowBounds.right,
+                                        windowBounds.bottom - splitFromBubbleDragZoneHeight
+                                    ),
                                 ),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    0,
-                                    windowBounds.bottom - splitFromBubbleDragZoneHeight,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        windowBounds.bottom - splitFromBubbleDragZoneHeight,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -344,15 +431,20 @@ class DragZoneFactory(
                 SplitScreenMode.SPLIT_10_90 -> {
                     listOf(
                         DragZone.Split.Top(
-                            bounds = Rect(0, 0, windowBounds.right, splitFromBubbleDragZoneHeight),
+                            bounds =
+                                RectZone(
+                                    Rect(0, 0, windowBounds.right, splitFromBubbleDragZoneHeight)
+                                ),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    0,
-                                    splitFromBubbleDragZoneHeight,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        splitFromBubbleDragZoneHeight,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -365,15 +457,18 @@ class DragZoneFactory(
                 SplitScreenMode.NONE ->
                     listOf(
                         DragZone.Split.Left(
-                            bounds = Rect(0, 0, windowBounds.right / 2, windowBounds.bottom),
+                            bounds =
+                                RectZone(Rect(0, 0, windowBounds.right / 2, windowBounds.bottom)),
                         ),
                         DragZone.Split.Right(
                             bounds =
-                                Rect(
-                                    windowBounds.right / 2,
-                                    0,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        windowBounds.right / 2,
+                                        0,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -381,35 +476,44 @@ class DragZoneFactory(
                     listOf(
                         DragZone.Split.Left(
                             bounds =
-                                Rect(
-                                    0,
-                                    0,
-                                    windowBounds.right - splitFromBubbleDragZoneWidth,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        0,
+                                        windowBounds.right - splitFromBubbleDragZoneWidth,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         ),
                         DragZone.Split.Right(
                             bounds =
-                                Rect(
-                                    windowBounds.right - splitFromBubbleDragZoneWidth,
-                                    0,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        windowBounds.right - splitFromBubbleDragZoneWidth,
+                                        0,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
                 SplitScreenMode.SPLIT_10_90 ->
                     listOf(
                         DragZone.Split.Left(
-                            bounds = Rect(0, 0, splitFromBubbleDragZoneWidth, windowBounds.bottom),
+                            bounds =
+                                RectZone(
+                                    Rect(0, 0, splitFromBubbleDragZoneWidth, windowBounds.bottom)
+                                ),
                         ),
                         DragZone.Split.Right(
                             bounds =
-                                Rect(
-                                    splitFromBubbleDragZoneWidth,
-                                    0,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        splitFromBubbleDragZoneWidth,
+                                        0,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -422,27 +526,35 @@ class DragZoneFactory(
             createHorizontalSplitDragZonesForExpandedView()
         } else {
             // for tablets in portrait mode, split drag zones appear below the full screen drag zone
-            // for the top split zone, and above the dismiss zone. Both are horizontally centered.
+            // for the top split zone. the bottom edge of the bottom split zone starts at the
+            // dismiss zone upper half circle to cover the area outside of the dismiss circle but
+            // within the split zone width. Both are horizontally centered.
             val splitZoneLeft = windowBounds.right / 2 - vSplitFromExpandedViewDragZoneWidth / 2
             val splitZoneRight = splitZoneLeft + vSplitFromExpandedViewDragZoneWidth
-            val bottomSplitZoneBottom = windowBounds.bottom - dismissDragZoneSize
+            val bottomSplitZoneBottom =
+                windowBounds.bottom - dismissDragZoneBottomMargin - dismissDragZoneRadius * 2
             listOf(
                 DragZone.Split.Top(
                     bounds =
-                        Rect(
-                            splitZoneLeft,
-                            fullScreenDragZoneHeight,
-                            splitZoneRight,
-                            fullScreenDragZoneHeight + vSplitFromExpandedViewDragZoneHeightTablet
+                        RectZone(
+                            Rect(
+                                splitZoneLeft,
+                                fullScreenDragZoneHeight,
+                                splitZoneRight,
+                                fullScreenDragZoneHeight +
+                                    vSplitFromExpandedViewDragZoneHeightTablet
+                            ),
                         ),
                 ),
                 DragZone.Split.Bottom(
                     bounds =
-                        Rect(
-                            splitZoneLeft,
-                            bottomSplitZoneBottom - vSplitFromExpandedViewDragZoneHeightTablet,
-                            splitZoneRight,
-                            bottomSplitZoneBottom
+                        RectZone(
+                            Rect(
+                                splitZoneLeft,
+                                bottomSplitZoneBottom - vSplitFromExpandedViewDragZoneHeightTablet,
+                                splitZoneRight,
+                                bottomSplitZoneBottom
+                            ),
                         ),
                 )
             )
@@ -460,22 +572,26 @@ class DragZoneFactory(
                     listOf(
                         DragZone.Split.Top(
                             bounds =
-                                Rect(
-                                    splitZoneLeft,
-                                    fullScreenDragZoneHeight,
-                                    splitZoneLeft + fullScreenDragZoneWidth,
-                                    fullScreenDragZoneHeight +
-                                        vSplitFromExpandedViewDragZoneHeightFoldTall
+                                RectZone(
+                                    Rect(
+                                        splitZoneLeft,
+                                        fullScreenDragZoneHeight,
+                                        splitZoneLeft + fullScreenDragZoneWidth,
+                                        fullScreenDragZoneHeight +
+                                            vSplitFromExpandedViewDragZoneHeightFoldTall
+                                    ),
                                 ),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    splitZoneLeft,
-                                    windowBounds.bottom / 2,
-                                    splitZoneLeft + fullScreenDragZoneWidth,
-                                    windowBounds.bottom / 2 +
-                                        vSplitFromExpandedViewDragZoneHeightFoldTall
+                                RectZone(
+                                    Rect(
+                                        splitZoneLeft,
+                                        windowBounds.bottom / 2,
+                                        splitZoneLeft + fullScreenDragZoneWidth,
+                                        windowBounds.bottom / 2 +
+                                            vSplitFromExpandedViewDragZoneHeightFoldTall
+                                    ),
                                 ),
                         )
                     )
@@ -483,21 +599,25 @@ class DragZoneFactory(
                     listOf(
                         DragZone.Split.Top(
                             bounds =
-                                Rect(
-                                    0,
-                                    0,
-                                    windowBounds.right,
-                                    vSplitFromExpandedViewDragZoneHeightFoldShort
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        0,
+                                        windowBounds.right,
+                                        vSplitFromExpandedViewDragZoneHeightFoldShort
+                                    ),
                                 ),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    splitZoneLeft,
-                                    vSplitFromExpandedViewDragZoneHeightFoldShort,
-                                    splitZoneLeft + fullScreenDragZoneWidth,
-                                    vSplitFromExpandedViewDragZoneHeightFoldShort +
-                                        vSplitFromExpandedViewDragZoneHeightFoldTall
+                                RectZone(
+                                    Rect(
+                                        splitZoneLeft,
+                                        vSplitFromExpandedViewDragZoneHeightFoldShort,
+                                        splitZoneLeft + fullScreenDragZoneWidth,
+                                        vSplitFromExpandedViewDragZoneHeightFoldShort +
+                                            vSplitFromExpandedViewDragZoneHeightFoldTall
+                                    ),
                                 ),
                         )
                     )
@@ -505,22 +625,26 @@ class DragZoneFactory(
                     listOf(
                         DragZone.Split.Top(
                             bounds =
-                                Rect(
-                                    splitZoneLeft,
-                                    fullScreenDragZoneHeight,
-                                    splitZoneLeft + fullScreenDragZoneWidth,
-                                    fullScreenDragZoneHeight +
-                                        vSplitFromExpandedViewDragZoneHeightFoldTall
+                                RectZone(
+                                    Rect(
+                                        splitZoneLeft,
+                                        fullScreenDragZoneHeight,
+                                        splitZoneLeft + fullScreenDragZoneWidth,
+                                        fullScreenDragZoneHeight +
+                                            vSplitFromExpandedViewDragZoneHeightFoldTall
+                                    ),
                                 ),
                         ),
                         DragZone.Split.Bottom(
                             bounds =
-                                Rect(
-                                    0,
-                                    windowBounds.bottom -
-                                        vSplitFromExpandedViewDragZoneHeightFoldShort,
-                                    windowBounds.right,
-                                    windowBounds.bottom
+                                RectZone(
+                                    Rect(
+                                        0,
+                                        windowBounds.bottom -
+                                            vSplitFromExpandedViewDragZoneHeightFoldShort,
+                                        windowBounds.right,
+                                        windowBounds.bottom
+                                    ),
                                 ),
                         )
                     )
@@ -534,23 +658,20 @@ class DragZoneFactory(
     private fun createHorizontalSplitDragZonesForExpandedView(): List<DragZone> {
         // horizontal split drag zones for expanded view appear on the edges of the screen from the
         // top down until the dismiss drag zone height
+        val bottomY = windowBounds.bottom - dismissDragZoneBottomMargin - dismissDragZoneRadius * 2
         return listOf(
             DragZone.Split.Left(
-                bounds =
-                    Rect(
-                        0,
-                        0,
-                        hSplitFromExpandedViewDragZoneWidth,
-                        windowBounds.bottom - dismissDragZoneSize
-                    ),
+                bounds = RectZone(Rect(0, 0, hSplitFromExpandedViewDragZoneWidth, bottomY))
             ),
             DragZone.Split.Right(
                 bounds =
-                    Rect(
-                        windowBounds.right - hSplitFromExpandedViewDragZoneWidth,
-                        0,
-                        windowBounds.right,
-                        windowBounds.bottom - dismissDragZoneSize
+                    RectZone(
+                        Rect(
+                            windowBounds.right - hSplitFromExpandedViewDragZoneWidth,
+                            0,
+                            windowBounds.right,
+                            bottomY
+                        ),
                     ),
             )
         )
@@ -572,5 +693,14 @@ class DragZoneFactory(
     /** Checks if desktop window mode is supported. */
     fun interface DesktopWindowModeChecker {
         fun isSupported(): Boolean
+    }
+
+    /** Bubble bar properties for generating a drop target. */
+    interface BubbleBarPropertiesProvider {
+        fun getHeight(): Int = 0
+
+        fun getWidth(): Int = 0
+
+        fun getBottomPadding(): Int = 0
     }
 }

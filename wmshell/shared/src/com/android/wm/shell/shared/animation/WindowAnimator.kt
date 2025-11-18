@@ -26,6 +26,8 @@ import android.view.Choreographer
 import android.view.SurfaceControl
 import android.view.animation.Interpolator
 import android.window.TransitionInfo
+import com.android.wm.shell.shared.animation.WindowAnimator.BoundsAnimationParams.AnimationBounds.END
+import com.android.wm.shell.shared.animation.WindowAnimator.BoundsAnimationParams.AnimationBounds.START
 
 /** Creates animations that can be applied to windows/surfaces. */
 object WindowAnimator {
@@ -38,7 +40,10 @@ object WindowAnimator {
         val startScale: Float = 1f,
         val endScale: Float = 1f,
         val interpolator: Interpolator,
-    )
+        val animBounds: AnimationBounds = END,
+    ) {
+        enum class AnimationBounds { START, END }
+    }
 
     /**
      * Creates an animator to reposition and scale the bounds of the leash of the given change.
@@ -54,10 +59,14 @@ object WindowAnimator {
         change: TransitionInfo.Change,
         transaction: SurfaceControl.Transaction,
     ): ValueAnimator {
+        val bounds = when (boundsAnimDef.animBounds) {
+            START -> change.startAbsBounds
+            END -> change.endAbsBounds
+        }
         val startPos =
             getPosition(
                 displayMetrics,
-                change.endAbsBounds,
+                bounds,
                 boundsAnimDef.startScale,
                 boundsAnimDef.startOffsetYDp,
             )
@@ -65,7 +74,7 @@ object WindowAnimator {
         val endPos =
             getPosition(
                 displayMetrics,
-                change.endAbsBounds,
+                bounds,
                 boundsAnimDef.endScale,
                 boundsAnimDef.endOffsetYDp,
             )

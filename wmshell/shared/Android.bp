@@ -57,6 +57,7 @@ android_library {
         "androidx.core_core-animation",
         "androidx.dynamicanimation_dynamicanimation",
         "com_android_wm_shell_flags_lib",
+        "com.android.window.flags.window-aconfig-java",
         "jsr330",
     ],
     kotlincflags: ["-Xjvm-default=all"],
@@ -91,5 +92,6 @@ java_library {
     ],
     static_libs: [
         "com_android_wm_shell_flags_lib",
+        "com.android.window.flags.window-aconfig-java",
     ],
 }

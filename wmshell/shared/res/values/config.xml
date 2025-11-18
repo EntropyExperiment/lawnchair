@@ -15,4 +15,6 @@
     limitations under the License.
 -->
 <resources>
+    <!-- The time duration for animating a fullscreen task to a desktop. -->
+    <integer name="to_desktop_animation_duration_ms">336</integer>
 </resources>
