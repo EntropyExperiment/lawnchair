@@ -30,6 +30,7 @@ compose = "1.9.4"
 composeMaterial = "1.9.4"
 composeMaterial3 = "1.5.0-alpha08"
 composeMaterialIcons = "1.7.8"
+composeCompiler = "1.5.15"
 constraintlayout = "2.2.1"
 dagger = "2.57.2"
 datastore = "1.1.7"
@@ -135,6 +136,7 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose" }
+compose-compiler = { group = "androidx.compose.compiler", name = "compose-compiler", version.ref = "composeCompiler"}
 
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }

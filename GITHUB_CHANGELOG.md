@@ -9,6 +9,7 @@ Build: BS8.1711
 This is a developer-focused change log:
 * Migrate some functions to new changes
 * WM-Shell (and WM-Shell Shared) updated to Android 16-0.0_r3 (Android 16.0.0 Release 3)
+* Add Mechanics (SystemUI Platform Library)
 
 ### 🥞 Snapshot 7 (Development 4 Release 1)
 

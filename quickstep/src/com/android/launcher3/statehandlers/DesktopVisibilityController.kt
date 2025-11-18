@@ -25,7 +25,7 @@ import android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVI
 import androidx.core.util.forEach
 import com.android.internal.util.LatencyTracker
 import com.android.launcher3.LauncherState
-import com.android.launcher3.R
+//import com.android.launcher3.R
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -47,6 +47,8 @@ import com.android.wm.shell.shared.desktopmode.DesktopModeStatus.useRoundedCorne
 import java.io.PrintWriter
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+
+import com.android.wm.shell.R as SharedR
 
 /**
  * Controls the visibility of the workspace and the resumed / paused state when desktop mode is
@@ -601,7 +603,7 @@ constructor(
             (newActiveDesk == INACTIVE_DESK_ID || oldActiveDesk == INACTIVE_DESK_ID) &&
                 !launcherAnimationRunning
         ) {
-            val duration = context.resources.getInteger(R.integer.to_desktop_animation_duration_ms)
+            val duration = context.resources.getInteger(SharedR.integer.to_desktop_animation_duration_ms)
             if (oldActiveDesk == INACTIVE_DESK_ID && newActiveDesk != INACTIVE_DESK_ID) {
                 notifyTaskbarDesktopModeListenersForEntry(duration)
             } else if (newActiveDesk == INACTIVE_DESK_ID && oldActiveDesk != INACTIVE_DESK_ID) {

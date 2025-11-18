@@ -383,6 +383,7 @@ dependencies {
     implementation projects.contextualeducationlib
     implementation projects.viewcapturelib
     implementation projects.displaylib
+    implementation projects.mechanics
 
     // Recents lib dependency
     withQuickstepCompileOnly projects.hiddenApi

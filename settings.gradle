@@ -66,6 +66,9 @@ project(':viewcapturelib').projectDir = new File(rootDir, 'platform_frameworks_l
 include ':displaylib'
 project(':displaylib').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/displaylib')
 
+include ':mechanics'
+project(':mechanics').projectDir = new File(rootDir, 'platform_frameworks_libs_systemui/mechanics')
+
 include ':hidden-api'
 
 include ':shared'

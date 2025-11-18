@@ -115,7 +115,7 @@ class TaskbarInsetsController(val context: TaskbarActivityContext) : LoggableTas
         gestureNavSettingsObserver.unregister()
     }
 
-    fun onTaskbarOrBubblebarWindowHeightOrInsetsChanged() = {
+    fun onTaskbarOrBubblebarWindowHeightOrInsetsChanged() {
             val taskbarStashController = controllers.taskbarStashController
             val tappableHeight = taskbarStashController.tappableHeightToReportToApps
             // We only report tappableElement height for unstashed, persistent taskbar,
@@ -305,7 +305,7 @@ class TaskbarInsetsController(val context: TaskbarActivityContext) : LoggableTas
             )
         if (
             (context.isGestureNav || ENABLE_TASKBAR_NAVBAR_UNIFICATION) &&
-                provider.type == tappableElement()
+            provider.type == tappableElement()
         ) {
             provider.insetsSizeOverrides = insetsSizeOverrideForTappableElement
         } else if (provider.type != systemGestures()) {
