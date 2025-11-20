@@ -2,17 +2,20 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Snapshot 9 (Development 4 Release 1) (Draft)
+### 🥞 Snapshot 9 (Development 4 Release 1)
 
-Build: BS9.1811
+This snapshot marks the first time Bubble Tea QPR1 is able to assemble the APK without errors, 
+all that's left is bug bash testing. Limited visibility closed testing is available.
+
+Build: BS9.2011
 
 This is a developer-focused change log:
 * Re-added searchuilib
-* Fix some errors in Lawnchair side
 * SearchUiLib updated to latest commits before being private
 * Exclude disabled variant of Compose launcher3 features
+* Fix all errors in Lawnchair side
 
-### 🥞 Snapshot 8 (Development 4 Release 1)
+### Snapshot 8 (Development 4 Release 1)
 
 Build: BS8.1811
 
