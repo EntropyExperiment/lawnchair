@@ -6,7 +6,8 @@
 
 Build: BS9.1811
 
-TBC
+This is a developer-focused change log:
+* Re-added searchuilib
 
 ### 🥞 Snapshot 8 (Development 4 Release 1)
 
@@ -22,7 +23,7 @@ This is a developer-focused change log:
 * Add Mechanics (SystemUI Platform Library)
 * Some unresolved reference in Lawnchair code
 
-### 🥞 Snapshot 7 (Development 4 Release 1)
+### Snapshot 7 (Development 4 Release 1)
 
 Build: BS7.1711
 
