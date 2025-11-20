@@ -8,6 +8,8 @@ Build: BS9.1811
 
 This is a developer-focused change log:
 * Re-added searchuilib
+* Fix some errors in Lawnchair side
+* SearchUiLib updated to latest commits before being private
 
 ### 🥞 Snapshot 8 (Development 4 Release 1)
 
