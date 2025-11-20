@@ -20,6 +20,7 @@ import static com.android.launcher3.WorkspaceLayoutManager.FIRST_SCREEN_ID;
 import android.util.LongSparseArray;
 
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherSettings;

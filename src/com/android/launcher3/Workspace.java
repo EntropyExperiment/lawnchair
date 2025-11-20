@@ -656,7 +656,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      * Initializes and binds the first page
      */
     public void bindAndInitFirstWorkspaceScreen() {
-        if (!BuildConfig.QSB_ON_FIRST_SCREEN) {
+        if (!BuildConfigs.QSB_ON_FIRST_SCREEN) {
             mFirstPagePinnedItem = null;
             return;
         }
@@ -1094,7 +1094,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
             int id = mWorkspaceScreens.keyAt(i);
             CellLayout cl = mWorkspaceScreens.valueAt(i);
             // FIRST_SCREEN_ID can never be removed.
-            if ((!BuildConfig.QSB_ON_FIRST_SCREEN || id > FIRST_SCREEN_ID)
+            if ((!BuildConfigs.QSB_ON_FIRST_SCREEN || id > FIRST_SCREEN_ID)
                     && cl.getShortcutsAndWidgets().getChildCount() == 0) {
                 removeScreens.add(id);
             }

@@ -16,7 +16,7 @@
 
 package com.android.launcher3.model;
 
-import static com.android.launcher3.BuildConfig.QSB_ON_FIRST_SCREEN;
+import static com.android.launcher3.BuildConfigs.QSB_ON_FIRST_SCREEN;
 import static com.android.launcher3.GridType.GRID_TYPE_NON_ONE_GRID;
 import static com.android.launcher3.GridType.GRID_TYPE_ONE_GRID;
 import static com.android.launcher3.InvariantDeviceProfile.TYPE_TABLET;

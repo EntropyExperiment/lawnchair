@@ -234,7 +234,7 @@ public class AppPairsController {
                 if (delegate == null) {
                     return;
                 }
-                if (RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()) {
+                if (RecentsWindowFlags.enableLauncherOverviewInWindow) {
                     PerDisplayRepository<RecentsWindowManager> recentsWindowManagerRepository =
                             RecentsWindowManager.REPOSITORY_INSTANCE.get(mContext.asContext());
                     recentsWindowManagerRepository.get(gtv.getDisplayId())

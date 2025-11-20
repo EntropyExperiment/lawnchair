@@ -49,6 +49,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Hotseat;
@@ -326,7 +327,7 @@ public class LauncherPreviewRenderer extends BaseContext
         populateHotseatPredictions(itemIdMap);
 
         // Add first page QSB
-        if (BuildConfig.QSB_ON_FIRST_SCREEN) {
+        if (BuildConfigs.QSB_ON_FIRST_SCREEN) {
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
             if (firstScreen != null) {
                 View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen, false);

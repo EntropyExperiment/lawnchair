@@ -63,7 +63,7 @@ public abstract class AbstractQuickStepTest
     @Override
     protected void onLauncherActivityClose(QuickstepLauncher launcher) {
         super.onLauncherActivityClose(launcher);
-        if (RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()) {
+        if (RecentsWindowFlags.enableLauncherOverviewInWindow) {
             executeOnRecentsWindowIfPresent(RecentsWindowManager::cleanupRecentsWindow);
         }
         RecentsView recentsView = launcher.getOverviewPanel();
@@ -111,7 +111,7 @@ public abstract class AbstractQuickStepTest
     @Override
     protected boolean isInState(Supplier<LauncherState> state) {
         if (!TestHelpers.isInLauncherProcess()) return true;
-        if (!RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()
+        if (!RecentsWindowFlags.enableLauncherOverviewInWindow
                 || !hasEquivalentRecentsState(state.get())) {
             return super.isInState(state);
         }
@@ -124,7 +124,7 @@ public abstract class AbstractQuickStepTest
     protected void waitForState(
             boolean forInitialization, String message, Supplier<LauncherState> state) {
         if (!TestHelpers.isInLauncherProcess()) return;
-        if (!RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()
+        if (!RecentsWindowFlags.enableLauncherOverviewInWindow
                 || !hasEquivalentRecentsState(state.get())
                 || (forInitialization
                 && RecentsWindowManager.getRecentsWindowTracker().getCreatedContext() == null)) {
@@ -140,7 +140,7 @@ public abstract class AbstractQuickStepTest
     @Nullable
     protected RecentsView getOverviewPanel() {
         if (!TestHelpers.isInLauncherProcess()) return null;
-        if (!RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()) {
+        if (!RecentsWindowFlags.enableLauncherOverviewInWindow) {
             return super.getOverviewPanel();
         }
         return getFromRecentsWindowIfPresent(RecentsWindowManager::getOverviewPanel);
@@ -149,7 +149,7 @@ public abstract class AbstractQuickStepTest
     @Override
     protected boolean useNullOverview() {
         return super.useNullOverview()
-                && !RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue();
+                && !RecentsWindowFlags.enableLauncherOverviewInWindow;
     }
 
     protected void assertTestActivityIsRunning(int activityNumber, String message) {

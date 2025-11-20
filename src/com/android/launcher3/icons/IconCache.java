@@ -50,7 +50,6 @@ import androidx.core.util.Pair;
 
 import com.android.launcher3.Flags;
 import com.android.launcher3.InvariantDeviceProfile;
-import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
@@ -88,8 +87,6 @@ import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import app.lawnchair.icons.LawnchairIconProvider;
-
 /**
  * Cache of application icons.  Icons can be made from any thread.
  */
@@ -117,20 +114,6 @@ public class IconCache extends BaseIconCache {
 
     private int mPendingIconRequestCount = 0;
 
-    // Lawnchair: Apply 3p icon pack
-    public IconCache(Context context, InvariantDeviceProfile idp, LauncherIcons.IconPool iconPool, DaggerSingletonTracker lifecycle) {
-        this(
-            context,
-            idp,
-            LauncherFiles.APP_ICONS_DB,
-            UserCache.INSTANCE.get(context),
-            new LawnchairIconProvider(context),
-            InstallSessionHelper.INSTANCE.get(context),
-            iconPool,
-            lifecycle
-        );
-    }
-    
     @Inject
     public IconCache(
             @ApplicationContext Context context,
@@ -151,7 +134,7 @@ public class IconCache extends BaseIconCache {
         mInstallSessionHelper = installSessionHelper;
         mIconPool = iconPool;
 
-        mInstantAppResolver = InstantAppResolver.newInstance(context);
+        mInstantAppResolver = instantAppResolver;
         mWidgetCategoryBitmapInfos = new SparseArray<>();
 
         mCancelledTask = new CancellableTask(() -> null, MAIN_EXECUTOR, c -> { });
@@ -176,7 +159,7 @@ public class IconCache extends BaseIconCache {
         mInstallSessionHelper = installSessionHelper;
         mIconPool = iconPool;
 
-        mInstantAppResolver = instantAppResolver;
+        mInstantAppResolver = InstantAppResolver.newInstance(context);
         mWidgetCategoryBitmapInfos = new SparseArray<>();
 
         mCancelledTask = new CancellableTask(() -> null, MAIN_EXECUTOR, c -> { });

@@ -109,7 +109,7 @@ public abstract class BaseWindowInterface extends
 
     @Override
     public boolean isLauncherOverlayShowing() {
-        if (!RecentsWindowFlags.enableLauncherOverviewInWindow.isTrue()) {
+        if (!RecentsWindowFlags.enableLauncherOverviewInWindow) {
             return false;
         }
         Launcher launcher = Launcher.ACTIVITY_TRACKER.getCreatedContext();

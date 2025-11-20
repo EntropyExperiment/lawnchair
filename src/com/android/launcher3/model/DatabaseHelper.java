@@ -37,6 +37,7 @@ import androidx.annotation.NonNull;
 import com.android.launcher3.AutoInstallsLayout;
 import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.Utilities;

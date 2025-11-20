@@ -302,7 +302,6 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
 
         LauncherAppWidgetInfo widgetInfoOnView = (LauncherAppWidgetInfo) mWidgetView.getTag();
         // Only show resize handles for the directions in which resizing is possible.
-        InvariantDeviceProfile idp = LauncherAppState.getIDP(cellLayout.getContext());
 
         // on font / display change, the dp/px size of a cell changes, which means, existing spans
         // may be invalid. User should be able to resize to the correct widget size.

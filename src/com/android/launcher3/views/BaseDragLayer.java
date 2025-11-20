@@ -574,16 +574,10 @@ public abstract class BaseDragLayer<T extends Context & ActivityContext>
         mSystemGestureRegion.set(gestureInsets.left, gestureInsets.top, gestureInsets.right,
                 gestureInsets.bottom);
         if (mContainer.getDeviceProfile().isTaskbarPresent) {
-                // Ignore taskbar gesture insets to avoid interfering with TouchControllers.
+            // Ignore taskbar gesture insets to avoid interfering with TouchControllers.
             mSystemGestureRegion.bottom = ResourceUtils.getNavbarSize(
                     ResourceUtils.NAVBAR_BOTTOM_GESTURE_SIZE, getResources());
             }
-            mSystemGestureRegion.set(
-                Math.max(gestureInsets.left, imeInset.left),
-                Math.max(gestureInsets.top, imeInset.top),
-                Math.max(gestureInsets.right, imeInset.right),
-                Math.max(gestureInsetBottom, imeInset.bottom)
-            );
         }
         return super.dispatchApplyWindowInsets(insets);
     }

@@ -11,6 +11,7 @@ import app.lawnchair.search.adapter.SearchTargetCompat
 import app.lawnchair.search.adapter.SearchTargetCompat.Companion.RESULT_TYPE_APPLICATION
 import app.lawnchair.search.adapter.SearchTargetCompat.Companion.RESULT_TYPE_SHORTCUT
 import com.android.app.search.LayoutType.CALCULATOR
+import com.android.app.search.LayoutType.EDUCARD
 import com.android.app.search.LayoutType.EMPTY_DIVIDER
 import com.android.app.search.LayoutType.EMPTY_STATE
 import com.android.app.search.LayoutType.HORIZONTAL_MEDIUM_TEXT
@@ -18,6 +19,7 @@ import com.android.app.search.LayoutType.ICON_HORIZONTAL_TEXT
 import com.android.app.search.LayoutType.ICON_SINGLE_VERTICAL_TEXT
 import com.android.app.search.LayoutType.ICON_SLICE
 import com.android.app.search.LayoutType.PEOPLE_TILE
+import com.android.app.search.LayoutType.PLAY_PLACEHOLDER
 import com.android.app.search.LayoutType.SEARCH_SETTINGS
 import com.android.app.search.LayoutType.SMALL_ICON_HORIZONTAL_TEXT
 import com.android.app.search.LayoutType.TEXT_HEADER
@@ -179,6 +181,8 @@ sealed class LawnchairSearchAlgorithm(
         layoutType == CALCULATOR && calculator.isNotEmpty() -> normalBackground
         layoutType == EMPTY_STATE -> transparentBackground
         layoutType == SEARCH_SETTINGS -> transparentBackground
+//        layoutType == PLAY_PLACEHOLDER -> transparentBackground
+//        layoutType == EDUCARD -> transparentBackground
         isFirst && isLast -> normalBackground
         isFirst -> topBackground
         isLast -> bottomBackground

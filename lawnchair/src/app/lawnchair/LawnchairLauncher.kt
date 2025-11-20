@@ -251,8 +251,8 @@ class LawnchairLauncher : QuickstepLauncher() {
         out.add(SearchBarStateHandler(this))
     }
 
-    override fun getSupportedShortcuts(): Stream<SystemShortcut.Factory<*>> = Stream.concat(
-        super.getSupportedShortcuts(),
+    override fun getSupportedShortcuts(container: Int): Stream<SystemShortcut.Factory<*>> = Stream.concat(
+        super.getSupportedShortcuts(container),
         Stream.concat(
             Stream.of(LawnchairShortcut.UNINSTALL, LawnchairShortcut.CUSTOMIZE),
             if (LawnchairApp.isRecentsEnabled) Stream.of(LawnchairShortcut.PAUSE_APPS) else Stream.empty(),
@@ -282,20 +282,20 @@ class LawnchairLauncher : QuickstepLauncher() {
         }
     }
 
-    override fun bindItems(items: List<ItemInfo>, forceAnimateIcons: Boolean) {
+    fun bindItems(items: List<ItemInfo>, forceAnimateIcons: Boolean) {
         val inflatedItems = items.map { i ->
             Pair.create(
                 i,
                 itemInflater?.inflateItem(
                     i,
-                    modelWriter,
+                    null,
                 ),
             )
         }.toList()
         bindInflatedItems(inflatedItems, if (forceAnimateIcons) AnimatorSet() else null)
     }
 
-    override fun handleGestureContract(intent: Intent?) {
+    override fun handleGestureContract(intent: Intent) {
         if (!LawnchairApp.isRecentsEnabled) {
             val gnc = GestureNavContract.fromIntent(intent)
             if (gnc != null) {

@@ -51,6 +51,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import androidx.core.content.res.ResourcesCompat;
 import app.lawnchair.DeviceProfileOverrides.TextFactors;
 import com.android.launcher3.CellLayout.ContainerType;
 import com.android.launcher3.DevicePaddings.DevicePadding;
@@ -467,8 +468,8 @@ public class DeviceProfile {
             .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
         
         workspacePageIndicatorHeight *= (int) pageIndicatorHeightFactor;
-        mWorkspacePageIndicatorOverlapWorkspace = res
-                .getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
+//        mWorkspacePageIndicatorOverlapWorkspace = res
+//                .getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
 
         if (!mIsResponsiveGrid) {
             TypedArray cellStyle;
@@ -500,11 +501,6 @@ public class DeviceProfile {
 
         HotseatMode hotseatMode = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getHotseatMode());
         boolean isQsbEnable = hotseatMode.getLayoutResourceId() != R.layout.empty_view;
-
-        hotseatQsbHeight = isQsbEnable ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
-        hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height);
-        hotseatQsbVisualHeight = isQsbEnable ? hotseatQsbHeight - 2 * hotseatQsbShadowHeight : 0;
-
 
         numShownHotseatIcons = displayOptionSpec.numShownHotseatIcons;
         mHotseatColumnSpan = inv.numColumns;
@@ -545,7 +541,8 @@ public class DeviceProfile {
                 shouldApplyWidePortraitDimens,
                 isVerticalBarLayout(),
                 mResponsiveHotseatSpec,
-                workspacePageIndicatorHeight
+                workspacePageIndicatorHeight,
+                hotseatMode
         );
 
         // Whether QSB might be inline in appropriate orientation (e.g. landscape).
@@ -1399,7 +1396,7 @@ public class DeviceProfile {
         }
         var allAppLeftRightMarginMultiplier = PreferenceExtensionsKt
                 .firstBlocking(preferenceManager2.getDrawerLeftRightMarginFactor());
-        var marginMultiplier = allAppLeftRightMarginMultiplier * (!isTablet ? 100 : 2);
+        var marginMultiplier = allAppLeftRightMarginMultiplier * (!getDeviceProperties().isTablet() ? 100 : 2);
         allAppsLeftRightMargin = (int) (allAppsLeftRightMargin * marginMultiplier);
 
         // todo fix how drawer padding values are calculated in responsive grid type

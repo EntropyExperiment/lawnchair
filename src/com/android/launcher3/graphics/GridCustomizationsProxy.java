@@ -15,7 +15,7 @@
  */
 package com.android.launcher3.graphics;
 
-import static com.android.launcher3.BuildConfig.IS_DEBUG_DEVICE;
+import static com.android.launcher3.BuildConfigs.IS_DEBUG_DEVICE;
 import static com.android.launcher3.preview.PreviewSurfaceRenderer.KEY_BITMAP_GENERATION_DELAY_MS;
 import static com.android.launcher3.preview.PreviewSurfaceRenderer.KEY_VIEW_HEIGHT;
 import static com.android.launcher3.preview.PreviewSurfaceRenderer.KEY_VIEW_WIDTH;

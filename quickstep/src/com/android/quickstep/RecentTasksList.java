@@ -158,6 +158,7 @@ public class RecentTasksList {
             mSysUiProxy.registerRecentTasksListener(recentTasksListener);
             tracker.addCloseable(
                 () -> mSysUiProxy.unregisterRecentTasksListener(recentTasksListener));
+        }
 
         // We may receive onRunningTaskAppeared events later for tasks which have already been
         // included in the list returned by mSysUiProxy.getRunningTasks(), or may receive

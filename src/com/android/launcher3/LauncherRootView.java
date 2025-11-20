@@ -72,8 +72,8 @@ public class LauncherRootView extends InsettableFrameLayout {
 
     private void setUpBlur(Context context) {
         var display = mStatefulContainer.getDeviceProfile();
-        int width = display.widthPx;
-        int height = display.heightPx;
+        int width = display.getDeviceProperties().getWidthPx();
+        int height = display.getDeviceProperties().getHeightPx();
 
         var wallpaper = getScaledWallpaperDrawable(width, height);
         if (wallpaper == null) {

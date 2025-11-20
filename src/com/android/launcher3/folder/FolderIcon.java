@@ -210,7 +210,7 @@ public class FolderIcon extends FrameLayout implements FloatingIconViewCompanion
         icon.mFolderName.setCompoundDrawablePadding(0);
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) icon.mFolderName.getLayoutParams();
         if (folderInfo.container == ItemInfo.NO_ID) {
-            lp.topMargin = grid.allAppsIconSizePx + grid.allAppsIconDrawablePaddingPx;
+            lp.topMargin = grid.getAllAppsProfile().getIconSizePx() + grid.getAllAppsProfile().getIconDrawablePaddingPx();
             icon.mBackground = new PreviewBackground(activity.getDragLayer().getContext());
         } else {
             lp.topMargin = grid.iconSizePx + grid.iconDrawablePaddingPx;

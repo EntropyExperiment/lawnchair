@@ -52,13 +52,13 @@ import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.Utilities;
-import com.android.launcher3.graphics.LauncherPreviewRenderer;
 import com.android.launcher3.backuprestore.LauncherRestoreEventLogger;
 import com.android.launcher3.backuprestore.LauncherRestoreEventLogger.RestoreError;
 import com.android.launcher3.dagger.ApplicationContext;
 import com.android.launcher3.dagger.LauncherAppSingleton;
 import com.android.launcher3.logging.FileLog;
 import com.android.launcher3.pm.UserCache;
+import com.android.launcher3.preview.PreviewContext;
 import com.android.launcher3.provider.LauncherDbUtils;
 import com.android.launcher3.provider.LauncherDbUtils.SQLiteTransaction;
 import com.android.launcher3.provider.RestoreDbTask;
@@ -617,7 +617,7 @@ public class ModelDbController {
     public synchronized void loadDefaultFavoritesIfNecessary() {
         createDbIfNotExists();
 
-        if (!(mContext instanceof LauncherPreviewRenderer.PreviewContext)) {
+        if (!(mContext instanceof PreviewContext)) {
             LawnchairAppKt.getLawnchairApp(mContext).cleanUpDatabases();
         }
 

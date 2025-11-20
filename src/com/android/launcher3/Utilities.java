@@ -171,7 +171,7 @@ public final class Utilities {
      * @deprecated Use {@link BuildConfig#IS_DEBUG_DEVICE} directly
      */
     @Deprecated
-    public static final boolean IS_DEBUG_DEVICE = BuildConfig.IS_DEBUG_DEVICE;
+    public static final boolean IS_DEBUG_DEVICE = BuildConfigs.IS_DEBUG_DEVICE;
 
     public static final int TRANSLATE_UP = 0;
     public static final int TRANSLATE_DOWN = 1;
@@ -1101,7 +1101,7 @@ public final class Utilities {
      * <p>Debug devices by default include -eng and -userdebug builds, but not -user builds.
      */
     public static void debugLog(String tag, String message) {
-        if (BuildConfig.IS_DEBUG_DEVICE) {
+        if (BuildConfigs.IS_DEBUG_DEVICE) {
             Log.d(tag, message);
         }
     }

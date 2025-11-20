@@ -142,6 +142,7 @@ import com.android.internal.jank.Cuj;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BaseActivity.MultiWindowModeChangedListener;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Insettable;
 import com.android.launcher3.PagedView;
@@ -6711,7 +6712,7 @@ public abstract class RecentsView<
      */
     public void addOnScrollChangedListener(OnScrollChangedListener listener) {
         if (mScrollListeners.contains(listener)) {
-            if (BuildConfig.IS_STUDIO_BUILD) {
+            if (BuildConfigs.IS_STUDIO_BUILD) {
                 throw new IllegalStateException(
                         "Should not add duplicated OnScrollChangedListener");
             } else {

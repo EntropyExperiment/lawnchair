@@ -412,7 +412,7 @@ public class AlphabeticalAppsList<T extends Context & ActivityContext> implement
                 position++;
             }
         } else {
-            if (Flags.privateSpaceAppInstallerButton()) {
+            if (Flags.enablePrivateSpace()) {
                 mPrivateProviderManager.addPrivateSpaceInstallAppButton(mAdapterItems);
                 position++;
             }

@@ -71,7 +71,7 @@ public class MainProcessInitializer implements ResourceBasedOverride {
             BitmapCreationCheck.startTracking(context);
         }
 
-        if (DEBUG_STRICT_MODE || (BuildConfig.IS_STUDIO_BUILD && enableStrictMode())) {
+        if (DEBUG_STRICT_MODE || (BuildConfigs.IS_STUDIO_BUILD && enableStrictMode())) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
@@ -87,7 +87,7 @@ public class MainProcessInitializer implements ResourceBasedOverride {
                     .build());
         }
 
-        if (BuildConfig.IS_DEBUG_DEVICE && FeatureFlags.NOTIFY_CRASHES.get()) {
+        if (BuildConfigs.IS_DEBUG_DEVICE && FeatureFlags.NOTIFY_CRASHES.get()) {
             final String notificationChannelId = "com.android.launcher3.Debug";
             final String notificationChannelName = "Debug";
             final String notificationTag = "Debug";
