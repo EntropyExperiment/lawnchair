@@ -319,7 +319,7 @@ android {
     sourceSets {
         main {
             res.srcDirs = ['res']
-            java.srcDirs = ['src', 'src_plugins', 'compose']
+            java.srcDirs = ['src', 'src_plugins', 'compose/facade/core', 'compose/facade/enabled', 'compose/features'] // Lawnchair-TODO: Don't include Compose Disabled, but there's has to be another way of making this NOT long
             manifest.srcFile 'AndroidManifest-common.xml'
             proto {
                 srcDirs = ['protos/', 'quickstep/protos_overrides/']

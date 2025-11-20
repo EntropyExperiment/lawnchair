@@ -10,6 +10,7 @@ This is a developer-focused change log:
 * Re-added searchuilib
 * Fix some errors in Lawnchair side
 * SearchUiLib updated to latest commits before being private
+* Exclude disabled variant of Compose launcher3 features
 
 ### 🥞 Snapshot 8 (Development 4 Release 1)
 
