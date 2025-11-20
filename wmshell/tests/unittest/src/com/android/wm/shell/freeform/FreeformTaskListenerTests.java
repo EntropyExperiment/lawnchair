@@ -20,9 +20,9 @@ import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.view.Display.INVALID_DISPLAY;
 
-import static com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_BACK_NAVIGATION;
-import static com.android.window.flags.Flags.FLAG_ENABLE_WINDOWING_TRANSITION_HANDLERS_OBSERVERS;
-import static com.android.window.flags.Flags.FLAG_SHOW_DESKTOP_WINDOWING_DEV_OPTION;
+import static com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_BACK_NAVIGATION;
+import static com.android.window.flags2.Flags.FLAG_ENABLE_WINDOWING_TRANSITION_HANDLERS_OBSERVERS;
+import static com.android.window.flags2.Flags.FLAG_SHOW_DESKTOP_WINDOWING_DEV_OPTION;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -38,7 +38,7 @@ import android.view.SurfaceControl;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.ShellTestCase;
 import com.android.wm.shell.TestRunningTaskInfoBuilder;

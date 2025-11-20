@@ -161,7 +161,7 @@ class AspectRatioSystemShortcutTests {
      * When the corresponding feature flag is off, there will not be an option to open aspect ratio
      * settings.
      */
-    @DisableFlags(com.android.window.flags.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
+    @DisableFlags(com.android.window.flags2.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
     @Test
     fun createShortcut_flaggedOff_notCreated() {
         val task = createTask()
@@ -177,7 +177,7 @@ class AspectRatioSystemShortcutTests {
      * When the screen doesn't meet or exceed sw600dp (eg. phone, watch), there will not be an
      * option to open aspect ratio settings.
      */
-    @EnableFlags(com.android.window.flags.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
+    @EnableFlags(com.android.window.flags2.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
     @Test
     fun createShortcut_sw599dp_notCreated() {
         val task = createTask()
@@ -193,7 +193,7 @@ class AspectRatioSystemShortcutTests {
      * When the screen does meet or exceed sw600dp (eg. tablet, inner foldable screen, home cinema)
      * there will be an option to open aspect ratio settings.
      */
-    @EnableFlags(com.android.window.flags.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
+    @EnableFlags(com.android.window.flags2.Flags.FLAG_UNIVERSAL_RESIZABLE_BY_DEFAULT)
     @Test
     fun createShortcut_sw800dp_created_andOpensSettings() {
         val task = createTask()

@@ -28,7 +28,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
 import static com.android.launcher3.util.ScrollableLayoutManager.PREDICTIVE_BACK_MIN_SCALE;
 import static com.android.launcher3.views.RecyclerViewFastScroller.FastScrollerLocation.ALL_APPS_SCROLLER;
-import static com.android.window.flags.Flags.predictiveBackThreeButtonNav;
+import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

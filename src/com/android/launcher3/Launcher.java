@@ -268,7 +268,7 @@ import com.android.systemui.plugins.LauncherOverlayPlugin;
 import com.android.systemui.plugins.PluginListener;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlayTouchProxy;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

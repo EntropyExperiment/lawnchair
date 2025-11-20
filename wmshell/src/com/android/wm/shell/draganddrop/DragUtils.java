@@ -57,7 +57,7 @@ public class DragUtils {
             // Clip data contains an app drag initiated from SysUI, handle it
             return true;
         }
-        if (com.android.window.flags.Flags.delegateUnhandledDrags()
+        if (com.android.window.flags2.Flags.delegateUnhandledDrags()
                 && getLaunchIntent(event) != null) {
             // Clip data contains a launchable intent drag, handle it
             return true;

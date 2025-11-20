@@ -26,7 +26,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.quickstep.RemoteAnimationTargets;
 import com.android.quickstep.util.SurfaceTransaction.SurfaceProperties;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 
 import java.util.function.Supplier;
 

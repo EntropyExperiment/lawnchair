@@ -51,7 +51,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.function.TriConsumer;
 import com.android.launcher3.icons.IconProvider;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.ExternalInterfaceBinder;
 import com.android.wm.shell.common.RemoteCallable;

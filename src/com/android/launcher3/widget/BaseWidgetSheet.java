@@ -19,7 +19,7 @@ import static com.android.app.animation.Interpolators.EMPHASIZED;
 import static com.android.launcher3.LauncherState.NORMAL;
 import static com.android.launcher3.anim.AnimatorListeners.forSuccessCallback;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_WIDGET_ADD_BUTTON_TAP;
-import static com.android.window.flags.Flags.predictiveBackThreeButtonNav;
+import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
 
 import android.content.Context;
 import android.graphics.Canvas;

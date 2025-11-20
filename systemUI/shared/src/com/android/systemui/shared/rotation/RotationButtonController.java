@@ -71,7 +71,7 @@ import com.android.systemui.shared.rotation.RotationButton.RotationButtonUpdates
 import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.shared.system.TaskStackChangeListener;
 import com.android.systemui.shared.system.TaskStackChangeListeners;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 
 import java.io.PrintWriter;
 import java.util.List;

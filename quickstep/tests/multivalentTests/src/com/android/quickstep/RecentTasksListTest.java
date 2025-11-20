@@ -18,7 +18,7 @@ package com.android.quickstep;
 
 import static android.view.Display.DEFAULT_DISPLAY;
 
-import static com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND;
+import static com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND;
 
 import static com.google.common.truth.Truth.assertThat;
 

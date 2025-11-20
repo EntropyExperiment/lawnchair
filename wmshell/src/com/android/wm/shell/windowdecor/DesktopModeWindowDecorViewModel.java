@@ -91,7 +91,7 @@ import com.android.internal.jank.Cuj;
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.LatencyTracker;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.R;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;

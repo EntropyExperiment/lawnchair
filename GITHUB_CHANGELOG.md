@@ -2,6 +2,16 @@
 
 ## Bubble Tea [QPR1]
 
+### 🏗️ Snapshot 10 (Development 4 Release 1)
+
+Bug fixes only
+
+Build: BS10.2011
+
+This is a developer-focused change log:
+* Fix a lot of internal basic functionality
+* Re-added some Lawnchair-specific code
+
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
 This snapshot marks the first time Bubble Tea QPR1 is able to assemble the APK without errors, 

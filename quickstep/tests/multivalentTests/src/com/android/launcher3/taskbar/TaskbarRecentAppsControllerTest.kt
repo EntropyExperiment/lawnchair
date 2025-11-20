@@ -182,7 +182,7 @@ class TaskbarRecentAppsControllerTest : TaskbarBaseTestCase() {
     }
 
     @Test
-    @EnableFlags(com.android.window.flags.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
+    @EnableFlags(com.android.window.flags2.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
     fun recentTasksChanged_duringGetTasksLoading_dontCallGetTasks() {
         // getTasks() should have been called once from init().
         verify(mockRecentsModel, times(1)).getTasks(any(), any<Consumer<List<GroupTask>>>())
@@ -200,7 +200,7 @@ class TaskbarRecentAppsControllerTest : TaskbarBaseTestCase() {
     }
 
     @Test
-    @EnableFlags(com.android.window.flags.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
+    @EnableFlags(com.android.window.flags2.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
     fun recentTasksChanged_duringGetTasksLoading_getTasksCalledWhenLoadingDone() {
         val callbackCaptor = argumentCaptor<Consumer<List<GroupTask>>>()
         // getTasks() should have been called once from init().
@@ -220,7 +220,7 @@ class TaskbarRecentAppsControllerTest : TaskbarBaseTestCase() {
     }
 
     @Test
-    @DisableFlags(com.android.window.flags.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
+    @DisableFlags(com.android.window.flags2.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
     fun recentTasksChanged_duringGetTasksLoading_flagDisabled_callGetTasks() {
         // getTasks() should have been called once from init().
         verify(mockRecentsModel, times(1)).getTasks(any(), any<Consumer<List<GroupTask>>>())
@@ -238,7 +238,7 @@ class TaskbarRecentAppsControllerTest : TaskbarBaseTestCase() {
     }
 
     @Test
-    @DisableFlags(com.android.window.flags.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
+    @DisableFlags(com.android.window.flags2.Flags.FLAG_ENABLE_TASKBAR_RECENT_TASKS_THROTTLE_BUGFIX)
     fun recentTasksChanged_duringGetTasksLoading_flagDisabled_getTasksNotCalledWhenLoadingDone() {
         val callbackCaptor = argumentCaptor<Consumer<List<GroupTask>>>()
         // getTasks() should have been called once from init().

@@ -21,7 +21,7 @@ import static android.view.RemoteAnimationTarget.MODE_OPENING;
 import static android.window.BackEvent.EDGE_RIGHT;
 
 import static com.android.internal.jank.InteractionJankMonitor.CUJ_PREDICTIVE_BACK_CROSS_TASK;
-import static com.android.window.flags.Flags.predictiveBackTimestampApi;
+import static com.android.window.flags2.Flags.predictiveBackTimestampApi;
 import static com.android.wm.shell.back.BackAnimationConstants.UPDATE_SYSUI_FLAGS_THRESHOLD;
 import static com.android.wm.shell.back.CrossActivityBackAnimationKt.scaleCentered;
 import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BACK_PREVIEW;

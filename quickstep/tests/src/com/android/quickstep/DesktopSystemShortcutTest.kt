@@ -50,7 +50,7 @@ import com.android.quickstep.views.TaskViewIcon
 import com.android.quickstep.views.TaskViewType
 import com.android.systemui.shared.recents.model.Task
 import com.android.systemui.shared.recents.model.Task.TaskKey
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODALS_POLICY
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODALS_POLICY
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus
 import com.android.wm.shell.shared.desktopmode.DesktopModeTransitionSource
 import com.google.common.truth.Truth.assertThat

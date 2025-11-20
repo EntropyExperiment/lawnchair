@@ -26,8 +26,8 @@ import static com.android.launcher3.BaseActivity.INVISIBLE_ALL;
 import static com.android.launcher3.BaseActivity.INVISIBLE_BY_PENDING_FLAGS;
 import static com.android.launcher3.BaseActivity.PENDING_INVISIBLE_BY_WALLPAPER_ANIMATION;
 import static com.android.launcher3.Flags.enableOverviewBackgroundWallpaperBlur;
-import static com.android.window.flags.Flags.predictiveBackThreeButtonNav;
-import static com.android.window.flags.Flags.removeDepartTargetFromMotion;
+import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
+import static com.android.window.flags2.Flags.removeDepartTargetFromMotion;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

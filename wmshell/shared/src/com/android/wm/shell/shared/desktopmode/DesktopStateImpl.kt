@@ -58,7 +58,12 @@ class DesktopStateImpl(context: Context) : DesktopState {
         }
 
     override val canShowDesktopModeDevOption: Boolean =
-        isDeviceEligibleForDesktopModeDevOption && Flags.showDesktopWindowingDevOption()
+        isDeviceEligibleForDesktopModeDevOption && if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            Flags.showDesktopWindowingDevOption()
+        } else {
+            false
+        }
 
     private val isDesktopModeEnabledByDevOption =
         DesktopModeFlags.isDesktopModeForcedEnabled() && canShowDesktopModeDevOption
@@ -77,7 +82,12 @@ class DesktopStateImpl(context: Context) : DesktopState {
         !enforceDeviceRestrictions || isDesktopModeSupported || isDesktopModeDevOptionSupported
 
     override val canShowDesktopExperienceDevOption: Boolean =
-        Flags.showDesktopExperienceDevOption() && isDeviceEligibleForDesktopExperienceDevOption
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            Flags.showDesktopExperienceDevOption()
+        } else {
+            false
+        } && isDeviceEligibleForDesktopExperienceDevOption
 
     override val enterDesktopByDefaultOnFreeformDisplay: Boolean =
         DesktopExperienceFlags.ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX.isTrue ||
@@ -93,7 +103,12 @@ class DesktopStateImpl(context: Context) : DesktopState {
         get() {
             if (!enforceDeviceRestrictions) return true
             val desktopModeSupportedByDevOptions =
-                Flags.enableDesktopModeThroughDevOption() && isDesktopModeDevOptionSupported
+                if (false) {
+                    // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+                    Flags.enableDesktopModeThroughDevOption()
+                } else {
+                    false
+                } && isDesktopModeDevOptionSupported
             return isDesktopModeSupported || desktopModeSupportedByDevOptions
         }
 

@@ -28,7 +28,7 @@ import com.android.app.animation.Interpolators
 import com.android.internal.dynamicanimation.animation.DynamicAnimation
 import com.android.internal.dynamicanimation.animation.FlingAnimation
 import com.android.internal.dynamicanimation.animation.FloatValueHolder
-import com.android.window.flags.Flags.predictiveBackTimestampApi
+import com.android.window.flags2.Flags.predictiveBackTimestampApi
 
 private const val FLING_FRICTION = 6f
 private const val SCALE_FACTOR = 100f

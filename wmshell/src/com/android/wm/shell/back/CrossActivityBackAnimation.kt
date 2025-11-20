@@ -53,7 +53,7 @@ import com.android.internal.jank.Cuj
 import com.android.internal.policy.ScreenDecorationsUtils
 import com.android.internal.policy.SystemBarUtils
 import com.android.internal.protolog.ProtoLog
-import com.android.window.flags.Flags.predictiveBackTimestampApi
+import com.android.window.flags2.Flags.predictiveBackTimestampApi
 import com.android.wm.shell.R
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer
 import com.android.wm.shell.protolog.ShellProtoLogGroup

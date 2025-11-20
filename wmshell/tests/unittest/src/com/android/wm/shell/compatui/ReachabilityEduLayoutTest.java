@@ -16,7 +16,7 @@
 
 package com.android.wm.shell.compatui;
 
-import static com.android.window.flags.Flags.FLAG_APP_COMPAT_UI_FRAMEWORK;
+import static com.android.window.flags2.Flags.FLAG_APP_COMPAT_UI_FRAMEWORK;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

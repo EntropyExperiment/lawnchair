@@ -15,7 +15,7 @@ import static com.android.launcher3.taskbar.TaskbarNavButtonController.BUTTON_IM
 import static com.android.launcher3.taskbar.TaskbarNavButtonController.BUTTON_RECENTS;
 import static com.android.launcher3.taskbar.TaskbarNavButtonController.SCREEN_PIN_LONG_PRESS_THRESHOLD;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_SCREEN_PINNING;
-import static com.android.window.flags.Flags.FLAG_PREDICTIVE_BACK_THREE_BUTTON_NAV;
+import static com.android.window.flags2.Flags.FLAG_PREDICTIVE_BACK_THREE_BUTTON_NAV;
 
 import static com.google.common.truth.Truth.assertThat;
 

@@ -64,10 +64,10 @@ import com.android.quickstep.util.GroupTask
 import com.android.quickstep.util.SingleTask
 import com.android.quickstep.util.SingleTask.Companion.createTaskItemInfo
 import com.android.systemui.shared.recents.model.Task
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODE
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_TASKBAR_RUNNING_APPS
-import com.android.window.flags.Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU
-import com.android.window.flags.Flags.FLAG_ENABLE_TASKBAR_OVERFLOW
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODE
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_TASKBAR_RUNNING_APPS
+import com.android.window.flags2.Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU
+import com.android.window.flags2.Flags.FLAG_ENABLE_TASKBAR_OVERFLOW
 import com.android.wm.shell.Flags.FLAG_ENABLE_BUBBLE_BAR
 import com.android.wm.shell.desktopmode.IDesktopTaskListener
 import com.google.common.truth.Truth.assertThat

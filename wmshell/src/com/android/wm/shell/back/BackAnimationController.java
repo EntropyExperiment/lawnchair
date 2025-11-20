@@ -31,7 +31,7 @@ import static android.window.TransitionInfo.FLAG_SHOW_WALLPAPER;
 
 import static com.android.internal.jank.InteractionJankMonitor.CUJ_PREDICTIVE_BACK_HOME;
 import static com.android.systemui.Flags.predictiveBackDelayWmTransition;
-import static com.android.window.flags.Flags.unifyBackNavigationTransition;
+import static com.android.window.flags2.Flags.unifyBackNavigationTransition;
 import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BACK_PREVIEW;
 
 import android.annotation.NonNull;
@@ -83,7 +83,7 @@ import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.LatencyTracker;
 import com.android.internal.view.AppearanceRegion;
 import com.android.systemui.animation.TransitionAnimator;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.R;
 import com.android.wm.shell.common.ExternalInterfaceBinder;
 import com.android.wm.shell.common.RemoteCallable;

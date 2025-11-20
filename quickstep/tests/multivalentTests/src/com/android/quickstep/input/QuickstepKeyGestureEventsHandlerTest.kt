@@ -35,7 +35,7 @@ import com.android.quickstep.input.QuickstepKeyGestureEventsManager.OverviewGest
 import com.android.quickstep.input.QuickstepKeyGestureEventsManager.OverviewGestureHandler.OverviewType
 import com.android.quickstep.input.QuickstepKeyGestureEventsManager.OverviewGestureHandler.OverviewType.ALT_TAB
 import com.android.quickstep.input.QuickstepKeyGestureEventsManager.OverviewGestureHandler.OverviewType.UNDEFINED
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Rule

@@ -78,7 +78,7 @@ import android.window.WindowContainerTransaction;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.SystemBarUtils;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.R;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;

@@ -562,7 +562,7 @@ public class BubbleController implements ConfigurationChangeListener,
                 this::createExternalInterface, this);
         mShellCommandHandler.addDumpCallback(this::dump, this);
 
-        if (com.android.window.flags.Flags.enableExperimentalBubblesController()) {
+        if (com.android.window.flags2.Flags.enableExperimentalBubblesController()) {
             try {
                 final BubbleMultitaskingDelegate delegate = new BubbleMultitaskingDelegate(
                         this, mBubbleData, mCurrentUserId);
@@ -1425,7 +1425,7 @@ public class BubbleController implements ConfigurationChangeListener,
 
     /** Returns whether the given task should be an App Bubble */
     public boolean shouldBeAppBubble(@NonNull ActivityManager.RunningTaskInfo taskInfo) {
-        if (com.android.window.flags.Flags.rootTaskForBubble()) {
+        if (com.android.window.flags2.Flags.rootTaskForBubble()) {
             return mAppBubbleRootTaskInfo != null
                     && taskInfo.parentTaskId == mAppBubbleRootTaskInfo.taskId;
         }

@@ -20,8 +20,8 @@ import static android.hardware.display.DisplayManager.DISPLAY_CATEGORY_ALL_INCLU
 
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.os.SystemProperties;
@@ -32,7 +32,7 @@ import android.window.DesktopModeFlags;
 
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 
 import java.util.Arrays;
 
@@ -215,8 +215,15 @@ public class DesktopModeStatus {
         if (!enforceDeviceRestrictions()) {
             return true;
         }
+        final boolean enableDesktopModeThroughDevOption;
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            enableDesktopModeThroughDevOption = Flags.enableDesktopModeThroughDevOption();
+        } else {
+            enableDesktopModeThroughDevOption = false;
+        }
         final boolean desktopModeSupportedByDevOptions =
-                Flags.enableDesktopModeThroughDevOption()
+            enableDesktopModeThroughDevOption
                     && isDesktopModeDevOptionSupported(context);
         return isDesktopModeSupported(context) || desktopModeSupportedByDevOptions;
     }

@@ -23,8 +23,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.launcher3.util.DaggerSingletonTracker
 import com.android.quickstep.SystemUiProxy
-import com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
-import com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND
+import com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
+import com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus
 import org.junit.Assert.assertFalse
 import org.junit.Before

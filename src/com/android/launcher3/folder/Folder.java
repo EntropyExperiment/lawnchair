@@ -364,12 +364,13 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         }
         
         if (enableLauncherVisualRefresh()) {
-            mLeftArrow = findViewById(R.id.left_indicator_arrow);
-            mRightArrow = findViewById(R.id.right_indicator_arrow);
-            mRightArrow.setOnClickListener(v -> mContent.snapToPage(
-                    mContent.getCurrentPage() + 1));
-            mLeftArrow.setOnClickListener(v -> mContent.snapToPage(
-                    mContent.getCurrentPage() - 1));
+            // pE-TODO(QPR1): Investigate
+//            mLeftArrow = findViewById(R.id.left_indicator_arrow);
+//            mRightArrow = findViewById(R.id.right_indicator_arrow);
+//            mRightArrow.setOnClickListener(v -> mContent.snapToPage(
+//                    mContent.getCurrentPage() + 1));
+//            mLeftArrow.setOnClickListener(v -> mContent.snapToPage(
+//                    mContent.getCurrentPage() - 1));
         }
     }
 

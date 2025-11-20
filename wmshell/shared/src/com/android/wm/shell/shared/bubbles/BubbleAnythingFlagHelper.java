@@ -34,7 +34,7 @@ public class BubbleAnythingFlagHelper {
     /** Whether creating any bubble and force task excluded from recents are enabled. */
     public static boolean enableCreateAnyBubbleWithForceExcludedFromRecents() {
         return Flags.enableCreateAnyBubble()
-                && com.android.window.flags.Flags.excludeTaskFromRecents();
+                && com.android.window.flags2.Flags.excludeTaskFromRecents();
     }
 
     /** Whether creating any bubble and app compat fixes for bubbles are enabled. */
@@ -60,16 +60,16 @@ public class BubbleAnythingFlagHelper {
         }
 
         // This is needed to allow the activity behind the root task remains in RESUMED state.
-        if (!com.android.window.flags.Flags.enableSeeThroughTaskFragments()) {
+        if (!com.android.window.flags2.Flags.enableSeeThroughTaskFragments()) {
             return false;
         }
 
         // This is needed to allow the leaf task can be started in expected bounds.
-        if (!com.android.window.flags.Flags.respectLeafTaskBounds()) {
+        if (!com.android.window.flags2.Flags.respectLeafTaskBounds()) {
             return false;
         }
 
-        return com.android.window.flags.Flags.rootTaskForBubble();
+        return com.android.window.flags2.Flags.rootTaskForBubble();
     }
 
     /** Whether the overall bubble anything feature is enabled. */

@@ -35,9 +35,9 @@ import static android.view.WindowManager.TRANSIT_TO_FRONT;
 import static android.window.TransitionInfo.FLAG_IS_DISPLAY;
 import static android.window.WindowContainerTransaction.HierarchyOp.HIERARCHY_OP_TYPE_REORDER;
 
-import static com.android.window.flags.Flags.enableFullScreenWindowOnRemovingSplitScreenStageBugfix;
-import static com.android.window.flags.Flags.enableMultiDisplaySplit;
-import static com.android.window.flags.Flags.enableNonDefaultDisplaySplit;
+import static com.android.window.flags2.Flags.enableFullScreenWindowOnRemovingSplitScreenStageBugfix;
+import static com.android.window.flags2.Flags.enableMultiDisplaySplit;
+import static com.android.window.flags2.Flags.enableNonDefaultDisplaySplit;
 import static com.android.wm.shell.Flags.enableEnterSplitRemoveBubble;
 import static com.android.wm.shell.Flags.enableFlexibleSplit;
 import static com.android.wm.shell.Flags.enableFlexibleTwoAppSplit;

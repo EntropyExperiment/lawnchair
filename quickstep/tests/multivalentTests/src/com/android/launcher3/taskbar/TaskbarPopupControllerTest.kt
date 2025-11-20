@@ -41,7 +41,7 @@ import com.android.launcher3.taskbar.rules.TaskbarWindowSandboxContext
 import com.android.launcher3.util.LauncherMultivalentJUnit
 import com.android.launcher3.util.LauncherMultivalentJUnit.EmulatedDevices
 import com.android.quickstep.util.GroupTask
-import com.android.window.flags.Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU
+import com.android.window.flags2.Flags.FLAG_ENABLE_PINNING_APP_WITH_CONTEXT_MENU
 import com.google.common.truth.Truth.assertThat
 import org.junit.Assert
 import org.junit.Before

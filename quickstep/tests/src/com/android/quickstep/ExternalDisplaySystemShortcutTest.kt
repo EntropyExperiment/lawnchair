@@ -47,7 +47,7 @@ import com.android.quickstep.views.TaskView
 import com.android.quickstep.views.TaskViewIcon
 import com.android.systemui.shared.recents.model.Task
 import com.android.systemui.shared.recents.model.Task.TaskKey
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus
 import com.google.common.truth.Truth.assertThat
 import org.junit.After

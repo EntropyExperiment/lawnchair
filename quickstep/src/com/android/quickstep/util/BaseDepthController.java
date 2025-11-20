@@ -123,7 +123,7 @@ public class BaseDepthController {
     /**
      * Info for early wakeup requests to SurfaceFlinger.
      */
-    private EarlyWakeupInfo mEarlyWakeupInfo = new EarlyWakeupInfo();
+//    private EarlyWakeupInfo mEarlyWakeupInfo = new EarlyWakeupInfo();
 
     public BaseDepthController(QuickstepLauncher activity) {
         mLauncher = activity;
@@ -141,8 +141,8 @@ public class BaseDepthController {
                 new MultiPropertyFactory<>(this, DEPTH, DEPTH_INDEX_COUNT, Float::max);
         stateDepth = depthProperty.get(DEPTH_INDEX_STATE_TRANSITION);
         widgetDepth = depthProperty.get(DEPTH_INDEX_WIDGET);
-        mEarlyWakeupInfo.token = new Binder();
-        mEarlyWakeupInfo.trace = BaseDepthController.class.getName();
+//        mEarlyWakeupInfo.token = new Binder();
+//        mEarlyWakeupInfo.trace = BaseDepthController.class.getName();
     }
 
     /**
@@ -312,11 +312,11 @@ public class BaseDepthController {
         }
         Log.d(TAG, "setEarlyWakeup: " + start);
         if (start) {
-            Trace.instantForTrack(TRACE_TAG_APP, TAG, "notifyRendererForGpuLoadUp");
+//            Trace.instantForTrack(TRACE_TAG_APP, TAG, "notifyRendererForGpuLoadUp");
             mLauncher.getRootView().getViewRootImpl().notifyRendererForGpuLoadUp("applyBlur");
-            transaction.setEarlyWakeupStart(mEarlyWakeupInfo);
+//            transaction.setEarlyWakeupStart();
         } else {
-            transaction.setEarlyWakeupEnd(mEarlyWakeupInfo);
+//            transaction.setEarlyWakeupEnd();
         }
         mInEarlyWakeUp = start;
     }

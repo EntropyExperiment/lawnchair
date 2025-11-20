@@ -40,7 +40,7 @@ import android.window.DesktopModeFlags
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import com.android.internal.policy.SystemBarUtils
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.android.wm.shell.R
 import com.android.wm.shell.desktopmode.DesktopModeUiEventLogger
 import com.android.wm.shell.desktopmode.DesktopModeUiEventLogger.DesktopUiEventEnum.A11Y_APP_HANDLE_MENU_OPENED

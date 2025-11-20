@@ -34,6 +34,7 @@ import static java.util.stream.Collectors.toCollection;
 
 import android.app.StatsManager;
 import android.app.prediction.AppPredictionContext;
+import android.app.prediction.AppPredictionManager;
 import android.app.prediction.AppTargetEvent;
 import android.content.Context;
 import android.content.Intent;
@@ -302,6 +303,14 @@ public class QuickstepModelDelegate extends ModelDelegate {
         if (!Utilities.ATLEAST_Q || !mActive) {
             return;
         }
+        AppPredictionManager apm = mContext.getSystemService(AppPredictionManager.class);
+        if (apm == null) {
+            return;
+        }
+
+        int usagePerm = mContext.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS);
+        if (usagePerm != PackageManager.PERMISSION_GRANTED)
+            return;
 
         mAllPredictionAppsState.registerPredictor(mContext,
                 new AppPredictionContext.Builder(mContext)

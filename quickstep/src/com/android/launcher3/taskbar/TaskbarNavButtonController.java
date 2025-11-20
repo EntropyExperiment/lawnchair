@@ -34,7 +34,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.systemui.shared.system.ActivityManagerWrapper.CLOSE_SYSTEM_WINDOWS_REASON_HOME_KEY;
 import static com.android.systemui.shared.system.ActivityManagerWrapper.CLOSE_SYSTEM_WINDOWS_REASON_RECENTS;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_SCREEN_PINNING;
-import static com.android.window.flags.Flags.predictiveBackThreeButtonNav;
+import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
 
 import android.content.Context;
 import android.graphics.Rect;

@@ -39,7 +39,7 @@ import android.window.TransitionInfo
 import android.window.TransitionInfo.FLAG_MOVED_TO_TOP
 import android.window.WindowContainerToken
 import androidx.test.filters.SmallTest
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.android.wm.shell.ShellTaskOrganizer
 import com.android.wm.shell.ShellTestCase
 import com.android.wm.shell.TestShellExecutor

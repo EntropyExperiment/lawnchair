@@ -30,8 +30,8 @@ import android.window.TransitionFilter.CONTAINER_ORDER_TOP
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.quickstep.SystemUiProxy
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_BUGFIX
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS_BUGFIX
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_BUGFIX
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_APP_LAUNCH_TRANSITIONS_BUGFIX
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before

@@ -558,7 +558,7 @@ public class BackAnimationControllerTest extends ShellTestCase {
 
     @EnableFlags({com.android.systemui.shared.Flags.FLAG_RETURN_ANIMATION_FRAMEWORK_LIBRARY,
             com.android.systemui.shared.Flags.FLAG_RETURN_ANIMATION_FRAMEWORK_LONG_LIVED,
-            com.android.window.flags.Flags.FLAG_UNIFY_BACK_NAVIGATION_TRANSITION})
+            com.android.window.flags2.Flags.FLAG_UNIFY_BACK_NAVIGATION_TRANSITION})
     @Test
     public void appCallback_receivesTakeoverHandler_whenAvailable() throws RemoteException {
         registerAnimation(BackNavigationInfo.TYPE_CROSS_TASK);

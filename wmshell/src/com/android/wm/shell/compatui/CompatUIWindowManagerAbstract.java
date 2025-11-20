@@ -43,7 +43,7 @@ import android.view.WindowManager;
 import android.view.WindowlessWindowManager;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.DisplayLayout;
 import com.android.wm.shell.common.SyncTransactionQueue;

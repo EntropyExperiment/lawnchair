@@ -52,7 +52,7 @@ import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.systemui.shared.system.RecentsAnimationControllerCompat;
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 
 import org.junit.Before;
 import org.junit.Rule;

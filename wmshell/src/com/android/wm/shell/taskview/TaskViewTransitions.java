@@ -24,8 +24,8 @@ import static android.view.WindowManager.TRANSIT_OPEN;
 import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
 
-import static com.android.window.flags.Flags.FLAG_EXCLUDE_TASK_FROM_RECENTS;
-import static com.android.window.flags.Flags.enableHandlersDebuggingMode;
+import static com.android.window.flags2.Flags.FLAG_EXCLUDE_TASK_FROM_RECENTS;
+import static com.android.window.flags2.Flags.enableHandlersDebuggingMode;
 import static com.android.wm.shell.Flags.FLAG_ENABLE_CREATE_ANY_BUBBLE;
 import static com.android.wm.shell.bubbles.util.BubbleUtils.getExitBubbleTransaction;
 import static com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_BUBBLES_NOISY;

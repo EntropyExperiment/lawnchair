@@ -32,8 +32,8 @@ import android.view.Display.DEFAULT_DISPLAY
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android.internal.R
 import com.android.launcher3.statehandlers.DesktopVisibilityController.Companion.INACTIVE_DESK_ID
-import com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
-import com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND
+import com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
+import com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_FRONTEND
 import com.android.wm.shell.Flags.FLAG_ENABLE_SHELL_TOP_TASK_TRACKING
 import com.android.wm.shell.shared.GroupedTaskInfo
 import com.android.wm.shell.shared.GroupedTaskInfo.TYPE_DESK

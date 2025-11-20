@@ -30,7 +30,7 @@ import android.window.WindowContainerToken;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import com.android.window.flags.Flags;
+import com.android.window.flags2.Flags;
 import com.android.wm.shell.desktopmode.DesktopBackNavTransitionObserver;
 import com.android.wm.shell.desktopmode.DesktopImeHandler;
 import com.android.wm.shell.desktopmode.DesktopImmersiveController;

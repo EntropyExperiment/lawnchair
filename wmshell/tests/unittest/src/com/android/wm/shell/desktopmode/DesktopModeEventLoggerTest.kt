@@ -26,7 +26,7 @@ import com.android.dx.mockito.inline.extended.ExtendedMockito.verify
 import com.android.dx.mockito.inline.extended.ExtendedMockito.verifyNoMoreInteractions
 import com.android.internal.util.FrameworkStatsLog
 import com.android.modules.utils.testing.ExtendedMockitoRule
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.android.wm.shell.EventLogTags
 import com.android.wm.shell.ShellTestCase
 import com.android.wm.shell.TestRunningTaskInfoBuilder

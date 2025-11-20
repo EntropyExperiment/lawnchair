@@ -90,7 +90,7 @@ import com.android.internal.jank.InteractionJankMonitor
 import com.android.internal.policy.SystemBarUtils.getDesktopViewAppHeaderHeightPx
 import com.android.internal.protolog.ProtoLog
 import com.android.internal.util.LatencyTracker
-import com.android.window.flags.Flags
+import com.android.window.flags2.Flags
 import com.android.wm.shell.Flags.enableFlexibleSplit
 import com.android.wm.shell.R
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer

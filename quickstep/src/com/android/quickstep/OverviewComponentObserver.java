@@ -120,9 +120,11 @@ public final class OverviewComponentObserver {
                 context.getPackageName());
         ResolveInfo secondaryInfo = context.getPackageManager().resolveActivity(
                 mSecondaryHomeIntent, 0);
-        ComponentName secondaryComponent = new ComponentName(context,
-                secondaryInfo.activityInfo.name);
-        mSecondaryHomeIntent.setComponent(secondaryComponent);
+        if (secondaryInfo != null) {
+            ComponentName secondaryComponent = new ComponentName(context,
+                    secondaryInfo.activityInfo.name);
+            mSecondaryHomeIntent.setComponent(secondaryComponent);
+        }
 
         mConfigChangesMap.append(myHomeComponent.hashCode(), info.activityInfo.configChanges);
         mSetupWizardPkg = context.getString(R.string.setup_wizard_pkg);

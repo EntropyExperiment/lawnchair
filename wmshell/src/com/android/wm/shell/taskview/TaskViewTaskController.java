@@ -413,7 +413,7 @@ public class TaskViewTaskController implements ShellTaskOrganizer.TaskListener {
                 // should always be consumed, otherwise the handle may block app content.
                 flags = FLAG_FORCE_CONSUMING | FLAG_FORCE_CONSUMING_OPAQUE_CAPTION_BAR;
             }
-            if (com.android.window.flags.Flags.relativeInsets()) {
+            if (com.android.window.flags2.Flags.relativeInsets()) {
                 wct.addInsetsSource(mTaskToken, mCaptionInsetsOwner, 0,
                         WindowInsets.Type.captionBar(), Insets.of(0, mCaptionInsets.height(), 0, 0),
                         null /* boundingRects */, flags);
