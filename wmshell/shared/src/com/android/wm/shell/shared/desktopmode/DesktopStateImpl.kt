@@ -90,14 +90,19 @@ class DesktopStateImpl(context: Context) : DesktopState {
         } && isDeviceEligibleForDesktopExperienceDevOption
 
     override val enterDesktopByDefaultOnFreeformDisplay: Boolean =
-        DesktopExperienceFlags.ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX.isTrue ||
-        DesktopExperienceFlags.ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS.isTrue &&
-            SystemProperties.getBoolean(
-                ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAY_SYS_PROP,
-                context
-                    .getResources()
-                    .getBoolean(R.bool.config_enterDesktopByDefaultOnFreeformDisplay),
-            )
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            DesktopExperienceFlags.ENABLE_DESKTOP_FIRST_BASED_DEFAULT_TO_DESKTOP_BUGFIX.isTrue ||
+            DesktopExperienceFlags.ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS.isTrue &&
+                SystemProperties.getBoolean(
+                    ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAY_SYS_PROP,
+                    context
+                        .getResources()
+                        .getBoolean(R.bool.config_enterDesktopByDefaultOnFreeformDisplay),
+                )
+        } else {
+            false
+        }
 
     override val isDeviceEligibleForDesktopMode: Boolean
         get() {
@@ -159,8 +164,13 @@ class DesktopStateImpl(context: Context) : DesktopState {
             } ?: false
 
     override val overridesShowAppHandle: Boolean =
-        (Flags.showAppHandleLargeScreens() ||
-            BubbleAnythingFlagHelper.enableBubbleToFullscreen()) && deviceHasLargeScreen
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            (Flags.showAppHandleLargeScreens() ||
+                BubbleAnythingFlagHelper.enableBubbleToFullscreen()) && deviceHasLargeScreen
+        } else {
+            false
+        }
 
     private val hasFreeformFeature =
         context.getPackageManager().hasSystemFeature(FEATURE_FREEFORM_WINDOW_MANAGEMENT)
@@ -173,9 +183,14 @@ class DesktopStateImpl(context: Context) : DesktopState {
     override val isFreeformEnabled: Boolean = hasFreeformFeature || hasFreeformDevOption
 
     override val shouldShowHomeBehindDesktop: Boolean =
-        Flags.showHomeBehindDesktop() && context.resources.getBoolean(
-            R.bool.config_showHomeBehindDesktop
-        )
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            Flags.showHomeBehindDesktop() && context.resources.getBoolean(
+                R.bool.config_showHomeBehindDesktop
+            )
+        } else {
+            false
+        }
 
     companion object {
         @VisibleForTesting

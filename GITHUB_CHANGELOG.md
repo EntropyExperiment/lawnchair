@@ -6,11 +6,13 @@
 
 Bug fixes only
 
-Build: BS10.2011
+Build: BS10.2111 (latest), BS10.2011
 
 This is a developer-focused change log:
 * Fix a lot of internal basic functionality
 * Re-added some Lawnchair-specific code
+* Fix workspace navigation
+* Fix allapps navigation
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 

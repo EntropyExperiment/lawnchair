@@ -15,6 +15,7 @@
  */
 package com.android.launcher3.model;
 
+import static android.Manifest.permission.PACKAGE_USAGE_STATS;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.formatElapsedTime;
 
@@ -308,7 +309,7 @@ public class QuickstepModelDelegate extends ModelDelegate {
             return;
         }
 
-        int usagePerm = mContext.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS);
+        int usagePerm = mContext.checkCallingOrSelfPermission(PACKAGE_USAGE_STATS);
         if (usagePerm != PackageManager.PERMISSION_GRANTED)
             return;
 
@@ -337,6 +338,13 @@ public class QuickstepModelDelegate extends ModelDelegate {
     @WorkerThread
     private void recreateHotseatPredictor() {
         mHotseatPredictionState.destroyPredictor();
+        
+        AppPredictionManager apm = mContext.getSystemService(AppPredictionManager.class);
+        if (apm == null) return;
+        
+        int usagePerm = mContext.checkCallingOrSelfPermission(PACKAGE_USAGE_STATS);
+        if (usagePerm != PackageManager.PERMISSION_GRANTED) return;
+        
         if (mActive) {
             registerHotseatPredictor(mContext);
         }

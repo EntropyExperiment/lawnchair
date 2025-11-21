@@ -141,8 +141,15 @@ public class CheckLongPressHelper {
     }
 
     private void triggerLongPress() {
+        boolean showHomeBehindDesktop;
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            showHomeBehindDesktop = Flags.showHomeBehindDesktop();
+        } else {
+            showHomeBehindDesktop = false;
+        }
         if ((mView.getParent() != null)
-                && (Flags.showHomeBehindDesktop() || mView.hasWindowFocus())
+                && (showHomeBehindDesktop || mView.hasWindowFocus())
                 && (!mView.isPressed() || mListener != null)
                 && !mHasPerformedLongPress) {
             boolean handled;
