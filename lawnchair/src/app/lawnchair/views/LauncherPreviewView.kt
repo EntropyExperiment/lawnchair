@@ -89,7 +89,7 @@ class LauncherPreviewView(
             workspaceScreenId,
             null, // Wallpaper colors
             model,
-            themeRes
+            themeRes,
         )
 
         /*
@@ -103,7 +103,7 @@ class LauncherPreviewView(
            1. Add field: private int mWorkspaceSearchContainer = R.layout.qsb_preview;
            2. Add method: public void setWorkspaceSearchContainer(int resId) { mWorkspaceSearchContainer = resId; }
            3. Use 'mWorkspaceSearchContainer' inside 'bindCompleteModel' when inflating the QSB.
-        */
+         */
         if (dummySmartspace) {
             // renderer.setWorkspaceSearchContainer(R.layout.smartspace_widget_placeholder)
         }

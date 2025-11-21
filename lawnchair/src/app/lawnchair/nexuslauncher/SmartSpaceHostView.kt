@@ -124,5 +124,4 @@ sealed class SmartSpaceHostView(context: Context) :
 
 enum class NexusLauncherEnum(override val id: Int) : EventEnum {
     SMARTSPACE_TAP_OR_LONGPRESS(520),
-    ;
 }
