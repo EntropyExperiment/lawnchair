@@ -27,32 +27,33 @@ class AddFoldersWithItemsTask(
     private val onComplete: (() -> Unit)? = null,
 ) : LauncherModel.ModelUpdateTask {
 
-    private val itemSpaceFinder = WorkspaceItemSpaceFinder()
-
     override fun execute(
         taskController: ModelTaskController,
         dataModel: BgDataModel,
         apps: AllAppsList,
     ) {
+        val context = taskController.context
+
+        val idp = LauncherAppState.getInstance(context).invariantDeviceProfile
+        val model = LauncherAppState.getInstance(context).model;
+        val itemSpaceFinder = WorkspaceItemSpaceFinder(dataModel, idp, model)
+
         if (folders.isEmpty()) {
             return
         }
 
-        val context = taskController.app.context
         val addedItemsFinal = ArrayList<ItemInfo>()
         val addedWorkspaceScreensFinal = IntArray()
 
         synchronized(dataModel) {
-            val workspaceScreens = dataModel.collectWorkspaceScreens()
             val modelWriter = taskController.getModelWriter()
 
             folders.forEach { folderInfo ->
                 // Find space for the folder
                 val coords = itemSpaceFinder.findSpaceForItem(
-                    taskController.app,
-                    dataModel,
-                    workspaceScreens,
+                    dataModel.itemsIdMap.collectWorkspaceScreens(),
                     addedWorkspaceScreensFinal,
+                    addedItemsFinal,
                     folderInfo.spanX,
                     folderInfo.spanY,
                 )
@@ -111,11 +112,7 @@ class AddFoldersWithItemsTask(
                     }
                 }
 
-                callbacks.bindAppsAdded(
-                    addedWorkspaceScreensFinal,
-                    ArrayList(addNotAnimated),
-                    ArrayList(addAnimated),
-                )
+                callbacks.bindItemsAdded(addedItemsFinal)
 
                 // Notify completion after items are bound
                 onComplete?.invoke()
