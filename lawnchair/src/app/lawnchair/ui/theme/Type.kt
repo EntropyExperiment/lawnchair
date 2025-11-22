@@ -27,42 +27,62 @@ import com.android.launcher3.R
 import kotlin.require
 
 @OptIn(ExperimentalTextApi::class)
-private val GoogleSansFlexNormal = FontFamily(
+/**
+ * Google Sans Flex Normal (400), optimised for large text with grade axis put to max (100)
+ **/
+private val GoogleSansFlexDisplayNormal = FontFamily(
     Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
         FontVariation.weight(FontWeight.Normal.weight),
-        round(100)
+        FontVariation.grade(100),
+        googleSansFlexRound(100)
     )),
 )
 
 @OptIn(ExperimentalTextApi::class)
+/**
+ * Google Sans Flex Normal (400), optimised for small text
+ **/
+private val GoogleSansFlexNormal = FontFamily(
+    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
+        FontVariation.weight(FontWeight.Normal.weight),
+        googleSansFlexRound(100)
+    )),
+)
+
+@OptIn(ExperimentalTextApi::class)
+/**
+ * Google Sans Flex Medium (500), optimised for small/medium text
+ **/
 private val GoogleSansFlexMedium = FontFamily(
     Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
         FontVariation.weight(FontWeight.Medium.weight),
-        round(100)
+        googleSansFlexRound(100)
     )),
 )
 
 /**
- * Typographic feature axis for round (ROND) variations, Integer form only as ROND only go up by 1 step
+ * Typographic feature axis for googleSansFlexRound (ROND) variations
  *
  * [OpenType Variable Axes Definition](https://fonts.google.com/variablefonts#axis-definitions)
+ *
+ * @param ROND Round axis integer value, only goes from 0 to 100
  **/
-private fun round(ROND: Int): FontVariation.Setting {
+private fun googleSansFlexRound(ROND: Int): FontVariation.Setting {
     val featureTagType = "ROND"
 
-    require(ROND in 0..100) { "'Round' must be in 0..100" }
+    require(ROND in 0..100) { "Google Sans Flex 'Round' axis must be in 0..100" }
     return FontVariation.Setting(featureTagType, ROND.toFloat())
 }
 
 private val base = Typography()
 val Typography = Typography(
-    displayLarge = base.displayLarge.copy(fontFamily = GoogleSansFlexNormal),
-    displayMedium = base.displayMedium.copy(fontFamily = GoogleSansFlexNormal),
-    displaySmall = base.displaySmall.copy(fontFamily = GoogleSansFlexNormal),
-    headlineLarge = base.headlineLarge.copy(fontFamily = GoogleSansFlexNormal),
-    headlineMedium = base.headlineMedium.copy(fontFamily = GoogleSansFlexNormal),
+    displayLarge = base.displayLarge.copy(fontFamily = GoogleSansFlexDisplayNormal),
+    displayMedium = base.displayMedium.copy(fontFamily = GoogleSansFlexDisplayNormal),
+    displaySmall = base.displaySmall.copy(fontFamily = GoogleSansFlexDisplayNormal),
+    headlineLarge = base.headlineLarge.copy(fontFamily = GoogleSansFlexDisplayNormal),
+    headlineMedium = base.headlineMedium.copy(fontFamily = GoogleSansFlexDisplayNormal),
     headlineSmall = base.headlineSmall.copy(fontFamily = GoogleSansFlexNormal),
-    titleLarge = base.titleLarge.copy(fontFamily = GoogleSansFlexNormal),
+    titleLarge = base.titleLarge.copy(fontFamily = GoogleSansFlexDisplayNormal),
     titleMedium = base.titleMedium.copy(fontFamily = GoogleSansFlexMedium),
     titleSmall = base.titleSmall.copy(fontFamily = GoogleSansFlexMedium),
     bodyLarge = base.bodyLarge.copy(fontFamily = GoogleSansFlexNormal, letterSpacing = 0.sp),
