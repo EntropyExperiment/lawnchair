@@ -15,6 +15,7 @@
  */
 package com.android.launcher3.util;
 
+import static android.content.pm.PackageManager.FEATURE_SENSOR_HINGE_ANGLE;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
 
@@ -509,6 +510,8 @@ public class DisplayController implements DesktopVisibilityListener {
 
         private final boolean mShowDesktopTaskbarForFreeformDisplay;
 
+        private boolean mIsFoldable;
+
         public Info(Context displayInfoContext) {
             /* don't need system overrides for external displays */
             this(displayInfoContext, new WindowManagerProxy(), new ArrayMap<>());
@@ -529,6 +532,10 @@ public class DisplayController implements DesktopVisibilityListener {
             densityDpi = config.densityDpi;
             mScreenSizeDp = new PortraitSize(config.screenHeightDp, config.screenWidthDp);
             navigationMode = wmProxy.getNavigationMode(displayInfoContext);
+            
+            // LC: Hacky stuff but it work!
+            mIsFoldable = Utilities.ATLEAST_R && displayInfoContext.getPackageManager()
+                .hasSystemFeature(FEATURE_SENSOR_HINGE_ANGLE);
 
             mPerDisplayBounds.putAll(perDisplayBoundsCache);
             List<WindowBounds> cachedValue = getCurrentBounds();
@@ -665,12 +672,16 @@ public class DisplayController implements DesktopVisibilityListener {
                     .mapToInt(bounds -> isTablet(bounds) ? flagTablet : flagPhone)
                     .reduce(0, (a, b) -> a | b);
 
-            //type = flagTablet;
-            // pE-TODO(n/a): Testing DC!
             if (type == (flagPhone | flagTablet)) {
-                Log.d("LC-DisplayController", "Device has multiple display (Phone|Tablet)");
+                Log.d("LC-DisplayController", "Device has multiple display (Phone|Tablet) based on bounds");
                 return TYPE_MULTI_DISPLAY;
-            } else if (type == flagTablet) {
+            }
+            if (type == flagTablet) {
+                // LC: Hacky stuff but it work!
+                if (mIsFoldable) {
+                    Log.d("LC-DisplayController", "Device is Foldable (Tablet && Hinge Detected)");
+                    return TYPE_MULTI_DISPLAY;
+                }
                 Log.d("LC-DisplayController", "Device has tablet profile (Tablet)");
                 return TYPE_TABLET;
             } else {

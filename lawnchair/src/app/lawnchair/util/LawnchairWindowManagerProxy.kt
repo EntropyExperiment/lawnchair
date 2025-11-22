@@ -34,22 +34,28 @@ class LawnchairWindowManagerProxy @Inject constructor() : WindowManagerProxy(Uti
     val TAG = "LC-WindowManagerProxy"
 
     override fun estimateInternalDisplayBounds(displayInfoContext: Context): ArrayMap<CachedDisplayInfo, List<WindowBounds>> {
-        // Lawnchair-TODO(Foldable): See estimateInternalDisplayBounds in [SystemWindowManagerProxy]
-        // Wait... If SWMP fallback to getMaximumWindowMetrics from [WindowManager] public APIs
-        // That means that we can combine getMaximumWindowMetrics with getCurrentWindowMetrics!
-        // Wait... but doesn't that only account for two screens? What if there were more than two
-        // Until then *this* is a good enough solutions
-        // Wait... Launcher calls eIDB every time you interact, what happened if you switched screen
-        //         to the screen with maximum window metrics screen? won't that cause duplicate with
-        //         getCurrentWindowMetrics?
-        //
-        // True... we duplicate it, and cache it? Is there a better way to do this?
-        // We can't just call [getPossibleMaximumWindowMetrics] because it's an internal apis,
-        // reflection won't work. Thanks @SystemApi
-        val info = getDisplayInfo(displayInfoContext).normalize(this)
-        val bounds = estimateWindowBounds(displayInfoContext, info)
-        val result = ArrayMap<CachedDisplayInfo, List<WindowBounds>>().apply { put(info, bounds) }
-        Log.d(TAG, "estimateInternalDisplayBounds: $result")
+        val result = ArrayMap<CachedDisplayInfo, List<WindowBounds>>()
+        val displayManager = displayInfoContext.getSystemService(DisplayManager::class.java) ?: return result
+
+        val displays = displayManager.displays
+
+        for (display in displays) {
+            try {
+                val contextForDisplay = displayInfoContext.createDisplayContext(display)
+                val wm = contextForDisplay.getSystemService(WindowManager::class.java)
+                val metrics = if (Utilities.ATLEAST_R) wm.maximumWindowMetrics else null
+
+                if (metrics != null) {
+                    val info = getDisplayInfo(metrics, display.rotation).normalize(this)
+                    val bounds = estimateWindowBounds(contextForDisplay, info)
+
+                    result[info] = bounds
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error estimating bounds for display ${display.displayId}", e)
+            }
+        }
+
         return result
     }
 
