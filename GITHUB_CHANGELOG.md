@@ -20,6 +20,7 @@ This is a developer-focused change log:
 * Better At-a-Glance perceptive wallpaper colour luminance detection
   * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance. 
 * Variable font for Launcher3 (????????)
+* Dynamically get app widget popup icon 
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
