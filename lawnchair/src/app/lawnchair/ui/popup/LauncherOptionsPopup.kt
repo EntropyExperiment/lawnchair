@@ -174,6 +174,7 @@ object LauncherOptionsPopup {
                 label = R.string.widget_button_text,
                 icon = R.drawable.ic_widget,
             )
+
             "all_apps" -> LauncherOptionMetadata(
                 label = R.string.all_apps_button_label,
                 icon = R.drawable.ic_apps,
