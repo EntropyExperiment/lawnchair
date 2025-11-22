@@ -16,6 +16,9 @@ This is a developer-focused change log:
 * Fix folder navigation (TODO)
 * Enable Material Expressive Folder Expansion animation flag
 * Move to Google Sans Flex font (TODO)
+* Material 3 Expressive Settings (Phase 2, TODO)
+* Better At-a-Glance perceptive wallpaper colour luminance detection
+  * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance. 
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
