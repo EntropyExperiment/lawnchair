@@ -406,8 +406,8 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             });
         } else {
             ((MarginLayoutParams) mFolderName.getLayoutParams()).setMarginEnd(0);
-            mLeftArrow.setVisibility(View.GONE);
-            mRightArrow.setVisibility(View.GONE);
+//            mLeftArrow.setVisibility(View.GONE);
+//            mRightArrow.setVisibility(View.GONE);
         }
     }
 
@@ -427,10 +427,11 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
      */
     public void updateArrowAlphas() {
         if (enableLauncherVisualRefresh()) {
-            mLeftArrow.setAlpha(
-                    0 == mContent.getCurrentPage() ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
-            mRightArrow.setAlpha(mContent.getPageCount() == mContent.getCurrentPage() + 1
-                    ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
+            // pE-TODO(QPR1): Investigate
+//            mLeftArrow.setAlpha(
+//                    0 == mContent.getCurrentPage() ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
+//            mRightArrow.setAlpha(mContent.getPageCount() == mContent.getCurrentPage() + 1
+//                    ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
         }
     }
 
