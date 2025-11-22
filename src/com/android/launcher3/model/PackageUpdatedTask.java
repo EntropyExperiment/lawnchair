@@ -467,7 +467,7 @@ public class PackageUpdatedTask implements ModelUpdateTask {
             if (PreferenceExtensionsKt.firstBlocking(pref2.getDeckLayout())) {
                 LawndeckManager deckManager = new LawndeckManager(context);
                 ModelWriter modelWriter = taskController.getModelWriter();
-                for (int i = 0; i < N; i++) {
+                for (int i = 0; i < packageCount; i++) {
                     deckManager.addNewlyInstalledApp(packages[i], mUser, modelWriter, dataModel);
                 }
             }

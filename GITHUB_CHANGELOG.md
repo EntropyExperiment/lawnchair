@@ -70,18 +70,40 @@ This is a developer-focused change log:
 Lawnchair 16 pE Development 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### 🥞 Development 3
+### 🥞 Development 3 Release 2
+
+Build: BD3.2211
+
+Compatibility list:
+
+| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
+|-------------|---------------------|--------------------|
+| Android 8.1 |                     | Android 12.0       |
+| Android 9   |                     | Android 12.1       |
+| Android 10  |                     | Android 13         |
+| Android 11  |                     | Android 14         |
+|             |                     | Android 15         |
+|             |                     | Android 16         |
+
+#### Features
+* [Lawnchair] Updated screenshots compressions and fastlane screenshot
+* [Lawnchair] Features from Lawnchair 15-dev
+
+#### Fixes
+* [Lawnchair] Conflict from Lawnchair 15-dev
+
+### Development 3 Release 1
 
 Build: BD3.1711
 
-The biggest change log ever, this marked the end of Bubble Tea [r2] branch as future development 
+The biggest change log ever, this marked the end of Bubble Tea [r2] branch as future development
 switched to Bubble Tea [QPR1]. See you at Snapshot 7 or Development 4!
 
-(Again) Originally going to launch D3 if most of the issue on tracker have been resolved, but hit a 
+(Again) Originally going to launch D3 if most of the issue on tracker have been resolved, but hit a
 stability milestone instead.
 
-This release includes 4 new features, and 33 bug fixes, 
-Reimplemented some of Lawnchair features, better sizing of home screen, updated README.md screenshot 
+This release includes 4 new features, and 33 bug fixes,
+Reimplemented some of Lawnchair features, better sizing of home screen, updated README.md screenshot
 and the inclusion of Bubble Tea project into the official Lawnchair repository as 16-dev!
 
 This release have been tested with:

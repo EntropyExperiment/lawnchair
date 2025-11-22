@@ -16,24 +16,24 @@ mockitoKotlin = "5.4.0"
 opto = "1.0.18"
 protocVersion = "4.33.1"
 retrofit = "3.0.0"
-room = "2.8.3"
+room = "2.8.4"
 testRules = "1.7.0"
 testRunner = "1.7.0"
 truth = "1.4.5"
 
-activityCompose = "1.11.0"
+activityCompose = "1.12.0"
 airbnbLottie = "6.7.1"
 androidDesugar = "2.1.5"
 coil = "2.7.0"
-composeBom = "2025.11.00"
-compose = "1.9.4"
-composeMaterial = "1.9.4"
+composeBom = "2025.11.01"
+compose = "1.9.5"
+composeMaterial = "1.9.5"
 composeMaterial3 = "1.5.0-alpha08"
 composeMaterialIcons = "1.7.8"
 composeCompiler = "1.5.15"
 constraintlayout = "2.2.1"
 dagger = "2.57.2"
-datastore = "1.1.7"
+datastore = "1.2.0"
 dynamicanimation = "1.1.0"
 fuzzywuzzy = "1.4.0"
 googleMaterial = "1.13.0"
@@ -47,10 +47,10 @@ kotlinxCoroutines = "1.10.2"
 kotlinxSerialization = "1.9.0"
 leakcanaryAndroid = "2.14"
 libsu = "6.0.0"
-lifecycle = "2.9.4"
+lifecycle = "2.10.0"
 materialMotionCompose = "2.0.1"
 navigationCompose = "2.9.6"
-okhttp = "5.3.1"
+okhttp = "5.3.2"
 palette = "1.0.0"
 persianDate = "1.7.1"
 preference = "1.2.1"
@@ -61,7 +61,7 @@ restrictionBypass = "2.2"
 slice = "1.1.0-alpha02"
 smartspacer = "1.1.2"
 uiautomator = "2.3.0"
-window = "1.5.0"
+window = "1.5.1"
 
 agp = "8.13.1"
 baselineprofile = "1.4.1"
@@ -69,7 +69,7 @@ kotlin = "2.2.21"
 protobuf = "0.9.5"
 licensee = "1.14.1"
 refine = "4.4.0"
-spotless = "8.0.0"
+spotless = "8.1.0"
 
 guava = "33.5.0-android"
 
@@ -83,7 +83,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-google-ksp = "com.google.devtools.ksp:2.3.2"
+google-ksp = "com.google.devtools.ksp:2.3.3"
 google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 cash-licensee = { id = "app.cash.licensee", version.ref = "licensee" }
 rikka-refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
@@ -138,6 +138,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-ui-util = { group = "androidx.compose.ui", name = "ui-util", version.ref = "compose" }
 compose-compiler = { group = "androidx.compose.compiler", name = "compose-compiler", version.ref = "composeCompiler"}
 
+# Dagger & Hilt
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 dagger-android-processor = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }

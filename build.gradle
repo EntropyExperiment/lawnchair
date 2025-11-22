@@ -169,7 +169,7 @@ android {
          * Lawnchair Launcher 16.0 Development 4 Release 1
          * see CONTRIBUTING.md#versioning-scheme
          */
-        versionCode 16_00_04_00_01
+        versionCode 16_00_01_04_01
         versionName "${versionDisplayName}"
         buildConfigField "String", "VERSION_DISPLAY_NAME", "\"${versionDisplayName}\""
         buildConfigField "String", "MAJOR_VERSION", "\"${majorVersion}\""
@@ -514,8 +514,8 @@ spotless {
     }
     kotlin {
         target("lawnchair/src/**/*.kt")
-        ktlint().customRuleSets([
-            "io.nlopez.compose.rules:ktlint:0.4.27",
+        ktlint("1.8.0").customRuleSets([
+            "io.nlopez.compose.rules:ktlint:0.4.28",
         ]).editorConfigOverride([
             "ktlint_compose_compositionlocal-allowlist": "disabled",
             "ktlint_compose_lambda-param-event-trailing": "disabled",
