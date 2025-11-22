@@ -20,6 +20,7 @@ import static android.hardware.display.DisplayManager.DISPLAY_CATEGORY_ALL_INCLU
 
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
+import android.content.res.Resources.NotFoundException;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.content.Context;
@@ -88,21 +89,33 @@ public class DesktopModeStatus {
      * Return {@code true} if the current device supports desktop mode.
      */
     private static boolean isDesktopModeSupported(@NonNull Context context) {
-        return context.getResources().getBoolean(R.bool.config_isDesktopModeSupported);
+        try {
+            return context.getResources().getBoolean(R.bool.config_isDesktopModeSupported);
+        } catch (NotFoundException e) {
+            return false;
+        }
     }
 
     /**
      * Return {@code true} if the current device supports the developer option for desktop mode.
      */
     private static boolean isDesktopModeDevOptionSupported(@NonNull Context context) {
-        return context.getResources().getBoolean(R.bool.config_isDesktopModeDevOptionSupported);
+        try {
+            return context.getResources().getBoolean(R.bool.config_isDesktopModeDevOptionSupported);
+        } catch (NotFoundException e) {
+            return false;
+        }
     }
 
     /**
      * Return {@code true} if the current device can host desktop sessions on its internal display.
      */
     private static boolean canInternalDisplayHostDesktops(@NonNull Context context) {
-        return context.getResources().getBoolean(R.bool.config_canInternalDisplayHostDesktops);
+        try {
+            return context.getResources().getBoolean(R.bool.config_canInternalDisplayHostDesktops);
+        } catch (NotFoundException e) {
+            return false;
+        }
     }
 
 

@@ -8,6 +8,17 @@ Bug fixes only
 
 Build: BS10.2111 (latest), BS10.2011
 
+Compatibility list:
+
+| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
+|-------------|---------------------|--------------------|
+| Android 8.1 |                     | Android 12.0       |
+| Android 9   |                     | Android 12.1       |
+| Android 10  |                     | Android 13         |
+| Android 11  |                     | Android 14         |
+|             |                     | Android 15         |
+|             |                     | Android 16         |
+
 This is a developer-focused change log:
 * Fix a lot of internal basic functionality
 * Re-added some Lawnchair-specific code
@@ -22,7 +33,7 @@ This is a developer-focused change log:
 * Variable font for Launcher3 (????????)
 * Dynamically get app widget popup icon 
 * Foldable support (for real)
-* Support Android 14/15
+* Support Android 12.0/12.1/13/14/15
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 

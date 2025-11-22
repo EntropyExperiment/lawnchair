@@ -36,7 +36,12 @@ constructor(@ApplicationContext private val context: Context) : LauncherRestoreE
     }
 
     private val restoreEventLogger: BackupRestoreEventLogger? = if (Utilities.ATLEAST_S) {
-        BackupManager(context).delayedRestoreLogger
+        try {
+            BackupManager(context).delayedRestoreLogger
+        } catch (e: NoSuchMethodError) {
+            // Lawnchair-TODO: pE-TODO: wtf?
+            null
+        }
     } else {
         null
     }

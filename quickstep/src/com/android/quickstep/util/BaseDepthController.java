@@ -128,8 +128,12 @@ public class BaseDepthController {
     public BaseDepthController(QuickstepLauncher activity) {
         mLauncher = activity;
         if (Flags.allAppsBlur() || enableOverviewBackgroundWallpaperBlur()) {
-            mCrossWindowBlursEnabled =
-                    CrossWindowBlurListeners.getInstance().isCrossWindowBlurEnabled();
+            if (Utilities.ATLEAST_S) {
+                mCrossWindowBlursEnabled =
+                        CrossWindowBlurListeners.getInstance().isCrossWindowBlurEnabled();
+            } else {
+                mCrossWindowBlursEnabled = false;
+            }
             mMaxBlurRadius = activity.getResources().getDimensionPixelSize(
                     R.dimen.max_depth_blur_radius_enhanced);
         } else {
@@ -251,11 +255,17 @@ public class BaseDepthController {
 
         final SurfaceControl.Transaction finalTransaction =
                 transaction == null ? createTransaction() : transaction;
+        
+        // LC: Fix blur effect on Android 12.1/12.0
         try (finalTransaction) {
-            finalTransaction.setBackgroundBlurRadius(blurSurface, mCurrentBlur)
-                    .setOpaque(blurSurface, isSurfaceOpaque);
-            // Set early wake-up flags when we know we're executing an expensive operation, this way
-            // SurfaceFlinger will adjust its internal offsets to avoid jank.
+            if (blurSurface != null && blurSurface.isValid()) {
+                finalTransaction.setBackgroundBlurRadius(blurSurface, mCurrentBlur)
+                        .setOpaque(blurSurface, isSurfaceOpaque);
+            } else {
+                // GRASP
+                return;
+            }
+
             boolean wantsEarlyWakeUp = blurAmount > 0 && blurAmount < 1;
             if (wantsEarlyWakeUp && !mInEarlyWakeUp) {
                 try {
@@ -271,15 +281,8 @@ public class BaseDepthController {
                 }
             }
 
-            if (applyImmediately) {
-                finalTransaction.apply();
-            } else {
-                AttachedSurfaceControl rootSurfaceControl =
-                        mLauncher.getRootView().getRootSurfaceControl();
-                if (rootSurfaceControl != null) {
-                    rootSurfaceControl.applyTransactionOnDraw(finalTransaction);
-                }
-            }
+            // LC: Always apply immediately.
+            finalTransaction.apply();
         }
 
         blurWorkspaceDepthTargets();

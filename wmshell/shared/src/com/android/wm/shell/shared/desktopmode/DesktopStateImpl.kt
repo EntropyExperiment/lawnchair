@@ -18,6 +18,7 @@ package com.android.wm.shell.shared.desktopmode
 
 import android.content.Context
 import android.content.pm.PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT
+import android.content.res.Resources
 import android.hardware.display.DisplayManager
 import android.os.SystemProperties
 import android.provider.Settings
@@ -40,13 +41,25 @@ class DesktopStateImpl(context: Context) : DesktopState {
         SystemProperties.getBoolean(ENFORCE_DEVICE_RESTRICTIONS_SYS_PROP, true)
 
     private val isDesktopModeDevOptionSupported =
-        context.getResources().getBoolean(R.bool.config_isDesktopModeDevOptionSupported)
+        try {
+            context.getResources().getBoolean(R.bool.config_isDesktopModeDevOptionSupported)
+        } catch (e: Resources.NotFoundException) {
+            false
+        }
 
     private val isDesktopModeSupported =
-        context.getResources().getBoolean(R.bool.config_isDesktopModeSupported)
+        try {
+            context.getResources().getBoolean(R.bool.config_isDesktopModeSupported)
+        } catch (e: Resources.NotFoundException) {
+            false
+        }
 
     private val canInternalDisplayHostDesktops =
-        context.getResources().getBoolean(R.bool.config_canInternalDisplayHostDesktops)
+        try {
+            context.getResources().getBoolean(R.bool.config_canInternalDisplayHostDesktops)
+        } catch (e: Resources.NotFoundException) {
+            false
+        }
 
     private val isDeviceEligibleForDesktopModeDevOption =
         if (!enforceDeviceRestrictions) {

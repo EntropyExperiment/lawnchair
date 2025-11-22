@@ -151,7 +151,7 @@ sealed class WorkspaceData : Iterable<ItemInfo> {
         private fun pushUpdate(update: WorkspaceChangeEvent) {
             modificationId++
             changeHistory.add(0, update)
-            if (changeHistory.size > MAX_HISTORY_SIZE) changeHistory.removeLast()
+            if (changeHistory.size > MAX_HISTORY_SIZE) changeHistory.removeAt(changeHistory.lastIndex)
         }
 
         override fun copy(): WorkspaceData =
