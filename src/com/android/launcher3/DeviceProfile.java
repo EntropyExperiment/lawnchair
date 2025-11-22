@@ -707,7 +707,7 @@ public class DeviceProfile {
         // Load the default font to use on notification dots
         Typeface typeface = null;
         if (showNotificationCount) {
-            typeface = ResourcesCompat.getFont(context, R.font.inter_regular);
+            typeface = ResourcesCompat.getFont(context, R.font.googlesansflex_variable);
         }
 
         // Load dot color
@@ -720,7 +720,6 @@ public class DeviceProfile {
         int countColor = counterColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         // This is done last, after iconSizePx is calculated above.
-        // Lawnchair-TODO: dotRendererCache?
         mDotRendererWorkSpace = createDotRenderer(themeManager, iconSizePx, dotRendererCache, showNotificationCount, typeface, dotColor, countColor);
         mDotRendererAllApps = createDotRenderer(themeManager,
                 getAllAppsProfile().getIconSizePx(), dotRendererCache, showNotificationCount, typeface, dotColor, countColor);

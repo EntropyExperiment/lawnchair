@@ -17,34 +17,58 @@
 package app.lawnchair.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.android.launcher3.R
+import kotlin.require
 
-private val InterFontFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semi_bold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold),
+@OptIn(ExperimentalTextApi::class)
+private val GoogleSansFlexNormal = FontFamily(
+    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
+        FontVariation.weight(FontWeight.Normal.weight),
+        round(100)
+    )),
 )
+
+@OptIn(ExperimentalTextApi::class)
+private val GoogleSansFlexMedium = FontFamily(
+    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
+        FontVariation.weight(FontWeight.Medium.weight),
+        round(100)
+    )),
+)
+
+/**
+ * Typographic feature axis for round (ROND) variations, Integer form only as ROND only go up by 1 step
+ *
+ * [OpenType Variable Axes Definition](https://fonts.google.com/variablefonts#axis-definitions)
+ **/
+private fun round(ROND: Int): FontVariation.Setting {
+    val featureTagType = "ROND"
+
+    require(ROND in 0..100) { "'Round' must be in 0..100" }
+    return FontVariation.Setting(featureTagType, ROND.toFloat())
+}
 
 private val base = Typography()
 val Typography = Typography(
-    displayLarge = base.displayLarge.copy(fontFamily = InterFontFamily),
-    displayMedium = base.displayMedium.copy(fontFamily = InterFontFamily),
-    displaySmall = base.displaySmall.copy(fontFamily = InterFontFamily),
-    headlineLarge = base.headlineLarge.copy(fontFamily = InterFontFamily),
-    headlineMedium = base.headlineMedium.copy(fontFamily = InterFontFamily),
-    headlineSmall = base.headlineSmall.copy(fontFamily = InterFontFamily),
-    titleLarge = base.titleLarge.copy(fontFamily = InterFontFamily),
-    titleMedium = base.titleMedium.copy(fontFamily = InterFontFamily),
-    titleSmall = base.titleSmall.copy(fontFamily = InterFontFamily),
-    bodyLarge = base.bodyLarge.copy(fontFamily = InterFontFamily, letterSpacing = 0.sp),
-    bodyMedium = base.bodyMedium.copy(fontFamily = InterFontFamily, letterSpacing = 0.1.sp),
-    bodySmall = base.bodySmall.copy(fontFamily = InterFontFamily),
-    labelLarge = base.labelLarge.copy(fontFamily = InterFontFamily),
-    labelMedium = base.labelMedium.copy(fontFamily = InterFontFamily),
-    labelSmall = base.labelSmall.copy(fontFamily = InterFontFamily),
+    displayLarge = base.displayLarge.copy(fontFamily = GoogleSansFlexNormal),
+    displayMedium = base.displayMedium.copy(fontFamily = GoogleSansFlexNormal),
+    displaySmall = base.displaySmall.copy(fontFamily = GoogleSansFlexNormal),
+    headlineLarge = base.headlineLarge.copy(fontFamily = GoogleSansFlexNormal),
+    headlineMedium = base.headlineMedium.copy(fontFamily = GoogleSansFlexNormal),
+    headlineSmall = base.headlineSmall.copy(fontFamily = GoogleSansFlexNormal),
+    titleLarge = base.titleLarge.copy(fontFamily = GoogleSansFlexNormal),
+    titleMedium = base.titleMedium.copy(fontFamily = GoogleSansFlexMedium),
+    titleSmall = base.titleSmall.copy(fontFamily = GoogleSansFlexMedium),
+    bodyLarge = base.bodyLarge.copy(fontFamily = GoogleSansFlexNormal, letterSpacing = 0.sp),
+    bodyMedium = base.bodyMedium.copy(fontFamily = GoogleSansFlexNormal, letterSpacing = 0.1.sp),
+    bodySmall = base.bodySmall.copy(fontFamily = GoogleSansFlexNormal),
+    labelLarge = base.labelLarge.copy(fontFamily = GoogleSansFlexMedium),
+    labelMedium = base.labelMedium.copy(fontFamily = GoogleSansFlexMedium),
+    labelSmall = base.labelSmall.copy(fontFamily = GoogleSansFlexMedium),
 )

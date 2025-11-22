@@ -15,6 +15,7 @@ This is a developer-focused change log:
 * Fix allapps navigation
 * Fix folder navigation (TODO)
 * Enable Material Expressive Folder Expansion animation flag
+* Move to Google Sans Flex font (TODO)
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
