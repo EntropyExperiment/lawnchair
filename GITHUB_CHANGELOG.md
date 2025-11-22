@@ -2,11 +2,13 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Snapshot 10 (Development 4 Release 1)
+### 🏗️ Development 4 Release 1 (Draft)
+
+aka: Snapshot 10
 
 Bug fixes only
 
-Build: BS10.2111 (latest), BS10.2011
+Build: BD4.2311 (latest), BS10.2111, BS10.2011
 
 Compatibility list:
 
@@ -19,21 +21,25 @@ Compatibility list:
 |             |                     | Android 15         |
 |             |                     | Android 16         |
 
-This is a developer-focused change log:
-* Fix a lot of internal basic functionality
-* Re-added some Lawnchair-specific code
-* Fix workspace navigation
-* Fix allapps navigation
-* Fix folder navigation
-* Enable Material Expressive Folder Expansion animation flag
-* Move to Google Sans Flex font (TODO)
-* Material 3 Expressive Settings (Phase 2, TODO)
-* Better At-a-Glance perceptive wallpaper colour luminance detection
-  * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance. 
-* Variable font for Launcher3 (????????)
-* Dynamically get app widget popup icon 
-* Foldable support (for real)
-* Support Android 12.0/12.1/13/14/15
+
+#### Features
+
+* [Launcher] Move to Google Sans Flex font (TODO)
+* [Lawnchair] Material 3 Expressive Settings (Phase 2, TODO)
+* [Lawnchair] Better At-a-Glance perceptive wallpaper colour luminance detection
+    * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance.
+* [Launcher] Enable Material Expressive Folder Expansion animation flag
+* [Launcher/Font] Variable font for Launcher3 (????????)
+* [Launcher/Popup] Dynamically get app widget popup icon
+* [Launcher] Foldable support (actually real)
+
+#### Fixes
+* [Launcher] Fix a lot of internal basic functionality
+* [Lawnchair] Re-added some Lawnchair-specific code
+* [Launcher] Fix workspace navigation
+* [Launcher] Fix allapps navigation
+* [Launcher] Fix folder navigation
+* [Launcher] Support Android 12.0/12.1/13/14/15
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
