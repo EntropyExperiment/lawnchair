@@ -20,6 +20,7 @@ import static android.multiuser.Flags.enableMovingContentIntoPrivateSpace;
 import static com.android.launcher3.LauncherConstants.ActivityCodes.REQUEST_BIND_PENDING_APPWIDGET;
 import static com.android.launcher3.LauncherConstants.ActivityCodes.REQUEST_RECONFIGURE_APPWIDGET;
 import static com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT;
+import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
 import static com.android.launcher3.allapps.AlphabeticalAppsList.PRIVATE_SPACE_PACKAGE;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_FOLDER_OPEN;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_PRIVATE_SPACE_INSTALL_APP_BUTTON_TAP;
@@ -397,7 +398,20 @@ public class ItemClickHandler {
                         LAUNCHER_PRIVATE_SPACE_INSTALL_APP_BUTTON_TAP);
             }
         }
-        if (enableMovingContentIntoPrivateSpace() &&
+
+        boolean enableMovingContentIntoPrivateSpace = false;
+        if (ATLEAST_BAKLAVA) {
+            try {
+                /* LC-Note: Some devices (Android 16 QPR) doesn't have or expose this flag to user.
+                 * Let's assume no, because (the flags) enableMovingContentIntoPrivateSpace seems
+                 * to be False for R8 by default.
+                 * */
+                enableMovingContentIntoPrivateSpace = enableMovingContentIntoPrivateSpace();
+            } catch (NoClassDefFoundError | NoSuchMethodError e) {
+                enableMovingContentIntoPrivateSpace = false;
+            }
+        }
+        if (enableMovingContentIntoPrivateSpace &&
                 Objects.equals(item.getTargetPackage(), PRIVATE_SPACE_PACKAGE)
                 && item.itemType != ITEM_TYPE_DEEP_SHORTCUT) {
             // Only show the popup menu when clicking on the icon itself.

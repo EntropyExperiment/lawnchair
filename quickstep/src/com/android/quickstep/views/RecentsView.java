@@ -941,8 +941,15 @@ public abstract class RecentsView<
                 .inflate(R.layout.overview_clear_all_button, this, false);
         mClearAllButton.setOnClickListener(this::dismissAllTasks);
 
-        if (DesktopModeStatus.isMultipleDesktopFrontendEnabledOnDisplay(mContext,
-                mContainer.getDisplay())) {
+        boolean isMultipleDesktopFrontendEnabledOnDisplay;
+        if (false) {
+            isMultipleDesktopFrontendEnabledOnDisplay = DesktopModeStatus.isMultipleDesktopFrontendEnabledOnDisplay(mContext,
+                mContainer.getDisplay());
+        } else {
+            isMultipleDesktopFrontendEnabledOnDisplay = false;
+        }
+
+        if (isMultipleDesktopFrontendEnabledOnDisplay) {
             mAddDesktopButton = (AddDesktopButton) LayoutInflater.from(context).inflate(
                     R.layout.overview_add_desktop_button, this, false);
             mAddDesktopButton.setOnClickListener(view -> {

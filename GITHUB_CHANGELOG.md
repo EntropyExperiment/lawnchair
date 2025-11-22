@@ -22,6 +22,7 @@ This is a developer-focused change log:
 * Variable font for Launcher3 (????????)
 * Dynamically get app widget popup icon 
 * Foldable support (for real)
+* Support Android 14/15
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 

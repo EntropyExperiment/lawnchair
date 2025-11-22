@@ -66,15 +66,27 @@ class DesktopStateImpl(context: Context) : DesktopState {
         }
 
     private val isDesktopModeEnabledByDevOption =
-        DesktopModeFlags.isDesktopModeForcedEnabled() && canShowDesktopModeDevOption
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            DesktopModeFlags.isDesktopModeForcedEnabled()
+        } else {
+            false
+        } && canShowDesktopModeDevOption
 
     override val canEnterDesktopMode: Boolean = run {
         val isEligibleForDesktopMode =
             isDeviceEligibleForDesktopMode &&
-                    (DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue ||
-                            canInternalDisplayHostDesktops)
+                    (if (false) {
+                        // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+                        DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue
+                    } else {
+                        false
+                    } || canInternalDisplayHostDesktops)
         val desktopModeEnabled =
-            isEligibleForDesktopMode && DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODE.isTrue
+            isEligibleForDesktopMode && if (false) {
+                // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+                DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODE.isTrue
+            } else { false}
         desktopModeEnabled || isDesktopModeEnabledByDevOption
     }
 
@@ -118,14 +130,22 @@ class DesktopStateImpl(context: Context) : DesktopState {
         }
 
     override val enableMultipleDesktops: Boolean =
-        DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue
-                && DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_FRONTEND.isTrue
-                && canEnterDesktopMode
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue
+                    && DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_FRONTEND.isTrue
+        } else {
+            false
+        } && canEnterDesktopMode
 
     override fun isMultipleDesktopFrontendEnabledOnDisplay(display: Display): Boolean =
-        DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_FRONTEND.isTrue
-                && DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue
-                && isDesktopModeSupportedOnDisplay(display)
+        if (false) {
+            // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+            DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_FRONTEND.isTrue
+                    && DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue
+        } else {
+            false
+        } && isDesktopModeSupportedOnDisplay(display)
 
     override fun isMultipleDesktopFrontendEnabledOnDisplay(displayId: Int): Boolean =
         displayManager.getDisplay(displayId)?.let { isMultipleDesktopFrontendEnabledOnDisplay(it) }
@@ -138,12 +158,22 @@ class DesktopStateImpl(context: Context) : DesktopState {
         if (!canEnterDesktopMode) return false
         if (!enforceDeviceRestrictions) return true
         if (display.type == Display.TYPE_INTERNAL) return canInternalDisplayHostDesktops
-        if (!DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue) return false
+        if (!if (false) {
+                // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+                DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue
+            } else {false}
+        ) return false
         return windowManager?.isEligibleForDesktopMode(display.displayId) ?: false
     }
 
     override fun isProjectedMode(): Boolean {
-        if (!DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue) {
+        if (!if (false) {
+                // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
+                DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue
+            } else {
+                false
+            }
+        ) {
             return false
         }
 
@@ -157,11 +187,16 @@ class DesktopStateImpl(context: Context) : DesktopState {
     }
 
     private val deviceHasLargeScreen =
-        displayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED)
-            ?.filter { display -> display.type == Display.TYPE_INTERNAL }
-            ?.any { display ->
-                display.minSizeDimensionDp >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP
-            } ?: false
+        if (false) {
+            // pE-TODO(QPR1): Put this in ATLEAST_BAKLAVA check
+            displayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED)
+                ?.filter { display -> display.type == Display.TYPE_INTERNAL }
+                ?.any { display ->
+                    display.minSizeDimensionDp >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP
+                } ?: false
+        } else {
+            false
+        }
 
     override val overridesShowAppHandle: Boolean =
         if (false) {

@@ -57,6 +57,7 @@ import com.android.internal.logging.InstanceId
 import com.android.internal.util.ScreenshotRequest
 import com.android.internal.view.AppearanceRegion
 import com.android.launcher3.Flags
+import com.android.launcher3.Utilities.ATLEAST_BAKLAVA
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -1107,7 +1108,11 @@ class SystemUiProxy @Inject constructor(@ApplicationContext private val context:
 
     private fun shouldEnableRunningTasksForDesktopMode(): Boolean =
         DesktopModeStatus.canEnterDesktopMode(context) &&
-            ENABLE_DESKTOP_WINDOWING_TASKBAR_RUNNING_APPS.isTrue
+            if (ATLEAST_BAKLAVA) {
+                ENABLE_DESKTOP_WINDOWING_TASKBAR_RUNNING_APPS.isTrue
+            } else {
+                false
+            }
 
     private fun handleMessageAsync(msg: Message): Boolean {
         return when (msg.what) {
