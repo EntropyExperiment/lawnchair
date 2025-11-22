@@ -22,6 +22,7 @@ import android.content.res.AssetManager
 import android.graphics.Typeface
 import android.net.Uri
 import androidx.annotation.Keep
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.Font as ComposeFont
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -75,10 +76,49 @@ class FontCache @Inject constructor(
                 .toList()
         }
 
-    val uiRegular = ResourceFont(context, R.font.googlesansflex_variable, "Google Sans Flex " + context.getString(R.string.font_weight_regular))
-    val uiMedium = ResourceFont(context, R.font.googlesansflex_variable, "Google Sans Flex " + context.getString(R.string.font_weight_medium))
-    val uiText = ResourceFont(context, R.font.googlesansflex_variable, "Google Sans Flex " + context.getString(R.string.font_weight_regular))
-    val uiTextMedium = ResourceFont(context, R.font.googlesansflex_variable, "Google Sans Flex " + context.getString(R.string.font_weight_medium))
+    val uiRegular = ResourceFont(
+        context,
+        R.font.googlesansflex_variable,
+        "Google Sans Flex " + context.getString(R.string.font_weight_medium),
+        mapOf(
+            FontAxes.WEIGHT to FontWeight.Normal.weight.toFloat(),
+            FontAxes.ROUNDNESS to 100f,
+            FontAxes.GRADE to 100f
+        )
+    )
+
+    val uiMedium = ResourceFont(
+        context,
+        R.font.googlesansflex_variable,
+        "Google Sans Flex " + context.getString(R.string.font_weight_medium),
+        mapOf(
+            FontAxes.WEIGHT to FontWeight.Medium.weight.toFloat(),
+            FontAxes.ROUNDNESS to 100f,
+            FontAxes.GRADE to 0f
+        )
+    )
+
+    val uiText = ResourceFont(
+        context,
+        R.font.googlesansflex_variable,
+        "Google Sans Flex " + context.getString(R.string.font_weight_medium),
+        mapOf(
+            FontAxes.WEIGHT to FontWeight.Normal.weight.toFloat(),
+            FontAxes.ROUNDNESS to 100f,
+            FontAxes.GRADE to 0f
+        )
+    )
+
+    val uiTextMedium = ResourceFont(
+        context,
+        R.font.googlesansflex_variable,
+        "Google Sans Flex " + context.getString(R.string.font_weight_medium),
+        mapOf(
+            FontAxes.WEIGHT to FontWeight.Medium.weight.toFloat(),
+            FontAxes.ROUNDNESS to 100f,
+            FontAxes.GRADE to 100f
+        )
+    )
 
     suspend fun getTypeface(font: Font): Typeface? {
         return loadFontAsync(font).await()?.typeface
@@ -354,21 +394,36 @@ class FontCache @Inject constructor(
         context: Context,
         private val resId: Int,
         private val name: String,
-    ) : TypefaceFont(ResourcesCompat.getFont(context, resId)) {
+        private val axisSettings: Map<String, Float> = emptyMap()
+    ) : TypefaceFont(createTypeface(context, resId, axisSettings)) {
 
-        private val hashCode = "ResourceFont|$name".hashCode()
+        private val hashCode = "ResourceFont|$name|$axisSettings".hashCode()
 
         override val fullDisplayName = name
-        override val composeFontFamily = FontFamily(ComposeFont(resId))
+        @OptIn(ExperimentalTextApi::class)
+        override val composeFontFamily = FontFamily(
+            // Don't let it fool you, removing qualifier name makes everything 10x worse
+            androidx.compose.ui.text.font.Font(
+                resId = resId,
+                variationSettings = androidx.compose.ui.text.font.FontVariation.Settings(
+                    *axisSettings.map {
+                        androidx.compose.ui.text.font.FontVariation.Setting(it.key, it.value)
+                    }.toTypedArray()
+                )
+            )
+        )
 
         override fun saveToJson(obj: JSONObject) {
             super.saveToJson(obj)
             obj.put(KEY_RESOURCE_ID, resId)
             obj.put(KEY_FAMILY_NAME, name)
+            val axesObj = JSONObject()
+            axisSettings.forEach { (k, v) -> axesObj.put(k, v) }
+            obj.put("axes", axesObj)
         }
 
         override fun equals(other: Any?): Boolean {
-            return other is ResourceFont && name == other.name
+            return other is ResourceFont && name == other.name && axisSettings == other.axisSettings
         }
 
         override fun hashCode(): Int {
@@ -376,13 +431,33 @@ class FontCache @Inject constructor(
         }
 
         companion object {
+            private fun createTypeface(context: Context, resId: Int, axes: Map<String, Float>): Typeface? {
+                if (axes.isEmpty()) {
+                    return ResourcesCompat.getFont(context, resId)
+                }
+                return try {
+                    context.resources.openRawResourceFd(resId).use { pfd ->
+                        Typeface.Builder(pfd.fileDescriptor)
+                            .setFontVariationSettings(FontAxes.mapToString(axes))
+                            .build()
+                    }
+                } catch (e: Exception) {
+                    ResourcesCompat.getFont(context, resId)
+                }
+            }
 
             @Keep
             @JvmStatic
             fun fromJson(context: Context, obj: JSONObject): Font {
                 val resId = obj.getInt(KEY_RESOURCE_ID)
                 val name = obj.getString(KEY_FAMILY_NAME)
-                return ResourceFont(context, resId, name)
+                val axesMap = mutableMapOf<String, Float>()
+                val axesObj = obj.optJSONObject("axes")
+                axesObj?.keys()?.forEach { key ->
+                    axesMap[key] = axesObj.getDouble(key).toFloat()
+                }
+
+                return ResourceFont(context, resId, name, axesMap)
             }
         }
     }
