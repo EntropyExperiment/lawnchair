@@ -125,7 +125,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableExpressiveFolderExpansion() {
-        return false;
+        return true;
     }
 
     @Override
@@ -461,7 +461,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableTieredWidgetsByDefaultInPicker() {
-        return false;
+        return true;
     }
 
     @Override
