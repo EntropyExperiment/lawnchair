@@ -891,7 +891,7 @@ public class DeviceProfile {
         // Load the default font to use on notification dots
         Typeface typeface = null;
         if (showNotificationCount) {
-            typeface = ResourcesCompat.getFont(context, R.font.inter_regular);
+            typeface = ResourcesCompat.getFont(context, R.font.googlesansflex_variable);
         }
 
         // Load dot color
