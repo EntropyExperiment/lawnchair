@@ -13,7 +13,7 @@ This is a developer-focused change log:
 * Re-added some Lawnchair-specific code
 * Fix workspace navigation
 * Fix allapps navigation
-* Fix folder navigation (TODO)
+* Fix folder navigation
 * Enable Material Expressive Folder Expansion animation flag
 * Move to Google Sans Flex font (TODO)
 * Material 3 Expressive Settings (Phase 2, TODO)

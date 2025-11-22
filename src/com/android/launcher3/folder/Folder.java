@@ -364,13 +364,17 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
         }
         
         if (enableLauncherVisualRefresh()) {
-            // pE-TODO(QPR1): Investigate
-//            mLeftArrow = findViewById(R.id.left_indicator_arrow);
-//            mRightArrow = findViewById(R.id.right_indicator_arrow);
-//            mRightArrow.setOnClickListener(v -> mContent.snapToPage(
-//                    mContent.getCurrentPage() + 1));
-//            mLeftArrow.setOnClickListener(v -> mContent.snapToPage(
-//                    mContent.getCurrentPage() - 1));
+            mLeftArrow = findViewById(R.id.left_indicator_arrow);
+            mRightArrow = findViewById(R.id.right_indicator_arrow);
+            
+            if (mRightArrow != null) {
+                mRightArrow.setOnClickListener(v -> mContent.snapToPage(
+                        mContent.getCurrentPage() + 1));
+            }
+            if (mLeftArrow != null) {
+                mLeftArrow.setOnClickListener(v -> mContent.snapToPage(
+                        mContent.getCurrentPage() - 1));
+            }
         }
     }
 
@@ -386,8 +390,8 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             Executors.UI_HELPER_EXECUTOR.execute(() -> {
                 // Only show arrows if a mouse or touchpad is connected to the device
                 int arrowVisibility = isPointerEnabled(ctx) ? View.VISIBLE : View.GONE;
-                mLeftArrow.setVisibility(arrowVisibility);
-                mRightArrow.setVisibility(arrowVisibility);
+                if (mLeftArrow != null) mLeftArrow.setVisibility(arrowVisibility);
+                if (mRightArrow != null) mRightArrow.setVisibility(arrowVisibility);
 
                 // If the arrows are visible, then their touch box will slightly overlap with the
                 // footer's padding by 8dp. Update it for proper alignment. PaddingEnd was always
@@ -406,8 +410,8 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
             });
         } else {
             ((MarginLayoutParams) mFolderName.getLayoutParams()).setMarginEnd(0);
-//            mLeftArrow.setVisibility(View.GONE);
-//            mRightArrow.setVisibility(View.GONE);
+            if (mLeftArrow != null) mLeftArrow.setVisibility(View.GONE);
+            if (mRightArrow != null) mRightArrow.setVisibility(View.GONE);
         }
     }
 
@@ -427,11 +431,14 @@ public class Folder extends AbstractFloatingView implements ClipPathView, DragSo
      */
     public void updateArrowAlphas() {
         if (enableLauncherVisualRefresh()) {
-            // pE-TODO(QPR1): Investigate
-//            mLeftArrow.setAlpha(
-//                    0 == mContent.getCurrentPage() ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
-//            mRightArrow.setAlpha(mContent.getPageCount() == mContent.getCurrentPage() + 1
-//                    ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
+            if (mLeftArrow != null) {
+                mLeftArrow.setAlpha(
+                        0 == mContent.getCurrentPage() ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
+            }
+            if (mRightArrow != null) {
+                mRightArrow.setAlpha(mContent.getPageCount() == mContent.getCurrentPage() + 1
+                        ? DISABLED_ARROW_OPACITY : FULLY_OPAQUE);
+            }
         }
     }
 
