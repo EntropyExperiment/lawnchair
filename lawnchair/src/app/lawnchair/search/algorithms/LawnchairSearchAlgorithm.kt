@@ -171,21 +171,35 @@ sealed class LawnchairSearchAlgorithm(
         calculator: List<Int>,
     ): SearchItemBackground = when {
         layoutType == TEXT_HEADER || layoutType == ICON_SINGLE_VERTICAL_TEXT || layoutType == EMPTY_DIVIDER -> iconBackground
+
         layoutType == SMALL_ICON_HORIZONTAL_TEXT -> getGroupedBackground(index, smallIconIndices)
+
         layoutType == ICON_HORIZONTAL_TEXT -> getGroupedBackground(index, iconRowIndices)
+
         layoutType == PEOPLE_TILE -> getGroupedBackground(index, peopleTileIndices)
+
         layoutType == HORIZONTAL_MEDIUM_TEXT -> getGroupedBackground(index, suggestionIndices)
+
         layoutType == THUMBNAIL -> getGroupedBackground(index, fileIndices)
+
         layoutType == ICON_SLICE -> getGroupedBackground(index, settingIndices)
+
         layoutType == WIDGET_LIVE -> getGroupedBackground(index, recentIndices)
+
         layoutType == CALCULATOR && calculator.isNotEmpty() -> normalBackground
+
         layoutType == EMPTY_STATE -> transparentBackground
+
         layoutType == SEARCH_SETTINGS -> transparentBackground
-//        layoutType == PLAY_PLACEHOLDER -> transparentBackground
+
+        //        layoutType == PLAY_PLACEHOLDER -> transparentBackground
 //        layoutType == EDUCARD -> transparentBackground
         isFirst && isLast -> normalBackground
+
         isFirst -> topBackground
+
         isLast -> bottomBackground
+
         else -> centerBackground
     }
 

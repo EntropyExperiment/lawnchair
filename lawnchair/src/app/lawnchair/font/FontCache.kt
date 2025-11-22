@@ -83,8 +83,8 @@ class FontCache @Inject constructor(
         mapOf(
             FontAxes.WEIGHT to FontWeight.Normal.weight.toFloat(),
             FontAxes.ROUNDNESS to 100f,
-            FontAxes.GRADE to 100f
-        )
+            FontAxes.GRADE to 100f,
+        ),
     )
 
     val uiMedium = ResourceFont(
@@ -94,8 +94,8 @@ class FontCache @Inject constructor(
         mapOf(
             FontAxes.WEIGHT to FontWeight.Medium.weight.toFloat(),
             FontAxes.ROUNDNESS to 100f,
-            FontAxes.GRADE to 0f
-        )
+            FontAxes.GRADE to 0f,
+        ),
     )
 
     val uiText = ResourceFont(
@@ -105,8 +105,8 @@ class FontCache @Inject constructor(
         mapOf(
             FontAxes.WEIGHT to FontWeight.Normal.weight.toFloat(),
             FontAxes.ROUNDNESS to 100f,
-            FontAxes.GRADE to 0f
-        )
+            FontAxes.GRADE to 0f,
+        ),
     )
 
     val uiTextMedium = ResourceFont(
@@ -116,8 +116,8 @@ class FontCache @Inject constructor(
         mapOf(
             FontAxes.WEIGHT to FontWeight.Medium.weight.toFloat(),
             FontAxes.ROUNDNESS to 100f,
-            FontAxes.GRADE to 100f
-        )
+            FontAxes.GRADE to 100f,
+        ),
     )
 
     suspend fun getTypeface(font: Font): Typeface? {
@@ -394,12 +394,13 @@ class FontCache @Inject constructor(
         context: Context,
         private val resId: Int,
         private val name: String,
-        private val axisSettings: Map<String, Float> = emptyMap()
+        private val axisSettings: Map<String, Float> = emptyMap(),
     ) : TypefaceFont(createTypeface(context, resId, axisSettings)) {
 
         private val hashCode = "ResourceFont|$name|$axisSettings".hashCode()
 
         override val fullDisplayName = name
+
         @OptIn(ExperimentalTextApi::class)
         override val composeFontFamily = FontFamily(
             // Don't let it fool you, removing qualifier name makes everything 10x worse
@@ -408,9 +409,9 @@ class FontCache @Inject constructor(
                 variationSettings = androidx.compose.ui.text.font.FontVariation.Settings(
                     *axisSettings.map {
                         androidx.compose.ui.text.font.FontVariation.Setting(it.key, it.value)
-                    }.toTypedArray()
-                )
-            )
+                    }.toTypedArray(),
+                ),
+            ),
         )
 
         override fun saveToJson(obj: JSONObject) {

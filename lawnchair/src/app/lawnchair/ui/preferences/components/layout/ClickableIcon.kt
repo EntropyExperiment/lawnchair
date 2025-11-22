@@ -30,8 +30,8 @@ fun ClickableIcon(
         enabled = enabled,
         shapes = IconButtonDefaults.shapes(),
         colors = IconButtonDefaults.filledTonalIconButtonColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest
-        )
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        ),
     ) {
         val contentAlpha = if (enabled) tint.alpha else 0.38f
         val alpha by animateFloatAsState(targetValue = contentAlpha, label = "")
