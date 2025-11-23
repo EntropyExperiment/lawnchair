@@ -20,13 +20,13 @@ import android.view.SurfaceControl;
 import android.window.RemoteTransition;
 import android.window.TransitionFilter;
 
-import com.android.wm.shell.shared.IFocusTransitionListener;
-import com.android.wm.shell.shared.IHomeTransitionListener;
+import com.android.wm.shell.shared.IFocusTransitionListener2;
+import com.android.wm.shell.shared.IHomeTransitionListener2;
 
 /**
  * Interface that is exposed to remote callers to manipulate the transitions feature.
  */
-interface IShellTransitions {
+interface IShellTransitions2 {
 
     /**
      * Registers a remote transition handler for all operations excluding takeovers (see
@@ -48,7 +48,7 @@ interface IShellTransitions {
     /**
      * Set listener that will receive callbacks about transitions involving home activity.
      */
-    oneway void setHomeTransitionListener(in IHomeTransitionListener listener) = 4;
+    oneway void setHomeTransitionListener(in IHomeTransitionListener2 listener) = 4;
 
     /**
      * Returns a container surface for the home root task.
@@ -64,5 +64,5 @@ interface IShellTransitions {
     /**
      * Set listener that will receive callbacks about transitions involving focus switch.
      */
-    oneway void setFocusTransitionListener(in IFocusTransitionListener listener) = 7;
+    oneway void setFocusTransitionListener(in IFocusTransitionListener2 listener) = 7;
 }

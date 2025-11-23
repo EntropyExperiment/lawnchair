@@ -42,6 +42,7 @@ Compatibility list:
 * [Launcher] Support Android 12.0/12.1/13/14/15
 * [Lawnchair/Smartspace] At-a-Glance can't launch activity due to background startup restrictions on Android 14 and above
 * [Launcher] Use Lawnchair theming colour for allapps
+* [WM-Shell] Fix conflict with prebuilts aidl, make Release build work again
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
