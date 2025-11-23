@@ -49,7 +49,6 @@ import app.lawnchair.ui.preferences.components.AnnouncementPreference
 import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
-import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
@@ -69,13 +68,12 @@ import app.lawnchair.ui.preferences.navigation.PreferenceRootRoute
 import app.lawnchair.ui.preferences.navigation.Quickstep
 import app.lawnchair.ui.preferences.navigation.Search
 import app.lawnchair.ui.preferences.navigation.Smartspace
-import app.lawnchair.ui.theme.isSelectedThemeDark
-import app.lawnchair.ui.theme.preferenceGroupColor
 import app.lawnchair.ui.util.addIf
 import app.lawnchair.util.isDefaultLauncher
 import app.lawnchair.util.restartLauncher
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
+import com.patrykmichalik.opto.core.firstBlocking
 
 @Composable
 fun PreferencesDashboard(
@@ -130,10 +128,11 @@ fun PreferencesDashboard(
                 isSelected = currentRoute is HomeScreen,
             )
 
+            val isSmartspaceEnabled = prefs2.enableSmartspace.firstBlocking()
             PreferenceCategory(
                 label = stringResource(id = R.string.smartspace_widget),
                 description = stringResource(R.string.smartspace_widget_description),
-                iconResource = R.drawable.ic_smartspace,
+                iconResource = if (isSmartspaceEnabled) R.drawable.ic_smartspace else R.drawable.ic_smartspace_off,
                 onNavigate = { onNavigate(Smartspace) },
                 isSelected = currentRoute is Smartspace,
             )
@@ -194,7 +193,7 @@ fun PreferencesDashboard(
             PreferenceCategory(
                 label = stringResource(R.string.about_label),
                 description = aboutDescrption,
-                iconResource = R.drawable.ic_about,
+                iconResource = R.drawable.info_24px,
                 onNavigate = { onNavigate(About) },
                 isSelected = currentRoute is About,
             )
