@@ -32,7 +32,7 @@ object BcSmartSpaceUtil {
         val options = ActivityOptions.makeBasic()
         if (Utilities.ATLEAST_U) {
             options.setPendingIntentBackgroundActivityStartMode(
-                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED,
             )
         }
         if (view == null || action == null) {
