@@ -85,7 +85,7 @@ public class AddWorkspaceItemsTask implements ModelUpdateTask {
         final Context context = taskController.getContext();
 
         synchronized (dataModel) {
-            IntArray workspaceScreens = dataModel.itemsIdMap.collectWorkspaceScreens();
+            IntArray workspaceScreens = dataModel.itemsIdMap.collectWorkspaceScreens(context);
 
             List<ItemInfo> filteredItems = new ArrayList<>();
             for (Pair<ItemInfo, Object> entry : mItemList) {
@@ -126,7 +126,7 @@ public class AddWorkspaceItemsTask implements ModelUpdateTask {
             for (ItemInfo item : filteredItems) {
                 // Find appropriate space for the item.
                 int[] coords = mItemSpaceFinder.findSpaceForItem(workspaceScreens,
-                        addedWorkspaceScreensFinal, addedItemsFinal, item.spanX, item.spanY);
+                        addedWorkspaceScreensFinal, addedItemsFinal, item.spanX, item.spanY, context);
                 int screenId = coords[0];
 
                 ItemInfo itemInfo;

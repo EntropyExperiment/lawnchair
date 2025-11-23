@@ -47,7 +47,7 @@ class AddFoldersWithItemsTask(
         val addedWorkspaceScreensFinal = IntArray()
 
         synchronized(dataModel) {
-            val workspaceScreens = dataModel.itemsIdMap.collectWorkspaceScreens()
+            val workspaceScreens = dataModel.itemsIdMap.collectWorkspaceScreens(context)
             val modelWriter = taskController.getModelWriter()
 
             folders.forEach { folderInfo ->
@@ -58,6 +58,7 @@ class AddFoldersWithItemsTask(
                     addedItemsFinal,
                     folderInfo.spanX,
                     folderInfo.spanY,
+                    context,
                 )
                 val screenId = coords[0]
                 val cellX = coords[1]

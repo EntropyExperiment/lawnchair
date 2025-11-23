@@ -442,7 +442,7 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
 
         MAIN_EXECUTOR.execute { clearPendingBinds() }
 
-        val orderedScreenIds = itemIdMap.collectWorkspaceScreens()
+        val orderedScreenIds = itemIdMap.collectWorkspaceScreens(launcher)
         val currentScreenIds = getPagesToBindSynchronously(orderedScreenIds)
 
         fun setupPendingBind(pendingExecutor: Executor) {

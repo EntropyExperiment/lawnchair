@@ -43,6 +43,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import app.lawnchair.preferences2.PreferenceManager2;
 import com.android.launcher3.Flags;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherSettings;
@@ -54,6 +55,7 @@ import com.android.launcher3.util.IntArray;
 import com.android.launcher3.widget.LauncherAppWidgetProviderInfo;
 import com.android.launcher3.widget.WidgetManagerHelper;
 
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -279,7 +281,8 @@ public class GridSizeMigrationDBController {
                 Log.d(TAG, "Migrating " + screenId);
             }
             solveGridPlacement(helper, srcReader,
-                    destReader, screenId, trgX, trgY, workspaceToBeAdded, idsInUse);
+                    destReader, screenId, trgX, trgY, workspaceToBeAdded, idsInUse,
+                srcReader.mContext);
             if (workspaceToBeAdded.isEmpty()) {
                 break;
             }
@@ -291,7 +294,7 @@ public class GridSizeMigrationDBController {
         while (!workspaceToBeAdded.isEmpty()) {
             solveGridPlacement(helper, srcReader, destReader, screenId, trgX, trgY,
                     workspaceToBeAdded,
-                    srcWorkspaceItems.stream().map(entry -> entry.id).collect(Collectors.toList()));
+                    srcWorkspaceItems.stream().map(entry -> entry.id).collect(Collectors.toList()), srcReader.mContext);
             screenId++;
         }
 
@@ -394,11 +397,15 @@ public class GridSizeMigrationDBController {
     private static void solveGridPlacement(@NonNull final DatabaseHelper helper,
             @NonNull final DbReader srcReader, @NonNull final DbReader destReader,
             final int screenId, final int trgX, final int trgY,
-            @NonNull final List<DbEntry> sortedItemsToPlace, List<Integer> idsInUse) {
+            @NonNull final List<DbEntry> sortedItemsToPlace, List<Integer> idsInUse, Context context) {
+        PreferenceManager2 prefs2 = PreferenceManager2.INSTANCE.get(context);
+        
+        boolean smartspaceEnabled = PreferenceExtensionsKt.firstBlocking(prefs2.getEnableSmartspace());
+        
         final GridOccupancy occupied = new GridOccupancy(trgX, trgY);
         final Point trg = new Point(trgX, trgY);
         final Point next = new Point(0,
-                screenId == 0 && QSB_ON_FIRST_SCREEN ? 1 /* smartspace */ : 0);
+                screenId == 0 && smartspaceEnabled ? 1 /* smartspace */ : 0);
         List<DbEntry> existedEntries = destReader.mWorkspaceEntriesByScreenId.get(screenId);
         if (existedEntries != null) {
             for (DbEntry entry : existedEntries) {

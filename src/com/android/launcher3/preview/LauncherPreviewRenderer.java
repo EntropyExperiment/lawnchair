@@ -48,6 +48,7 @@ import androidx.annotation.UiThread;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import app.lawnchair.preferences2.PreferenceManager2;
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.CellLayout;
@@ -77,6 +78,7 @@ import com.android.launcher3.util.window.WindowManagerProxy;
 import com.android.launcher3.views.BaseDragLayer;
 import com.android.launcher3.widget.LauncherWidgetHolder;
 
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +108,8 @@ public class LauncherPreviewRenderer extends BaseContext
     private final Hotseat mHotseat;
     private final Map<Integer, CellLayout> mWorkspaceScreens = new HashMap<>();
     private final ItemInflater<LauncherPreviewRenderer> mItemInflater;
+    
+    private final PreferenceManager2 mPreferenceManager2;
 
     public LauncherPreviewRenderer(Context context,
             int workspaceScreenId,
@@ -114,6 +118,8 @@ public class LauncherPreviewRenderer extends BaseContext
             int themeRes) {
 
         super(context, themeRes);
+        mPreferenceManager2 = PreferenceManager2.getInstance(context);
+        
         mUiHandler = new Handler(Looper.getMainLooper());
         mIdp = InvariantDeviceProfile.INSTANCE.get(context);
         mDp = getDeviceProfileForPreview(context).toBuilder(context)
@@ -327,7 +333,7 @@ public class LauncherPreviewRenderer extends BaseContext
         populateHotseatPredictions(itemIdMap);
 
         // Add first page QSB
-        if (BuildConfigs.QSB_ON_FIRST_SCREEN) {
+        if (PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getEnableSmartspace())) {
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
             if (firstScreen != null) {
                 View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen, false);

@@ -34,6 +34,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import app.lawnchair.preferences2.PreferenceManager2;
 import com.android.launcher3.AutoInstallsLayout;
 import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
 import com.android.launcher3.BuildConfig;
@@ -52,6 +53,7 @@ import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.widget.LauncherWidgetHolder;
 
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -257,7 +259,7 @@ public class DatabaseHelper extends NoLocaleSQLiteHelper implements
                         Favorites.SCREEN, IntArray.wrap(-777, -778)), null);
             }
             case 30: {
-                if (BuildConfigs.QSB_ON_FIRST_SCREEN) {
+                if (PreferenceExtensionsKt.firstBlocking(PreferenceManager2.INSTANCE.get(mContext).getEnableSmartspace())) {
                     // Clean up first row in screen 0 as it might contain junk data.
                     Log.d(TAG, "Cleaning up first row");
                     db.delete(Favorites.TABLE_NAME,
