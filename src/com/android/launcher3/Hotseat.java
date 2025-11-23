@@ -143,13 +143,11 @@ public class Hotseat extends CellLayout implements Insettable {
         }
         int layoutId = hotseatMode.getLayoutResourceId();
 
-        //mQsb = LayoutInflater.from(context).inflate(layoutId, this, false);
-        // pE-TODO(QPR1): Investigate Qsb
         if (Flags.enableQsbOnHotseat()) {
             mQsb = LayoutInflater.from(context).inflate(R.layout.qsb_container_hotseat, this,
                     false);
         } else {
-            mQsb = LayoutInflater.from(context).inflate(R.layout.search_container_hotseat, this,
+            mQsb = LayoutInflater.from(context).inflate(layoutId, this,
                     false);
         }
 

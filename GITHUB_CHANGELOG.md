@@ -44,6 +44,7 @@ Compatibility list:
 * [Launcher] Use Lawnchair theming colour for allapps
 * [WM-Shell] Fix conflict with prebuilts aidl, make Release build work again
 * [Launcher/Desktop] Correct deviceHasLargeScreen check for Baklava
+* [Lawnchair/Search] Make search layout changes work
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
