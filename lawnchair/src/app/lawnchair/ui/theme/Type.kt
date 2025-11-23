@@ -26,38 +26,47 @@ import androidx.compose.ui.unit.sp
 import com.android.launcher3.R
 import kotlin.require
 
-@OptIn(ExperimentalTextApi::class)
 /**
  * Google Sans Flex Normal (400), optimised for large text with grade axis put to max (100)
  **/
+@OptIn(ExperimentalTextApi::class)
 private val GoogleSansFlexDisplayNormal = FontFamily(
-    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
-        FontVariation.weight(FontWeight.Normal.weight),
-        FontVariation.grade(100),
-        googleSansFlexRound(100)
-    )),
+    Font(
+        R.font.googlesansflex_variable,
+        variationSettings = FontVariation.Settings(
+            FontVariation.weight(FontWeight.Normal.weight),
+            FontVariation.grade(100),
+            googleSansFlexRound(100),
+        ),
+    ),
 )
 
-@OptIn(ExperimentalTextApi::class)
 /**
  * Google Sans Flex Normal (400), optimised for small text
  **/
+@OptIn(ExperimentalTextApi::class)
 private val GoogleSansFlexNormal = FontFamily(
-    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
-        FontVariation.weight(FontWeight.Normal.weight),
-        googleSansFlexRound(100)
-    )),
+    Font(
+        R.font.googlesansflex_variable,
+        variationSettings = FontVariation.Settings(
+            FontVariation.weight(FontWeight.Normal.weight),
+            googleSansFlexRound(100),
+        ),
+    ),
 )
 
-@OptIn(ExperimentalTextApi::class)
 /**
  * Google Sans Flex Medium (500), optimised for small/medium text
  **/
+@OptIn(ExperimentalTextApi::class)
 private val GoogleSansFlexMedium = FontFamily(
-    Font(R.font.googlesansflex_variable, variationSettings = FontVariation.Settings(
-        FontVariation.weight(FontWeight.Medium.weight),
-        googleSansFlexRound(100)
-    )),
+    Font(
+        R.font.googlesansflex_variable,
+        variationSettings = FontVariation.Settings(
+            FontVariation.weight(FontWeight.Medium.weight),
+            googleSansFlexRound(100),
+        ),
+    ),
 )
 
 /**
