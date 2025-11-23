@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.pm.PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT
 import android.content.res.Resources
 import android.hardware.display.DisplayManager
+import android.os.Build
 import android.os.SystemProperties
 import android.provider.Settings
 import android.view.Display
@@ -200,8 +201,7 @@ class DesktopStateImpl(context: Context) : DesktopState {
     }
 
     private val deviceHasLargeScreen =
-        if (false) {
-            // pE-TODO(QPR1): Put this in ATLEAST_BAKLAVA check
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
             displayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED)
                 ?.filter { display -> display.type == Display.TYPE_INTERNAL }
                 ?.any { display ->
