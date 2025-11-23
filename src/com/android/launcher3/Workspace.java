@@ -654,15 +654,12 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      * Initializes and binds the first page
      */
     public void bindAndInitFirstWorkspaceScreen() {
-        if ((!FeatureFlags.QSB_ON_FIRST_SCREEN
-                || !mLauncher.getIsFirstPagePinnedItemEnabled())
-                || SHOULD_SHOW_FIRST_PAGE_WIDGET) {
+        // Add the first page
+        CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
+        if (!PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getEnableSmartspace())) {
             mFirstPagePinnedItem = null;
             return;
         }
-
-        // Add the first page
-        CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
         if (mFirstPagePinnedItem == null) {
             SmartspaceMode smartspaceMode = PreferenceExtensionsKt
                 .firstBlocking(mPreferenceManager2.getSmartspaceMode());
@@ -1102,9 +1099,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
             int id = mWorkspaceScreens.keyAt(i);
             CellLayout cl = mWorkspaceScreens.valueAt(i);
             // FIRST_SCREEN_ID can never be removed.
-            if (((!FeatureFlags.QSB_ON_FIRST_SCREEN
-                    || SHOULD_SHOW_FIRST_PAGE_WIDGET)
-                    || id > FIRST_SCREEN_ID)
+            if ((!PreferenceExtensionsKt.firstBlocking(PreferenceManager2.INSTANCE.get(getContext()).getEnableSmartspace()) || id > FIRST_SCREEN_ID)
                     && cl.getShortcutsAndWidgets().getChildCount() == 0) {
                 removeScreens.add(id);
             }

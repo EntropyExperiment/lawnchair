@@ -38,6 +38,7 @@ Compatibility list:
 * [Lawnchair/AllApps] Reimplement app drawer opacity
 * [Lawnchair/Recents] Reimplement recents overview opacity
 * [Lawnchair/Preference] Misaligned slider and text preference
+* [Lawnchair/Smartspace] Allow disabling the smartspace feature
 
 ### 🥞 Development 3 Release 2
 

@@ -18,8 +18,12 @@ package com.android.launcher3.model;
 import static com.android.launcher3.Utilities.SHOULD_SHOW_FIRST_PAGE_WIDGET;
 import static com.android.launcher3.WorkspaceLayoutManager.FIRST_SCREEN_ID;
 
+import android.content.Context;
 import android.util.LongSparseArray;
 
+import app.lawnchair.preferences2.PreferenceManager2;
+import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherSettings;
@@ -29,6 +33,7 @@ import com.android.launcher3.util.GridOccupancy;
 import com.android.launcher3.util.IntArray;
 import com.android.launcher3.util.IntSet;
 
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -56,7 +61,7 @@ public class WorkspaceItemSpaceFinder {
      * @return screenId and the coordinates for the item in an int array of size 3.
      */
     public int[] findSpaceForItem(
-            IntArray workspaceScreens, IntArray addedWorkspaceScreensFinal, int spanX, int spanY) {
+            IntArray workspaceScreens, IntArray addedWorkspaceScreensFinal, int spanX, int spanY, Context context) {
         LongSparseArray<ArrayList<ItemInfo>> screenItems = new LongSparseArray<>();
 
         // Use sBgItemsIdMap as all the items are already loaded.
@@ -81,7 +86,9 @@ public class WorkspaceItemSpaceFinder {
         int screenCount = workspaceScreens.size();
         // First check the preferred screen.
         IntSet screensToExclude = new IntSet();
-        if (FeatureFlags.QSB_ON_FIRST_SCREEN) {
+        
+        boolean smartspaceEnabled = PreferenceExtensionsKt.firstBlocking(PreferenceManager2.INSTANCE.get(context).getEnableSmartspace());
+        if (smartspaceEnabled) {
             screensToExclude.add(FIRST_SCREEN_ID);
         }
 
