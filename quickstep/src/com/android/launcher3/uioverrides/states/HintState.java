@@ -64,13 +64,11 @@ public class HintState extends LauncherState {
 
     @Override
     public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
-        // pE-TODO(QPR1):         return ColorUtils.setAlphaComponent(
-        //                ColorTokens.OverviewScrim.resolveColor(launcher), 100);
-        ScrimColors overviewStateColor = OVERVIEW.getWorkspaceScrimColor(launcher);
+//        ScrimColors overviewStateColor = OVERVIEW.getWorkspaceScrimColor(launcher);
         return new ScrimColors(
                 /* backgroundColor */
-                ColorUtils.setAlphaComponent(overviewStateColor.getBackgroundColor(),
-                        Math.round(Color.valueOf(overviewStateColor.getBackgroundColor()).alpha()
+                ColorUtils.setAlphaComponent(ColorTokens.OverviewScrim.resolveColor(launcher),
+                        Math.round(Color.valueOf(ColorTokens.OverviewScrim.resolveColor(launcher)).alpha()
                                 * 100)),
                 /* foregroundColor */ Color.TRANSPARENT);
     }

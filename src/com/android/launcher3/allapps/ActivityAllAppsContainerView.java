@@ -338,13 +338,10 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         };
 
         if (Flags.allAppsBlur()) {
-            // pE-TODO(QPR1): Return int color value directly, not a resource ID for custom colours
-            int layerFg = getContext().getColor(R.color.blur_shade_panel_fg);
-            int layerBg = getContext().getColor(R.color.blur_shade_panel_bg);
+            int layerFg = ColorTokens.shade_panel_fg_color.resolveColor(getContext());
+            int layerBg = ColorTokens.shade_panel_bg_color.resolveColor(getContext());
             mBottomSheetBackgroundColorOverBlur = ColorUtils.compositeColors(layerFg, layerBg);
-            mBottomSheetBackgroundColorBlurFallback = getContext().getColor(
-                    Utilities.isDarkTheme(getContext()) ? android.R.color.system_accent2_800
-                            : android.R.color.system_accent2_200);
+            mBottomSheetBackgroundColorBlurFallback = ColorTokens.BottomSheetBackgroundColorBlurFallback.resolveColor(getContext());
         }
 
         mBottomSheetBackgroundColorLegacy = ColorTokens.SurfaceDimColor.resolveColor(getContext());

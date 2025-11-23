@@ -173,6 +173,18 @@ object ColorTokens {
 
     // Material 3 Expressive
     @JvmField val ExpressiveAllApps = DayNightColorToken(Accent1_100, Accent1_800)
+
+    @JvmField val BottomSheetBackgroundColorBlurFallback = DayNightColorToken(Accent2_800, Accent2_800)
+
+    @JvmField val shade_panel_fg_color = DayNightColorToken(
+        Neutral1_100.setAlpha(0.32f),
+        Neutral1_800.setAlpha(0.32f),
+    )
+
+    @JvmField val shade_panel_bg_color = DayNightColorToken(
+        Neutral1_500.setLStar(98.0).setAlpha(0.32f),
+        Neutral1_500.setLStar(4.0).setAlpha(0.32f),
+    )
 }
 
 @Composable
