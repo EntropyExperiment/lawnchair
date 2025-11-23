@@ -40,6 +40,7 @@ Compatibility list:
 * [Launcher] Fix allapps navigation
 * [Launcher] Fix folder navigation
 * [Launcher] Support Android 12.0/12.1/13/14/15
+* [Lawnchair/Smartspace] At-a-Glance can't launch activity due to background startup restrictions on Android 14 and above
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
