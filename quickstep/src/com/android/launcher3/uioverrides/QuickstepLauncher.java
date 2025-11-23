@@ -42,6 +42,7 @@ import static com.android.launcher3.LauncherState.OVERVIEW;
 import static com.android.launcher3.LauncherState.OVERVIEW_MODAL_TASK;
 import static com.android.launcher3.LauncherState.OVERVIEW_SPLIT_SELECT;
 import static com.android.launcher3.Utilities.ATLEAST_BAKLAVA;
+import static com.android.launcher3.Utilities.ATLEAST_S;
 import static com.android.launcher3.Utilities.ATLEAST_S_V2;
 import static com.android.launcher3.Utilities.ATLEAST_T;
 import static com.android.launcher3.Utilities.isRtl;
@@ -307,7 +308,10 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
 
     @Override
     protected void setupViews() {
-        getAppWidgetHolder().setOnViewCreationCallback(new QuickstepInteractionHandler(this));
+        // pE-TODO(CompatTier2): Android 9/10/11 support
+        if (ATLEAST_S) {
+            getAppWidgetHolder().setOnViewCreationCallback(new QuickstepInteractionHandler(this));
+        }
         mDepthController = new DepthController(this);
         mOverviewBlurEnabled = isOverviewBackgroundBlurEnabled();
         getTheme().applyStyle(getOverviewBlurStyleResId(), true);
