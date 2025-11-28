@@ -1,5 +1,27 @@
-Lawnchair 16 pE Development 2 is here! Contributors are encouraged to target this branch instead of 
+Lawnchair 16 pE Development 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
+
+### 🏗️ Development 3 Release 3
+
+Build: BD3.0712
+
+Compatibility list:
+
+| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
+|-------------|---------------------|--------------------|
+| Android 8.1 |                     | Android 12.0       |
+| Android 9   |                     | Android 12.1       |
+| Android 10  |                     | Android 13         |
+| Android 11  |                     | Android 14         |
+|             |                     | Android 15         |
+|             |                     | Android 16         |
+
+#### Features
+* [Lawnchair] Features from Lawnchair 15-dev 07122025
+
+#### Fixes
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version
+
 
 ### 🥞 Development 3 Release 2
 
@@ -19,6 +41,7 @@ Compatibility list:
 #### Features
 * [Lawnchair] Updated screenshots compressions and fastlane screenshot
 * [Lawnchair] Features from Lawnchair 15-dev
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version
 
 #### Fixes
 * [Lawnchair] Conflict from Lawnchair 15-dev
@@ -84,7 +107,7 @@ Compatibility list:
 * [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
 * [Launcher3/AllApps] Allow theming of Expressive allapps
 * ~~[Lawnchair] Lawnchair can now be compiled in release mode~~
-    * [Lawnchair] Fix crashes with WM-Shell
+  * [Lawnchair] Fix crashes with WM-Shell
 * [Lawnchair] Bottom sheet blur will only trigger when your device supported blur*
 * [Lawnchair/Lazy] Corner radii of lazy component now matched radius of non-lazy*
 * [Lawnchair/Debug] Cleanup the debug menu*
