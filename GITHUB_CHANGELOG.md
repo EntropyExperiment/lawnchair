@@ -28,7 +28,8 @@ Compatibility list:
 * [Lawnchair] Material 3 Expressive Settings (Phase 2, TODO)
 * [Lawnchair] Better At-a-Glance perceptive wallpaper colour luminance detection
     * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance.
-* [Launcher] Enable Material Expressive Folder Expansion animation flag
+~~* [Launcher] Enable Material Expressive Folder Expansion animation flag~~
+    * Disabled due to rendering bugs
 * [Launcher/Font] Variable font for Launcher3 (????????)
 * [Launcher/Popup] Dynamically get app widget popup icon
 * [Launcher] Foldable support (actually real)

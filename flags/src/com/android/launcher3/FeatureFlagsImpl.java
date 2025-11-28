@@ -125,7 +125,7 @@ public final class FeatureFlagsImpl implements FeatureFlags {
 
 
     public boolean enableExpressiveFolderExpansion() {
-        return true;
+        return false;
     }
 
     @Override
