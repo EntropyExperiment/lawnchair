@@ -47,6 +47,7 @@ Compatibility list:
 * [Launcher/Desktop] Correct deviceHasLargeScreen check for Baklava
 * [Lawnchair/Search] Make search layout changes work
 * [Lawnchair/Smartspace] Allow disabling the smartspace feature
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
