@@ -152,6 +152,12 @@ class AboutViewModel(
                 socialUrl = "https://x.com/skittles9823",
             ),
             TeamMember(
+                name = "Pun Butrach",
+                role = Role.Development,
+                photoUrl = "https://github.com/validcube.png",
+                socialUrl = "https://github.com/validcube",
+            ),
+            TeamMember(
                 name = "SuperDragonXD",
                 role = Role.Development,
                 photoUrl = "https://avatars.githubusercontent.com/u/70206496",
