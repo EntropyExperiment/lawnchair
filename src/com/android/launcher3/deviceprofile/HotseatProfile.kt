@@ -19,9 +19,11 @@ package com.android.launcher3.deviceprofile
 import android.content.Context
 import android.content.res.Resources
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import app.lawnchair.hotseat.HotseatMode
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.InvariantDeviceProfile
+import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.R
 import com.android.launcher3.responsive.CalculatedHotseatSpec
 import com.patrykmichalik.opto.core.firstBlocking
@@ -98,7 +100,11 @@ data class HotseatProfile(
                 else res.getDimensionPixelSize(R.dimen.dynamic_grid_hotseat_side_padding)
             val hotseatQsbHeight =
                 if (isQsbEnable) res.getDimensionPixelSize(R.dimen.qsb_widget_height) else 0
-            val hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height)
+            val hotseatQsbShadowHeight = if (inv.inlineQsb[INDEX_DEFAULT] && !deviceProperties.isPhone) {
+                res.getDimensionPixelSize(R.dimen.taskbar_size)
+            } else {
+                res.getDimensionPixelSize(R.dimen.qsb_shadow_height)
+            }
             val hotseatQsbVisualHeight =
                 if (isQsbEnable) hotseatQsbHeight - 2 * hotseatQsbShadowHeight else 0
 
