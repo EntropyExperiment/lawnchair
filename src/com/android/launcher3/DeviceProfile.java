@@ -23,6 +23,7 @@ import static com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT;
 import static com.android.launcher3.InvariantDeviceProfile.INDEX_LANDSCAPE;
 import static com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_LANDSCAPE;
 import static com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_PORTRAIT;
+import static com.android.launcher3.InvariantDeviceProfile.deviceType;
 import static com.android.launcher3.Utilities.dpiFromPx;
 import static com.android.launcher3.Utilities.pxFromSp;
 import static com.android.launcher3.icons.IconNormalizer.ICON_VISIBLE_AREA_FACTOR;
@@ -644,7 +645,11 @@ public class DeviceProfile {
         boolean isQsbEnable = hotseatMode.getLayoutResourceId() != R.layout.empty_view;
 
         hotseatQsbHeight = isQsbEnable ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
-        hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height);
+        if (inv.inlineQsb[INDEX_DEFAULT] && !isPhone) {
+            hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.taskbar_size);
+        } else {
+            hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height);
+        }
         hotseatQsbVisualHeight = isQsbEnable ? hotseatQsbHeight - 2 * hotseatQsbShadowHeight : 0;
 
         // Whether QSB might be inline in appropriate orientation (e.g. landscape).
@@ -2068,7 +2073,7 @@ public class DeviceProfile {
             } else {
                 hotseatBarPadding.left += qsbWidth;
             }
-        } else if (isTaskbarPresent) {
+        } else if (isTaskbarPresent || isQsbInline) {
             // Center the QSB vertically with hotseat
             int hotseatBarBottomPadding = getHotseatBarBottomPadding();
             int hotseatBarTopPadding =
@@ -2175,9 +2180,9 @@ public class DeviceProfile {
      * Returns the number of pixels the QSB is translated from the bottom of the screen.
      */
     public int getQsbOffsetY() {
-        if (isQsbInline) {
+        if (isPhone && isQsbInline) {
             return getHotseatBarBottomPadding() - ((hotseatQsbHeight - hotseatCellHeightPx) / 2);
-        } else if (isTaskbarPresent) { // QSB on top
+        } else if (isTaskbarPresent || (isLandscape && isQsbInline)) { // QSB on top
             return hotseatBarSizePx - hotseatQsbHeight + hotseatQsbShadowHeight;
         } else {
             return hotseatBarBottomSpacePx - hotseatQsbShadowHeight;
