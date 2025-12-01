@@ -34,6 +34,8 @@ Compatibility list:
 * [Launcher/Popup] Dynamically get app widget popup icon
 * [Launcher] Foldable support (actually real)
 * [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
+* [Launcher] Enable bulk loading by default
+* [Launcher] Tablet support (ish)
 
 #### Fixes
 * [Launcher] Fix a lot of internal basic functionality
