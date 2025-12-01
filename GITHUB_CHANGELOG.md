@@ -33,6 +33,7 @@ Compatibility list:
 * [Launcher/Font] Variable font for Launcher3 (????????)
 * [Launcher/Popup] Dynamically get app widget popup icon
 * [Launcher] Foldable support (actually real)
+* [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
 
 #### Fixes
 * [Launcher] Fix a lot of internal basic functionality
