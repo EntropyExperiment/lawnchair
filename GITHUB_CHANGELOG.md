@@ -19,6 +19,8 @@ Compatibility list:
 #### Features
 * [Lawnchair] Features from Lawnchair 15-dev 07122025
 * [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
+* [Launcher] Enable bulk loading by default
+* [Launcher] Tablet support (ish)
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
