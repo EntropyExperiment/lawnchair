@@ -43,6 +43,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
 import android.window.TaskSnapshot;
+import android.window.TaskSnapshotManager;
 
 import com.android.internal.app.IVoiceInteractionManagerService;
 import com.android.systemui.shared.recents.model.Task;
@@ -86,7 +87,7 @@ public class ActivityManagerWrapper {
     /**
      * @return the top running task (can be {@code null}).
      */
-    public ActivityManager.RunningTaskInfo getRunningTask() {
+    public RunningTaskInfo getRunningTask() {
         return getRunningTask(false /* filterVisibleRecents */);
     }
 
@@ -94,9 +95,9 @@ public class ActivityManagerWrapper {
      * @return the top running task filtering only for tasks that can be visible in the recent tasks
      * list (can be {@code null}).
      */
-    public ActivityManager.RunningTaskInfo getRunningTask(boolean filterOnlyVisibleRecents) {
+    public RunningTaskInfo getRunningTask(boolean filterOnlyVisibleRecents) {
         // Note: The set of running tasks from the system is ordered by recency
-        List<ActivityManager.RunningTaskInfo> tasks =
+        List<RunningTaskInfo> tasks =
                 mAtm.getTasks(1, filterOnlyVisibleRecents);
         if (tasks.isEmpty()) {
             return null;
@@ -107,7 +108,7 @@ public class ActivityManagerWrapper {
     /**
      * @see #getRunningTasks(boolean , int)
      */
-    public ActivityManager.RunningTaskInfo[] getRunningTasks(boolean filterOnlyVisibleRecents) {
+    public RunningTaskInfo[] getRunningTasks(boolean filterOnlyVisibleRecents) {
         return getRunningTasks(filterOnlyVisibleRecents, Display.INVALID_DISPLAY);
     }
 
@@ -120,10 +121,10 @@ public class ActivityManagerWrapper {
      * @return an array of up to {@link #NUM_RECENT_ACTIVITIES_REQUEST} running tasks
      *         filtering only for tasks that can be visible in the recent tasks list.
      */
-    public ActivityManager.RunningTaskInfo[] getRunningTasks(boolean filterOnlyVisibleRecents,
+    public RunningTaskInfo[] getRunningTasks(boolean filterOnlyVisibleRecents,
             int displayId) {
         // Note: The set of running tasks from the system is ordered by recency
-        List<ActivityManager.RunningTaskInfo> tasks =
+        List<RunningTaskInfo> tasks =
                 mAtm.getTasks(NUM_RECENT_ACTIVITIES_REQUEST,
                         filterOnlyVisibleRecents, /* keepInExtras= */ false, displayId);
         return tasks.toArray(new RunningTaskInfo[tasks.size()]);
@@ -135,7 +136,12 @@ public class ActivityManagerWrapper {
     public @NonNull ThumbnailData getTaskThumbnail(int taskId, boolean isLowResolution) {
         TaskSnapshot snapshot = null;
         try {
-            snapshot = getService().getTaskSnapshot(taskId, isLowResolution);
+            if (com.android.window.flags.Flags.reduceTaskSnapshotMemoryUsage()) {
+                snapshot = TaskSnapshotManager.getInstance().getTaskSnapshot(
+                        taskId, TaskSnapshotManager.convertRetrieveFlag(isLowResolution));
+            } else {
+                snapshot = getService().getTaskSnapshot(taskId, isLowResolution);
+            }
         } catch (RemoteException e) {
             Log.w(TAG, "Failed to retrieve task snapshot", e);
         }
@@ -155,7 +161,36 @@ public class ActivityManagerWrapper {
     public ThumbnailData takeTaskThumbnail(int taskId) {
         TaskSnapshot snapshot = null;
         try {
-            snapshot = getService().takeTaskSnapshot(taskId, /* updateCache= */ true);
+            if (com.android.window.flags.Flags.reduceTaskSnapshotMemoryUsage()) {
+                snapshot = TaskSnapshotManager.getInstance().takeTaskSnapshot(taskId,
+                        true /* updateCache */);
+            } else {
+                snapshot = getService().takeTaskSnapshot(taskId, /* updateCache= */ true);
+            }
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed to take task snapshot", e);
+        }
+        if (snapshot != null) {
+            return ThumbnailData.fromSnapshot(snapshot);
+        } else {
+            return new ThumbnailData();
+        }
+    }
+
+    /**
+     * Requests for a new snapshot to be taken for the given task, stores it in the cache, and
+     * returns a {@link ThumbnailData} with specific resolution as result.
+     */
+    @NonNull
+    public ThumbnailData takeTaskThumbnail(int taskId, boolean lowResolution) {
+        if (!com.android.window.flags.Flags.respectRequestedTaskSnapshotResolution()
+                || !com.android.window.flags.Flags.reduceTaskSnapshotMemoryUsage()) {
+            return takeTaskThumbnail(taskId);
+        }
+        TaskSnapshot snapshot = null;
+        try {
+            snapshot = TaskSnapshotManager.getInstance().takeTaskSnapshot(taskId,
+                    true /* updateCache */, lowResolution);
         } catch (RemoteException e) {
             Log.w(TAG, "Failed to take task snapshot", e);
         }
