@@ -27,8 +27,8 @@ import androidx.datastore.dataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODE
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODE
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE
 import com.android.wm.shell.ShellTestCase
 import com.google.common.truth.Truth.assertThat
 import java.io.File

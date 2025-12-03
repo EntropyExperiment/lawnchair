@@ -46,9 +46,9 @@ interface IShellTransitions2 {
     IBinder getShellApplyToken() = 3;
 
     /**
-     * Set listener that will receive callbacks about transitions involving home activity.
+     * Set listener that will receive callbacks about transitions involving a user's home activity.
      */
-    oneway void setHomeTransitionListener(in IHomeTransitionListener2 listener) = 4;
+    oneway void setHomeTransitionListener(in IHomeTransitionListener listener, int userId) = 4;
 
     /**
      * Returns a container surface for the home root task.
@@ -64,5 +64,11 @@ interface IShellTransitions2 {
     /**
      * Set listener that will receive callbacks about transitions involving focus switch.
      */
-    oneway void setFocusTransitionListener(in IFocusTransitionListener2 listener) = 7;
+    oneway void setFocusTransitionListener(in IFocusTransitionListener listener) = 7;
+
+    /**
+     * Returns a container surface for the overview overlay.
+     */
+    @nullable
+    SurfaceControl getOverviewOverlayContainer(int displayId) = 8;
 }

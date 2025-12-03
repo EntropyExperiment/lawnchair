@@ -21,9 +21,9 @@ import android.platform.test.annotations.EnableFlags
 import android.testing.AndroidTestingRunner
 import android.view.Display.DEFAULT_DISPLAY
 import androidx.test.filters.SmallTest
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_HSUM
-import com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE
-import com.android.window.flags.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_HSUM
+import com.android.window.flags2.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_PERSISTENCE
+import com.android.window.flags2.Flags.FLAG_ENABLE_MULTIPLE_DESKTOPS_BACKEND
 import com.android.wm.shell.ShellTestCase
 import com.android.wm.shell.common.ShellExecutor
 import com.android.wm.shell.desktopmode.DesktopUserRepositories

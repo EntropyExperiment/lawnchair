@@ -36,8 +36,8 @@ typealias SurfaceControlViewHostFactory =
  *
  * It does not support swapping the root view added to the VRI of the [SurfaceControlViewHost], and
  * any attempts to do will throw, which means that once a [View] is added using [updateView], only
- * its properties and binding may be changed, children views may be added, removed or changed
- * and its [WindowManager.LayoutParams] may be changed.
+ * its properties and binding may be changed, children views may be added, removed or changed and
+ * its [WindowManager.LayoutParams] may be changed.
  */
 class SurfaceControlViewHostAdapter(
     private val context: Context,
@@ -56,13 +56,8 @@ class SurfaceControlViewHostAdapter(
     private var wwm: WindowDecorWindowlessWindowManager? = null
     @VisibleForTesting var viewHost: SurfaceControlViewHost? = null
 
-    /**
-     * Initialize or updates the [SurfaceControlViewHost].
-     */
-    fun prepareViewHost(
-        configuration: Configuration,
-        touchableRegion: Region?
-    ) {
+    /** Initialize or updates the [SurfaceControlViewHost]. */
+    fun prepareViewHost(configuration: Configuration, touchableRegion: Region?) {
         if (wwm == null) {
             wwm = WindowDecorWindowlessWindowManager(configuration, rootSurface)
         }
