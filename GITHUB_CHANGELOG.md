@@ -1,8 +1,19 @@
 # Bubble Tea
 
+## Bubble Tea [QPR2]
+
+### 🏗️ SNAPSHOT 11 (Draft)
+
+Build: BS11.1212
+
+Initial QPR2 merge
+
+This is a developer-focused change log:
+* Codebase updated to Android 16-0.0_r4 (Android 16.0.0 Release 4)
+
 ## Bubble Tea [QPR1]
 
-### 🏗️ Development 4 Release 1 (Draft)
+### Development 4 Release 1 (Unreleased, Work continued in QPR2)
 
 aka: Snapshot 10
 
