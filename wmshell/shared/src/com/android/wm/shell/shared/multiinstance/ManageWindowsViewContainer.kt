@@ -37,9 +37,7 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.window.TaskSnapshot
-//import com.android.wm.shell.shared.R
-
-import com.android.wm.shell.R as SharedR
+import com.android.wm.shell.shared.R
 
 /**
  * View for the All Windows menu option, used by both Desktop Windowing and Taskbar.
@@ -188,7 +186,7 @@ abstract class ManageWindowsViewContainer(
                 appSnapshotButton.cornerRadius = iconRadius
                 appSnapshotButton.setZOrderOnTop(true)
                 appSnapshotButton.contentDescription = context.resources.getString(
-                    SharedR.string.manage_windows_icon_text, iconCount + 1
+                    R.string.manage_windows_icon_text, iconCount + 1
                 )
                 appSnapshotButton.setOnClickListener {
                     onIconClickListener?.invoke(taskId)
