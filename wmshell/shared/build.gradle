@@ -19,14 +19,14 @@ compileOnlyCommonJars()
 
 android {
     buildToolsVersion "36.1.0"
-    namespace "com.android.wm.shell"
+    namespace "com.android.wm.shell.shared"
     buildFeatures {
         aidl true
     }
     sourceSets {
         main {
             java.srcDirs = ['src']
-//            aidl.srcDirs = ['src']
+            aidl.srcDirs = ['src']
             manifest.srcFile 'AndroidManifest.xml'
             res.srcDirs = ['res']
         }

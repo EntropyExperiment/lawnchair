@@ -39,7 +39,7 @@
 
         <activity
             android:name=".bubbles.shortcut.CreateBubbleShortcutActivity"
-<!--            android:featureFlag="com.android.wm.shell.enable_retrievable_bubbles"-->
+
             android:exported="true"
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay"
@@ -53,7 +53,7 @@
 
         <activity
             android:name=".bubbles.shortcut.ShowBubblesActivity"
-<!--            android:featureFlag="com.android.wm.shell.enable_retrievable_bubbles"-->
+
             android:exported="true"
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay" >

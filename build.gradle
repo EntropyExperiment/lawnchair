@@ -407,6 +407,7 @@ dependencies {
     withQuickstepImplementation projects.compatLib.compatLibVV
     withQuickstepImplementation projects.compatLib.compatLibVBaklava
     withQuickstepImplementation projects.wmshell
+    withQuickstepImplementation projects.wmshell.shared
     withQuickstepImplementation projects.flags
     withQuickstepImplementation projects.dagger
     withQuickstepImplementation projects.modules.concurrent
