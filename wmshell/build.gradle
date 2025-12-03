@@ -45,6 +45,7 @@ dependencies {
     implementation projects.flags
     implementation projects.utils
     implementation projects.wmshell.shared
+    implementation projects.msdllib
 }
 
 ksp {
