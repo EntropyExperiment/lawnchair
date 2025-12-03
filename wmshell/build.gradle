@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.ksp)
+    id 'kotlin-parcelize' // pE-TODO(QPR2): Move to version catalog
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
