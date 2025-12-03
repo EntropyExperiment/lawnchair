@@ -104,7 +104,7 @@
                     android:background=
                         "@drawable/letterbox_education_dismiss_button_background_ripple"
                     android:text="@string/letterbox_education_got_it"
-                    android:textColor="@androidprv:color/materialColorOnPrimary"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textAlignment="center"
                     android:contentDescription="@string/letterbox_education_got_it"/>
 

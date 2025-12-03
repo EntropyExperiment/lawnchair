@@ -123,7 +123,7 @@
                     android:layout_marginBottom="18dp"
                     android:textSize="14sp"
                     android:textFontWeight="500"
-                    android:textColor="@androidprv:color/materialColorOnPrimary"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:background="@drawable/open_by_default_settings_dialog_confirm_button_background"/>
             </LinearLayout>
         </ScrollView>
