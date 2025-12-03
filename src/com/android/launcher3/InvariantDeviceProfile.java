@@ -32,10 +32,11 @@ import static com.android.launcher3.util.DisplayController.CHANGE_DESKTOP_MODE;
 import static com.android.launcher3.util.DisplayController.CHANGE_NAVIGATION_MODE;
 import static com.android.launcher3.util.DisplayController.CHANGE_SUPPORTED_BOUNDS;
 import static com.android.launcher3.util.DisplayController.CHANGE_TASKBAR_PINNING;
-import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
+import static com.android.launcher3.util.SimpleBroadcastReceiver.actionsFilter;
 
 import android.content.Context;
 import android.content.Intent;
+import com.android.launcher3.concurrent.annotations.Ui;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
@@ -53,10 +54,11 @@ import android.view.Display;
 
 import androidx.annotation.DimenRes;
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.annotation.XmlRes;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dagger.ApplicationContext;
@@ -72,9 +74,11 @@ import com.android.launcher3.util.DaggerSingletonObject;
 import com.android.launcher3.util.DaggerSingletonTracker;
 import com.android.launcher3.util.DisplayController;
 import com.android.launcher3.util.DisplayController.Info;
+import com.android.launcher3.util.LooperExecutor;
 import com.android.launcher3.util.Partner;
 import com.android.launcher3.util.ResourceHelper;
 import com.android.launcher3.util.SimpleBroadcastReceiver;
+import com.android.launcher3.util.TaskbarModeUtil;
 import com.android.launcher3.util.WindowBounds;
 import com.android.launcher3.util.window.CachedDisplayInfo;
 import com.android.launcher3.util.window.WindowManagerProxy;
@@ -91,6 +95,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -143,10 +148,10 @@ public class InvariantDeviceProfile {
     private static final String RES_GRID_NUM_COLUMNS = "grid_num_columns";
     private static final String RES_GRID_ICON_SIZE_DP = "grid_icon_size_dp";
 
-    private DisplayController mDisplayController;
+    private final DisplayController mDisplayController;
     private WindowManagerProxy mWMProxy;
-    private LauncherPrefs mPrefs;
-    private ThemeManager mThemeManager;
+    private final LauncherPrefs mPrefs;
+    private final ThemeManager mThemeManager;
 
     /**
      * Number of icons per row and column in the workspace.
@@ -229,7 +234,7 @@ public class InvariantDeviceProfile {
     public @StyleRes int allAppsStyle;
 
     /**
-     * Do not query directly. see {@link deviceprofile#isScalableGrid}.
+     * Do not query directly. see {@link DeviceProfile#isScalableGrid}.
      */
     protected boolean isScalable;
     @XmlRes
@@ -282,11 +287,14 @@ public class InvariantDeviceProfile {
     /**
      * An immutable list of supported profiles.
      */
-    public List<DeviceProfile> supportedProfiles = Collections.EMPTY_LIST;
+    public List<DeviceProfile> supportedProfiles = Collections.emptyList();
 
     public Point defaultWallpaperSize;
 
     private final List<OnIDPChangeListener> mChangeListeners = new CopyOnWriteArrayList<>();
+
+    public TaskbarModeUtil taskbarModeUtil;
+    private final LooperExecutor mMainExecutor;
 
     @Inject
     public InvariantDeviceProfile(
@@ -295,21 +303,26 @@ public class InvariantDeviceProfile {
             DisplayController dc,
             WindowManagerProxy wmProxy,
             ThemeManager themeManager,
-            DaggerSingletonTracker lifeCycle) {
+            DaggerSingletonTracker lifeCycle,
+            TaskbarModeUtil taskbarModeUtil,
+            @Ui final LooperExecutor mainExecutor) {
         mDisplayController = dc;
         mWMProxy = wmProxy;
+        this.taskbarModeUtil = taskbarModeUtil;
         mPrefs = prefs;
         mThemeManager = themeManager;
+        mMainExecutor = mainExecutor;
 
         String gridName = prefs.get(GRID_NAME);
-        initGrid(context, gridName);
+        initGrid(context, gridName); // pE-TODO(QPR2): Launcher3 now init with context
+        mThemeManager.generateIconShape(iconBitmapSize);
 
         dc.setPriorityListener(
                 (displayContext, info, flags) -> {
                     if ((flags & (CHANGE_DENSITY | CHANGE_SUPPORTED_BOUNDS
                             | CHANGE_NAVIGATION_MODE | CHANGE_TASKBAR_PINNING
                             | CHANGE_DESKTOP_MODE)) != 0) {
-                        onConfigChanged(displayContext);
+                        onConfigChanged();
                     }
                 });
         lifeCycle.addCloseable(() -> dc.setPriorityListener(null));
@@ -318,14 +331,14 @@ public class InvariantDeviceProfile {
             if (FIXED_LANDSCAPE_MODE.getSharedPrefKey().equals(key)
                     && isFixedLandscape != prefs.get(FIXED_LANDSCAPE_MODE)) {
                 if (isFixedLandscape) {
-                    setCurrentGrid(context, prefs.get(NON_FIXED_LANDSCAPE_GRID_NAME));
+                    setCurrentGrid(prefs.get(NON_FIXED_LANDSCAPE_GRID_NAME));
                 } else {
                     prefs.put(NON_FIXED_LANDSCAPE_GRID_NAME, getCurrentGridName(context));
-                    onConfigChanged(context);
+                    onConfigChanged();
                 }
             } else if (ENABLE_TWOLINE_ALLAPPS_TOGGLE.getSharedPrefKey().equals(key)
                     && enableTwoLinesInAllApps != prefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE)) {
-                onConfigChanged(context);
+                onConfigChanged();
             }
         };
         prefs.addListener(prefListener, FIXED_LANDSCAPE_MODE, ENABLE_TWOLINE_ALLAPPS_TOGGLE);
@@ -333,9 +346,9 @@ public class InvariantDeviceProfile {
                 FIXED_LANDSCAPE_MODE, ENABLE_TWOLINE_ALLAPPS_TOGGLE));
 
         SimpleBroadcastReceiver localeReceiver = new SimpleBroadcastReceiver(context,
-                MAIN_EXECUTOR, i -> onConfigChanged(context));
-        localeReceiver.register(Intent.ACTION_LOCALE_CHANGED);
-        lifeCycle.addCloseable(() -> localeReceiver.unregisterReceiverSafely());
+                mMainExecutor, i -> onConfigChanged());
+        localeReceiver.register(actionsFilter(Intent.ACTION_LOCALE_CHANGED));
+        lifeCycle.addCloseable(localeReceiver);
     }
 
     public static String getCurrentGridName(Context context) {
@@ -347,15 +360,14 @@ public class InvariantDeviceProfile {
         this.mThemeManager = ThemeManager.INSTANCE.get(context.getApplicationContext());
         this.mDisplayController = DisplayController.INSTANCE.get(context.getApplicationContext());
         String gridName = DeviceProfileOverrides.INSTANCE.get(context).getGridName(dbGridInfo);
-        initGrid(context, gridName);
+        initGrid(gridName);
     }
 
-    private String initGrid(Context context, String gridName) {
+    private void initGrid(String gridName) {
         Info displayInfo = mDisplayController.getInfo();
         List<DisplayOption> allOptions = getPredefinedDeviceProfiles(
-                context,
-                gridName,
                 displayInfo,
+                gridName,
                 (RestoreDbTask.isPending(mPrefs) && !Flags.oneGridSpecs()),
                 mPrefs.get(FIXED_LANDSCAPE_MODE)
         );
@@ -376,13 +388,12 @@ public class InvariantDeviceProfile {
         }
         DeviceProfileOverrides.DBGridInfo dbGridInfo = DeviceProfileOverrides.INSTANCE.get(context)
             .getGridInfo();
-        initGrid(context, displayInfo, displayOption, dbGridInfo);
+        initGridForDisplayOption(displayInfo, displayOption, dbGridInfo);
         FileLog.d(TAG, "After initGrid:"
                 + "gridName:" + gridName
                 + ", dbFile:" + dbFile
                 + ", LauncherPrefs GRID_NAME:" + mPrefs.get(GRID_NAME)
                 + ", LauncherPrefs DB_FILE:" + mPrefs.get(DB_FILE));
-        return displayOption.grid.name;
     }
 
     private List<DisplayOption> filterByColumnCount(
@@ -398,12 +409,13 @@ public class InvariantDeviceProfile {
      */
     @Deprecated
     public void reset(Context context) {
-        initGrid(context, getCurrentGridName(context));
+        initGrid(getCurrentGridName(context));
     }
 
-    private void initGrid(Context context, Info displayInfo, DisplayOption displayOption, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
+    private void initGridForDisplayOption(Info displayInfo, DisplayOption displayOption, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
         this.closestProfile = displayOption.grid;
         
+        Context context = displayInfo.context;
         enableTwoLinesInAllApps = Flags.enableTwolineToggle()
                 && Utilities.isEnglishLanguage(context)
                 && mPrefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE);
@@ -459,11 +471,11 @@ public class InvariantDeviceProfile {
         for (int i = 1; i < allAppsIconSize.length; i++) {
             maxAllAppsIconSize = Math.max(maxAllAppsIconSize, allAppsIconSize[i]);
         }
-                // Calculate separate bitmap sizes for workspace and all apps
-                iconBitmapSize = ResourceUtils.pxFromDp(maxIconSize, metrics);
-                allAppsIconBitmapSize = ResourceUtils.pxFromDp(maxAllAppsIconSize, metrics);
-                // Use the larger of the two for fillResIconDpi to ensure we have adequate resources
-                fillResIconDpi = getLauncherIconDensity(Math.max(iconBitmapSize, allAppsIconBitmapSize));
+        // Calculate separate bitmap sizes for workspace and all apps
+        iconBitmapSize = ResourceUtils.pxFromDp(maxIconSize, metrics);
+        allAppsIconBitmapSize = ResourceUtils.pxFromDp(maxAllAppsIconSize, metrics);
+        // Use the larger of the two for fillResIconDpi to ensure we have adequate resources
+        fillResIconDpi = getLauncherIconDensity(Math.max(iconBitmapSize, allAppsIconBitmapSize));
 
         iconTextSize = displayOption.textSizes;
 
@@ -512,7 +524,7 @@ public class InvariantDeviceProfile {
         defaultWallpaperSize = new Point(displayInfo.currentSize);
         SparseArray<DotRenderer> dotRendererCache = new SparseArray<>();
         for (WindowBounds bounds : displayInfo.supportedBounds) {
-            localSupportedProfiles.add(newDPBuilder(context, displayInfo)
+            localSupportedProfiles.add(newDPBuilder(displayInfo)
                     .setIsMultiDisplay(deviceType == TYPE_MULTI_DISPLAY)
                     .setWindowBounds(bounds)
                     .setDotRendererCache(dotRendererCache)
@@ -551,8 +563,8 @@ public class InvariantDeviceProfile {
                 });
     }
 
-    DeviceProfile.Builder newDPBuilder(Context context, Info info) {
-        return new DeviceProfile.Builder(context, this, info, mWMProxy, mThemeManager);
+    DeviceProfile.Builder newDPBuilder(Info info) {
+        return new DeviceProfile.Builder(this, info, mWMProxy);
     }
 
     public void addOnChangeListener(OnIDPChangeListener listener) {
@@ -572,36 +584,37 @@ public class InvariantDeviceProfile {
      * Updates the current grid, this triggers a new IDP, reloads the database and triggers a grid
      * migration.
      */
-    @VisibleForTesting
-    public void setCurrentGrid(Context context, String newGridName) {
+    public void setCurrentGrid(String newGridName) {
         if (TextUtils.equals(mPrefs.get(GRID_NAME), newGridName)) return;
         // pE-TODO(QPR1): Move off setCurrentGrid to Prefs?
         // Lawnchair-TODO: Move off setCurrentGrid to Prefs?
         //mPrefs.put(GRID_NAME, newGridName);
         DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(newGridName);
-        MAIN_EXECUTOR.execute(() -> {
-            onConfigChanged(context.getApplicationContext());
+        mMainExecutor.execute(() -> {
+            onConfigChanged();
         });
     }
 
     private Object[] toModelState() {
         return new Object[]{
                 numColumns, numRows, numSearchContainerColumns, numDatabaseHotseatIcons,
-                        iconBitmapSize, allAppsIconBitmapSize, fillResIconDpi, numDatabaseAllAppsColumns, dbFile};
+                        iconBitmapSize, allAppsIconBitmapSize, fillResIconDpi, numDatabaseAllAppsColumns, dbFile, mLocale};
     }
 
     /** Updates IDP using the provided context. Notifies listeners of change. */
-    @VisibleForTesting
-    public void onConfigChanged(Context context) {
+    public void onConfigChanged() {
         Object[] oldState = toModelState();
 
         // Re-init grid
-        initGrid(context, mPrefs.get(GRID_NAME));
+        initGrid(mPrefs.get(GRID_NAME));
 
         boolean modelPropsChanged = !Arrays.equals(oldState, toModelState());
         for (OnIDPChangeListener listener : mChangeListeners) {
             listener.onIdpChanged(modelPropsChanged);
         }
+
+        // Generate new Icon Shape info
+        mThemeManager.generateIconShape(iconBitmapSize);
     }
 
     private static boolean firstGridFilter(GridOption gridOption, int deviceType,
@@ -611,13 +624,13 @@ public class InvariantDeviceProfile {
     }
 
     private static List<DisplayOption> getPredefinedDeviceProfiles(
-            Context context,
-            String gridName,
-            Info displayInfo,
+            @NonNull Info displayInfo,
+            @Nullable String gridName,
             boolean allowDisabledGrid,
             boolean isFixedLandscapeMode
     ) {
         ArrayList<DisplayOption> profiles = new ArrayList<>();
+        Context context = displayInfo.context;
 
         try (XmlResourceParser parser = context.getResources().getXml(R.xml.device_profiles)) {
             final int depth = parser.getDepth();
@@ -976,10 +989,10 @@ public class InvariantDeviceProfile {
     }
 
     public DeviceProfile createDeviceProfileForSecondaryDisplay(Context displayContext) {
-        // Disable transpose layout and use multi-window mode so that the icons are scaled properly
-        return newDPBuilder(displayContext, new Info(displayContext))
+        // Disable transpose layout and use external display so that the icons are scaled properly
+        return newDPBuilder(new Info(displayContext, mWMProxy))
                 .setIsMultiDisplay(false)
-                .setMultiWindowMode(true)
+                .setExternalDisplay(true)
                 .setWindowBounds(mWMProxy.getRealBounds(
                         displayContext, mWMProxy.getDisplayInfo(displayContext)))
                 .setTransposeLayoutWithOrientation(false)
@@ -1060,19 +1073,18 @@ public class InvariantDeviceProfile {
     }
 
     /** Returns {@link DisplayOptionSpec} for the provided displayInfo. */
-    static DisplayOptionSpec createDisplayOptionSpec(Context context, Info displayInfo,
-            boolean isLandscape) {
+    static DisplayOptionSpec createDisplayOptionSpec(Info displayInfo, boolean isLandscape) {
         // Get predefined profiles for provided displayInfo without using any main device's pref.
-        List<DisplayOption> allOptions = getPredefinedDeviceProfiles(context,
-                /* gridName= */ null, displayInfo, /* allowDisabledGrid= */ false,
+        List<DisplayOption> allOptions = getPredefinedDeviceProfiles(displayInfo,
+                /* gridName= */ null,
+                /* allowDisabledGrid= */ false,
                 /* isFixedLandscapeMode= */ false);
-
         return new DisplayOptionSpec(
-                invDistWeightedInterpolate(displayInfo, new ArrayList<>(allOptions),
+                invDistWeightedInterpolate(displayInfo, allOptions,
                         displayInfo.getDeviceType()), isLandscape);
     }
 
-    /** Class to expose properties required for external displays to {@link deviceprofile} */
+    /** Class to expose properties required for external displays to {@link DeviceProfile} */
     public static final class DisplayOptionSpec {
         public final int typeIndex;
         public final int numShownHotseatIcons;
@@ -1227,10 +1239,14 @@ public class InvariantDeviceProfile {
                         R.styleable.GridDisplayOption_defaultLayoutId, 0);
             }
 
+            int numAllAppsColumnsFromAllAppsSizeSpec = -1;
             if (mAllAppsSizeSpecId != INVALID_RESOURCE_HANDLE) {
                 ResourceHelper resourceHelper = new ResourceHelper(context, mAllAppsSizeSpecId);
                 AllAppsSize allAppsSize = getAllAppsSize(resourceHelper, context, displayInfo);
                 mAllAppsAlignedWithWorkspaceRow = allAppsSize.mAlignWithWorkspaceRow;
+                if (allAppsSize.mNumColumns > 0) {
+                    numAllAppsColumnsFromAllAppsSizeSpec = allAppsSize.mNumColumns;
+                }
             } else {
                 mAllAppsAlignedWithWorkspaceRow = -1;
             }
@@ -1240,8 +1256,9 @@ public class InvariantDeviceProfile {
 
             allAppsStyle = a.getResourceId(R.styleable.GridDisplayOption_allAppsStyle,
                     R.style.AllAppsStyleDefault);
-            numAllAppsColumns = a.getInt(
-                    R.styleable.GridDisplayOption_numAllAppsColumns, numColumns);
+            numAllAppsColumns = numAllAppsColumnsFromAllAppsSizeSpec > 0
+                    ? numAllAppsColumnsFromAllAppsSizeSpec
+                    : a.getInt(R.styleable.GridDisplayOption_numAllAppsColumns, numColumns);
             numDatabaseAllAppsColumns = a.getInt(
                     R.styleable.GridDisplayOption_numExtendedAllAppsColumns, 2 * numAllAppsColumns);
 
@@ -1449,6 +1466,10 @@ public class InvariantDeviceProfile {
         // Negative value will be ignored, and cause all apps container to fill up vertical space.
         final int mAlignWithWorkspaceRow;
 
+        // Number of columns to be shown in all apps. Negative value indicates that default value
+        // should be used (i.e. the number of columns defined as part of grid-option spec).
+        final int mNumColumns;
+
         // The minimum device pixel width to which the spec can be applied.
         final float mMinDeviceWidthPx;
 
@@ -1456,6 +1477,7 @@ public class InvariantDeviceProfile {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AllAppsSize);
 
             mAlignWithWorkspaceRow =  a.getInt(R.styleable.AllAppsSize_alignWithWorkspaceRow, -1);
+            mNumColumns = a.getInt(R.styleable.AllAppsSize_allAppsColumns, -1);
             mMinDeviceWidthPx = a.getFloat(R.styleable.AllAppsSize_minDeviceWidthDp, 0)
                     * stableDensityScale;
 
@@ -1685,7 +1707,7 @@ public class InvariantDeviceProfile {
 
             hotseatBarBottomSpace[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatBarBottomSpace,
-                    ResourcesCompat.getFloat(res, R.dimen.hotseat_bar_bottom_space_default));
+                    res.getFloat(R.dimen.hotseat_bar_bottom_space_default));
             hotseatBarBottomSpace[INDEX_LANDSCAPE] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatBarBottomSpaceLandscape,
                     hotseatBarBottomSpace[INDEX_DEFAULT]);
@@ -1698,7 +1720,7 @@ public class InvariantDeviceProfile {
 
             hotseatQsbSpace[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatQsbSpace,
-                    ResourcesCompat.getFloat(res, R.dimen.hotseat_qsb_space_default));
+                    res.getFloat(R.dimen.hotseat_qsb_space_default));
             hotseatQsbSpace[INDEX_LANDSCAPE] = a.getFloat(
                     R.styleable.ProfileDisplayOption_hotseatQsbSpaceLandscape,
                     hotseatQsbSpace[INDEX_DEFAULT]);
@@ -1711,7 +1733,7 @@ public class InvariantDeviceProfile {
 
             transientTaskbarIconSize[INDEX_DEFAULT] = a.getFloat(
                     R.styleable.ProfileDisplayOption_transientTaskbarIconSize,
-                    ResourcesCompat.getFloat(res, R.dimen.taskbar_icon_size));
+                    res.getFloat(R.dimen.taskbar_icon_size));
             transientTaskbarIconSize[INDEX_LANDSCAPE] = a.getFloat(
                     R.styleable.ProfileDisplayOption_transientTaskbarIconSizeLandscape,
                     transientTaskbarIconSize[INDEX_DEFAULT]);

@@ -63,6 +63,7 @@ import com.android.launcher3.util.Thunk;
 import com.android.launcher3.views.ActivityContext;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import app.lawnchair.ui.StretchEdgeEffect;
@@ -157,6 +158,8 @@ public abstract class PagedView<T extends View & PageIndicator> extends ViewGrou
 
     protected EdgeEffectCompat mEdgeGlowLeft;
     protected EdgeEffectCompat mEdgeGlowRight;
+
+    private List<PageSwitchListener> mPageSwitchListeners = new ArrayList<>();
 
     public PagedView(Context context) {
         this(context, null);
@@ -459,6 +462,23 @@ public abstract class PagedView<T extends View & PageIndicator> extends ViewGrou
      */
     protected void notifyPageSwitchListener(int prevPage) {
         updatePageIndicator();
+        for (PageSwitchListener listener : mPageSwitchListeners) {
+            listener.onPageSwitch();
+        }
+    }
+
+    /**
+     * Add a callback that is triggered when the page is switched.
+     */
+    public void addPageSwitchListener(PageSwitchListener listener) {
+        mPageSwitchListeners.add(listener);
+    }
+
+    /**
+     * Remove a page switch callback.
+     */
+    public void removePageSwitchListener(PageSwitchListener listener) {
+        mPageSwitchListeners.remove(listener);
     }
 
     private void updatePageIndicator() {
@@ -2015,5 +2035,15 @@ public abstract class PagedView<T extends View & PageIndicator> extends ViewGrou
                 canvas.restoreToCount(restoreCount);
             }
         }
+    }
+
+    /**
+     * Callback interface for page switches.
+     */
+    public interface PageSwitchListener {
+        /**
+         * Called when the workspace page is switched.
+         */
+        void onPageSwitch();
     }
 }

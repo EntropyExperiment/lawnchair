@@ -43,6 +43,10 @@ android {
                     "tests/multivalentTestsForDevice/src",
                 )
             )
+            res.setSrcDirs(listOf(
+                "tests/multivalentScreenshotTests/res",
+                "res"
+            ))
             manifest.srcFile("tests/AndroidManifest.xml")
         }
         named("test") {
@@ -89,6 +93,7 @@ dependencies {
     testImplementation(libs.mockito.robolectric.bytebuddy.agent)
     testImplementation(libs.mockito.robolectric.bytebuddy)
     testImplementation(libs.mockito.robolectric)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.junit)
     testImplementation(libs.google.truth)
     testImplementation(libs.androidx.test.runner)
