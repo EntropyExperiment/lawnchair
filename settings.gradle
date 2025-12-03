@@ -98,7 +98,6 @@ project(':unfold').projectDir = new File(rootDir, 'systemUI/unfold')
 include ':utils'
 project(':utils').projectDir = new File(rootDir, 'systemUI/utils')
 
-
 include ':compatLib'
 include ':compatLib:compatLibVQ'
 include ':compatLib:compatLibVR'
@@ -114,7 +113,7 @@ include ':androidx-lib'
 include ':flags'
 include ':wmshell'
 include ':dagger'
-include ':concurrent'
+include ':modules:concurrent'
 //include ':compose'
 include ':modules:widgetpicker'
 

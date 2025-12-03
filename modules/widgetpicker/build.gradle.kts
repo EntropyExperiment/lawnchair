@@ -110,6 +110,6 @@ dependencies {
     androidTestApi(libs.compose.ui.test.junit4)
     debugApi(libs.compose.ui.test.manifest)
 
-    implementation(projects.concurrent)
+    implementation(projects.modules.concurrent)
     implementation(projects.dagger)
 }
