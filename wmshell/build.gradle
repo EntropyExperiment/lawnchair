@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.google.ksp)
+    id 'kotlin-parcelize' // pE-TODO(QPR2): Move to version catalog
 }
 
 android {
