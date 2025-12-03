@@ -44,6 +44,7 @@ dependencies {
     implementation projects.iconloaderlib
     implementation projects.flags
     implementation projects.utils
+    implementation projects.wmshell.shared
 }
 
 ksp {
