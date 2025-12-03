@@ -575,10 +575,10 @@ public class InvariantDeviceProfile {
     @VisibleForTesting
     public void setCurrentGrid(Context context, String newGridName) {
         if (TextUtils.equals(mPrefs.get(GRID_NAME), newGridName)) return;
-        // pE-TODO(QPR1): Move off setCurrentGrid to Prefs
-        // Lawnchair-TODO: Move off setCurrentGrid to Prefs
-        mPrefs.put(GRID_NAME, newGridName);
-        //DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(newGridName);
+        // pE-TODO(QPR1): Move off setCurrentGrid to Prefs?
+        // Lawnchair-TODO: Move off setCurrentGrid to Prefs?
+        //mPrefs.put(GRID_NAME, newGridName);
+        DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(newGridName);
         MAIN_EXECUTOR.execute(() -> {
             onConfigChanged(context.getApplicationContext());
         });
