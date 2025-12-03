@@ -402,7 +402,7 @@ dependencies {
     withQuickstepImplementation projects.wmshell
     withQuickstepImplementation projects.flags
     withQuickstepImplementation projects.dagger
-    withQuickstepImplementation projects.concurrent
+    withQuickstepImplementation projects.modules.concurrent
 //    withQuickstepImplementation projects.compose
     withQuickstepImplementation projects.modules.widgetpicker
     implementation libs.androidx.dynamicanimation

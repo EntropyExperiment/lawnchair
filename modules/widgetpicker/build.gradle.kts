@@ -120,6 +120,6 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
 
-    implementation(projects.concurrent)
+    implementation(projects.modules.concurrent)
     implementation(projects.dagger)
 }
