@@ -16,7 +16,7 @@ out\soong\.intermediates\frameworks\base\packages\SystemUI\aconfig\com_android_s
 
 out\soong\.intermediates\frameworks\libs\systemui\aconfig\com_android_systemui_shared_flags_lib\android_common\gen\com_android_systemui_shared_flags_lib.srcjar
 
-## Windows.flags2
+## Window.flags2
 
 out\soong\.intermediates\frameworks\base\com.android.window.flags.window-aconfig-java\android_common\gen\com.android.window.flags.window-aconfig-java.srcjar
 
