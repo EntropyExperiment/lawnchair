@@ -26,7 +26,7 @@ import android.os.Handler
 import android.os.LocaleList
 import android.os.UserHandle
 import android.util.Slog
-import androidx.tracing.Trace
+//import androidx.tracing.Trace
 import com.android.internal.annotations.VisibleForTesting
 import com.android.launcher3.icons.BaseIconFactory
 import com.android.launcher3.icons.BaseIconFactory.Companion.MODE_DEFAULT
@@ -193,7 +193,7 @@ class WindowDecorTaskResourceLoaderImpl(
 
     private suspend fun loadAppResources(taskInfo: RunningTaskInfo): AppResources =
         withContext(bgDispatcher) {
-            Trace.beginSection("$TAG#loadAppResources")
+//            Trace.beginSection("$TAG#loadAppResources")
             try {
                 val pm = userProfilesContexts.getOrCreate(taskInfo.userId).packageManager
                 val activityInfo = getActivityInfo(taskInfo, pm)
@@ -225,7 +225,7 @@ class WindowDecorTaskResourceLoaderImpl(
                     shouldCacheResult = false,
                 )
             } finally {
-                Trace.endSection()
+//                Trace.endSection()
             }
         }
 

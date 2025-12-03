@@ -30,6 +30,6 @@ dependencies {
     implementation libs.androidx.core.animation
     implementation libs.androidx.core
     compileOnly projects.animationlib
-    compileOnly projects.wmshell
+    compileOnly projects.wmshell.shared
     compileOnly projects.flags
 }

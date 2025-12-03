@@ -19,7 +19,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.PixelFormat
 import android.graphics.Region
-import android.os.Trace.TRACE_TAG_WINDOW_MANAGER
+//import android.os.Trace.TRACE_TAG_WINDOW_MANAGER
 import android.view.Display
 import android.view.SurfaceControl
 import android.view.View
@@ -27,8 +27,8 @@ import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION
 import android.widget.FrameLayout
-import androidx.tracing.Trace
-import com.android.app.tracing.traceSection
+//import androidx.tracing.Trace
+//import com.android.app.tracing.traceSection
 import com.android.internal.annotations.VisibleForTesting
 import com.android.wm.shell.shared.annotations.ShellMainThread
 import com.android.wm.shell.windowdecor.extension.identityHashCode
@@ -93,10 +93,10 @@ class ReusableWindowDecorViewHost(
         touchableRegion: Region?,
         onDrawTransaction: SurfaceControl.Transaction?,
     ) {
-        Trace.beginSection("ReusableWindowDecorViewHost#updateView")
+//        Trace.beginSection("ReusableWindowDecorViewHost#updateView")
         clearCurrentUpdateJob()
         updateViewHost(view, attrs, configuration, touchableRegion, onDrawTransaction)
-        Trace.endSection()
+//        Trace.endSection()
     }
 
     override fun updateViewAsync(
@@ -105,7 +105,7 @@ class ReusableWindowDecorViewHost(
         configuration: Configuration,
         touchableRegion: Region?,
     ) {
-        Trace.beginSection("ReusableWindowDecorViewHost#updateViewAsync")
+//        Trace.beginSection("ReusableWindowDecorViewHost#updateViewAsync")
         clearCurrentUpdateJob()
         currentUpdateJob =
             mainScope.launch {
@@ -117,11 +117,10 @@ class ReusableWindowDecorViewHost(
                     onDrawTransaction = null,
                 )
             }
-        Trace.endSection()
+//        Trace.endSection()
     }
 
-    override fun reset() =
-        traceSection(traceTag = TRACE_TAG_WINDOW_MANAGER, name = "$TAG#reset") {
+    override fun reset() {
             clearCurrentUpdateJob()
             updateViewHost(
                 view = null,

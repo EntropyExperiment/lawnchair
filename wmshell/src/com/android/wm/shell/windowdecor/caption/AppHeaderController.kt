@@ -202,11 +202,7 @@ class AppHeaderController(
         startT: SurfaceControl.Transaction,
         finishT: SurfaceControl.Transaction,
         wct: WindowContainerTransaction,
-    ): CaptionRelayoutResult =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "AppHeaderController#relayout",
-        ) {
+    ): CaptionRelayoutResult {
             // If we get a relayout call while hovering over maximize button in the app header but
             // the task has lost focus, explicitly cancel the hover (since we don't get a HOVER_EXIT
             // signal in this case).

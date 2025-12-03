@@ -42,7 +42,7 @@ import android.view.WindowlessWindowManager
 import android.window.DesktopExperienceFlags
 import android.window.TaskConstants
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.protolog.ProtoLog
 import com.android.wm.shell.ShellTaskOrganizer
 import com.android.wm.shell.common.BoxShadowHelper
@@ -165,11 +165,7 @@ abstract class WindowDecoration2<T>(
         finishT: SurfaceControl.Transaction,
         wct: WindowContainerTransaction,
         newTaskSurface: SurfaceControl?,
-    ): RelayoutResult<T>? =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "WindowDecoration2#relayout",
-        ) {
+    ): RelayoutResult<T>? {
             logD("relayout(task=%d) startT=%d finishT=%d", taskInfo.taskId, startT.id, finishT.id)
             taskInfo = params.runningTaskInfo
             hasGlobalFocus = params.hasGlobalFocus
@@ -241,23 +237,18 @@ abstract class WindowDecoration2<T>(
                     )
                 } else INVALID_SHADOW_RADIUS
 
-            traceSection(
-                traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-                name = "WindowDecoration2#relayout-updateSurfacesAndInsets",
-            ) {
-                updateDecorationContainerSurface(startT, taskWidth, taskHeight)
-                updateTaskSurface(
-                    params,
-                    startT,
-                    finishT,
-                    taskWidth,
-                    taskHeight,
-                    borderSettings,
-                    boxShadowSettings,
-                    shadowRadius,
-                    cornerRadius,
-                )
-            }
+            updateDecorationContainerSurface(startT, taskWidth, taskHeight)
+            updateTaskSurface(
+                params,
+                startT,
+                finishT,
+                taskWidth,
+                taskHeight,
+                borderSettings,
+                boxShadowSettings,
+                shadowRadius,
+                cornerRadius,
+            )
 
             val controller = getOrCreateCaptionController(params.captionType)
             if (controller == null) {
@@ -461,11 +452,7 @@ abstract class WindowDecoration2<T>(
         ProtoLog.d(ShellProtoLogGroup.WM_SHELL_WINDOW_DECORATION, "%s: $msg", TAG, *arguments)
     }
 
-    private fun releaseViewsIfNeeded(params: RelayoutParams, wct: WindowContainerTransaction) =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "WindowDecoration2#relayout-releaseViewsIfNeeded",
-        ) {
+    private fun releaseViewsIfNeeded(params: RelayoutParams, wct: WindowContainerTransaction) {
             val windowDecorConfigInitialized = windowDecorConfig != null
             val oldConfig = windowDecorConfig ?: taskInfo.configuration
             val newConfig = params.windowDecorConfig ?: taskInfo.configuration
@@ -543,11 +530,7 @@ abstract class WindowDecoration2<T>(
     }
 
     /** Releases all window decoration views. */
-    private fun releaseViews(wct: WindowContainerTransaction) =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "WindowDecoration2#releaseViews",
-        ) {
+    private fun releaseViews(wct: WindowContainerTransaction) {
             val t = surfaceControlTransactionSupplier()
             var released = false
 
@@ -564,8 +547,7 @@ abstract class WindowDecoration2<T>(
             }
         }
 
-    override fun close() =
-        traceSection(traceTag = Trace.TRACE_TAG_WINDOW_MANAGER, name = "WindowDecoration2#close") {
+    override fun close() {
             displayController.removeDisplayWindowListener(onDisplaysChangedListener)
             taskDragResizer?.close()
             val wct = windowContainerTransactionSupplier()

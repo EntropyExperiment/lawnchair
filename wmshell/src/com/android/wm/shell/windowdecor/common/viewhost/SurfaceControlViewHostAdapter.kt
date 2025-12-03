@@ -25,7 +25,7 @@ import android.view.SurfaceControlViewHost
 import android.view.View
 import android.view.WindowManager
 import android.view.WindowlessWindowManager
-import androidx.tracing.Trace
+//import androidx.tracing.Trace
 import com.android.internal.annotations.VisibleForTesting
 
 typealias SurfaceControlViewHostFactory =
@@ -85,14 +85,14 @@ class SurfaceControlViewHostAdapter(
     /** Update the view hierarchy of the view host. */
     fun updateView(view: View, attrs: WindowManager.LayoutParams) {
         if (requireViewHost().view == null) {
-            Trace.beginSection("SurfaceControlViewHostAdapter#updateView-setView")
+//            Trace.beginSection("SurfaceControlViewHostAdapter#updateView-setView")
             requireViewHost().setView(view, attrs)
-            Trace.endSection()
+//            Trace.endSection()
         } else {
             check(requireViewHost().view == view) { "Changing view is not allowed" }
-            Trace.beginSection("SurfaceControlViewHostAdapter#updateView-relayout")
+//            Trace.beginSection("SurfaceControlViewHostAdapter#updateView-relayout")
             requireViewHost().relayout(attrs)
-            Trace.endSection()
+//            Trace.endSection()
         }
     }
 

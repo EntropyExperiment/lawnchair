@@ -119,11 +119,7 @@ abstract class CaptionController<T>(
         startT: SurfaceControl.Transaction,
         finishT: SurfaceControl.Transaction,
         wct: WindowContainerTransaction,
-    ): CaptionRelayoutResult =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "CaptionController#relayout",
-        ) {
+    ): CaptionRelayoutResult {
             taskInfo = params.runningTaskInfo
             hasGlobalFocus = params.hasGlobalFocus
             this.decorWindowContext = decorWindowContext
@@ -229,11 +225,7 @@ abstract class CaptionController<T>(
         captionHeight: Int,
         startT: SurfaceControl.Transaction,
         touchableRegion: Region?,
-    ) =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "CaptionController#updateViewHierarchy",
-        ) {
+    ) {
             val taskId = taskInfo.taskId
             logD(
                 "updateViewHierarchy of taskId=%d size=%dx%d touchableRegion=%s " +
@@ -382,11 +374,7 @@ abstract class CaptionController<T>(
     }
 
     /** Releases all caption views. Returns true if caption view host is released. */
-    open fun close(wct: WindowContainerTransaction, t: SurfaceControl.Transaction): Boolean =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "CaptionController#releaseViews",
-        ) {
+    open fun close(wct: WindowContainerTransaction, t: SurfaceControl.Transaction): Boolean {
             captionInsets?.remove(wct)
             captionInsets = null
             windowDecorationViewHolder = null
@@ -397,11 +385,7 @@ abstract class CaptionController<T>(
             return true
         }
 
-    private fun getOrCreateViewHost(context: Context, display: Display): WindowDecorViewHost =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "CaptionController#getOrCreateViewHost",
-        ) {
+    private fun getOrCreateViewHost(context: Context, display: Display): WindowDecorViewHost {
             val currentViewHost = captionViewHost
             if (currentViewHost != null) {
                 return currentViewHost

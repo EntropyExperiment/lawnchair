@@ -22,7 +22,7 @@ import android.view.Display
 import android.view.SurfaceControl
 import android.view.View
 import android.view.WindowManager
-import androidx.tracing.Trace
+//import androidx.tracing.Trace
 import com.android.internal.annotations.VisibleForTesting
 import com.android.wm.shell.shared.annotations.ShellMainThread
 import kotlinx.coroutines.CoroutineScope
@@ -58,10 +58,10 @@ class DefaultWindowDecorViewHost(
         touchableRegion: Region?,
         onDrawTransaction: SurfaceControl.Transaction?,
     ) {
-        Trace.beginSection("DefaultWindowDecorViewHost#updateView")
+//        Trace.beginSection("DefaultWindowDecorViewHost#updateView")
         clearCurrentUpdateJob()
         updateViewHost(view, attrs, configuration, touchableRegion, onDrawTransaction)
-        Trace.endSection()
+//        Trace.endSection()
     }
 
     override fun updateViewAsync(
@@ -70,7 +70,7 @@ class DefaultWindowDecorViewHost(
         configuration: Configuration,
         touchableRegion: Region?,
     ) {
-        Trace.beginSection("DefaultWindowDecorViewHost#updateViewAsync")
+//        Trace.beginSection("DefaultWindowDecorViewHost#updateViewAsync")
         clearCurrentUpdateJob()
         currentUpdateJob =
             mainScope.launch {
@@ -82,7 +82,7 @@ class DefaultWindowDecorViewHost(
                     onDrawTransaction = null,
                 )
             }
-        Trace.endSection()
+//        Trace.endSection()
     }
 
     override fun reset() {
@@ -101,12 +101,12 @@ class DefaultWindowDecorViewHost(
         touchableRegion: Region?,
         onDrawTransaction: SurfaceControl.Transaction?,
     ) {
-        Trace.beginSection("DefaultWindowDecorViewHost#updateViewHost")
+//        Trace.beginSection("DefaultWindowDecorViewHost#updateViewHost")
         view.layoutDirection = configuration.layoutDirection
         viewHostAdapter.prepareViewHost(configuration, touchableRegion)
         onDrawTransaction?.let { viewHostAdapter.applyTransactionOnDraw(it) }
         viewHostAdapter.updateView(view, attrs)
-        Trace.endSection()
+//        Trace.endSection()
     }
 
     private fun clearCurrentUpdateJob() {

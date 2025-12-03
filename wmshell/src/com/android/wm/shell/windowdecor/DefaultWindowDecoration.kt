@@ -44,7 +44,7 @@ import android.view.WindowManagerGlobal
 import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.policy.DesktopModeCompatPolicy
 import com.android.window.flags2.Flags
 import com.android.wm.shell.R
@@ -322,8 +322,7 @@ constructor(
         displayExclusionRegion: Region,
         inSyncWithTransition: Boolean,
         taskSurface: SurfaceControl?,
-    ) =
-        traceSection("DefaultWindowDecoration#relayout") {
+    ) {
             if (DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_APP_TO_WEB.isTrue) {
                 taskInfo.capturedLink?.let {
                     appToWebRepository.setCapturedLink(
@@ -376,15 +375,11 @@ constructor(
                     // because |mShouldSetAppBounds| applies the insets by modifying app bounds,
                     // which
                     // can cause a bounds offset that needs to be reported to transition handlers.
-                    traceSection("DesktopModeWindowDecoration#relayout-startTransition") {
                         handler.post {
                             transitions.startTransition(TRANSIT_CHANGE, wct, /* handler= */ null)
                         }
-                    }
                 } else {
-                    traceSection("DesktopModeWindowDecoration#relayout-applyWCT") {
                         bgExecutor.execute { taskOrganizer.applyTransaction(wct) }
-                    }
                 }
                 Trace.endSection()
             }

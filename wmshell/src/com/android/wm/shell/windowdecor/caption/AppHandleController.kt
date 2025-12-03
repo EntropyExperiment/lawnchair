@@ -174,11 +174,7 @@ class AppHandleController(
         startT: SurfaceControl.Transaction,
         finishT: SurfaceControl.Transaction,
         wct: WindowContainerTransaction,
-    ): CaptionRelayoutResult =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "AppHandleController#relayout",
-        ) {
+    ): CaptionRelayoutResult {
             // Check for relevant configuration changes
             val oldConfig = this.taskInfo.configuration
             val newConfig = params.runningTaskInfo.configuration
