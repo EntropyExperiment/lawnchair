@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.protobuf)
-    id 'kotlin-parcelize' // pE-TODO(QPR2): Move to version catalog
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.compose)
 }
 
 // LC-Build-TODO: addFrameworkJar() doesn't work, what???
@@ -23,6 +24,7 @@ android {
     namespace "com.android.wm.shell"
     buildFeatures {
         aidl true
+        compose true
     }
     sourceSets {
         main {
@@ -43,12 +45,20 @@ dependencies {
     ksp libs.dagger.hilt.compiler
     implementation libs.androidx.core.animation
     implementation libs.androidx.dynamicanimation
+    implementation libs.androidx.datastore.preferences
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.recyclerview
+    implementation libs.compose.material3
+    implementation libs.airbnb.lottie
     implementation projects.iconloaderlib
     implementation projects.flags
     implementation projects.utils
     implementation projects.wmshell.shared
     implementation projects.msdllib
     implementation projects.animation
+    implementation projects.mechanics
+    implementation projects.animationlib
+    implementation projects.viewcapturelib
 }
 
 ksp {
