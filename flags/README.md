@@ -25,3 +25,7 @@ Change from windows.flag to windows.flags2
 ## WM Shell
 
 out\soong\.intermediates\frameworks\base\libs\WindowManager\Shell\aconfig\com_android_wm_shell_flags_lib\android_common\gen\com_android_wm_shell_flags_lib.srcjar
+
+## AM (ActivityManager)
+
+out\soong\.intermediates\frameworks\base\services\core\java\com\android\server\am\am_flags_lib\android_common\gen\am_flags_lib.srcjar
