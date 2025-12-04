@@ -69,7 +69,7 @@ import com.android.wm.shell.transition.DefaultMixedHandler;
 import com.android.wm.shell.transition.Transitions;
 import com.android.wm.shell.windowdecor.WindowDecorViewModel;
 
-import dalvik.annotation.optimization.NeverCompile;
+
 
 import com.google.android.msdl.domain.MSDLPlayer;
 
@@ -566,7 +566,7 @@ public abstract class StageCoordinatorAbstract implements SplitLayout.SplitLayou
      * @param pw     The output stream to dump to
      * @param prefix The prefix to use when dumping
      */
-    @NeverCompile
+
     public abstract void dump(@NonNull PrintWriter pw, String prefix);
 
     /**

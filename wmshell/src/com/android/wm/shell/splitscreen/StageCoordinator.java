@@ -181,7 +181,7 @@ import com.android.wm.shell.transition.DefaultMixedHandler;
 import com.android.wm.shell.transition.Transitions;
 import com.android.wm.shell.windowdecor.WindowDecorViewModel;
 
-import dalvik.annotation.optimization.NeverCompile;
+
 
 import com.google.android.msdl.domain.MSDLPlayer;
 
@@ -4674,7 +4674,7 @@ public class StageCoordinator extends StageCoordinatorAbstract {
         return mStatusBarHider.isStatusBarImmersive();
     }
 
-    @NeverCompile
+
     @Override
     public void dump(@NonNull PrintWriter pw, String prefix) {
         final String innerPrefix = prefix + "  ";
