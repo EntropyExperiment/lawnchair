@@ -29,3 +29,5 @@ out\soong\.intermediates\frameworks\base\libs\WindowManager\Shell\aconfig\com_an
 ## AM (ActivityManager)
 
 out\soong\.intermediates\frameworks\base\services\core\java\com\android\server\am\am_flags_lib\android_common\gen\am_flags_lib.srcjar
+
+Command: `m am`
