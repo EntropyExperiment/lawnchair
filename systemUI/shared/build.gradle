@@ -45,7 +45,7 @@ dependencies {
     compileOnly projects.plugin
     compileOnly projects.plugincore
     compileOnly projects.flags
-    compileOnly projects.wmshell
+    compileOnly projects.wmshell.shared
     compileOnly projects.animationlib
     compileOnly projects.utils
     compileOnly projects.log

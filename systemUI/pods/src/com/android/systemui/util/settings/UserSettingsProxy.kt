@@ -355,7 +355,7 @@ public interface UserSettingsProxy : SettingsProxy {
         settingsObserver: ContentObserver,
         userHandle: Int,
     ): Job =
-        settingsScope.launch("registerContentObserverForUserAsync-E") {
+        settingsScope.launch() {
             try {
                 registerContentObserverForUserSync(
                     uri,

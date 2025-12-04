@@ -23,6 +23,7 @@ compileOnlyCommonJars()
 
 dependencies {
     compileOnly projects.log
+    compileOnly projects.flags
 
     implementation libs.dagger.hilt.android
     ksp libs.dagger.hilt.compiler
