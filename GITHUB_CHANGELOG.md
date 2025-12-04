@@ -2,11 +2,13 @@
 
 ## Bubble Tea [QPR2]
 
-### 🏗️ SNAPSHOT 11 (Draft)
+### 🥞 SNAPSHOT 11
 
-Build: BS11.0412 (latest), BS11.1212 (Botched use BS11.0312 instead)
+Build: BS11.0412-b (latest), BS11.0412, BS11.1212 (Botched use BS11.0312 instead)
 
-Initial QPR2 merge
+Initial QPR2 merge, this is the first time that Lawnchair is able to get pass KSP stage 
+(and first time that rebase is faster than previous attempt, this rebase took 2 days to finish
+instead of more than a week.).
 
 This is a developer-focused change log:
 * Codebase updated to Android 16-0.0_r4 (Android 16.0.0 Release 4)
@@ -66,7 +68,7 @@ Compatibility list:
 * [Lawnchair/Smartspace] Allow disabling the smartspace feature
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
 
-### 🥞 Snapshot 9 (Development 4 Release 1)
+### Snapshot 9 (Development 4 Release 1)
 
 This snapshot marks the first time Bubble Tea QPR1 is able to assemble the APK without errors, 
 all that's left is bug bash testing. Limited visibility closed testing is available.
