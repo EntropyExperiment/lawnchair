@@ -29,7 +29,7 @@ import android.view.SurfaceControl
 import android.view.View
 import android.view.WindowManager
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.protolog.ProtoLog
 import com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_WINDOW_DECORATION
 import com.android.wm.shell.windowdecor.HandleMenuController
@@ -184,22 +184,17 @@ abstract class CaptionController<T>(
                 localCaptionBounds = localCaptionBounds,
             )
 
-            traceSection(
-                traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-                name = "CaptionController#relayout-updateViewHost",
-            ) {
-                viewHolder.setTopPadding(captionTopPadding)
-                viewHolder.setTaskFocusState(params.hasGlobalFocus)
-                updateViewHierarchy(
-                    params,
-                    viewHost,
-                    viewHolder.rootView,
-                    captionWidth,
-                    captionHeight,
-                    startT,
-                    touchableRegion,
-                )
-            }
+            viewHolder.setTopPadding(captionTopPadding)
+            viewHolder.setTaskFocusState(params.hasGlobalFocus)
+            updateViewHierarchy(
+                params,
+                viewHost,
+                viewHolder.rootView,
+                captionWidth,
+                captionHeight,
+                startT,
+                touchableRegion,
+            )
 
             captionLayoutResult =
                 CaptionRelayoutResult(

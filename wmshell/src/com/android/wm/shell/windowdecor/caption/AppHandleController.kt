@@ -35,7 +35,7 @@ import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import android.window.TaskSnapshot
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.policy.SystemBarUtils
 import com.android.window.flags2.Flags
 import com.android.wm.shell.R
@@ -326,8 +326,7 @@ class AppHandleController(
     }
 
     /** Update the view holder for app handle. */
-    private fun updateViewHolder(captionLayoutResult: CaptionRelayoutResult) =
-        traceSection("AppHandleController#updateViewHolder") {
+    private fun updateViewHolder(captionLayoutResult: CaptionRelayoutResult) {
             viewHolder.bindData(
                 HandleData(
                     taskInfo,

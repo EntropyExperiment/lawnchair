@@ -28,8 +28,8 @@ import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import androidx.core.util.forEach
 import androidx.core.util.valueIterator
-import androidx.tracing.Trace
-import com.android.app.tracing.traceSection
+//import androidx.tracing.Trace
+//import com.android.app.tracing.traceSection
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.protolog.ProtoLog
 import com.android.window.flags2.Flags
@@ -1222,8 +1222,7 @@ class DesktopRepository(
             }
             .toTypedArray()
 
-    private fun updatePersistentRepository(displayId: Int): Unit =
-        traceSection("DesktopRepository#updatePersistentRepository") {
+    private fun updatePersistentRepository(displayId: Int): Unit {
             logD("updatePersistentRepository: displayId=%d", displayId)
             if (displayId == INVALID_DISPLAY) return
 
@@ -1237,7 +1236,7 @@ class DesktopRepository(
             }
             if (DesktopExperienceFlags.REPOSITORY_BASED_PERSISTENCE.isTrue) {
                 persistentUpdateQueue.post {
-                    Trace.beginSection("DesktopRepository#UpdateRepoWork")
+//                    Trace.beginSection("DesktopRepository#UpdateRepoWork")
                     logD("updatePersistentRepository user=%d display=%d", userId, displayId)
                     try {
                         persistentRepository.addOrUpdateRepository(
@@ -1252,7 +1251,7 @@ class DesktopRepository(
                             exception.stackTrace,
                         )
                     } finally {
-                        Trace.endSection()
+//                        Trace.endSection()
                     }
                 }
             } else {
@@ -1266,8 +1265,7 @@ class DesktopRepository(
         "Use updatePersistentRepository() instead.",
         ReplaceWith("updatePersistentRepository()"),
     )
-    private fun updatePersistentRepositoryForDesk(deskId: Int): Unit =
-        traceSection("DesktopRepository#updatePersistentRepositoryForDeskId") {
+    private fun updatePersistentRepositoryForDesk(deskId: Int): Unit {
             val desk = desktopData.getDesk(deskId)?.deepCopy() ?: return
             mainCoroutineScope.launch { updatePersistentRepositoryForDesk(desk) }
         }
@@ -1276,8 +1274,7 @@ class DesktopRepository(
         "Use updatePersistentRepository() instead.",
         ReplaceWith("updatePersistentRepository()"),
     )
-    private suspend fun updatePersistentRepositoryForDesk(desk: Desk): Unit =
-        traceSection("DesktopRepository#updatePersistentRepositoryForDesk") {
+    private suspend fun updatePersistentRepositoryForDesk(desk: Desk): Unit {
             try {
                 persistentRepository.addOrUpdateDesktop(
                     userId = userId,
@@ -1301,15 +1298,14 @@ class DesktopRepository(
         "Use updatePersistentRepository() instead.",
         ReplaceWith("updatePersistentRepository()"),
     )
-    private fun removeDeskFromPersistentRepository(desk: Desk) =
-        traceSection("DesktopRepository#removeDeskFromPersistentRepository") {
+    private fun removeDeskFromPersistentRepository(desk: Desk) {
             mainCoroutineScope.launch {
                 logD(
                     "updatePersistentRepositoryForRemovedDesk user=%d desk=%d",
                     userId,
                     desk.deskId,
                 )
-                Trace.beginSection("DesktopRepository#removeDeskWork")
+//                Trace.beginSection("DesktopRepository#removeDeskWork")
                 try {
                     persistentRepository.removeDesktop(userId = userId, desktopId = desk.deskId)
                 } catch (throwable: Throwable) {
@@ -1318,7 +1314,7 @@ class DesktopRepository(
                         throwable.stackTrace,
                     )
                 } finally {
-                    Trace.endSection()
+//                    Trace.endSection()
                 }
             }
         }

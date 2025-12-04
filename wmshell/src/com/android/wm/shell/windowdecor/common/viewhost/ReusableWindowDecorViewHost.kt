@@ -143,7 +143,7 @@ class ReusableWindowDecorViewHost(
         touchableRegion: Region?,
         onDrawTransaction: SurfaceControl.Transaction?,
     ) {
-        Trace.beginSection("ReusableWindowDecorViewHost#updateViewHost")
+//        Trace.beginSection("ReusableWindowDecorViewHost#updateViewHost")
         rootView.layoutDirection = configuration.layoutDirection
         viewHostAdapter.prepareViewHost(configuration, touchableRegion)
         onDrawTransaction?.let { viewHostAdapter.applyTransactionOnDraw(it) }
@@ -155,7 +155,7 @@ class ReusableWindowDecorViewHost(
             }
         }
         viewHostAdapter.updateView(rootView, attrs)
-        Trace.endSection()
+//        Trace.endSection()
     }
 
     private fun clearCurrentUpdateJob() {

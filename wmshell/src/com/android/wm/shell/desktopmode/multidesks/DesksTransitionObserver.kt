@@ -26,7 +26,7 @@ import android.window.DesktopExperienceFlags
 import android.window.TransitionInfo
 import android.window.TransitionInfo.FLAG_MOVED_TO_TOP
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.protolog.ProtoLog
 import com.android.wm.shell.desktopmode.DesktopModeEventLogger
 import com.android.wm.shell.desktopmode.DesktopModeEventLogger.Companion.EnterReason
@@ -77,11 +77,7 @@ class DesksTransitionObserver(
      * Called when any transition is ready, which may include transitions not tracked by this
      * observer.
      */
-    fun onTransitionReady(transition: IBinder, info: TransitionInfo) =
-        traceSection(
-            traceTag = Trace.TRACE_TAG_WINDOW_MANAGER,
-            name = "DesksTransitionObserver#onTransitionReady",
-        ) {
+    fun onTransitionReady(transition: IBinder, info: TransitionInfo) {
             if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) return
             val readyDeskTransitions = deskTransitions.remove(transition)
             readyDeskTransitions?.forEach { readyDeskTransition ->

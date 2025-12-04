@@ -36,7 +36,7 @@ import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import android.window.TaskSnapshot
 import android.window.WindowContainerTransaction
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.policy.SystemBarUtils.getDesktopViewAppHeaderHeightId
 import com.android.window.flags2.Flags
 import com.android.wm.shell.R
@@ -625,10 +625,9 @@ class AppHeaderController(
     private fun updateViewHolder(
         hasGlobalFocus: Boolean,
         animatingTaskResizeOrReposition: Boolean = false,
-    ) =
-        traceSection("AppHeaderController#updateViewHolder") {
+    ) {
             val displayId = taskInfo.displayId
-            val displayLayout = displayController.getDisplayLayout(displayId) ?: return@traceSection
+            val displayLayout = displayController.getDisplayLayout(displayId) ?: return
             viewHolder.bindData(
                 HeaderData(
                     taskInfo,

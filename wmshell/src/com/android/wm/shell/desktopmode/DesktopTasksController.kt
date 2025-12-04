@@ -87,7 +87,7 @@ import android.window.TransitionInfo.Change
 import android.window.TransitionRequestInfo
 import android.window.WindowContainerTransaction
 import androidx.annotation.BinderThread
-import com.android.app.tracing.traceSection
+//import com.android.app.tracing.traceSection
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.jank.Cuj.CUJ_DESKTOP_MODE_ENTER_APP_HANDLE_DRAG_HOLD
 import com.android.internal.jank.Cuj.CUJ_DESKTOP_MODE_ENTER_APP_HANDLE_DRAG_RELEASE
@@ -5445,11 +5445,7 @@ class DesktopTasksController(
         remoteTransition: RemoteTransition? = null,
         taskIdToReorderToFront: Int? = null,
         enterReason: EnterReason,
-    ) =
-        traceSection(
-            Trace.TRACE_TAG_WINDOW_MANAGER,
-            "DesktopTasksController#activateDesk: $deskId",
-        ) {
+    ) {
             logD(
                 "activateDesk deskId=%d userId=%d taskIdToReorderToFront=%d remoteTransition=%s",
                 deskId,

@@ -252,11 +252,7 @@ class DesktopDisplayEventHandler(
             displayId in boundsChangedByDisplayId &&
             transitionReady
 
-    override fun onDisplayAdded(displayId: Int) =
-        traceSection(
-            Trace.TRACE_TAG_WINDOW_MANAGER,
-            "DesktopDisplayEventHandler#onDisplayAdded: $displayId",
-        ) {
+    override fun onDisplayAdded(displayId: Int) {
             if (DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) {
                 rootTaskDisplayAreaOrganizer.registerListener(
                     displayId,
@@ -277,11 +273,7 @@ class DesktopDisplayEventHandler(
             }
         }
 
-    override fun onDisplayRemoved(displayId: Int): Unit =
-        traceSection(
-            Trace.TRACE_TAG_WINDOW_MANAGER,
-            "DesktopDisplayEventHandler#onDisplayRemoved: $displayId",
-        ) {
+    override fun onDisplayRemoved(displayId: Int): Unit {
             if (DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) {
                 rootTaskDisplayAreaOrganizer.unregisterListener(
                     displayId,
