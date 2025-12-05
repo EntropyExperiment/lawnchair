@@ -276,7 +276,7 @@ public class InvariantDeviceProfile {
     /**
      * Fixed landscape mode is the landscape on the phones.
      */
-    public static boolean isFixedLandscape = false;
+    public boolean isFixedLandscape = false;
 
     @GridType
     public int gridType;
@@ -314,7 +314,7 @@ public class InvariantDeviceProfile {
         mMainExecutor = mainExecutor;
 
         String gridName = prefs.get(GRID_NAME);
-        initGrid(context, gridName); // pE-TODO(QPR2): Launcher3 now init with context
+        initGrid(gridName);
         mThemeManager.generateIconShape(iconBitmapSize);
 
         dc.setPriorityListener(
@@ -355,10 +355,12 @@ public class InvariantDeviceProfile {
         return DeviceProfileOverrides.INSTANCE.get(context).getCurrentGridName();
     }
 
-    public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo) {
+    public InvariantDeviceProfile(Context context, DeviceProfileOverrides.DBGridInfo dbGridInfo,
+        LooperExecutor mMainExecutor) {
         this.mPrefs = LauncherPrefs.get(context.getApplicationContext());
         this.mThemeManager = ThemeManager.INSTANCE.get(context.getApplicationContext());
         this.mDisplayController = DisplayController.INSTANCE.get(context.getApplicationContext());
+        this.mMainExecutor = mMainExecutor;
         String gridName = DeviceProfileOverrides.INSTANCE.get(context).getGridName(dbGridInfo);
         initGrid(gridName);
     }
@@ -386,7 +388,7 @@ public class InvariantDeviceProfile {
         if (!displayOption.grid.name.equals(gridName)) {
             mPrefs.put(GRID_NAME, displayOption.grid.name);
         }
-        DeviceProfileOverrides.DBGridInfo dbGridInfo = DeviceProfileOverrides.INSTANCE.get(context)
+        DeviceProfileOverrides.DBGridInfo dbGridInfo = DeviceProfileOverrides.INSTANCE.get(displayInfo.context)
             .getGridInfo();
         initGridForDisplayOption(displayInfo, displayOption, dbGridInfo);
         FileLog.d(TAG, "After initGrid:"
@@ -575,9 +577,8 @@ public class InvariantDeviceProfile {
         mChangeListeners.remove(listener);
     }
 
-    public void onPreferencesChanged(Context context) {
-        Context appContext = context.getApplicationContext();
-        MAIN_EXECUTOR.execute(() -> onConfigChanged(appContext));
+    public void onPreferencesChanged() {
+        mMainExecutor.execute(this::onConfigChanged);
     }
 
     /**
@@ -589,7 +590,7 @@ public class InvariantDeviceProfile {
         // pE-TODO(QPR1): Move off setCurrentGrid to Prefs?
         // Lawnchair-TODO: Move off setCurrentGrid to Prefs?
         //mPrefs.put(GRID_NAME, newGridName);
-        DeviceProfileOverrides.INSTANCE.get(context).setCurrentGrid(newGridName);
+        DeviceProfileOverrides.INSTANCE.get(displayInfo.context).setCurrentGrid(newGridName);
         mMainExecutor.execute(() -> {
             onConfigChanged();
         });
@@ -847,7 +848,7 @@ public class InvariantDeviceProfile {
     /**
      * @return all the grid options that can be shown on the device
      */
-    public static List<GridOption> parseAllGridOptions(Context context) {
+    public List<GridOption> parseAllGridOptions(Context context) {
         return parseAllDefinedGridOptions(context, displayInfo)
                 .stream()
                 .filter(go -> go.isEnabled(deviceType))

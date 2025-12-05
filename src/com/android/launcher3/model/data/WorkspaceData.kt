@@ -16,18 +16,15 @@
 
 package com.android.launcher3.model.data
 
-import android.content.Context
 import android.util.SparseArray
 import androidx.core.util.putAll
 import androidx.core.util.valueIterator
-import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_DESKTOP
 import com.android.launcher3.Utilities.qsbOnFirstScreen
 import com.android.launcher3.Workspace
 import com.android.launcher3.util.IntArray
 import com.android.launcher3.util.IntSet
 import com.android.launcher3.util.ItemInfoMatcher
-import com.patrykmichalik.opto.core.firstBlocking
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
@@ -40,14 +37,10 @@ sealed class WorkspaceData : Iterable<ItemInfo> {
 
     /** Creates an array of valid workspace screens based on current items in the model. */
     // LC-Note: Add context to replace QSB_ON_FIRST_SCREEN config
-    fun collectWorkspaceScreens(context: Context): IntArray {
-        val prefs2 = PreferenceManager2.INSTANCE.get(context)
-        val smartspaceEnabled = prefs2.enableSmartspace.firstBlocking()
-
-        // pE-TODO(QPR2): Investigate qsbOnFirstScreen()
+    fun collectWorkspaceScreens(): IntArray {
         val screenSet = IntSet()
         forEach { if (it.container == CONTAINER_DESKTOP) screenSet.add(it.screenId) }
-        if (smartspaceEnabled || screenSet.isEmpty) {
+        if (qsbOnFirstScreen() || screenSet.isEmpty) {
             screenSet.add(Workspace.FIRST_SCREEN_ID)
         }
         return screenSet.array

@@ -133,8 +133,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.function.IntConsumer;
 
-import app.lawnchair.LawnchairApp;
-
 /**
  * Class to manage taskbar lifecycle
  */
@@ -313,7 +311,6 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
                 if ((flags & CHANGE_SHOW_LOCKED_TASKBAR) != 0) {
                     debugTaskbarManager("onDisplayInfoChanged: show locked taskbar changed!",
                             displayId);
-                    }
                 }
                 updateExternalDpAndRecreateTaskbar.accept(displayId);
             }
@@ -1194,16 +1191,12 @@ public class TaskbarManagerImpl implements DisplayDecorationListener {
         }
 
         removeRecreationListener(mPrimaryDisplayId);
-
-        if (LawnchairApp.isRecentsEnabled()) {
-            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
+        SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .unregister(USER_SETUP_COMPLETE_URI, mOnSettingsChangeListener);
-            SettingsCache.INSTANCE.get(mPrimaryWindowContext)
+        SettingsCache.INSTANCE.get(mPrimaryWindowContext)
                 .unregister(NAV_BAR_KIDS_MODE, mOnSettingsChangeListener);
-        }
-        // Lawnchair-TODO: DesktopExperienceFlags.ENABLE_SYS_DECORS_CALLBACKS_VIA_WM.isTrue()
-        //                && DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()
-        if (false) {
+        if (DesktopExperienceFlags.ENABLE_SYS_DECORS_CALLBACKS_VIA_WM.isTrue()
+                && DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
             mDisplaysWithDecorationsRepositoryCompat.unregisterDisplayDecorationListener(this);
         } else {
             SystemDecorationChangeObserver.getINSTANCE().get(mPrimaryWindowContext)

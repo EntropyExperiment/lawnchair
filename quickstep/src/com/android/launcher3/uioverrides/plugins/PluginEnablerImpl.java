@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
 import com.android.launcher3.LauncherPrefs;
+import com.android.systemui.shared.plugins.PluginEnabler;
 
 public class PluginEnablerImpl implements PluginEnabler {
 

@@ -33,6 +33,9 @@ import com.android.launcher3.util.PluginManagerWrapper;
 import com.android.systemui.plugins.Plugin;
 import com.android.systemui.plugins.PluginListener;
 import com.android.systemui.plugins.PluginManager;
+import com.android.systemui.shared.plugins.PluginActionManager;
+import com.android.systemui.shared.plugins.PluginInstance;
+import com.android.systemui.shared.plugins.PluginManagerImpl;
 import com.android.systemui.shared.plugins.PluginPrefs;
 import com.android.systemui.shared.plugins.VersionCheckerImpl;
 

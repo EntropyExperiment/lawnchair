@@ -24,7 +24,9 @@ class DeviceProfileOverrides @Inject constructor(
     private val prefs = PreferenceManager.getInstance(context)
     private val preferenceManager2 = PreferenceManager2.getInstance(context)
 
-    private val predefinedGrids = InvariantDeviceProfile.parseAllGridOptions(context)
+    private val idp = InvariantDeviceProfile.INSTANCE.get(context)
+
+    private val predefinedGrids = idp.parseAllGridOptions(context)
         .map { option ->
             val gridInfo = DBGridInfo(
                 numHotseatColumns = option.numHotseatIcons,

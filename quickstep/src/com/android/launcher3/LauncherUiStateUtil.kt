@@ -28,7 +28,7 @@ object LauncherUiStateUtil {
     ): DeviceProfile =
         if (refactorTaskbarUiState()) {
             val ret: DeviceProfile = launcherUiState.deviceProfileRef.value!!
-            check(!(BuildConfig.IS_STUDIO_BUILD && ret !== launcher.getDeviceProfile())) {
+            check(!(BuildConfigs.IS_STUDIO_BUILD && ret !== launcher.getDeviceProfile())) {
                 "getDeviceProfile() doesn't match"
             }
             ret
@@ -43,7 +43,7 @@ object LauncherUiStateUtil {
     ): Boolean =
         if (refactorTaskbarUiState()) {
             val ret: Boolean = launcherUiState.isSplitSelectActiveRef.value
-            if (BuildConfig.IS_STUDIO_BUILD && ret != launcher.isSplitSelectActive()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != launcher.isSplitSelectActive()) {
                 throw IllegalStateException("isSplitSelectionActive() doesn't match")
             }
             ret
@@ -58,7 +58,7 @@ object LauncherUiStateUtil {
     ): LauncherState =
         if (refactorTaskbarUiState()) {
             val ret: LauncherState = launcherUiState.launcherStateRef.value
-            if (BuildConfig.IS_STUDIO_BUILD && ret !== launcher.getState()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret !== launcher.getState()) {
                 throw IllegalStateException("launcher state doesn't match")
             }
             ret
@@ -73,7 +73,7 @@ object LauncherUiStateUtil {
     ): Float =
         if (refactorTaskbarUiState()) {
             val ret: Float = launcherUiState.taskbarAlignmentChannelAlpha.value
-            if (BuildConfig.IS_STUDIO_BUILD && ret != launcher.getTaskbarAlignmentChannelAlpha()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != launcher.getTaskbarAlignmentChannelAlpha()) {
                 throw IllegalStateException("taskbarAlignmentChannelAlpha doesn't match")
             }
             ret

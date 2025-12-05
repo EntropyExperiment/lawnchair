@@ -16,20 +16,23 @@
 
 package com.android.quickstep.recents.data
 
+import android.os.Build
 import android.view.InputDevice.SOURCE_MOUSE
 import android.view.InputDevice.SOURCE_TOUCHPAD
-import com.android.app.tracing.traceSection
+import androidx.annotation.RequiresApi
+//import com.android.app.tracing.traceSection
 
 interface PointerRepository {
     fun isAnyPointerDeviceConnected(): Boolean
 }
 
 class PointerRepositoryImpl(private val inputManager: InputDeviceDataSource) : PointerRepository {
-    override fun isAnyPointerDeviceConnected(): Boolean =
-        traceSection("PointerRepositoryImpl.isAnyPointerDeviceConnected") {
+    @RequiresApi(Build.VERSION_CODES.O_MR1)
+    override fun isAnyPointerDeviceConnected(): Boolean {
             return inputManager.inputDeviceIds.any { isPointerDeviceEnabled(it) }
         }
 
+    @RequiresApi(Build.VERSION_CODES.O_MR1)
     private fun isPointerDeviceEnabled(deviceId: Int): Boolean {
         val device = inputManager.getInputDevice(deviceId) ?: return false
 
