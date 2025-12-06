@@ -361,7 +361,10 @@ android {
 
         withQuickstep {
             res.srcDirs = ['quickstep/res', 'quickstep/recents_ui_overrides/res']
-            java.srcDirs = ['quickstep/src', 'quickstep/dagger', 'quickstep/recents_ui_overrides/src', 'quickstep/src_protolog', 'quickstep/compose']
+            java.srcDirs = ['quickstep/src', 'quickstep/dagger',
+                            'quickstep/recents_ui_overrides/src', 'quickstep/src_protolog',
+                            'quickstep/compose/facade/core', 'quickstep/compose/facade/enabled',
+                            'quickstep/compose/features'] // pE-TODO(QPR2): Fix compose/facade/disabled
             manifest.srcFile "quickstep/AndroidManifest.xml"
         }
     }
@@ -396,6 +399,7 @@ dependencies {
     withQuickstepImplementation projects.plugincore
     withQuickstepCompileOnly projects.common
     withQuickstepCompileOnly projects.utils
+    withQuickstepCompileOnly projects.pods.internal
 
     // QuickSwitch Compat
     withQuickstepImplementation projects.compatLib
