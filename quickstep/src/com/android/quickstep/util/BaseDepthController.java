@@ -246,36 +246,28 @@ public class BaseDepthController {
         Log.v(TAG, "Applying blur: " + mCurrentBlur + " to " + blurSurface + " applyImmediately: "
                 + applyImmediately);
 
-        final SurfaceControl.Transaction finalTransaction =
-                transaction == null ? createTransaction() : transaction;
-        
-        // LC: Fix blur effect on Android 12.1/12.0
-        try (finalTransaction) {
-            if (blurSurface != null && blurSurface.isValid()) {
-                finalTransaction.setBackgroundBlurRadius(blurSurface, mCurrentBlur)
-                        .setOpaque(blurSurface, isSurfaceOpaque);
-            } else {
-                // GRASP
-                return;
-            }
-
-        boolean wantsEarlyWakeUp = blurAmount > 0 && blurAmount < 1;
-        if (wantsEarlyWakeUp && !mInEarlyWakeUp) {
-                try {
-                    setEarlyWakeup(finalTransaction, true);
-                } catch (NoSuchMethodError e) {
-                    // LC-Ignored: wtf?
-                }
-        } else if (!wantsEarlyWakeUp && mInEarlyWakeUp) {
-                try {
-                    setEarlyWakeup(finalTransaction, false);
-                } catch (NoSuchMethodError e) {
-                    // LC-Ignored: wtf?
-                }
+        if (surfaceTransaction == null) {
+            surfaceTransaction = new SurfaceTransaction();
         }
 
-            // LC: Always apply immediately.
-            finalTransaction.apply();
+        surfaceTransaction.forSurface(blurSurface)
+                .setBackgroundBlurRadius(mCurrentBlur)
+                .setOpaque(isSurfaceOpaque);
+        // Set early wake-up flags when we know we're executing an expensive operation, this way
+        // SurfaceFlinger will adjust its internal offsets to avoid jank.
+        boolean wantsEarlyWakeUp = blurAmount > 0 && blurAmount < 1;
+        if (wantsEarlyWakeUp && !mInEarlyWakeUp) {
+            setEarlyWakeup(surfaceTransaction.getTransaction(), true);
+        } else if (!wantsEarlyWakeUp && mInEarlyWakeUp) {
+            setEarlyWakeup(surfaceTransaction.getTransaction(), false);
+        }
+
+        if (applyImmediately || mSurfaceTransactionApplier == null) {
+            Log.d(TAG, "Applying blur immediately, mSurfaceTransactionApplier is null? "
+                    + (mSurfaceTransactionApplier == null));
+            surfaceTransaction.getTransaction().apply();
+        } else {
+            mSurfaceTransactionApplier.scheduleApply(surfaceTransaction);
         }
 
         blurWorkspaceDepthTargets();

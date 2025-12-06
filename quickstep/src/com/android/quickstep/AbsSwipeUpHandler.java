@@ -115,6 +115,7 @@ import com.android.internal.jank.Cuj;
 import com.android.internal.util.LatencyTracker;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.LifecycleTracker;
@@ -455,7 +456,7 @@ public abstract class AbsSwipeUpHandler<
     private boolean isTaskbarStashed(Context context) {
         if (refactorTaskbarUiState()) {
             final boolean ret = newIsTaskbarStashed(context);
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyIsTaskbarStashed()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyIsTaskbarStashed()) {
                 throw new IllegalStateException("isTaskbarStashed() doesn't match");
             }
             return ret;
@@ -479,7 +480,7 @@ public abstract class AbsSwipeUpHandler<
     private boolean isTaskbarAllAppsOpen(Context context) {
         if (refactorTaskbarUiState()) {
             final boolean ret = newIsTaskbarAllAppsOpen(context);
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyIsTaskbarAllAppsOpen()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyIsTaskbarAllAppsOpen()) {
                 throw new IllegalStateException("isTaskbarAllAppsOpen() doesn't match");
             }
             return ret;
@@ -3167,7 +3168,7 @@ public abstract class AbsSwipeUpHandler<
     private boolean shouldAllowTaskbarToAutoStash() {
         if (refactorTaskbarUiState()) {
             final boolean ret = newShouldAllowTaskbarToAutoStash();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyShouldAllowTaskbarToAutoStash()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyShouldAllowTaskbarToAutoStash()) {
                 throw new IllegalStateException("shouldAllowTaskbarToAutoStash() doesn't match");
             }
             return ret;

@@ -50,7 +50,6 @@ import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.testing.TestLogging;
 import com.android.launcher3.testing.shared.TestProtocol;
 import com.android.launcher3.util.ActivityOptionsWrapper;
-import com.android.launcher3.util.ResourceBasedOverride;
 import com.android.launcher3.util.SafeCloseable;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.widget.ListenableAppWidgetHost.ProviderChangedListener;
@@ -67,6 +66,8 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 
 import app.lawnchair.LawnchairAppWidgetHostView;
+
+// pE-TODO(QPR2): ActivityOptionsWrapper, LawnchairAppWidgetHostView
 
 /**
  * A wrapper for LauncherAppWidgetHost. This class is created so the AppWidgetHost could run in

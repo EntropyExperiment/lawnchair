@@ -17,6 +17,7 @@ package com.android.launcher3.preview
 
 import android.content.Context
 import android.text.TextUtils
+import app.lawnchair.AccentColorExtractor
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.Item
 import com.android.launcher3.LauncherModel
@@ -200,7 +201,7 @@ constructor(
     interface PreviewAppComponent : LauncherAppComponent {
         val model: LauncherModel
         val modelInitializer: ModelInitializer
-        val localColorExtractor: LocalColorExtractor
+        val localColorExtractor: AccentColorExtractor
 
         /** Builder for NexusLauncherAppComponent. */
         @Component.Builder

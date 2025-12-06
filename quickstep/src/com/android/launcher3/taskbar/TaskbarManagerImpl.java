@@ -91,7 +91,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherInteractor;
 import com.android.launcher3.LauncherPrefChangeListener;
 import com.android.launcher3.LauncherPrefs;
-import com.android.launcher3.R;
+import com.android.wm.shell.shared.R;
 import com.android.launcher3.anim.AnimatorListeners;
 import com.android.launcher3.anim.AnimatorPlaybackController;
 import com.android.launcher3.statehandlers.DesktopVisibilityController;

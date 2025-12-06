@@ -75,6 +75,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.ResourcesCompat;
 
+import androidx.core.graphics.ColorUtils;
 import androidx.core.view.WindowInsetsCompat;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.Alarm;

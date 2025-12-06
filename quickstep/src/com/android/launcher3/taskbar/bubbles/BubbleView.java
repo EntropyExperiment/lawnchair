@@ -257,7 +257,7 @@ public class BubbleView extends ConstraintLayout {
         ColorOption counterColorOption = PreferenceExtensionsKt
                 .firstBlocking(preferenceManager2.getNotificationDotTextColor());
         int countColor = counterColorOption.getColorPreferenceEntry().getLightColor().invoke(getContext());
-        mDotRenderer = new DotRenderer(mBubbleSize, bubble.getDotPath(), DEFAULT_PATH_SIZE, false, null, dotColor,
+        mDotRenderer = new DotRenderer(mBubbleSize, false, null, dotColor,
                 countColor);
         String contentDesc = bubble.getInfo().getTitle();
         if (TextUtils.isEmpty(contentDesc)) {

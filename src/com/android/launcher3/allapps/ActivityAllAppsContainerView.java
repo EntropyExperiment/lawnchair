@@ -1003,11 +1003,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         return true;
     }
 
-    /** Creates the adapter provider for the main section. */
-    protected SearchAdapterProvider<?> createMainAdapterProvider() {
-        return new DefaultSearchAdapterProvider(mActivityContext);
-    }
-
     /**
      * Inflates the search bar
      */

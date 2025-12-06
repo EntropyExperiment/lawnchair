@@ -101,7 +101,7 @@ public class RecentsAnimationCallbacks implements
             RemoteAnimationTarget[] appTargets, Rect homeContentInsets,
             Rect minimizedHomeBounds, Bundle extras) {
         onAnimationStart(controller, appTargets, new RemoteAnimationTarget[0],
-                homeContentInsets, minimizedHomeBounds, extras, /* transitionInfo= */ null);
+                homeContentInsets, extras, /* transitionInfo= */ null);
     }
 
     // Introduced in NothingOS 2.5.5, needed in 2.6
@@ -113,7 +113,7 @@ public class RecentsAnimationCallbacks implements
         if (transaction != null) {
             transaction.apply();
         }
-//        onAnimationStart(controller, apps, wallpapers, homeContentInsets, minimizedHomeBounds);
+        onAnimationStart(controller, apps, wallpapers, homeContentInsets, null /* extras */, transitionInfo);
     }
 
     // Called only in R+ platform

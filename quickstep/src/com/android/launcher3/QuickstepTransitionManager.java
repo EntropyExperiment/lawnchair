@@ -864,7 +864,7 @@ public class QuickstepTransitionManager implements OnDeviceProfileChangeListener
             private boolean shouldShowEduOnAppLaunch() {
                 if (refactorTaskbarUiState()) {
                     final boolean ret = newShouldShowEduOnAppLaunch();
-                    if (BuildConfig.IS_STUDIO_BUILD && ret != legacyShouldShowEduOnAppLaunch()) {
+                    if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyShouldShowEduOnAppLaunch()) {
                         throw new IllegalStateException("shouldShowEduOnAppLaunch() doesn't match");
                     }
                     return ret;

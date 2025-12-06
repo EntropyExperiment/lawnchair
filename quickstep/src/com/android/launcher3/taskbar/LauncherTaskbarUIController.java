@@ -42,6 +42,7 @@ import androidx.annotation.Nullable;
 
 import com.android.app.animation.Interpolators;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
 import com.android.launcher3.LauncherInteractor;
@@ -573,7 +574,7 @@ public class LauncherTaskbarUIController extends TaskbarUIController {
     private boolean isLauncherResumed() {
         if (refactorTaskbarUiState()) {
             final boolean ret = mLauncherUiState.isResumed();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != mLauncher.isResumed()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != mLauncher.isResumed()) {
                 throw new IllegalStateException("hasBeenResumed doesn't match");
             }
             return ret;
@@ -585,7 +586,7 @@ public class LauncherTaskbarUIController extends TaskbarUIController {
     private boolean isLauncherTopResumedActivity() {
         if (refactorTaskbarUiState()) {
             final boolean ret = mLauncherUiState.isTopResumedActivityRef().getValue();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != mLauncher.isTopResumedActivity()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != mLauncher.isTopResumedActivity()) {
                 throw new IllegalStateException("isTopResumedActivity doesn't match");
             }
             return ret;

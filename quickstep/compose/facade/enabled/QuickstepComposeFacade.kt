@@ -21,7 +21,8 @@ import android.view.View
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
-import com.android.compose.theme.PlatformTheme
+import app.lawnchair.ui.theme.LawnchairTheme
+//import com.android.compose.theme.PlatformTheme
 import com.android.launcher3.compose.ComposeFacade
 import com.android.launcher3.compose.core.BaseComposeFacade
 import com.android.quickstep.compose.core.QuickstepComposeFeatures
@@ -57,7 +58,7 @@ object QuickstepComposeFacade : BaseComposeFacade, QuickstepComposeFeatures {
         return (view as ComposeView).apply {
             setContent {
                 val timerUiState by viewModel.uiState
-                PlatformTheme { AppTimerToast(timerUiState, viewModel) }
+                LawnchairTheme { AppTimerToast(timerUiState, viewModel) }
             }
         }
     }

@@ -50,6 +50,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
@@ -267,7 +268,7 @@ public abstract class BaseContainerInterface<STATE_TYPE extends BaseState<STATE_
     public boolean shouldCancelCurrentGesture(int displayId) {
         if (refactorTaskbarUiState()) {
             final boolean ret = newIsDraggingItem(displayId);
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyIsDraggingItem()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyIsDraggingItem()) {
                 throw new IllegalStateException("isDraggingItem() doesn't match");
             }
             return ret;
@@ -561,7 +562,7 @@ public abstract class BaseContainerInterface<STATE_TYPE extends BaseState<STATE_
         if (refactorTaskbarUiState()) {
             final boolean ret = taskbarUiState != null
                     && taskbarUiState.isEventOverBubbleBarViews(ev);
-            if (BuildConfig.IS_STUDIO_BUILD && ret
+            if (BuildConfigs.IS_STUDIO_BUILD && ret
                     != (interactor != null && interactor.isEventOverBubbleBarViews(ev))) {
                 throw new IllegalStateException("isEventOverBubbleBarView doesn't match");
             }
@@ -576,7 +577,7 @@ public abstract class BaseContainerInterface<STATE_TYPE extends BaseState<STATE_
         if (refactorTaskbarUiState()) {
             final boolean ret = taskbarUiState != null
                     && taskbarUiState.isEventOverAnyTaskbarItem(ev);
-            if (BuildConfig.IS_STUDIO_BUILD && ret
+            if (BuildConfigs.IS_STUDIO_BUILD && ret
                     != (interactor != null && interactor.isEventOverAnyTaskbarItem(ev))) {
                 throw new IllegalStateException("isEventOverAnyTaskbarView doesn't match");
             }

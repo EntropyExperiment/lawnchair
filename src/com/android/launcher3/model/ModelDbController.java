@@ -115,6 +115,8 @@ public class ModelDbController {
     // Lawnchair: ModelDbController
     public ModelDbController(Context context) {
         mContext = context;
+        // pE-TODO(QPR2): Properly init mMigrationLogicFactory
+        this.mMigrationLogicFactory = null;
     }
 
     private synchronized void createDbIfNotExists() {

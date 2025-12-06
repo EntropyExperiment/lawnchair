@@ -20,7 +20,6 @@ package com.android.launcher3;
 
 import static android.graphics.fonts.FontStyle.FONT_WEIGHT_BOLD;
 import static android.graphics.fonts.FontStyle.FONT_WEIGHT_NORMAL;
-import static com.android.launcher3.graphics.PreloadIconDrawable.newPendingIcon;
 import static android.text.Layout.Alignment.ALIGN_NORMAL;
 
 import static com.android.launcher3.BubbleTextView.RunningAppState.MINIMIZED;

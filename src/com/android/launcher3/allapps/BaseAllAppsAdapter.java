@@ -25,6 +25,7 @@ import static com.android.launcher3.allapps.SectionDecorationInfo.ROUND_TOP_RIGH
 import static com.android.launcher3.allapps.UserProfileManager.STATE_DISABLED;
 import static com.android.launcher3.allapps.UserProfileManager.STATE_ENABLED;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -262,7 +263,7 @@ public abstract class BaseAllAppsAdapter
                 return new ViewHolder(new View(mActivityContext.asContext()));
             case VIEW_TYPE_FOLDER:
                 // LC-Feature: Folder support in All Apps
-                FrameLayout fl = new FrameLayout(mActivityContext);
+                FrameLayout fl = new FrameLayout(mActivityContext.asContext());
                 ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -362,7 +363,9 @@ public abstract class BaseAllAppsAdapter
                 ViewGroup container = (ViewGroup) holder.itemView;
                 container.removeAllViews();
                 container.addView(
-                    FolderIcon.inflateFolderAndIcon(R.layout.all_apps_folder_icon, mActivityContext,
+                    FolderIcon.inflateFolderAndIcon(
+                        R.layout.all_apps_folder_icon, 
+                        ActivityContext.lookupContext(mActivityContext.asContext()),
                     container, folderInfo));
                 break;
             default:

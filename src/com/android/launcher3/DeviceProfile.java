@@ -271,11 +271,6 @@ public class DeviceProfile {
             @NonNull final ViewScaleProvider viewScaleProvider,
             @NonNull final Consumer<DeviceProfile> dimensionOverrideProvider,
             DisplayOptionSpec displayOptionSpec) {
-        mTextFactors = DeviceProfileOverrides.INSTANCE.get(context).getTextFactors();
-
-        preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
-        allAppsCellHeightMultiplier = PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getDrawerCellHeightFactor());
         this.inv = inv;
 
         mDeviceProperties = DeviceProperties.Factory.createDeviceProperties(
@@ -314,6 +309,12 @@ public class DeviceProfile {
                 windowBounds);
         final Resources res = context.getResources();
 
+        mTextFactors = DeviceProfileOverrides.INSTANCE.get(context).getTextFactors();
+
+        preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
+        allAppsCellHeightMultiplier = PreferenceExtensionsKt
+            .firstBlocking(preferenceManager2.getDrawerCellHeightFactor());
+
         overviewProfile = OverviewProfile.Factory.createOverviewProfile(res);
 
         mMetrics = res.getDisplayMetrics();
@@ -334,12 +335,14 @@ public class DeviceProfile {
 
         setupAllAppsStyle(context);
 
-        workspacePageIndicatorHeight = res.getDimensionPixelSize(
-                R.dimen.workspace_page_indicator_height);
-        float pageIndicatorHeightFactor = PreferenceExtensionsKt
-            .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
-        
-        workspacePageIndicatorHeight *= (int) pageIndicatorHeightFactor;
+        // pE-TODO(QPR2): See WorkspaceProfile
+//        workspacePageIndicatorHeight = res.getDimensionPixelSize(
+//                R.dimen.workspace_page_indicator_height);
+//        float pageIndicatorHeightFactor = PreferenceExtensionsKt
+//            .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
+//        
+//        workspacePageIndicatorHeight *= (int) pageIndicatorHeightFactor;
+
 //        mWorkspacePageIndicatorOverlapWorkspace = res
 //                .getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
         
@@ -399,7 +402,7 @@ public class DeviceProfile {
                 // TODO(431261051) HotseatProfile is calculated before the WorkspaceProfile hence
                 //  this variable needs to be manually set here. A better way to handle this is
                 //  necessary.
-                res.getDimensionPixelSize(R.dimen.workspace_page_indicator_height)
+                res.getDimensionPixelSize(R.dimen.workspace_page_indicator_height),
                 hotseatMode
         );
 
@@ -741,7 +744,7 @@ public class DeviceProfile {
 
     /** Updates hotseatCellHeightPx and hotseatBarSizePx */
     private void updateHotseatSizes(int hotseatIconSizePx) {
-        int iconTextHeight = Utilities.calculateTextHeight(iconTextSizePx);
+        int iconTextHeight = Utilities.calculateTextHeight(mWorkspaceProfile.getIconTextSizePx());
         boolean isLabelInDock = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableLabelInDock());
         // Ensure there is enough space for folder icons, which have a slightly larger radius.
         hotseatCellHeightPx = getIconSizeWithOverlap(hotseatIconSizePx * 2) - hotseatIconSizePx / 2;

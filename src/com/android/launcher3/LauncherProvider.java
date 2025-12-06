@@ -118,12 +118,7 @@ public class LauncherProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        MainProcessInitializer.initialize(getContext().getApplicationContext());
         return true;
-    }
-
-    public ModelDbController getModelDbController() {
-        return LauncherAppState.getInstance(getContext()).getModel().getModelDbController();
     }
 
     @Override

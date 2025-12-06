@@ -121,6 +121,7 @@ import androidx.annotation.RequiresApi;
 import com.android.app.viewcapture.ViewCaptureFactory;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
 import com.android.launcher3.GestureNavContract;
@@ -584,7 +585,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     private boolean canPinAppWithContextMenu() {
         if (refactorTaskbarUiState()) {
             final boolean ret = newCanPinAppWithContextMenu();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyCanPinAppWithContextMenu()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyCanPinAppWithContextMenu()) {
                 throw new IllegalStateException("canPinAppWithContextMenu() doesn't match");
             }
             return ret;
@@ -1598,7 +1599,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
     public boolean hasBubbles() {
         if (refactorTaskbarUiState()) {
             final boolean ret = newHasBubbles();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyHasBubbles()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyHasBubbles()) {
                 throw new IllegalStateException("hasBubbles() doesn't match");
             }
             return ret;

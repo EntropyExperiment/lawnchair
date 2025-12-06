@@ -119,8 +119,8 @@ public class OverviewState extends LauncherState {
 
     @Override
     public int getVisibleElements(LauncherUiState launcherUiState) {
-        // pE-TODO(QPR2): Bring back context to prefs
-        if (PreferenceManager.getInstance(launcher).getRecentsActionClearAll().get()) {
+        // pE-TODO(QPR2): Better way to get context?
+        if (PreferenceManager.getInstance(launcherUiState.getDeviceProfileRef().getValue().getDisplayInfo().context).getRecentsActionClearAll().get()) {
             return OVERVIEW_ACTIONS;
         }
         int elements = CLEAR_ALL_BUTTON | OVERVIEW_ACTIONS | ADD_DESK_BUTTON;

@@ -48,6 +48,7 @@ import androidx.annotation.Nullable;
 
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.BuildConfig;
+import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Hotseat.HotseatQsbAlphaId;
 import com.android.launcher3.LauncherInteractor;
@@ -286,7 +287,7 @@ public class TaskbarLauncherStateController {
     private boolean hasLauncherBeenResumed() {
         if (refactorTaskbarUiState()) {
             final boolean ret = mLauncherUiState.isResumed();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != mLauncher.hasBeenResumed()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != mLauncher.hasBeenResumed()) {
                 throw new IllegalStateException("hasBeenResumed doesn't match");
             }
             return ret;
@@ -1237,7 +1238,7 @@ public class TaskbarLauncherStateController {
     private boolean isOverlayShown() {
         if (refactorTaskbarUiState()) {
             final boolean ret = mLauncherUiState.isOverlayShownRef().getValue();
-            if (BuildConfig.IS_STUDIO_BUILD && ret != legacyIsOverlayShown()) {
+            if (BuildConfigs.IS_STUDIO_BUILD && ret != legacyIsOverlayShown()) {
                 throw new IllegalStateException("isOverlayShown doesn't match");
             }
             return ret;
