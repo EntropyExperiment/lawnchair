@@ -7,6 +7,8 @@ private const val TAG = "Compatibility"
 
 val isOnePlusStock = checkOnePlusStock()
 
+val isGestureNavContractCompatible = checkGestureNavContract()
+
 private fun checkOnePlusStock(): Boolean = when {
     getSystemProperty("ro.rom.version", "")
         .contains(Regex("Oxygen OS|Hydrogen OS|O2_BETA|H2_BETA")) -> true
@@ -15,6 +17,18 @@ private fun checkOnePlusStock(): Boolean = when {
 
     getSystemProperty("ro.hydrogen.version", "").isNotEmpty() -> true
 
+    else -> false
+}
+
+private fun checkGoogle(): Boolean = when {
+    Build.BRAND.contains("google", true) -> true
+    Build.MANUFACTURER.contains("google", true) -> true
+    Build.FINGERPRINT.contains("google", true) -> true
+    else -> false
+}
+
+private fun checkGestureNavContract(): Boolean = when {
+    checkGoogle() -> true
     else -> false
 }
 

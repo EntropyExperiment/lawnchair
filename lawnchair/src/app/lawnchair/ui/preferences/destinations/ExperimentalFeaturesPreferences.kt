@@ -24,6 +24,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
 import com.android.launcher3.R
+import com.android.launcher3.Utilities.ATLEAST_S
 
 @Composable
 fun ExperimentalFeaturesPreferences(
@@ -37,6 +38,12 @@ fun ExperimentalFeaturesPreferences(
         modifier = modifier,
     ) {
         PreferenceGroup {
+            SwitchPreference(
+                adapter = enableGncAdapter,
+                label = stringResource(id = R.string.gesturenavcontract_label),
+                description = stringResource(id = R.string.gesturenavcontract_description),
+                enabled = ATLEAST_S,
+            )
             SwitchPreference(
                 adapter = prefs2.enableFontSelection.getAdapter(),
                 label = stringResource(id = R.string.font_picker_label),
