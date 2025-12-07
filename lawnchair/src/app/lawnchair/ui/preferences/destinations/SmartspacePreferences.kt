@@ -60,6 +60,7 @@ fun SmartspacePreferences(
         modifier = modifier,
     ) {
         if (fromWidget) {
+            SmartspacePreview()
             LawnchairSmartspaceSettings(smartspaceProvider)
         } else {
             MainSwitchPreference(
@@ -67,6 +68,9 @@ fun SmartspacePreferences(
                 label = stringResource(R.string.smartspace_widget_toggle_label),
                 description = stringResource(id = R.string.smartspace_widget_toggle_description).takeIf { modeIsLawnchair },
             ) {
+                if (modeIsLawnchair) {
+                    SmartspacePreview()
+                }
                 PreferenceGroup {
                     SmartspaceProviderPreference(
                         adapter = smartspaceModeAdapter,
@@ -75,7 +79,7 @@ fun SmartspacePreferences(
 
                 Crossfade(
                     targetState = selectedMode,
-                    label = "Smartspace setting transision",
+                    label = "Smartspace setting transition",
                 ) { targetState ->
                     when (targetState) {
                         LawnchairSmartspace -> {
@@ -102,7 +106,6 @@ private fun LawnchairSmartspaceSettings(
     Column(
         modifier = modifier,
     ) {
-        SmartspacePreview()
         PreferenceGroup(
             heading = stringResource(id = R.string.what_to_show),
             modifier = Modifier.padding(top = 8.dp),
