@@ -451,6 +451,9 @@ public class StatsLogManager implements ResourceBasedOverride {
         @UiEvent(doc = "Current grid size is changed to 4x6")
         LAUNCHER_GRID_SIZE_4_BY_6(2185),
 
+        @UiEvent(doc = "Current grid size is changed to 4x7")
+        LAUNCHER_GRID_SIZE_4_BY_7(2189),
+
         @UiEvent(doc = "Current grid size is changed to 5x5")
         LAUNCHER_GRID_SIZE_5_BY_5(2186),
 

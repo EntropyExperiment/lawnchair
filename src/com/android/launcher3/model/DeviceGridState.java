@@ -168,6 +168,8 @@ public class DeviceGridState implements Comparable<DeviceGridState> {
                     return LauncherEvent.LAUNCHER_GRID_SIZE_4_BY_5;
                 case "4,6":
                     return LauncherEvent.LAUNCHER_GRID_SIZE_4_BY_6;
+                case "4,7":
+                    return LauncherEvent.LAUNCHER_GRID_SIZE_4_BY_7;
                 case "5,5":
                     return LauncherEvent.LAUNCHER_GRID_SIZE_5_BY_5;
                 case "5,6":
