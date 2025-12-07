@@ -23,12 +23,8 @@ enum class BuildVariant {
     User;
 
     companion object {
-        val CURRENT =
-            when {
-                Build.IS_ENG -> Eng
-                Build.IS_USERDEBUG -> UserDebug
-                else -> User
-            }
+        // LC: Ignore other variants
+        val CURRENT = User
     }
 }
 
