@@ -504,6 +504,8 @@
     <string name="contributor_status_active">Active</string>
 
     <string name="update_check_failed">Failed to check for updates</string>
+    <string name="major_update_label">Breaking change!</string>
+    <string name="major_update_description">You are about to update from Lawnchair <xliff:g example="15" id="current_major_version">%1$s</xliff:g> to Lawnchair <xliff:g example="16" id="next_major_version">%2$s</xliff:g>, please consider carefully as newer major version may be unstable than current version.</string>
 
     <!--
 
@@ -609,10 +611,10 @@
     <string name="wallpaper_depth_effect_label">Wallpaper depth effect</string>
     <string name="wallpaper_depth_effect_description">Zoom in and out of the wallpaper when transitioning between areas of the launcher</string>
     <string name="show_sys_ui_scrim">Top shadow</string>
-    
+
     <string name="infinite_scrolling_label">Infinite scrolling</string>
     <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
-    
+
     <string name="home_screen_grid">Home screen grid</string>
     <string name="home_screen_lock">Lock home screen</string>
     <string name="home_screen_unlock">Unlock home screen</string>

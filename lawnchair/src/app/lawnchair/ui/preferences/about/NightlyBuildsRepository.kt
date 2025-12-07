@@ -112,7 +112,11 @@ class NightlyBuildsRepository(
         }
     }
 
-    fun installUpdate(file: File) {
+    fun installUpdate(file: File, forceInstall: Boolean = false) {
+        if (!forceInstall && applicationContext.isApkMajorVersionNewer(file)) {
+            _updateState.update { UpdateState.MajorUpdate(file) }
+            return
+        }
         if (!applicationContext.hasInstallPermission()) {
             // todo expose proper permission UI instead of requesting immediately on click
             applicationContext.requestInstallPermission()
@@ -128,6 +132,10 @@ class NightlyBuildsRepository(
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         applicationContext.startActivity(intent)
+    }
+
+    fun resetToDownloaded(file: File) {
+        _updateState.update { UpdateState.Downloaded(file) }
     }
 
     private suspend fun getCommitsSinceCurrentVersion(): List<GitHubCommit>? {
@@ -206,6 +214,79 @@ private fun Context.requestInstallPermission() {
         }
         startActivity(intent)
     }
+}
+
+/**
+ * Parses a version code into [Major, Minor, Stage, Release, Patch].
+ * Handles both 8-digit (AA_BB_CC_DD) and 10-digit (AA_BB_CC_DD_EE) formats.
+ *
+ * Lawnchair format has: [Major, Minor, Stage, Release]
+ *
+ * pE format has: [Major, Minor, Stage, Release, Patch]
+ */
+fun versionParser(version: Long): List<Int> {
+    var ver = version
+
+    // If version is less than 1 Billion (1,000,000,000), it is likely the 8-digit format
+    // (AA_BB_CC_DD). Multiply by 100 to shift it to 10-digit format equivalent
+    // (AA_BB_CC_DD_00), so the math below works for both.
+    if (ver < 1_000_000_000L) {
+        ver *= 100
+    }
+
+    val patch = (ver % 100).toInt()          // EE
+    val release = ((ver / 100) % 100).toInt() // DD
+    val stage = ((ver / 10000) % 100).toInt() // CC
+    val minor = ((ver / 1000000) % 100).toInt() // BB
+    val major = ((ver / 100000000)).toInt()   // AA
+
+    return listOf(major, minor, stage, release, patch)
+}
+
+/**
+ * Get both current and APK version for the purpose of comparing them.
+ * Returns a [Pair] of (current build version, apk build version) or null if parsing fails.
+ */
+fun Context.getApkVersionComparison(apkFile: File): Pair<List<Int>, List<Int>>? {
+    val pm = packageManager
+
+    val info = pm.getPackageArchiveInfo(apkFile.absolutePath, 0)
+        ?: return null
+
+    val apkVersionCode = if (Utilities.ATLEAST_P) {
+        info.longVersionCode
+    } else {
+        @Suppress("DEPRECATION")
+        info.versionCode.toLong()
+    }
+
+    val currentVersionCode = if (Utilities.ATLEAST_P) {
+        pm.getPackageInfo(packageName, 0).longVersionCode
+    } else {
+        BuildConfig.VERSION_CODE.toLong()
+    }
+
+    val apkParsed = versionParser(apkVersionCode)
+    val currentParsed = versionParser(currentVersionCode)
+
+    Log.d("UpdateCheck", "Current: $currentParsed, APK: $apkParsed")
+
+    return Pair(currentParsed, apkParsed)
+}
+
+/**
+ * Checks if the downloaded APK file has a higher Major (AA) version than the currently
+ * installed build.
+ */
+private fun Context.isApkMajorVersionNewer(apkFile: File): Boolean {
+    val (currentParsed, apkParsed) = getApkVersionComparison(apkFile) ?: return false
+
+    val apkMajor = apkParsed[0]
+    val currentMajor = currentParsed[0]
+
+    Log.d("UpdateCheck", "Current Major: $currentMajor, APK Major: $apkMajor")
+
+    return apkMajor > currentMajor
 }
 
 private const val MAX_FALLBACK_COMMITS = 30
