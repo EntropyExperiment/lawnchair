@@ -8,7 +8,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.android.launcher3.R
 
-
 // Thanks https://gitlab.com/nongthaihoang/google-sans-prime/-/commit/0f7b9d29f6ffe5005d22d81af264a86106f2450d
 object GoogleSansFlex {
     object Display {
@@ -29,6 +28,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -45,6 +45,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -81,6 +82,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -97,6 +99,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -133,6 +136,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -149,6 +153,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -185,6 +190,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/
@@ -201,6 +207,7 @@ object GoogleSansFlex {
                     ),
                 ),
             )
+
             /**
              * Google Sans Flex Medium (500), Emphasized
              **/

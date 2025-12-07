@@ -21,6 +21,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.sp
 
 private val base = Typography()
+
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 val Typography = Typography(
     displayLarge = base.displayLarge.copy(fontFamily = GoogleSansFlex.Display.Emphasized.Large),

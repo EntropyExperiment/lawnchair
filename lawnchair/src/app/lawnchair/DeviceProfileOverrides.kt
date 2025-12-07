@@ -27,15 +27,16 @@ class DeviceProfileOverrides @Inject constructor(
     // pE-TODO(QPR2): I don't think you're both supposed to be lazily loaded.
     private val idp by lazy { InvariantDeviceProfile.INSTANCE.get(context) }
 
-    private val predefinedGrids by lazy { idp.parseAllGridOptions(context)
-        .map { option ->
-            val gridInfo = DBGridInfo(
-                numHotseatColumns = option.numHotseatIcons,
-                numRows = option.numRows,
-                numColumns = option.numColumns,
-            )
-            gridInfo to option.name
-        }
+    private val predefinedGrids by lazy {
+        idp.parseAllGridOptions(context)
+            .map { option ->
+                val gridInfo = DBGridInfo(
+                    numHotseatColumns = option.numHotseatIcons,
+                    numRows = option.numRows,
+                    numColumns = option.numColumns,
+                )
+                gridInfo to option.name
+            }
     }
 
     fun getGridInfo() = DBGridInfo(prefs)

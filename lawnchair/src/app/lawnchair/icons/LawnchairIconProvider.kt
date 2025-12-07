@@ -199,7 +199,6 @@ class LawnchairIconProvider @JvmOverloads constructor(
         mSystemState += "," + mThemeManager?.iconState?.toUniqueId()
     }
 
-
     private inner class IconPackChangeReceiver(
         private val context: Context,
         private val handler: Handler,
