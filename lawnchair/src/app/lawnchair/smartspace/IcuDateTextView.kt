@@ -93,10 +93,37 @@ class IcuDateTextView @JvmOverloads constructor(
         }
         val formatter = when (calendar) {
             SmartspaceCalendar.Persian -> createPersianFormatter()
+            SmartspaceCalendar.Chinese -> createChineseLunarFormatter()
             else -> createGregorianFormatter()
         }
         formatterFunction = formatter
         return formatter
+    }
+
+    private fun createChineseLunarFormatter(): FormatterFunction {
+        var format: String
+        if (dateTimeOptions.showTime) {
+            format = context.getString(
+                when {
+                    dateTimeOptions.timeFormat is SmartspaceTimeFormat.TwelveHourFormat -> R.string.smartspace_icu_date_pattern_gregorian_time_12h
+                    dateTimeOptions.timeFormat is SmartspaceTimeFormat.TwentyFourHourFormat -> R.string.smartspace_icu_date_pattern_gregorian_time
+                    is24HourFormat(context) -> R.string.smartspace_icu_date_pattern_gregorian_time
+                    else -> R.string.smartspace_icu_date_pattern_gregorian_time_12h
+                },
+            )
+            if (dateTimeOptions.showDate) format += context.getString(R.string.smartspace_icu_date_pattern_gregorian_date)
+        } else {
+            format = context.getString(R.string.smartspace_icu_date_pattern_gregorian_wday_month_day_no_year)
+        }
+
+        val chineseLocale = Locale.Builder()
+            .setLocale(Locale.CHINESE)
+            .setUnicodeLocaleKeyword("ca", "chinese")
+            .build()
+
+        val formatter = DateFormat.getInstanceForSkeleton(format, chineseLocale)
+        formatter.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE)
+        return { formatter.format(it) }
     }
 
     private fun createPersianFormatter(): FormatterFunction {
