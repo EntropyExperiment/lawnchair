@@ -27,6 +27,7 @@ Compatibility list:
 * [Lawnchair] Warn when nightly updater is updating to next major version
 * [Lawnchair/Smartspace] Add Chinese calendar option
 * [Lawnchair/Smartspace] Promote smartspace calendar to stable
+* [Lawnchair/Smartspace] Expressive redesign Phase 2
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
@@ -34,6 +35,7 @@ Compatibility list:
 * [Launcher3/DeviceProfile] Positioning of first folder during Lawnchair setup
 * [Lawnchair/AllApps] Reimplement app drawer opacity
 * [Lawnchair/Recents] Reimplement recents overview opacity
+* [Lawnchair/Preference] Misaligned slider and text preference
 
 
 ### 🥞 Development 3 Release 2
