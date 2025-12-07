@@ -33,7 +33,7 @@ This is a developer-focused change log:
 
 ## Bubble Tea [QPR1]
 
-### Development 4 Release 1 (Unreleased, Work continued in QPR2)
+### Development 4 Release 1
 
 aka: Snapshot 10
 
