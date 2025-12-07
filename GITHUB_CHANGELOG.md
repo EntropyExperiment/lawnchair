@@ -21,9 +21,14 @@ Compatibility list:
 * [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
 * [Launcher] Enable bulk loading by default
 * [Launcher] Tablet support (ish)
+* [Launcher] Implement BAKLAVA_1 check
+* [Launcher] Refreshed Material 3 Expressive
+* [Lawnchair] Refreshed Material 3 Expressive
+* [Launcher] Foldable support (ish)
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
+* [Launcher] Hotseat Google provider failed to open due to Android pending intent restrictions on Android 14/15/16/16.1
 
 
 ### 🥞 Development 3 Release 2
