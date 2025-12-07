@@ -25,6 +25,7 @@ Compatibility list:
 * [Launcher] Refreshed Material 3 Expressive
 * [Lawnchair] Refreshed Material 3 Expressive
 * [Launcher] Foldable support (ish)
+* [Lawnchair] Warn when nightly updater is updating to next major version
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
