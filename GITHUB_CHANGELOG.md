@@ -28,6 +28,8 @@ Compatibility list:
 * [Lawnchair/Smartspace] Add Chinese calendar option
 * [Lawnchair/Smartspace] Promote smartspace calendar to stable
 * [Lawnchair] Expressive redesign Phase 2
+* [Lawnchair] GestureNavContract toggle in experimental features
+* [Lawnchair] Set GestureNavContract on by default on Google device
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
