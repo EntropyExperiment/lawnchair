@@ -466,7 +466,7 @@ constructor(
         @ApplicationContext private val context: Context,
     ) : Stub() {
         private val controller = WeakReference(controller)
-        private val displayId = context.displayId
+        private val displayId = DEFAULT_DISPLAY // pE-TODO(QPR2): context.displayId
 
         override fun onListenerConnected(
             displayDeskStates: Array<DisplayDeskState>,

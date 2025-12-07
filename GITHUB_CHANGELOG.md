@@ -2,7 +2,21 @@
 
 ## Bubble Tea [QPR2]
 
-### 🥞 SNAPSHOT 11
+### 🥞 SNAPSHOT 12
+
+Build: BS11.0612 (latest)
+
+Initial QPR2 merge, buildable stage, fastest ever in any merge.
+
+This is a developer-focused change log:
+* Add Quickstep compose facade to build
+* Add SystemUI Pods
+* Merge some lawnchair code change back
+* Merge some launcher3 code change back
+* More workaround for some trivial files
+* Move from BuildConfig to BuildConfigs when identifying studio build
+
+### SNAPSHOT 11
 
 Build: BS11.0412-b (latest), BS11.0412, BS11.1212 (Botched use BS11.0312 instead)
 
