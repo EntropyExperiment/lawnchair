@@ -107,7 +107,7 @@ object ColorTokens {
 
     @JvmField val OverviewScrimOverBlurColor = DayNightColorToken(
         StaticColorToken(0x80FFFFFF),
-        StaticColorToken(0x80000000)
+        StaticColorToken(0x80000000),
     )
 
     @JvmField val OverviewScrim = OverviewScrimColor

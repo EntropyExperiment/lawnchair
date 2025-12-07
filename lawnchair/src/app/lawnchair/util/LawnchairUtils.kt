@@ -306,16 +306,17 @@ private fun versionParser(version: Long): List<Int> {
         ver *= 100
     }
 
-    val patch = (ver % 100).toInt()          // EE
+    val patch = (ver % 100).toInt() // EE
     val release = ((ver / 100) % 100).toInt() // DD
     val stage = ((ver / 10000) % 100).toInt() // CC
     val minor = ((ver / 1000000) % 100).toInt() // BB
-    val major = ((ver / 100000000)).toInt()   // AA
+    val major = ((ver / 100000000)).toInt() // AA
 
     return listOf(major, minor, stage, release, patch)
 }
 
 // pE-TODO: Make this actually sensible because the writing is really non-sense after re-reading for fourth time
+
 /**
  * Get both current and APK version for the purpose of comparing them.
  * Returns a [Pair] of (current build version, apk build version) or null if parsing fails.
@@ -347,8 +348,8 @@ fun Context.getApkVersionComparison(apkFile: File): Pair<List<Int>, List<Int>>? 
     return Pair(currentParsed, apkParsed)
 }
 
-
 // pE-TODO: Make this actually sensible because the writing is really non-sense after re-reading for fourth time
+
 /**
  * Get current version for the purpose of comparing them.
  * Returns a [Pair] of (current build version, apk build version else null)

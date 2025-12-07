@@ -80,12 +80,12 @@ fun SearchProviderPreferences(
                             Options(
                                 appEnabled = appInstalled,
                                 appSelected = !forceWebsiteAdapter.state.value && appInstalled,
-                            onAppClick = { forceWebsiteAdapter.onChange(newValue = false) },
-                            onAppDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
-                            onWebsiteClick = { forceWebsiteAdapter.onChange(newValue = true) },
-                            showAppDownloadButton = !appInstalled,
-                        )
-                    }
+                                onAppClick = { forceWebsiteAdapter.onChange(newValue = false) },
+                                onAppDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
+                                onWebsiteClick = { forceWebsiteAdapter.onChange(newValue = true) },
+                                showAppDownloadButton = !appInstalled,
+                            )
+                        }
                     }
                 }
             }

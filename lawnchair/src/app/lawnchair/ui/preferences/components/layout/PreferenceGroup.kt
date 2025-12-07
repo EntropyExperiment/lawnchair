@@ -125,6 +125,7 @@ private class PreferenceGroupScopeImpl : PreferenceGroupScope {
         items.add(content)
     }
 
+    @Suppress("ktlint:compose:modifier-missing-check")
     @Composable
     fun Render() {
         val count = items.size

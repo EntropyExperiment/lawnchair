@@ -147,8 +147,10 @@ class PreferenceManager @Inject constructor(
     val enableMaterialExpressive = BoolPref("pref_enableMaterialExpressive", false, recreate)
     val enableGnc = BoolPref("pref_enableGnc", isGestureNavContractCompatible, recreate)
 
-    val lawnchairMajorVersion = IntPref("pref_lawnchairMajorVersion",
-        context.getApkVersionComparison().first[0])
+    val lawnchairMajorVersion = IntPref(
+        "pref_lawnchairMajorVersion",
+        context.getApkVersionComparison().first[0],
+    )
 
     override fun close() {
         TODO("Not yet implemented")
