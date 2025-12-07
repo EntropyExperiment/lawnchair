@@ -4,7 +4,7 @@
 
 ### 🥞 SNAPSHOT 12
 
-Build: BS11.0612 (latest)
+Build: BS11.0712 (latest), BS11.0612
 
 Initial QPR2 merge, buildable stage, fastest ever in any merge.
 
@@ -15,6 +15,7 @@ This is a developer-focused change log:
 * Merge some launcher3 code change back
 * More workaround for some trivial files
 * Move from BuildConfig to BuildConfigs when identifying studio build
+* Updated Compatlib to frameworks 16 (Compatibility not tested)
 
 ### SNAPSHOT 11
 
