@@ -9,8 +9,9 @@ import com.android.launcher3.icons.mono.ThemedIconDelegate
 import com.android.quickstep.QuickstepProcessInitializer
 
 @Keep
-class LawnchairProcessInitializer() : QuickstepProcessInitializer() {
+class LawnchairProcessInitializer : QuickstepProcessInitializer() {
 
+    // pE-TODO(QPR2): CRITICAL: Investigate
     override fun init(context: Context) {
         LawnchairBugReporter.INSTANCE.get(context)
         ThemedIconDelegate.COLORS_LOADER = {
