@@ -193,7 +193,7 @@ fun PreferencesDashboard(
             PreferenceCategory(
                 label = stringResource(R.string.about_label),
                 description = aboutDescrption,
-                iconResource = R.drawable.info_24px,
+                iconResource = R.drawable.ic_about,
                 onNavigate = { onNavigate(About) },
                 isSelected = currentRoute is About,
             )
