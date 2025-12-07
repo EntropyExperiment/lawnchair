@@ -22,6 +22,7 @@ import static android.window.DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DES
 import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
+import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.app.TaskInfo;
@@ -430,14 +431,16 @@ public class DesktopModeStatus {
      * @return {@code true} if this device has an internal large screen
      */
     private static boolean deviceHasLargeScreen(@NonNull Context context) {
-        if (sIsLargeScreenDevice == null) {
-            sIsLargeScreenDevice = Arrays.stream(
-                context.getSystemService(DisplayManager.class)
-                        .getDisplays(DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED))
-                .filter(display -> display.getType() == Display.TYPE_INTERNAL)
-                .anyMatch(display -> display.getMinSizeDimensionDp()
-                        >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP);
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            if (sIsLargeScreenDevice == null) {
+                sIsLargeScreenDevice = Arrays.stream(
+                    context.getSystemService(DisplayManager.class)
+                            .getDisplays(DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED))
+                    .filter(display -> display.getType() == Display.TYPE_INTERNAL)
+                    .anyMatch(display -> display.getMinSizeDimensionDp()
+                            >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP);
+            }
+        } else sIsLargeScreenDevice = false; // pE-TODO(QPR1, QPR2): Should make it better
         return sIsLargeScreenDevice;
     }
 
