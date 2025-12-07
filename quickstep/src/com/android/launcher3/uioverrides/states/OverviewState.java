@@ -166,11 +166,8 @@ public class OverviewState extends LauncherState {
 
     @Override
     public int getWorkspaceScrimColor(Launcher launcher) {
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColorOverBlur
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColor
-        return enableOverviewBackgroundWallpaperBlur() && BlurUtils.supportsBlursOnWindows()
-                ? Themes.getAttrColor(launcher, R.attr.overviewScrimColorOverBlur)
-                : Themes.getAttrColor(launcher, R.attr.overviewScrimColor);
+        // Use Lawnchair's OverviewScrim which applies user preferences for translucent background
+        return ColorTokens.OverviewScrim.resolveColor(launcher);
     }
 
     @Override

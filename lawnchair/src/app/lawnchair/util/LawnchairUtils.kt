@@ -193,6 +193,19 @@ fun getAllAppsScrimColor(context: Context): Int {
     return ColorUtils.setAlphaComponent(scrimColor, alpha)
 }
 
+fun getAllAppsScrimColorOverBlur(context: Context): Int {
+    val opacity = PreferenceManager.getInstance(context).drawerOpacity.get()
+    val prefs2 = PreferenceManager2.getInstance(context)
+    var scrimColor = ColorTokens.AllAppsScrimColorOverBlur.resolveColor(context)
+    val colorOptions: ColorOption = prefs2.appDrawerBackgroundColor.firstBlocking()
+    val color = colorOptions.colorPreferenceEntry.lightColor.invoke(context)
+    if (color != 0) {
+        scrimColor = color
+    }
+    val alpha = (opacity * 255).roundToInt()
+    return ColorUtils.setAlphaComponent(scrimColor, alpha)
+}
+
 fun Context.checkPackagePermission(packageName: String, permissionName: String): Boolean {
     try {
         val info = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)

@@ -35,6 +35,8 @@ import android.window.OnBackInvokedDispatcher;
 
 import androidx.annotation.Nullable;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
+import app.lawnchair.util.LawnchairUtilsKt;
 import com.android.app.animation.Interpolators;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
@@ -253,12 +255,12 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
     @Override
     protected int getScrimColor(Context context) {
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
-            return Themes.getAttrColor(context, R.attr.allAppsScrimColor);
+            return LawnchairUtilsKt.getAllAppsScrimColor(context);
         }
         if (Flags.allAppsBlur()) {
-            return Themes.getAttrColor(context, R.attr.allAppsScrimColorOverBlur);
+            return LawnchairUtilsKt.getAllAppsScrimColorOverBlur(context);
         }
-        return context.getResources().getColor(R.color.widgets_picker_scrim);
+        return ColorTokens.WidgetsPickerScrim.resolveColor(context);
     }
 
     @Override

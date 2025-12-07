@@ -21,6 +21,7 @@ import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_ALLAP
 
 import android.content.Context;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
 import com.android.internal.jank.Cuj;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
@@ -210,14 +211,11 @@ public class AllAppsState extends LauncherState {
     @Override
     public int getWorkspaceScrimColor(Launcher launcher) {
         if (!launcher.getDeviceProfile().shouldShowAllAppsOnSheet()) {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColor
-            return Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+            return LawnchairUtilsKt.getAllAppsScrimColor(launcher);
         }
         if (Flags.allAppsBlur()) {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColorOverBlur
-            return Themes.getAttrColor(launcher, R.attr.allAppsScrimColorOverBlur);
+            return LawnchairUtilsKt.getAllAppsScrimColorOverBlur(launcher);
         }
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + widgets_picker_scrim
-        return launcher.getResources().getColor(R.color.widgets_picker_scrim);
+        return ColorTokens.WidgetsPickerScrim.resolveColor(launcher);
     }
 }
