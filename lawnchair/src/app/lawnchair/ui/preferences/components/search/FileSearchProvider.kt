@@ -52,7 +52,7 @@ import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.dividerColor
 import app.lawnchair.ui.util.isPlayStoreFlavor
@@ -109,7 +109,7 @@ fun FileSearchProvider(
         enabled = hasAnyPermissions,
         modifier = modifier,
     )
-    PreferenceGroup(
+    PreferenceGroupPositionAware(
         heading = stringResource(R.string.search_pref_files_search_on),
     ) {
         val allFilesAccessState by viewModel.allFilesAccessState.collectAsStateWithLifecycle()
@@ -158,13 +158,15 @@ fun FileSearchProvider(
     }
 
     ExpandAndShrink(hasAnyPermissions) {
-        PreferenceGroup {
-            SliderPreference(
-                label = stringResource(id = R.string.max_file_result_count_title),
-                adapter = prefs2.maxFileResultCount.getAdapter(),
-                step = 1,
-                valueRange = 3..10,
-            )
+        PreferenceGroupPositionAware {
+            item { _ ->
+                SliderPreference(
+                    label = stringResource(id = R.string.max_file_result_count_title),
+                    adapter = prefs2.maxFileResultCount.getAdapter(),
+                    step = 1,
+                    valueRange = 3..10,
+                )
+            }
         }
     }
 }

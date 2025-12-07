@@ -49,7 +49,7 @@ import app.lawnchair.ui.preferences.components.controls.getSteps
 import app.lawnchair.ui.preferences.components.controls.snapSliderValue
 import app.lawnchair.ui.preferences.components.layout.BottomSpacer
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
@@ -133,54 +133,62 @@ private fun IconShapeCornerPreferenceGroup(
     modifier: Modifier = Modifier,
     onSelectedIconShapeChange: (IconShape) -> Unit,
 ) {
-    PreferenceGroup(
+    PreferenceGroupPositionAware(
         modifier = modifier,
         heading = stringResource(id = R.string.color_sliders),
     ) {
-        IconShapeCornerPreference(
-            title = stringResource(id = R.string.custom_icon_shape_top_left),
-            scale = selectedIconShape.topLeft.scale.x,
-            onScaleChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(topLeftScale = it))
-            },
-            cornerShape = selectedIconShape.topLeft.shape,
-            onCornerShapeChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(topLeftShape = it))
-            },
-        )
-        IconShapeCornerPreference(
-            title = stringResource(id = R.string.custom_icon_shape_top_right),
-            scale = selectedIconShape.topRight.scale.x,
-            onScaleChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(topRightScale = it))
-            },
-            cornerShape = selectedIconShape.topRight.shape,
-            onCornerShapeChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(topRightShape = it))
-            },
-        )
-        IconShapeCornerPreference(
-            title = stringResource(id = R.string.custom_icon_shape_bottom_left),
-            scale = selectedIconShape.bottomLeft.scale.x,
-            onScaleChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(bottomLeftScale = it))
-            },
-            cornerShape = selectedIconShape.bottomLeft.shape,
-            onCornerShapeChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(bottomLeftShape = it))
-            },
-        )
-        IconShapeCornerPreference(
-            title = stringResource(id = R.string.custom_icon_shape_bottom_right),
-            scale = selectedIconShape.bottomRight.scale.x,
-            onScaleChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(bottomRightScale = it))
-            },
-            cornerShape = selectedIconShape.bottomRight.shape,
-            onCornerShapeChange = {
-                onSelectedIconShapeChange(selectedIconShape.copy(bottomRightShape = it))
-            },
-        )
+        item { _ ->
+            IconShapeCornerPreference(
+                title = stringResource(id = R.string.custom_icon_shape_top_left),
+                scale = selectedIconShape.topLeft.scale.x,
+                onScaleChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(topLeftScale = it))
+                },
+                cornerShape = selectedIconShape.topLeft.shape,
+                onCornerShapeChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(topLeftShape = it))
+                },
+            )
+        }
+        item { _ ->
+            IconShapeCornerPreference(
+                title = stringResource(id = R.string.custom_icon_shape_top_right),
+                scale = selectedIconShape.topRight.scale.x,
+                onScaleChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(topRightScale = it))
+                },
+                cornerShape = selectedIconShape.topRight.shape,
+                onCornerShapeChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(topRightShape = it))
+                },
+            )
+        }
+        item { _ ->
+            IconShapeCornerPreference(
+                title = stringResource(id = R.string.custom_icon_shape_bottom_left),
+                scale = selectedIconShape.bottomLeft.scale.x,
+                onScaleChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(bottomLeftScale = it))
+                },
+                cornerShape = selectedIconShape.bottomLeft.shape,
+                onCornerShapeChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(bottomLeftShape = it))
+                },
+            )
+        }
+        item { _ ->
+            IconShapeCornerPreference(
+                title = stringResource(id = R.string.custom_icon_shape_bottom_right),
+                scale = selectedIconShape.bottomRight.scale.x,
+                onScaleChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(bottomRightScale = it))
+                },
+                cornerShape = selectedIconShape.bottomRight.shape,
+                onCornerShapeChange = {
+                    onSelectedIconShapeChange(selectedIconShape.copy(bottomRightShape = it))
+                },
+            )
+        }
     }
 }
 
@@ -192,29 +200,33 @@ private fun IconShapeClipboardPreferenceGroup(
 ) {
     val context = LocalContext.current
     val importErrorMessage = stringResource(id = R.string.icon_shape_clipboard_import_error)
-    PreferenceGroup(
+    PreferenceGroupPositionAware(
         modifier = modifier,
         heading = stringResource(id = R.string.clipboard),
     ) {
-        ClipboardButton(
-            imageVector = Icons.Rounded.ContentCopy,
-            label = stringResource(id = R.string.export_to_clipboard),
-        ) {
-            copyToClipboard(
-                context = context,
-                text = selectedIconShape.toString(),
-            )
+        item { _ ->
+            ClipboardButton(
+                imageVector = Icons.Rounded.ContentCopy,
+                label = stringResource(id = R.string.export_to_clipboard),
+            ) {
+                copyToClipboard(
+                    context = context,
+                    text = selectedIconShape.toString(),
+                )
+            }
         }
-        ClipboardButton(
-            imageVector = Icons.Rounded.ContentPaste,
-            label = stringResource(id = R.string.import_from_clipboard),
-        ) {
-            getClipboardContent(context)?.let {
-                IconShape.fromString(value = it, context = context)
-            }?.let {
-                onSelectedIconShapeChange(it)
-            } ?: run {
-                Toast.makeText(context, importErrorMessage, Toast.LENGTH_SHORT).show()
+        item { _ ->
+            ClipboardButton(
+                imageVector = Icons.Rounded.ContentPaste,
+                label = stringResource(id = R.string.import_from_clipboard),
+            ) {
+                getClipboardContent(context)?.let {
+                    IconShape.fromString(value = it, context = context)
+                }?.let {
+                    onSelectedIconShapeChange(it)
+                } ?: run {
+                    Toast.makeText(context, importErrorMessage, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

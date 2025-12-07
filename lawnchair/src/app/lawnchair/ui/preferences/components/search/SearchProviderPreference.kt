@@ -39,7 +39,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.dividerColor
@@ -172,13 +172,15 @@ fun ContactsSearchProvider(
         modifier = modifier,
         enabled = contactsPermissionState.status.isGranted,
     ) {
-        PreferenceGroup {
-            SliderPreference(
-                label = stringResource(R.string.max_people_result_count_title),
-                adapter = prefs2.maxPeopleResultCount.getAdapter(),
-                valueRange = 2..10,
-                step = 1,
-            )
+        PreferenceGroupPositionAware {
+            item { _ ->
+                SliderPreference(
+                    label = stringResource(R.string.max_people_result_count_title),
+                    adapter = prefs2.maxPeopleResultCount.getAdapter(),
+                    valueRange = 2..10,
+                    step = 1,
+                )
+            }
         }
     }
 
@@ -222,70 +224,80 @@ fun GenericSearchProviderPreference(
         label = stringResource(getProviderName(provider)),
         modifier = modifier,
     ) {
-        PreferenceGroup {
-            SliderPreference(
-                label = stringResource(
-                    when (provider) {
-                        SearchProviderId.APPS -> R.string.max_apps_result_count_title
-                        SearchProviderId.HISTORY -> R.string.max_recent_result_count_title
-                        SearchProviderId.SETTINGS -> R.string.max_settings_entry_result_count_title
-                        SearchProviderId.WEB -> R.string.max_suggestion_result_count_title
-                        else -> return@PreferenceGroup
+        PreferenceGroupPositionAware {
+            item { _ ->
+                SliderPreference(
+                    label = stringResource(
+                        when (provider) {
+                            SearchProviderId.APPS -> R.string.max_apps_result_count_title
+                            SearchProviderId.HISTORY -> R.string.max_recent_result_count_title
+                            SearchProviderId.SETTINGS -> R.string.max_settings_entry_result_count_title
+                            SearchProviderId.WEB -> R.string.max_suggestion_result_count_title
+                            else -> return@item
+                        },
+                    ),
+                    adapter = prefs2.let {
+                        when (provider) {
+                            SearchProviderId.APPS -> it.maxAppSearchResultCount
+                            SearchProviderId.HISTORY -> it.maxRecentResultCount
+                            SearchProviderId.SETTINGS -> it.maxSettingsEntryResultCount
+                            SearchProviderId.WEB -> it.maxWebSuggestionResultCount
+                            else -> return@item
+                        }.getAdapter()
                     },
-                ),
-                adapter = prefs2.let {
-                    when (provider) {
-                        SearchProviderId.APPS -> it.maxAppSearchResultCount
-                        SearchProviderId.HISTORY -> it.maxRecentResultCount
-                        SearchProviderId.SETTINGS -> it.maxSettingsEntryResultCount
-                        SearchProviderId.WEB -> it.maxWebSuggestionResultCount
-                        else -> return@PreferenceGroup
-                    }.getAdapter()
-                },
-                valueRange = 2..10,
-                step = 1,
-            )
+                    valueRange = 2..10,
+                    step = 1,
+                )
+            }
 
             when (provider) {
                 SearchProviderId.APPS -> {
-                    SwitchPreference(
-                        adapter = prefs2.enableFuzzySearch.getAdapter(),
-                        label = stringResource(id = R.string.fuzzy_search_title),
-                        description = stringResource(id = R.string.fuzzy_search_desc),
-                    )
+                    item { _ ->
+                        SwitchPreference(
+                            adapter = prefs2.enableFuzzySearch.getAdapter(),
+                            label = stringResource(id = R.string.fuzzy_search_title),
+                            description = stringResource(id = R.string.fuzzy_search_desc),
+                        )
+                    }
                 }
 
                 SearchProviderId.WEB -> {
-                    SliderPreference(
-                        label = stringResource(id = R.string.max_web_suggestion_delay),
-                        adapter = prefs2.maxWebSuggestionDelay.getAdapter(),
-                        step = 500,
-                        valueRange = 500..5000,
-                        showUnit = "ms",
-                    )
-                    WebSearchProvider(
-                        adapter = prefs2.webSuggestionProvider.getAdapter(),
-                        nameAdapter = prefs2.webSuggestionProviderName.getAdapter(),
-                        urlAdapter = prefs2.webSuggestionProviderUrl.getAdapter(),
-                        suggestionsUrlAdapter = prefs2.webSuggestionProviderSuggestionsUrl.getAdapter(),
-                    )
+                    item { _ ->
+                        SliderPreference(
+                            label = stringResource(id = R.string.max_web_suggestion_delay),
+                            adapter = prefs2.maxWebSuggestionDelay.getAdapter(),
+                            step = 500,
+                            valueRange = 500..5000,
+                            showUnit = "ms",
+                        )
+                    }
+                    item { _ ->
+                        WebSearchProvider(
+                            adapter = prefs2.webSuggestionProvider.getAdapter(),
+                            nameAdapter = prefs2.webSuggestionProviderName.getAdapter(),
+                            urlAdapter = prefs2.webSuggestionProviderUrl.getAdapter(),
+                            suggestionsUrlAdapter = prefs2.webSuggestionProviderSuggestionsUrl.getAdapter(),
+                        )
+                    }
                 }
 
                 SearchProviderId.HISTORY -> {
-                    val context = LocalContext.current
+                    item { _ ->
+                        val context = LocalContext.current
 
-                    val suggestionsRecent = SearchRecentSuggestions(
-                        context,
-                        LawnchairRecentSuggestionProvider.AUTHORITY,
-                        LawnchairRecentSuggestionProvider.MODE,
-                    )
+                        val suggestionsRecent = SearchRecentSuggestions(
+                            context,
+                            LawnchairRecentSuggestionProvider.AUTHORITY,
+                            LawnchairRecentSuggestionProvider.MODE,
+                        )
 
-                    ClickablePreference(
-                        label = stringResource(id = R.string.clear_history),
-                        onClick = {
-                            suggestionsRecent.clearHistory()
-                        },
-                    )
+                        ClickablePreference(
+                            label = stringResource(id = R.string.clear_history),
+                            onClick = {
+                                suggestionsRecent.clearHistory()
+                            },
+                        )
+                    }
                 }
 
                 else -> {}

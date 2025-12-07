@@ -55,7 +55,7 @@ import app.lawnchair.preferences2.asState
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.GeneralCustomIconShapeCreator
@@ -104,37 +104,43 @@ fun IconShapePreference(
         label = stringResource(id = R.string.icon_shape_label),
         modifier = modifier,
     ) {
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.custom),
         ) {
-            CustomIconShapePreferenceOption(
-                iconShapeAdapter = iconShapeAdapter,
-            )
-            ModifyCustomIconShapePreference(
-                customIconShape = customIconShape.value,
-            )
+            item { _ ->
+                CustomIconShapePreferenceOption(
+                    iconShapeAdapter = iconShapeAdapter,
+                )
+            }
+            item { _ ->
+                ModifyCustomIconShapePreference(
+                    customIconShape = customIconShape.value,
+                )
+            }
         }
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.presets),
         ) {
             entries.forEach { item ->
-                PreferenceTemplate(
-                    enabled = item.enabled,
-                    title = { Text(item.label()) },
-                    modifier = Modifier.clickable(item.enabled) {
-                        iconShapeAdapter.onChange(newValue = item.value)
-                    },
-                    startWidget = {
-                        RadioButton(
-                            selected = item.value == iconShapeAdapter.state.value,
-                            onClick = null,
-                            enabled = item.enabled,
-                        )
-                    },
-                    endWidget = {
-                        IconShapePreview(iconShape = item.value)
-                    },
-                )
+                item { _ ->
+                    PreferenceTemplate(
+                        enabled = item.enabled,
+                        title = { Text(item.label()) },
+                        modifier = Modifier.clickable(item.enabled) {
+                            iconShapeAdapter.onChange(newValue = item.value)
+                        },
+                        startWidget = {
+                            RadioButton(
+                                selected = item.value == iconShapeAdapter.state.value,
+                                onClick = null,
+                                enabled = item.enabled,
+                            )
+                        },
+                        endWidget = {
+                            IconShapePreview(iconShape = item.value)
+                        },
+                    )
+                }
             }
         }
     }

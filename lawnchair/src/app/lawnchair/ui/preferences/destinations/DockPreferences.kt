@@ -49,6 +49,7 @@ import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
 
@@ -66,24 +67,28 @@ fun DockPreferences(modifier: Modifier = Modifier) {
 
         MainSwitchPreference(adapter = prefs2.isHotseatEnabled.getAdapter(), label = stringResource(id = R.string.show_hotseat_title)) {
             DockPreferencesPreview()
-            PreferenceGroup(heading = stringResource(id = R.string.style)) {
-                SwitchPreference(
-                    adapter = hotseatBgAdapter,
-                    label = stringResource(id = R.string.hotseat_background),
-                )
-                ExpandAndShrink(visible = hotseatBgAdapter.state.value) {
-                    HotseatBackgroundSettings(prefs, prefs2)
+            PreferenceGroupPositionAware(heading = stringResource(id = R.string.style)) {
+                item { _ ->
+                    SwitchPreference(
+                        adapter = hotseatBgAdapter,
+                        label = stringResource(id = R.string.hotseat_background),
+                    )
+                }
+                if (hotseatBgAdapter.state.value) {
+                    item { _ -> HotseatBackgroundSettings(prefs, prefs2) }
                 }
             }
             SearchBarPreference(SearchRoute.DOCK_SEARCH)
-            PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-                GridSettings(prefs, prefs2)
+            PreferenceGroupPositionAware(heading = stringResource(id = R.string.grid)) {
+                item { _ -> GridSettings(prefs, prefs2) }
             }
-            PreferenceGroup(heading = stringResource(id = R.string.icons)) {
-                SwitchPreference(
-                    adapter = prefs2.enableLabelInDock.getAdapter(),
-                    label = stringResource(id = R.string.show_labels),
-                )
+            PreferenceGroupPositionAware(heading = stringResource(id = R.string.icons)) {
+                item { _ ->
+                    SwitchPreference(
+                        adapter = prefs2.enableLabelInDock.getAdapter(),
+                        label = stringResource(id = R.string.show_labels),
+                    )
+                }
             }
         }
     }

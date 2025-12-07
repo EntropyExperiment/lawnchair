@@ -34,9 +34,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.DividerColumn
-import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.theme.isSelectedThemeDark
 import com.android.launcher3.R
@@ -71,10 +69,12 @@ fun SmartspacePreferences(
                 if (modeIsLawnchair) {
                     SmartspacePreview()
                 }
-                PreferenceGroup {
-                    SmartspaceProviderPreference(
-                        adapter = smartspaceModeAdapter,
-                    )
+                PreferenceGroupPositionAware {
+                    item { _ ->
+                        SmartspaceProviderPreference(
+                            adapter = smartspaceModeAdapter,
+                        )
+                    }
                 }
 
                 Crossfade(
@@ -106,7 +106,7 @@ private fun LawnchairSmartspaceSettings(
     Column(
         modifier = modifier,
     ) {
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.what_to_show),
             modifier = Modifier.padding(top = 8.dp),
         ) {
@@ -115,10 +115,12 @@ private fun LawnchairSmartspaceSettings(
                 .filter { it.isAvailable }
                 .forEach {
                     key(it.providerName) {
-                        SwitchPreference(
-                            adapter = it.enabledPref.getAdapter(),
-                            label = stringResource(id = it.providerName),
-                        )
+                        item { _ ->
+                            SwitchPreference(
+                                adapter = it.enabledPref.getAdapter(),
+                                label = stringResource(id = it.providerName),
+                            )
+                        }
                     }
                 }
         }
@@ -159,27 +161,29 @@ fun SmartspacePreview(
     val context = LocalContext.current
     val themedContext = remember(themeRes) { ContextThemeWrapper(context, themeRes) }
 
-    PreferenceGroup(
+    PreferenceGroupPositionAware(
         heading = stringResource(id = R.string.preview_label),
         modifier = modifier,
     ) {
-        CompositionLocalProvider(LocalContext provides themedContext) {
-            AndroidView(
-                factory = {
-                    val view = SmartspaceViewContainer(it, previewMode = true)
-                    val height = it.resources
-                        .getDimensionPixelSize(R.dimen.enhanced_smartspace_height)
-                    view.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, height)
-                    view
-                },
-                modifier = Modifier.padding(
-                    top = 8.dp,
-                    bottom = 16.dp,
-                ),
-            )
-        }
-        LaunchedEffect(key1 = null) {
-            SmartspaceProvider.INSTANCE.get(context).startSetup(context as Activity)
+        item { _ ->
+            CompositionLocalProvider(LocalContext provides themedContext) {
+                AndroidView(
+                    factory = {
+                        val view = SmartspaceViewContainer(it, previewMode = true)
+                        val height = it.resources
+                            .getDimensionPixelSize(R.dimen.enhanced_smartspace_height)
+                        view.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, height)
+                        view
+                    },
+                    modifier = Modifier.padding(
+                        top = 8.dp,
+                        bottom = 16.dp,
+                    ),
+                )
+            }
+            LaunchedEffect(key1 = null) {
+                SmartspaceProvider.INSTANCE.get(context).startSetup(context as Activity)
+            }
         }
     }
 }
@@ -188,38 +192,39 @@ fun SmartspacePreview(
 fun SmartspaceDateAndTimePreferences(
     modifier: Modifier = Modifier,
 ) {
-    PreferenceGroup(
+    val preferenceManager2 = preferenceManager2()
+
+    val calendarAdapter = preferenceManager2.smartspaceCalendar.getAdapter()
+    val showDateAdapter = preferenceManager2.smartspaceShowDate.getAdapter()
+    val showTimeAdapter = preferenceManager2.smartspaceShowTime.getAdapter()
+
+    val calendarHasMinimumContent = !showDateAdapter.state.value || !showTimeAdapter.state.value
+    val calendar = calendarAdapter.state.value
+
+    PreferenceGroupPositionAware(
         heading = stringResource(id = R.string.smartspace_date_and_time),
         modifier = modifier.padding(top = 8.dp),
     ) {
-        val preferenceManager2 = preferenceManager2()
-
-        val calendarAdapter = preferenceManager2.smartspaceCalendar.getAdapter()
-        val showDateAdapter = preferenceManager2.smartspaceShowDate.getAdapter()
-        val showTimeAdapter = preferenceManager2.smartspaceShowTime.getAdapter()
-
-        val calendarHasMinimumContent = !showDateAdapter.state.value || !showTimeAdapter.state.value
-
-        val calendar = calendarAdapter.state.value
-
-        ExpandAndShrink(visible = calendar.formatCustomizationSupport) {
-            DividerColumn {
+        if (calendar.formatCustomizationSupport) {
+            item { _ ->
                 SwitchPreference(
                     adapter = showDateAdapter,
                     label = stringResource(id = R.string.smartspace_date),
                     enabled = if (showDateAdapter.state.value) !calendarHasMinimumContent else true,
                 )
-                ExpandAndShrink(visible = showDateAdapter.state.value) {
-                    SmartspaceCalendarPreference()
-                }
+            }
+            if (showDateAdapter.state.value) {
+                item { _ -> SmartspaceCalendarPreference() }
+            }
+            item { _ ->
                 SwitchPreference(
                     adapter = showTimeAdapter,
                     label = stringResource(id = R.string.smartspace_time),
                     enabled = if (showTimeAdapter.state.value) !calendarHasMinimumContent else true,
                 )
-                ExpandAndShrink(visible = showTimeAdapter.state.value) {
-                    SmartspaceTimeFormatPreference()
-                }
+            }
+            if (showTimeAdapter.state.value) {
+                item { _ -> SmartspaceTimeFormatPreference() }
             }
         }
     }
@@ -273,20 +278,24 @@ fun SmartspacerSettings(
     val prefs2 = preferenceManager2()
 
     Column(modifier) {
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.smartspacer_settings),
         ) {
-            SliderPreference(
-                label = stringResource(R.string.maximum_number_of_targets),
-                adapter = prefs2.smartspacerMaxCount.getAdapter(),
-                valueRange = 5..15,
-                step = 1,
-            )
-            ClickablePreference(label = stringResource(R.string.open_smartspacer_settings)) {
-                val intent = context.packageManager.getLaunchIntentForPackage(
-                    SmartspacerConstants.SMARTSPACER_PACKAGE_NAME,
+            item { _ ->
+                SliderPreference(
+                    label = stringResource(R.string.maximum_number_of_targets),
+                    adapter = prefs2.smartspacerMaxCount.getAdapter(),
+                    valueRange = 5..15,
+                    step = 1,
                 )
-                context.startActivity(intent)
+            }
+            item { _ ->
+                ClickablePreference(label = stringResource(R.string.open_smartspacer_settings)) {
+                    val intent = context.packageManager.getLaunchIntentForPackage(
+                        SmartspacerConstants.SMARTSPACER_PACKAGE_NAME,
+                    )
+                    context.startActivity(intent)
+                }
             }
         }
     }

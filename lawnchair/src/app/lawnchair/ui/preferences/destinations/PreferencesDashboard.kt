@@ -52,7 +52,7 @@ import app.lawnchair.ui.preferences.components.AnnouncementPreference
 import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.data.liveinfo.SyncLiveInformation
@@ -113,92 +113,132 @@ fun PreferencesDashboard(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        PreferenceGroup {
-            PreferenceCategory(
-                label = stringResource(R.string.general_label),
-                description = stringResource(R.string.general_description),
-                iconResource = R.drawable.ic_general,
-                onNavigate = { onNavigate(General) },
-                isSelected = currentRoute is General,
-            )
+        val deckLayout = prefs2.deckLayout.getAdapter()
+        PreferenceGroupPositionAware {
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.general_label),
+                    description = stringResource(R.string.general_description),
+                    iconResource = R.drawable.ic_general,
+                    onNavigate = { onNavigate(General) },
+                    isSelected = currentRoute is General,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
 
-            PreferenceCategory(
-                label = stringResource(R.string.home_screen_label),
-                description = stringResource(R.string.home_screen_description),
-                iconResource = R.drawable.ic_home_screen,
-                onNavigate = { onNavigate(HomeScreen) },
-                isSelected = currentRoute is HomeScreen,
-            )
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.home_screen_label),
+                    description = stringResource(R.string.home_screen_description),
+                    iconResource = R.drawable.ic_home_screen,
+                    onNavigate = { onNavigate(HomeScreen) },
+                    isSelected = currentRoute is HomeScreen,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
 
             val isSmartspaceEnabled = prefs2.enableSmartspace.firstBlocking()
-            PreferenceCategory(
-                label = stringResource(id = R.string.smartspace_widget),
-                description = stringResource(R.string.smartspace_widget_description),
-                iconResource = if (isSmartspaceEnabled) R.drawable.ic_smartspace else R.drawable.ic_smartspace_off,
-                onNavigate = { onNavigate(Smartspace) },
-                isSelected = currentRoute is Smartspace,
-            )
-
-            PreferenceCategory(
-                label = stringResource(R.string.dock_label),
-                description = stringResource(R.string.dock_description),
-                iconResource = R.drawable.ic_dock,
-                onNavigate = { onNavigate(Dock) },
-                isSelected = currentRoute is Dock,
-            )
-
-            val deckLayout = prefs2.deckLayout.getAdapter()
-            if (!deckLayout.state.value) {
+            item {
                 PreferenceCategory(
-                    label = stringResource(R.string.app_drawer_label),
-                    description = stringResource(R.string.app_drawer_description),
-                    iconResource = R.drawable.ic_app_drawer,
-                    onNavigate = { onNavigate(AppDrawer) },
-                    isSelected = currentRoute is AppDrawer,
+                    label = stringResource(id = R.string.smartspace_widget),
+                    description = stringResource(R.string.smartspace_widget_description),
+                    iconResource = if (isSmartspaceEnabled) R.drawable.ic_smartspace else R.drawable.ic_smartspace_off,
+                    onNavigate = { onNavigate(Smartspace) },
+                    isSelected = currentRoute is Smartspace,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
                 )
             }
 
-            PreferenceCategory(
-                label = stringResource(R.string.search_bar_label),
-                description = stringResource(R.string.drawer_search_description),
-                iconResource = R.drawable.ic_search,
-                onNavigate = { onNavigate(Search()) },
-                isSelected = currentRoute is Search,
-            )
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.dock_label),
+                    description = stringResource(R.string.dock_description),
+                    iconResource = R.drawable.ic_dock,
+                    onNavigate = { onNavigate(Dock) },
+                    isSelected = currentRoute is Dock,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
 
-            PreferenceCategory(
-                label = stringResource(R.string.folders_label),
-                description = stringResource(R.string.folders_description),
-                iconResource = R.drawable.ic_folder,
-                onNavigate = { onNavigate(Folders) },
-                isSelected = currentRoute is Folders,
-            )
+            if (!deckLayout.state.value) {
+                item {
+                    PreferenceCategory(
+                        label = stringResource(R.string.app_drawer_label),
+                        description = stringResource(R.string.app_drawer_description),
+                        iconResource = R.drawable.ic_app_drawer,
+                        onNavigate = { onNavigate(AppDrawer) },
+                        isSelected = currentRoute is AppDrawer,
+                        isFirst = it.isFirst,
+                        isLast = it.isLast,
+                    )
+                }
+            }
 
-            PreferenceCategory(
-                label = stringResource(id = R.string.gestures_label),
-                description = stringResource(R.string.gestures_description),
-                iconResource = R.drawable.ic_gestures,
-                onNavigate = { onNavigate(Gestures) },
-                isSelected = currentRoute is Gestures,
-            )
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.search_bar_label),
+                    description = stringResource(R.string.drawer_search_description),
+                    iconResource = R.drawable.ic_search,
+                    onNavigate = { onNavigate(Search()) },
+                    isSelected = currentRoute is Search,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
+
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.folders_label),
+                    description = stringResource(R.string.folders_description),
+                    iconResource = R.drawable.ic_folder,
+                    onNavigate = { onNavigate(Folders) },
+                    isSelected = currentRoute is Folders,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
+
+            item {
+                PreferenceCategory(
+                    label = stringResource(id = R.string.gestures_label),
+                    description = stringResource(R.string.gestures_description),
+                    iconResource = R.drawable.ic_gestures,
+                    onNavigate = { onNavigate(Gestures) },
+                    isSelected = currentRoute is Gestures,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
 
             if (LawnchairApp.isRecentsEnabled || BuildConfig.DEBUG) {
-                PreferenceCategory(
-                    label = stringResource(id = R.string.quickstep_label),
-                    description = stringResource(id = R.string.quickstep_description),
-                    iconResource = R.drawable.ic_quickstep,
-                    onNavigate = { onNavigate(Quickstep) },
-                    isSelected = currentRoute is Quickstep,
-                )
+                item {
+                    PreferenceCategory(
+                        label = stringResource(id = R.string.quickstep_label),
+                        description = stringResource(id = R.string.quickstep_description),
+                        iconResource = R.drawable.ic_quickstep,
+                        onNavigate = { onNavigate(Quickstep) },
+                        isSelected = currentRoute is Quickstep,
+                        isFirst = it.isFirst,
+                        isLast = it.isLast,
+                    )
+                }
             }
 
-            PreferenceCategory(
-                label = stringResource(R.string.about_label),
-                description = aboutDescrption,
-                iconResource = R.drawable.ic_about,
-                onNavigate = { onNavigate(About) },
-                isSelected = currentRoute is About,
-            )
+            item {
+                PreferenceCategory(
+                    label = stringResource(R.string.about_label),
+                    description = aboutDescrption,
+                    iconResource = R.drawable.ic_about,
+                    onNavigate = { onNavigate(About) },
+                    isSelected = currentRoute is About,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
+            }
         }
     }
 }

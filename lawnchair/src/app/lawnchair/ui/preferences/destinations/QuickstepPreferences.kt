@@ -22,6 +22,7 @@ import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import app.lawnchair.util.isOnePlusStock
@@ -73,20 +74,24 @@ fun QuickstepPreferences(
         modifier = modifier,
     ) {
         if (!LawnchairApp.isRecentsEnabled) QuickSwitchIgnoredWarning()
-        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-            SwitchPreference(
-                adapter = prefs.recentsTranslucentBackground.getAdapter(),
-                label = stringResource(id = R.string.translucent_background),
-            )
-            val recentsTranslucentBackground by prefs.recentsTranslucentBackground.observeAsState()
-            ExpandAndShrink(visible = recentsTranslucentBackground) {
-                SliderPreference(
-                    adapter = prefs.recentsTranslucentBackgroundAlpha.getAdapter(),
-                    label = stringResource(id = R.string.translucent_background_alpha),
-                    step = 0.05f,
-                    valueRange = 0f..0.95f,
-                    showAsPercentage = true,
+        val recentsTranslucentBackground by prefs.recentsTranslucentBackground.observeAsState()
+        PreferenceGroupPositionAware(heading = stringResource(id = R.string.general_label)) {
+            item { _ ->
+                SwitchPreference(
+                    adapter = prefs.recentsTranslucentBackground.getAdapter(),
+                    label = stringResource(id = R.string.translucent_background),
                 )
+            }
+            if (recentsTranslucentBackground) {
+                item { _ ->
+                    SliderPreference(
+                        adapter = prefs.recentsTranslucentBackgroundAlpha.getAdapter(),
+                        label = stringResource(id = R.string.translucent_background_alpha),
+                        step = 0.05f,
+                        valueRange = 0f..0.95f,
+                        showAsPercentage = true,
+                    )
+                }
             }
         }
 
@@ -96,33 +101,39 @@ fun QuickstepPreferences(
         )
 
         val overrideWindowCornerRadius by prefs.overrideWindowCornerRadius.observeAsState()
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.window_corner_radius_label),
             description = stringResource(id = (R.string.window_corner_radius_description)),
             showDescription = overrideWindowCornerRadius,
         ) {
-            SwitchPreference(
-                adapter = prefs.overrideWindowCornerRadius.getAdapter(),
-                label = stringResource(id = R.string.override_window_corner_radius_label),
-            )
-            ExpandAndShrink(visible = overrideWindowCornerRadius) {
-                SliderPreference(
-                    label = stringResource(id = R.string.window_corner_radius_label),
-                    adapter = prefs.windowCornerRadius.getAdapter(),
-                    step = 0,
-                    valueRange = 70..150,
+            item { _ ->
+                SwitchPreference(
+                    adapter = prefs.overrideWindowCornerRadius.getAdapter(),
+                    label = stringResource(id = R.string.override_window_corner_radius_label),
                 )
+            }
+            if (overrideWindowCornerRadius) {
+                item { _ ->
+                    SliderPreference(
+                        label = stringResource(id = R.string.window_corner_radius_label),
+                        adapter = prefs.windowCornerRadius.getAdapter(),
+                        step = 0,
+                        valueRange = 70..150,
+                    )
+                }
             }
         }
 
         if (Utilities.ATLEAST_S_V2) {
-            PreferenceGroup(
+            PreferenceGroupPositionAware(
                 heading = stringResource(id = R.string.taskbar_label),
             ) {
-                SwitchPreference(
-                    adapter = prefs2.enableTaskbarOnPhone.getAdapter(),
-                    label = stringResource(id = R.string.enable_taskbar_experimental),
-                )
+                item { _ ->
+                    SwitchPreference(
+                        adapter = prefs2.enableTaskbarOnPhone.getAdapter(),
+                        label = stringResource(id = R.string.enable_taskbar_experimental),
+                    )
+                }
             }
         }
     }

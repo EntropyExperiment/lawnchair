@@ -21,8 +21,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.navigation.SearchProviderPreference
 import app.lawnchair.util.FileAccessManager
 import com.android.launcher3.R
@@ -46,52 +45,62 @@ fun DrawerSearchPreference(
         label = stringResource(id = R.string.show_app_search_bar),
         modifier = modifier,
     ) {
-        PreferenceGroup(heading = stringResource(R.string.general_label)) {
-            ExpandAndShrink(visible = hiddenApps.isNotEmpty()) {
-                HiddenAppsInSearchPreference()
+        PreferenceGroupPositionAware(heading = stringResource(R.string.general_label)) {
+            if (hiddenApps.isNotEmpty()) {
+                item { _ -> HiddenAppsInSearchPreference() }
             }
-            SwitchPreference(
-                adapter = prefs2.autoShowKeyboardInDrawer.getAdapter(),
-                label = stringResource(id = R.string.pref_search_auto_show_keyboard),
-            )
-            SearchProvider(
-                context = context,
-            )
-            SwitchPreference(
-                label = stringResource(R.string.allapps_match_qsb_style_label),
-                description = stringResource(R.string.allapps_match_qsb_style_description),
-                adapter = prefs2.matchHotseatQsbStyle.getAdapter(),
-            )
+            item { _ ->
+                SwitchPreference(
+                    adapter = prefs2.autoShowKeyboardInDrawer.getAdapter(),
+                    label = stringResource(id = R.string.pref_search_auto_show_keyboard),
+                )
+            }
+            item { _ ->
+                SearchProvider(
+                    context = context,
+                )
+            }
+            item { _ ->
+                SwitchPreference(
+                    label = stringResource(R.string.allapps_match_qsb_style_label),
+                    description = stringResource(R.string.allapps_match_qsb_style_description),
+                    adapter = prefs2.matchHotseatQsbStyle.getAdapter(),
+                )
+            }
         }
 
-        PreferenceGroup(heading = stringResource(id = R.string.show_search_result_types)) {
-            val searchAlgorithm = preferenceManager2().searchAlgorithm.getAdapter().state.value
+        val searchAlgorithm = preferenceManager2().searchAlgorithm.getAdapter().state.value
+        val navController = LocalNavController.current
+        PreferenceGroupPositionAware(heading = stringResource(id = R.string.show_search_result_types)) {
             if (searchAlgorithm != LawnchairSearchAlgorithm.ASI_SEARCH) {
-                val navController = LocalNavController.current
                 val canDisable = searchAlgorithm != LawnchairSearchAlgorithm.APP_SEARCH
                 val adapter = prefs.searchResultApps.getAdapter()
 
-                TwoTargetSwitchPreference(
-                    checked = if (canDisable) adapter.state.value else true,
-                    onCheckedChange = if (canDisable) adapter::onChange else ({}),
-                    enabled = canDisable,
-                    label = stringResource(R.string.search_pref_result_apps_and_shortcuts_title),
-                    onClick = {
-                        navController.navigate(SearchProviderPreference(SearchProviderId.APPS))
-                    },
-                )
+                item { _ ->
+                    TwoTargetSwitchPreference(
+                        checked = if (canDisable) adapter.state.value else true,
+                        onCheckedChange = if (canDisable) adapter::onChange else ({}),
+                        enabled = canDisable,
+                        label = stringResource(R.string.search_pref_result_apps_and_shortcuts_title),
+                        onClick = {
+                            navController.navigate(SearchProviderPreference(SearchProviderId.APPS))
+                        },
+                    )
+                }
             }
             when (searchAlgorithm) {
                 LawnchairSearchAlgorithm.LOCAL_SEARCH -> {
-                    LocalSearchSettings(
-                        prefs = prefs,
-                        prefs2 = prefs2,
-                        context = context,
-                    )
+                    item { _ ->
+                        LocalSearchSettings(
+                            prefs = prefs,
+                            prefs2 = prefs2,
+                            context = context,
+                        )
+                    }
                 }
 
                 LawnchairSearchAlgorithm.ASI_SEARCH -> {
-                    ASISearchSettings(prefs)
+                    item { _ -> ASISearchSettings(prefs) }
                 }
             }
         }

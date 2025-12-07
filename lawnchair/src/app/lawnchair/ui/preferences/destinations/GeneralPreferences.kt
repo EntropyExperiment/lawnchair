@@ -43,9 +43,8 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
-import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.notificationDotsEnabled
 import app.lawnchair.ui.preferences.components.notificationServiceEnabled
@@ -89,114 +88,143 @@ fun GeneralPreferences() {
         backArrowVisible = !LocalIsExpandedScreen.current,
         label = stringResource(id = R.string.general_label),
     ) {
-        PreferenceGroup {
-            SwitchPreference(
-                adapter = prefs.allowRotation.getAdapter(),
-                label = stringResource(id = R.string.home_screen_rotation_label),
-                description = stringResource(id = R.string.home_screen_rotation_description),
-            )
+        PreferenceGroupPositionAware {
+            item { _ ->
+                SwitchPreference(
+                    adapter = prefs.allowRotation.getAdapter(),
+                    label = stringResource(id = R.string.home_screen_rotation_label),
+                    description = stringResource(id = R.string.home_screen_rotation_description),
+                )
+            }
         }
         ExpandAndShrink(visible = prefs2.enableFontSelection.asState().value) {
-            PreferenceGroup(heading = stringResource(id = R.string.font_label)) {
-                FontPreference(
-                    fontPref = prefs.fontWorkspace,
-                    label = stringResource(R.string.fontWorkspace),
-                )
-                FontPreference(
-                    fontPref = prefs.fontHeading,
-                    label = stringResource(R.string.fontHeading),
-                )
-                FontPreference(
-                    fontPref = prefs.fontHeadingMedium,
-                    label = stringResource(R.string.fontHeadingMedium),
-                )
-                FontPreference(
-                    fontPref = prefs.fontBody,
-                    label = stringResource(R.string.fontBody),
-                )
-                FontPreference(
-                    fontPref = prefs.fontBodyMedium,
-                    label = stringResource(R.string.fontBodyMedium),
-                )
+            PreferenceGroupPositionAware(heading = stringResource(id = R.string.font_label)) {
+                item { _ ->
+                    FontPreference(
+                        fontPref = prefs.fontWorkspace,
+                        label = stringResource(R.string.fontWorkspace),
+                    )
+                }
+                item { _ ->
+                    FontPreference(
+                        fontPref = prefs.fontHeading,
+                        label = stringResource(R.string.fontHeading),
+                    )
+                }
+                item { _ ->
+                    FontPreference(
+                        fontPref = prefs.fontHeadingMedium,
+                        label = stringResource(R.string.fontHeadingMedium),
+                    )
+                }
+                item { _ ->
+                    FontPreference(
+                        fontPref = prefs.fontBody,
+                        label = stringResource(R.string.fontBody),
+                    )
+                }
+                item { _ ->
+                    FontPreference(
+                        fontPref = prefs.fontBodyMedium,
+                        label = stringResource(R.string.fontBodyMedium),
+                    )
+                }
             }
         }
         val wrapAdaptiveIcons = prefs.wrapAdaptiveIcons.getAdapter()
 
-        PreferenceGroup(
+        PreferenceGroupPositionAware(
             heading = stringResource(id = R.string.icons),
             description = stringResource(id = (R.string.adaptive_icon_background_description)),
             showDescription = wrapAdaptiveIcons.state.value,
         ) {
-            NavigationActionPreference(
-                label = stringResource(id = R.string.icon_style_label),
-                destination = GeneralIconPack,
-                subtitle = iconStyleSubtitle,
-            )
-            ExpandAndShrink(visible = themedIconsEnabled) {
-                SwitchPreference(
-                    adapter = prefs.transparentIconBackground.getAdapter(),
-                    label = stringResource(id = R.string.transparent_background_icons_label),
-                    description = stringResource(id = R.string.transparent_background_icons_description),
+            item { _ ->
+                NavigationActionPreference(
+                    label = stringResource(id = R.string.icon_style_label),
+                    destination = GeneralIconPack,
+                    subtitle = iconStyleSubtitle,
                 )
             }
-            NavigationActionPreference(
-                label = stringResource(id = R.string.icon_shape_label),
-                destination = GeneralIconShape,
-                subtitle = iconShapeSubtitle,
-                endWidget = {
-                    IconShapePreview(iconShape = iconShapeAdapter.state.value)
-                },
-            )
-            SwitchPreference(
-                adapter = wrapAdaptiveIcons,
-                label = stringResource(id = R.string.auto_adaptive_icons_label),
-                description = stringResource(id = R.string.auto_adaptive_icons_description),
-            )
-            SwitchPreference(
-                adapter = prefs.shadowBGIcons.getAdapter(),
-                label = stringResource(id = R.string.shadow_bg_icons_label),
-            )
-
-            ExpandAndShrink(visible = wrapAdaptiveIcons.state.value) {
-                SliderPreference(
-                    label = stringResource(id = R.string.background_lightness_label),
-                    adapter = prefs.coloredBackgroundLightness.getAdapter(),
-                    valueRange = 0F..1F,
-                    step = 0.1f,
-                    showAsPercentage = true,
-                )
-            }
-        }
-
-        PreferenceGroup(heading = stringResource(id = R.string.colors)) {
-            ThemePreference()
-            ColorPreference(preference = prefs2.accentColor)
-            if (Utilities.ATLEAST_S && prefs2.accentColor.getAdapter().state.value == ColorOption.SystemAccent) {
-                if (!Utilities.ATLEAST_S) {
-                    ColorStylePreference(prefs2.colorStyle.getAdapter())
+            if (themedIconsEnabled) {
+                item { _ ->
+                    SwitchPreference(
+                        adapter = prefs.transparentIconBackground.getAdapter(),
+                        label = stringResource(id = R.string.transparent_background_icons_label),
+                        description = stringResource(id = R.string.transparent_background_icons_description),
+                    )
                 }
-            } else {
-                ColorStylePreference(prefs2.colorStyle.getAdapter())
+            }
+            item { _ ->
+                NavigationActionPreference(
+                    label = stringResource(id = R.string.icon_shape_label),
+                    destination = GeneralIconShape,
+                    subtitle = iconShapeSubtitle,
+                    endWidget = {
+                        IconShapePreview(iconShape = iconShapeAdapter.state.value)
+                    },
+                )
+            }
+            item { _ ->
+                SwitchPreference(
+                    adapter = wrapAdaptiveIcons,
+                    label = stringResource(id = R.string.auto_adaptive_icons_label),
+                    description = stringResource(id = R.string.auto_adaptive_icons_description),
+                )
+            }
+            item { _ ->
+                SwitchPreference(
+                    adapter = prefs.shadowBGIcons.getAdapter(),
+                    label = stringResource(id = R.string.shadow_bg_icons_label),
+                )
+            }
+            if (wrapAdaptiveIcons.state.value) {
+                item { _ ->
+                    SliderPreference(
+                        label = stringResource(id = R.string.background_lightness_label),
+                        adapter = prefs.coloredBackgroundLightness.getAdapter(),
+                        valueRange = 0F..1F,
+                        step = 0.1f,
+                        showAsPercentage = true,
+                    )
+                }
             }
         }
 
-        PreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
-            val enabled by remember { notificationDotsEnabled(context) }.collectAsStateWithLifecycle(initialValue = false)
-            val serviceEnabled = notificationServiceEnabled()
-            NotificationDotsPreference(enabled = enabled, serviceEnabled = serviceEnabled)
-            if (enabled && serviceEnabled) {
-                val showNotificationCountAdapter = prefs2.showNotificationCount.getAdapter()
-                ColorPreference(preference = prefs2.notificationDotColor)
-                SwitchPreference(
-                    adapter = showNotificationCountAdapter,
-                    label = stringResource(id = R.string.show_notification_count),
-                )
-                ExpandAndShrink(visible = showNotificationCountAdapter.state.value) {
-                    DividerColumn {
-                        ColorPreference(preference = prefs2.notificationDotTextColor)
+        val accentColorAdapter = prefs2.accentColor.getAdapter()
+        val showColorStyle = !(Utilities.ATLEAST_S && accentColorAdapter.state.value == ColorOption.SystemAccent) ||
+            !Utilities.ATLEAST_S
+
+        PreferenceGroupPositionAware(heading = stringResource(id = R.string.colors)) {
+            item { _ -> ThemePreference() }
+            item { _ -> ColorPreference(preference = prefs2.accentColor) }
+            if (showColorStyle) {
+                item { _ -> ColorStylePreference(prefs2.colorStyle.getAdapter()) }
+            }
+        }
+
+        val notificationEnabled by remember { notificationDotsEnabled(context) }.collectAsStateWithLifecycle(initialValue = false)
+        val serviceEnabled = notificationServiceEnabled()
+        val showNotificationCountAdapter = prefs2.showNotificationCount.getAdapter()
+        val showNotificationCount = showNotificationCountAdapter.state.value
+        val dotColor = prefs2.notificationDotColor.asState().value
+        val dotTextColor = prefs2.notificationDotTextColor.asState().value
+
+        PreferenceGroupPositionAware(heading = stringResource(id = R.string.notification_dots)) {
+            item { _ -> NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
+            if (notificationEnabled && serviceEnabled) {
+                item { _ -> ColorPreference(preference = prefs2.notificationDotColor) }
+                item { _ ->
+                    SwitchPreference(
+                        adapter = showNotificationCountAdapter,
+                        label = stringResource(id = R.string.show_notification_count),
+                    )
+                }
+                if (showNotificationCount) {
+                    item { _ -> ColorPreference(preference = prefs2.notificationDotTextColor) }
+                    item { _ ->
                         NotificationDotColorContrastWarnings(
-                            dotColor = prefs2.notificationDotColor.asState().value,
-                            dotTextColor = prefs2.notificationDotTextColor.asState().value,
+                            dotColor = dotColor,
+                            dotTextColor = dotTextColor,
                         )
                     }
                 }

@@ -28,7 +28,7 @@ import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
@@ -47,43 +47,45 @@ fun SearchProviderPreferences(
         label = stringResource(R.string.search_provider),
         modifier = modifier,
     ) {
-        PreferenceGroup {
+        PreferenceGroupPositionAware {
             QsbSearchProvider.values().forEach { qsbSearchProvider ->
-                val appInstalled = qsbSearchProvider.isDownloaded(context)
-                val selected = adapter.state.value == qsbSearchProvider
-                val hasAppAndWebsite = qsbSearchProvider.type == QsbSearchProviderType.APP_AND_WEBSITE
-                val showDownloadButton = qsbSearchProvider.type == QsbSearchProviderType.APP && !appInstalled
-                Column {
-                    val title = stringResource(id = qsbSearchProvider.name)
-                    ListItem(
-                        title = title,
-                        showDownloadButton = showDownloadButton,
-                        enabled = qsbSearchProvider.type != QsbSearchProviderType.APP || appInstalled,
-                        selected = selected,
-                        onClick = { adapter.onChange(newValue = qsbSearchProvider) },
-                        onDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
-                        onSponsorDisclaimerClick = {
-                            bottomSheetHandler.show {
-                                SponsorDisclaimer(title) {
-                                    bottomSheetHandler.hide()
+                item { _ ->
+                    val appInstalled = qsbSearchProvider.isDownloaded(context)
+                    val selected = adapter.state.value == qsbSearchProvider
+                    val hasAppAndWebsite = qsbSearchProvider.type == QsbSearchProviderType.APP_AND_WEBSITE
+                    val showDownloadButton = qsbSearchProvider.type == QsbSearchProviderType.APP && !appInstalled
+                    Column {
+                        val title = stringResource(id = qsbSearchProvider.name)
+                        ListItem(
+                            title = title,
+                            showDownloadButton = showDownloadButton,
+                            enabled = qsbSearchProvider.type != QsbSearchProviderType.APP || appInstalled,
+                            selected = selected,
+                            onClick = { adapter.onChange(newValue = qsbSearchProvider) },
+                            onDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
+                            onSponsorDisclaimerClick = {
+                                bottomSheetHandler.show {
+                                    SponsorDisclaimer(title) {
+                                        bottomSheetHandler.hide()
+                                    }
                                 }
-                            }
-                        }.takeIf { qsbSearchProvider.sponsored },
-                        description = if (showDownloadButton) {
-                            stringResource(id = R.string.qsb_search_provider_app_required)
-                        } else {
-                            null
-                        },
-                    )
-                    ExpandAndShrink(visible = selected && hasAppAndWebsite) {
-                        Options(
-                            appEnabled = appInstalled,
-                            appSelected = !forceWebsiteAdapter.state.value && appInstalled,
+                            }.takeIf { qsbSearchProvider.sponsored },
+                            description = if (showDownloadButton) {
+                                stringResource(id = R.string.qsb_search_provider_app_required)
+                            } else {
+                                null
+                            },
+                        )
+                        ExpandAndShrink(visible = selected && hasAppAndWebsite) {
+                            Options(
+                                appEnabled = appInstalled,
+                                appSelected = !forceWebsiteAdapter.state.value && appInstalled,
                             onAppClick = { forceWebsiteAdapter.onChange(newValue = false) },
                             onAppDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
                             onWebsiteClick = { forceWebsiteAdapter.onChange(newValue = true) },
                             showAppDownloadButton = !appInstalled,
                         )
+                    }
                     }
                 }
             }
