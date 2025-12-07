@@ -164,7 +164,6 @@ fun ExperimentalFeaturesPreferences(
                 item { _ -> WarningPreference(stringResource(R.string.always_reload_icons_warning)) }
             }
 
-            // pE-FeatureTaskForce-TODO(N/A): Make GestureNavContract API Toggle
             item { _ ->
                 SwitchPreference(
                     adapter = enableGncAdapter,
