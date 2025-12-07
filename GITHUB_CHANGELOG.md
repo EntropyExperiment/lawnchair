@@ -15,7 +15,7 @@ This is a developer-focused change log:
 * Merge some launcher3 code change back
 * More workaround for some trivial files
 * Move from BuildConfig to BuildConfigs when identifying studio build
-* Updated Compatlib to frameworks 16 (Compatibility not tested)
+~~* Updated Compatlib to frameworks 16 (Compatibility not tested)~~
 
 ### SNAPSHOT 11
 
