@@ -222,8 +222,14 @@ public class ActivityManagerWrapper {
      */
     public void preloadRecentsActivity(Intent intent) {
         try {
-            getService().preloadRecentsActivity(intent);
-        } catch (Exception e) {
+            Class<?> activityTaskManagerClass = Class.forName("android.app.ActivityTaskManager");
+            Method getServiceMethod = activityTaskManagerClass.getMethod("getService");
+            Object activityTaskManagerService = getServiceMethod.invoke(null);
+            Method preloadRecentsActivityMethod = activityTaskManagerService.getClass()
+                .getMethod("preloadRecentsActivity", Intent.class);
+
+            preloadRecentsActivityMethod.invoke(activityTaskManagerService, intent);
+        } catch (Throwable e) {
             Log.w(TAG, "Failed to preload recents activity", e);
         }
     }
