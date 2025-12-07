@@ -296,11 +296,6 @@ public class DeviceProfile {
         mIsScalableGrid = inv.isScalable && !isVerticalBarLayout() && !isExternalDisplay;
         // Determine device posture.
         mInfo = info;
-        boolean isTaskBarEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableTaskbarOnPhone());
-        boolean taskbarOrBubbleBarOnPhones = enableTinyTaskbar()
-                || (enableBubbleBar() && enableBubbleBarOnPhones());
-        isTaskbarPresent = isTaskBarEnabled && (mDeviceProperties.isTablet() || (taskbarOrBubbleBarOnPhones && isGestureMode))
-                        && wmProxy.isTaskbarDrawnInProcess();
 
         // Some more constants.
         Context context = getContext(info, isLandscapeOrientation()
@@ -314,6 +309,12 @@ public class DeviceProfile {
         preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
         allAppsCellHeightMultiplier = PreferenceExtensionsKt
             .firstBlocking(preferenceManager2.getDrawerCellHeightFactor());
+        
+        boolean isTaskBarEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableTaskbarOnPhone());
+        boolean taskbarOrBubbleBarOnPhones = enableTinyTaskbar()
+                || (enableBubbleBar() && enableBubbleBarOnPhones());
+        isTaskbarPresent = isTaskBarEnabled && (mDeviceProperties.isTablet() || (taskbarOrBubbleBarOnPhones && isGestureMode))
+                        && wmProxy.isTaskbarDrawnInProcess();
 
         overviewProfile = OverviewProfile.Factory.createOverviewProfile(res);
 
@@ -437,9 +438,9 @@ public class DeviceProfile {
         }
 
         if (mIsResponsiveGrid) {
-            updateHotseatSizes(mResponsiveWorkspaceCellSpec.getIconSize());
+            updateHotseatSizes(mResponsiveWorkspaceCellSpec.getIconSize(), 0);
         } else {
-            updateHotseatSizes(pxFromDp(inv.iconSize[mTypeIndex], mMetrics));
+            updateHotseatSizes(pxFromDp(inv.iconSize[mTypeIndex], mMetrics), 0);
         }
 
         mBubbleBarSpaceThresholdPx =
@@ -743,9 +744,9 @@ public class DeviceProfile {
     }
 
     /** Updates hotseatCellHeightPx and hotseatBarSizePx */
-    private void updateHotseatSizes(int hotseatIconSizePx) {
-        int iconTextHeight = Utilities.calculateTextHeight(mWorkspaceProfile.getIconTextSizePx());
-        boolean isLabelInDock = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableLabelInDock());
+    private void updateHotseatSizes(int hotseatIconSizePx, int iconTextSizePx) {
+        int iconTextHeight = Utilities.calculateTextHeight(iconTextSizePx);
+        boolean isLabelInDock = preferenceManager2 != null && PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableLabelInDock());
         // Ensure there is enough space for folder icons, which have a slightly larger radius.
         hotseatCellHeightPx = getIconSizeWithOverlap(hotseatIconSizePx * 2) - hotseatIconSizePx / 2;
         hotseatCellHeightPx += isLabelInDock ? iconTextHeight : 0;
@@ -961,7 +962,7 @@ public class DeviceProfile {
             );
         }
 
-        updateHotseatSizes(getWorkspaceIconProfile().getIconSizePx());
+        updateHotseatSizes(getWorkspaceIconProfile().getIconSizePx(), getWorkspaceIconProfile().getIconTextSizePx());
 
         // Folder icon
         folderIconSizePx = Math.round(
