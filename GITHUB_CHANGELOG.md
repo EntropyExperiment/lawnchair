@@ -3,7 +3,7 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🏗️ Development 3 Release 3
 
-Build: BD3.0712
+Build: BD3.0812 (latest), BD3.0712
 
 Compatibility list:
 
@@ -38,7 +38,6 @@ Compatibility list:
 * [Lawnchair/AllApps] Reimplement app drawer opacity
 * [Lawnchair/Recents] Reimplement recents overview opacity
 * [Lawnchair/Preference] Misaligned slider and text preference
-
 
 ### 🥞 Development 3 Release 2
 
