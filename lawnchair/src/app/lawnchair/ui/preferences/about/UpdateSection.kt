@@ -24,9 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import app.lawnchair.ui.util.preview.PreviewLawnchair
+import app.lawnchair.util.getApkVersionComparison
 import com.android.launcher3.R
 import java.io.File
 
@@ -132,7 +131,6 @@ fun UpdateSection(
                     },
                 )
             }
-
         }
     }
 }
