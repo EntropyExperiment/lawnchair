@@ -147,7 +147,7 @@ class PreferenceManager @Inject constructor(
     val enableGnc = BoolPref("pref_enableGnc", false, recreate)
 
     val lawnchairMajorVersion = IntPref("pref_lawnchairMajorVersion",
-        context.getApkVersionComparison().first[0], recreate)
+        context.getApkVersionComparison().first[0])
 
     override fun close() {
         TODO("Not yet implemented")
