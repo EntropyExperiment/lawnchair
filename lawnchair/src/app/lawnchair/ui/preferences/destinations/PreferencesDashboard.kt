@@ -15,15 +15,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Backup
-import androidx.compose.material.icons.outlined.Science
+import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Science
 import androidx.compose.material.icons.rounded.SettingsBackupRestore
 import androidx.compose.material.icons.rounded.TipsAndUpdates
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -43,13 +46,12 @@ import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.observeAsState
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
-import app.lawnchair.ui.OverflowMenu
+import app.lawnchair.ui.OverflowMenuGrouped
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.AnnouncementPreference
 import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
-import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
@@ -201,6 +203,7 @@ fun PreferencesDashboard(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun RowScope.PreferencesOverflowMenu(
     currentRoute: PreferenceRootRoute,
@@ -225,7 +228,9 @@ fun RowScope.PreferencesOverflowMenu(
     val navController = LocalNavController.current
     val openCreateBackup = { navController.navigate(CreateBackup) }
     val openRestoreBackup = restoreBackupOpener()
-    OverflowMenu(
+    val context = LocalContext.current
+
+    OverflowMenuGrouped(
         modifier = modifier.addIf(
             listOf(ExperimentalFeatures).any {
                 currentRoute == it
@@ -236,88 +241,97 @@ fun RowScope.PreferencesOverflowMenu(
                 .background(highlightColor)
         },
     ) {
-        val context = LocalContext.current
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_about),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            onClick = {
-                openAppInfo(context)
-                hideMenu()
-            },
-            text = {
-                Text(text = stringResource(id = R.string.app_info_drop_target_label))
-            },
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Refresh,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            onClick = {
-                restartLauncher(context)
-                hideMenu()
-            },
-            text = {
-                Text(text = stringResource(id = R.string.debug_restart_launcher))
-            },
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Science,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            onClick = {
-                onNavigate(ExperimentalFeatures)
-                hideMenu()
-            },
-            text = {
-                Text(text = stringResource(id = R.string.experimental_features_label))
-            },
-        )
-        PreferenceDivider(modifier = Modifier.padding(vertical = 8.dp))
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Backup,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            onClick = {
-                openCreateBackup()
-                hideMenu()
-            },
-            text = {
-                Text(text = stringResource(id = R.string.create_backup))
-            },
-        )
-        DropdownMenuItem(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.SettingsBackupRestore,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            onClick = {
-                openRestoreBackup()
-                hideMenu()
-            },
-            text = {
-                Text(text = stringResource(id = R.string.restore_backup))
-            },
-        )
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShape(0, 2),
+        ) {
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_about),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = {
+                    openAppInfo(context)
+                    hideMenu()
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.app_info_drop_target_label))
+                },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = {
+                    restartLauncher(context)
+                    hideMenu()
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.debug_restart_launcher))
+                },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Science,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = {
+                    onNavigate(ExperimentalFeatures)
+                    hideMenu()
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.experimental_features_label))
+                },
+            )
+        }
+
+        Spacer(Modifier.height(MenuDefaults.GroupSpacing))
+
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShape(1, 2),
+        ) {
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Backup,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = {
+                    openCreateBackup()
+                    hideMenu()
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.create_backup))
+                },
+            )
+            DropdownMenuItem(
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.SettingsBackupRestore,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = {
+                    openRestoreBackup()
+                    hideMenu()
+                },
+                text = {
+                    Text(text = stringResource(id = R.string.restore_backup))
+                },
+            )
+        }
     }
 }
 

@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,11 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.lawnchair.data.folder.model.FolderViewModel
-import app.lawnchair.ui.OverflowMenu
+import app.lawnchair.ui.OverflowMenuGrouped
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.AppItem
 import app.lawnchair.ui.preferences.components.AppItemPlaceholder
-import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceLazyColumn
 import app.lawnchair.ui.preferences.components.layout.PreferenceScaffold
 import app.lawnchair.ui.preferences.components.layout.preferenceGroupItems
@@ -170,6 +172,7 @@ fun SelectAppsForDrawerFolder(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ListSortingOptions(
     originalList: List<App>,
@@ -180,79 +183,89 @@ private fun ListSortingOptions(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    OverflowMenu(modifier) {
+    OverflowMenuGrouped(modifier) {
         val originalListPackageNames = originalList
             .map { it.key.componentName.packageName }
-        DropdownMenuItem(
-            onClick = {
-                val inverseSelectionPackageNames = originalListPackageNames
-                    .filter { items ->
-                        !filteredList.map { it.targetPackage }.contains(items)
-                    }
-                    .toSet()
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShape(0, 2),
+        ) {
+            DropdownMenuItem(
+                onClick = {
+                    val inverseSelectionPackageNames = originalListPackageNames
+                        .filter { items ->
+                            !filteredList.map { it.targetPackage }.contains(items)
+                        }
+                        .toSet()
 
-                val inverseSelection = originalList
-                    .filter {
-                        inverseSelectionPackageNames.contains(it.key.componentName.packageName)
-                    }
-                    .map {
-                        it.toAppInfo(context)
-                    }
-                    .toSet()
+                    val inverseSelection = originalList
+                        .filter {
+                            inverseSelectionPackageNames.contains(it.key.componentName.packageName)
+                        }
+                        .map {
+                            it.toAppInfo(context)
+                        }
+                        .toSet()
 
-                onUpdateList(inverseSelection)
-                hideMenu()
-            },
-            text = {
-                Text(stringResource(R.string.inverse_selection))
-            },
-        )
+                    onUpdateList(inverseSelection)
+                    hideMenu()
+                },
+                text = {
+                    Text(stringResource(R.string.inverse_selection))
+                },
+            )
 
-        val selectedAll = originalListPackageNames == filteredList.map { it.targetPackage }
-        DropdownMenuItem(
-            onClick = {
-                onUpdateList(
-                    if (selectedAll) {
-                        emptySet()
-                    } else {
-                        originalList.map { app ->
-                            app.toAppInfo(context)
-                        }.toSet()
-                    },
-                )
-                hideMenu()
-            },
-            text = {
-                Text(
-                    stringResource(if (selectedAll) R.string.deselect_all else R.string.select_all),
-                )
-            },
-        )
-        DropdownMenuItem(
-            onClick = {
-                onToggleFilterUniqueItems(!filterUniqueItems)
-                hideMenu()
-            },
-            trailingIcon = {
-                if (filterUniqueItems) {
-                    Icon(Icons.Rounded.Check, contentDescription = null)
-                }
-            },
-            text = {
-                Text(stringResource(R.string.folders_filter_duplicates))
-            },
-        )
-        PreferenceDivider(modifier = Modifier.padding(vertical = 8.dp))
-        DropdownMenuItem(
-            onClick = {
-                onUpdateList(
-                    emptySet(),
-                )
-            },
-            text = {
-                Text(stringResource(R.string.action_reset))
-            },
-        )
+            val selectedAll = originalListPackageNames == filteredList.map { it.targetPackage }
+            DropdownMenuItem(
+                onClick = {
+                    onUpdateList(
+                        if (selectedAll) {
+                            emptySet()
+                        } else {
+                            originalList.map { app ->
+                                app.toAppInfo(context)
+                            }.toSet()
+                        },
+                    )
+                    hideMenu()
+                },
+                text = {
+                    Text(
+                        stringResource(if (selectedAll) R.string.deselect_all else R.string.select_all),
+                    )
+                },
+            )
+            DropdownMenuItem(
+                onClick = {
+                    onToggleFilterUniqueItems(!filterUniqueItems)
+                    hideMenu()
+                },
+                trailingIcon = {
+                    if (filterUniqueItems) {
+                        Icon(Icons.Rounded.Check, contentDescription = null)
+                    }
+                },
+                text = {
+                    Text(stringResource(R.string.folders_filter_duplicates))
+                },
+            )
+        }
+
+        Spacer(Modifier.height(MenuDefaults.GroupSpacing))
+
+        DropdownMenuGroup(
+            shapes = MenuDefaults.groupShape(1, 2),
+        ) {
+            DropdownMenuItem(
+                onClick = {
+                    onUpdateList(
+                        emptySet(),
+                    )
+                },
+                text = {
+                    Text(stringResource(R.string.action_reset))
+                },
+            )
+        }
     }
 }
 
