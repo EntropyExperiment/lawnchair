@@ -15,6 +15,7 @@ import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
+import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
@@ -131,17 +132,6 @@ fun ExperimentalFeaturesPreferences(
                 fileAccessManager.refresh()
                 onPauseOrDispose { }
             }
-        }
-
-        PreferenceGroup(
-            Modifier,
-            stringResource(R.string.smartspace_label),
-        ) {
-            SwitchPreference(
-                adapter = prefs2.enableSmartspaceCalendarSelection.getAdapter(),
-                label = stringResource(id = R.string.smartspace_calendar_label),
-                description = stringResource(id = R.string.smartspace_calendar_description),
-            )
         }
 
         PreferenceGroup(

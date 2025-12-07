@@ -37,13 +37,7 @@ class IcuDateTextView @JvmOverloads constructor(
 
     init {
         repeatOnAttached {
-            val calendarSelectionEnabled = prefs.enableSmartspaceCalendarSelection.firstBlocking()
-            val calendarFlow =
-                if (calendarSelectionEnabled) {
-                    prefs.smartspaceCalendar.get()
-                } else {
-                    flowOf(prefs.smartspaceCalendar.defaultValue)
-                }
+            val calendarFlow = prefs.smartspaceCalendar.get()
             val optionsFlow = DateTimeOptions.fromPrefs(prefs)
             combine(calendarFlow, optionsFlow) { calendar, options -> calendar to options }
                 .subscribeBlocking(this) {

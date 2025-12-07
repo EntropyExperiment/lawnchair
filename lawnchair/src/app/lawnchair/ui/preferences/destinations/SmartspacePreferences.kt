@@ -191,19 +191,13 @@ fun SmartspaceDateAndTimePreferences(
     ) {
         val preferenceManager2 = preferenceManager2()
 
-        val calendarSelectionAdapter =
-            preferenceManager2.enableSmartspaceCalendarSelection.getAdapter()
         val calendarAdapter = preferenceManager2.smartspaceCalendar.getAdapter()
         val showDateAdapter = preferenceManager2.smartspaceShowDate.getAdapter()
         val showTimeAdapter = preferenceManager2.smartspaceShowTime.getAdapter()
 
         val calendarHasMinimumContent = !showDateAdapter.state.value || !showTimeAdapter.state.value
 
-        val calendar = if (calendarSelectionAdapter.state.value) {
-            calendarAdapter.state.value
-        } else {
-            preferenceManager2.smartspaceCalendar.defaultValue
-        }
+        val calendar = calendarAdapter.state.value
 
         ExpandAndShrink(visible = calendar.formatCustomizationSupport) {
             DividerColumn {
@@ -212,9 +206,7 @@ fun SmartspaceDateAndTimePreferences(
                     label = stringResource(id = R.string.smartspace_date),
                     enabled = if (showDateAdapter.state.value) !calendarHasMinimumContent else true,
                 )
-                val calendarSelectionEnabled =
-                    preferenceManager2.enableSmartspaceCalendarSelection.getAdapter()
-                ExpandAndShrink(visible = calendarSelectionEnabled.state.value && showDateAdapter.state.value) {
+                ExpandAndShrink(visible = showDateAdapter.state.value) {
                     SmartspaceCalendarPreference()
                 }
                 SwitchPreference(

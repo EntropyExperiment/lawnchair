@@ -21,11 +21,12 @@ Compatibility list:
 * [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
 * [Launcher] Enable bulk loading by default
 * [Launcher] Tablet support (ish)
-* [Launcher] Implement BAKLAVA_1 check
 * [Launcher] Refreshed Material 3 Expressive
 * [Lawnchair] Refreshed Material 3 Expressive
 * [Launcher] Foldable support (ish)
 * [Lawnchair] Warn when nightly updater is updating to next major version
+* [Lawnchair/Smartspace] Add Chinese calendar option
+* [Lawnchair/Smartspace] Promote smartspace calendar to stable
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
