@@ -44,7 +44,6 @@ materialMotionCompose = "2.0.1"
 navigationCompose = "2.9.6"
 okhttp = "5.3.2"
 palette = "1.0.0"
-persianDate = "1.7.1"
 preference = "1.2.1"
 profileinstaller = "1.4.1"
 recyclerview = "1.4.0"
@@ -168,7 +167,6 @@ leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", ve
 libsu-core = { group = "com.github.topjohnwu.libsu", name = "core", version.ref = "libsu" }
 libsu-service = { group = "com.github.topjohnwu.libsu", name = "service", version.ref = "libsu" }
 material-motion-compose = { group = "io.github.fornewid", name = "material-motion-compose-core", version.ref = "materialMotionCompose" }
-persian-date = { group = "com.github.samanzamani", name = "PersianDate", version.ref = "persianDate" }
 reorderable = { group = "sh.calvin.reorderable", name = "reorderable", version.ref = "reorderable" }
 rikka-annotation = { module = "dev.rikka.tools.refine:annotation", version.ref = "refine" }
 rikka-annotation-processor = { module = "dev.rikka.tools.refine:annotation-processor", version.ref = "refine" }

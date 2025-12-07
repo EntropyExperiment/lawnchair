@@ -468,9 +468,6 @@ dependencies {
 
     implementation libs.libsu.service
 
-    // Persian Date
-    implementation libs.persian.date
-
     implementation libs.airbnb.lottie
 
     // Compose drag and drop library
