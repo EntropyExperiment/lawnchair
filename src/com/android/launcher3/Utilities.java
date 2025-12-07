@@ -156,9 +156,10 @@ public final class Utilities {
     @ChecksSdkIntAtLeast(api = VERSION_CODES.BAKLAVA)
     public static final boolean ATLEAST_BAKLAVA = Build.VERSION.SDK_INT >= VERSION_CODES.BAKLAVA;
 
-    // pE-TODO(N/A): BAKLAVA_1, 36.1
-    @ChecksSdkIntAtLeast(api = 36, extension = 1, codename = "BAKLAVA_1")
-    public static final boolean ATLEAST_BAKLAVA_1 = Build.VERSION.SDK_INT >= VERSION_CODES.BAKLAVA;
+    @ChecksSdkIntAtLeast(api = 36, codename = "BAKLAVA_1")
+    public static final boolean ATLEAST_BAKLAVA_1 = 
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) 
+                && (Build.VERSION.SDK_INT_FULL >= Build.VERSION_CODES_FULL.BAKLAVA_1);
 
     /**
      * Set on a motion event dispatched from the nav bar. See {@link MotionEvent#setEdgeFlags(int)}.
