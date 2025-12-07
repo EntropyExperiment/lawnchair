@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.font.FontCache
+import app.lawnchair.util.getApkVersionComparison
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
@@ -144,6 +145,9 @@ class PreferenceManager @Inject constructor(
 
     val enableMaterialExpressive = BoolPref("pref_enableMaterialExpressive", false, recreate)
     val enableGnc = BoolPref("pref_enableGnc", false, recreate)
+
+    val lawnchairMajorVersion = IntPref("pref_lawnchairMajorVersion",
+        context.getApkVersionComparison().first[0], recreate)
 
     override fun close() {
         TODO("Not yet implemented")
