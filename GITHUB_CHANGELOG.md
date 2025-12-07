@@ -31,6 +31,8 @@ Compatibility list:
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
 * [Launcher] Hotseat Google provider failed to open due to Android pending intent restrictions on Android 14/15/16/16.1
+* [Launcher3/DeviceProfile] Positioning of first folder during Lawnchair setup
+* [Lawnchair/AllApps] Reimplement app drawer opacity
 
 
 ### 🥞 Development 3 Release 2
