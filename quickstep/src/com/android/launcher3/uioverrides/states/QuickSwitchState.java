@@ -19,6 +19,7 @@ import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_BACKG
 
 import android.graphics.Color;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
@@ -53,7 +54,7 @@ public class QuickSwitchState extends BackgroundAppState {
         if (dp.isTaskbarPresentInApps) {
             return launcher.getColor(R.color.taskbar_background);
         }
-        return Themes.getAttrColor(launcher, R.attr.overviewScrimColor);
+        return ColorTokens.OverviewScrim.resolveColor(launcher);
     }
 
     @Override

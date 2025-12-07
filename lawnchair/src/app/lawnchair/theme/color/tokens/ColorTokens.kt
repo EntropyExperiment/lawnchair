@@ -105,7 +105,19 @@ object ColorTokens {
 
     @JvmField val OverviewScrimColor = DayNightColorToken(Neutral2_100.setLStar(87.0), Neutral1_800)
 
+    @JvmField val OverviewScrimOverBlurColor = DayNightColorToken(
+        StaticColorToken(0x80FFFFFF),
+        StaticColorToken(0x80000000)
+    )
+
     @JvmField val OverviewScrim = OverviewScrimColor
+        .withPreferences { prefs ->
+            val translucent = prefs.recentsTranslucentBackground.get()
+            val translucentIntensity = prefs.recentsTranslucentBackgroundAlpha.get()
+            if (translucent) setAlpha(translucentIntensity) else this
+        }
+
+    @JvmField val OverviewScrimOverBlur = OverviewScrimOverBlurColor
         .withPreferences { prefs ->
             val translucent = prefs.recentsTranslucentBackground.get()
             val translucentIntensity = prefs.recentsTranslucentBackgroundAlpha.get()

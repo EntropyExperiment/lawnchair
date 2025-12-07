@@ -172,7 +172,7 @@ public class RecentsState implements BaseState<RecentsState> {
      */
     public int getScrimColor(Context context) {
         return hasFlag(FLAG_SCRIM)
-            ? Themes.getAttrColor(context, R.attr.overviewScrimColor)
+            ? ColorTokens.OverviewScrim.resolveColor(context)
             : Color.TRANSPARENT;
     }
 

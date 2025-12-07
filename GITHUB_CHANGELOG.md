@@ -33,6 +33,7 @@ Compatibility list:
 * [Launcher] Hotseat Google provider failed to open due to Android pending intent restrictions on Android 14/15/16/16.1
 * [Launcher3/DeviceProfile] Positioning of first folder during Lawnchair setup
 * [Lawnchair/AllApps] Reimplement app drawer opacity
+* [Lawnchair/Recents] Reimplement recents overview opacity
 
 
 ### 🥞 Development 3 Release 2
