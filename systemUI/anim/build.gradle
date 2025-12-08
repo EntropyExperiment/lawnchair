@@ -5,16 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
-// LC-Build-TODO: addFrameworkJar() doesn't work, what???
-def frameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
-tasks.withType(JavaCompile).configureEach {
-    classpath = files(frameworkJar)
-}
-tasks.withType(KotlinCompile).configureEach {
-    libraries.from(files(frameworkJar))
-}
-compileOnlyCommonJars()
-
 // TODO: Pull out surfaceeffects outside of src and have separate build files there.
 android {
     buildToolsVersion "36.1.0"

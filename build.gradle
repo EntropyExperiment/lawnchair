@@ -20,15 +20,6 @@ plugins {
     alias(libs.plugins.diffplug.spotless)
 }
 
-// LC-Build-TODO: addFrameworkJar() doesn't work, what???
-def localFrameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
-tasks.withType(JavaCompile).configureEach {
-    classpath = files(localFrameworkJar)
-}
-tasks.withType(KotlinCompile).configureEach {
-    libraries.from(files(localFrameworkJar))
-}
-
 allprojects {
     plugins.withType(AndroidBasePlugin).configureEach {
         android {
