@@ -43,6 +43,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import app.lawnchair.preferences2.PreferenceManager2;
 import com.android.launcher3.BuildConfig;
 import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.Workspace;
@@ -66,6 +67,7 @@ import com.android.launcher3.util.PackageUserKey;
 import com.android.launcher3.util.RunnableList;
 import com.android.launcher3.widget.model.WidgetsListBaseEntry;
 
+import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -151,16 +153,17 @@ public class BgDataModel {
     /**
      * Creates an array of valid workspace screens based on current items in the model.
      */
-    public synchronized IntArray collectWorkspaceScreens() {
+    public synchronized IntArray collectWorkspaceScreens(Context context) {
         IntSet screenSet = new IntSet();
         for (ItemInfo item: itemsIdMap) {
             if (item.container == CONTAINER_DESKTOP) {
                 screenSet.add(item.screenId);
             }
         }
-        if ((FeatureFlags.QSB_ON_FIRST_SCREEN
-                && !SHOULD_SHOW_FIRST_PAGE_WIDGET)
-                || screenSet.isEmpty()) {
+
+        boolean smartspaceEnabled = PreferenceExtensionsKt.firstBlocking(
+            PreferenceManager2.INSTANCE.get(context).getEnableSmartspace());
+        if (smartspaceEnabled || screenSet.isEmpty()) {
             screenSet.add(Workspace.FIRST_SCREEN_ID);
         }
         return screenSet.getArray();

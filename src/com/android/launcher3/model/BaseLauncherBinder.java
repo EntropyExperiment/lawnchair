@@ -124,7 +124,7 @@ public class BaseLauncherBinder {
             final int workspaceItemCount;
             synchronized (mBgDataModel) {
                 itemsIdMap = mBgDataModel.itemsIdMap.clone();
-                orderedScreenIds.addAll(mBgDataModel.collectWorkspaceScreens());
+                orderedScreenIds.addAll(mBgDataModel.collectWorkspaceScreens(mContext));
                 mBgDataModel.extraItems.forEach(extraItems::add);
                 if (incrementBindId) {
                     mBgDataModel.lastBindId++;
