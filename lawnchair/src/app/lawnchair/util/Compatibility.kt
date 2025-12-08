@@ -3,10 +3,13 @@ package app.lawnchair.util
 import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
+import com.android.launcher3.Utilities
 
 private const val TAG = "Compatibility"
 
 val isOnePlusStock = checkOnePlusStock()
+
+val isNothingStock = checkNothingStock()
 
 val isGoogle = checkGoogle()
 
@@ -25,11 +28,25 @@ private fun checkOnePlusStock(): Boolean = when {
     else -> false
 }
 
-private fun checkGoogle(): Boolean = when {
-    Build.BRAND.contains("google", true) -> true
-    Build.MANUFACTURER.contains("google", true) -> true
-    Build.FINGERPRINT.contains("google", true) -> true
+private fun checkNothingStock(): Boolean = when {
+    getSystemProperty("ro.nothing.version.id", "").isNotEmpty() -> true
+    getSystemProperty("ro.build.nothing.version", "").isNotEmpty() -> true
+    getSystemProperty("ro.build.nothing.feature.base", "").isNotEmpty() -> true
     else -> false
+}
+
+private fun checkGoogle(): Boolean = if (Utilities.ATLEAST_S) {
+    when {
+        Build.SOC_MODEL.contains("tensor", true) && Build.SOC_MANUFACTURER.contains("google", true) -> true
+        else -> false
+    }
+} else {
+    when {
+        Build.BRAND.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
+        Build.MANUFACTURER.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
+        Build.FINGERPRINT.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
+        else -> false
+    }
 }
 
 private fun checkSamsung(): Boolean = when {
@@ -42,6 +59,7 @@ private fun checkSamsung(): Boolean = when {
 
 private fun checkGestureNavContract(): Boolean = when {
     checkGoogle() -> true
+    checkNothingStock() -> true
     else -> false
 }
 
