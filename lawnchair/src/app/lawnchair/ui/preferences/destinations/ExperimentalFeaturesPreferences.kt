@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.lawnchair.LawnchairApp
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
@@ -24,7 +25,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
 import com.android.launcher3.R
-import com.android.launcher3.Utilities.ATLEAST_S
+import com.android.launcher3.Utilities
 
 @Composable
 fun ExperimentalFeaturesPreferences(
@@ -39,10 +40,10 @@ fun ExperimentalFeaturesPreferences(
     ) {
         PreferenceGroup {
             SwitchPreference(
-                adapter = enableGncAdapter,
+                adapter = prefs.enableGnc.getAdapter(),
                 label = stringResource(id = R.string.gesturenavcontract_label),
                 description = stringResource(id = R.string.gesturenavcontract_description),
-                enabled = ATLEAST_S,
+                enabled = !LawnchairApp.isRecentsEnabled && Utilities.ATLEAST_S,
             )
             SwitchPreference(
                 adapter = prefs2.enableFontSelection.getAdapter(),
