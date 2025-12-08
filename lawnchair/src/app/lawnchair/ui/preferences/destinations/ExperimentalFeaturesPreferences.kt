@@ -22,6 +22,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAwa
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
+import app.lawnchair.util.isGestureNavContractCompatible
 import com.android.launcher3.R
 import com.android.launcher3.Utilities.ATLEAST_S
 import com.android.systemui.shared.system.BlurUtils
@@ -172,7 +173,7 @@ fun ExperimentalFeaturesPreferences(
                     enabled = ATLEAST_S,
                 )
             }
-            if (enableGncAdapter.state.value) {
+            if (enableGncAdapter.state.value && !isGestureNavContractCompatible) {
                 item { _ -> WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility)) }
             }
         }
