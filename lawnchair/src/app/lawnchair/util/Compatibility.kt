@@ -31,7 +31,6 @@ private fun checkGoogle(): Boolean = when {
 }
 
 private fun checkGestureNavContract(): Boolean = when {
-    LawnchairApp.isRecentsEnabled -> false
     Utilities.ATLEAST_S && checkGoogle() -> true
     else -> false
 }
