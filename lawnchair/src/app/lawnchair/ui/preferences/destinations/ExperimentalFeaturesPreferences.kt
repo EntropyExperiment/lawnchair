@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.lawnchair.LawnchairApp
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
@@ -43,7 +42,7 @@ fun ExperimentalFeaturesPreferences(
                 adapter = prefs.enableGnc.getAdapter(),
                 label = stringResource(id = R.string.gesturenavcontract_label),
                 description = stringResource(id = R.string.gesturenavcontract_description),
-                enabled = !LawnchairApp.isRecentsEnabled && Utilities.ATLEAST_S,
+                enabled = Utilities.ATLEAST_S,
             )
             SwitchPreference(
                 adapter = prefs2.enableFontSelection.getAdapter(),
