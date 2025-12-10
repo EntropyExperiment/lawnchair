@@ -138,26 +138,28 @@ fun HotseatBackgroundSettings(prefs: PreferenceManager, prefs2: PreferenceManage
 
 @Composable
 fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
-    SliderPreference(
-        label = stringResource(id = R.string.dock_icons),
-        adapter = prefs.hotseatColumns.getAdapter(),
-        step = 1,
-        valueRange = 3..10,
-    )
-    SliderPreference(
-        adapter = prefs2.hotseatBottomFactor.getAdapter(),
-        label = stringResource(id = R.string.hotseat_bottom_space_label),
-        valueRange = 0.0F..1.7F,
-        step = 0.1F,
-        showAsPercentage = true,
-    )
-    SliderPreference(
-        adapter = prefs2.pageIndicatorHeightFactor.getAdapter(),
-        label = stringResource(id = R.string.page_indicator_height),
-        valueRange = 0.0F..1.0F,
-        step = 0.1F,
-        showAsPercentage = true,
-    )
+    DividerColumn {
+        SliderPreference(
+            label = stringResource(id = R.string.dock_icons),
+            adapter = prefs.hotseatColumns.getAdapter(),
+            step = 1,
+            valueRange = 3..10,
+        )
+        SliderPreference(
+            adapter = prefs2.hotseatBottomFactor.getAdapter(),
+            label = stringResource(id = R.string.hotseat_bottom_space_label),
+            valueRange = 0.0F..1.7F,
+            step = 0.1F,
+            showAsPercentage = true,
+        )
+        SliderPreference(
+            adapter = prefs2.pageIndicatorHeightFactor.getAdapter(),
+            label = stringResource(id = R.string.page_indicator_height),
+            valueRange = 0.0F..1.0F,
+            step = 0.1F,
+            showAsPercentage = true,
+        )
+    }
 }
 
 @Composable
