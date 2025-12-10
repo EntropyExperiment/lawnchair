@@ -96,13 +96,33 @@ fun PreferenceGroupPositionAware(
         modifier = modifier,
     ) {
         PreferenceGroupHeading(heading)
+
+        val scope = PreferenceGroupScopeImpl()
+        scope.content()
+
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
         ) {
-            val scope = PreferenceGroupScopeImpl()
-            scope.content()
-            scope.Render()
+            val items = scope.items
+            val count = items.size
+
+            items.forEachIndexed { index, itemData ->
+                androidx.compose.runtime.key(itemData.key ?: index) {
+                    val position = PreferenceGroupItemPosition(
+                        isFirst = index == 0,
+                        isLast = index == count - 1,
+                    )
+
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = preferenceGroupItemShape(position),
+                        color = preferenceGroupColor(),
+                    ) {
+                        itemData.content(position)
+                    }
+                }
+            }
         }
         PreferenceGroupDescription(description = description, showDescription = showDescription)
     }
@@ -115,33 +135,19 @@ interface PreferenceGroupScope {
     )
 }
 
+private data class PreferenceGroupItemData(
+    val key: Any?,
+    val content: @Composable (position: PreferenceGroupItemPosition) -> Unit,
+)
+
 private class PreferenceGroupScopeImpl : PreferenceGroupScope {
-    private val items = mutableListOf<@Composable (position: PreferenceGroupItemPosition) -> Unit>()
+    val items = mutableListOf<PreferenceGroupItemData>()
 
     override fun item(
         key: Any?,
         content: @Composable (position: PreferenceGroupItemPosition) -> Unit,
     ) {
-        items.add(content)
-    }
-
-    @Suppress("ktlint:compose:modifier-missing-check")
-    @Composable
-    fun Render() {
-        val count = items.size
-        items.forEachIndexed { index, item ->
-            val position = PreferenceGroupItemPosition(
-                isFirst = index == 0,
-                isLast = index == count - 1,
-            )
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = preferenceGroupItemShape(position),
-                color = preferenceGroupColor(),
-            ) {
-                item(position)
-            }
-        }
+        items.add(PreferenceGroupItemData(key, content))
     }
 }
 
