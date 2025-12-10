@@ -114,18 +114,24 @@ fun UpdateSection(
                     text = { Text(stringResource(R.string.major_update_description, "$currentMajor", "$apkMajor")) },
                     icon = { Icon(Icons.Rounded.Warning, null) },
                     confirmButton = {
-                        TextButton(onClick = {
-                            showMajorDialog = false
-                            onForceInstall(updateState.file)
-                        }) {
+                        TextButton(
+                            onClick = {
+                                showMajorDialog = false
+                                onForceInstall(updateState.file)
+                            },
+                            shapes = ButtonDefaults.shapes(),
+                        ) {
                             Text(stringResource(R.string.install_update))
                         }
                     },
                     dismissButton = {
-                        TextButton(onClick = {
-                            showMajorDialog = false
-                            onDismissMajorUpdate(updateState.file)
-                        }) {
+                        TextButton(
+                            onClick = {
+                                showMajorDialog = false
+                                onDismissMajorUpdate(updateState.file)
+                            },
+                            shapes = ButtonDefaults.shapes(),
+                        ) {
                             Text(stringResource(android.R.string.cancel))
                         }
                     },
