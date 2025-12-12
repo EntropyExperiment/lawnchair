@@ -3,6 +3,7 @@ package app.lawnchair.ui.preferences.components
 import android.view.HapticFeedbackConstants
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -52,7 +54,7 @@ import app.lawnchair.ui.util.addIf
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import sh.calvin.reorderable.ReorderableColumn
-import sh.calvin.reorderable.ReorderableScope
+import sh.calvin.reorderable.ReorderableListItemScope
 
 @Composable
 fun <T> DraggablePreferenceGroup(
@@ -61,22 +63,28 @@ fun <T> DraggablePreferenceGroup(
     defaultList: List<T>,
     onOrderChange: (List<T>) -> Unit,
     modifier: Modifier = Modifier,
-    itemContent: @Composable ReorderableScope.(
+    itemContent: @Composable ReorderableListItemScope.(
         item: T,
         index: Int,
         isDragging: Boolean,
         onDraggingChange: (Boolean) -> Unit,
     ) -> Unit,
 ) {
-    var localItems = items
+    var localItems by remember { mutableStateOf(items) }
     var isAnyDragging by remember { mutableStateOf(false) }
+
+    LaunchedEffect(items) {
+        if (localItems != items) {
+            localItems = items
+        }
+    }
+
+    val view = LocalView.current
 
     val color by animateColorAsState(
         targetValue = if (!isAnyDragging) preferenceGroupColor() else MaterialTheme.colorScheme.surface,
         label = "card background animation",
     )
-
-    val view = LocalView.current
 
     Column(modifier) {
         PreferenceGroupHeading(
@@ -88,13 +96,12 @@ fun <T> DraggablePreferenceGroup(
             color = color,
         ) {
             ReorderableColumn(
-                modifier = Modifier,
                 list = localItems,
-                onSettle = { fromIndex, toIndex ->
+                onSettle = { from, to ->
                     localItems = localItems.toMutableList().apply {
-                        add(toIndex, removeAt(fromIndex))
-                    }.toList().also { newItems ->
-                        onOrderChange(newItems)
+                        add(to, removeAt(from))
+                    }.also {
+                        onOrderChange(it)
                         isAnyDragging = false
                     }
                 },
@@ -105,30 +112,31 @@ fun <T> DraggablePreferenceGroup(
                     }
                 },
             ) { index, item, isDragging ->
-                key(item) {
-                    Column {
-                        DraggablePreferenceContainer(
-                            isDragging = isDragging,
-                            modifier = Modifier
-                                .a11yDrag(
-                                    index = index,
-                                    items = items,
-                                    onMoveUp = { localItems = it },
-                                    onMoveDown = { localItems = it },
-                                ),
-                        ) {
-                            itemContent(
-                                item,
-                                index,
-                                isDragging,
+                key(item.hashCode()) {
+                    ReorderableItem {
+                        Column {
+                            DraggablePreferenceContainer(
+                                isDragging = isDragging,
+                                modifier = Modifier
+                                    .a11yDrag(
+                                        index = index,
+                                        items = items,
+                                        onMoveUp = { onOrderChange(it) },
+                                        onMoveDown = { onOrderChange(it) },
+                                    ),
                             ) {
-                                isAnyDragging = it
+                                itemContent(
+                                    item,
+                                    index,
+                                    isDragging,
+                                ) { isAnyDragging = it }
                             }
-                        }
-                        AnimatedVisibility(!isAnyDragging && index != localItems.lastIndex) {
-                            HorizontalDivider(
-                                Modifier.padding(start = 50.dp, end = 16.dp),
-                            )
+
+                            AnimatedVisibility(!isAnyDragging && index != localItems.lastIndex) {
+                                HorizontalDivider(
+                                    Modifier.padding(start = 50.dp, end = 16.dp),
+                                )
+                            }
                         }
                     }
                 }
@@ -153,20 +161,14 @@ fun DraggablePreferenceContainer(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp, label = "elevation")
+
     Card(
-        elevation = if (isDragging) {
-            CardDefaults.elevatedCardElevation()
-        } else {
-            CardDefaults.cardElevation(
-                0.dp,
-            )
-        },
+        elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         colors = if (isDragging) {
             CardDefaults.elevatedCardColors()
         } else {
-            CardDefaults.cardColors(
-                Color.Transparent,
-            )
+            CardDefaults.cardColors(containerColor = Color.Transparent)
         },
         modifier = modifier,
     ) {
@@ -236,7 +238,7 @@ fun DraggableSwitchPreference(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DragHandle(
-    scope: ReorderableScope,
+    scope: ReorderableListItemScope,
     interactionSource: MutableInteractionSource,
     modifier: Modifier = Modifier,
     isDraggable: Boolean = true,
@@ -246,7 +248,8 @@ fun DragHandle(
     IconButton(
         modifier = with(scope) {
             modifier.addIf(isDraggable) {
-                longPressDraggableHandle(
+                draggableHandle(
+                    interactionSource = interactionSource,
                     onDragStarted = {
                         if (Utilities.ATLEAST_U) {
                             view.performHapticFeedback(HapticFeedbackConstants.DRAG_START)
