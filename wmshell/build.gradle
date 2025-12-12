@@ -30,9 +30,9 @@ dependencies {
     ksp libs.dagger.hilt.compiler
     implementation libs.androidx.core.animation
     implementation libs.androidx.dynamicanimation
-    implementation projects.iconloaderlib
-    implementation projects.flags
-    implementation projects.utils
+    compileOnly projects.iconloaderlib
+    compileOnly projects.flags
+    compileOnly projects.utils
 }
 
 ksp {
