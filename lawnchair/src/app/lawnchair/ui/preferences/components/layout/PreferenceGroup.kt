@@ -97,7 +97,7 @@ fun PreferenceGroup(
                             modifier = Modifier.fillMaxWidth(),
                             shape = preferenceGroupItemShape(position),
                             color = preferenceGroupColor(),
-                            content = { itemData.content(this, position) }
+                            content = { itemData.content(this, position) },
                         )
                     }
                 }
@@ -114,7 +114,7 @@ interface PreferenceGroupScope {
         visible: Boolean = true,
         enter: EnterTransition = expandVertically() + fadeIn(),
         exit: ExitTransition = shrinkVertically() + fadeOut(),
-        content: @Composable AnimatedVisibilityScope.(position: PreferenceGroupItemPosition) -> Unit
+        content: @Composable AnimatedVisibilityScope.(position: PreferenceGroupItemPosition) -> Unit,
     )
 }
 
@@ -130,7 +130,7 @@ private data class PreferenceGroupItemData(
 }
 
 private class PreferenceGroupScopeImpl(
-    private val items: SnapshotStateList<PreferenceGroupItemData>
+    private val items: SnapshotStateList<PreferenceGroupItemData>,
 ) : PreferenceGroupScope {
 
     @Composable
@@ -151,7 +151,7 @@ private class PreferenceGroupScopeImpl(
                 enter = enter,
                 exit = exit,
                 content = content,
-            )
+            ),
         )
     }
 }
