@@ -33,6 +33,8 @@ Compatibility list:
 * [Lawnchair] Set GestureNavContract on by default on Nothing device
 * [Lawnchair] Don't show warning on known compatible device
 * [Lawnchair] Swipe to dismiss announcement perform haptic on successful dismiss
+* [Lawnchair] Remove Inter v3 fonts from Lawnchair entirely (to reduce apk size)
+* [Lawnchair] Add Google Sans variable font as fallback to Google Sans Flex (to support the most of the world languages)
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
