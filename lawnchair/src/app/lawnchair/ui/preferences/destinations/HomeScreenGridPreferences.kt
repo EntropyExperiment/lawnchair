@@ -25,7 +25,7 @@ import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.GridOverridesPreview
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
@@ -61,7 +61,7 @@ fun HomeScreenGridPreferences(
 
         val maxGridSize = if (increaseMaxGridSize.state.value) 20 else 10
 
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             item { _ ->
                 SliderPreference(
                     label = stringResource(id = R.string.columns),

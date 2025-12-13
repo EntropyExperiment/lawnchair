@@ -55,7 +55,7 @@ import app.lawnchair.preferences2.asState
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.GeneralCustomIconShapeCreator
@@ -104,7 +104,7 @@ fun IconShapePreference(
         label = stringResource(id = R.string.icon_shape_label),
         modifier = modifier,
     ) {
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             heading = stringResource(id = R.string.custom),
         ) {
             item { _ ->
@@ -118,7 +118,7 @@ fun IconShapePreference(
                 )
             }
         }
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             heading = stringResource(id = R.string.presets),
         ) {
             entries.forEach { item ->

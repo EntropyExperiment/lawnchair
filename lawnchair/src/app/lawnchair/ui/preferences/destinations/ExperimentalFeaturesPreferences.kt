@@ -18,7 +18,7 @@ import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
@@ -47,7 +47,7 @@ fun ExperimentalFeaturesPreferences(
         val hasPermission = wallpaperAccessState != FileAccessState.Denied
         var showPermissionDialog by remember { mutableStateOf(false) }
 
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             Modifier,
             stringResource(R.string.workspace_label),
         ) {
@@ -148,7 +148,7 @@ fun ExperimentalFeaturesPreferences(
         val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
         val enableGncAdapter = prefs.enableGnc.getAdapter()
 
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             Modifier,
             stringResource(R.string.internal_label),
             stringResource(R.string.internal_description),

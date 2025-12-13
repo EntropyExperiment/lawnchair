@@ -21,7 +21,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.TextPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.data.liveinfo.liveInformationManager
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
@@ -57,7 +57,7 @@ fun DebugMenuPreferences(
         modifier = modifier,
     ) {
         MainSwitchPreference(adapter = enableDebug, label = "Show debug menu") {
-            PreferenceGroupPositionAware {
+            PreferenceGroup {
                 item { _ ->
                     ClickablePreference(
                         label = "Feature flags (Views)",
@@ -107,7 +107,7 @@ fun DebugMenuPreferences(
                 }
             }
 
-            PreferenceGroupPositionAware(heading = "Debug flags") {
+            PreferenceGroup(heading = "Debug flags") {
                 flags2.forEach {
                     item { _ ->
                         SwitchPreference(
@@ -141,7 +141,7 @@ fun DebugMenuPreferences(
             }
 
             val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
-            PreferenceGroupPositionAware(heading = "Supported features") {
+            PreferenceGroup(heading = "Supported features") {
                 item { _ ->
                     ClickablePreference(
                         label = "Window blurs",

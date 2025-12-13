@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.preferenceGroupColor
 import app.lawnchair.ui.util.addIf
@@ -144,7 +144,7 @@ fun <T> DraggablePreferenceGroup(
         }
 
         ExpandAndShrink(visible = localItems != defaultList) {
-            PreferenceGroupPositionAware {
+            PreferenceGroup {
                 item { _ ->
                     ClickablePreference(label = stringResource(id = R.string.action_reset)) {
                         onOrderChange(defaultList)

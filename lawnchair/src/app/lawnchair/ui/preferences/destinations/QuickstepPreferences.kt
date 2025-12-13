@@ -20,9 +20,7 @@ import app.lawnchair.ui.preferences.components.RecentsQuickAction
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
-import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import app.lawnchair.util.isOnePlusStock
@@ -75,7 +73,7 @@ fun QuickstepPreferences(
     ) {
         if (!LawnchairApp.isRecentsEnabled) QuickSwitchIgnoredWarning()
         val recentsTranslucentBackground by prefs.recentsTranslucentBackground.observeAsState()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             item { _ ->
                 SwitchPreference(
                     adapter = prefs.recentsTranslucentBackground.getAdapter(),
@@ -101,7 +99,7 @@ fun QuickstepPreferences(
         )
 
         val overrideWindowCornerRadius by prefs.overrideWindowCornerRadius.observeAsState()
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             heading = stringResource(id = R.string.window_corner_radius_label),
             description = stringResource(id = (R.string.window_corner_radius_description)),
             showDescription = overrideWindowCornerRadius,
@@ -125,7 +123,7 @@ fun QuickstepPreferences(
         }
 
         if (Utilities.ATLEAST_S_V2) {
-            PreferenceGroupPositionAware(
+            PreferenceGroup(
                 heading = stringResource(id = R.string.taskbar_label),
             ) {
                 item { _ ->

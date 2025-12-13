@@ -44,7 +44,7 @@ import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.notificationDotsEnabled
 import app.lawnchair.ui.preferences.components.notificationServiceEnabled
@@ -88,7 +88,7 @@ fun GeneralPreferences() {
         backArrowVisible = !LocalIsExpandedScreen.current,
         label = stringResource(id = R.string.general_label),
     ) {
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             item { _ ->
                 SwitchPreference(
                     adapter = prefs.allowRotation.getAdapter(),
@@ -98,7 +98,7 @@ fun GeneralPreferences() {
             }
         }
         ExpandAndShrink(visible = prefs2.enableFontSelection.asState().value) {
-            PreferenceGroupPositionAware(heading = stringResource(id = R.string.font_label)) {
+            PreferenceGroup(heading = stringResource(id = R.string.font_label)) {
                 item { _ ->
                     FontPreference(
                         fontPref = prefs.fontWorkspace,
@@ -133,7 +133,7 @@ fun GeneralPreferences() {
         }
         val wrapAdaptiveIcons = prefs.wrapAdaptiveIcons.getAdapter()
 
-        PreferenceGroupPositionAware(
+        PreferenceGroup(
             heading = stringResource(id = R.string.icons),
             description = stringResource(id = (R.string.adaptive_icon_background_description)),
             showDescription = wrapAdaptiveIcons.state.value,
@@ -194,7 +194,7 @@ fun GeneralPreferences() {
         val showColorStyle = !(Utilities.ATLEAST_S && accentColorAdapter.state.value == ColorOption.SystemAccent) ||
             !Utilities.ATLEAST_S
 
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.colors)) {
+        PreferenceGroup(heading = stringResource(id = R.string.colors)) {
             item { _ -> ThemePreference() }
             item { _ -> ColorPreference(preference = prefs2.accentColor) }
             if (showColorStyle) {
@@ -209,7 +209,7 @@ fun GeneralPreferences() {
         val dotColor = prefs2.notificationDotColor.asState().value
         val dotTextColor = prefs2.notificationDotTextColor.asState().value
 
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.notification_dots)) {
+        PreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
             item { _ -> NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
             if (notificationEnabled && serviceEnabled) {
                 item { _ -> ColorPreference(preference = prefs2.notificationDotColor) }

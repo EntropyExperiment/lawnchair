@@ -26,7 +26,7 @@ import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
 
@@ -41,7 +41,7 @@ fun FolderPreferences(
     ) {
         val prefs = preferenceManager()
         val prefs2 = preferenceManager2()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             item { _ -> ColorPreference(preference = prefs2.folderColor) }
             item { _ ->
                 SliderPreference(
@@ -62,7 +62,7 @@ fun FolderPreferences(
                 )
             }
         }
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.grid)) {
+        PreferenceGroup(heading = stringResource(id = R.string.grid)) {
             item { _ ->
                 SliderPreference(
                     label = stringResource(id = R.string.max_folder_columns),
@@ -82,7 +82,7 @@ fun FolderPreferences(
         }
 
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreenFolder.getAdapter()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.icons)) {
+        PreferenceGroup(heading = stringResource(id = R.string.icons)) {
             item { _ ->
                 SwitchPreference(
                     adapter = homeScreenLabelsAdapter,

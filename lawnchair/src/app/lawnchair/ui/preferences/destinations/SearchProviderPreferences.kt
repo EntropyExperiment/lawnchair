@@ -28,7 +28,7 @@ import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
@@ -47,7 +47,7 @@ fun SearchProviderPreferences(
         label = stringResource(R.string.search_provider),
         modifier = modifier,
     ) {
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             QsbSearchProvider.values().forEach { qsbSearchProvider ->
                 item { _ ->
                     val appInstalled = qsbSearchProvider.isDownloaded(context)

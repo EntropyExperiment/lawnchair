@@ -40,7 +40,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.HomeScreenGrid
 import app.lawnchair.util.collectAsStateBlocking
@@ -72,7 +72,7 @@ fun HomeScreenPreferences(
             HomeLayoutSettings()
         }
 
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             val addIconToHomeAdapter = prefs.addIconToHome.getAdapter()
             val isDeckLayoutAdapter = prefs2.deckLayout.getAdapter()
             if (!isDeckLayoutAdapter.state.value) {
@@ -102,7 +102,7 @@ fun HomeScreenPreferences(
         }
         val feedAvailable = OverlayCallbackImpl.minusOneAvailable(LocalContext.current)
         val enableFeedAdapter = prefs2.enableFeed.getAdapter()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.minus_one)) {
+        PreferenceGroup(heading = stringResource(id = R.string.minus_one)) {
             item { _ ->
                 SwitchPreference(
                     adapter = enableFeedAdapter,
@@ -118,7 +118,7 @@ fun HomeScreenPreferences(
                 FeedPreference()
             }
         }
-        PreferenceGroupPositionAware(heading = stringResource(R.string.style)) {
+        PreferenceGroup(heading = stringResource(R.string.style)) {
             item { _ -> HomeScreenTextColorPreference() }
             item { _ ->
                 OverlayHandlerPreference(
@@ -127,7 +127,7 @@ fun HomeScreenPreferences(
                 )
             }
         }
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.wallpaper)) {
+        PreferenceGroup(heading = stringResource(id = R.string.wallpaper)) {
             item { _ ->
                 SwitchPreference(
                     prefs.wallpaperScrolling.getAdapter(),
@@ -152,7 +152,7 @@ fun HomeScreenPreferences(
         }
         val columns by prefs.workspaceColumns.getAdapter()
         val rows by prefs.workspaceRows.getAdapter()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.layout)) {
+        PreferenceGroup(heading = stringResource(id = R.string.layout)) {
             item { _ ->
                 NavigationActionPreference(
                     label = stringResource(id = R.string.home_screen_grid),
@@ -168,11 +168,11 @@ fun HomeScreenPreferences(
                 )
             }
         }
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.popup_menu)) {
+        PreferenceGroup(heading = stringResource(id = R.string.popup_menu)) {
             item { _ -> LauncherPopupPreferenceItem() }
         }
         val showStatusBarAdapter = prefs2.showStatusBar.getAdapter()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.status_bar_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.status_bar_label)) {
             item { _ ->
                 SwitchPreference(
                     adapter = showStatusBarAdapter,
@@ -198,7 +198,7 @@ fun HomeScreenPreferences(
             }
         }
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreen.getAdapter()
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.icons)) {
+        PreferenceGroup(heading = stringResource(id = R.string.icons)) {
             item { _ ->
                 SliderPreference(
                     label = stringResource(id = R.string.icon_sizes),
@@ -229,7 +229,7 @@ fun HomeScreenPreferences(
         val overrideRepo = IconOverrideRepository.INSTANCE.get(LocalContext.current)
         val customIconsCount by remember { overrideRepo.observeCount() }.collectAsStateBlocking()
         if (customIconsCount > 0) {
-            PreferenceGroupPositionAware {
+            PreferenceGroup {
                 item { _ ->
                     ClickablePreference(
                         label = stringResource(id = R.string.reset_custom_icons),
@@ -239,7 +239,7 @@ fun HomeScreenPreferences(
                 }
             }
         }
-        PreferenceGroupPositionAware(heading = stringResource(id = R.string.widget_button_text)) {
+        PreferenceGroup(heading = stringResource(id = R.string.widget_button_text)) {
             item { _ ->
                 SwitchPreference(
                     adapter = prefs2.roundedWidgets.getAdapter(),

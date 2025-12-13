@@ -49,7 +49,7 @@ import app.lawnchair.ui.preferences.components.controls.getSteps
 import app.lawnchair.ui.preferences.components.controls.snapSliderValue
 import app.lawnchair.ui.preferences.components.layout.BottomSpacer
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
@@ -133,7 +133,7 @@ private fun IconShapeCornerPreferenceGroup(
     modifier: Modifier = Modifier,
     onSelectedIconShapeChange: (IconShape) -> Unit,
 ) {
-    PreferenceGroupPositionAware(
+    PreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.color_sliders),
     ) {
@@ -200,7 +200,7 @@ private fun IconShapeClipboardPreferenceGroup(
 ) {
     val context = LocalContext.current
     val importErrorMessage = stringResource(id = R.string.icon_shape_clipboard_import_error)
-    PreferenceGroupPositionAware(
+    PreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.clipboard),
     ) {

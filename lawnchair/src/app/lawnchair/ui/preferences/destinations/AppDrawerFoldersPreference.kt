@@ -47,7 +47,6 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.LoadingScreen
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.AppDrawerAppListToFolder
@@ -63,7 +62,7 @@ fun AppDrawerFolderPreferenceItem(
 ) {
     val navController = LocalNavController.current
 
-    PreferenceGroupPositionAware(
+    PreferenceGroup(
         modifier = modifier,
     ) {
         item { _ ->
@@ -153,7 +152,7 @@ fun AppDrawerFoldersPreference(
             label = stringResource(id = R.string.app_drawer_folder),
             backArrowVisible = true,
         ) {
-            PreferenceGroupPositionAware(
+            PreferenceGroup(
                 heading = stringResource(R.string.settings),
             ) {
                 item { _ ->
@@ -164,7 +163,7 @@ fun AppDrawerFoldersPreference(
                     )
                 }
             }
-            PreferenceGroupPositionAware(heading = stringResource(R.string.folders_label)) {
+            PreferenceGroup(heading = stringResource(R.string.folders_label)) {
                 item { _ ->
                     PreferenceTemplate(
                         title = {},

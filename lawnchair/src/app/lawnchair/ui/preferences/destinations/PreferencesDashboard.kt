@@ -52,7 +52,7 @@ import app.lawnchair.ui.preferences.components.AnnouncementPreference
 import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.data.liveinfo.SyncLiveInformation
@@ -114,7 +114,7 @@ fun PreferencesDashboard(
         }
 
         val deckLayout = prefs2.deckLayout.getAdapter()
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             item {
                 PreferenceCategory(
                     label = stringResource(R.string.general_label),

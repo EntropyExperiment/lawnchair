@@ -38,21 +38,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.drawOutline
-import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -60,52 +50,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.theme.preferenceGroupColor
 
-@Composable
-fun PreferenceGroup(
-    modifier: Modifier = Modifier,
-    heading: String? = null,
-    description: String? = null,
-    showDescription: Boolean = true,
-    showDividers: Boolean = true,
-    dividerStartIndent: Dp = 0.dp,
-    dividerEndIndent: Dp = 0.dp,
-    dividersToSkip: Int = 0,
-    dividerColor: Color = MaterialTheme.colorScheme.surface,
-    content: @Composable () -> Unit,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        PreferenceGroupHeading(heading)
-        Surface(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(24.dp),
-            color = preferenceGroupColor(),
-        ) {
-            if (showDividers) {
-                DividerColumn(
-                    startIndent = dividerStartIndent,
-                    endIndent = dividerEndIndent,
-                    content = content,
-                    dividersToSkip = dividersToSkip,
-                    color = dividerColor,
-                )
-            } else {
-                Column {
-                    content()
-                }
-            }
-        }
-        PreferenceGroupDescription(description = description, showDescription = showDescription)
-    }
-}
-
 /**
  * PreferenceGroup with scope-based content for position-aware items.
  * Items added via scope automatically get isFirst/isLast tracking
  */
 @Composable
-fun PreferenceGroupPositionAware(
+fun PreferenceGroup(
     modifier: Modifier = Modifier,
     heading: String? = null,
     description: String? = null,

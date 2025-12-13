@@ -72,7 +72,7 @@ import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.invariantDeviceProfile
 import app.lawnchair.ui.preferences.components.layout.Chip
 import app.lawnchair.ui.preferences.components.layout.NestedScrollStretch
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.theme.preferenceGroupColor
 import app.lawnchair.util.Constants
@@ -203,7 +203,7 @@ fun IconPackPreferences(
                                 adapter = iconPackAdapter,
                                 false,
                             )
-                            PreferenceGroupPositionAware {
+                            PreferenceGroup {
                                 item { _ ->
                                     SwitchPreference(
                                         adapter = prefs.tintIconPackBackgrounds.getAdapter(),
@@ -228,7 +228,7 @@ fun IconPackPreferences(
                                     true,
                                 )
                             }
-                            PreferenceGroupPositionAware {
+                            PreferenceGroup {
                                 item { _ ->
                                     ListPreference(
                                         enabled = themedIconsAvailable,

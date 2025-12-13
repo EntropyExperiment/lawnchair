@@ -39,7 +39,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupPositionAware
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.dividerColor
@@ -172,7 +172,7 @@ fun ContactsSearchProvider(
         modifier = modifier,
         enabled = contactsPermissionState.status.isGranted,
     ) {
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             item { _ ->
                 SliderPreference(
                     label = stringResource(R.string.max_people_result_count_title),
@@ -224,7 +224,7 @@ fun GenericSearchProviderPreference(
         label = stringResource(getProviderName(provider)),
         modifier = modifier,
     ) {
-        PreferenceGroupPositionAware {
+        PreferenceGroup {
             item { _ ->
                 SliderPreference(
                     label = stringResource(
