@@ -47,20 +47,20 @@ fun DrawerSearchPreference(
     ) {
         PreferenceGroup(heading = stringResource(R.string.general_label)) {
             if (hiddenApps.isNotEmpty()) {
-                item {  HiddenAppsInSearchPreference() }
+                Item { HiddenAppsInSearchPreference() }
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs2.autoShowKeyboardInDrawer.getAdapter(),
                     label = stringResource(id = R.string.pref_search_auto_show_keyboard),
                 )
             }
-            item {
+            Item {
                 SearchProvider(
                     context = context,
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     label = stringResource(R.string.allapps_match_qsb_style_label),
                     description = stringResource(R.string.allapps_match_qsb_style_description),
@@ -76,7 +76,7 @@ fun DrawerSearchPreference(
                 val canDisable = searchAlgorithm != LawnchairSearchAlgorithm.APP_SEARCH
                 val adapter = prefs.searchResultApps.getAdapter()
 
-                item {
+                Item {
                     TwoTargetSwitchPreference(
                         checked = if (canDisable) adapter.state.value else true,
                         onCheckedChange = if (canDisable) adapter::onChange else ({}),
@@ -90,7 +90,7 @@ fun DrawerSearchPreference(
             }
             when (searchAlgorithm) {
                 LawnchairSearchAlgorithm.LOCAL_SEARCH -> {
-                    item {
+                    Item {
                         LocalSearchSettings(
                             prefs = prefs,
                             prefs2 = prefs2,
@@ -100,7 +100,7 @@ fun DrawerSearchPreference(
                 }
 
                 LawnchairSearchAlgorithm.ASI_SEARCH -> {
-                    item {  ASISearchSettings(prefs) }
+                    Item { ASISearchSettings(prefs) }
                 }
             }
         }

@@ -115,7 +115,7 @@ fun PreferencesDashboard(
 
         val deckLayout = prefs2.deckLayout.getAdapter()
         PreferenceGroup {
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.general_label),
                     description = stringResource(R.string.general_description),
@@ -127,7 +127,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.home_screen_label),
                     description = stringResource(R.string.home_screen_description),
@@ -140,7 +140,7 @@ fun PreferencesDashboard(
             }
 
             val isSmartspaceEnabled = prefs2.enableSmartspace.firstBlocking()
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(id = R.string.smartspace_widget),
                     description = stringResource(R.string.smartspace_widget_description),
@@ -152,7 +152,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.dock_label),
                     description = stringResource(R.string.dock_description),
@@ -164,9 +164,9 @@ fun PreferencesDashboard(
                 )
             }
 
-            item(
+            Item(
                 key = "app_drawer",
-                visible = !deckLayout.state.value
+                visible = !deckLayout.state.value,
             ) {
                 PreferenceCategory(
                     label = stringResource(R.string.app_drawer_label),
@@ -179,7 +179,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.search_bar_label),
                     description = stringResource(R.string.drawer_search_description),
@@ -191,7 +191,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.folders_label),
                     description = stringResource(R.string.folders_description),
@@ -203,7 +203,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(id = R.string.gestures_label),
                     description = stringResource(R.string.gestures_description),
@@ -214,9 +214,9 @@ fun PreferencesDashboard(
                     isLast = it.isLast,
                 )
             }
-            item(
+            Item(
                 "quickstep",
-                LawnchairApp.isRecentsEnabled || BuildConfig.DEBUG
+                LawnchairApp.isRecentsEnabled || BuildConfig.DEBUG,
             ) {
                 PreferenceCategory(
                     label = stringResource(id = R.string.quickstep_label),
@@ -229,7 +229,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            item {
+            Item {
                 PreferenceCategory(
                     label = stringResource(R.string.about_label),
                     description = aboutDescrption,

@@ -52,16 +52,16 @@ fun ExperimentalFeaturesPreferences(
             stringResource(R.string.workspace_label),
         ) {
             // pE-FeatureTaskForce-TODO(N/A): Make Material 3 Expressive Toggle
-            item {
+            Item {
                 SwitchPreference(
                     adapter = enableMaterialExpressiveAdapter,
                     label = stringResource(id = R.string.material_expressive_label),
                     description = stringResource(id = R.string.material_expressive_description),
                 )
             }
-            item(
+            Item(
                 "material_expressive_warning",
-                enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows())
+                enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows()),
             ) {
                 WarningPreference(
                     "Expressive Blur will be ignored because blur effect required at " +
@@ -70,35 +70,35 @@ fun ExperimentalFeaturesPreferences(
                         "device manufacturer.",
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs2.enableFontSelection.getAdapter(),
                     label = stringResource(id = R.string.font_picker_label),
                     description = stringResource(id = R.string.font_picker_description),
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
                     label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
                     description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs2.iconSwipeGestures.getAdapter(),
                     label = stringResource(R.string.icon_swipe_gestures),
                     description = stringResource(R.string.icon_swipe_gestures_description),
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs2.showDeckLayout.getAdapter(),
                     label = stringResource(R.string.show_deck_layout),
                     description = stringResource(R.string.show_deck_layout_description),
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     checked = hasPermission && enableWallpaperBlur.state.value,
                     onCheckedChange = {
@@ -113,9 +113,9 @@ fun ExperimentalFeaturesPreferences(
             }
 
             val canBlur = hasPermission && enableWallpaperBlur.state.value
-            item(
+            Item(
                 "wallpaper_background_blur",
-                canBlur
+                canBlur,
             ) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur),
@@ -125,9 +125,9 @@ fun ExperimentalFeaturesPreferences(
                     showUnit = "%",
                 )
             }
-            item(
+            Item(
                 "wallpaper_background_blur",
-                canBlur
+                canBlur,
             ) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur_factor),
@@ -161,21 +161,21 @@ fun ExperimentalFeaturesPreferences(
             stringResource(R.string.internal_description),
         ) {
             // Lawnchair-TODO(Merge): Investigate Always Reload Icons
-            item {
+            Item {
                 SwitchPreference(
                     adapter = alwaysReloadIconsAdapter,
                     label = stringResource(id = R.string.always_reload_icons_label),
                     description = stringResource(id = R.string.always_reload_icons_description),
                 )
             }
-            item(
+            Item(
                 "always_reload_icons_warning",
-                alwaysReloadIconsAdapter.state.value
+                alwaysReloadIconsAdapter.state.value,
             ) {
                 WarningPreference(stringResource(R.string.always_reload_icons_warning))
             }
 
-            item {
+            Item {
                 SwitchPreference(
                     adapter = enableGncAdapter,
                     label = stringResource(id = R.string.gesturenavcontract_label),
@@ -183,9 +183,9 @@ fun ExperimentalFeaturesPreferences(
                     enabled = ATLEAST_S,
                 )
             }
-            item(
+            Item(
                 "gesturenavcontract_warning",
-                enableGncAdapter.state.value && !isGestureNavContractCompatible
+                enableGncAdapter.state.value && !isGestureNavContractCompatible,
             ) {
                 WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility))
             }

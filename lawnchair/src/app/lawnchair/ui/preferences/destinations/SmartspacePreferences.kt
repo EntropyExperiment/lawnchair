@@ -70,7 +70,7 @@ fun SmartspacePreferences(
                     SmartspacePreview()
                 }
                 PreferenceGroup {
-                    item {
+                    Item {
                         SmartspaceProviderPreference(
                             adapter = smartspaceModeAdapter,
                         )
@@ -115,7 +115,7 @@ private fun LawnchairSmartspaceSettings(
                 .filter { it.isAvailable }
                 .forEach {
                     key(it.providerName) {
-                        item { _ ->
+                        Item { _ ->
                             SwitchPreference(
                                 adapter = it.enabledPref.getAdapter(),
                                 label = stringResource(id = it.providerName),
@@ -165,7 +165,7 @@ fun SmartspacePreview(
         heading = stringResource(id = R.string.preview_label),
         modifier = modifier,
     ) {
-        item {
+        Item {
             CompositionLocalProvider(LocalContext provides themedContext) {
                 AndroidView(
                     factory = {
@@ -206,7 +206,7 @@ fun SmartspaceDateAndTimePreferences(
         modifier = modifier.padding(top = 8.dp),
     ) {
         val supportCustomizationFormat = calendar.formatCustomizationSupport
-        item(
+        Item(
             key = "smartspace_date",
             visible = supportCustomizationFormat,
         ) {
@@ -216,11 +216,11 @@ fun SmartspaceDateAndTimePreferences(
                 enabled = if (showDateAdapter.state.value) !calendarHasMinimumContent else true,
             )
         }
-        item(
+        Item(
             "smartspace_calendar",
             supportCustomizationFormat && showDateAdapter.state.value,
-        ) {  SmartspaceCalendarPreference() }
-        item(
+        ) { SmartspaceCalendarPreference() }
+        Item(
             "smartspace_time",
             supportCustomizationFormat,
         ) {
@@ -230,10 +230,10 @@ fun SmartspaceDateAndTimePreferences(
                 enabled = if (showTimeAdapter.state.value) !calendarHasMinimumContent else true,
             )
         }
-        item(
+        Item(
             "smartspace_time_format",
             supportCustomizationFormat && showTimeAdapter.state.value,
-        ) {  SmartspaceTimeFormatPreference() }
+        ) { SmartspaceTimeFormatPreference() }
     }
 }
 
@@ -288,7 +288,7 @@ fun SmartspacerSettings(
         PreferenceGroup(
             heading = stringResource(id = R.string.smartspacer_settings),
         ) {
-            item {
+            Item {
                 SliderPreference(
                     label = stringResource(R.string.maximum_number_of_targets),
                     adapter = prefs2.smartspacerMaxCount.getAdapter(),
@@ -296,7 +296,7 @@ fun SmartspacerSettings(
                     step = 1,
                 )
             }
-            item {
+            Item {
                 ClickablePreference(label = stringResource(R.string.open_smartspacer_settings)) {
                     val intent = context.packageManager.getLaunchIntentForPackage(
                         SmartspacerConstants.SMARTSPACER_PACKAGE_NAME,

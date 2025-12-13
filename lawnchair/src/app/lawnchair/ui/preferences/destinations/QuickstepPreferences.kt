@@ -74,13 +74,13 @@ fun QuickstepPreferences(
         if (!LawnchairApp.isRecentsEnabled) QuickSwitchIgnoredWarning()
         val recentsTranslucentBackground by prefs.recentsTranslucentBackground.observeAsState()
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs.recentsTranslucentBackground.getAdapter(),
                     label = stringResource(id = R.string.translucent_background),
                 )
             }
-            item(
+            Item(
                 key = "recents_translucent_background_alpha",
                 visible = recentsTranslucentBackground,
             ) {
@@ -105,13 +105,13 @@ fun QuickstepPreferences(
             description = stringResource(id = (R.string.window_corner_radius_description)),
             showDescription = overrideWindowCornerRadius,
         ) {
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs.overrideWindowCornerRadius.getAdapter(),
                     label = stringResource(id = R.string.override_window_corner_radius_label),
                 )
             }
-            item(
+            Item(
                 "window_corner_radius",
                 overrideWindowCornerRadius,
             ) {
@@ -128,7 +128,7 @@ fun QuickstepPreferences(
             PreferenceGroup(
                 heading = stringResource(id = R.string.taskbar_label),
             ) {
-                item {
+                Item {
                     SwitchPreference(
                         adapter = prefs2.enableTaskbarOnPhone.getAdapter(),
                         label = stringResource(id = R.string.enable_taskbar_experimental),

@@ -107,12 +107,12 @@ fun IconShapePreference(
         PreferenceGroup(
             heading = stringResource(id = R.string.custom),
         ) {
-            item {
+            Item {
                 CustomIconShapePreferenceOption(
                     iconShapeAdapter = iconShapeAdapter,
                 )
             }
-            item {
+            Item {
                 ModifyCustomIconShapePreference(
                     customIconShape = customIconShape.value,
                 )
@@ -122,7 +122,7 @@ fun IconShapePreference(
             heading = stringResource(id = R.string.presets),
         ) {
             entries.forEach { item ->
-                item {
+                Item {
                     PreferenceTemplate(
                         enabled = item.enabled,
                         title = { Text(item.label()) },

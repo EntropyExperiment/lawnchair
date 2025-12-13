@@ -42,8 +42,8 @@ fun FolderPreferences(
         val prefs = preferenceManager()
         val prefs2 = preferenceManager2()
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-            item {  ColorPreference(preference = prefs2.folderColor) }
-            item {
+            Item { ColorPreference(preference = prefs2.folderColor) }
+            Item {
                 SliderPreference(
                     label = stringResource(id = R.string.folder_preview_bg_opacity_label),
                     adapter = prefs2.folderPreviewBackgroundOpacity.getAdapter(),
@@ -52,7 +52,7 @@ fun FolderPreferences(
                     showAsPercentage = true,
                 )
             }
-            item {
+            Item {
                 SliderPreference(
                     label = stringResource(id = R.string.folder_bg_opacity_label),
                     adapter = prefs2.folderBackgroundOpacity.getAdapter(),
@@ -63,7 +63,7 @@ fun FolderPreferences(
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-            item {
+            Item {
                 SliderPreference(
                     label = stringResource(id = R.string.max_folder_columns),
                     adapter = prefs2.folderColumns.getAdapter(),
@@ -71,7 +71,7 @@ fun FolderPreferences(
                     valueRange = 2..5,
                 )
             }
-            item {
+            Item {
                 SliderPreference(
                     label = stringResource(id = R.string.max_folder_rows),
                     adapter = prefs.folderRows.getAdapter(),
@@ -83,15 +83,15 @@ fun FolderPreferences(
 
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreenFolder.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.icons)) {
-            item {
+            Item {
                 SwitchPreference(
                     adapter = homeScreenLabelsAdapter,
                     label = stringResource(id = R.string.show_labels),
                 )
             }
-            item(
+            Item(
                 "label_size",
-                homeScreenLabelsAdapter.state.value
+                homeScreenLabelsAdapter.state.value,
             ) {
                 SliderPreference(
                     label = stringResource(id = R.string.label_size),

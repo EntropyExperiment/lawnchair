@@ -88,8 +88,8 @@ fun AnnouncementPreference(
         modifier = modifier.animateContentSize(
             animationSpec = spring(
                 stiffness = Spring.StiffnessMediumLow,
-                dampingRatio = Spring.DampingRatioLowBouncy
-            )
+                dampingRatio = Spring.DampingRatioLowBouncy,
+            ),
         ),
     ) {
         announcements.forEachIndexed { index, announcement ->

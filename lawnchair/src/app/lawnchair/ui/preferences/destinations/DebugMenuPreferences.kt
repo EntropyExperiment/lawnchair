@@ -58,7 +58,7 @@ fun DebugMenuPreferences(
     ) {
         MainSwitchPreference(adapter = enableDebug, label = "Show debug menu") {
             PreferenceGroup {
-                item {
+                Item {
                     ClickablePreference(
                         label = "Feature flags (Views)",
                         onClick = {
@@ -80,7 +80,7 @@ fun DebugMenuPreferences(
                         },
                     )
                 }
-                item {
+                Item {
                     ClickablePreference(
                         label = "Feature flags (Compose)",
                         onClick = {
@@ -88,13 +88,13 @@ fun DebugMenuPreferences(
                         },
                     )
                 }
-                item {
+                Item {
                     ClickablePreference(
                         label = "Crash launcher",
                         onClick = { throw RuntimeException("User triggered crash") },
                     )
                 }
-                item {
+                Item {
                     ClickablePreference(
                         label = "Reset live information",
                         onClick = {
@@ -109,7 +109,7 @@ fun DebugMenuPreferences(
 
             PreferenceGroup(heading = "Debug flags") {
                 flags2.forEach {
-                    item { _ ->
+                    Item { _ ->
                         SwitchPreference(
                             adapter = it.getAdapter(),
                             label = it.key.name,
@@ -117,7 +117,7 @@ fun DebugMenuPreferences(
                     }
                 }
                 flags.forEach {
-                    item { _ ->
+                    Item { _ ->
                         SwitchPreference(
                             adapter = it.getAdapter(),
                             label = it.key,
@@ -125,14 +125,14 @@ fun DebugMenuPreferences(
                     }
                 }
                 textFlags.forEach {
-                    item { _ ->
+                    Item { _ ->
                         TextPreference(
                             adapter = it.getAdapter(),
                             label = it.key.name,
                         )
                     }
                 }
-                item {
+                Item {
                     TextPreference(
                         label = "Custom version info",
                         adapter = prefs.pseudonymVersion.getAdapter(),
@@ -142,13 +142,13 @@ fun DebugMenuPreferences(
 
             val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
             PreferenceGroup(heading = "Supported features") {
-                item {
+                Item {
                     ClickablePreference(
                         label = "Window blurs",
                         subtitle = BlurUtils.supportsBlursOnWindows().toString(),
                     ) { }
                 }
-                item {
+                Item {
                     ClickablePreference(
                         label = "App prediction",
                         subtitle = apmSupport.toString(),

@@ -109,7 +109,7 @@ fun PreferenceGroup(
 
 interface PreferenceGroupScope {
     @Composable
-    fun item(
+    fun Item(
         key: Any? = null,
         visible: Boolean = true,
         enter: EnterTransition = expandVertically() + fadeIn(),
@@ -134,7 +134,7 @@ private class PreferenceGroupScopeImpl(
 ) : PreferenceGroupScope {
 
     @Composable
-    override fun item(
+    override fun Item(
         key: Any?,
         visible: Boolean,
         enter: EnterTransition,

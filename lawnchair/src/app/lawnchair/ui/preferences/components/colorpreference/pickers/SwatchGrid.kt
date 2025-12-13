@@ -52,7 +52,7 @@ fun <T> SwatchGrid(
         heading = stringResource(id = R.string.swatches),
         modifier = modifier,
     ) {
-        item {
+        Item {
             Column(modifier = contentModifier) {
                 for (rowNo in 1..rowCount) {
                     val firstIndex = (rowNo - 1) * columnCount

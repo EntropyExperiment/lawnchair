@@ -89,7 +89,7 @@ fun GeneralPreferences() {
         label = stringResource(id = R.string.general_label),
     ) {
         PreferenceGroup {
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs.allowRotation.getAdapter(),
                     label = stringResource(id = R.string.home_screen_rotation_label),
@@ -99,31 +99,31 @@ fun GeneralPreferences() {
         }
         ExpandAndShrink(visible = prefs2.enableFontSelection.asState().value) {
             PreferenceGroup(heading = stringResource(id = R.string.font_label)) {
-                item {
+                Item {
                     FontPreference(
                         fontPref = prefs.fontWorkspace,
                         label = stringResource(R.string.fontWorkspace),
                     )
                 }
-                item {
+                Item {
                     FontPreference(
                         fontPref = prefs.fontHeading,
                         label = stringResource(R.string.fontHeading),
                     )
                 }
-                item {
+                Item {
                     FontPreference(
                         fontPref = prefs.fontHeadingMedium,
                         label = stringResource(R.string.fontHeadingMedium),
                     )
                 }
-                item {
+                Item {
                     FontPreference(
                         fontPref = prefs.fontBody,
                         label = stringResource(R.string.fontBody),
                     )
                 }
-                item {
+                Item {
                     FontPreference(
                         fontPref = prefs.fontBodyMedium,
                         label = stringResource(R.string.fontBodyMedium),
@@ -138,16 +138,16 @@ fun GeneralPreferences() {
             description = stringResource(id = (R.string.adaptive_icon_background_description)),
             showDescription = wrapAdaptiveIcons.state.value,
         ) {
-            item {
+            Item {
                 NavigationActionPreference(
                     label = stringResource(id = R.string.icon_style_label),
                     destination = GeneralIconPack,
                     subtitle = iconStyleSubtitle,
                 )
             }
-            item(
+            Item(
                 "themed_icon",
-                themedIconsEnabled
+                themedIconsEnabled,
             ) {
                 SwitchPreference(
                     adapter = prefs.transparentIconBackground.getAdapter(),
@@ -155,7 +155,7 @@ fun GeneralPreferences() {
                     description = stringResource(id = R.string.transparent_background_icons_description),
                 )
             }
-            item {
+            Item {
                 NavigationActionPreference(
                     label = stringResource(id = R.string.icon_shape_label),
                     destination = GeneralIconShape,
@@ -165,22 +165,22 @@ fun GeneralPreferences() {
                     },
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = wrapAdaptiveIcons,
                     label = stringResource(id = R.string.auto_adaptive_icons_label),
                     description = stringResource(id = R.string.auto_adaptive_icons_description),
                 )
             }
-            item {
+            Item {
                 SwitchPreference(
                     adapter = prefs.shadowBGIcons.getAdapter(),
                     label = stringResource(id = R.string.shadow_bg_icons_label),
                 )
             }
-            item(
+            Item(
                 "wrap_adaptive_icons",
-                wrapAdaptiveIcons.state.value
+                wrapAdaptiveIcons.state.value,
             ) {
                 SliderPreference(
                     label = stringResource(id = R.string.background_lightness_label),
@@ -197,12 +197,12 @@ fun GeneralPreferences() {
             !Utilities.ATLEAST_S
 
         PreferenceGroup(heading = stringResource(id = R.string.colors)) {
-            item {  ThemePreference() }
-            item {  ColorPreference(preference = prefs2.accentColor) }
-            item(
+            Item { ThemePreference() }
+            Item { ColorPreference(preference = prefs2.accentColor) }
+            Item(
                 "color_style",
-                showColorStyle
-            ) {  ColorStylePreference(prefs2.colorStyle.getAdapter()) }
+                showColorStyle,
+            ) { ColorStylePreference(prefs2.colorStyle.getAdapter()) }
         }
 
         val notificationEnabled by remember { notificationDotsEnabled(context) }.collectAsStateWithLifecycle(initialValue = false)
@@ -213,28 +213,28 @@ fun GeneralPreferences() {
         val dotTextColor = prefs2.notificationDotTextColor.asState().value
 
         PreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
-            item {  NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
+            Item { NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
             val canDisplayNotificationDot = notificationEnabled && serviceEnabled
-            item(
+            Item(
                 "notification_dot_color",
-                canDisplayNotificationDot
-            ) {  ColorPreference(preference = prefs2.notificationDotColor) }
-            item(
+                canDisplayNotificationDot,
+            ) { ColorPreference(preference = prefs2.notificationDotColor) }
+            Item(
                 "notification_dot_counter_toggle",
-                canDisplayNotificationDot
+                canDisplayNotificationDot,
             ) {
                 SwitchPreference(
                     adapter = showNotificationCountAdapter,
                     label = stringResource(id = R.string.show_notification_count),
                 )
             }
-            item(
+            Item(
                 "notification_dot_text_color",
-                canDisplayNotificationDot && showNotificationCount
-            ) {  ColorPreference(preference = prefs2.notificationDotTextColor) }
-            item(
+                canDisplayNotificationDot && showNotificationCount,
+            ) { ColorPreference(preference = prefs2.notificationDotTextColor) }
+            Item(
                 "notification_dot_color_contrast_warning",
-                canDisplayNotificationDot && showNotificationCount
+                canDisplayNotificationDot && showNotificationCount,
             ) {
                 NotificationDotColorContrastWarnings(
                     dotColor = dotColor,

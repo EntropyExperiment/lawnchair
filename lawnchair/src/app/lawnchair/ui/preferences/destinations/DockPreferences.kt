@@ -46,8 +46,8 @@ import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.createPreviewIdp
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
 
@@ -66,13 +66,13 @@ fun DockPreferences(modifier: Modifier = Modifier) {
         MainSwitchPreference(adapter = prefs2.isHotseatEnabled.getAdapter(), label = stringResource(id = R.string.show_hotseat_title)) {
             DockPreferencesPreview()
             PreferenceGroup(heading = stringResource(id = R.string.style)) {
-                item {
+                Item {
                     SwitchPreference(
                         adapter = hotseatBgAdapter,
                         label = stringResource(id = R.string.hotseat_background),
                     )
                 }
-                item(
+                Item(
                     key = "feed_pref",
                     visible = hotseatBgAdapter.state.value,
                 ) {
@@ -82,7 +82,7 @@ fun DockPreferences(modifier: Modifier = Modifier) {
             SearchBarPreference(SearchRoute.DOCK_SEARCH)
             GridSettings(prefs, prefs2)
             PreferenceGroup(heading = stringResource(id = R.string.icons)) {
-                item {
+                Item {
                     SwitchPreference(
                         adapter = prefs2.enableLabelInDock.getAdapter(),
                         label = stringResource(id = R.string.show_labels),
@@ -138,7 +138,7 @@ fun HotseatBackgroundSettings(prefs: PreferenceManager, prefs2: PreferenceManage
 @Composable
 fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
     PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-        item {
+        Item {
             SliderPreference(
                 label = stringResource(id = R.string.dock_icons),
                 adapter = prefs.hotseatColumns.getAdapter(),
@@ -146,7 +146,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                 valueRange = 3..10,
             )
         }
-        item {
+        Item {
             SliderPreference(
                 adapter = prefs2.hotseatBottomFactor.getAdapter(),
                 label = stringResource(id = R.string.hotseat_bottom_space_label),
@@ -155,7 +155,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                 showAsPercentage = true,
             )
         }
-        item {
+        Item {
             SliderPreference(
                 adapter = prefs2.pageIndicatorHeightFactor.getAdapter(),
                 label = stringResource(id = R.string.page_indicator_height),
