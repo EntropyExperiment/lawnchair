@@ -22,31 +22,31 @@ fun GesturePreferences(
         modifier = modifier,
     ) {
         PreferenceGroup {
-            item { _ ->
+            item {
                 GestureHandlerPreference(
                     adapter = prefs.doubleTapGestureHandler.getAdapter(),
                     label = stringResource(id = R.string.gesture_double_tap),
                 )
             }
-            item { _ ->
+            item {
                 GestureHandlerPreference(
                     adapter = prefs.swipeUpGestureHandler.getAdapter(),
                     label = stringResource(id = R.string.gesture_swipe_up),
                 )
             }
-            item { _ ->
+            item {
                 GestureHandlerPreference(
                     adapter = prefs.swipeDownGestureHandler.getAdapter(),
                     label = stringResource(id = R.string.gesture_swipe_down),
                 )
             }
-            item { _ ->
+            item {
                 GestureHandlerPreference(
                     adapter = prefs.homePressGestureHandler.getAdapter(),
                     label = stringResource(id = R.string.gesture_home_tap),
                 )
             }
-            item { _ ->
+            item {
                 GestureHandlerPreference(
                     adapter = prefs.backPressGestureHandler.getAdapter(),
                     label = stringResource(id = R.string.gesture_back_tap),

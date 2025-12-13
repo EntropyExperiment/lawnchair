@@ -49,7 +49,7 @@ fun SearchProviderPreferences(
     ) {
         PreferenceGroup {
             QsbSearchProvider.values().forEach { qsbSearchProvider ->
-                item { _ ->
+                item {
                     val appInstalled = qsbSearchProvider.isDownloaded(context)
                     val selected = adapter.state.value == qsbSearchProvider
                     val hasAppAndWebsite = qsbSearchProvider.type == QsbSearchProviderType.APP_AND_WEBSITE

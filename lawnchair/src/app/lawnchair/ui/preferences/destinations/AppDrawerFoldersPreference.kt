@@ -65,7 +65,7 @@ fun AppDrawerFolderPreferenceItem(
     PreferenceGroup(
         modifier = modifier,
     ) {
-        item { _ ->
+        item {
             ClickablePreference(
                 label = stringResource(R.string.app_drawer_folder),
                 modifier = Modifier,
@@ -155,7 +155,7 @@ fun AppDrawerFoldersPreference(
             PreferenceGroup(
                 heading = stringResource(R.string.settings),
             ) {
-                item { _ ->
+                item {
                     SwitchPreference(
                         adapter = prefs.folderApps.getAdapter(),
                         label = stringResource(id = R.string.apps_in_folder_label),
@@ -164,7 +164,7 @@ fun AppDrawerFoldersPreference(
                 }
             }
             PreferenceGroup(heading = stringResource(R.string.folders_label)) {
-                item { _ ->
+                item {
                     PreferenceTemplate(
                         title = {},
                         description = {

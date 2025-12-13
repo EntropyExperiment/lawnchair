@@ -58,7 +58,7 @@ fun DebugMenuPreferences(
     ) {
         MainSwitchPreference(adapter = enableDebug, label = "Show debug menu") {
             PreferenceGroup {
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "Feature flags (Views)",
                         onClick = {
@@ -80,7 +80,7 @@ fun DebugMenuPreferences(
                         },
                     )
                 }
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "Feature flags (Compose)",
                         onClick = {
@@ -88,13 +88,13 @@ fun DebugMenuPreferences(
                         },
                     )
                 }
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "Crash launcher",
                         onClick = { throw RuntimeException("User triggered crash") },
                     )
                 }
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "Reset live information",
                         onClick = {
@@ -132,7 +132,7 @@ fun DebugMenuPreferences(
                         )
                     }
                 }
-                item { _ ->
+                item {
                     TextPreference(
                         label = "Custom version info",
                         adapter = prefs.pseudonymVersion.getAdapter(),
@@ -142,13 +142,13 @@ fun DebugMenuPreferences(
 
             val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
             PreferenceGroup(heading = "Supported features") {
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "Window blurs",
                         subtitle = BlurUtils.supportsBlursOnWindows().toString(),
                     ) { }
                 }
-                item { _ ->
+                item {
                     ClickablePreference(
                         label = "App prediction",
                         subtitle = apmSupport.toString(),

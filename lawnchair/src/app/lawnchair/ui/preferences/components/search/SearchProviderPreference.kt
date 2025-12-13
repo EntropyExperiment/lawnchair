@@ -173,7 +173,7 @@ fun ContactsSearchProvider(
         enabled = contactsPermissionState.status.isGranted,
     ) {
         PreferenceGroup {
-            item { _ ->
+            item {
                 SliderPreference(
                     label = stringResource(R.string.max_people_result_count_title),
                     adapter = prefs2.maxPeopleResultCount.getAdapter(),
@@ -225,7 +225,7 @@ fun GenericSearchProviderPreference(
         modifier = modifier,
     ) {
         PreferenceGroup {
-            item { _ ->
+            item {
                 SliderPreference(
                     label = stringResource(
                         when (provider) {
@@ -252,7 +252,7 @@ fun GenericSearchProviderPreference(
 
             when (provider) {
                 SearchProviderId.APPS -> {
-                    item { _ ->
+                    item {
                         SwitchPreference(
                             adapter = prefs2.enableFuzzySearch.getAdapter(),
                             label = stringResource(id = R.string.fuzzy_search_title),
@@ -262,7 +262,7 @@ fun GenericSearchProviderPreference(
                 }
 
                 SearchProviderId.WEB -> {
-                    item { _ ->
+                    item {
                         SliderPreference(
                             label = stringResource(id = R.string.max_web_suggestion_delay),
                             adapter = prefs2.maxWebSuggestionDelay.getAdapter(),
@@ -271,7 +271,7 @@ fun GenericSearchProviderPreference(
                             showUnit = "ms",
                         )
                     }
-                    item { _ ->
+                    item {
                         WebSearchProvider(
                             adapter = prefs2.webSuggestionProvider.getAdapter(),
                             nameAdapter = prefs2.webSuggestionProviderName.getAdapter(),
@@ -282,7 +282,7 @@ fun GenericSearchProviderPreference(
                 }
 
                 SearchProviderId.HISTORY -> {
-                    item { _ ->
+                    item {
                         val context = LocalContext.current
 
                         val suggestionsRecent = SearchRecentSuggestions(

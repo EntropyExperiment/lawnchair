@@ -52,7 +52,7 @@ fun ExperimentalFeaturesPreferences(
             stringResource(R.string.workspace_label),
         ) {
             // pE-FeatureTaskForce-TODO(N/A): Make Material 3 Expressive Toggle
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = enableMaterialExpressiveAdapter,
                     label = stringResource(id = R.string.material_expressive_label),
@@ -62,7 +62,7 @@ fun ExperimentalFeaturesPreferences(
             item(
                 "material_expressive_warning",
                 enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows())
-            ) { _ ->
+            ) {
                 WarningPreference(
                     "Expressive Blur will be ignored because blur effect required at " +
                         "least Android 12 or above, and device need performant GPU to render " +
@@ -70,35 +70,35 @@ fun ExperimentalFeaturesPreferences(
                         "device manufacturer.",
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs2.enableFontSelection.getAdapter(),
                     label = stringResource(id = R.string.font_picker_label),
                     description = stringResource(id = R.string.font_picker_description),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
                     label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
                     description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs2.iconSwipeGestures.getAdapter(),
                     label = stringResource(R.string.icon_swipe_gestures),
                     description = stringResource(R.string.icon_swipe_gestures_description),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs2.showDeckLayout.getAdapter(),
                     label = stringResource(R.string.show_deck_layout),
                     description = stringResource(R.string.show_deck_layout_description),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     checked = hasPermission && enableWallpaperBlur.state.value,
                     onCheckedChange = {
@@ -116,7 +116,7 @@ fun ExperimentalFeaturesPreferences(
             item(
                 "wallpaper_background_blur",
                 canBlur
-            ) { _ ->
+            ) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur),
                     adapter = prefs.wallpaperBlur.getAdapter(),
@@ -128,7 +128,7 @@ fun ExperimentalFeaturesPreferences(
             item(
                 "wallpaper_background_blur",
                 canBlur
-            ) { _ ->
+            ) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur_factor),
                     adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
@@ -161,7 +161,7 @@ fun ExperimentalFeaturesPreferences(
             stringResource(R.string.internal_description),
         ) {
             // Lawnchair-TODO(Merge): Investigate Always Reload Icons
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = alwaysReloadIconsAdapter,
                     label = stringResource(id = R.string.always_reload_icons_label),
@@ -175,7 +175,7 @@ fun ExperimentalFeaturesPreferences(
                 WarningPreference(stringResource(R.string.always_reload_icons_warning))
             }
 
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = enableGncAdapter,
                     label = stringResource(id = R.string.gesturenavcontract_label),

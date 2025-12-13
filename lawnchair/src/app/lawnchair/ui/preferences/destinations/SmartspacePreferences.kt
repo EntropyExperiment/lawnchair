@@ -70,7 +70,7 @@ fun SmartspacePreferences(
                     SmartspacePreview()
                 }
                 PreferenceGroup {
-                    item { _ ->
+                    item {
                         SmartspaceProviderPreference(
                             adapter = smartspaceModeAdapter,
                         )
@@ -165,7 +165,7 @@ fun SmartspacePreview(
         heading = stringResource(id = R.string.preview_label),
         modifier = modifier,
     ) {
-        item { _ ->
+        item {
             CompositionLocalProvider(LocalContext provides themedContext) {
                 AndroidView(
                     factory = {
@@ -206,7 +206,7 @@ fun SmartspaceDateAndTimePreferences(
         modifier = modifier.padding(top = 8.dp),
     ) {
         if (calendar.formatCustomizationSupport) {
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = showDateAdapter,
                     label = stringResource(id = R.string.smartspace_date),
@@ -214,9 +214,9 @@ fun SmartspaceDateAndTimePreferences(
                 )
             }
             if (showDateAdapter.state.value) {
-                item { _ -> SmartspaceCalendarPreference() }
+                item {  SmartspaceCalendarPreference() }
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = showTimeAdapter,
                     label = stringResource(id = R.string.smartspace_time),
@@ -224,7 +224,7 @@ fun SmartspaceDateAndTimePreferences(
                 )
             }
             if (showTimeAdapter.state.value) {
-                item { _ -> SmartspaceTimeFormatPreference() }
+                item {  SmartspaceTimeFormatPreference() }
             }
         }
     }
@@ -281,7 +281,7 @@ fun SmartspacerSettings(
         PreferenceGroup(
             heading = stringResource(id = R.string.smartspacer_settings),
         ) {
-            item { _ ->
+            item {
                 SliderPreference(
                     label = stringResource(R.string.maximum_number_of_targets),
                     adapter = prefs2.smartspacerMaxCount.getAdapter(),
@@ -289,7 +289,7 @@ fun SmartspacerSettings(
                     step = 1,
                 )
             }
-            item { _ ->
+            item {
                 ClickablePreference(label = stringResource(R.string.open_smartspacer_settings)) {
                     val intent = context.packageManager.getLaunchIntentForPackage(
                         SmartspacerConstants.SMARTSPACER_PACKAGE_NAME,

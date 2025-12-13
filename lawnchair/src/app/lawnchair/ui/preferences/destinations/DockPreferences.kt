@@ -66,7 +66,7 @@ fun DockPreferences(modifier: Modifier = Modifier) {
         MainSwitchPreference(adapter = prefs2.isHotseatEnabled.getAdapter(), label = stringResource(id = R.string.show_hotseat_title)) {
             DockPreferencesPreview()
             PreferenceGroup(heading = stringResource(id = R.string.style)) {
-                item { _ ->
+                item {
                     SwitchPreference(
                         adapter = hotseatBgAdapter,
                         label = stringResource(id = R.string.hotseat_background),
@@ -75,14 +75,14 @@ fun DockPreferences(modifier: Modifier = Modifier) {
                 item(
                     key = "feed_pref",
                     visible = hotseatBgAdapter.state.value,
-                ) { _ ->
+                ) {
                     HotseatBackgroundSettings(prefs, prefs2)
                 }
             }
             SearchBarPreference(SearchRoute.DOCK_SEARCH)
             GridSettings(prefs, prefs2)
             PreferenceGroup(heading = stringResource(id = R.string.icons)) {
-                item { _ ->
+                item {
                     SwitchPreference(
                         adapter = prefs2.enableLabelInDock.getAdapter(),
                         label = stringResource(id = R.string.show_labels),
@@ -138,7 +138,7 @@ fun HotseatBackgroundSettings(prefs: PreferenceManager, prefs2: PreferenceManage
 @Composable
 fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
     PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-        item { _ ->
+        item {
             SliderPreference(
                 label = stringResource(id = R.string.dock_icons),
                 adapter = prefs.hotseatColumns.getAdapter(),
@@ -146,7 +146,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                 valueRange = 3..10,
             )
         }
-        item { _ ->
+        item {
             SliderPreference(
                 adapter = prefs2.hotseatBottomFactor.getAdapter(),
                 label = stringResource(id = R.string.hotseat_bottom_space_label),
@@ -155,7 +155,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                 showAsPercentage = true,
             )
         }
-        item { _ ->
+        item {
             SliderPreference(
                 adapter = prefs2.pageIndicatorHeightFactor.getAdapter(),
                 label = stringResource(id = R.string.page_indicator_height),

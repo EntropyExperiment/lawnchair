@@ -137,7 +137,7 @@ private fun IconShapeCornerPreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.color_sliders),
     ) {
-        item { _ ->
+        item {
             IconShapeCornerPreference(
                 title = stringResource(id = R.string.custom_icon_shape_top_left),
                 scale = selectedIconShape.topLeft.scale.x,
@@ -150,7 +150,7 @@ private fun IconShapeCornerPreferenceGroup(
                 },
             )
         }
-        item { _ ->
+        item {
             IconShapeCornerPreference(
                 title = stringResource(id = R.string.custom_icon_shape_top_right),
                 scale = selectedIconShape.topRight.scale.x,
@@ -163,7 +163,7 @@ private fun IconShapeCornerPreferenceGroup(
                 },
             )
         }
-        item { _ ->
+        item {
             IconShapeCornerPreference(
                 title = stringResource(id = R.string.custom_icon_shape_bottom_left),
                 scale = selectedIconShape.bottomLeft.scale.x,
@@ -176,7 +176,7 @@ private fun IconShapeCornerPreferenceGroup(
                 },
             )
         }
-        item { _ ->
+        item {
             IconShapeCornerPreference(
                 title = stringResource(id = R.string.custom_icon_shape_bottom_right),
                 scale = selectedIconShape.bottomRight.scale.x,
@@ -204,7 +204,7 @@ private fun IconShapeClipboardPreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.clipboard),
     ) {
-        item { _ ->
+        item {
             ClipboardButton(
                 imageVector = Icons.Rounded.ContentCopy,
                 label = stringResource(id = R.string.export_to_clipboard),
@@ -215,7 +215,7 @@ private fun IconShapeClipboardPreferenceGroup(
                 )
             }
         }
-        item { _ ->
+        item {
             ClipboardButton(
                 imageVector = Icons.Rounded.ContentPaste,
                 label = stringResource(id = R.string.import_from_clipboard),

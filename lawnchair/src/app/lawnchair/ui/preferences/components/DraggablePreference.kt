@@ -145,7 +145,7 @@ fun <T> DraggablePreferenceGroup(
 
         ExpandAndShrink(visible = localItems != defaultList) {
             PreferenceGroup {
-                item { _ ->
+                item {
                     ClickablePreference(label = stringResource(id = R.string.action_reset)) {
                         onOrderChange(defaultList)
                     }

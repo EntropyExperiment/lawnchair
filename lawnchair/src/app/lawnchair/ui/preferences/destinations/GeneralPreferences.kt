@@ -89,7 +89,7 @@ fun GeneralPreferences() {
         label = stringResource(id = R.string.general_label),
     ) {
         PreferenceGroup {
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs.allowRotation.getAdapter(),
                     label = stringResource(id = R.string.home_screen_rotation_label),
@@ -99,31 +99,31 @@ fun GeneralPreferences() {
         }
         ExpandAndShrink(visible = prefs2.enableFontSelection.asState().value) {
             PreferenceGroup(heading = stringResource(id = R.string.font_label)) {
-                item { _ ->
+                item {
                     FontPreference(
                         fontPref = prefs.fontWorkspace,
                         label = stringResource(R.string.fontWorkspace),
                     )
                 }
-                item { _ ->
+                item {
                     FontPreference(
                         fontPref = prefs.fontHeading,
                         label = stringResource(R.string.fontHeading),
                     )
                 }
-                item { _ ->
+                item {
                     FontPreference(
                         fontPref = prefs.fontHeadingMedium,
                         label = stringResource(R.string.fontHeadingMedium),
                     )
                 }
-                item { _ ->
+                item {
                     FontPreference(
                         fontPref = prefs.fontBody,
                         label = stringResource(R.string.fontBody),
                     )
                 }
-                item { _ ->
+                item {
                     FontPreference(
                         fontPref = prefs.fontBodyMedium,
                         label = stringResource(R.string.fontBodyMedium),
@@ -138,7 +138,7 @@ fun GeneralPreferences() {
             description = stringResource(id = (R.string.adaptive_icon_background_description)),
             showDescription = wrapAdaptiveIcons.state.value,
         ) {
-            item { _ ->
+            item {
                 NavigationActionPreference(
                     label = stringResource(id = R.string.icon_style_label),
                     destination = GeneralIconPack,
@@ -146,7 +146,7 @@ fun GeneralPreferences() {
                 )
             }
             if (themedIconsEnabled) {
-                item { _ ->
+                item {
                     SwitchPreference(
                         adapter = prefs.transparentIconBackground.getAdapter(),
                         label = stringResource(id = R.string.transparent_background_icons_label),
@@ -154,7 +154,7 @@ fun GeneralPreferences() {
                     )
                 }
             }
-            item { _ ->
+            item {
                 NavigationActionPreference(
                     label = stringResource(id = R.string.icon_shape_label),
                     destination = GeneralIconShape,
@@ -164,21 +164,21 @@ fun GeneralPreferences() {
                     },
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = wrapAdaptiveIcons,
                     label = stringResource(id = R.string.auto_adaptive_icons_label),
                     description = stringResource(id = R.string.auto_adaptive_icons_description),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs.shadowBGIcons.getAdapter(),
                     label = stringResource(id = R.string.shadow_bg_icons_label),
                 )
             }
             if (wrapAdaptiveIcons.state.value) {
-                item { _ ->
+                item {
                     SliderPreference(
                         label = stringResource(id = R.string.background_lightness_label),
                         adapter = prefs.coloredBackgroundLightness.getAdapter(),
@@ -195,10 +195,10 @@ fun GeneralPreferences() {
             !Utilities.ATLEAST_S
 
         PreferenceGroup(heading = stringResource(id = R.string.colors)) {
-            item { _ -> ThemePreference() }
-            item { _ -> ColorPreference(preference = prefs2.accentColor) }
+            item {  ThemePreference() }
+            item {  ColorPreference(preference = prefs2.accentColor) }
             if (showColorStyle) {
-                item { _ -> ColorStylePreference(prefs2.colorStyle.getAdapter()) }
+                item {  ColorStylePreference(prefs2.colorStyle.getAdapter()) }
             }
         }
 
@@ -210,18 +210,18 @@ fun GeneralPreferences() {
         val dotTextColor = prefs2.notificationDotTextColor.asState().value
 
         PreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
-            item { _ -> NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
+            item {  NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled) }
             if (notificationEnabled && serviceEnabled) {
-                item { _ -> ColorPreference(preference = prefs2.notificationDotColor) }
-                item { _ ->
+                item {  ColorPreference(preference = prefs2.notificationDotColor) }
+                item {
                     SwitchPreference(
                         adapter = showNotificationCountAdapter,
                         label = stringResource(id = R.string.show_notification_count),
                     )
                 }
                 if (showNotificationCount) {
-                    item { _ -> ColorPreference(preference = prefs2.notificationDotTextColor) }
-                    item { _ ->
+                    item {  ColorPreference(preference = prefs2.notificationDotTextColor) }
+                    item {
                         NotificationDotColorContrastWarnings(
                             dotColor = dotColor,
                             dotTextColor = dotTextColor,

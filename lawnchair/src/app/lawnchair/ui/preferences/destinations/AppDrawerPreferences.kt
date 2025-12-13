@@ -77,19 +77,19 @@ fun AppDrawerPreferences(
         }
         val hiddenApps = prefs2.hiddenApps.getAdapter().state.value
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
-            item { _ ->
+            item {
                 NavigationActionPreference(
                     label = stringResource(id = R.string.hidden_apps_label),
                     subtitle = resources.getQuantityString(R.plurals.apps_count, hiddenApps.size, hiddenApps.size),
                     destination = AppDrawerHiddenApps,
                 )
             }
-            item { _ -> SearchBarPreference(SearchRoute.DRAWER_SEARCH, showLabel = false) }
-            item { _ -> SuggestionsPreference() }
+            item {  SearchBarPreference(SearchRoute.DRAWER_SEARCH, showLabel = false) }
+            item {  SuggestionsPreference() }
         }
         PreferenceGroup(heading = stringResource(R.string.style)) {
-            item { _ -> ColorPreference(preference = prefs2.appDrawerBackgroundColor) }
-            item { _ ->
+            item {  ColorPreference(preference = prefs2.appDrawerBackgroundColor) }
+            item {
                 SliderPreference(
                     label = stringResource(id = R.string.background_opacity),
                     adapter = prefs.drawerOpacity.getAdapter(),
@@ -98,7 +98,7 @@ fun AppDrawerPreferences(
                     showAsPercentage = true,
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     label = stringResource(id = R.string.pref_all_apps_search_bar_background),
                     adapter = prefs2.appDrawerSearchBarBackground.getAdapter(),
@@ -106,7 +106,7 @@ fun AppDrawerPreferences(
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-            item { _ ->
+            item {
                 SliderPreference(
                     label = stringResource(id = R.string.app_drawer_columns),
                     adapter = prefs2.drawerColumns.getAdapter(),
@@ -114,7 +114,7 @@ fun AppDrawerPreferences(
                     valueRange = 3..10,
                 )
             }
-            item { _ ->
+            item {
                 SliderPreference(
                     adapter = prefs2.drawerCellHeightFactor.getAdapter(),
                     label = stringResource(id = R.string.row_height_label),
@@ -123,7 +123,7 @@ fun AppDrawerPreferences(
                     showAsPercentage = true,
                 )
             }
-            item { _ ->
+            item {
                 SliderPreference(
                     adapter = prefs2.drawerLeftRightMarginFactor.getAdapter(),
                     label = stringResource(id = R.string.app_drawer_indent_label),
@@ -135,7 +135,7 @@ fun AppDrawerPreferences(
         }
         val showDrawerLabels = prefs2.showIconLabelsInDrawer.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.icons)) {
-            item { _ ->
+            item {
                 SliderPreference(
                     label = stringResource(id = R.string.icon_sizes),
                     adapter = prefs2.drawerIconSizeFactor.getAdapter(),
@@ -144,14 +144,14 @@ fun AppDrawerPreferences(
                     showAsPercentage = true,
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = showDrawerLabels,
                     label = stringResource(id = R.string.show_labels),
                 )
             }
             if (showDrawerLabels.state.value) {
-                item { _ ->
+                item {
                     SliderPreference(
                         label = stringResource(id = R.string.label_size),
                         adapter = prefs2.drawerIconLabelSizeFactor.getAdapter(),
@@ -160,7 +160,7 @@ fun AppDrawerPreferences(
                         showAsPercentage = true,
                     )
                 }
-                item { _ ->
+                item {
                     SwitchPreference(
                         adapter = prefs2.twoLineAllApps.getAdapter(),
                         label = stringResource(R.string.twoline_label),
@@ -169,21 +169,21 @@ fun AppDrawerPreferences(
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.advanced)) {
-            item { _ ->
+            item {
                 SwitchPreference(
                     label = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_title),
                     description = stringResource(id = R.string.pref_all_apps_bulk_icon_loading_description),
                     adapter = prefs.allAppBulkIconLoading.getAdapter(),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     label = stringResource(id = R.string.pref_all_apps_remember_position_title),
                     description = stringResource(id = R.string.pref_all_apps_remember_position_description),
                     adapter = prefs2.rememberPosition.getAdapter(),
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     label = stringResource(id = R.string.pref_all_apps_show_scrollbar_title),
                     adapter = prefs2.showScrollbar.getAdapter(),

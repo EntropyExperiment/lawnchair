@@ -47,20 +47,20 @@ fun DrawerSearchPreference(
     ) {
         PreferenceGroup(heading = stringResource(R.string.general_label)) {
             if (hiddenApps.isNotEmpty()) {
-                item { _ -> HiddenAppsInSearchPreference() }
+                item {  HiddenAppsInSearchPreference() }
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     adapter = prefs2.autoShowKeyboardInDrawer.getAdapter(),
                     label = stringResource(id = R.string.pref_search_auto_show_keyboard),
                 )
             }
-            item { _ ->
+            item {
                 SearchProvider(
                     context = context,
                 )
             }
-            item { _ ->
+            item {
                 SwitchPreference(
                     label = stringResource(R.string.allapps_match_qsb_style_label),
                     description = stringResource(R.string.allapps_match_qsb_style_description),
@@ -76,7 +76,7 @@ fun DrawerSearchPreference(
                 val canDisable = searchAlgorithm != LawnchairSearchAlgorithm.APP_SEARCH
                 val adapter = prefs.searchResultApps.getAdapter()
 
-                item { _ ->
+                item {
                     TwoTargetSwitchPreference(
                         checked = if (canDisable) adapter.state.value else true,
                         onCheckedChange = if (canDisable) adapter::onChange else ({}),
@@ -90,7 +90,7 @@ fun DrawerSearchPreference(
             }
             when (searchAlgorithm) {
                 LawnchairSearchAlgorithm.LOCAL_SEARCH -> {
-                    item { _ ->
+                    item {
                         LocalSearchSettings(
                             prefs = prefs,
                             prefs2 = prefs2,
@@ -100,7 +100,7 @@ fun DrawerSearchPreference(
                 }
 
                 LawnchairSearchAlgorithm.ASI_SEARCH -> {
-                    item { _ -> ASISearchSettings(prefs) }
+                    item {  ASISearchSettings(prefs) }
                 }
             }
         }

@@ -204,7 +204,7 @@ fun IconPackPreferences(
                                 false,
                             )
                             PreferenceGroup {
-                                item { _ ->
+                                item {
                                     SwitchPreference(
                                         adapter = prefs.tintIconPackBackgrounds.getAdapter(),
                                         label = stringResource(id = R.string.themed_icon_pack_tint),
@@ -229,7 +229,7 @@ fun IconPackPreferences(
                                 )
                             }
                             PreferenceGroup {
-                                item { _ ->
+                                item {
                                     ListPreference(
                                         enabled = themedIconsAvailable,
                                         label = stringResource(id = R.string.themed_icon_title),

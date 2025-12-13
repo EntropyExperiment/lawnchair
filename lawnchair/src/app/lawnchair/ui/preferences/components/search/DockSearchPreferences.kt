@@ -55,7 +55,7 @@ fun DockSearchPreference(
         if (hotseatEnabled) {
             Column {
                 PreferenceGroup {
-                    item { _ ->
+                    item {
                         HotseatModePreference(
                             adapter = hotseatModeAdapter,
                         )
@@ -72,7 +72,7 @@ fun DockSearchPreference(
                         PreferenceGroup(
                             heading = stringResource(R.string.search_bar_settings),
                         ) {
-                            item { _ ->
+                            item {
                                 NavigationActionPreference(
                                     label = stringResource(R.string.search_provider),
                                     destination = DockSearchProvider,
@@ -87,13 +87,13 @@ fun DockSearchPreference(
                         PreferenceGroup(
                             heading = stringResource(R.string.style),
                         ) {
-                            item { _ ->
+                            item {
                                 SwitchPreference(
                                     adapter = themeQsbAdapter,
                                     label = stringResource(id = R.string.apply_accent_color_label),
                                 )
                             }
-                            item { _ ->
+                            item {
                                 SliderPreference(
                                     label = stringResource(id = R.string.corner_radius_label),
                                     adapter = qsbCornerAdapter,
@@ -102,7 +102,7 @@ fun DockSearchPreference(
                                     showAsPercentage = true,
                                 )
                             }
-                            item { _ ->
+                            item {
                                 SliderPreference(
                                     label = stringResource(id = R.string.qsb_hotseat_background_transparency),
                                     adapter = qsbAlphaAdapter,
@@ -111,7 +111,7 @@ fun DockSearchPreference(
                                     showUnit = "%",
                                 )
                             }
-                            item { _ ->
+                            item {
                                 SliderPreference(
                                     label = stringResource(id = R.string.qsb_hotseat_stroke_width),
                                     adapter = qsbHotseatStrokeWidth,
@@ -121,7 +121,7 @@ fun DockSearchPreference(
                                 )
                             }
                             if (qsbHotseatStrokeWidth.state.value > 0f) {
-                                item { _ -> ColorPreference(preference = prefs2.strokeColorStyle) }
+                                item {  ColorPreference(preference = prefs2.strokeColorStyle) }
                             }
                         }
                     }
