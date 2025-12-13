@@ -320,7 +320,8 @@ public class QsbContainerView extends FrameLayout {
         protected View getDefaultView(ViewGroup container, boolean showSetupIcon) {
             // Return a default widget with setup icon.
             View v = QsbWidgetHostView.getDefaultView(container);
-            if (showSetupIcon) {
+            // pE-TODO(??): Why are we using isInPreviewMode() check to prevent crash?
+            if (showSetupIcon && !isInPreviewMode()) {
                 requestQsbCreate();
                 View setupButton = v.findViewById(R.id.btn_qsb_setup);
                 setupButton.setVisibility(View.VISIBLE);
