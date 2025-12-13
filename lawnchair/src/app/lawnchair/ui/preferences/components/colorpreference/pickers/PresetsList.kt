@@ -27,13 +27,9 @@ fun PresetsList(
     PreferenceGroup(
         heading = stringResource(id = R.string.dynamic),
         modifier = modifier.padding(top = 12.dp),
-        showDividers = false,
     ) {
-        dynamicEntries.mapIndexed { index, entry ->
-            key(entry) {
-                if (index > 0) {
-                    PreferenceDivider(startIndent = 40.dp)
-                }
+        dynamicEntries.forEach { entry ->
+            item(key = entry) {
                 PreferenceTemplate(
                     title = { Text(text = entry.label()) },
                     verticalPadding = 12.dp,
