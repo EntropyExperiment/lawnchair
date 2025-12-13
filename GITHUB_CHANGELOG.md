@@ -3,18 +3,18 @@ older (i.e., Lawnchair `15-dev`).
 
 ### 🏗️ Development 3 Release 3
 
-Build: BD3.0812 (latest), BD3.0712
+Build: BD3.1312 (latest), BD3.0812, BD3.0712
 
 Compatibility list:
 
-| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
-|-------------|---------------------|--------------------|
-| Android 8.1 |                     | Android 12.0       |
-| Android 9   |                     | Android 12.1       |
-| Android 10  |                     | Android 13         |
-| Android 11  |                     | Android 14         |
-|             |                     | Android 15         |
-|             |                     | Android 16         |
+| 🏗️ Crash   | 🥞 Fully supported |
+|-------------|--------------------|
+| Android 8.1 | Android 12.0       |
+| Android 9   | Android 12.1       |
+| Android 10  | Android 13         |
+| Android 11  | Android 14         |
+|             | Android 15         |
+|             | Android 16         |
 
 #### Features
 * [Lawnchair] Features from Lawnchair 15-dev 07122025
@@ -34,7 +34,7 @@ Compatibility list:
 * [Lawnchair] Don't show warning on known compatible device
 * [Lawnchair] Swipe to dismiss announcement perform haptic on successful dismiss
 * [Lawnchair] Remove Inter v3 fonts from Lawnchair entirely (to reduce apk size)
-* [Lawnchair] Add Google Sans variable font as fallback to Google Sans Flex (to support the most of the world languages)
+* [Lawnchair] Add Google Sans variable font as fallback to Google Sans Flex (to support the most of the world languages, yes that increases sizes)
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
