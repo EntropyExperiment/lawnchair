@@ -29,9 +29,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -97,29 +109,37 @@ fun PreferenceGroupPositionAware(
     ) {
         PreferenceGroupHeading(heading)
 
-        val scope = PreferenceGroupScopeImpl()
-        scope.content()
+        // Rebuild the list on every composition to handle structure changes
+        val items = remember { mutableStateListOf<PreferenceGroupItemData>() }
+        items.clear()
+        val scope = PreferenceGroupScopeImpl(items)
+        content(scope)
 
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
         ) {
-            val items = scope.items
-            val count = items.size
+            val laidOutItems = items.filter { it.shouldBeLaidOut }
+            val count = laidOutItems.size
 
-            items.forEachIndexed { index, itemData ->
+            laidOutItems.forEachIndexed { index, itemData ->
                 androidx.compose.runtime.key(itemData.key ?: index) {
                     val position = PreferenceGroupItemPosition(
                         isFirst = index == 0,
                         isLast = index == count - 1,
                     )
 
-                    Surface(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = preferenceGroupItemShape(position),
-                        color = preferenceGroupColor(),
+                    AnimatedVisibility(
+                        visibleState = itemData.visibleState,
+                        enter = itemData.enter,
+                        exit = itemData.exit,
                     ) {
-                        itemData.content(position)
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = preferenceGroupItemShape(position),
+                            color = preferenceGroupColor(),
+                            content = { itemData.content(this, position) }
+                        )
                     }
                 }
             }
@@ -129,25 +149,51 @@ fun PreferenceGroupPositionAware(
 }
 
 interface PreferenceGroupScope {
+    @Composable
     fun item(
         key: Any? = null,
-        content: @Composable (position: PreferenceGroupItemPosition) -> Unit,
+        visible: Boolean = true,
+        enter: EnterTransition = expandVertically() + fadeIn(),
+        exit: ExitTransition = shrinkVertically() + fadeOut(),
+        content: @Composable AnimatedVisibilityScope.(position: PreferenceGroupItemPosition) -> Unit
     )
 }
 
 private data class PreferenceGroupItemData(
     val key: Any?,
-    val content: @Composable (position: PreferenceGroupItemPosition) -> Unit,
-)
+    val visibleState: MutableTransitionState<Boolean>,
+    val enter: EnterTransition,
+    val exit: ExitTransition,
+    val content: @Composable AnimatedVisibilityScope.(position: PreferenceGroupItemPosition) -> Unit,
+) {
+    val shouldBeLaidOut: Boolean
+        get() = visibleState.currentState || visibleState.targetState
+}
 
-private class PreferenceGroupScopeImpl : PreferenceGroupScope {
-    val items = mutableListOf<PreferenceGroupItemData>()
+private class PreferenceGroupScopeImpl(
+    private val items: SnapshotStateList<PreferenceGroupItemData>
+) : PreferenceGroupScope {
 
+    @Composable
     override fun item(
         key: Any?,
-        content: @Composable (position: PreferenceGroupItemPosition) -> Unit,
+        visible: Boolean,
+        enter: EnterTransition,
+        exit: ExitTransition,
+        content: @Composable AnimatedVisibilityScope.(position: PreferenceGroupItemPosition) -> Unit,
     ) {
-        items.add(PreferenceGroupItemData(key, content))
+        val visibleState = remember { MutableTransitionState(visible) }
+        visibleState.targetState = visible
+
+        items.add(
+            PreferenceGroupItemData(
+                key = key,
+                visibleState = visibleState,
+                enter = enter,
+                exit = exit,
+                content = content,
+            )
+        )
     }
 }
 
