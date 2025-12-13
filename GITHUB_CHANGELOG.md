@@ -32,6 +32,7 @@ Compatibility list:
 * [Lawnchair] Set GestureNavContract on by default on Google device
 * [Lawnchair] Set GestureNavContract on by default on Nothing device
 * [Lawnchair] Don't show warning on known compatible device
+* [Lawnchair] Swipe to dismiss announcement perform haptic on successful dismiss
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
@@ -41,6 +42,8 @@ Compatibility list:
 * [Lawnchair/Recents] Reimplement recents overview opacity
 * [Lawnchair/Preference] Misaligned slider and text preference
 * [Lawnchair/Smartspace] Allow disabling the smartspace feature
+* [Lawnchair] Settings now correctly animate expand/shrink items
+* [Lawnchair] Correctly display warning in experimental features (race conditions)
 
 ### 🥞 Development 3 Release 2
 
