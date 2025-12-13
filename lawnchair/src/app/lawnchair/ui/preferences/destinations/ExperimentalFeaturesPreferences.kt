@@ -59,15 +59,16 @@ fun ExperimentalFeaturesPreferences(
                     description = stringResource(id = R.string.material_expressive_description),
                 )
             }
-            if (enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows())) {
-                item { _ ->
-                    WarningPreference(
-                        "Expressive Blur will be ignored because blur effect required at " +
-                            "least Android 12 or above, and device need performant GPU to render " +
-                            "blur and need to enable support rendering cross window blur by the " +
-                            "device manufacturer.",
-                    )
-                }
+            item(
+                "material_expressive_warning",
+                enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows())
+            ) { _ ->
+                WarningPreference(
+                    "Expressive Blur will be ignored because blur effect required at " +
+                        "least Android 12 or above, and device need performant GPU to render " +
+                        "blur and need to enable support rendering cross window blur by the " +
+                        "device manufacturer.",
+                )
             }
             item { _ ->
                 SwitchPreference(
@@ -110,24 +111,30 @@ fun ExperimentalFeaturesPreferences(
                     label = stringResource(id = R.string.wallpaper_blur),
                 )
             }
-            if (hasPermission && enableWallpaperBlur.state.value) {
-                item { _ ->
-                    SliderPreference(
-                        label = stringResource(id = R.string.wallpaper_background_blur),
-                        adapter = prefs.wallpaperBlur.getAdapter(),
-                        step = 5,
-                        valueRange = 0..100,
-                        showUnit = "%",
-                    )
-                }
-                item { _ ->
-                    SliderPreference(
-                        label = stringResource(id = R.string.wallpaper_background_blur_factor),
-                        adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
-                        step = 1F,
-                        valueRange = 0F..10F,
-                    )
-                }
+
+            val canBlur = hasPermission && enableWallpaperBlur.state.value
+            item(
+                "wallpaper_background_blur",
+                canBlur
+            ) { _ ->
+                SliderPreference(
+                    label = stringResource(id = R.string.wallpaper_background_blur),
+                    adapter = prefs.wallpaperBlur.getAdapter(),
+                    step = 5,
+                    valueRange = 0..100,
+                    showUnit = "%",
+                )
+            }
+            item(
+                "wallpaper_background_blur",
+                canBlur
+            ) { _ ->
+                SliderPreference(
+                    label = stringResource(id = R.string.wallpaper_background_blur_factor),
+                    adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
+                    step = 1F,
+                    valueRange = 0F..10F,
+                )
             }
         }
         if (showPermissionDialog) {
@@ -161,8 +168,11 @@ fun ExperimentalFeaturesPreferences(
                     description = stringResource(id = R.string.always_reload_icons_description),
                 )
             }
-            if (alwaysReloadIconsAdapter.state.value) {
-                item { _ -> WarningPreference(stringResource(R.string.always_reload_icons_warning)) }
+            item(
+                "always_reload_icons_warning",
+                alwaysReloadIconsAdapter.state.value
+            ) {
+                WarningPreference(stringResource(R.string.always_reload_icons_warning))
             }
 
             item { _ ->
@@ -173,8 +183,11 @@ fun ExperimentalFeaturesPreferences(
                     enabled = ATLEAST_S,
                 )
             }
-            if (enableGncAdapter.state.value && !isGestureNavContractCompatible) {
-                item { _ -> WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility)) }
+            item(
+                "gesturenavcontract_warning",
+                enableGncAdapter.state.value && !isGestureNavContractCompatible
+            ) {
+                WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility))
             }
         }
     }
