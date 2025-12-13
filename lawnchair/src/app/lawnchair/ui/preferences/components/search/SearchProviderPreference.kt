@@ -233,7 +233,7 @@ fun GenericSearchProviderPreference(
                             SearchProviderId.HISTORY -> R.string.max_recent_result_count_title
                             SearchProviderId.SETTINGS -> R.string.max_settings_entry_result_count_title
                             SearchProviderId.WEB -> R.string.max_suggestion_result_count_title
-                            else -> return@item
+                            else -> return@Item
                         },
                     ),
                     adapter = prefs2.let {
@@ -242,7 +242,7 @@ fun GenericSearchProviderPreference(
                             SearchProviderId.HISTORY -> it.maxRecentResultCount
                             SearchProviderId.SETTINGS -> it.maxSettingsEntryResultCount
                             SearchProviderId.WEB -> it.maxWebSuggestionResultCount
-                            else -> return@item
+                            else -> return@Item
                         }.getAdapter()
                     },
                     valueRange = 2..10,
