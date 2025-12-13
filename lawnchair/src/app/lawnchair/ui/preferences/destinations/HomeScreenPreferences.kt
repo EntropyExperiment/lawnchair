@@ -111,8 +111,11 @@ fun HomeScreenPreferences(
                     enabled = feedAvailable,
                 )
             }
-            if (feedAvailable && enableFeedAdapter.state.value) {
-                item { _ -> FeedPreference() }
+            item(
+                key = "feed_pref",
+                visible = feedAvailable && enableFeedAdapter.state.value,
+            ) { _ ->
+                FeedPreference()
             }
         }
         PreferenceGroupPositionAware(heading = stringResource(R.string.style)) {
