@@ -164,18 +164,19 @@ fun PreferencesDashboard(
                 )
             }
 
-            if (!deckLayout.state.value) {
-                item {
-                    PreferenceCategory(
-                        label = stringResource(R.string.app_drawer_label),
-                        description = stringResource(R.string.app_drawer_description),
-                        iconResource = R.drawable.ic_app_drawer,
-                        onNavigate = { onNavigate(AppDrawer) },
-                        isSelected = currentRoute is AppDrawer,
-                        isFirst = it.isFirst,
-                        isLast = it.isLast,
-                    )
-                }
+            item(
+                key = "app_drawer",
+                visible = !deckLayout.state.value
+            ) {
+                PreferenceCategory(
+                    label = stringResource(R.string.app_drawer_label),
+                    description = stringResource(R.string.app_drawer_description),
+                    iconResource = R.drawable.ic_app_drawer,
+                    onNavigate = { onNavigate(AppDrawer) },
+                    isSelected = currentRoute is AppDrawer,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
             }
 
             item {
@@ -213,19 +214,19 @@ fun PreferencesDashboard(
                     isLast = it.isLast,
                 )
             }
-
-            if (LawnchairApp.isRecentsEnabled || BuildConfig.DEBUG) {
-                item {
-                    PreferenceCategory(
-                        label = stringResource(id = R.string.quickstep_label),
-                        description = stringResource(id = R.string.quickstep_description),
-                        iconResource = R.drawable.ic_quickstep,
-                        onNavigate = { onNavigate(Quickstep) },
-                        isSelected = currentRoute is Quickstep,
-                        isFirst = it.isFirst,
-                        isLast = it.isLast,
-                    )
-                }
+            item(
+                "quickstep",
+                LawnchairApp.isRecentsEnabled || BuildConfig.DEBUG
+            ) {
+                PreferenceCategory(
+                    label = stringResource(id = R.string.quickstep_label),
+                    description = stringResource(id = R.string.quickstep_description),
+                    iconResource = R.drawable.ic_quickstep,
+                    onNavigate = { onNavigate(Quickstep) },
+                    isSelected = currentRoute is Quickstep,
+                    isFirst = it.isFirst,
+                    isLast = it.isLast,
+                )
             }
 
             item {

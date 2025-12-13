@@ -205,28 +205,35 @@ fun SmartspaceDateAndTimePreferences(
         heading = stringResource(id = R.string.smartspace_date_and_time),
         modifier = modifier.padding(top = 8.dp),
     ) {
-        if (calendar.formatCustomizationSupport) {
-            item {
-                SwitchPreference(
-                    adapter = showDateAdapter,
-                    label = stringResource(id = R.string.smartspace_date),
-                    enabled = if (showDateAdapter.state.value) !calendarHasMinimumContent else true,
-                )
-            }
-            if (showDateAdapter.state.value) {
-                item {  SmartspaceCalendarPreference() }
-            }
-            item {
-                SwitchPreference(
-                    adapter = showTimeAdapter,
-                    label = stringResource(id = R.string.smartspace_time),
-                    enabled = if (showTimeAdapter.state.value) !calendarHasMinimumContent else true,
-                )
-            }
-            if (showTimeAdapter.state.value) {
-                item {  SmartspaceTimeFormatPreference() }
-            }
+        val supportCustomizationFormat = calendar.formatCustomizationSupport
+        item(
+            key = "smartspace_date",
+            visible = supportCustomizationFormat,
+        ) {
+            SwitchPreference(
+                adapter = showDateAdapter,
+                label = stringResource(id = R.string.smartspace_date),
+                enabled = if (showDateAdapter.state.value) !calendarHasMinimumContent else true,
+            )
         }
+        item(
+            "smartspace_calendar",
+            supportCustomizationFormat && showDateAdapter.state.value,
+        ) {  SmartspaceCalendarPreference() }
+        item(
+            "smartspace_time",
+            supportCustomizationFormat,
+        ) {
+            SwitchPreference(
+                adapter = showTimeAdapter,
+                label = stringResource(id = R.string.smartspace_time),
+                enabled = if (showTimeAdapter.state.value) !calendarHasMinimumContent else true,
+            )
+        }
+        item(
+            "smartspace_time_format",
+            supportCustomizationFormat && showTimeAdapter.state.value,
+        ) {  SmartspaceTimeFormatPreference() }
     }
 }
 

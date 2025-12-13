@@ -75,16 +75,17 @@ fun HomeScreenPreferences(
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             val addIconToHomeAdapter = prefs.addIconToHome.getAdapter()
             val isDeckLayoutAdapter = prefs2.deckLayout.getAdapter()
-            if (!isDeckLayoutAdapter.state.value) {
-                item {
-                    SwitchPreference(
-                        checked = (!lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value) || isDeckLayoutAdapter.state.value,
-                        onCheckedChange = addIconToHomeAdapter::onChange,
-                        label = stringResource(id = R.string.auto_add_shortcuts_label),
-                        description = if (lockHomeScreenAdapter.state.value) stringResource(id = R.string.home_screen_locked) else null,
-                        enabled = lockHomeScreenAdapter.state.value.not(),
-                    )
-                }
+            item(
+                "add_icon_to_home",
+                !isDeckLayoutAdapter.state.value
+            ) {
+                SwitchPreference(
+                    checked = (!lockHomeScreenAdapter.state.value && addIconToHomeAdapter.state.value) || isDeckLayoutAdapter.state.value,
+                    onCheckedChange = addIconToHomeAdapter::onChange,
+                    label = stringResource(id = R.string.auto_add_shortcuts_label),
+                    description = if (lockHomeScreenAdapter.state.value) stringResource(id = R.string.home_screen_locked) else null,
+                    enabled = lockHomeScreenAdapter.state.value.not(),
+                )
             }
             item {
                 GestureHandlerPreference(
@@ -134,14 +135,15 @@ fun HomeScreenPreferences(
                     label = stringResource(id = R.string.wallpaper_scrolling_label),
                 )
             }
-            if (Utilities.ATLEAST_R) {
-                item {
-                    SwitchPreference(
-                        prefs2.wallpaperDepthEffect.getAdapter(),
-                        label = stringResource(id = R.string.wallpaper_depth_effect_label),
-                        description = stringResource(id = R.string.wallpaper_depth_effect_description),
-                    )
-                }
+            item(
+                "wallpaper_depth_effect",
+                Utilities.ATLEAST_R
+            ) {
+                SwitchPreference(
+                    prefs2.wallpaperDepthEffect.getAdapter(),
+                    label = stringResource(id = R.string.wallpaper_depth_effect_label),
+                    description = stringResource(id = R.string.wallpaper_depth_effect_description),
+                )
             }
             item {
                 SwitchPreference(
@@ -179,22 +181,24 @@ fun HomeScreenPreferences(
                     label = stringResource(id = R.string.show_status_bar),
                 )
             }
-            if (showStatusBarAdapter.state.value) {
-                item {
-                    SwitchPreference(
-                        adapter = prefs2.darkStatusBar.getAdapter(),
-                        label = stringResource(id = R.string.dark_status_bar_label),
-                    )
-                }
+            item(
+                "dark_status_bar",
+                showStatusBarAdapter.state.value
+            ) {
+                SwitchPreference(
+                    adapter = prefs2.darkStatusBar.getAdapter(),
+                    label = stringResource(id = R.string.dark_status_bar_label),
+                )
             }
-            if (showStatusBarAdapter.state.value && LawnchairApp.isRecentsEnabled) {
-                item {
-                    SwitchPreference(
-                        adapter = prefs2.statusBarClock.getAdapter(),
-                        label = stringResource(id = R.string.status_bar_clock_label),
-                        description = stringResource(id = R.string.status_bar_clock_description),
-                    )
-                }
+            item(
+                "status_bar_clock",
+                showStatusBarAdapter.state.value && LawnchairApp.isRecentsEnabled
+            ) {
+                SwitchPreference(
+                    adapter = prefs2.statusBarClock.getAdapter(),
+                    label = stringResource(id = R.string.status_bar_clock_label),
+                    description = stringResource(id = R.string.status_bar_clock_description),
+                )
             }
         }
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreen.getAdapter()
@@ -214,16 +218,17 @@ fun HomeScreenPreferences(
                     label = stringResource(id = R.string.show_labels),
                 )
             }
-            if (homeScreenLabelsAdapter.state.value) {
-                item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.label_size),
-                        adapter = prefs2.homeIconLabelSizeFactor.getAdapter(),
-                        step = 0.1f,
-                        valueRange = 0.5F..1.5F,
-                        showAsPercentage = true,
-                    )
-                }
+            item(
+                "workspace_label_size",
+                homeScreenLabelsAdapter.state.value
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.label_size),
+                    adapter = prefs2.homeIconLabelSizeFactor.getAdapter(),
+                    step = 0.1f,
+                    valueRange = 0.5F..1.5F,
+                    showAsPercentage = true,
+                )
             }
         }
         val overrideRepo = IconOverrideRepository.INSTANCE.get(LocalContext.current)

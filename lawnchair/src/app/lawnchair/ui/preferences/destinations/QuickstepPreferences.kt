@@ -80,16 +80,17 @@ fun QuickstepPreferences(
                     label = stringResource(id = R.string.translucent_background),
                 )
             }
-            if (recentsTranslucentBackground) {
-                item {
-                    SliderPreference(
-                        adapter = prefs.recentsTranslucentBackgroundAlpha.getAdapter(),
-                        label = stringResource(id = R.string.translucent_background_alpha),
-                        step = 0.05f,
-                        valueRange = 0f..0.95f,
-                        showAsPercentage = true,
-                    )
-                }
+            item(
+                key = "recents_translucent_background_alpha",
+                visible = recentsTranslucentBackground,
+            ) {
+                SliderPreference(
+                    adapter = prefs.recentsTranslucentBackgroundAlpha.getAdapter(),
+                    label = stringResource(id = R.string.translucent_background_alpha),
+                    step = 0.05f,
+                    valueRange = 0f..0.95f,
+                    showAsPercentage = true,
+                )
             }
         }
 
@@ -110,15 +111,16 @@ fun QuickstepPreferences(
                     label = stringResource(id = R.string.override_window_corner_radius_label),
                 )
             }
-            if (overrideWindowCornerRadius) {
-                item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.window_corner_radius_label),
-                        adapter = prefs.windowCornerRadius.getAdapter(),
-                        step = 0,
-                        valueRange = 70..150,
-                    )
-                }
+            item(
+                "window_corner_radius",
+                overrideWindowCornerRadius,
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.window_corner_radius_label),
+                    adapter = prefs.windowCornerRadius.getAdapter(),
+                    step = 0,
+                    valueRange = 70..150,
+                )
             }
         }
 

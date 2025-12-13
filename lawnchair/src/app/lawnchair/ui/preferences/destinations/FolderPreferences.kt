@@ -89,16 +89,17 @@ fun FolderPreferences(
                     label = stringResource(id = R.string.show_labels),
                 )
             }
-            if (homeScreenLabelsAdapter.state.value) {
-                item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.label_size),
-                        adapter = prefs2.homeIconLabelFolderSizeFactor.getAdapter(),
-                        step = 0.1f,
-                        valueRange = 0.5F..1.5F,
-                        showAsPercentage = true,
-                    )
-                }
+            item(
+                "label_size",
+                homeScreenLabelsAdapter.state.value
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.label_size),
+                    adapter = prefs2.homeIconLabelFolderSizeFactor.getAdapter(),
+                    step = 0.1f,
+                    valueRange = 0.5F..1.5F,
+                    showAsPercentage = true,
+                )
             }
         }
     }

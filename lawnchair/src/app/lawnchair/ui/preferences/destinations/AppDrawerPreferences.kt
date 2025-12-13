@@ -150,22 +150,26 @@ fun AppDrawerPreferences(
                     label = stringResource(id = R.string.show_labels),
                 )
             }
-            if (showDrawerLabels.state.value) {
-                item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.label_size),
-                        adapter = prefs2.drawerIconLabelSizeFactor.getAdapter(),
-                        step = 0.1F,
-                        valueRange = 0.5F..1.5F,
-                        showAsPercentage = true,
-                    )
-                }
-                item {
-                    SwitchPreference(
-                        adapter = prefs2.twoLineAllApps.getAdapter(),
-                        label = stringResource(R.string.twoline_label),
-                    )
-                }
+            item(
+                "drawer_icon_label_size",
+                showDrawerLabels.state.value
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.label_size),
+                    adapter = prefs2.drawerIconLabelSizeFactor.getAdapter(),
+                    step = 0.1F,
+                    valueRange = 0.5F..1.5F,
+                    showAsPercentage = true,
+                )
+            }
+            item(
+                "drawer_label_twoline",
+                showDrawerLabels.state.value
+            ) {
+                SwitchPreference(
+                    adapter = prefs2.twoLineAllApps.getAdapter(),
+                    label = stringResource(R.string.twoline_label),
+                )
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.advanced)) {
