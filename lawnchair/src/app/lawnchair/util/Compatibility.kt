@@ -13,7 +13,7 @@ val isNothingStock = checkNothingStock()
 
 val isGoogle = checkGoogle()
 
-val isSamsung = checkSamsung()
+val isSamsung = checkSamsungStock()
 
 val isGestureNavContractCompatible = checkGestureNavContract()
 
@@ -54,12 +54,10 @@ private fun checkGoogle(): Boolean = if (Utilities.ATLEAST_S) {
     }
 }
 
-private fun checkSamsung(): Boolean = when {
-    Build.BRAND.contains("samsung", true) &&
-        Build.MANUFACTURER.contains("samsung", true) &&
-        Build.FINGERPRINT.contains("samsung", true) &&
-        Build.MODEL.contains("SM-", true) -> true
-
+private fun checkSamsungStock(): Boolean = when {
+    getSystemProperty("ro.build.version.oneui", "").isNotEmpty() -> true
+    getSystemProperty("ro.config.knox", "").isNotEmpty() -> true
+    getSystemProperty("ro.build.PDA", "").isNotEmpty() -> true
     else -> false
 }
 
