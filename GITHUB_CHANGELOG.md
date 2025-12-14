@@ -36,6 +36,8 @@ Compatibility list:
 * [Lawnchair] Remove Inter v3 fonts from Lawnchair entirely (to reduce apk size)
 * [Lawnchair] Add Google Sans variable font as fallback to Google Sans Flex (to support the most of the world languages, yes that increases sizes)
 * [Launcher] Google Sans variable normal style
+* [Lawnchair] Improve Google device compatibility check
+* [Lawnchair] Improve Samsung device compatibility check
 
 #### Fixes
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version
@@ -47,6 +49,8 @@ Compatibility list:
 * [Lawnchair/Smartspace] Allow disabling the smartspace feature
 * [Lawnchair] Settings now correctly animate expand/shrink items
 * [Lawnchair] Correctly display warning in experimental features (race conditions)
+* [Project] Support for Android Studio 2025.2.3 Canary 5 (Bump to AGP 9.0.0-beta05)
+* [Lawnchair] Offer a toggle to disable/enable suggestions instead of linking it to ASI if the device is not Google Pixel
 
 ### 🥞 Development 3 Release 2
 

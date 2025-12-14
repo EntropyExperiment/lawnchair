@@ -37,23 +37,29 @@ private fun checkNothingStock(): Boolean = when {
 
 private fun checkGoogle(): Boolean = if (Utilities.ATLEAST_S) {
     when {
-        Build.SOC_MODEL.contains("tensor", true) && Build.SOC_MANUFACTURER.contains("google", true) -> true
+        Build.BRAND.contains("google", true) &&
+            Build.SOC_MODEL.contains("tensor", true) &&
+            Build.SOC_MANUFACTURER.contains("google", true) -> true
+
         else -> false
     }
 } else {
     when {
-        Build.BRAND.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
-        Build.MANUFACTURER.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
-        Build.FINGERPRINT.contains("google", true) && Build.PRODUCT.contains("pixel", true) -> true
+        Build.BRAND.contains("google", true) &&
+            Build.MANUFACTURER.contains("google", true) &&
+            Build.FINGERPRINT.contains("pixel", true) &&
+            Build.PRODUCT.contains("pixel", true) -> true
+
         else -> false
     }
 }
 
 private fun checkSamsung(): Boolean = when {
-    Build.BRAND.contains("samsung", true) -> true
-    Build.MANUFACTURER.contains("samsung", true) -> true
-    Build.FINGERPRINT.contains("samsung", true) -> true
-    Build.MODEL.contains("SM-", true) -> true
+    Build.BRAND.contains("samsung", true) &&
+        Build.MANUFACTURER.contains("samsung", true) &&
+        Build.FINGERPRINT.contains("samsung", true) &&
+        Build.MODEL.contains("SM-", true) -> true
+
     else -> false
 }
 
