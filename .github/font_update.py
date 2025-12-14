@@ -4,11 +4,7 @@ import sys
 
 import requests
 
-if (
-    not sys.version_info.major == 3
-    and not sys.version_info.minor >= 10
-    and not sys.version_info.minor > 14
-):
+if not (sys.version_info.major == 3 and 10 <= sys.version_info.minor <= 14):
     print("🤨 This script effectiveness is guaranteed from Python 3.10 to Python 3.14")
 
 
@@ -70,7 +66,8 @@ def get_local_diff(font_data: dict):
             local_data = json.load(f)
             local_fonts = {font["family"]: font for font in local_data.get("items", [])}
         except json.JSONDecodeError:
-            pass
+            # Could not parse the local font file; proceeding as if there are no local fonts.
+            print(f"⚠️  Warning: Failed to parse {LOCAL_FONT} as JSON. Assuming no local fonts.")
 
     added, removed, updated = list(), list(), list()
 
@@ -105,7 +102,7 @@ def get_local_diff(font_data: dict):
     return "\n".join(markdown_output)
 
 
-LOCAL_TEST = True
+LOCAL_TEST = False
 if LOCAL_TEST:
     LOCAL_FONT = os.path.join("google_fonts.json")
     API_KEY = ""
@@ -124,7 +121,7 @@ CAPABILITY = os.getenv(
 font_data = fetch_font_data(API_KEY, SORTING, CAPABILITY)
 
 
-if os.path.exists(LOCAL_FONT) is True:
+if os.path.exists(LOCAL_FONT):
     diff = get_local_diff(font_data)
     print(diff)
 else:
@@ -134,4 +131,4 @@ with open(LOCAL_FONT, "w", encoding="utf-8") as f:
     json.dump(
         font_data, f, indent=None
     )  # Trim whitespace because those can add 2/4/6/8 additional megabytes to the file
-    f.close()
+
