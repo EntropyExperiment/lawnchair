@@ -25,7 +25,7 @@ Compatibility list:
 * [Lawnchair] Refreshed Material 3 Expressive
 * [Launcher] Foldable support (ish)
 * [Lawnchair] Warn when nightly updater is updating to next major version
-* [Lawnchair/Smartspace] Add Chinese calendar option
+* [Lawnchair/Smartspace] Add Lunar calendar option
 * [Lawnchair/Smartspace] Promote smartspace calendar to stable
 * [Lawnchair] Expressive redesign Phase 2
 * [Lawnchair] GestureNavContract toggle in experimental features

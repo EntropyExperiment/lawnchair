@@ -15,10 +15,8 @@ import app.lawnchair.util.broadcastReceiverFlow
 import app.lawnchair.util.repeatOnAttached
 import app.lawnchair.util.subscribeBlocking
 import com.android.launcher3.R
-import com.patrykmichalik.opto.core.firstBlocking
 import java.util.Locale
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -87,14 +85,14 @@ class IcuDateTextView @JvmOverloads constructor(
         }
         val formatter = when (calendar) {
             SmartspaceCalendar.Persian -> createPersianFormatter()
-            SmartspaceCalendar.Chinese -> createChineseLunarFormatter()
+            SmartspaceCalendar.Lunar -> createLunarFormatter()
             else -> createGregorianFormatter()
         }
         formatterFunction = formatter
         return formatter
     }
 
-    private fun createChineseLunarFormatter(): FormatterFunction {
+    private fun createLunarFormatter(): FormatterFunction {
         var format: String
         if (dateTimeOptions.showTime) {
             format = context.getString(
