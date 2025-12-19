@@ -4,7 +4,7 @@ import sys
 
 import requests
 
-if not (sys.version_info.major == 3 and 10 <= sys.version_info.minor <= 14):
+if not ((3, 10) <= sys.version_info[:2] <= (3, 14)):
     print("🤨 This script effectiveness is guaranteed from Python 3.10 to Python 3.14")
 
 
@@ -129,6 +129,5 @@ else:
 
 with open(LOCAL_FONT, "w", encoding="utf-8") as f:
     json.dump(
-        font_data, f, indent=None
+        font_data, f, indent=None, separators=(",", ":")
     )  # Trim whitespace because those can add 2/4/6/8 additional megabytes to the file
-
