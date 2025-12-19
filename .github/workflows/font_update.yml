@@ -8,7 +8,6 @@ on:
 
 jobs:
   update:
-    # runs-on: ubuntu-slim
     runs-on: ubuntu-latest
     if: github.repository_owner == 'LawnchairLauncher'
     permissions:
