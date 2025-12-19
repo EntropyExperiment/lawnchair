@@ -63,6 +63,7 @@ fun <T> DraggablePreferenceGroup(
     defaultList: List<T>,
     onOrderChange: (List<T>) -> Unit,
     modifier: Modifier = Modifier,
+    onSettle: ((List<T>) -> Unit)? = null,
     itemContent: @Composable ReorderableListItemScope.(
         item: T,
         index: Int,
@@ -71,6 +72,13 @@ fun <T> DraggablePreferenceGroup(
     ) -> Unit,
 ) {
     var localItems by remember { mutableStateOf(items) }
+
+    LaunchedEffect(items) {
+        if (localItems != items) {
+            localItems = items
+        }
+    }
+
     var isAnyDragging by remember { mutableStateOf(false) }
 
     LaunchedEffect(items) {
@@ -97,13 +105,16 @@ fun <T> DraggablePreferenceGroup(
         ) {
             ReorderableColumn(
                 list = localItems,
-                onSettle = { from, to ->
-                    localItems = localItems.toMutableList().apply {
-                        add(to, removeAt(from))
-                    }.also {
-                        onOrderChange(it)
-                        isAnyDragging = false
+                onSettle = { fromIndex, toIndex ->
+                    val newItems = localItems.toMutableList().apply {
+                        add(toIndex, removeAt(fromIndex))
+                    }.toList()
+                    localItems = newItems
+                    onOrderChange(newItems)
+                    if (onSettle != null) {
+                        onSettle(newItems)
                     }
+                    isAnyDragging = false
                 },
                 onMove = {
                     isAnyDragging = true
@@ -121,8 +132,20 @@ fun <T> DraggablePreferenceGroup(
                                     .a11yDrag(
                                         index = index,
                                         items = items,
-                                        onMoveUp = { onOrderChange(it) },
-                                        onMoveDown = { onOrderChange(it) },
+                                    onMoveUp = {
+                                        localItems = it
+                                        onOrderChange(it)
+                                        if (onSettle != null) {
+                                            onSettle(it)
+                                        }
+                                    },
+                                    onMoveDown = {
+                                        localItems = it
+                                        onOrderChange(it)
+                                        if (onSettle != null) {
+                                            onSettle(it)
+                                        }
+                                    },
                                     ),
                             ) {
                                 itemContent(
@@ -147,7 +170,11 @@ fun <T> DraggablePreferenceGroup(
             PreferenceGroup {
                 Item {
                     ClickablePreference(label = stringResource(id = R.string.action_reset)) {
-                        onOrderChange(defaultList)
+                    val resetList = defaultList
+                    onOrderChange(resetList)
+                    if (onSettle != null) {
+                        onSettle(resetList)
+                    }
                     }
                 }
             }
