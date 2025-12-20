@@ -125,10 +125,12 @@ val isSelectedThemeDark: Boolean
         }
     }
 
-val isAutoThemeDark: Boolean @Composable get() = when {
-    Utilities.ATLEAST_P -> isSystemInDarkTheme()
-    else -> wallpaperSupportsDarkTheme
-}
+val isAutoThemeDark: Boolean @Composable get() =
+    if (LocalInspectionMode.current || Utilities.ATLEAST_P) {
+        isSystemInDarkTheme()
+    } else {
+        wallpaperSupportsDarkTheme
+    }
 
 val wallpaperSupportsDarkTheme: Boolean
     @Composable get() {

@@ -169,9 +169,10 @@ public class RecentsState implements BaseState<RecentsState> {
      * For this state, what color scrim should be drawn behind overview.
      */
     public ScrimColors getScrimColor(Context context) {
+        // Lawnchair-TODO-Colour: Check R.attr.overviewScrimColor
         return new ScrimColors(
                 /* backgroundColor */ hasFlag(FLAG_SCRIM)
-                ? Themes.getAttrColor(context, R.attr.overviewScrimColor)
+                ? ColorTokens.OverviewScrim.resolveColor(context)
                 : Color.TRANSPARENT,
                 /* foregroundColor */ Color.TRANSPARENT);
     }

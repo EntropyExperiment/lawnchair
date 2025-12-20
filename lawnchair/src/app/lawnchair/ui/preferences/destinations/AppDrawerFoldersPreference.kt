@@ -65,13 +65,15 @@ fun AppDrawerFolderPreferenceItem(
     PreferenceGroup(
         modifier = modifier,
     ) {
-        ClickablePreference(
-            label = stringResource(R.string.app_drawer_folder),
-            modifier = Modifier,
-            onClick = {
-                navController.navigate(route = AppDrawerFolder)
-            },
-        )
+        Item {
+            ClickablePreference(
+                label = stringResource(R.string.app_drawer_folder),
+                modifier = Modifier,
+                onClick = {
+                    navController.navigate(route = AppDrawerFolder)
+                },
+            )
+        }
     }
 }
 
@@ -153,40 +155,44 @@ fun AppDrawerFoldersPreference(
             PreferenceGroup(
                 heading = stringResource(R.string.settings),
             ) {
-                SwitchPreference(
-                    adapter = prefs.folderApps.getAdapter(),
-                    label = stringResource(id = R.string.apps_in_folder_label),
-                    description = stringResource(id = R.string.apps_in_folder_description),
-                )
+                Item {
+                    SwitchPreference(
+                        adapter = prefs.folderApps.getAdapter(),
+                        label = stringResource(id = R.string.apps_in_folder_label),
+                        description = stringResource(id = R.string.apps_in_folder_description),
+                    )
+                }
             }
             PreferenceGroup(heading = stringResource(R.string.folders_label)) {
-                PreferenceTemplate(
-                    title = {},
-                    description = {
-                        Text(
-                            text = stringResource(R.string.add_folder),
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                    },
-                    modifier = Modifier.clickable {
-                        bottomSheetHandler.show {
-                            FolderEditSheet(
-                                FolderInfo().apply {
-                                    title = stringResource(R.string.my_folder_label)
-                                },
-                                onRename = onCreateFolder,
-                                onNavigate = {},
-                                onDismiss = {
-                                    bottomSheetHandler.hide()
-                                },
-                                hideAppPicker = true,
+                Item {
+                    PreferenceTemplate(
+                        title = {},
+                        description = {
+                            Text(
+                                text = stringResource(R.string.add_folder),
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
-                        }
-                    },
-                    startWidget = {
-                        Icon(Icons.Rounded.Add, contentDescription = null)
-                    },
-                )
+                        },
+                        modifier = Modifier.clickable {
+                            bottomSheetHandler.show {
+                                FolderEditSheet(
+                                    FolderInfo().apply {
+                                        title = stringResource(R.string.my_folder_label)
+                                    },
+                                    onRename = onCreateFolder,
+                                    onNavigate = {},
+                                    onDismiss = {
+                                        bottomSheetHandler.hide()
+                                    },
+                                    hideAppPicker = true,
+                                )
+                            }
+                        },
+                        startWidget = {
+                            Icon(Icons.Rounded.Add, contentDescription = null)
+                        },
+                    )
+                }
             }
             DraggablePreferenceGroup(
                 label = null,

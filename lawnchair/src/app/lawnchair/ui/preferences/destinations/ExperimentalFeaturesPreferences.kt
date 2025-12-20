@@ -18,12 +18,11 @@ import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
-import app.lawnchair.ui.preferences.components.layout.DividerColumn
-import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
+import app.lawnchair.util.isGestureNavContractCompatible
 import com.android.launcher3.R
 import com.android.launcher3.Utilities.ATLEAST_S
 import com.android.systemui.shared.system.BlurUtils
@@ -39,110 +38,122 @@ fun ExperimentalFeaturesPreferences(
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
+        val enableMaterialExpressiveAdapter = prefs.enableMaterialExpressive.getAdapter()
+        val enableWallpaperBlur = prefs.enableWallpaperBlur.getAdapter()
+        val context = LocalContext.current
+        val fileAccessManager = remember { FileAccessManager.getInstance(context) }
+        val allFilesAccessState by fileAccessManager.allFilesAccessState.collectAsStateWithLifecycle()
+        val wallpaperAccessState by fileAccessManager.wallpaperAccessState.collectAsStateWithLifecycle()
+        val hasPermission = wallpaperAccessState != FileAccessState.Denied
+        var showPermissionDialog by remember { mutableStateOf(false) }
+
         PreferenceGroup(
             Modifier,
             stringResource(R.string.workspace_label),
         ) {
             // pE-FeatureTaskForce-TODO(N/A): Make Material 3 Expressive Toggle
-            val enableMaterialExpressiveAdapter = prefs.enableMaterialExpressive.getAdapter()
-            SwitchPreference(
-                adapter = enableMaterialExpressiveAdapter,
-                label = stringResource(id = R.string.material_expressive_label),
-                description = stringResource(id = R.string.material_expressive_description),
-            )
-            ExpandAndShrink(visible = enableMaterialExpressiveAdapter.state.value) {
-                if (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows()) {
-                    WarningPreference(
-                        "Expressive Blur will be ignored because blur effect required at " +
-                            "least Android 12 or above, and device need performant GPU to render " +
-                            "blur and need to enable support rendering cross window blur by the " +
-                            "device manufacturer.",
-                    )
-                }
-            }
-            SwitchPreference(
-                adapter = prefs2.enableFontSelection.getAdapter(),
-                label = stringResource(id = R.string.font_picker_label),
-                description = stringResource(id = R.string.font_picker_description),
-            )
-            SwitchPreference(
-                adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
-                label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
-                description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
-            )
-            SwitchPreference(
-                adapter = prefs2.iconSwipeGestures.getAdapter(),
-                label = stringResource(R.string.icon_swipe_gestures),
-                description = stringResource(R.string.icon_swipe_gestures_description),
-            )
-            SwitchPreference(
-                adapter = prefs2.showDeckLayout.getAdapter(),
-                label = stringResource(R.string.show_deck_layout),
-                description = stringResource(R.string.show_deck_layout_description),
-            )
-
-            val context = LocalContext.current
-            val enableWallpaperBlur = prefs.enableWallpaperBlur.getAdapter()
-            val fileAccessManager = remember { FileAccessManager.getInstance(context) }
-            val allFilesAccessState by fileAccessManager.allFilesAccessState.collectAsStateWithLifecycle()
-            val wallpaperAccessState by fileAccessManager.wallpaperAccessState.collectAsStateWithLifecycle()
-            val hasPermission = wallpaperAccessState != FileAccessState.Denied
-            var showPermissionDialog by remember { mutableStateOf(false) }
-
-            SwitchPreference(
-                checked = hasPermission && enableWallpaperBlur.state.value,
-                onCheckedChange = {
-                    if (!hasPermission) {
-                        showPermissionDialog = true
-                    } else {
-                        enableWallpaperBlur.onChange(it)
-                    }
-                },
-                label = stringResource(id = R.string.wallpaper_blur),
-            )
-            ExpandAndShrink(visible = hasPermission && enableWallpaperBlur.state.value) {
-                DividerColumn {
-                    SliderPreference(
-                        label = stringResource(id = R.string.wallpaper_background_blur),
-                        adapter = prefs.wallpaperBlur.getAdapter(),
-                        step = 5,
-                        valueRange = 0..100,
-                        showUnit = "%",
-                    )
-                    SliderPreference(
-                        label = stringResource(id = R.string.wallpaper_background_blur_factor),
-                        adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
-                        step = 1F,
-                        valueRange = 0F..10F,
-                    )
-                }
-            }
-            if (showPermissionDialog) {
-                WallpaperAccessPermissionDialog(
-                    managedFilesChecked = allFilesAccessState != FileAccessState.Denied,
-                    onDismiss = {
-                        showPermissionDialog = false
-                    },
-                    onPermissionRequest = { fileAccessManager.refresh() },
+            Item {
+                SwitchPreference(
+                    adapter = enableMaterialExpressiveAdapter,
+                    label = stringResource(id = R.string.material_expressive_label),
+                    description = stringResource(id = R.string.material_expressive_description),
                 )
             }
-            LifecycleResumeEffect(Unit) {
-                showPermissionDialog = false
-                fileAccessManager.refresh()
-                onPauseOrDispose { }
+            Item(
+                "material_expressive_warning",
+                enableMaterialExpressiveAdapter.state.value && (!ATLEAST_S || !BlurUtils.supportsBlursOnWindows()),
+            ) {
+                WarningPreference(
+                    "Expressive Blur will be ignored because blur effect required at " +
+                        "least Android 12 or above, and device need performant GPU to render " +
+                        "blur and need to enable support rendering cross window blur by the " +
+                        "device manufacturer.",
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = prefs2.enableFontSelection.getAdapter(),
+                    label = stringResource(id = R.string.font_picker_label),
+                    description = stringResource(id = R.string.font_picker_description),
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
+                    label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
+                    description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = prefs2.iconSwipeGestures.getAdapter(),
+                    label = stringResource(R.string.icon_swipe_gestures),
+                    description = stringResource(R.string.icon_swipe_gestures_description),
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = prefs2.showDeckLayout.getAdapter(),
+                    label = stringResource(R.string.show_deck_layout),
+                    description = stringResource(R.string.show_deck_layout_description),
+                )
+            }
+            Item {
+                SwitchPreference(
+                    checked = hasPermission && enableWallpaperBlur.state.value,
+                    onCheckedChange = {
+                        if (!hasPermission) {
+                            showPermissionDialog = true
+                        } else {
+                            enableWallpaperBlur.onChange(it)
+                        }
+                    },
+                    label = stringResource(id = R.string.wallpaper_blur),
+                )
+            }
+
+            val canBlur = hasPermission && enableWallpaperBlur.state.value
+            Item(
+                "wallpaper_background_blur",
+                canBlur,
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.wallpaper_background_blur),
+                    adapter = prefs.wallpaperBlur.getAdapter(),
+                    step = 5,
+                    valueRange = 0..100,
+                    showUnit = "%",
+                )
+            }
+            Item(
+                "wallpaper_background_blur",
+                canBlur,
+            ) {
+                SliderPreference(
+                    label = stringResource(id = R.string.wallpaper_background_blur_factor),
+                    adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
+                    step = 1F,
+                    valueRange = 0F..10F,
+                )
             }
         }
-
-        PreferenceGroup(
-            Modifier,
-            stringResource(R.string.smartspace_label),
-        ) {
-            SwitchPreference(
-                adapter = prefs2.enableSmartspaceCalendarSelection.getAdapter(),
-                label = stringResource(id = R.string.smartspace_calendar_label),
-                description = stringResource(id = R.string.smartspace_calendar_description),
+        if (showPermissionDialog) {
+            WallpaperAccessPermissionDialog(
+                managedFilesChecked = allFilesAccessState != FileAccessState.Denied,
+                onDismiss = {
+                    showPermissionDialog = false
+                },
+                onPermissionRequest = { fileAccessManager.refresh() },
             )
         }
+        LifecycleResumeEffect(Unit) {
+            showPermissionDialog = false
+            fileAccessManager.refresh()
+            onPauseOrDispose { }
+        }
+
+        val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
+        val enableGncAdapter = prefs.enableGnc.getAdapter()
 
         PreferenceGroup(
             Modifier,
@@ -150,25 +161,32 @@ fun ExperimentalFeaturesPreferences(
             stringResource(R.string.internal_description),
         ) {
             // Lawnchair-TODO(Merge): Investigate Always Reload Icons
-            val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
-            SwitchPreference(
-                adapter = alwaysReloadIconsAdapter,
-                label = stringResource(id = R.string.always_reload_icons_label),
-                description = stringResource(id = R.string.always_reload_icons_description),
-            )
-            ExpandAndShrink(visible = alwaysReloadIconsAdapter.state.value) {
+            Item {
+                SwitchPreference(
+                    adapter = alwaysReloadIconsAdapter,
+                    label = stringResource(id = R.string.always_reload_icons_label),
+                    description = stringResource(id = R.string.always_reload_icons_description),
+                )
+            }
+            Item(
+                "always_reload_icons_warning",
+                alwaysReloadIconsAdapter.state.value,
+            ) {
                 WarningPreference(stringResource(R.string.always_reload_icons_warning))
             }
 
-            // pE-FeatureTaskForce-TODO(N/A): Make GestureNavContract API Toggle
-            val enableGncAdapter = prefs.enableGnc.getAdapter()
-            SwitchPreference(
-                adapter = enableGncAdapter,
-                label = stringResource(id = R.string.gesturenavcontract_label),
-                description = stringResource(id = R.string.gesturenavcontract_description),
-                enabled = ATLEAST_S,
-            )
-            ExpandAndShrink(visible = enableGncAdapter.state.value) {
+            Item {
+                SwitchPreference(
+                    adapter = enableGncAdapter,
+                    label = stringResource(id = R.string.gesturenavcontract_label),
+                    description = stringResource(id = R.string.gesturenavcontract_description),
+                    enabled = ATLEAST_S,
+                )
+            }
+            Item(
+                "gesturenavcontract_warning",
+                enableGncAdapter.state.value && !isGestureNavContractCompatible,
+            ) {
                 WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility))
             }
         }

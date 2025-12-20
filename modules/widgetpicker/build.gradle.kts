@@ -63,14 +63,14 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
     ksp(libs.dagger.android.processor)
 
     // Compose UI dependencies
     implementation(libs.compose.ui)
-    implementation(libs.compose.runtime)
+    implementation(libs.compose.runtime.livedata)
     implementation(libs.compose.foundation.layout)
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)

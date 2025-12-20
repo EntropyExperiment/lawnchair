@@ -95,7 +95,7 @@ public class BaseLauncherBinder {
             StringCache stringCache;
 
             synchronized (mBgDataModel) {
-                itemsIdMap = mBgDataModel.itemsIdMap.copy();
+                itemsIdMap = mBgDataModel.itemsIdMap.copy(mContext);
                 mBgDataModel.extraItems.forEach(extraItems::add);
                 if (incrementBindId) {
                     mBgDataModel.lastBindId++;

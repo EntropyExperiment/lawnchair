@@ -17,6 +17,10 @@ package com.android.launcher3.uioverrides.states;
 
 import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_BACKGROUND;
 
+import android.graphics.Color;
+
+import app.lawnchair.theme.color.tokens.ColorTokens;
+import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
 
 /**

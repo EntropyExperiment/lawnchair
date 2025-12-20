@@ -8,7 +8,7 @@ aka: Snapshot 10
 
 Bug fixes only
 
-Build: BD4.2311 (latest), BS10.2111, BS10.2011
+Build: BD4.2012 (latest), BD4.2311, BS10.2111, BS10.2011
 
 Compatibility list:
 
@@ -106,6 +106,57 @@ This is a developer-focused change log:
 Lawnchair 16 pE Development 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
+### 🥞 Development 3 Release 3
+
+Build: BD3.2012 (latest), BD3.1312, BD3.0812, BD3.0712
+
+Compatibility list:
+
+| 🏗️ Crash   | 🥞 Fully supported |
+|-------------|--------------------|
+| Android 8.1 | Android 12.0       |
+| Android 9   | Android 12.1       |
+| Android 10  | Android 13         |
+| Android 11  | Android 14         |
+|             | Android 15         |
+|             | Android 16         |
+
+#### Features
+* [Lawnchair] Features from Lawnchair 15-dev 07122025
+* [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
+* [Launcher] Enable bulk loading by default
+* [Launcher] Tablet support (ish)
+* [Launcher] Refreshed Material 3 Expressive
+* [Lawnchair] Refreshed Material 3 Expressive
+* [Launcher] Foldable support (ish)
+* [Lawnchair] Warn when nightly updater is updating to next major version
+* [Lawnchair/Smartspace] Add Lunar calendar option
+* [Lawnchair/Smartspace] Promote smartspace calendar to stable
+* [Lawnchair] Expressive redesign Phase 2
+* [Lawnchair] GestureNavContract toggle in experimental features
+* [Lawnchair] Set GestureNavContract on by default on Google device
+* [Lawnchair] Set GestureNavContract on by default on Nothing device
+* [Lawnchair] Don't show warning on known compatible device
+* [Lawnchair] Swipe to dismiss announcement perform haptic on successful dismiss
+* [Lawnchair] Remove Inter v3 fonts from Lawnchair entirely (to reduce apk size)
+* [Lawnchair] Add Google Sans variable font as fallback to Google Sans Flex (to support the most of the world languages, yes that increases sizes)
+* [Launcher] Google Sans variable normal style
+* [Lawnchair] Improve Google device compatibility check
+* [Lawnchair] Improve Samsung device compatibility check
+
+#### Fixes
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version
+* [Launcher] Hotseat Google provider failed to open due to Android pending intent restrictions on Android 14/15/16/16.1
+* [Launcher3/DeviceProfile] Positioning of first folder during Lawnchair setup
+* [Lawnchair/AllApps] Reimplement app drawer opacity
+* [Lawnchair/Recents] Reimplement recents overview opacity
+* [Lawnchair/Preference] Misaligned slider and text preference
+* [Lawnchair/Smartspace] Allow disabling the smartspace feature
+* [Lawnchair] Settings now correctly animate expand/shrink items
+* [Lawnchair] Correctly display warning in experimental features (race conditions)
+* [Project] Support for Android Studio 2025.2.3 Canary 5 (Bump to AGP 9.0.0-beta05)
+* [Lawnchair] Offer a toggle to disable/enable suggestions instead of linking it to ASI if the device is not Google Pixel
+
 ### 🥞 Development 3 Release 2
 
 Build: BD3.2211
@@ -124,6 +175,7 @@ Compatibility list:
 #### Features
 * [Lawnchair] Updated screenshots compressions and fastlane screenshot
 * [Lawnchair] Features from Lawnchair 15-dev
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version
 
 #### Fixes
 * [Lawnchair] Conflict from Lawnchair 15-dev
@@ -189,7 +241,7 @@ Compatibility list:
 * [Lawnchair/Iconloaderlib] Don't parse monochrome drawable in Android 12.1 or less
 * [Launcher3/AllApps] Allow theming of Expressive allapps
 * ~~[Lawnchair] Lawnchair can now be compiled in release mode~~
-  * [Lawnchair] Fix crashes with WM-Shell
+    * [Lawnchair] Fix crashes with WM-Shell
 * [Lawnchair] Bottom sheet blur will only trigger when your device supported blur*
 * [Lawnchair/Lazy] Corner radii of lazy component now matched radius of non-lazy*
 * [Lawnchair/Debug] Cleanup the debug menu*

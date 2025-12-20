@@ -62,18 +62,22 @@ fun HomeScreenGridPreferences(
         val maxGridSize = if (increaseMaxGridSize.state.value) 20 else 10
 
         PreferenceGroup {
-            SliderPreference(
-                label = stringResource(id = R.string.columns),
-                adapter = columns.asPreferenceAdapter(),
-                step = 1,
-                valueRange = 3..maxGridSize,
-            )
-            SliderPreference(
-                label = stringResource(id = R.string.rows),
-                adapter = rows.asPreferenceAdapter(),
-                step = 1,
-                valueRange = 3..maxGridSize,
-            )
+            Item {
+                SliderPreference(
+                    label = stringResource(id = R.string.columns),
+                    adapter = columns.asPreferenceAdapter(),
+                    step = 1,
+                    valueRange = 3..maxGridSize,
+                )
+            }
+            Item {
+                SliderPreference(
+                    label = stringResource(id = R.string.rows),
+                    adapter = rows.asPreferenceAdapter(),
+                    step = 1,
+                    valueRange = 3..maxGridSize,
+                )
+            }
         }
 
         val navController = LocalNavController.current

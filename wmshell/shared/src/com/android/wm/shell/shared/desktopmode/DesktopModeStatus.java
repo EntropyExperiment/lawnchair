@@ -21,6 +21,7 @@ import static android.hardware.display.DisplayManager.DISPLAY_CATEGORY_ALL_INCLU
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
 import android.content.res.Resources.NotFoundException;
+import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.content.Context;
@@ -327,14 +328,16 @@ public class DesktopModeStatus {
      * @return {@code true} if this device has an internal large screen
      */
     private static boolean deviceHasLargeScreen(@NonNull Context context) {
-        if (sIsLargeScreenDevice == null) {
-            sIsLargeScreenDevice = Arrays.stream(
-                context.getSystemService(DisplayManager.class)
-                        .getDisplays(DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED))
-                .filter(display -> display.getType() == Display.TYPE_INTERNAL)
-                .anyMatch(display -> display.getMinSizeDimensionDp()
-                        >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP);
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            if (sIsLargeScreenDevice == null) {
+                sIsLargeScreenDevice = Arrays.stream(
+                    context.getSystemService(DisplayManager.class)
+                            .getDisplays(DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED))
+                    .filter(display -> display.getType() == Display.TYPE_INTERNAL)
+                    .anyMatch(display -> display.getMinSizeDimensionDp()
+                            >= WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP);
+            }
+        } else sIsLargeScreenDevice = false; // pE-TODO(QPR1, QPR2): Should make it better
         return sIsLargeScreenDevice;
     }
 

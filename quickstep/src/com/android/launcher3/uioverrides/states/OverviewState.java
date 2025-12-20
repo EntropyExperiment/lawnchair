@@ -167,10 +167,10 @@ public class OverviewState extends LauncherState {
 
     @Override
     public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColorOverBlur
-        // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColor
+        // Lawnchair-TODO-Colour: Check overviewScrimForegroundPrimary and overviewScrimForegroundSecondary
+        // Lawnchair-TODO-Colour: Move to OverviewScrim
         return new ScrimColors(
-                /* backgroundColor */ Themes.getAttrColor(launcher, R.attr.overviewScrimColor),
+                /* backgroundColor */ Themes.getAttrColor(launcher, ColorTokens.OverviewScrimOverBlur.resolveColor(launcher)),
                 /* foregroundColor */ ColorUtils.compositeColors(
                 Themes.getAttrColor(launcher, R.attr.overviewScrimForegroundPrimary),
                 Themes.getAttrColor(launcher, R.attr.overviewScrimForegroundSecondary)));

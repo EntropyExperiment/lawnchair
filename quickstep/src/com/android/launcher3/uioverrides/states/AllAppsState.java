@@ -22,6 +22,7 @@ import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_ALLAP
 import android.content.Context;
 import android.graphics.Color;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
 import com.android.internal.jank.Cuj;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
@@ -211,16 +212,15 @@ public class AllAppsState extends LauncherState {
     public ScrimColors getWorkspaceScrimColor(Launcher launcher) {
         int backgroundColor;
         if (!launcher.getDeviceProfile().shouldShowAllAppsOnSheet()) {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + materialColorSurfaceDim
             // Always use an opaque scrim if there's no sheet.
+            // Lawnchair-TODO-Colour: Check R.color.materialColorSurfaceDim
             backgroundColor = launcher.getResources().getColor(R.color.materialColorSurfaceDim);
         } else if (!Flags.allAppsBlur()) {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + widgets_picker_scrim
             // If there's a sheet but no blur, use the old scrim color.
-            backgroundColor = launcher.getResources().getColor(R.color.widgets_picker_scrim);
+            backgroundColor = ColorTokens.WidgetsPickerScrim.resolveColor(launcher);
         } else {
-            // Lawnchair-TODO-Colour: LawnchairUtilsKt.getAllAppsScrimColor(launcher) + allAppsScrimColor
-            backgroundColor = Themes.getAttrColor(launcher, R.attr.allAppsScrimColor);
+            // Lawnchair-TODO-Colour: Move to getAllAppsScrimColor
+            backgroundColor = LawnchairUtilsKt.getAllAppsScrimColorOverBlur(launcher);
         }
         return new ScrimColors(backgroundColor, /* foregroundColor */ Color.TRANSPARENT);
     }

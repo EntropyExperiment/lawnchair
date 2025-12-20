@@ -42,25 +42,25 @@
     <string name="deselect_all">Batal pilih semua</string>
     <string name="inverse_selection">Balik pilihan</string>
     <string name="loading">Memuat…</string>
-    <string name="dismiss">Dismiss</string>
+    <string name="dismiss">Menolak</string>
     <string name="download_update">Unduh pembaruan</string>
     <string name="install_update">Pasang pembaruan</string>
-    <string name="view_changes">View changes</string>
+    <string name="view_changes">Tampilkan perubahan</string>
     <string name="pro_updated">Sudah versi terbaru!</string>
     <!-- Changes dialog strings -->
-    <string name="changes_dialog_title">Updates</string>
-    <string name="changes_dialog_error">Failed to load changes</string>
-    <string name="changes_dialog_no_changes">No changes found</string>
+    <string name="changes_dialog_title">Pembaruan</string>
+    <string name="changes_dialog_error">Gagal untuk memproses pembaruan</string>
+    <string name="changes_dialog_no_changes">Tidak ditemukan pembaruan</string>
     <string name="changes_dialog_build_format">Build #%1$d → #%2$d</string>
-    <string name="changes_dialog_commit_info">by %1$s • %2$s • %3$s</string>
+    <string name="changes_dialog_commit_info">oleh %1$s • %2$s • %3$s</string>
     <!-- Time ago strings -->
-    <string name="time_just_now">just now</string>
+    <string name="time_just_now">baru saja</string>
     <string name="time_minutes_ago">%dm</string>
-    <string name="time_hours_ago">%dh</string>
-    <string name="time_days_ago">%dd</string>
-    <string name="time_weeks_ago">%dw</string>
-    <string name="time_months_ago">%dmo</string>
-    <string name="time_years_ago">%dy</string>
+    <string name="time_hours_ago">%dj</string>
+    <string name="time_days_ago">%dh</string>
+    <string name="time_weeks_ago">%dmg</string>
+    <string name="time_months_ago">%dbln</string>
+    <string name="time_years_ago">%dthn</string>
     <string name="managed_by_lawnchair">Dikelola oleh Lawnchair</string>
     <!-- When mentioning settings UI -->
     <string name="smartspace_preferences">Preferensi</string>
@@ -87,11 +87,11 @@
     <string name="grid">Kisi</string>
     <string name="layout">Tata Letak</string>
     <!-- Generic styling options -->
-    <string name="show_wallpaper">Show wallpaper</string>
+    <string name="show_wallpaper">Tampilkan wallpaper</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="style">Gaya</string>
     <string name="background_opacity">Tingkat transparan latar belakang</string>
-    <string name="pref_all_apps_search_bar_background">Separated Search bar background</string>
+    <string name="pref_all_apps_search_bar_background">Pisahkan latar Bilah pencari</string>
     <!-- Toast text and tips -->
     <string name="copied_toast">Disalin ke papan klip</string>
     <string name="calculator_search_result_copied_toast">Hasil disalin ke papan klip</string>
@@ -147,10 +147,10 @@
     <string name="debug_restart_launcher">Muat ulang Lawnchair</string>
     <string name="experimental_features_label">Masa datang eksperimental</string>
     <!-- Experimental features -->
-    <string name="workspace_label">Workspace</string>
-    <string name="smartspace_label">Smartspace</string>
+    <string name="workspace_label">Ruang kerja</string>
+    <string name="smartspace_label">Ruang pintar</string>
     <string name="internal_label">Internal</string>
-    <string name="internal_description">Internal may be more unstable than other experimental group</string>
+    <string name="internal_description">Internal mungkin lebih tidak stabil dibanding grup eksperimental lainnya</string>
     <string name="font_picker_label">Perubahan huruf</string>
     <string name="font_picker_description">Beberapa teks tetap tidak berubah</string>
     <string name="smartspace_calendar_label">Perubahan kalender Sekilas</string>
@@ -159,16 +159,16 @@
     <string name="workspace_increase_max_grid_size_description">Tingkatkan batas ukuran kisi yang diperbolehkan dari 10x10 ke 20x20</string>
     <string name="always_reload_icons_label">Selalu muat ulang lambang</string>
     <string name="always_reload_icons_description">Hindari menggunakan ikon yang telah di tembolok dari paket lambang</string>
-    <string name="always_reload_icons_warning">Will cause icon to reload regularly, this is not required if icon pack doesn\'t update regularly</string>
+    <string name="always_reload_icons_warning">Dapat menyebabkan ikon untuk memuat ulang secara berkala, ini tidak diperlukan apabila pak ikon tidak update secara berkala</string>
     <string name="icon_swipe_gestures">Gerakan menggeser ikon</string>
     <string name="icon_swipe_gestures_description">Lakukan tindakan saat menggeser ke kiri atau kanan pada ikon alih-alih memindahkan layar beranda</string>
     <string name="show_deck_layout">Tata letak dek</string>
     <string name="show_deck_layout_description">Tampilkan opsi tata letak untuk menyembunyikan laci aplikasi dan secara otomatis menambahkan aplikasi baru ke layar beranda</string>
-    <string name="material_expressive_label">Material 3 Expressive</string>
-    <string name="material_expressive_description">Enable Material 3 Expressive changes in workspace</string>
-    <string name="gesturenavcontract_label">GestureNavContract API</string>
-    <string name="gesturenavcontract_description">Render launcher animations without root, does not work with heavily modified AOSP</string>
-    <string name="gesturenavcontract_warning_incompatibility">GestureNavContract may cause artifacting during animations</string>
+    <string name="material_expressive_label">Material 3 Ekspresif</string>
+    <string name="material_expressive_description">Aktifkan perubahan Material 3 Ekspresif pada ruang kerja</string>
+    <string name="gesturenavcontract_label">API GestureNavContract</string>
+    <string name="gesturenavcontract_description">Render animasi peluncur tanpa root, tidak akan bekerja pada AOSP dengan modifikasi berat</string>
+    <string name="gesturenavcontract_warning_incompatibility">GestureNavContract mungkin akan menyebabkan artifacting pada saat animasi</string>
     <string name="recents_lock_unlock">Kunci/buka kunci</string>
     <string name="recents_lock_unlock_description">Cegah aplikasi terpilih untuk ditutup saat menekan \"Bersihkan semua\"</string>
     <!--Overlay-->
@@ -233,11 +233,11 @@
     <string name="icon_shape_squircle">Squircle</string>
     <string name="icon_shape_teardrop">Tetesan air</string>
     <!-- Icon shapes (Material 3 Expressive) -->
-    <string name="icon_shape_very_sunny">Very sunny</string>
-    <string name="icon_shape_complex_clover">Complex clover</string>
-    <string name="icon_shape_four_sided_cookie">Four-sided cookie</string>
-    <string name="icon_shape_seven_sided_cookie">Seven-sided cookie</string>
-    <string name="icon_shape_arch">Arch</string>
+    <string name="icon_shape_very_sunny">Sangat cerah</string>
+    <string name="icon_shape_complex_clover">Semanggi kompleks</string>
+    <string name="icon_shape_four_sided_cookie">Cookie empat sisi</string>
+    <string name="icon_shape_seven_sided_cookie">Cookie tujuh sisi</string>
+    <string name="icon_shape_arch">Lengkungan</string>
     <!-- Custom icon shapes -->
     <string name="custom_icon_shape">Bentuk ikon kustom</string>
     <string name="custom_icon_shape_create">Buat bentuk ikon kustom</string>
@@ -327,11 +327,11 @@
     <!-- Date formats -->
     <string name="smartspace_calendar_gregorian">Gregorian</string>
     <string name="smartspace_calendar_persian">Persia</string>
-    <string name="smartspace_calendar_buddhist">Buddhist</string>
+    <string name="smartspace_calendar_chinese">Chinese</string>
     <string name="generic_smartspace_concatenated_desc">%1$s, %2$s</string>
     <!-- Battery labels -->
-    <string name="smartspace_battery_fast_charging">Fast charging</string>
-    <string name="smartspace_battery_slow_charging">Slow charging</string>
+    <string name="smartspace_battery_fast_charging">Pengisian daya cepat</string>
+    <string name="smartspace_battery_slow_charging">Pengisian daya lambat</string>
     <string name="smartspace_battery_charging">Mengisi daya</string>
     <string name="smartspace_battery_full">Daya terisi penuh</string>
     <string name="smartspace_battery_low">Baterai lemah</string>
@@ -383,14 +383,16 @@
     <string name="quickswitch_maintenance">Pemeliharaan QuickSwitch</string>
     <string name="devops">DevOps</string>
     <string name="support_and_pr">Bantuan dan relasi Publik</string>
-    <string name="community">Community</string>
+    <string name="community">Komunitas</string>
     <string name="telegram">Telegram</string>
     <string name="news">Berita</string>
     <string name="legal">Legal</string>
     <string name="acknowledgements">Ucapan Terima Kasih</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="contributor_status_active">Active</string>
-    <string name="update_check_failed">Failed to check for updates</string>
+    <string name="privacy_policy">Kebijakan privasi</string>
+    <string name="contributor_status_active">Aktif</string>
+    <string name="update_check_failed">Gagal untuk cek pembaruan</string>
+    <string name="major_update_label">Breaking change!</string>
+    <string name="major_update_description">You are about to update from Lawnchair <xliff:g example="15" id="current_major_version">%1$s</xliff:g> to Lawnchair <xliff:g example="16" id="next_major_version">%2$s</xliff:g>, please consider carefully as newer major version may be unstable than current version.</string>
     <!--
 
     Backup and restore
@@ -423,7 +425,7 @@
     <string name="gesture_handler_sleep">Tidur</string>
     <string name="gesture_handler_recents">Buka layar terbaru</string>
     <string name="gesture_handler_open_notifications">Buka panel notifikasi</string>
-    <string name="gesture_handler_open_quick_settings">Open Quick Settings</string>
+    <string name="gesture_handler_open_quick_settings">Buka Setelan Cepat</string>
     <string name="gesture_handler_open_app_option">Buka apli</string>
     <string name="gesture_handler_open_app_config">Buka %1$s</string>
     <string name="gesture_handler_open_app_drawer">Buka laci apli</string>
@@ -478,6 +480,8 @@
     <string name="wallpaper_depth_effect_label">Efek kedalaman wallpaper</string>
     <string name="wallpaper_depth_effect_description">Perbesar dan perkecil wallpaper ketika beralih area dalam peluncur</string>
     <string name="show_sys_ui_scrim">Bayangan atas</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Kisi layar utama</string>
     <string name="home_screen_lock">Kunci layar beranda</string>
     <string name="home_screen_unlock">Buka kunci layar beranda</string>

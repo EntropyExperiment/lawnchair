@@ -328,7 +328,7 @@ Transparentes</string>
     <!-- Date formats -->
     <string name="smartspace_calendar_gregorian">Gregoriano</string>
     <string name="smartspace_calendar_persian">Persa</string>
-    <string name="smartspace_calendar_buddhist">Buddhist</string>
+    <string name="smartspace_calendar_chinese">Chinese</string>
     <string name="generic_smartspace_concatenated_desc">%1$s, %2$s</string>
     <!-- Battery labels -->
     <string name="smartspace_battery_fast_charging">Fast charging</string>
@@ -392,6 +392,8 @@ Transparentes</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="contributor_status_active">Ativo</string>
     <string name="update_check_failed">Falha na procura de atualizações</string>
+    <string name="major_update_label">Breaking change!</string>
+    <string name="major_update_description">You are about to update from Lawnchair <xliff:g example="15" id="current_major_version">%1$s</xliff:g> to Lawnchair <xliff:g example="16" id="next_major_version">%2$s</xliff:g>, please consider carefully as newer major version may be unstable than current version.</string>
     <!--
 
     Backup and restore
@@ -479,6 +481,8 @@ Transparentes</string>
     <string name="wallpaper_depth_effect_label">Efeito de profundidade do papel de parede</string>
     <string name="wallpaper_depth_effect_description">Aproximar e afastar o papel de parede ao transitar entre as áreas do launcher</string>
     <string name="show_sys_ui_scrim">Sombra superior</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Grelha do ecrã principal</string>
     <string name="home_screen_lock">Bloquear o ecrã principal</string>
     <string name="home_screen_unlock">Desbloquear o ecrã principal</string>

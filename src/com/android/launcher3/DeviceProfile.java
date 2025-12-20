@@ -21,6 +21,7 @@ import static com.android.launcher3.InvariantDeviceProfile.INDEX_LANDSCAPE;
 import static com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_LANDSCAPE;
 import static com.android.launcher3.InvariantDeviceProfile.INDEX_TWO_PANEL_PORTRAIT;
 import static com.android.launcher3.InvariantDeviceProfile.createDisplayOptionSpec;
+import static com.android.launcher3.InvariantDeviceProfile.deviceType;
 import static com.android.launcher3.Utilities.dpiFromPx;
 import static com.android.launcher3.Utilities.pxFromSp;
 import static com.android.launcher3.folder.ClippedFolderIconLayoutRule.ICON_OVERLAP_FACTOR;
@@ -502,6 +503,12 @@ public class DeviceProfile {
         HotseatMode hotseatMode = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getHotseatMode());
         boolean isQsbEnable = hotseatMode.getLayoutResourceId() != R.layout.empty_view;
 
+        // pE-TODO(QPR1): Check this (Tablet/Foldable)
+//        if (inv.inlineQsb[INDEX_DEFAULT] && !isPhone) {
+//            hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.taskbar_size);
+//        } else {
+//            hotseatQsbShadowHeight = res.getDimensionPixelSize(R.dimen.qsb_shadow_height);
+//        }
         numShownHotseatIcons = displayOptionSpec.numShownHotseatIcons;
         mHotseatColumnSpan = inv.numColumns;
 

@@ -21,6 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.font.FontCache
+import app.lawnchair.util.getApkVersionComparison
+import app.lawnchair.util.isGestureNavContractCompatible
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
@@ -62,7 +64,7 @@ class PreferenceManager @Inject constructor(
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
-    val drawerOpacity = FloatPref("pref_drawerOpacity", 1F, recreate)
+    val drawerOpacity = FloatPref("pref_drawerOpacity", .4f, recreate)
     val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F, recreate)
     val feedProvider = StringPref("pref_feedProvider", "")
     val ignoreFeedWhitelist = BoolPref("pref_ignoreFeedWhitelist", false)
@@ -71,6 +73,7 @@ class PreferenceManager @Inject constructor(
     val windowCornerRadius = IntPref("pref_windowCornerRadius", 80, recreate)
     val autoLaunchRoot = BoolPref("pref_autoLaunchRoot", false)
     val wallpaperScrolling = BoolPref("pref_wallpaperScrolling", true)
+    val infiniteScrolling = BoolPref("pref_infiniteScrolling", false)
     val enableDebugMenu = BoolPref("pref_enableDebugMenu", false)
     val customAppName = object : MutableMapPref<ComponentKey, String>("pref_appNameMap", reloadGrid) {
         override fun flattenKey(key: ComponentKey) = key.toString()
@@ -142,7 +145,12 @@ class PreferenceManager @Inject constructor(
     val pseudonymVersion = StringPref("pref_pseudonymVersion", "Bubble Tea")
 
     val enableMaterialExpressive = BoolPref("pref_enableMaterialExpressive", false, recreate)
-    val enableGnc = BoolPref("pref_enableGnc", false, recreate)
+    val enableGnc = BoolPref("pref_enableGnc", isGestureNavContractCompatible, recreate)
+
+    val lawnchairMajorVersion = IntPref(
+        "pref_lawnchairMajorVersion",
+        context.getApkVersionComparison().first[0],
+    )
 
     override fun close() {
         TODO("Not yet implemented")

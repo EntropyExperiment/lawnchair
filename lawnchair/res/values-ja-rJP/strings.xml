@@ -327,7 +327,7 @@
     <!-- Date formats -->
     <string name="smartspace_calendar_gregorian">グレゴリオ暦</string>
     <string name="smartspace_calendar_persian">ペルシア暦</string>
-    <string name="smartspace_calendar_buddhist">Buddhist</string>
+    <string name="smartspace_calendar_chinese">Chinese</string>
     <string name="generic_smartspace_concatenated_desc">%1$s, %2$s</string>
     <!-- Battery labels -->
     <string name="smartspace_battery_fast_charging">Fast charging</string>
@@ -391,6 +391,8 @@
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="contributor_status_active">アクティブ</string>
     <string name="update_check_failed">アップデートの確認に失敗しました</string>
+    <string name="major_update_label">Breaking change!</string>
+    <string name="major_update_description">You are about to update from Lawnchair <xliff:g example="15" id="current_major_version">%1$s</xliff:g> to Lawnchair <xliff:g example="16" id="next_major_version">%2$s</xliff:g>, please consider carefully as newer major version may be unstable than current version.</string>
     <!--
 
     Backup and restore
@@ -478,6 +480,8 @@
     <string name="wallpaper_depth_effect_label">壁紙の深度エフェクト</string>
     <string name="wallpaper_depth_effect_description">ランチャーのエリアを移動する際に背景がズームイン・ズームアウトします</string>
     <string name="show_sys_ui_scrim">上部の影</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">ホーム画面のグリッド</string>
     <string name="home_screen_lock">ホーム画面をロック</string>
     <string name="home_screen_unlock">ホーム画面のロックを解除</string>

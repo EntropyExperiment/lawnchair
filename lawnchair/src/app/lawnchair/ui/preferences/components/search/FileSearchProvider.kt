@@ -159,12 +159,14 @@ fun FileSearchProvider(
 
     ExpandAndShrink(hasAnyPermissions) {
         PreferenceGroup {
-            SliderPreference(
-                label = stringResource(id = R.string.max_file_result_count_title),
-                adapter = prefs2.maxFileResultCount.getAdapter(),
-                step = 1,
-                valueRange = 3..10,
-            )
+            Item {
+                SliderPreference(
+                    label = stringResource(id = R.string.max_file_result_count_title),
+                    adapter = prefs2.maxFileResultCount.getAdapter(),
+                    step = 1,
+                    valueRange = 3..10,
+                )
+            }
         }
     }
 }

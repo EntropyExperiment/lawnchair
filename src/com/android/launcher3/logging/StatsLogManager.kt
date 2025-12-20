@@ -306,6 +306,9 @@ open class StatsLogManager protected constructor(@JvmField protected val mContex
         @UiEvent(doc = "Current grid size is changed to 4x4") LAUNCHER_GRID_SIZE_4_BY_4(2183),
         @UiEvent(doc = "Current grid size is changed to 4x5") LAUNCHER_GRID_SIZE_4_BY_5(2184),
         @UiEvent(doc = "Current grid size is changed to 4x6") LAUNCHER_GRID_SIZE_4_BY_6(2185),
+        @UiEvent(doc = "Current grid size is changed to 4x7")
+        LAUNCHER_GRID_SIZE_4_BY_7(2189),
+
         @UiEvent(doc = "Current grid size is changed to 5x5") LAUNCHER_GRID_SIZE_5_BY_5(2186),
         @UiEvent(doc = "Current grid size is changed to 5x6") LAUNCHER_GRID_SIZE_5_BY_6(2187),
         @UiEvent(doc = "Current grid size is changed to 6x5") LAUNCHER_GRID_SIZE_6_BY_5(2188),

@@ -69,8 +69,12 @@ class AboutViewModel(
         nightlyBuildsRepository.downloadUpdate()
     }
 
-    fun installUpdate(file: File) {
-        nightlyBuildsRepository.installUpdate(file)
+    fun installUpdate(file: File, forceInstall: Boolean = false) {
+        nightlyBuildsRepository.installUpdate(file, forceInstall)
+    }
+
+    fun resetToDownloaded(file: File) {
+        nightlyBuildsRepository.resetToDownloaded(file)
     }
 
     private suspend fun fetchActiveContributors(): Set<String> {
@@ -102,7 +106,7 @@ class AboutViewModel(
                 socialUrl = "https://codebucket.de",
             ),
             TeamMember(
-                name = "Goooler",
+                name = "Zongle Wang",
                 role = Role.Development,
                 photoUrl = "https://avatars.githubusercontent.com/u/10363352",
                 socialUrl = "https://github.com/Goooler",
@@ -154,7 +158,7 @@ class AboutViewModel(
             TeamMember(
                 name = "Pun Butrach",
                 role = Role.Development,
-                photoUrl = "https://github.com/validcube.png",
+                photoUrl = "https://avatars.githubusercontent.com/u/93124920",
                 socialUrl = "https://github.com/validcube",
             ),
             TeamMember(
