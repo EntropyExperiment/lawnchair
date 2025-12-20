@@ -376,7 +376,6 @@ dependencies {
     implementation projects.viewcapturelib
     implementation projects.displaylib
     implementation projects.mechanics
-    implementation projects.mechanics.compose
 
     // Recents lib dependency
     withQuickstepCompileOnly projects.hiddenApi
