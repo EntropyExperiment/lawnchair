@@ -6,20 +6,20 @@
 
 aka: Snapshot 10
 
-Bug fixes only
+~~Bug fixes only~~
 
 Build: BD4.2012 (latest), BD4.2311, BS10.2111, BS10.2011
 
 Compatibility list:
 
-| 🏗️ Crash   | 💫 Limited features | 🥞 Fully supported |
-|-------------|---------------------|--------------------|
-| Android 8.1 |                     | Android 12.0       |
-| Android 9   |                     | Android 12.1       |
-| Android 10  |                     | Android 13         |
-| Android 11  |                     | Android 14         |
-|             |                     | Android 15         |
-|             |                     | Android 16         |
+| 🏗️ Crash   | 🥞 Fully supported |
+|-------------|--------------------|
+| Android 8.1 | Android 12.0       |
+| Android 9   | Android 12.1       |
+| Android 10  | Android 13         |
+| Android 11  | Android 14         |
+|             | Android 15         |
+|             | Android 16         |
 
 
 #### Features
