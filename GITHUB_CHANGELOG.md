@@ -2,11 +2,9 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Development 4 Release 1 (Draft)
+### 🏗️ Development 4 Release 1 (Snapshot 10) (Draft)
 
-aka: Snapshot 10
-
-~~Bug fixes only~~
+~~Bug fixes only~~ You may see duplicated changelogs in this release because of merged diverged timeline.
 
 Build: BD4.2012 (latest), BD4.2311, BS10.2111, BS10.2011
 
