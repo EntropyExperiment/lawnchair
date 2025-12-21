@@ -44,6 +44,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.HomeScreenGrid
 import app.lawnchair.util.collectAsStateBlocking
+import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import kotlinx.coroutines.launch
@@ -67,6 +68,7 @@ fun HomeScreenPreferences(
     ) {
         val lockHomeScreenAdapter = prefs2.lockHomeScreen.getAdapter()
         val showDeckLayout = prefs2.showDeckLayout.getAdapter().state.value
+        val context = LocalContext.current
 
         if (showDeckLayout) {
             HomeLayoutSettings()
@@ -101,6 +103,20 @@ fun HomeScreenPreferences(
                 )
             }
         }
+        PreferenceGroup(heading = stringResource(id = R.string.home_screen_actions)) {
+            Item {
+                ClickablePreference(
+                    label = stringResource(id = R.string.remove_all_views_from_home_screen),
+                    confirmationText = stringResource(id = R.string.remove_all_views_from_home_screen_desc),
+                    onClick = {
+                        scope.launch {
+                            LauncherAppState.getInstance(context).clearAllViewsFromHomeScreen()
+                        }
+                    },
+                )
+            }
+        }
+        PreferenceGroup(heading = stringResource(id = R.string.minus_one)) {
         val feedAvailable = OverlayCallbackImpl.minusOneAvailable(LocalContext.current)
         val enableFeedAdapter = prefs2.enableFeed.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.minus_one)) {
