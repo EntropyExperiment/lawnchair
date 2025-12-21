@@ -219,8 +219,7 @@ public class AllAppsState extends LauncherState {
             // If there's a sheet but no blur, use the old scrim color.
             backgroundColor = ColorTokens.WidgetsPickerScrim.resolveColor(launcher);
         } else {
-            // Lawnchair-TODO-Colour: Move to getAllAppsScrimColor
-            backgroundColor = LawnchairUtilsKt.getAllAppsScrimColorOverBlur(launcher);
+            backgroundColor = LawnchairUtilsKt.getAllAppsScrimColor(launcher);
         }
         return new ScrimColors(backgroundColor, /* foregroundColor */ Color.TRANSPARENT);
     }
