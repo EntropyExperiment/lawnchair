@@ -16,6 +16,7 @@
 
 package com.android.launcher3.model;
 
+import static com.android.launcher3.LauncherSettings.Favorites.TABLE_NAME;
 import static com.android.launcher3.provider.LauncherDbUtils.itemIdMatch;
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 
@@ -159,10 +160,11 @@ public class ModelWriter {
      */
     public boolean clearAllHomeScreenViewsByType(int type) {
         final ArrayList<ItemInfo> itemsToRemove = new ArrayList<>();
-
-        for (ItemInfo item : mBgDataModel.itemsIdMap) {
-            if (item.container == type) {
-                itemsToRemove.add(item);
+        synchronized (mBgDataModel) {
+            for (ItemInfo item : mBgDataModel.itemsIdMap) {
+                if (item.container == type) {
+                    itemsToRemove.add(item);
+                }
             }
         }
 
@@ -170,16 +172,7 @@ public class ModelWriter {
             return false;
         }
 
-        enqueueDeleteRunnable(newModelTask(() -> {
-            final ModelDbController db = mModel.getModelDbController();
-
-            for (ItemInfo item : itemsToRemove) {
-                db.delete(TABLE_NAME, itemIdMatch(item.id), null);
-                mBgDataModel.removeItem(mContext, item);
-            }
-        }));
-
-        mModel.forceReload();
+        deleteItemsFromDatabase(itemsToRemove, "clearAllHomeScreenViewsByType");
         return true;
     }
 
