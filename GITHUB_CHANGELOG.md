@@ -6,7 +6,7 @@
 
 ~~Bug fixes only~~ You may see duplicated changelogs in this release because of merged diverged timeline.
 
-Build: BD4.2012 (latest), BD4.2311, BS10.2111, BS10.2011
+Build: BD4.2112 (latest), BD4.2012, BD4.2311, BS10.2111, BS10.2011
 
 Compatibility list:
 
