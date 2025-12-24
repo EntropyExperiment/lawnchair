@@ -167,11 +167,17 @@ fun About(
                 onInstall = {
                     viewModel.installUpdate(it)
                 },
+                onForceInstall = {
+                    viewModel.installUpdate(it, forceInstall = true)
+                },
                 onViewChanges = {
                     openBottomSheet = true
                     scope.launch {
                         sheetState.show()
                     }
+                },
+                onDismissMajorUpdate = {
+                    viewModel.resetToDownloaded(it)
                 },
             )
         }

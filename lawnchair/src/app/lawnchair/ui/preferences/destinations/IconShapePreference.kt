@@ -107,34 +107,40 @@ fun IconShapePreference(
         PreferenceGroup(
             heading = stringResource(id = R.string.custom),
         ) {
-            CustomIconShapePreferenceOption(
-                iconShapeAdapter = iconShapeAdapter,
-            )
-            ModifyCustomIconShapePreference(
-                customIconShape = customIconShape.value,
-            )
+            Item {
+                CustomIconShapePreferenceOption(
+                    iconShapeAdapter = iconShapeAdapter,
+                )
+            }
+            Item {
+                ModifyCustomIconShapePreference(
+                    customIconShape = customIconShape.value,
+                )
+            }
         }
         PreferenceGroup(
             heading = stringResource(id = R.string.presets),
         ) {
             entries.forEach { item ->
-                PreferenceTemplate(
-                    enabled = item.enabled,
-                    title = { Text(item.label()) },
-                    modifier = Modifier.clickable(item.enabled) {
-                        iconShapeAdapter.onChange(newValue = item.value)
-                    },
-                    startWidget = {
-                        RadioButton(
-                            selected = item.value == iconShapeAdapter.state.value,
-                            onClick = null,
-                            enabled = item.enabled,
-                        )
-                    },
-                    endWidget = {
-                        IconShapePreview(iconShape = item.value)
-                    },
-                )
+                Item {
+                    PreferenceTemplate(
+                        enabled = item.enabled,
+                        title = { Text(item.label()) },
+                        modifier = Modifier.clickable(item.enabled) {
+                            iconShapeAdapter.onChange(newValue = item.value)
+                        },
+                        startWidget = {
+                            RadioButton(
+                                selected = item.value == iconShapeAdapter.state.value,
+                                onClick = null,
+                                enabled = item.enabled,
+                            )
+                        },
+                        endWidget = {
+                            IconShapePreview(iconShape = item.value)
+                        },
+                    )
+                }
             }
         }
     }

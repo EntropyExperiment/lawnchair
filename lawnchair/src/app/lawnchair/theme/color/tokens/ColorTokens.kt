@@ -91,7 +91,7 @@ object ColorTokens {
 
     @JvmField val AllAppsHeaderProtectionColor = DayNightColorToken(SurfaceContainerHighest, SurfaceContainerLow)
 
-    @JvmField val AllAppsScrimColor = ColorBackground
+    @JvmField val AllAppsScrimColor = StaticColorToken(0x404040).setAlpha(.40f)
 
     @JvmField val AllAppsTabBackground = DayNightColorToken(Neutral1_100, Neutral1_800.setLStar(22.0))
 
@@ -101,9 +101,21 @@ object ColorTokens {
 
     @JvmField val GroupHighlight = Surface
 
-    @JvmField val OverviewScrimColor = DayNightColorToken(Neutral2_200, Neutral1_500.setLStar(35.0))
+    @JvmField val OverviewScrimColor = DayNightColorToken(Neutral2_100.setLStar(87.0), Neutral1_800)
+
+    @JvmField val OverviewScrimOverBlurColor = DayNightColorToken(
+        StaticColorToken(0x80FFFFFF),
+        StaticColorToken(0x80000000),
+    )
 
     @JvmField val OverviewScrim = OverviewScrimColor
+        .withPreferences { prefs ->
+            val translucent = prefs.recentsTranslucentBackground.get()
+            val translucentIntensity = prefs.recentsTranslucentBackgroundAlpha.get()
+            if (translucent) setAlpha(translucentIntensity) else this
+        }
+
+    @JvmField val OverviewScrimOverBlur = OverviewScrimOverBlurColor
         .withPreferences { prefs ->
             val translucent = prefs.recentsTranslucentBackground.get()
             val translucentIntensity = prefs.recentsTranslucentBackgroundAlpha.get()
@@ -148,7 +160,7 @@ object ColorTokens {
 
     @JvmField val WallpaperPopupScrim = Neutral1_900
 
-    @JvmField val WidgetsPickerScrim = DayNightColorToken(Neutral1_200, Neutral1_900).setAlpha(0.8f)
+    @JvmField val WidgetsPickerScrim = Scrim.setAlpha(.32f)
 
     @JvmField val AccentRippleColor = DayNightColorToken(Accent2_50, Accent1_300)
 
@@ -174,7 +186,7 @@ object ColorTokens {
     // Material 3 Expressive
     @JvmField val ExpressiveAllApps = DayNightColorToken(Accent1_100, Accent1_800)
 
-    @JvmField val BottomSheetBackgroundColorBlurFallback = DayNightColorToken(Accent2_800, Accent2_800)
+    @JvmField val BottomSheetBackgroundColorBlurFallback = DayNightColorToken(Accent2_200, Accent2_800)
 
     @JvmField val shade_panel_fg_color = DayNightColorToken(
         Neutral1_100.setAlpha(0.32f),

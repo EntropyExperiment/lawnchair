@@ -512,7 +512,7 @@ public class DisplayController {
             // LC: Hacky stuff but it work!
             mIsFoldable = Utilities.ATLEAST_R && displayInfoContext.getPackageManager()
                 .hasSystemFeature(FEATURE_SENSOR_HINGE_ANGLE);
-
+            
             mPerDisplayBounds.putAll(perDisplayBoundsCache);
             List<WindowBounds> cachedValue = getCurrentBounds();
 

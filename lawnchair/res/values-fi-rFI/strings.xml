@@ -102,6 +102,8 @@
     <string name="caddy_beta">Ryhmitetyt sovellukset (Beta)</string>
     <string name="caddy">Ryhmitetty sovellukset</string>
     <string name="app_drawer_folder">Kansiot sovellusvalikossa</string>
+    <string name="selected_apps">Selected apps</string>
+    <string name="add_apps">Add apps</string>
     <string name="app_drawer_folder_settings">Sovellusvalikon kansio</string>
     <string name="add_folder">Luo kansio</string>
     <string name="edit_folder">Muokkaa kansiota</string>
@@ -130,6 +132,7 @@
     <string name="general_description">Värit, kuvakepaketit, ilmoituspisteet</string>
     <string name="home_screen_label">Aloitusnäyttö</string>
     <string name="home_screen_description">Syöte, ruudukko, kuvakkeet</string>
+    <string name="home_screen_actions">Home screen actions</string>
     <string name="dock_label">Telakka</string>
     <string name="dock_description">Hakupalkki, kuvakkeiden määrä</string>
     <string name="app_drawer_label">Sovellusvalikko</string>
@@ -201,6 +204,8 @@
     <string name="adaptive_icon_background_description">Käytä 100% kirkkautta saadaksesi valkoisen taustan</string>
     <string name="reset_custom_icons">Nollaa mukautetut kuvakkeet</string>
     <string name="reset_custom_icons_confirmation">Kaikki mukautetut kuvakkeet nollataan. Haluatko jatkaa?</string>
+    <string name="remove_all_views_from_home_screen">Clear home screen</string>
+    <string name="remove_all_views_from_home_screen_desc">Home screen will be cleared. Do you want to continue?</string>
     <!-- Icon picker -->
     <string name="icon_picker_default_category">Kuvakkeet</string>
     <string name="icon_picker_reset_to_default">Palauta oletukseen</string>
@@ -459,6 +464,8 @@
     <string name="wallpaper_depth_effect_label">Taustakuvan syvyysefekti</string>
     <string name="wallpaper_depth_effect_description">Zoomaa sisään ja ulos taustakuvasta aloitusnäytön eri osien välillä liikuttaessa</string>
     <string name="show_sys_ui_scrim">Yläosan varjo</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Aloitusnäytön ruudukko</string>
     <string name="home_screen_lock">Lukitse aloitusnäyttö</string>
     <string name="home_screen_unlock">Poista aloitusnäytön lukitus</string>
@@ -574,7 +581,7 @@
 
     -->
     <!-- Launcher strings used -->
-    <string name="all_apps_device_search_hint">Hae sovelluksia, internetistä ja muuta</string>
+    <string name="all_apps_device_search_hint">Search web and more</string>
     <string name="all_apps_search_bar_hint">Hae sovelluksia</string>
     <string name="all_apps_no_search_results">Yhtään \"<xliff:g example="Android" id="query">%1$s</xliff:g>\" vastaavaa sovellusta ei löytynyt</string>
     <string name="all_apps_search_result_suggestions">Verkosta</string>
@@ -674,4 +681,6 @@
     <string name="grant_requested_permissions">Grant permissions</string>
     <string name="permissions_needed">Permissions needed</string>
     <string name="grant_requested_permissions_tap">Tap to grant permissions</string>
+    <!-- Message shown when all home screen views are removed -->
+    <string name="home_screen_all_views_removed_msg">Home screen cleared</string>
 </resources>

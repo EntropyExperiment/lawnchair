@@ -69,8 +69,12 @@ class AboutViewModel(
         nightlyBuildsRepository.downloadUpdate()
     }
 
-    fun installUpdate(file: File) {
-        nightlyBuildsRepository.installUpdate(file)
+    fun installUpdate(file: File, forceInstall: Boolean = false) {
+        nightlyBuildsRepository.installUpdate(file, forceInstall)
+    }
+
+    fun resetToDownloaded(file: File) {
+        nightlyBuildsRepository.resetToDownloaded(file)
     }
 
     private suspend fun fetchActiveContributors(): Set<String> {

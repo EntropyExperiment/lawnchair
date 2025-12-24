@@ -120,6 +120,9 @@ sealed interface UpdateState {
 
     /** An update download has failed. */
     data object Failed : UpdateState
+
+    /** An major update has detected. */
+    data class MajorUpdate(val file: File) : UpdateState
 }
 
 data class ChangelogState(

@@ -97,7 +97,7 @@
     <string name="config_default_web_suggestion_provider" translatable="false">google</string>
 
     <!-- which overlay to use by default -->
-    <string name="config_default_overlay" translatable="false">suck_in</string>
+    <string name="config_default_overlay" translatable="false">none</string>
 
 
     <!-- swipe gesture key -->

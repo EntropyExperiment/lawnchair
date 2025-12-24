@@ -9,16 +9,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-// LC-Build-TODO: addFrameworkJar() doesn't work, what???
-def frameworkJar = new File("$rootDir/prebuilts/libs", "framework-16.jar")
-tasks.withType(JavaCompile).configureEach {
-    classpath = files(frameworkJar)
-}
-tasks.withType(KotlinCompile).configureEach {
-    libraries.from(files(frameworkJar))
-}
-compileOnlyCommonJars()
-
 android {
     buildToolsVersion "36.1.0"
     namespace "com.android.wm.shell"
@@ -50,15 +40,15 @@ dependencies {
     implementation libs.androidx.recyclerview
     implementation libs.compose.material3
     implementation libs.airbnb.lottie
-    implementation projects.iconloaderlib
-    implementation projects.flags
-    implementation projects.utils
-    implementation projects.wmshell.shared
-    implementation projects.msdllib
-    implementation projects.animation
-    implementation projects.mechanics
-    implementation projects.animationlib
-    implementation projects.viewcapturelib
+    compileOnly projects.iconloaderlib
+    compileOnly projects.flags
+    compileOnly projects.utils
+    compileOnly projects.wmshell.shared
+    compileOnly projects.msdllib
+    compileOnly projects.animation
+    compileOnly projects.mechanics
+    compileOnly projects.animationlib
+    compileOnly projects.viewcapturelib
 }
 
 ksp {

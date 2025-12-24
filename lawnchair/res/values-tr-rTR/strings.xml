@@ -102,6 +102,8 @@
     <string name="caddy_beta">Caddy (Beta)</string>
     <string name="caddy">Caddy</string>
     <string name="app_drawer_folder">Uygulama çekmecesi klasörleri</string>
+    <string name="selected_apps">Selected apps</string>
+    <string name="add_apps">Add apps</string>
     <string name="app_drawer_folder_settings">Çekmece klasörü</string>
     <string name="add_folder">Klasör oluştur</string>
     <string name="edit_folder">Klasörü düzenle</string>
@@ -130,6 +132,7 @@
     <string name="general_description">Renkler, simge paketleri, bildirim rozetleri</string>
     <string name="home_screen_label">Ana ekran</string>
     <string name="home_screen_description">Akış, ızgara, simgeler</string>
+    <string name="home_screen_actions">Home screen actions</string>
     <string name="dock_label">Alt Sıra</string>
     <string name="dock_description">Arama çubuğu, simge sayısı</string>
     <string name="app_drawer_label">Uygulama çekmecesi</string>
@@ -201,6 +204,8 @@
     <string name="adaptive_icon_background_description">Beyaz için %100 arka plan açıklığı kullan</string>
     <string name="reset_custom_icons">Özel simgeleri sıfırla</string>
     <string name="reset_custom_icons_confirmation">Tüm özel simgeler sıfırlanacak. Devam etmek istiyor musun?</string>
+    <string name="remove_all_views_from_home_screen">Clear home screen</string>
+    <string name="remove_all_views_from_home_screen_desc">Home screen will be cleared. Do you want to continue?</string>
     <!-- Icon picker -->
     <string name="icon_picker_default_category">Simgeler</string>
     <string name="icon_picker_reset_to_default">Varsayılanlara sıfırla</string>
@@ -459,6 +464,8 @@
     <string name="wallpaper_depth_effect_label">Duvar kağıdı derinlik efekti</string>
     <string name="wallpaper_depth_effect_description">Başlatıcının alanları arasında geçiş yaparken duvar kağıdını yakınlaştırın ve uzaklaştırın</string>
     <string name="show_sys_ui_scrim">Üst gölge</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Ana ekran ızgarası</string>
     <string name="home_screen_lock">Ana ekranı kilitle</string>
     <string name="home_screen_unlock">Ana ekranın kilidini aç</string>
@@ -574,7 +581,7 @@
 
     -->
     <!-- Launcher strings used -->
-    <string name="all_apps_device_search_hint">Uygulama, site ve daha fazlasını aratın</string>
+    <string name="all_apps_device_search_hint">Search web and more</string>
     <string name="all_apps_search_bar_hint">Uygulamaları Ara</string>
     <string name="all_apps_no_search_results">\"<xliff:g example="Android" id="query">%1$s</xliff:g>\" ile eşleşen bir uygulama bulunamadı</string>
     <string name="all_apps_search_result_suggestions">Web\'den</string>
@@ -674,4 +681,6 @@
     <string name="grant_requested_permissions">İzinleri ver</string>
     <string name="permissions_needed">İzinler gerekli</string>
     <string name="grant_requested_permissions_tap">İzinleri vermek için dokunun</string>
+    <!-- Message shown when all home screen views are removed -->
+    <string name="home_screen_all_views_removed_msg">Home screen cleared</string>
 </resources>

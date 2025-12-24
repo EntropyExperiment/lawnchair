@@ -58,82 +58,102 @@ fun DebugMenuPreferences(
     ) {
         MainSwitchPreference(adapter = enableDebug, label = "Show debug menu") {
             PreferenceGroup {
-                ClickablePreference(
-                    label = "Feature flags (Views)",
-                    onClick = {
-                        try {
-                            Intent(context, SettingsActivity::class.java)
-                                .putExtra(
-                                    EXTRA_FRAGMENT_HIGHLIGHT_KEY,
-                                    DEVELOPER_OPTIONS_KEY,
-                                )
-                                .also { context.startActivity(it) }
-                        } catch (e: Exception) {
-                            /* This is really unlikely, we are just highlighting the option,
-                                not directly opening like Lawnchair 14 and older unless they
-                                changed the entire preferences system */
-                            Toast.makeText(context, "Failed to open developer settings!", Toast.LENGTH_SHORT)
-                                .show()
-                            Log.e("DebugMenuPreferences", "Failed to open developer settings!", e)
-                        }
-                    },
-                )
-                ClickablePreference(
-                    label = "Feature flags (Compose)",
-                    onClick = {
-                        navController.navigate(FeatureFlags)
-                    },
-                )
-                ClickablePreference(
-                    label = "Crash launcher",
-                    onClick = { throw RuntimeException("User triggered crash") },
-                )
-                ClickablePreference(
-                    label = "Reset live information",
-                    onClick = {
-                        runBlocking {
-                            liveInfoManager.liveInformation.set(LiveInformation())
-                            liveInfoManager.dismissedAnnouncementIds.set(emptySet())
-                        }
-                    },
-                )
+                Item {
+                    ClickablePreference(
+                        label = "Feature flags (Views)",
+                        onClick = {
+                            try {
+                                Intent(context, SettingsActivity::class.java)
+                                    .putExtra(
+                                        EXTRA_FRAGMENT_HIGHLIGHT_KEY,
+                                        DEVELOPER_OPTIONS_KEY,
+                                    )
+                                    .also { context.startActivity(it) }
+                            } catch (e: Exception) {
+                                /* This is really unlikely, we are just highlighting the option,
+                                    not directly opening like Lawnchair 14 and older unless they
+                                    changed the entire preferences system */
+                                Toast.makeText(context, "Failed to open developer settings!", Toast.LENGTH_SHORT)
+                                    .show()
+                                Log.e("DebugMenuPreferences", "Failed to open developer settings!", e)
+                            }
+                        },
+                    )
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Feature flags (Compose)",
+                        onClick = {
+                            navController.navigate(FeatureFlags)
+                        },
+                    )
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Crash launcher",
+                        onClick = { throw RuntimeException("User triggered crash") },
+                    )
+                }
+                Item {
+                    ClickablePreference(
+                        label = "Reset live information",
+                        onClick = {
+                            runBlocking {
+                                liveInfoManager.liveInformation.set(LiveInformation())
+                                liveInfoManager.dismissedAnnouncementIds.set(emptySet())
+                            }
+                        },
+                    )
+                }
             }
 
             PreferenceGroup(heading = "Debug flags") {
                 flags2.forEach {
-                    SwitchPreference(
-                        adapter = it.getAdapter(),
-                        label = it.key.name,
-                    )
+                    Item { _ ->
+                        SwitchPreference(
+                            adapter = it.getAdapter(),
+                            label = it.key.name,
+                        )
+                    }
                 }
                 flags.forEach {
-                    SwitchPreference(
-                        adapter = it.getAdapter(),
-                        label = it.key,
-                    )
+                    Item { _ ->
+                        SwitchPreference(
+                            adapter = it.getAdapter(),
+                            label = it.key,
+                        )
+                    }
                 }
                 textFlags.forEach {
+                    Item { _ ->
+                        TextPreference(
+                            adapter = it.getAdapter(),
+                            label = it.key.name,
+                        )
+                    }
+                }
+                Item {
                     TextPreference(
-                        adapter = it.getAdapter(),
-                        label = it.key.name,
+                        label = "Custom version info",
+                        adapter = prefs.pseudonymVersion.getAdapter(),
                     )
                 }
-                TextPreference(
-                    label = "Custom version info",
-                    adapter = prefs.pseudonymVersion.getAdapter(),
-                )
             }
 
+            val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
             PreferenceGroup(heading = "Supported features") {
-                val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
-                ClickablePreference(
-                    label = "Window blurs",
-                    subtitle = BlurUtils.supportsBlursOnWindows().toString(),
-                ) { }
-                ClickablePreference(
-                    label = "App prediction",
-                    subtitle = apmSupport.toString(),
-                ) {}
+                Item {
+                    ClickablePreference(
+                        label = "Window blurs",
+                        subtitle = BlurUtils.supportsBlursOnWindows().toString(),
+                    ) { }
+                }
+                Item {
+                    ClickablePreference(
+                        label = "App prediction",
+                        subtitle = apmSupport.toString(),
+                    ) {}
+                }
             }
         }
     }

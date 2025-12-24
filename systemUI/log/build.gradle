@@ -23,5 +23,5 @@ compileOnlyCommonJars()
 
 dependencies {
     compileOnly projects.common
-    implementation libs.google.errorprone.annotations
+    implementation libs.errorprone.annotations
 }

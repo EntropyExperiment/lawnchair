@@ -42,6 +42,8 @@ import android.window.OnBackInvokedDispatcher;
 
 import androidx.annotation.Nullable;
 
+import app.lawnchair.theme.color.tokens.ColorTokens;
+import app.lawnchair.util.LawnchairUtilsKt;
 import com.android.app.animation.Interpolators;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Flags;
@@ -278,12 +280,13 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
     protected int getScrimColor(Context context) {
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             // Always use an opaque scrim if there's no sheet.
+            // Lawnchair-TODO-Colour: Check R.color.materialColorSurfaceDim
             return context.getResources().getColor(R.color.materialColorSurfaceDim);
         } else if (!Flags.allAppsBlur()) {
             // If there's a sheet but no blur, use the old scrim color.
-            return context.getResources().getColor(R.color.widgets_picker_scrim);
+            return ColorTokens.WidgetsPickerScrim.resolveColor(context);
         }
-        return Themes.getAttrColor(context, R.attr.allAppsScrimColor);
+        return LawnchairUtilsKt.getAllAppsScrimColor(context);
     }
 
     @Override

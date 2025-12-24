@@ -102,6 +102,8 @@
     <string name="caddy_beta">Caddy (Beta)</string>
     <string name="caddy">Caddy</string>
     <string name="app_drawer_folder">App drawer folders</string>
+    <string name="selected_apps">Selected apps</string>
+    <string name="add_apps">Add apps</string>
     <string name="app_drawer_folder_settings">Drawer folder</string>
     <string name="add_folder">Create folder</string>
     <string name="edit_folder">Edit folder</string>
@@ -130,6 +132,7 @@
     <string name="general_description">Farby, Balíčky Ikon, Bodky Oznámenia</string>
     <string name="home_screen_label">Domovská obrazovka</string>
     <string name="home_screen_description">Feed, mriežka, ikony</string>
+    <string name="home_screen_actions">Home screen actions</string>
     <string name="dock_label">Dok</string>
     <string name="dock_description">Vyhľadávací panel, počet ikon</string>
     <string name="app_drawer_label">Ponuka aplikácií</string>
@@ -201,6 +204,8 @@
     <string name="adaptive_icon_background_description">Použiť 100% jas pozadia pre bielu</string>
     <string name="reset_custom_icons">Obnoviť vlastné ikony</string>
     <string name="reset_custom_icons_confirmation">Všetky vlastné ikony budú obnovené, naozaj chcete pokračovať?</string>
+    <string name="remove_all_views_from_home_screen">Clear home screen</string>
+    <string name="remove_all_views_from_home_screen_desc">Home screen will be cleared. Do you want to continue?</string>
     <!-- Icon picker -->
     <string name="icon_picker_default_category">Ikony</string>
     <string name="icon_picker_reset_to_default">Obnoviť predvolené nastavenie</string>
@@ -459,6 +464,8 @@
     <string name="wallpaper_depth_effect_label">Efekt hĺbky pozadia</string>
     <string name="wallpaper_depth_effect_description">Priblížiť a oddialiť pozadie pri prechode medzi stavmi</string>
     <string name="show_sys_ui_scrim">Vrchný tieň</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Mriežka na domovskej obrazovke</string>
     <string name="home_screen_lock">Uzamknúť domovskú obrazovku</string>
     <string name="home_screen_unlock">Odomknúť domovskú obrazovku</string>
@@ -576,7 +583,7 @@
 
     -->
     <!-- Launcher strings used -->
-    <string name="all_apps_device_search_hint">Search apps, web, and more</string>
+    <string name="all_apps_device_search_hint">Search web and more</string>
     <string name="all_apps_search_bar_hint">Vyhľadávať aplikácie</string>
     <string name="all_apps_no_search_results">Nenašli sa žiadne vyhovujúce aplikácie<xliff:g example="Android" id="query">%1$s</xliff:g></string>
     <string name="all_apps_search_result_suggestions">Z webu</string>
@@ -676,4 +683,6 @@
     <string name="grant_requested_permissions">Povoľte prístup</string>
     <string name="permissions_needed">Permissions needed</string>
     <string name="grant_requested_permissions_tap">Tap to grant permissions</string>
+    <!-- Message shown when all home screen views are removed -->
+    <string name="home_screen_all_views_removed_msg">Home screen cleared</string>
 </resources>

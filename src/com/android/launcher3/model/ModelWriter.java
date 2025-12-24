@@ -16,6 +16,7 @@
 
 package com.android.launcher3.model;
 
+import static com.android.launcher3.LauncherSettings.Favorites.TABLE_NAME;
 import static com.android.launcher3.provider.LauncherDbUtils.itemIdMatch;
 import static com.android.launcher3.util.Executors.MODEL_EXECUTOR;
 
@@ -152,6 +153,27 @@ public class ModelWriter {
             }
             throw e;
         }
+    }
+    
+    /**
+     * Clears all views from the home screen.
+     */
+    public boolean clearAllHomeScreenViewsByType(int type) {
+        final ArrayList<ItemInfo> itemsToRemove = new ArrayList<>();
+        synchronized (mBgDataModel) {
+            for (ItemInfo item : mBgDataModel.itemsIdMap) {
+                if (item.container == type) {
+                    itemsToRemove.add(item);
+                }
+            }
+        }
+
+        if (itemsToRemove.isEmpty()) {
+            return false;
+        }
+
+        deleteItemsFromDatabase(itemsToRemove, "clearAllHomeScreenViewsByType");
+        return true;
     }
 
     /**

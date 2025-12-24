@@ -284,6 +284,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     fun bindItems(items: List<ItemInfo>, forceAnimateIcons: Boolean) {
+        // pE-TODO(QPR1): Note: null is modelWriter + bindItems override something
         val inflatedItems = items.map { i ->
             Pair.create(
                 i,
@@ -297,7 +298,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     override fun handleGestureContract(intent: Intent) {
-        if (!LawnchairApp.isRecentsEnabled) {
+        if (!LawnchairApp.isRecentsEnabled && prefs.enableGnc.get()) {
             val gnc = GestureNavContract.fromIntent(intent)
             if (gnc != null) {
                 AbstractFloatingView.closeOpenViews(

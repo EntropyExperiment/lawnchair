@@ -162,7 +162,7 @@ private fun SliderPreference(
                 steps = getSteps(valueRange, step),
                 modifier = Modifier
                     .padding(top = 2.dp, bottom = 12.dp)
-                    .padding(horizontal = 10.dp)
+                    .padding(horizontal = 14.dp)
                     .height(24.dp),
             )
         },

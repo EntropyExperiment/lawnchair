@@ -102,6 +102,8 @@
     <string name="caddy_beta">Organizador (Beta)</string>
     <string name="caddy">Organizador</string>
     <string name="app_drawer_folder">App drawer folders</string>
+    <string name="selected_apps">Selected apps</string>
+    <string name="add_apps">Add apps</string>
     <string name="app_drawer_folder_settings">Pasta do Menu</string>
     <string name="add_folder">Create folder</string>
     <string name="edit_folder">Editar pasta</string>
@@ -130,6 +132,7 @@
     <string name="general_description">Cores, pacotes de ícones, pontos de notificação</string>
     <string name="home_screen_label">Ecrã principal</string>
     <string name="home_screen_description">Feed, grelha, ícones</string>
+    <string name="home_screen_actions">Home screen actions</string>
     <string name="dock_label">Doca</string>
     <string name="dock_description">Barra de pesquisa, contagem de ícones</string>
     <string name="app_drawer_label">Menu de aplicações</string>
@@ -202,6 +205,8 @@ Transparentes</string>
     <string name="adaptive_icon_background_description">Usar 100% de luminosidade do fundo para branco</string>
     <string name="reset_custom_icons">Redefinir Ícones Personalizados</string>
     <string name="reset_custom_icons_confirmation">Todos os ícones personalizados serão redefinidos. Deseja continuar?</string>
+    <string name="remove_all_views_from_home_screen">Clear home screen</string>
+    <string name="remove_all_views_from_home_screen_desc">Home screen will be cleared. Do you want to continue?</string>
     <!-- Icon picker -->
     <string name="icon_picker_default_category">Ícones</string>
     <string name="icon_picker_reset_to_default">Redefinir para padrão</string>
@@ -460,6 +465,8 @@ Transparentes</string>
     <string name="wallpaper_depth_effect_label">Efeito de profundidade do papel de parede</string>
     <string name="wallpaper_depth_effect_description">Aproximar e afastar o papel de parede ao transitar entre as áreas do launcher</string>
     <string name="show_sys_ui_scrim">Sombra superior</string>
+    <string name="infinite_scrolling_label">Infinite scrolling</string>
+    <string name="infinite_scrolling_description">Swipe to loop between the first and last pages</string>
     <string name="home_screen_grid">Grelha do ecrã principal</string>
     <string name="home_screen_lock">Bloquear o ecrã principal</string>
     <string name="home_screen_unlock">Desbloquear o ecrã principal</string>
@@ -575,7 +582,7 @@ Transparentes</string>
 
     -->
     <!-- Launcher strings used -->
-    <string name="all_apps_device_search_hint">Pesquisa</string>
+    <string name="all_apps_device_search_hint">Search web and more</string>
     <string name="all_apps_search_bar_hint">Pesquisar aplicações</string>
     <string name="all_apps_no_search_results">Nenhum aplicativo encontrado correspondente a \"<xliff:g example="Android" id="query">%1$s</xliff:g>\"</string>
     <string name="all_apps_search_result_suggestions">Da web</string>
@@ -675,4 +682,6 @@ Transparentes</string>
     <string name="grant_requested_permissions">Conceder permissões</string>
     <string name="permissions_needed">Permissions needed</string>
     <string name="grant_requested_permissions_tap">Ativar permissões</string>
+    <!-- Message shown when all home screen views are removed -->
+    <string name="home_screen_all_views_removed_msg">Home screen cleared</string>
 </resources>
