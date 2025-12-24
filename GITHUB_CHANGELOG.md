@@ -22,33 +22,34 @@ Compatibility list:
 
 #### Features
 
-* [Launcher] Move to Google Sans Flex font (TODO)
-* [Lawnchair] Material 3 Expressive Settings (Phase 2, TODO)
-* [Lawnchair] Better At-a-Glance perceptive wallpaper colour luminance detection
-    * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance.
-~~* [Launcher] Enable Material Expressive Folder Expansion animation flag~~
-    * Disabled due to rendering bugs
-* [Launcher/Font] Variable font for Launcher3 (????????)
-* [Launcher/Popup] Dynamically get app widget popup icon
-* [Launcher] Foldable support (actually real)
-* [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel
-* [Launcher] Enable bulk loading by default
-* [Launcher] Tablet support (ish)
+* [Launcher] Move to Google Sans Flex font (TODO)*
+* [Lawnchair] Material 3 Expressive Settings (Phase 2, TODO)*
+* [Lawnchair] Better At-a-Glance perceptive wallpaper colour luminance detection*
+    * Big word that means Lawnchair will take system default hint bright/dark theme and fallback to luminosity detection for bright/dark mode detection in At a Glance.*
+~~* [Launcher] Enable Material Expressive Folder Expansion animation flag~~*
+    * Disabled due to rendering bugs*
+* [Launcher/Font] Variable font for Launcher3 (????????)*
+* [Launcher/Popup] Dynamically get app widget popup icon*
+* [Launcher] Foldable support (actually real)*
+* [Launcher] Google Sans Flex font uses almost the exact same configuration as Pixel*
+* [Launcher] Enable bulk loading by default*
+* [Launcher] Tablet support (ish)*
 
 #### Fixes
-* [Launcher] Fix a lot of internal basic functionality
-* [Lawnchair] Re-added some Lawnchair-specific code
-* [Launcher] Fix workspace navigation
-* [Launcher] Fix allapps navigation
-* [Launcher] Fix folder navigation
-* [Launcher] Support Android 12.0/12.1/13/14/15
-* [Lawnchair/Smartspace] At-a-Glance can't launch activity due to background startup restrictions on Android 14 and above
-* [Launcher] Use Lawnchair theming colour for allapps
-* [WM-Shell] Fix conflict with prebuilts aidl, make Release build work again
-* [Launcher/Desktop] Correct deviceHasLargeScreen check for Baklava
-* [Lawnchair/Search] Make search layout changes work
-* [Lawnchair/Smartspace] Allow disabling the smartspace feature
-* [Launcher3] Widget preview crash for no reason at all on compatible Android version
+* [Launcher] Fix a lot of internal basic functionality*
+* [Lawnchair] Re-added some Lawnchair-specific code*
+* [Launcher] Fix workspace navigation*
+* [Launcher] Fix allapps navigation*
+* [Launcher] Fix folder navigation*
+* [Launcher] Support Android 12.0/12.1/13/14/15*
+* [Lawnchair/Smartspace] At-a-Glance can't launch activity due to background startup restrictions on Android 14 and above*
+* [Launcher] Use Lawnchair theming colour for allapps*
+* [WM-Shell] Fix conflict with prebuilts aidl, make Release build work again*
+* [Launcher/Desktop] Correct deviceHasLargeScreen check for Baklava*
+* [Lawnchair/Search] Make search layout changes work*
+* [Lawnchair/Smartspace] Allow disabling the smartspace feature*
+* [Launcher3] Widget preview crash for no reason at all on compatible Android version*
+* [Launcher3] Correct fallback (blur unsupported) allapps colour
 
 ### 🥞 Snapshot 9 (Development 4 Release 1)
 
