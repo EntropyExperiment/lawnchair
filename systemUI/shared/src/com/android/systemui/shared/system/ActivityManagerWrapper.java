@@ -49,6 +49,7 @@ import com.android.internal.app.IVoiceInteractionManagerService;
 import com.android.systemui.shared.recents.model.Task;
 import com.android.systemui.shared.recents.model.ThumbnailData;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class ActivityManagerWrapper {
