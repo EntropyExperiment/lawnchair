@@ -2,11 +2,14 @@
 
 ## Bubble Tea [QPR1]
 
-### 🏗️ Development 4 Release 1 (Snapshot 10) (Draft)
+### 🥞 Development 4 Release 1 (Snapshot 10) (Draft)
 
 ~~Bug fixes only~~ You may see duplicated changelogs in this release because of merged diverged timeline.
 
-Build: BD4.2112 (latest), BD4.2012, BD4.2311, BS10.2111, BS10.2011
+In this release, the initial 16-dev branch has now merged to QPR1 branch, 
+meaning you'll have tons of improvements from upstream Launcher3 source.
+
+Build: BD4.2412 (latest), BD4.2112, BD4.2012, BD4.2311, BS10.2111, BS10.2011
 
 Compatibility list:
 
