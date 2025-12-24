@@ -131,8 +131,12 @@ public class BaseDepthController {
         mLauncher = activity;
         if (Flags.allAppsBlur() || enableOverviewBackgroundWallpaperBlur()) {
             if (Utilities.ATLEAST_S) {
-                mCrossWindowBlursEnabled =
-                        CrossWindowBlurListeners.getInstance().isCrossWindowBlurEnabled();
+                try {
+                    mCrossWindowBlursEnabled =
+                            CrossWindowBlurListeners.getInstance().isCrossWindowBlurEnabled();
+                } catch (NoSuchMethodError e) {
+                    mCrossWindowBlursEnabled = BlurUtils.supportsBlursOnWindows(activity.getApplicationContext());
+                }
             } else {
                 mCrossWindowBlursEnabled = false;
             }
@@ -210,7 +214,7 @@ public class BaseDepthController {
             mWallpaperManager.setWallpaperZoomOut(windowToken, depth);
         }
 
-        if (!BlurUtils.supportsBlursOnWindows()) {
+        if (!BlurUtils.supportsBlursOnWindows(mLauncher.getApplicationContext())) {
             return;
         }
         if (mBaseSurface == null) {

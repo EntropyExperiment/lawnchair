@@ -252,7 +252,7 @@ public final class TaskbarOverlayController {
         if (!Flags.allAppsBlur()) {
             return;
         }
-        if (!BlurUtils.supportsBlursOnWindows()) {
+        if (!BlurUtils.supportsBlursOnWindows(mWindowContext)) {
             Log.d(TAG, "setBackgroundBlurRadius: not supported, setting to 0");
             radius = 0;
             // intentionally falling through in case a non-0 blur was previously set.
@@ -321,7 +321,7 @@ public final class TaskbarOverlayController {
     }
 
     boolean isBackgroundBlurEnabled() {
-        return BlurUtils.supportsBlursOnWindows()
+        return BlurUtils.supportsBlursOnWindows(mWindowContext)
                 && CrossWindowBlurListeners.getInstance().isCrossWindowBlurEnabled();
     }
 
