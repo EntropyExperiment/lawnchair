@@ -132,20 +132,20 @@ fun <T> DraggablePreferenceGroup(
                                     .a11yDrag(
                                         index = index,
                                         items = items,
-                                    onMoveUp = {
-                                        localItems = it
-                                        onOrderChange(it)
-                                        if (onSettle != null) {
-                                            onSettle(it)
-                                        }
-                                    },
-                                    onMoveDown = {
-                                        localItems = it
-                                        onOrderChange(it)
-                                        if (onSettle != null) {
-                                            onSettle(it)
-                                        }
-                                    },
+                                        onMoveUp = {
+                                            localItems = it
+                                            onOrderChange(it)
+                                            if (onSettle != null) {
+                                                onSettle(it)
+                                            }
+                                        },
+                                        onMoveDown = {
+                                            localItems = it
+                                            onOrderChange(it)
+                                            if (onSettle != null) {
+                                                onSettle(it)
+                                            }
+                                        },
                                     ),
                             ) {
                                 itemContent(
@@ -170,11 +170,11 @@ fun <T> DraggablePreferenceGroup(
             PreferenceGroup {
                 Item {
                     ClickablePreference(label = stringResource(id = R.string.action_reset)) {
-                    val resetList = defaultList
-                    onOrderChange(resetList)
-                    if (onSettle != null) {
-                        onSettle(resetList)
-                    }
+                        val resetList = defaultList
+                        onOrderChange(resetList)
+                        if (onSettle != null) {
+                            onSettle(resetList)
+                        }
                     }
                 }
             }
