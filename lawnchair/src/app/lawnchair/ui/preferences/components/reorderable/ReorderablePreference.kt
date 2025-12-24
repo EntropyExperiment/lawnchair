@@ -102,7 +102,7 @@ fun <T> ReorderablePreferenceGroup(
                 key(item.hashCode()) {
                     ReorderableItem {
                         Column {
-                        ReorderablePreferenceItem(
+                            ReorderablePreferenceItem(
                                 isDragging = isDragging,
                                 modifier = Modifier
                                     .a11yDrag(
