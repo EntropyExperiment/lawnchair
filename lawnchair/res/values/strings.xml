@@ -153,6 +153,13 @@
     <string name="x_and_y">%1$s &amp; %2$s</string>
 
     <string name="advanced">Advanced</string>
+
+    <!-- Draggable -->
+    <string name="reorderable_active_items">Active items</string>
+    <string name="reorderable_disabled_items">Other items</string>
+    <string name="reorderable_disabled_hint">Disabled items will appear here. Drag an item here or tap the remove button to make an item active.</string>
+    <string name="reorderable_add_hint_items">Active items will appear here. Drag an item here or tap the add button to make an item active.</string>
+
     <!--
 
     Preference Dashboard

@@ -322,7 +322,8 @@ public abstract class ItemInfoWithIcon extends ItemInfo {
      * Returns a FastBitmapDrawable with the icon.
      */
     public FastBitmapDrawable newIcon(Context context) {
-        return newIcon(context, 0);
+        var shouldTheme = PreferenceManager.getInstance(context).getThemedIcons().get();
+        return newIcon(context, shouldTheme ? BitmapInfo.FLAG_THEMED : BitmapInfo.FLAG_NO_BADGE);
     }
 
     /**
