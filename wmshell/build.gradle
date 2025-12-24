@@ -38,6 +38,7 @@ dependencies {
     implementation libs.androidx.datastore.preferences
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.recyclerview
+    implementation libs.androidx.activity.compose
     implementation libs.compose.material3
     implementation libs.airbnb.lottie
     compileOnly projects.iconloaderlib
