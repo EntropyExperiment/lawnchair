@@ -142,7 +142,7 @@ public class CheckLongPressHelper {
 
     private void triggerLongPress() {
         boolean showHomeBehindDesktop;
-        if (false) {
+        if (Utilities.ATLEAST_BAKLAVA_1) {
             // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
             showHomeBehindDesktop = Flags.showHomeBehindDesktop();
         } else {

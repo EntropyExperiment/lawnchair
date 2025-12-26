@@ -20,6 +20,7 @@ import android.app.TaskInfo
 import android.content.ComponentName
 import android.content.res.Resources
 import android.window.DesktopExperienceFlags
+import com.android.launcher3.Utilities
 import com.android.systemui.shared.recents.model.Task
 
 class DesksUtils {
@@ -29,7 +30,7 @@ class DesksUtils {
 
         @JvmStatic
         fun areMultiDesksFlagsEnabled() =
-            if (false) {
+            if (Utilities.ATLEAST_BAKLAVA_1) {
                 // LC-Ignored: Lawnchair-TODO: Intentional unless we can find a way to detect QPR1 build or skip to Android 17
                 DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue &&
                     DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_FRONTEND.isTrue
