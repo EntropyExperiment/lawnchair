@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import com.android.internal.protolog.ProtoLog;
 import com.android.internal.protolog.common.IProtoLogGroup;
 
+import com.android.launcher3.Utilities;
 import java.util.UUID;
 
 /** Enums used to interface with the ProtoLog API. */
@@ -40,6 +41,7 @@ public enum QuickstepProtoLogGroup implements IProtoLogGroup {
     private final @NonNull String mTag;
 
     public static boolean isProtoLogInitialized() {
+        if (!Utilities.ATLEAST_R) return false;
         if (!Variables.sIsInitialized) {
             Log.w(Constants.TAG,
                     "Attempting to log to ProtoLog before initializing it.",

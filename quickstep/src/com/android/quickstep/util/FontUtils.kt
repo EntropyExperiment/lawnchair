@@ -19,6 +19,7 @@ package com.android.quickstep.util
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Typeface
+import android.os.Build
 import com.android.wm.shell.shared.TypefaceUtils
 
 object FontUtils {
@@ -31,7 +32,12 @@ object FontUtils {
         Typeface.create(baseTypeface, getFontWeight(resources), /* italic= */ false)
 
     fun getFontWeight(resources: Resources): Int {
-        val fontWeightAdjustment: Int = resources.configuration.fontWeightAdjustment
+        val fontWeightAdjustment: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            resources.configuration.fontWeightAdjustment
+        } else {
+            // LC-Note: Android 11 don't have font weight adjustment, assume 400 Normal
+            400
+        }
         return if (fontWeightAdjustment != Configuration.FONT_WEIGHT_ADJUSTMENT_UNDEFINED) {
             Typeface.Builder.NORMAL_WEIGHT + fontWeightAdjustment
         } else {

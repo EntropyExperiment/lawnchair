@@ -31,6 +31,7 @@ import static com.android.launcher3.util.RotationUtils.deltaRotation;
 import static com.android.launcher3.util.RotationUtils.rotateRect;
 import static com.android.launcher3.util.RotationUtils.rotateSize;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -38,6 +39,7 @@ import android.graphics.Insets;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
+import android.os.Build;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.Display;
@@ -431,9 +433,16 @@ public class WindowManagerProxy {
      */
     public CachedDisplayInfo getDisplayInfo(Context displayInfoContext) {
         int rotation = getRotation(displayInfoContext);
-        WindowMetrics windowMetrics = displayInfoContext.getSystemService(WindowManager.class)
-                .getMaximumWindowMetrics();
-        return getDisplayInfo(windowMetrics, rotation);
+        if (Utilities.ATLEAST_S) {
+            WindowMetrics windowMetrics = displayInfoContext.getSystemService(WindowManager.class)
+                    .getMaximumWindowMetrics();
+            return getDisplayInfo(windowMetrics, rotation);
+        } else {
+            Point size = new Point();
+            Display display = getDisplay(displayInfoContext);
+            display.getRealSize(size);
+            return new CachedDisplayInfo(size, rotation);
+        }
     }
 
     /**

@@ -328,6 +328,8 @@ class StatsLogCompatManager private constructor(context: Context) : StatsLogMana
 
             val features = mFeatures ?: getFeatures(atomInfo)
 
+            if (!Utilities.ATLEAST_R) return
+
             SysUiStatsLog.write(
                 SysUiStatsLog.LAUNCHER_EVENT,
                 SysUiStatsLog.LAUNCHER_UICHANGED__ACTION__DEFAULT_ACTION, /* deprecated */
@@ -430,6 +432,8 @@ class StatsLogCompatManager private constructor(context: Context) : StatsLogMana
                 Log.d(LATENCY_TAG, "InstanceId=$mInstanceId $name=${mLatencyInMillis}ms")
             }
 
+            if (!Utilities.ATLEAST_R) return
+
             SysUiStatsLog.write(
                 SysUiStatsLog.LAUNCHER_LATENCY,
                 event.id, // event_id
@@ -492,6 +496,8 @@ class StatsLogCompatManager private constructor(context: Context) : StatsLogMana
                 )
             }
 
+            if (!Utilities.ATLEAST_R) return
+
             SysUiStatsLog.write(
                 SysUiStatsLog.LAUNCHER_IMPRESSION_EVENT_V2,
                 event.id, // event_id
@@ -548,6 +554,9 @@ class StatsLogCompatManager private constructor(context: Context) : StatsLogMana
             if (Utilities.isRunningInTestHarness()) {
                 return
             }
+
+            if (!Utilities.ATLEAST_R) return
+
             SysUiStatsLog.write(
                 SysUiStatsLog.LAUNCHER_SNAPSHOT,
                 LAUNCHER_WORKSPACE_SNAPSHOT.id, /* event_id */

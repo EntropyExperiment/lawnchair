@@ -234,7 +234,7 @@ public class LauncherAppWidgetInfo extends ItemInfo {
         if (providerInfo.isConfigurationOptional()) {
             widgetFeatures |= FEATURE_OPTIONAL_CONFIGURATION;
         }
-        if (providerInfo.previewLayout != Resources.ID_NULL) {
+        if (ATLEAST_S && (providerInfo.previewLayout != Resources.ID_NULL)) {
             widgetFeatures |= FEATURE_PREVIEW_LAYOUT;
         }
         if (ATLEAST_S && (providerInfo.targetCellWidth > 0 || providerInfo.targetCellHeight > 0)) {

@@ -202,6 +202,7 @@ public class BaseDepthController {
         float depth = mDepth;
         IBinder windowToken = mLauncher.getRootView().getWindowToken();
         if (windowToken != null) {
+            if (!Utilities.ATLEAST_R) return;
             if (enableScalingRevealHomeAnimation()) {
                 mWallpaperManager.setWallpaperZoomOut(windowToken, depth);
             } else {

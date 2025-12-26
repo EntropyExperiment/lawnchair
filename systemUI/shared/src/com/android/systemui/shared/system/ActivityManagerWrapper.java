@@ -44,6 +44,7 @@ import android.util.Log;
 import android.view.Display;
 import android.window.TaskSnapshot;
 
+import app.lawnchair.compat.LawnchairQuickstepCompat;
 import com.android.internal.app.IVoiceInteractionManagerService;
 import com.android.systemui.shared.recents.model.Task;
 import com.android.systemui.shared.recents.model.ThumbnailData;
@@ -63,7 +64,8 @@ public class ActivityManagerWrapper {
     // Should match the value in AssistManager
     private static final String INVOCATION_TIME_MS_KEY = "invocation_time_ms";
 
-    private final ActivityTaskManager mAtm = ActivityTaskManager.getInstance();
+    // pE-TODO(CompatTier2): Try not to do this? Just use ActivityTaskManager.getInstance()
+    private final ActivityTaskManager mAtm = LawnchairQuickstepCompat.ATLEAST_S ? ActivityTaskManager.getInstance() : null;
     private ActivityManagerWrapper() { }
 
     public static ActivityManagerWrapper getInstance() {

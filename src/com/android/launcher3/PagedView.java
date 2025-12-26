@@ -1474,10 +1474,12 @@ public abstract class PagedView<T extends View & PageIndicator> extends ViewGrou
 
             // Detect if user tries to swipe to -1 page but gets disallowed by checking if there was
             // left-over values in mEdgeGlowLeft (or mEdgeGlowRight in RLT).
-            final int layoutDir = getLayoutDirection();
-            if ((mEdgeGlowLeft.getDistance() > 0 && layoutDir == LAYOUT_DIRECTION_LTR)
-                    || (mEdgeGlowRight.getDistance() > 0 && layoutDir == LAYOUT_DIRECTION_RTL)) {
-                onDisallowSwipeToMinusOnePage();
+            if (Utilities.ATLEAST_S) {
+                final int layoutDir = getLayoutDirection();
+                if ((mEdgeGlowLeft.getDistance() > 0 && layoutDir == LAYOUT_DIRECTION_LTR)
+                        || (mEdgeGlowRight.getDistance() > 0 && layoutDir == LAYOUT_DIRECTION_RTL)) {
+                    onDisallowSwipeToMinusOnePage();
+                }
             }
 
             mEdgeGlowLeft.onRelease(ev);

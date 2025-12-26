@@ -107,12 +107,14 @@ public class DepthController extends BaseDepthController implements StateHandler
         mOnAttachListener = new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View view) {
-                try {
-                        UI_HELPER_EXECUTOR.execute(() ->
-                                CrossWindowBlurListeners.getInstance().addListener(
-                                        mLauncher.getMainExecutor(), mCrossWindowBlurListener));
-                } catch (Throwable t) {
-                    // LC-Ignored
+                if (Utilities.ATLEAST_S) {
+                    try {
+                            UI_HELPER_EXECUTOR.execute(() ->
+                                    CrossWindowBlurListeners.getInstance().addListener(
+                                            mLauncher.getMainExecutor(), mCrossWindowBlurListener));
+                    } catch (Throwable t) {
+                        // LC-Ignored
+                    }
                 }
                 mLauncher.getScrimView().addOpaquenessListener(mOpaquenessListener);
 
@@ -144,12 +146,14 @@ public class DepthController extends BaseDepthController implements StateHandler
     }
 
     private void removeSecondaryListeners() {
-        try {
-            UI_HELPER_EXECUTOR.execute(() ->
-                CrossWindowBlurListeners.getInstance()
-                    .removeListener(mCrossWindowBlurListener));
-        } catch (Throwable t) {
-            // LC-Ignored
+        if (Utilities.ATLEAST_S) {
+            try {
+                UI_HELPER_EXECUTOR.execute(() ->
+                    CrossWindowBlurListeners.getInstance()
+                        .removeListener(mCrossWindowBlurListener));
+            } catch (Throwable t) {
+                // LC-Ignored
+            }
         }
         if (mOpaquenessListener != null) {
             mLauncher.getScrimView().removeOpaquenessListener(mOpaquenessListener);

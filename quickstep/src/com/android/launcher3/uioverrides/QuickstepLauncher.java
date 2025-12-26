@@ -764,7 +764,8 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
         }
         addMultiWindowModeChangedListener(mDepthController);
         initUnfoldTransitionProgressProvider();
-        mViewCapture = ViewCaptureFactory.getInstance(this).startCapture(getWindow());
+        // LC-Note: Make it NoOp for Android 8.0/8.1/9/10/11 support
+        mViewCapture = null;
 //        getWindow().addPrivateFlags(PRIVATE_FLAG_OPTIMIZE_MEASURE);
         QuickstepOnboardingPrefs.setup(this);
 //        View.setTraceLayoutSteps(TRACE_LAYOUTS);

@@ -116,10 +116,11 @@ Compatibility list:
 
 | 🏗️ Crash   | 🥞 Fully supported |
 |-------------|--------------------|
+| Android 8.0 | Android 11         |
 | Android 8.1 | Android 12.0       |
 | Android 9   | Android 12.1       |
 | Android 10  | Android 13         |
-| Android 11  | Android 14         |
+|             | Android 14         |
 |             | Android 15         |
 |             | Android 16         |
 
@@ -158,6 +159,7 @@ Compatibility list:
 * [Lawnchair] Correctly display warning in experimental features (race conditions)
 * [Project] Support for Android Studio 2025.2.3 Canary 5 (Bump to AGP 9.0.0-beta05)
 * [Lawnchair] Offer a toggle to disable/enable suggestions instead of linking it to ASI if the device is not Google Pixel
+* [Launcher] Android 11 support
 
 ### 🥞 Development 3 Release 2
 

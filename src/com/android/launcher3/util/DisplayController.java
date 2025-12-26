@@ -16,6 +16,8 @@
 package com.android.launcher3.util;
 
 import static android.content.pm.PackageManager.FEATURE_SENSOR_HINGE_ANGLE;
+import static android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+import static android.content.res.Configuration.UI_MODE_NIGHT_YES;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
 
@@ -577,8 +579,12 @@ public class DisplayController implements DesktopVisibilityListener {
             mStableDensityScaleFactor = (float) defaultDensityDpi / DisplayMetrics.DENSITY_DEFAULT;
             mScreenSizeDp = new PortraitSize(config.screenHeightDp, config.screenWidthDp);
             navigationMode = wmProxy.getNavigationMode(displayInfoContext);
-            mIsNightModeActive = config.isNightModeActive();
-            
+            if (Utilities.ATLEAST_R) {
+                mIsNightModeActive = config.isNightModeActive();
+            } else {
+                mIsNightModeActive = (config.uiMode & UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES;
+            }
+
             // LC: Hacky stuff but it work!
             mIsFoldable = Utilities.ATLEAST_R && displayInfoContext.getPackageManager()
                 .hasSystemFeature(FEATURE_SENSOR_HINGE_ANGLE);

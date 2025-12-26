@@ -33,6 +33,7 @@ import com.android.app.displaylib.PerDisplayInstanceRepositoryImpl
 import com.android.app.displaylib.PerDisplayRepository
 import com.android.app.displaylib.SingleInstanceRepositoryImpl
 import com.android.app.displaylib.createDisplayLibComponent
+import com.android.launcher3.Utilities
 import com.android.launcher3.util.coroutines.DispatcherProvider
 import com.android.quickstep.FallbackWindowInterface
 import com.android.quickstep.RecentsAnimationDeviceState
@@ -189,22 +190,30 @@ object PerDisplayRepositoriesModule {
                 "DisplayContextRepo",
                 { displayId ->
                     displayRepository.getDisplay(displayId)?.let {
-                        context.createWindowContext(
-                            it,
-                            TYPE_APPLICATION_OVERLAY,
-                            /* options=*/ null,
-                        )
+                        if (Utilities.ATLEAST_S) {
+                            context.createWindowContext(
+                                it,
+                                TYPE_APPLICATION_OVERLAY,
+                                /* options=*/ null,
+                            )
+                        } else {
+                            context.createDisplayContext(it)
+                        }
                     }
                 },
             )
         } else {
             SingleInstanceRepositoryImpl(
                 "DisplayContextRepo",
-                context.createWindowContext(
-                    displayRepository.getDisplay(DEFAULT_DISPLAY)!!,
-                    TYPE_APPLICATION_OVERLAY,
-                    /* options=*/ null,
-                ),
+                if (Utilities.ATLEAST_S) {
+                    context.createWindowContext(
+                        displayRepository.getDisplay(DEFAULT_DISPLAY)!!,
+                        TYPE_APPLICATION_OVERLAY,
+                        /* options=*/ null,
+                    )
+                } else {
+                    context.createDisplayContext(displayRepository.getDisplay(DEFAULT_DISPLAY)!!)
+                }
             )
         }
     }
