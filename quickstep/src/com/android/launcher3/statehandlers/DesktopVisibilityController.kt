@@ -16,6 +16,7 @@
 package com.android.launcher3.statehandlers
 
 import android.content.Context
+import android.hardware.display.DisplayManager
 import android.os.Debug
 import android.util.Log
 import android.util.Slog
@@ -25,6 +26,7 @@ import android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVI
 import androidx.core.util.forEach
 import com.android.internal.util.LatencyTracker
 import com.android.launcher3.LauncherState
+import com.android.launcher3.Utilities
 //import com.android.launcher3.R
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
@@ -668,7 +670,12 @@ constructor(
         @ApplicationContext private val context: Context,
     ) : Stub() {
         private val controller = WeakReference(controller)
-        private val displayId = context.displayId
+        private val displayManager: DisplayManager = context.getSystemService(DisplayManager::class.java)
+        private val displayId = if (Utilities.ATLEAST_R) {
+            context.display.displayId
+        } else {
+            displayManager.displays[DEFAULT_DISPLAY].displayId
+        }
 
         override fun onListenerConnected(
             displayDeskStates: Array<DisplayDeskState>,

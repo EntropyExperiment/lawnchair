@@ -97,7 +97,9 @@ class ModelCallbacks(private var launcher: Launcher) : BgDataModel.Callbacks {
         workspaceItemCount: Int,
         isBindSync: Boolean,
     ) {
-        Trace.endAsyncSection(DISPLAY_WORKSPACE_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE)
+        if (Utilities.ATLEAST_Q) {
+            Trace.endAsyncSection(DISPLAY_WORKSPACE_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE)
+        }
         synchronouslyBoundPages = boundPages
         pagesToBindSynchronously = LIntSet()
         clearPendingBinds()

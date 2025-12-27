@@ -94,7 +94,9 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AnalogClock;
@@ -110,6 +112,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import androidx.core.content.ContextCompat;
 import com.android.app.viewcapture.ViewCaptureFactory;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.DeviceProfile;
@@ -221,6 +224,7 @@ import com.android.wm.shell.shared.bubbles.BubbleBarLocation;
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
 import com.android.wm.shell.shared.desktopmode.DesktopState;
 
+import java.lang.reflect.InvocationTargetException;
 import kotlin.Unit;
 
 import java.io.FileDescriptor;
@@ -315,7 +319,16 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
         mDepthController = new DepthController(this);
         mOverviewBlurEnabled = isOverviewBackgroundBlurEnabled();
         getTheme().applyStyle(getOverviewBlurStyleResId(), true);
-        super.setupViews();
+        // In QuickstepLauncher.java (or Launcher.java)
+        try {
+            super.setupViews();
+        } catch (InflateException e) {
+            if (e.getCause() instanceof InvocationTargetException) {
+                Throwable target = ((InvocationTargetException) e.getCause()).getTargetException();
+                Log.e("LawnchairCrash", "RecentsView constructor failed", target);
+            }
+            throw e;
+        }
 
         mActionsView = findViewById(R.id.overview_actions_view);
         RecentsView<?, LauncherState> overviewPanel = getOverviewPanel();

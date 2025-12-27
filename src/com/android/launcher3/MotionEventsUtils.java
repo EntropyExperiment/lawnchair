@@ -33,7 +33,7 @@ public class MotionEventsUtils {
 
     @TargetApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     public static boolean isTrackpadScroll(MotionEvent event) {
-        return event.getClassification() == CLASSIFICATION_TWO_FINGER_SWIPE;
+        return Utilities.ATLEAST_U && event.getClassification() == CLASSIFICATION_TWO_FINGER_SWIPE;
     }
 
     @TargetApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

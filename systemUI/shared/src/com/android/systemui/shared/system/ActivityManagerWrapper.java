@@ -65,7 +65,7 @@ public class ActivityManagerWrapper {
     private static final String INVOCATION_TIME_MS_KEY = "invocation_time_ms";
 
     // pE-TODO(CompatTier2): Try not to do this? Just use ActivityTaskManager.getInstance()
-    private final ActivityTaskManager mAtm = LawnchairQuickstepCompat.ATLEAST_S ? ActivityTaskManager.getInstance() : null;
+    private final ActivityTaskManager mAtm = null;
     private ActivityManagerWrapper() { }
 
     public static ActivityManagerWrapper getInstance() {

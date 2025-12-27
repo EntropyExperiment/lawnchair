@@ -137,6 +137,7 @@ import android.util.FloatProperty;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
+import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
@@ -272,6 +273,7 @@ import com.android.window.flags2.Flags;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -432,9 +434,9 @@ public class Launcher extends StatefulActivity<LauncherState>
     @Override
     @TargetApi(Build.VERSION_CODES.S)
     protected void onCreate(Bundle savedInstanceState) {
-        TraceHelper.INSTANCE.beginSection(ON_CREATE_EVT);
-        Trace.beginAsyncSection(DISPLAY_WORKSPACE_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE);
-        Trace.beginAsyncSection(DISPLAY_ALL_APPS_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE);
+//        TraceHelper.INSTANCE.beginSection(ON_CREATE_EVT);
+//        Trace.beginAsyncSection(DISPLAY_WORKSPACE_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE);
+//        Trace.beginAsyncSection(DISPLAY_ALL_APPS_TRACE_METHOD_NAME, SINGLE_TRACE_COOKIE);
         mStartupLatencyLogger = StartupLatencyLogger.getLogger(this);
         mStartupLatencyLogger.logStart(LAUNCHER_LATENCY_STARTUP_ACTIVITY_ON_CREATE);
 
@@ -460,7 +462,16 @@ public class Launcher extends StatefulActivity<LauncherState>
         mAppWidgetHolder.setAppWidgetRemovedCallback(
                 appWidgetId -> getWorkspace().removeWidget(appWidgetId));
 
-        setupViews();
+        // In QuickstepLauncher.java (or Launcher.java)
+        try {
+            setupViews();
+        } catch (InflateException e) {
+            if (e.getCause() instanceof InvocationTargetException) {
+                Throwable target = ((InvocationTargetException) e.getCause()).getTargetException();
+                Log.e("LawnchairCrash", "RecentsView constructor failed", target);
+            }
+            throw e;
+        }
         updateDisallowBack();
 
         mAppWidgetHolder.startListening();

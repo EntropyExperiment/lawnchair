@@ -24,6 +24,7 @@ import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import com.android.launcher3.LauncherModel
+import com.android.launcher3.Utilities
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.graphics.ShapeDelegate.Circle
@@ -85,7 +86,7 @@ constructor(
             // Load the fallback app icon
             if (appInfo.icon != 0) {
                 // Tries to load the round icon res, if the app defines it as an adaptive icon
-                if (mThemeManager.iconShape is Circle) {
+                if (Utilities.ATLEAST_R && mThemeManager.iconShape is Circle) {
                     if (appInfo.roundIconRes != 0 && appInfo.roundIconRes != appInfo.icon) {
                         try {
                             val d =

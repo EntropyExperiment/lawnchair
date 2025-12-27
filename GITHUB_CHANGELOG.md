@@ -2,6 +2,28 @@
 
 ## Bubble Tea [QPR1]
 
+### 🏗️ Development 5 Release 1
+
+Build: BD4.2712 (latest)
+
+Compatibility list:
+
+| 🏗️ Crash   | 🥞 Fully supported    |
+|-------------|-----------------------|
+| Android 8.0 | Android 10* (Limited) |
+| Android 8.1 | Android 11* (Limited) |
+| Android 9   | Android 12.0          |
+|             | Android 12.1          |
+|             | Android 13            |
+|             | Android 14            |
+|             | Android 15            |
+|             | Android 16            |
+|             | Android 16.1          |
+
+#### Fixes
+* [Launcher] Limited Android 11 support
+* [Launcher] Limited Android 10 support
+
 ### 🥞 Development 4 Release 1 (Snapshot 10)
 
 ~~Bug fixes only~~ You may see duplicated changelogs in this release because of merged diverged timeline.
@@ -54,7 +76,7 @@ Compatibility list:
 * [Launcher3] Widget preview crash for no reason at all on compatible Android version*
 * [Launcher3] Correct fallback (blur unsupported) allapps colour
 
-### 🥞 Snapshot 9 (Development 4 Release 1)
+### Snapshot 9 (Development 4 Release 1)
 
 This snapshot marks the first time Bubble Tea QPR1 is able to assemble the APK without errors, 
 all that's left is bug bash testing. Limited visibility closed testing is available.
@@ -108,7 +130,7 @@ This is a developer-focused change log:
 Lawnchair 16 pE Development 3 is here! Contributors are encouraged to target this branch instead of 
 older (i.e., Lawnchair `15-dev`).
 
-### 🥞 Development 3 Release 3
+### Development 3 Release 3
 
 Build: BD3.2012 (latest), BD3.1312, BD3.0812, BD3.0712
 
@@ -116,11 +138,10 @@ Compatibility list:
 
 | 🏗️ Crash   | 🥞 Fully supported |
 |-------------|--------------------|
-| Android 8.0 | Android 11         |
-| Android 8.1 | Android 12.0       |
-| Android 9   | Android 12.1       |
-| Android 10  | Android 13         |
-|             | Android 14         |
+| Android 8.0 | Android 12.0       |
+| Android 8.1 | Android 12.1       |
+| Android 9   | Android 13         |
+| Android 10  | Android 14         |
 |             | Android 15         |
 |             | Android 16         |
 
@@ -159,7 +180,6 @@ Compatibility list:
 * [Lawnchair] Correctly display warning in experimental features (race conditions)
 * [Project] Support for Android Studio 2025.2.3 Canary 5 (Bump to AGP 9.0.0-beta05)
 * [Lawnchair] Offer a toggle to disable/enable suggestions instead of linking it to ASI if the device is not Google Pixel
-* [Launcher] Android 11 support
 
 ### 🥞 Development 3 Release 2
 
@@ -260,7 +280,7 @@ Compatibility list:
 * [Launcher3] Crash due to missing resources for Android 8.0
 * [Lawnchair/Docs] Update screenshot to 16-dev
 
-### 🥞 Development 2
+### Development 2
 
 Originally going to launch D2 if most of the comestic bug fixes have been resolved, but hit a 
 stability milestone instead.

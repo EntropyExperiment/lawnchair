@@ -33,8 +33,19 @@ public class EdgeEffectCompat extends EdgeEffect {
         super(context);
     }
 
+    // Lawnchair: Override getDistance so that we return 0 for not atleast android 12
+    @Override
+    public float getDistance() {
+        return Utilities.ATLEAST_S ? super.getDistance() : 0;
+    }
+
     public float onPullDistance(float deltaDistance, float displacement, MotionEvent ev) {
-        return onPullDistance(deltaDistance, displacement);
+        if (Utilities.ATLEAST_S) {
+            return super.onPullDistance(deltaDistance, displacement);
+        } else {
+            onPull(deltaDistance, displacement);
+            return deltaDistance;
+        }
     }
 
     public void onFlingVelocity(int velocity) { }

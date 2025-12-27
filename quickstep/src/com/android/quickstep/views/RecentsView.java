@@ -907,7 +907,7 @@ public abstract class RecentsView<
             mRecentsViewModel = new RecentsViewModel(
                     recentsDependencies.inject(RecentTasksRepository.class, scopeId),
                     recentsDependencies.inject(RecentsViewData.class, scopeId),
-                    mContainer.getDisplayId()
+                    mContainer.getDisplay().getDisplayId()
             );
             mHelper = new RecentsViewModelHelper(
                     mRecentsViewModel,
