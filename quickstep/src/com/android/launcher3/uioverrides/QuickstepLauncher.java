@@ -319,16 +319,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
         mDepthController = new DepthController(this);
         mOverviewBlurEnabled = isOverviewBackgroundBlurEnabled();
         getTheme().applyStyle(getOverviewBlurStyleResId(), true);
-        // In QuickstepLauncher.java (or Launcher.java)
-        try {
-            super.setupViews();
-        } catch (InflateException e) {
-            if (e.getCause() instanceof InvocationTargetException) {
-                Throwable target = ((InvocationTargetException) e.getCause()).getTargetException();
-                Log.e("LawnchairCrash", "RecentsView constructor failed", target);
-            }
-            throw e;
-        }
+        super.setupViews();
 
         mActionsView = findViewById(R.id.overview_actions_view);
         RecentsView<?, LauncherState> overviewPanel = getOverviewPanel();

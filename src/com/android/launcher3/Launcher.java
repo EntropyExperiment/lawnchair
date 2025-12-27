@@ -462,16 +462,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         mAppWidgetHolder.setAppWidgetRemovedCallback(
                 appWidgetId -> getWorkspace().removeWidget(appWidgetId));
 
-        // In QuickstepLauncher.java (or Launcher.java)
-        try {
-            setupViews();
-        } catch (InflateException e) {
-            if (e.getCause() instanceof InvocationTargetException) {
-                Throwable target = ((InvocationTargetException) e.getCause()).getTargetException();
-                Log.e("LawnchairCrash", "RecentsView constructor failed", target);
-            }
-            throw e;
-        }
+        setupViews();
         updateDisallowBack();
 
         mAppWidgetHolder.startListening();
