@@ -199,7 +199,7 @@ class AboutViewModel(
                 url = "https://lawnchair.crowdin.com/lawnchair",
             ),
             Link(
-                iconResId = R.drawable.ic_donate,
+                iconResId = R.drawable.ic_open_collective,
                 labelResId = R.string.donate,
                 url = "https://opencollective.com/lawnchair",
             ),

@@ -171,7 +171,7 @@ fun PreferencesDashboard(
                 PreferenceCategory(
                     label = stringResource(R.string.app_drawer_label),
                     description = stringResource(R.string.app_drawer_description),
-                    iconResource = R.drawable.ic_app_drawer,
+                    iconResource = R.drawable.ic_apps,
                     onNavigate = { onNavigate(AppDrawer) },
                     isSelected = currentRoute is AppDrawer,
                     isFirst = it.isFirst,
