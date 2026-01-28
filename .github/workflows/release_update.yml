@@ -22,7 +22,7 @@ on:
 
 jobs:
   build-release-apk:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-8vcpu-ubuntu-2404
     permissions:
       id-token: write
       attestations: write
@@ -61,7 +61,7 @@ jobs:
           path: ${{ github.event.inputs.artifactName }}
 
   publish-github-release:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     needs: build-release-apk
     permissions:
       contents: write
@@ -83,7 +83,7 @@ jobs:
           name: ${{ github.event.inputs.releaseName }}
 
   publish-telegram-update-post:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     needs: build-release-apk
     steps:
       - uses: actions/checkout@v6

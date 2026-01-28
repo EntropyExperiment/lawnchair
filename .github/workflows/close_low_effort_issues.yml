@@ -7,7 +7,7 @@ on:
 
 jobs:
   check_issue_quality:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     outputs:
       IS_LOW_EFFORT: ${{ steps.check_issue_quality.outputs.isLowEffort }}
     steps:
@@ -31,7 +31,7 @@ jobs:
             done
   
   close_issue:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     needs: check_issue_quality
     if: ${{ needs.check_issue_quality.outputs.IS_LOW_EFFORT == 'true' }}
     steps:
