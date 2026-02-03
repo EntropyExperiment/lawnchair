@@ -54,9 +54,7 @@ jobs:
             echo ${{ secrets.KEYSTORE }} | base64 --decode > ${{ github.workspace }}/key.jks
           fi
       - name: Build APK
-        run: | # Replace Xmx[x] with Xmx8g for CI-optimized build resource
-          sed -i 's/-Xmx[0-9]\+[mgMG]/-Xmx8g/g' gradle.properties
-          ./gradlew ${{ matrix.build-variant }}
+        run: ./gradlew ${{ matrix.build-variant }}
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
