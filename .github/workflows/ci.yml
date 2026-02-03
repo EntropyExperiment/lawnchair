@@ -39,7 +39,6 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v5
         with:
-          cache-disabled: true
           cache-encryption-key: Da25KUVSE5jbGds2zXmfXw==
       - name: Write sign info
         if: github.repository_owner == 'LawnchairLauncher'
@@ -54,7 +53,7 @@ jobs:
       - name: Build APK
         run: | # Replace Xmx[x] with Xmx8g for CI-optimized build resource
           sed -i 's/-Xmx[0-9]\+[mgMG]/-Xmx8g/g' gradle.properties
-          ./gradlew assembleLawnWithQuickstepNightlyRelease
+          ./gradlew assembleLawnWithQuickstepNightlyRelease assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
