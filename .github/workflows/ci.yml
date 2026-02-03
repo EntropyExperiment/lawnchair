@@ -28,6 +28,9 @@ on:
 
 jobs:
   build-debug-apk:
+    strategy:
+      matrix:
+        build-variant: [ assembleLawnWithQuickstepNightlyRelease, assembleLawnWithQuickstepGithubDebug, assembleLawnWithQuickstepPlayDebug ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -53,7 +56,7 @@ jobs:
       - name: Build APK
         run: | # Replace Xmx[x] with Xmx8g for CI-optimized build resource
           sed -i 's/-Xmx[0-9]\+[mgMG]/-Xmx8g/g' gradle.properties
-          ./gradlew assembleLawnWithQuickstepNightlyRelease assembleLawnWithQuickstepGithubDebug assembleLawnWithQuickstepPlayDebug
+          ./gradlew ${{ matrix.build-variant }}
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
