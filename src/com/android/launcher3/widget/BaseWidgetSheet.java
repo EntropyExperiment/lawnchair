@@ -19,7 +19,6 @@ import static com.android.app.animation.Interpolators.EMPHASIZED;
 import static com.android.launcher3.LauncherState.NORMAL;
 import static com.android.launcher3.anim.AnimatorListeners.forSuccessCallback;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_WIDGET_ADD_BUTTON_TAP;
-import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -134,15 +133,11 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
     @Override
     public void setScaleY(float scaleY) {
         super.setScaleY(scaleY);
-        try {
-            if (predictiveBackThreeButtonNav() && mNavBarScrimHeight > 0) {
-                // Call invalidate to prevent navbar scrim from scaling. The navbar scrim is drawn
-                // directly onto the canvas. To prevent it from being scaled with the canvas, there's a
-                // counter scale applied in dispatchDraw.
-                invalidate();
-            }
-        } catch (Throwable t) {
-            // LC-Ignored
+        if (mNavBarScrimHeight > 0) {
+            // Call invalidate to prevent navbar scrim from scaling. The navbar scrim is drawn
+            // directly onto the canvas. To prevent it from being scaled with the canvas, there's a
+            // counter scale applied in dispatchDraw.
+            invalidate();
         }
     }
 
@@ -372,7 +367,7 @@ public abstract class BaseWidgetSheet extends AbstractSlideInView<BaseActivity>
         } else if (mInsets.bottom > 0) {
             widthUsed = mInsets.left + mInsets.right;
         } else {
-            Rect padding = deviceProfile.workspacePadding;
+            Rect padding = deviceProfile.mWorkspaceProfile.getWorkspacePadding();
             widthUsed = Math.max(padding.left + padding.right,
                     2 * (mInsets.left + mInsets.right));
         }

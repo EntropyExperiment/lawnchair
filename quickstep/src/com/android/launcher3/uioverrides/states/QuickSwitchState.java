@@ -19,9 +19,10 @@ import static com.android.launcher3.logging.StatsLogManager.LAUNCHER_STATE_BACKG
 
 import android.graphics.Color;
 
-import app.lawnchair.theme.color.tokens.ColorTokens;
+import app.lawnchair.theme.color.tokens.ColorTokens; // pE-TODO(QPR2): Investigate
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
+import com.android.launcher3.LauncherUiState;
 
 /**
  * State to indicate we are about to launch a recent task. Note that this state is only used when
@@ -49,18 +50,13 @@ public class QuickSwitchState extends BackgroundAppState {
     }
 
     @Override
-    public int getVisibleElements(Launcher launcher) {
+    public int getVisibleElements(LauncherUiState launcherUiState) {
         return NONE;
     }
 
     @Override
-    public boolean isTaskbarStashed(Launcher launcher) {
-        return !launcher.getDeviceProfile().isTaskbarPresentInApps;
-    }
-
-    @Override
-    public boolean isTaskbarAlignedWithHotseat(Launcher launcher) {
-        return false;
+    public boolean isTaskbarStashed(DeviceProfile deviceProfile) {
+        return !deviceProfile.isTaskbarPresentInApps;
     }
 
     @Override

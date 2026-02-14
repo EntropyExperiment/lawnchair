@@ -123,13 +123,12 @@ public class PredictionRowView<T extends Context & ActivityContext>
 
     private void updateVisibility() {
         boolean enabled = mPredictionsEnabled && PreferenceExtensionsKt.firstBlocking(prefs2.getShowSuggestedAppsInDrawer());
+
         setVisibility(enabled ? VISIBLE : GONE);
-        if (mActivityContext.getAppsView() != null) {
-            if (enabled) {
-                mActivityContext.getAppsView().getAppsStore().registerIconContainer(this);
-            } else {
-                mActivityContext.getAppsView().getAppsStore().unregisterIconContainer(this);
-            }
+        if (mPredictionsEnabled) {
+            mActivityContext.getActivityComponent().getAppsStore().registerIconContainer(this);
+        } else {
+            mActivityContext.getActivityComponent().getAppsStore().unregisterIconContainer(this);
         }
     }
 

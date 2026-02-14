@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Modifications copyright 2025, Lawnchair
+ * Modifications copyright 2026, Lawnchair
  */
 
 package com.android.launcher3;
@@ -35,7 +35,8 @@ import android.util.Log;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.graphics.BitmapCreationCheck;
 import com.android.launcher3.logging.FileLog;
-import com.android.launcher3.util.ResourceBasedOverride;
+
+import javax.inject.Inject;
 
 import org.chickenhook.restrictionbypass.Unseal;
 
@@ -44,25 +45,15 @@ import app.lawnchair.preferences.PreferenceManager;
 /**
  * Utility class to handle one time initializations of the main process
  */
-public class MainProcessInitializer implements ResourceBasedOverride {
+public class MainProcessInitializer {
+
+    @Inject
+    public MainProcessInitializer() {
+    }
 
     private static final String TAG = "MainProcessInitializer";
 
     private static final boolean DEBUG_STRICT_MODE = false;
-
-    public static void initialize(Context context) {
-        try {
-            Unseal.unseal();
-            Log.i(TAG, "Unseal success!");
-        } catch (Exception e) {
-            Log.e(TAG, "Unseal fail!");
-            e.printStackTrace();
-        }
-        PreferenceManager.getInstance(context);
-        Overrides.getObject(
-                MainProcessInitializer.class, context, R.string.main_process_initializer_class)
-                .init(context);
-    }
 
     protected void init(Context context) {
         FileLog.setDir(context.getApplicationContext().getFilesDir());

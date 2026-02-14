@@ -22,6 +22,7 @@ import static android.view.Display.DEFAULT_DISPLAY;
 
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_LAUNCH_OMNI_SUCCESSFUL_SYSTEM_ACTION;
 import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
+import static com.android.launcher3.util.SimpleBroadcastReceiver.packageFilter;
 import static com.android.quickstep.util.SystemActionConstants.SYSTEM_ACTION_ID_SEARCH_SCREEN;
 
 import android.app.PendingIntent;
@@ -42,6 +43,7 @@ import android.view.accessibility.AccessibilityManager;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
 
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
@@ -72,7 +74,7 @@ public class ContextualSearchStateManager  {
 
     private static final String TAG = "ContextualSearchStMgr";
     private static final int MAX_DEBUG_EVENT_SIZE = 20;
-    private static final Uri SEARCH_ALL_ENTRYPOINTS_ENABLED_URI =
+    public static final Uri SEARCH_ALL_ENTRYPOINTS_ENABLED_URI =
             Settings.Secure.getUriFor(Settings.Secure.SEARCH_ALL_ENTRYPOINTS_ENABLED);
 
     private final Runnable mSysUiStateChangeListener = this::updateOverridesToSysUi;
@@ -115,11 +117,12 @@ public class ContextualSearchStateManager  {
             return;
         }
 
-        requestUpdateProperties();
+        UI_HELPER_EXECUTOR.execute(this::requestUpdateProperties);
         registerSearchScreenSystemAction();
-        mContextualSearchPackageReceiver.registerPkgActions(
-                mContextualSearchPackage, Intent.ACTION_PACKAGE_ADDED,
-                Intent.ACTION_PACKAGE_CHANGED, Intent.ACTION_PACKAGE_REMOVED);
+        mContextualSearchPackageReceiver.register(packageFilter(mContextualSearchPackage,
+                Intent.ACTION_PACKAGE_ADDED,
+                Intent.ACTION_PACKAGE_CHANGED,
+                Intent.ACTION_PACKAGE_REMOVED));
 
         SettingsCache.OnChangeListener settingChangedListener =
                 isEnabled -> mIsContextualSearchSettingEnabled = isEnabled;
@@ -130,7 +133,7 @@ public class ContextualSearchStateManager  {
         systemUiProxy.addOnStateChangeListener(mSysUiStateChangeListener);
 
         lifeCycle.addCloseable(() -> {
-            mContextualSearchPackageReceiver.unregisterReceiverSafely();
+            mContextualSearchPackageReceiver.close();
             unregisterSearchScreenSystemAction();
             settingsCache.unregister(SEARCH_ALL_ENTRYPOINTS_ENABLED_URI, settingChangedListener);
             systemUiProxy.removeOnStateChangeListener(mSysUiStateChangeListener);
@@ -211,19 +214,18 @@ public class ContextualSearchStateManager  {
     }
 
     @CallSuper
+    @WorkerThread
     protected void requestUpdateProperties() {
-        UI_HELPER_EXECUTOR.execute(() -> {
-            // Check that Contextual Search intent filters are enabled.
-            Intent csIntent = new Intent(ACTION_LAUNCH_CONTEXTUAL_SEARCH).setPackage(
-                    mContextualSearchPackage);
-            mIsContextualSearchIntentAvailable =
-                    !mContext.getPackageManager().queryIntentActivities(csIntent,
-                            PackageManager.MATCH_DIRECT_BOOT_AWARE
-                                    | PackageManager.MATCH_DIRECT_BOOT_UNAWARE).isEmpty();
+        // Check that Contextual Search intent filters are enabled.
+        Intent csIntent = new Intent(ACTION_LAUNCH_CONTEXTUAL_SEARCH).setPackage(
+                mContextualSearchPackage);
+        mIsContextualSearchIntentAvailable =
+                !mContext.getPackageManager().queryIntentActivities(csIntent,
+                        PackageManager.MATCH_DIRECT_BOOT_AWARE
+                                | PackageManager.MATCH_DIRECT_BOOT_UNAWARE).isEmpty();
 
-            addEventLog("Updated isContextualSearchIntentAvailable",
-                    mIsContextualSearchIntentAvailable);
-        });
+        addEventLog("Updated isContextualSearchIntentAvailable",
+                mIsContextualSearchIntentAvailable);
     }
 
     protected final void updateOverridesToSysUi() {

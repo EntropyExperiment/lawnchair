@@ -51,6 +51,7 @@ constructor(
     @ApplicationContext ctx: Context,
     themeManager: ThemeManager,
     private val modelProvider: Provider<LauncherModel>,
+    private val iconChangeTracker: IconChangeTracker,
     private val iconCacheProvider: Provider<IconCache>,
     pluginManagerWrapper: PluginManagerWrapper,
     lifecycle: DaggerSingletonTracker,
@@ -112,7 +113,7 @@ constructor(
         manager: PluginLifecycleManager<IconProcessorPlugin>?,
     ) {
         plugin?.setIconChangeNotifier { pkg, userHandle ->
-            modelProvider.get().onAppIconChanged(pkg, userHandle)
+            iconChangeTracker.notifyIconChanged(pkg, userHandle)
         }
         processor = plugin
         Log.d(TAG, "Plugin connected $plugin")

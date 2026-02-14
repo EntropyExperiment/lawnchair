@@ -22,8 +22,10 @@ import static com.android.launcher3.LauncherSettings.Favorites.DESKTOP_ICON_FLAG
 import static com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_APPLICATION;
 import static com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_APP_PAIR;
 import static com.android.launcher3.LauncherSettings.Favorites.ITEM_TYPE_DEEP_SHORTCUT;
+import static com.android.launcher3.Utilities.qsbOnFirstScreen;
 import static com.android.launcher3.icons.cache.CacheLookupFlag.DEFAULT_LOOKUP_FLAG;
 import static com.android.launcher3.model.data.ItemInfoWithIcon.FLAG_ARCHIVED;
+import static com.android.launcher3.model.data.WorkspaceItemInfo.FLAG_RESTORED_FULL_BLEED;
 
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -31,20 +33,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.os.UserHandle;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.LongSparseArray;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.android.launcher3.BuildConfig;
-import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.Flags;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherModel;
@@ -64,6 +62,7 @@ import com.android.launcher3.model.data.IconRequestInfo;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.model.data.WorkspaceItemInfo;
 import com.android.launcher3.pm.UserCache;
+import com.android.launcher3.pm.UserManagerState;
 import com.android.launcher3.shortcuts.ShortcutKey;
 import com.android.launcher3.util.ApiWrapper;
 import com.android.launcher3.util.ContentWriter;
@@ -91,7 +90,7 @@ public class LoaderCursor extends CursorWrapper {
 
     private static final String TAG = "LoaderCursor";
 
-    private final LongSparseArray<UserHandle> allUsers;
+    private final UserManagerState mUserManagerState;
 
     private final Context mContext;
     private final LauncherModel mModel;
@@ -130,8 +129,6 @@ public class LoaderCursor extends CursorWrapper {
     private final int mOptionsIndex;
     private final int mAppWidgetSourceIndex;
 
-    private final PackageManager mPM;
-
     @Nullable
     private LauncherActivityInfo mActivityInfo;
 
@@ -161,7 +158,7 @@ public class LoaderCursor extends CursorWrapper {
         mModel = model;
         mPmHelper = pmHelper;
 
-        allUsers = userManagerState.allUsers;
+        mUserManagerState = userManagerState;
         mRestoreEventLogger = restoreEventLogger;
 
         preferenceManager2 = PreferenceManager2.getInstance(mContext);
@@ -201,7 +198,7 @@ public class LoaderCursor extends CursorWrapper {
             container = getInt(mContainerIndex);
             id = getInt(mIdIndex);
             serialNumber = getInt(mProfileIdIndex);
-            user = allUsers.get(serialNumber);
+            user = mUserManagerState.getUser(serialNumber);
             restoreFlag = getInt(mRestoredIndex);
         }
         return result;
@@ -249,6 +246,7 @@ public class LoaderCursor extends CursorWrapper {
                 || (wai.isInactiveArchive() && Flags.restoreArchivedAppIconsFromDb())
                 ? getIconBlob() : null;
         return new IconRequestInfo<>(wai, mActivityInfo, iconBlob,
+                wai.hasStatusFlag(FLAG_RESTORED_FULL_BLEED),
                 DESKTOP_ICON_FLAG.withUseLowRes(useLowResIcon));
     }
 
@@ -357,7 +355,7 @@ public class LoaderCursor extends CursorWrapper {
             throw new InvalidParameterException("Invalid restoreType " + restoreFlag);
         }
 
-        info.contentDescription = mPM.getUserBadgedLabel(info.title, info.user);
+        info.contentDescription = mIconCache.getUserBadgedLabel(info.title, info.user);
         info.itemType = itemType;
         info.status = restoreFlag;
         if (isArchived) info.runtimeStatusFlags |= FLAG_ARCHIVED;
@@ -371,11 +369,13 @@ public class LoaderCursor extends CursorWrapper {
     /**
      * Make an WorkspaceItemInfo object for a shortcut that is an application.
      */
+    @Nullable
     public WorkspaceItemInfo getAppShortcutInfo(
             Intent intent, boolean allowMissingTarget, boolean useLowResIcon) {
         return getAppShortcutInfo(intent, allowMissingTarget, useLowResIcon, true);
     }
 
+    @Nullable
     public WorkspaceItemInfo getAppShortcutInfo(
             Intent intent, boolean allowMissingTarget, boolean useLowResIcon, boolean loadIcon) {
         if (user == null) {
@@ -423,7 +423,7 @@ public class LoaderCursor extends CursorWrapper {
             }
         }
 
-        info.contentDescription = mPM.getUserBadgedLabel(info.title, info.user);
+        info.contentDescription = mIconCache.getUserBadgedLabel(info.title, info.user);
         return info;
     }
 

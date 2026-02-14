@@ -21,6 +21,8 @@ import static android.view.View.VISIBLE;
 
 import static com.android.launcher3.Hotseat.ALPHA_CHANNEL_PREVIEW_RENDERER;
 import static com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT_PREDICTION;
+import static com.android.launcher3.Utilities.ATLEAST_R;
+import static com.android.launcher3.Utilities.qsbOnFirstScreen;
 import static com.android.launcher3.model.ModelUtils.currentScreenContentFilter;
 
 import static java.util.Comparator.comparingDouble;
@@ -30,6 +32,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -50,8 +54,6 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import app.lawnchair.preferences2.PreferenceManager2;
-import com.android.launcher3.BuildConfig;
-import com.android.launcher3.BuildConfigs;
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Hotseat;
@@ -109,6 +111,7 @@ public class LauncherPreviewRenderer extends BaseContext
     private final Hotseat mHotseat;
     private final Map<Integer, CellLayout> mWorkspaceScreens = new HashMap<>();
     private final ItemInflater<LauncherPreviewRenderer> mItemInflater;
+    private final LauncherWidgetHolder mWidgetHolder;
 
     // LC-Note: (we don't use QSB preview)
     private int mWorkspaceSearchContainer = R.layout.smartspace_container;
@@ -125,10 +128,16 @@ public class LauncherPreviewRenderer extends BaseContext
         
         mUiHandler = new Handler(Looper.getMainLooper());
         mIdp = InvariantDeviceProfile.INSTANCE.get(context);
-        mDp = getDeviceProfileForPreview(context).toBuilder(context)
+        mDp = getDeviceProfileForPreview(context).toBuilder()
                 .setViewScaleProvider(new PreviewScaleProvider(this)).build();
         Rect insets = getInsets(context);
         mDp.updateInsets(insets);
+        mWidgetHolder =
+                LauncherComponentProvider.get(this).getWidgetHolderFactory().newInstance(this);
+        if (wallpaperColorResources != null) {
+            mWidgetHolder.setOnViewCreationCallback(
+                    v -> v.setColorResources(wallpaperColorResources));
+        }
 
         mHomeElementInflater = LayoutInflater.from(
                 new ContextThemeWrapper(this, R.style.HomeScreenElementTheme));
@@ -147,20 +156,28 @@ public class LauncherPreviewRenderer extends BaseContext
 
         CellLayout firstScreen = mRootView.findViewById(R.id.workspace);
         firstScreen.setPadding(
-                mDp.workspacePadding.left + mDp.cellLayoutPaddingPx.left,
-                mDp.workspacePadding.top + mDp.cellLayoutPaddingPx.top,
-                mDp.getDeviceProperties().isTwoPanels() ? (mDp.cellLayoutBorderSpacePx.x / 2)
-                        : (mDp.workspacePadding.right + mDp.cellLayoutPaddingPx.right),
-                mDp.workspacePadding.bottom + mDp.cellLayoutPaddingPx.bottom
+                mDp.getWorkspaceIconProfile().getWorkspacePadding().left
+                        + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().left,
+                mDp.getWorkspaceIconProfile().getWorkspacePadding().top
+                        + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().top,
+                mDp.getDeviceProperties().isTwoPanels() ? (
+                        mDp.getWorkspaceIconProfile().getCellLayoutBorderSpacePx().x / 2)
+                        : (mDp.getWorkspaceIconProfile().getWorkspacePadding().right
+                                + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().right),
+                mDp.getWorkspaceIconProfile().getWorkspacePadding().bottom
+                        + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().bottom
         );
 
         if (mDp.getDeviceProperties().isTwoPanels()) {
             CellLayout rightPanel = mRootView.findViewById(R.id.workspace_right);
             rightPanel.setPadding(
-                    mDp.cellLayoutBorderSpacePx.x / 2,
-                    mDp.workspacePadding.top + mDp.cellLayoutPaddingPx.top,
-                    mDp.workspacePadding.right + mDp.cellLayoutPaddingPx.right,
-                    mDp.workspacePadding.bottom + mDp.cellLayoutPaddingPx.bottom
+                    mDp.getWorkspaceIconProfile().getCellLayoutBorderSpacePx().x / 2,
+                    mDp.getWorkspaceIconProfile().getWorkspacePadding().top
+                            + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().top,
+                    mDp.getWorkspaceIconProfile().getWorkspacePadding().right
+                            + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().right,
+                    mDp.getWorkspaceIconProfile().getWorkspacePadding().bottom
+                            + mDp.getWorkspaceIconProfile().getCellLayoutPaddingPx().bottom
             );
 
             int closestEvenPageId = workspaceScreenId - (workspaceScreenId % 2);
@@ -170,16 +187,10 @@ public class LauncherPreviewRenderer extends BaseContext
             mWorkspaceScreens.put(workspaceScreenId, firstScreen);
         }
 
-        LauncherWidgetHolder widgetHolder = LauncherComponentProvider.get(this)
-                .getWidgetHolderFactory().newInstance(this);
-        if (wallpaperColorResources != null) {
-            widgetHolder.setOnViewCreationCallback(
-                    v -> v.setColorResources(wallpaperColorResources));
-        }
-
+        mWidgetHolder.startListeningForSharedUpdate();
         mItemInflater = new ItemInflater<>(
                 this,
-                widgetHolder,
+                mWidgetHolder,
                 view -> { },
                 (view, b) -> { },
                 mHotseat
@@ -190,9 +201,15 @@ public class LauncherPreviewRenderer extends BaseContext
             @Override
             public void onDestroy(@NonNull LifecycleOwner owner) {
                 model.removeCallbacks(LauncherPreviewRenderer.this);
-                widgetHolder.destroy();
+                mWidgetHolder.destroy();
             }
         });
+    }
+
+    @Nullable
+    @Override
+    public LauncherWidgetHolder getAppWidgetHolder() {
+        return mWidgetHolder;
     }
 
     @Override
@@ -381,7 +398,7 @@ public class LauncherPreviewRenderer extends BaseContext
             inflateAndAdd(itemInfo);
         }
     }
-    
+
     // LC-Note: LC stuff that set the search container of preview (but we dont use it as search container)
     public void setWorkspaceSearchContainer(int resId) {
         mWorkspaceSearchContainer = resId;
@@ -405,8 +422,14 @@ public class LauncherPreviewRenderer extends BaseContext
      * Returns the insets of the screen closest to the display given by the context
      */
     private static Rect getInsets(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
+        // LC-Note: Fix crash access Window/Display context
+        Display display;
+        if (ATLEAST_R) {
+            display = context.getDisplay();
+        } else {
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            display = windowManager.getDefaultDisplay();
+        }
         return DisplayController.INSTANCE.get(context).getInfo().supportedBounds.stream()
                 .filter(w -> w.rotationHint == display.getRotation())
                 .min(comparingDouble(w ->

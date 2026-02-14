@@ -20,10 +20,11 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.core.view.isVisible
+import com.android.launcher3.Flags.enableRefactorDigitalWellbeingToast
 import com.android.launcher3.Flags.enableRefactorTaskContentView
 import com.android.launcher3.Flags.enableRefactorTaskThumbnail
 import com.android.launcher3.model.data.TaskViewItemInfo
-import com.android.launcher3.util.OverviewReleaseFlags.enableOverviewIconMenu
 import com.android.launcher3.util.SplitConfigurationOptions
 import com.android.launcher3.util.TransformingTouchDelegate
 import com.android.quickstep.TaskOverlayFactory
@@ -112,14 +113,16 @@ class TaskContainer(
         get() = TaskViewItemInfo(taskView, this)
 
     fun bind() = {
-            digitalWellBeingToast?.bind(task, taskView, snapshotView, stagePosition)
+        ->
+        digitalWellBeingToast?.bind(task, taskView, snapshotView, stagePosition)
             if (!enableRefactorTaskThumbnail()) {
                 thumbnailViewDeprecated.bind(task, overlay, taskView)
             }
         }
 
     fun destroy() = {
-            digitalWellBeingToast?.destroy()
+        ->
+        digitalWellBeingToast?.destroy()
             taskContentView.scaleX = 1f
             taskContentView.scaleY = 1f
             overlay.reset()
@@ -129,10 +132,6 @@ class TaskContainer(
                 thumbnailView.onRecycle()
             } else {
                 thumbnailViewDeprecated.setShowSplashForSplitSelection(false)
-            }
-
-            if (enableOverviewIconMenu() && taskView.type != TaskViewType.DESKTOP) {
-                (iconView as IconAppChipView).reset()
             }
         }
 
@@ -153,7 +152,8 @@ class TaskContainer(
     }
 
     fun refreshOverlay(thumbnailPosition: ThumbnailPosition) = {
-            this.thumbnailPosition = thumbnailPosition
+        ->
+        this.thumbnailPosition = thumbnailPosition
             if (overlayEnabledStatus) {
                 overlay.initOverlay(
                     task,
@@ -183,7 +183,8 @@ class TaskContainer(
         canShowAppTimer: Boolean,
         clickCloseListener: OnClickListener?,
     ) = {
-            if (enableRefactorTaskContentView()) {
+        ->
+        if (enableRefactorTaskContentView()) {
                 (taskContentView as TaskContentView).setState(
                     TaskUiStateMapper.toTaskHeaderState(state, hasHeader, clickCloseListener),
                     TaskUiStateMapper.toTaskThumbnailUiState(state),
@@ -237,6 +238,18 @@ class TaskContainer(
 
     fun updateThumbnailMatrix(matrix: Matrix) {
         thumbnailView.setImageMatrix(matrix)
+    }
+
+    fun digitalWellBeingBannerHeight(): Int {
+        if (enableRefactorTaskContentView() && enableRefactorDigitalWellbeingToast()) {
+            return (taskContentView as? TaskContentView)?.getTaskAppTimerToastHeight() ?: 0
+        }
+
+        if (digitalWellBeingToast?.isVisible == true) {
+            return digitalWellBeingToast.height
+        }
+
+        return 0
     }
 
     companion object {
