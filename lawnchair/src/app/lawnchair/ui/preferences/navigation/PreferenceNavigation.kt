@@ -104,8 +104,8 @@ fun PreferenceNavigation(
 
         composable<General>(
             deepLinks = listOf(
-                navDeepLink<General>(basePath = "$URI/general")
-            )
+                navDeepLink<General>(basePath = "$URI/general"),
+            ),
         ) { GeneralPreferences() }
         composable<GeneralFontSelection> { backStackEntry ->
             val route: GeneralFontSelection = backStackEntry.toRoute()
@@ -115,8 +115,8 @@ fun PreferenceNavigation(
         }
         composable<GeneralIconPack>(
             deepLinks = listOf(
-                navDeepLink<GeneralIconPack>(basePath = "$URI/iconpack")
-            )
+                navDeepLink<GeneralIconPack>(basePath = "$URI/iconpack"),
+            ),
         ) { IconPackPreferences() }
         composable<GeneralIconShape> { backStackEntry ->
             val route: GeneralIconShape = backStackEntry.toRoute()
@@ -124,53 +124,53 @@ fun PreferenceNavigation(
         }
         composable<GeneralCustomIconShapeCreator>(
             deepLinks = listOf(
-                navDeepLink<GeneralCustomIconShapeCreator>(basePath = "$URI/general-icon-shape-creator")
-            )
+                navDeepLink<GeneralCustomIconShapeCreator>(basePath = "$URI/general-icon-shape-creator"),
+            ),
         ) { CustomIconShapePreference() }
 
         composable<HomeScreen>(
             deepLinks = listOf(
-                navDeepLink<HomeScreen>(basePath = "$URI/home-screen")
-            )
+                navDeepLink<HomeScreen>(basePath = "$URI/home-screen"),
+            ),
         ) { HomeScreenPreferences() }
         composable<HomeScreenGrid>(
             deepLinks = listOf(
-                navDeepLink<HomeScreenGrid>(basePath = "$URI/home-screen-grid")
-            )
+                navDeepLink<HomeScreenGrid>(basePath = "$URI/home-screen-grid"),
+            ),
         ) { HomeScreenGridPreferences() }
         composable<HomeScreenPopupEditor>(
             deepLinks = listOf(
-                navDeepLink<HomeScreenPopupEditor>(basePath = "$URI/home-screen-popup-editor")
-            )
+                navDeepLink<HomeScreenPopupEditor>(basePath = "$URI/home-screen-popup-editor"),
+            ),
         ) { LauncherPopupPreference() }
 
         composable<Dock>(
             deepLinks = listOf(
-                navDeepLink<Dock>(basePath = "$URI/dock")
-            )
+                navDeepLink<Dock>(basePath = "$URI/dock"),
+            ),
         ) { DockPreferences() }
         composable<DockSearchProvider>(
             deepLinks = listOf(
-                navDeepLink<DockSearchProvider>(basePath = "$URI/dock-search-provider")
-            )
+                navDeepLink<DockSearchProvider>(basePath = "$URI/dock-search-provider"),
+            ),
         ) { SearchProviderPreferences() }
 
         composable<Smartspace>(
             deepLinks = listOf(
-                navDeepLink<Smartspace>(basePath = "$URI/smartspace")
-            )
+                navDeepLink<Smartspace>(basePath = "$URI/smartspace"),
+            ),
         ) { SmartspacePreferences(fromWidget = false) }
         composable<SmartspaceWidget> { SmartspacePreferences(fromWidget = true) }
 
         composable<AppDrawer>(
             deepLinks = listOf(
-                navDeepLink<AppDrawer>(basePath = "$URI/app-drawer")
-            )
+                navDeepLink<AppDrawer>(basePath = "$URI/app-drawer"),
+            ),
         ) { AppDrawerPreferences() }
         composable<AppDrawerHiddenApps>(
             deepLinks = listOf(
-                navDeepLink<AppDrawerHiddenApps>(basePath = "$URI/app-drawer-hidden-apps")
-            )
+                navDeepLink<AppDrawerHiddenApps>(basePath = "$URI/app-drawer-hidden-apps"),
+            ),
         ) { HiddenAppsPreferences() }
         composable<AppDrawerAppListToFolder> { backStackEntry ->
             val args = backStackEntry.arguments!!
@@ -179,22 +179,22 @@ fun PreferenceNavigation(
         }
         composable<AppDrawerFolder>(
             deepLinks = listOf(
-                navDeepLink<AppDrawerFolder>(basePath = "$URI/app-drawer-folder")
-            )
+                navDeepLink<AppDrawerFolder>(basePath = "$URI/app-drawer-folder"),
+            ),
         ) { AppDrawerFoldersPreference() }
 
         composable<Search>(
             deepLinks = listOf(
-                navDeepLink<Search>(basePath = "$URI/search")
-            )
+                navDeepLink<Search>(basePath = "$URI/search"),
+            ),
         ) { backStackEntry ->
             val route: Search = backStackEntry.toRoute()
             SearchPreferences(currentTab = route.selectedId)
         }
         composable<SearchProviderPreference>(
             deepLinks = listOf(
-                navDeepLink<SearchProviderPreference>(basePath = "$URI/search-provider")
-            )
+                navDeepLink<SearchProviderPreference>(basePath = "$URI/search-provider"),
+            ),
         ) { backStackEntry ->
             val route: SearchProviderPreference = backStackEntry.toRoute()
             SearchProviderPreferenceScreen(route.id)
@@ -202,32 +202,32 @@ fun PreferenceNavigation(
 
         composable<Folders>(
             deepLinks = listOf(
-                navDeepLink<Folders>(basePath = "$URI/folders")
-            )
+                navDeepLink<Folders>(basePath = "$URI/folders"),
+            ),
         ) { FolderPreferences() }
 
         composable<Gestures>(
             deepLinks = listOf(
-                navDeepLink<Gestures>(basePath = "$URI/gestures")
-            )
+                navDeepLink<Gestures>(basePath = "$URI/gestures"),
+            ),
         ) { GesturePreferences() }
         composable<GesturesPickApp> { PickAppForGesture() }
 
         composable<Quickstep>(
             deepLinks = listOf(
-                navDeepLink<Quickstep>(basePath = "$URI/quickstep")
-            )
+                navDeepLink<Quickstep>(basePath = "$URI/quickstep"),
+            ),
         ) { QuickstepPreferences() }
 
         composable<About>(
             deepLinks = listOf(
-                navDeepLink<About>(basePath = "$URI/about")
-            )
+                navDeepLink<About>(basePath = "$URI/about"),
+            ),
         ) { About() }
         composable<AboutLicenses>(
             deepLinks = listOf(
-                navDeepLink<AboutLicenses>(basePath = "$URI/about-licenses")
-            )
+                navDeepLink<AboutLicenses>(basePath = "$URI/about-licenses"),
+            ),
         ) { Acknowledgements() }
 
         composable<DebugMenu> { DebugMenuPreferences() }
@@ -246,8 +246,8 @@ fun PreferenceNavigation(
 
         composable<ExperimentalFeatures>(
             deepLinks = listOf(
-                navDeepLink<ExperimentalFeatures>(basePath = "$URI/experimental-features")
-            )
+                navDeepLink<ExperimentalFeatures>(basePath = "$URI/experimental-features"),
+            ),
         ) { ExperimentalFeaturesPreferences() }
         composable<ColorSelection> { backStackEntry ->
             val screen: ColorSelection = backStackEntry.toRoute()
@@ -262,8 +262,8 @@ fun PreferenceNavigation(
 
         composable<CreateBackup>(
             deepLinks = listOf(
-                navDeepLink<CreateBackup>(basePath = "$URI/create-backup")
-            )
+                navDeepLink<CreateBackup>(basePath = "$URI/create-backup"),
+            ),
         ) { CreateBackupScreen(viewModel()) }
 
         restoreBackupGraph()
