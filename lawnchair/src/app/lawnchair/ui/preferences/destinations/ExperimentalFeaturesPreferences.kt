@@ -42,7 +42,7 @@ fun ExperimentalFeaturesPreferences(
                 adapter = prefs.enableGnc.getAdapter(),
                 label = stringResource(id = R.string.gesturenavcontract_label),
                 description = stringResource(id = R.string.gesturenavcontract_description),
-                enabled = Utilities.ATLEAST_S,
+                enabled = Utilities.ATLEAST_Q,
             )
             SwitchPreference(
                 adapter = prefs2.enableFontSelection.getAdapter(),
