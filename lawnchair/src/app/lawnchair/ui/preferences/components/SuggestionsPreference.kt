@@ -11,7 +11,6 @@ import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.util.isGoogle
 import com.android.launcher3.R
 
 @SuppressLint("WrongConstant")
@@ -23,7 +22,7 @@ fun SuggestionsPreference() {
     val canResolveToSuggestionPreference = context.packageManager.resolveActivity(intent, 0) != null
     val suggestionSettingsAvailable = hasPkgUsagePermission && canResolveToSuggestionPreference
 
-    if (suggestionSettingsAvailable && isGoogle) {
+    if (suggestionSettingsAvailable) {
         ClickablePreference(
             label = stringResource(id = R.string.suggestion_pref_screen_title),
             onClick = {
