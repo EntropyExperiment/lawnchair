@@ -1,6 +1,7 @@
 package app.lawnchair.theme.drawable
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.InsetDrawable
@@ -8,8 +9,10 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.StateListDrawable
 import androidx.appcompat.content.res.AppCompatResources
+import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.theme.color.tokens.ColorTokens
 import com.android.launcher3.R
+import com.patrykmichalik.opto.core.firstBlocking
 
 object DrawableTokens {
 
@@ -17,8 +20,9 @@ object DrawableTokens {
     val BgCellLayout = ResourceDrawableToken<Drawable>(R.drawable.bg_celllayout)
         .setTint(ColorTokens.ColorAccent)
 
+    // pE-TODO(QPR1): Investigate
     @JvmField
-    val BgOverviewClearAllButton = ResourceDrawableToken<RippleDrawable>(R.drawable.bg_overview_clear_all_button)
+    val BgOverviewClearAllButton = ResourceDrawableToken<RippleDrawable>(R.drawable.overview_action_button_background)
         .mutate { context, scheme, uiColorMode ->
             val background = getDrawable(0) as GradientDrawable
             background.setColor(ColorTokens.ColorBackground.resolveColor(context, scheme, uiColorMode))
@@ -145,7 +149,19 @@ object DrawableTokens {
             context,
             R.drawable.all_apps_tabs_background,
         )
-        selected?.setTint(ColorTokens.AllAppsTabBackgroundSelected.resolveColor(context, scheme, uiColorMode))
+
+        // Get custom color from preferences
+        val prefs2 = PreferenceManager2.getInstance(context)
+        val colorOption = prefs2.workProfileTabBackgroundColor.firstBlocking()
+        val customColor = colorOption.colorPreferenceEntry.lightColor.invoke(context)
+
+        val selectedColor = if (customColor != 0) {
+            customColor
+        } else {
+            ColorTokens.AllAppsTabBackgroundSelected.resolveColor(context, scheme, uiColorMode)
+        }
+
+        selected?.setTint(selectedColor)
 
         list.addState(intArrayOf(-android.R.attr.state_selected), unselected)
         list.addState(intArrayOf(android.R.attr.state_selected), selected)
@@ -186,7 +202,7 @@ object DrawableTokens {
 
     @JvmField
     val WorkCard = ResourceDrawableToken<GradientDrawable>(R.drawable.work_card)
-        .setColor(ColorTokens.Surface)
+        .setColor(ColorTokens.SurfaceContainerHighest)
 
     @JvmField
     val WidgetAddButtonBackground = ResourceDrawableToken<InsetDrawable>(R.drawable.widget_cell_add_button_background)

@@ -103,8 +103,9 @@ sealed interface UpdateState {
      * A new update is available. Contains the name and URL of the update.
      * @param name The name of the available update (used in `Available` state).
      * @param url The URL to download the update from (used in `Available` state).
+     * @param expectedSha256 The expected SHA256 hash of the APK for verification (optional).
      */
-    data class Available(val name: String, val url: String, val changelogState: ChangelogState?) : UpdateState
+    data class Available(val name: String, val url: String, val changelogState: ChangelogState?, val expectedSha256: String? = null) : UpdateState
 
     /**
      * An update is currently being downloaded. Contains the download progress.
@@ -120,6 +121,23 @@ sealed interface UpdateState {
 
     /** An update download has failed. */
     data object Failed : UpdateState
+
+    /** An major update has detected. */
+    data class MajorUpdate(val file: File) : UpdateState
+
+    /** An major update has detected. */
+    data class Disabled(val reason: UpdateDisabledReason) : UpdateState
+}
+
+/**
+ * Indicate why the auto-updater was disabled.
+ *
+ * @property USER_OVERRIDE Disabled because of user configuration.
+ * @property MAJOR_IS_NEWER Disabled because of current build major version is higher than what is currently offered by updater source.
+ */
+enum class UpdateDisabledReason {
+    /** Disabled because of current build major version is higher than what is currently offered by updater source. */
+    MAJOR_IS_NEWER,
 }
 
 data class ChangelogState(

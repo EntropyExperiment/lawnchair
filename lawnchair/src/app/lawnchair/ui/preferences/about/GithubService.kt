@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
@@ -32,6 +33,7 @@ interface GitHubService {
     suspend fun getRepositoryCommits(
         @Path("owner") owner: String,
         @Path("repo") repo: String,
+        @Query("sha") sha: String? = null,
     ): List<GitHubCommit>
 
     @GET("repos/{owner}/{repo}/compare/{base}...{head}")
@@ -57,6 +59,8 @@ interface GitHubService {
 data class GitHubRelease(
     @SerialName("tag_name")
     val tagName: String,
+    @SerialName("target_commitish")
+    val targetCommitish: String,
     val assets: List<GitHubAsset>,
 ) {
     /**
@@ -64,13 +68,23 @@ data class GitHubRelease(
      *
      * @property name The name of the asset.
      * @property browserDownloadUrl The URL to download the asset from a browser.
+     * @property digest The SHA256 digest of the asset in format "sha256:hash".
+     * @property size The size of the asset in bytes.
      */
     @Serializable
     data class GitHubAsset(
         val name: String,
         @SerialName("browser_download_url")
         val browserDownloadUrl: String,
-    )
+        val digest: String? = null,
+        val size: Long? = null,
+    ) {
+        /**
+         * @return The SHA256 hash string, or null if digest is not available or not in expected format.
+         */
+        val sha256Hash: String?
+            get() = digest?.removePrefix("sha256:")?.takeIf { it != digest }
+    }
 }
 
 /**
