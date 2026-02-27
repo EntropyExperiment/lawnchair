@@ -71,9 +71,11 @@ fun AppDrawerPreferences(
         modifier = modifier,
     ) {
         val drawerListAdapter = prefs.drawerList.getAdapter()
-        DrawerLayoutPreference(drawerListAdapter)
-        ExpandAndShrink(visible = drawerListAdapter.state.value) {
-            AppDrawerFolderPreferenceItem()
+        Column {
+            DrawerLayoutPreference(drawerListAdapter)
+            ExpandAndShrink(visible = drawerListAdapter.state.value) {
+                AppDrawerFolderPreferenceItem()
+            }
         }
         val hiddenApps = prefs2.hiddenApps.getAdapter().state.value
         PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
