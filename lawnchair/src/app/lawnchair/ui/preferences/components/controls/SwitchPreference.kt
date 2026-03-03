@@ -36,9 +36,12 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import com.android.launcher3.util.MSDLPlayerWrapper
+import com.google.android.msdl.data.model.MSDLToken
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
@@ -81,6 +84,12 @@ fun SwitchPreference(
     onClick: (() -> Unit)? = null,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+    val mMSDLPlayerWrapper = MSDLPlayerWrapper.INSTANCE.get(LocalContext.current)
+
+    val wrappedOnCheckedChange: (Boolean) -> Unit = { newValue ->
+        mMSDLPlayerWrapper.playToken(if (newValue) MSDLToken.SWITCH_ON else MSDLToken.SWITCH_OFF)
+        onCheckedChange(newValue)
+    }
 
     PreferenceTemplate(
         modifier = modifier.clickable(
@@ -91,7 +100,7 @@ fun SwitchPreference(
             if (onClick != null) {
                 onClick()
             } else {
-                onCheckedChange(!checked)
+                wrappedOnCheckedChange(!checked)
             }
         },
         contentModifier = Modifier
@@ -115,7 +124,7 @@ fun SwitchPreference(
                     .padding(all = 16.dp)
                     .height(24.dp),
                 checked = checked,
-                onCheckedChange = onCheckedChange,
+                onCheckedChange = wrappedOnCheckedChange,
                 enabled = enabled,
                 interactionSource = interactionSource,
                 thumbContent = {
