@@ -165,8 +165,8 @@ private fun SliderPreference(
         description = {
             Slider(
                 value = sliderValue,
-                onValueChange = {
-                    newValue -> sliderValue = newValue
+                onValueChange = { newValue ->
+                    sliderValue = newValue
                     mMSDLPlayerWrapper.playToken(getAppropriateHaptic)
                 },
                 onValueChangeFinished = { onValueChangeFinished(sliderValue) },
