@@ -150,6 +150,8 @@
     <string name="gestures_description">ٹیپ اور سوائپس</string>
     <string name="quickstep_label">Recents screen</string>
     <string name="quickstep_description">کلئیر آل بٹن، کونے کی گولائی</string>
+    <string name="backup_and_restore_label">Backup and restore</string>
+    <string name="backup_and_restore_description">Save current setup, restore backups</string>
     <string name="about_label">کے بارے میں</string>
     <string name="app_info_drop_target_label">ایپ کی معلومات</string>
     <string name="debug_restart_launcher">لان چیئر کو دوبارہ شروع کریں۔</string>
@@ -177,8 +179,8 @@
     <string name="experimental_folder_shape_modify_label">Customizable folder shape</string>
     <string name="folder_shape_label">Folder</string>
     <string name="app_icon_shape_label">ایپ</string>
-    <string name="gesturenavcontract_label">GestureNavContract API</string>
-    <string name="gesturenavcontract_description">Render launcher animations without root, does not work with heavily modified AOSP</string>
+    <string name="gesturenavcontract_label">Use GestureNavContract API</string>
+    <string name="gesturenavcontract_description">Support Android\'s enhanced animations when using gesture navigation. Not all devices support this. May cause animation bugs when in use.</string>
     <string name="gesturenavcontract_warning_incompatibility">GestureNavContract may cause artifacting during animations</string>
     <string name="recents_lock_unlock">لاک/انلاک</string>
     <string name="recents_lock_unlock_description">\"سب کو صاف کریں\" دبانے پر منتخب ایپ کو بند ہونے سے روکیں۔</string>
@@ -435,6 +437,8 @@
     <string name="backup_restore_success">بیک اپ بحال ہو گیا۔</string>
     <string name="backup_restore_error">بیک اپ بحال کرنے میں ناکام</string>
     <string name="invalid_backup_file">غلط بیک اپ فائل</string>
+    <string name="create_backup_description">Export settings and launcher layout</string>
+    <string name="restore_backup_description">Import a previously created backup</string>
     <!--
 
     Gesture settings
@@ -515,6 +519,8 @@
     <string name="home_screen_unlock">ہوم اسکرین کو غیر مقفل کریں۔</string>
     <string name="home_screen_locked">ہوم اسکرین مقفل ہے۔</string>
     <string name="home_screen_lock_description">ہوم اسکرین لے آؤٹ میں تبدیلیوں کو روکیں۔</string>
+    <string name="set_default_home_page">Set as default page</string>
+    <string name="default_home_page_set">Default home page updated</string>
     <string name="popup_menu">پاپ اپ مینو</string>
     <string name="popup_menu_items"> پاپ اپ مینو آئٹمز</string>
     <string name="edit_menu_items">پاپ اپ مینو آئٹمز میں ترمیم کریں۔</string>
@@ -584,6 +590,7 @@
     <string name="pref_all_apps_show_scrollbar_title">اسکرول بار دکھائیں۔</string>
     <string name="app_drawer_columns">ایپ دراز کے کالم</string>
     <string name="row_height_label">قطار کی اونچائی</string>
+    <string name="app_drawer_haptic_feedback_label">Haptic feedback</string>
     <string name="app_drawer_indent_label">افقی پیڈنگ</string>
     <string name="app_drawer_bg_color_label">پس منظر کا رنگ</string>
     <string name="work_profile_tab_background_label">Tabs background color</string>

@@ -36,7 +36,7 @@ import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
 import app.lawnchair.util.isGestureNavContractCompatible
 import com.android.launcher3.R
-import com.android.launcher3.Utilities.ATLEAST_S
+import com.android.launcher3.Utilities
 import com.android.systemui.shared.system.BlurUtils
 
 @Composable
@@ -219,7 +219,7 @@ fun ExperimentalFeaturesPreferences(
                     adapter = enableGncAdapter,
                     label = stringResource(id = R.string.gesturenavcontract_label),
                     description = stringResource(id = R.string.gesturenavcontract_description),
-                    enabled = ATLEAST_S,
+                    enabled = Utilities.ATLEAST_Q,
                 )
             }
             Item(

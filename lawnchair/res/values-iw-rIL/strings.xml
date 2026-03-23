@@ -31,42 +31,42 @@
     <string name="action_lock">נעילה</string>
     <string name="action_apply">החל</string>
     <string name="action_customize">התאמה אישית</string>
-    <string name="always_choice">Always</string>
-    <string name="never_choice">Never</string>
+    <string name="always_choice">תמיד</string>
+    <string name="never_choice">אף פעם</string>
     <string name="clipboard">לוח</string>
-    <string name="action_copy_link">Copy link</string>
+    <string name="action_copy_link">העתקת קישור</string>
     <string name="action_copy">העתקה</string>
     <string name="action_paste">הדבק</string>
     <string name="action_done">סיום</string>
     <string name="select_all">בחר הכל</string>
-    <string name="deselect_all">Deselect all</string>
-    <string name="inverse_selection">Inverse selection</string>
+    <string name="deselect_all">ביטול בחירה</string>
+    <string name="inverse_selection">הפיכת בחירה</string>
     <string name="loading">כעת בטעינה…</string>
     <string name="dismiss">Dismiss</string>
     <string name="download_update">הורד עדכון</string>
     <string name="install_update">התקן עדכון</string>
-    <string name="view_changes">View changes</string>
-    <string name="pro_updated">You\'re up-to-date!</string>
+    <string name="view_changes">הצגת שינויים</string>
+    <string name="pro_updated">אין עדכונים!</string>
     <!-- Changes dialog strings -->
-    <string name="changes_dialog_title">Updates</string>
-    <string name="changes_dialog_error">Failed to load changes</string>
-    <string name="changes_dialog_no_changes">No changes found</string>
-    <string name="changes_dialog_build_format">Build #%1$d → #%2$d</string>
-    <string name="changes_dialog_commit_info">by %1$s • %2$s • %3$s</string>
+    <string name="changes_dialog_title">עדכונים</string>
+    <string name="changes_dialog_error">טעינת השינויים נכשלה</string>
+    <string name="changes_dialog_no_changes">לא נמצאו שינויים</string>
+    <string name="changes_dialog_build_format">קימפול מס. %1$d למס. %2$d</string>
+    <string name="changes_dialog_commit_info">ע\"י %1$s • %2$s • %3$s</string>
     <!-- Time ago strings -->
-    <string name="time_just_now">just now</string>
-    <string name="time_minutes_ago">%dm</string>
-    <string name="time_hours_ago">%dh</string>
-    <string name="time_days_ago">%dd</string>
-    <string name="time_weeks_ago">%dw</string>
-    <string name="time_months_ago">%dmo</string>
-    <string name="time_years_ago">%dy</string>
+    <string name="time_just_now">הרגע</string>
+    <string name="time_minutes_ago">%d דק\'</string>
+    <string name="time_hours_ago">%d שע\'</string>
+    <string name="time_days_ago">%d י\'</string>
+    <string name="time_weeks_ago">%d שב\'</string>
+    <string name="time_months_ago">%d ח\'</string>
+    <string name="time_years_ago">%d שנ\'</string>
     <string name="managed_by_lawnchair">מנוהל ע\"י Lawnchair</string>
     <!-- When mentioning settings UI -->
     <string name="smartspace_preferences">העדפות</string>
     <string name="settings_button_text">הגדרות כפתור בית</string>
     <string name="system_settings">הגדרות מערכת</string>
-    <string name="title_change_settings">Change settings</string>
+    <string name="title_change_settings">שינוי הגדרות</string>
     <!--
 
     General "words" used throughout Lawnchair
@@ -150,6 +150,8 @@
     <string name="gestures_description">Taps and swipes</string>
     <string name="quickstep_label">Recents screen</string>
     <string name="quickstep_description">Clear All button, corner radius</string>
+    <string name="backup_and_restore_label">Backup and restore</string>
+    <string name="backup_and_restore_description">Save current setup, restore backups</string>
     <string name="about_label">על אודות</string>
     <string name="app_info_drop_target_label">App info</string>
     <string name="debug_restart_launcher">איתחול Lawnchair</string>
@@ -177,8 +179,8 @@
     <string name="experimental_folder_shape_modify_label">Customizable folder shape</string>
     <string name="folder_shape_label">Folder</string>
     <string name="app_icon_shape_label">יישום</string>
-    <string name="gesturenavcontract_label">GestureNavContract API</string>
-    <string name="gesturenavcontract_description">Render launcher animations without root, does not work with heavily modified AOSP</string>
+    <string name="gesturenavcontract_label">Use GestureNavContract API</string>
+    <string name="gesturenavcontract_description">Support Android\'s enhanced animations when using gesture navigation. Not all devices support this. May cause animation bugs when in use.</string>
     <string name="gesturenavcontract_warning_incompatibility">GestureNavContract may cause artifacting during animations</string>
     <string name="recents_lock_unlock">Lock/unlock</string>
     <string name="recents_lock_unlock_description">Prevent selected app from closing when pressing \"Clear all\"</string>
@@ -435,6 +437,8 @@
     <string name="backup_restore_success">Backup restored</string>
     <string name="backup_restore_error">Failed to restore backup</string>
     <string name="invalid_backup_file">Invalid backup file</string>
+    <string name="create_backup_description">Export settings and launcher layout</string>
+    <string name="restore_backup_description">Import a previously created backup</string>
     <!--
 
     Gesture settings
@@ -515,6 +519,8 @@
     <string name="home_screen_unlock">Unlock home screen</string>
     <string name="home_screen_locked">Home screen is locked</string>
     <string name="home_screen_lock_description">Prevent changes to the home screen layout</string>
+    <string name="set_default_home_page">Set as default page</string>
+    <string name="default_home_page_set">Default home page updated</string>
     <string name="popup_menu">Pop-up menu</string>
     <string name="popup_menu_items">Pop-up menu items</string>
     <string name="edit_menu_items">Edit pop-up menu items</string>
@@ -584,6 +590,7 @@
     <string name="pref_all_apps_show_scrollbar_title">Show scrollbar</string>
     <string name="app_drawer_columns">App drawer columns</string>
     <string name="row_height_label">Row height</string>
+    <string name="app_drawer_haptic_feedback_label">Haptic feedback</string>
     <string name="app_drawer_indent_label">Horizontal padding</string>
     <string name="app_drawer_bg_color_label">Background color</string>
     <string name="work_profile_tab_background_label">Tabs background color</string>

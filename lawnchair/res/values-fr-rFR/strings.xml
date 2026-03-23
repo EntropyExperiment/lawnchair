@@ -150,6 +150,8 @@
     <string name="gestures_description">Appuis et balayages</string>
     <string name="quickstep_label">Écran Récents</string>
     <string name="quickstep_description">Bouton Tout effacer, rayon d\'angle</string>
+    <string name="backup_and_restore_label">Sauvegarder et restaurer</string>
+    <string name="backup_and_restore_description">Créez une sauvegarde de votre configuration, restaurez vos sauvegardes</string>
     <string name="about_label">À propos</string>
     <string name="app_info_drop_target_label">Infos sur l\'appli</string>
     <string name="debug_restart_launcher">Redémarrer Lawnchair</string>
@@ -177,8 +179,8 @@
     <string name="experimental_folder_shape_modify_label">Forme de dossier personnalisable</string>
     <string name="folder_shape_label">Dossier</string>
     <string name="app_icon_shape_label">Application</string>
-    <string name="gesturenavcontract_label">API GestureNavContract</string>
-    <string name="gesturenavcontract_description">Effectuer le rendu des animations du lanceur d\'applications sans accès root, ne fonctionne pas avec une version d\'Android déviant fortement d\'AOSP</string>
+    <string name="gesturenavcontract_label">Utiliser l\'API GestureNavContract</string>
+    <string name="gesturenavcontract_description">Activez la prise en charge des animations Android améliorées lors de l\'utilisation de la navigation par gestes. Incompatible avec certains appareils. Peut causer des bugs d\'animation lorsque activé.</string>
     <string name="gesturenavcontract_warning_incompatibility">GestureNavContract peut entraîner la présence d\'artéfacts pendant les animations</string>
     <string name="recents_lock_unlock">Verrouiller/déverrouiller</string>
     <string name="recents_lock_unlock_description">Empêcher l\'appli sélectionnée d\'être fermée lors d\'un appui sur « Tout effacer »</string>
@@ -216,7 +218,7 @@
     <string name="transparent_background_icons_label">Icônes à thème transparentes</string>
     <string name="transparent_background_icons_description">Appliquer un arrière-plan transparent aux icônes à thème</string>
     <string name="auto_adaptive_icons_label">Icônes adaptatives automatiques</string>
-    <string name="auto_adaptive_icons_description">Pour toutes les icônes non-adaptatives</string>
+    <string name="auto_adaptive_icons_description">Pour toutes les icônes non adaptatives</string>
     <string name="shadow_bg_icons_label">Afficher une ombre derrière les icônes</string>
     <string name="background_lightness_label">Luminosité de l\'arrière-plan</string>
     <string name="adaptive_icon_background_description">Définissez la luminosité à 100 % pour obtenir un arrière-plan blanc</string>
@@ -271,8 +273,8 @@
     <string name="themed_icon_pack">Source des icônes à thème</string>
     <string name="themed_icon_pack_tint">Appliquer la couleur d\'accentuation</string>
     <string name="system_icons">Icônes du système</string>
-    <string name="force_monochrome_label">Force monochrome</string>
-    <string name="force_monochrome_description">Require restart, tint unsupported apps with accent color</string>
+    <string name="force_monochrome_label">Forcer monochrome</string>
+    <string name="force_monochrome_description">Requiert un redémarrage, teindre avec la couleur d\'accentuation les applis non prises en charge</string>
     <string name="themed_icon_title">Icônes à thème</string>
     <string name="themed_icons_off_label">Désactivé</string>
     <string name="themed_icons_home_label">Écran d\'accueil</string>
@@ -426,7 +428,7 @@
     -->
     <string name="create_backup">Créer une sauvegarde</string>
     <string name="what_to_backup">Éléments à sauvegarder</string>
-    <string name="backup_content_layout_and_settings">Mise en page et paramètres</string>
+    <string name="backup_content_layout_and_settings">Disposition et paramètres</string>
     <string name="backup_content_wallpaper">Fond d\'écran</string>
     <string name="backup_create_success">Sauvegarde créée</string>
     <string name="backup_create_error">Échec de la création de la sauvegarde</string>
@@ -435,6 +437,8 @@
     <string name="backup_restore_success">Sauvegarde restaurée</string>
     <string name="backup_restore_error">Échec de la restauration de la sauvegarde</string>
     <string name="invalid_backup_file">Fichier de sauvegarde invalide</string>
+    <string name="create_backup_description">Exportez les paramètres et la disposition du lanceur d\'applications</string>
+    <string name="restore_backup_description">Importez une sauvegarde précédemment créée</string>
     <!--
 
     Gesture settings
@@ -515,6 +519,8 @@
     <string name="home_screen_unlock">Déverrouiller l\'écran d\'accueil</string>
     <string name="home_screen_locked">L\'écran d\'accueil est verrouillé</string>
     <string name="home_screen_lock_description">Empêcher les changements d\'agencement de l\'écran d\'accueil</string>
+    <string name="set_default_home_page">Définir comme page par défaut</string>
+    <string name="default_home_page_set">Page par défaut mise à jour</string>
     <string name="popup_menu">Menu pop-up</string>
     <string name="popup_menu_items">Éléments du menu pop-up</string>
     <string name="edit_menu_items">Modifier les éléments du menu pop-up</string>
@@ -584,6 +590,7 @@
     <string name="pref_all_apps_show_scrollbar_title">Afficher la barre de défilement</string>
     <string name="app_drawer_columns">Colonnes du tiroir des applis</string>
     <string name="row_height_label">Hauteur de ligne</string>
+    <string name="app_drawer_haptic_feedback_label">Retour haptique</string>
     <string name="app_drawer_indent_label">Décalage vers le centre</string>
     <string name="app_drawer_bg_color_label">Couleur d\'arrière-plan</string>
     <string name="work_profile_tab_background_label">Couleur d\'arrière-plan des onglets</string>

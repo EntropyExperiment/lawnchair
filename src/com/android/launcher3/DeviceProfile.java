@@ -395,6 +395,8 @@ public class DeviceProfile {
 
         workspacePageIndicatorHeight = res.getDimensionPixelSize(
                 R.dimen.workspace_page_indicator_height);
+        workspacePageIndicatorHeight *= PreferenceExtensionsKt
+                .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
         mWorkspacePageIndicatorOverlapWorkspace =
                 res.getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
 
@@ -462,15 +464,6 @@ public class DeviceProfile {
         }
 
         setupAllAppsStyle(context);
-
-        workspacePageIndicatorHeight = res.getDimensionPixelSize(
-                R.dimen.workspace_page_indicator_height);
-        float pageIndicatorHeightFactor = PreferenceExtensionsKt
-            .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
-        
-        workspacePageIndicatorHeight *= (int) pageIndicatorHeightFactor;
-//        mWorkspacePageIndicatorOverlapWorkspace = res
-//                .getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
 
         if (!mIsResponsiveGrid) {
             TypedArray cellStyle;
@@ -1312,19 +1305,18 @@ public class DeviceProfile {
             );
             updateAllAppsWithResponsiveMeasures();
         } else {
-            // LC: All apps should use scale 1.0, not workspace scale
-            // This ensures drawer icons are independent of workspace scaling
-            //updateAllAppsIconSize(1.0f, context.getResources());
-            // pE-TODO(QPR1): Investigate
+            // LC: All apps should use scale 1.0, not workspace scale.
+            // This ensures drawer icons are independent of workspace layout scaling.
             mAllAppsProfile = AllAppsProfile.Factory.createAllAppsProfile(
                     context.getResources(),
                     inv,
                     mMetrics,
                     mIsScalableGrid,
                     mTypeIndex,
-                    scale,
+                    1f, // See comment above
                     iconSizePx,
-                    mIconDrawablePaddingOriginalPx
+                    mIconDrawablePaddingOriginalPx,
+                    allAppsCellHeightMultiplier
             );
         }
         updateAllAppsContainerWidth();

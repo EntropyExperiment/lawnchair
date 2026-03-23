@@ -1724,6 +1724,13 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                     new ViewGroupFocusHelper(mRecyclerView)) : new FocusedItemDecorator(
                     mRecyclerView);
             mRecyclerView.addItemDecoration(focusedItemDecorator);
+            // LC-Note: This is needed for highlight focused app decoration, this has some problem of it own but purely visual.
+            if (isSearch()) {
+                RecyclerView.ItemDecoration searchDecorator = getMainAdapterProvider().getDecorator();
+                if (searchDecorator != null) {
+                    mRecyclerView.addItemDecoration(searchDecorator);
+                }
+            }
             mOnFocusChangeListener = focusedItemDecorator.getFocusListener();
             mAdapter.setIconFocusListener(mOnFocusChangeListener);
             applyPadding();
