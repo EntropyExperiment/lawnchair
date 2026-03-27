@@ -706,9 +706,14 @@ public class Launcher extends StatefulActivity<LauncherState>
         // When the flag oneGridSpecs is on we want to disable ALLOW_ROTATION which is replaced
         // by FIXED_LANDSCAPE_MODE, ALLOW_ROTATION will only be used on Tablets and foldables
         // afterwards.
-        if (getDeviceProfile().getDeviceProperties().isPhone()) {
-            LauncherPrefs.get(this).put(LauncherPrefs.ALLOW_ROTATION, false);
-        } else if (getDeviceProfile().getDeviceProperties().isTablet()) {
+//        if (getDeviceProfile().getDeviceProperties().isPhone()) {
+//            LauncherPrefs.get(this).put(LauncherPrefs.ALLOW_ROTATION, false);
+//        } else if (getDeviceProfile().getDeviceProperties().isTablet()) {
+        
+        // pE-TODO(oneGridSpec): Investigate!
+        //
+        // LC-Note: Don't rotation prefs to false on phones! See original code above
+        if (getDeviceProfile().getDeviceProperties().isTablet()) {
             // Tablet do not use fixed landscape mode, make sure it can't be activated by mistake
             LauncherPrefs.get(this).put(FIXED_LANDSCAPE_MODE, false);
         }

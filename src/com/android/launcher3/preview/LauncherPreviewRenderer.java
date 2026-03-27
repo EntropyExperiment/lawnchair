@@ -119,12 +119,21 @@ public class LauncherPreviewRenderer extends BaseContext
             @Nullable SparseIntArray wallpaperColorResources,
             LauncherModel model,
             int themeRes) {
+        this(context, workspaceScreenId, wallpaperColorResources, model, themeRes, null);
+    }
+
+    public LauncherPreviewRenderer(Context context,
+            int workspaceScreenId,
+            @Nullable SparseIntArray wallpaperColorResources,
+            LauncherModel model,
+            int themeRes,
+            @Nullable InvariantDeviceProfile previewIdp) {
 
         super(context, themeRes);
         mPreferenceManager2 = PreferenceManager2.getInstance(context);
         
         mUiHandler = new Handler(Looper.getMainLooper());
-        mIdp = InvariantDeviceProfile.INSTANCE.get(context);
+        mIdp = previewIdp != null ? previewIdp : InvariantDeviceProfile.INSTANCE.get(context);
         mDp = getDeviceProfileForPreview(context).toBuilder(context)
                 .setViewScaleProvider(new PreviewScaleProvider(this)).build();
         Rect insets = getInsets(context);

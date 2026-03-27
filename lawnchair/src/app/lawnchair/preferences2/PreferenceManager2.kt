@@ -391,16 +391,6 @@ class PreferenceManager2 @Inject constructor(
         defaultValue = context.resources.getBoolean(R.bool.config_default_app_drawer_haptic_feedback),
     )
 
-    val showHiddenAppsInSearch = preference(
-        key = booleanPreferencesKey(name = "show_hidden_apps_in_search"),
-        defaultValue = false,
-    )
-
-    val enableSmartHide = preference(
-        key = booleanPreferencesKey(name = "enable_smart_hide"),
-        defaultValue = false,
-    )
-
     val hiddenAppsInSearch = preference(
         key = stringPreferencesKey(name = "hidden_apps_in_search"),
         defaultValue = HiddenAppsInSearch.NEVER,

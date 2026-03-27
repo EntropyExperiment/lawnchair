@@ -69,6 +69,7 @@ class LawnchairApp : Application() {
         instance = this
         QuickStepContract.sRecentsDisabled = !recentsEnabled
         Flowerpot.Manager.getInstance(this)
+        registerActivityLifecycleCallbacks(activityHandler)
     }
 
     fun hideClockInStatusBar() {
@@ -94,10 +95,6 @@ class LawnchairApp : Application() {
             Settings.Secure.putString(contentResolver, "icon_blacklist", newBlacklist)
         } catch (_: Exception) {
         }
-    }
-
-    fun onLauncherAppStateCreated() {
-        registerActivityLifecycleCallbacks(activityHandler)
     }
 
     fun restart(recreateLauncher: Boolean = true) {

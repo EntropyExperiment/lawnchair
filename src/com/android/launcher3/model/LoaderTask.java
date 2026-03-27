@@ -734,7 +734,7 @@ public class LoaderTask implements Runnable {
             List<IconRequestInfo<WorkspaceItemInfo>> workspaceRequestInfos,
             boolean isRestoreFromBackup
     ) {
-        if (Flags.restoreArchivedAppIconsFromDb() && isRestoreFromBackup) {
+        if (Utilities.ATLEAST_V && Flags.restoreArchivedAppIconsFromDb() && isRestoreFromBackup) {
             Optional<IconRequestInfo<WorkspaceItemInfo>> workspaceIconRequest =
                     workspaceRequestInfos.stream()
                             .filter(request -> appInfo.getTargetComponent().equals(

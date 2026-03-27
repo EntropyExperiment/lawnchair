@@ -1165,6 +1165,17 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        // pE-TODO(Reimpl): Check Icon Swipe Gesture
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            View touchedView = findViewAtPosition(ev.getX(), ev.getY());
+            Boolean iconSwipeGestures = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getIconSwipeGestures());
+
+            if (iconSwipeGestures && touchedView instanceof ShortcutAndWidgetContainer container) {
+                container.onTouchEvent(ev);
+                return false;
+            }
+        }
+        
         if (isTrackpadMultiFingerSwipe(ev)) {
             return false;
         }

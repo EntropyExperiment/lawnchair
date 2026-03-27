@@ -82,14 +82,13 @@ class LauncherPreviewView(
         val workspaceScreenId = 0
         val themeRes = Themes.getActivityThemeRes(context)
 
-        // We use the current context. The Renderer extends BaseContext,
-        // so it will wrap this context internally.
         val renderer = LauncherPreviewRenderer(
             context,
             workspaceScreenId,
             null, // Wallpaper colors
             model,
             themeRes,
+            idp,
         )
 
         if (dummySmartspace) {

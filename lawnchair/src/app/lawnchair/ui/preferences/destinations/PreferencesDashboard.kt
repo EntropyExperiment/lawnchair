@@ -293,7 +293,7 @@ fun RowScope.PreferencesOverflowMenu(
         },
     ) {
         DropdownMenuGroup(
-            shapes = MenuDefaults.groupShape(0, 2),
+            shapes = MenuDefaults.groupShape(0, 1),
         ) {
             DropdownMenuItem(
                 leadingIcon = {

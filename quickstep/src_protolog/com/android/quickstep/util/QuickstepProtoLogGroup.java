@@ -41,11 +41,7 @@ public enum QuickstepProtoLogGroup implements IProtoLogGroup {
     private final @NonNull String mTag;
 
     public static boolean isProtoLogInitialized() {
-        // LC-Note: This is workaround for skipping Android 11 Release 41. 
-        //          Not the best solutions but this is not significant enough to Lawnchair.
-        // 
-        // Originally was !Utilities.ATLEAST_R
-        if (!Utilities.ATLEAST_S) return false;
+        if (!Utilities.ATLEAST_R) return false;
 
         if (!Variables.sIsInitialized) {
             Log.w(Constants.TAG,
