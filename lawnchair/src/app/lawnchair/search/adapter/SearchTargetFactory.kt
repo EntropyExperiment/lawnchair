@@ -25,6 +25,7 @@ import app.lawnchair.search.algorithms.data.FolderInfo
 import app.lawnchair.search.algorithms.data.IFileInfo
 import app.lawnchair.search.algorithms.data.RecentKeyword
 import app.lawnchair.search.algorithms.data.SettingInfo
+import app.lawnchair.search.algorithms.engine.SearchResult
 import app.lawnchair.search.algorithms.engine.provider.web.WebSearchProvider
 import app.lawnchair.theme.color.tokens.ColorTokens
 import app.lawnchair.util.createTextBitmap
@@ -367,6 +368,34 @@ class SearchTargetFactory(
             setSearchAction(action)
             setExtras(Bundle())
         }.build()
+    }
+
+    fun createTextActionTarget(action: SearchResult.Action.TextAction): SearchTargetCompat {
+        val id = "text_action:${action.title}:${action.subtitle}"
+
+        val actionBuilder = SearchActionCompat.Builder(id, action.title)
+            .setSubtitle(action.subtitle)
+
+        if (action.icon != null) {
+            actionBuilder.setIcon(action.icon)
+        } else {
+            actionBuilder.setIcon(
+                Icon.createWithResource(context, R.drawable.ic_allapps_search)
+                    .setTint(ColorTokens.TextColorSecondary.resolveColor(context)),
+            )
+        }
+
+        if (action.pendingIntent != null) {
+            actionBuilder.setPendingIntent(action.pendingIntent)
+        }
+
+        return createSearchTarget(
+            id = id,
+            action = actionBuilder.build(),
+            layoutType = LayoutType.ICON_HORIZONTAL_TEXT,
+            targetCompat = SearchTargetCompat.RESULT_TYPE_REDIRECTION,
+            pkg = START_PAGE, // ??
+        )
     }
 
     companion object {

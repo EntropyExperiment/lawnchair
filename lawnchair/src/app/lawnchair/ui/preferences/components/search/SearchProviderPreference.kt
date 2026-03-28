@@ -61,6 +61,7 @@ enum class SearchProviderId(val id: String) {
     HISTORY("history"),
     SETTINGS("settings"),
     WEB("web"),
+    TEXT_CLASSIFIER("textclassifier"),
 }
 
 fun getProviderName(provider: SearchProviderId): Int {
@@ -72,6 +73,7 @@ fun getProviderName(provider: SearchProviderId): Int {
         SearchProviderId.HISTORY -> R.string.search_pref_result_history_title
         SearchProviderId.SETTINGS -> R.string.search_pref_result_settings_title
         SearchProviderId.WEB -> R.string.search_pref_result_web_title
+        SearchProviderId.TEXT_CLASSIFIER -> R.string.search_pref_result_textclassifier
     }
 }
 

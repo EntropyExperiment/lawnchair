@@ -26,6 +26,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceGroupScope
 import app.lawnchair.ui.preferences.navigation.SearchProviderPreference
 import app.lawnchair.util.FileAccessManager
 import com.android.launcher3.R
+import com.android.launcher3.Utilities
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -233,6 +234,14 @@ private fun PreferenceGroupScope.LocalSearchSettings(
         SwitchPreference(
             adapter = prefs.searchResultCalculator.getAdapter(),
             label = stringResource(R.string.all_apps_search_result_calculator),
+        )
+    }
+    Item(
+        Utilities.ATLEAST_P,
+    ) {
+        SwitchPreference(
+            adapter = prefs.searchResultTextClassifier.getAdapter(),
+            label = stringResource(R.string.search_pref_result_textclassifier),
         )
     }
 }

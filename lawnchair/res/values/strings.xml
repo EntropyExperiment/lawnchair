@@ -895,6 +895,7 @@
     <string name="search_pref_result_web_title">Web suggestions</string>
     <string name="search_pref_result_history_title">Search history</string>
     <string name="all_apps_search_result_calculator">Calculator</string>
+    <string name="search_pref_result_textclassifier">Text classifier</string>
 
     <string name="search_empty_state_title">Start searching</string>
     <string name="search_empty_state_no_history_subtitle">Find apps, contacts, and more. Your recent searches will appear here.</string>

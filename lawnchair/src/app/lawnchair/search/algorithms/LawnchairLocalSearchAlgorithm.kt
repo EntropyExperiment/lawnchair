@@ -26,6 +26,7 @@ import app.lawnchair.search.algorithms.engine.provider.HistorySearchProvider
 import app.lawnchair.search.algorithms.engine.provider.SettingsSearchProvider
 import app.lawnchair.search.algorithms.engine.provider.ShortcutSearchProvider
 import app.lawnchair.search.algorithms.engine.provider.apps.AppSearchProvider
+import app.lawnchair.search.algorithms.engine.provider.textclassifier.TextClassifierSearchProvider
 import app.lawnchair.search.algorithms.engine.provider.web.CustomWebSearchProvider
 import app.lawnchair.search.algorithms.engine.provider.web.WebSuggestionProvider
 import com.android.launcher3.LauncherAppState
@@ -54,6 +55,7 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
     private val historySearchProvider = HistorySearchProvider
 
     private val searchProviders: List<SearchProvider> = listOf(
+        TextClassifierSearchProvider,
         SettingsSearchProvider,
         FileSearchProvider,
         ContactsSearchProvider,
