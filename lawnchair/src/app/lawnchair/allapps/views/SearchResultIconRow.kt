@@ -118,12 +118,14 @@ class SearchResultIconRow(context: Context, attrs: AttributeSet?) :
         if (shouldHandleClick(target) && !isSmall) {
             setOnClickListener {
                 target.searchAction?.intent?.let { intent -> handleSearchTargetClick(context, intent) }
+                target.searchAction?.pendingIntent?.let { pendingIntent -> handleSearchTargetClick(context, pendingIntent) }
             }
         }
         if (isSuggestion || isSetting) {
             layoutParams.height = resources.getDimensionPixelSize(R.dimen.search_result_small_row_height)
             setOnClickListener {
                 target.searchAction?.intent?.let { intent -> handleSearchTargetClick(context, intent) }
+                target.searchAction?.pendingIntent?.let { pendingIntent -> handleSearchTargetClick(context, pendingIntent) }
             }
         }
         if (isCalculator) {

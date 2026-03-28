@@ -1,5 +1,7 @@
 package app.lawnchair.allapps.views
 
+import android.app.ActivityOptions
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +13,7 @@ import app.lawnchair.search.adapter.START_PAGE
 import app.lawnchair.search.adapter.SearchTargetCompat
 import app.lawnchair.search.adapter.WEB_SUGGESTION
 import com.android.app.search.LayoutType
+import com.android.launcher3.Utilities
 
 sealed interface SearchResultView {
 
@@ -51,6 +54,18 @@ sealed interface SearchResultView {
             context.startActivity(searchTargetIntent)
         } ?: run {
             Toast.makeText(context, "No app found to handle this action", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun handleSearchTargetClick(context: Context, searchTargetIntent: PendingIntent) {
+        if (Utilities.ATLEAST_U) {
+            val options = ActivityOptions.makeBasic()
+            options.setPendingIntentBackgroundActivityStartMode(
+                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED,
+            )
+            searchTargetIntent.send(options.toBundle())
+        } else {
+            searchTargetIntent.send()
         }
     }
 
