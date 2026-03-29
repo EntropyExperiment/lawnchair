@@ -222,7 +222,7 @@ fun PreferenceNavigation(
         ) { QuickstepPreferences() }
         composable<BackupAndRestore>(
             deepLinks = listOf(
-                navDeepLink<Quickstep>(basePath = "$URI/backup-restore"),
+                navDeepLink<BackupAndRestore>(basePath = "$URI/backup-restore"),
             ),
         ) { BackupAndRestorePreference() }
 
