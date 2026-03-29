@@ -380,7 +380,7 @@ class SearchTargetFactory(
             actionBuilder.setIcon(action.icon)
         } else {
             actionBuilder.setIcon(
-                Icon.createWithResource(context, R.drawable.ic_allapps_search)
+                Icon.createWithResource(context, R.drawable.ic_suggestions)
                     .setTint(ColorTokens.TextColorSecondary.resolveColor(context)),
             )
         }
@@ -394,7 +394,7 @@ class SearchTargetFactory(
             action = actionBuilder.build(),
             layoutType = LayoutType.ICON_HORIZONTAL_TEXT,
             targetCompat = SearchTargetCompat.RESULT_TYPE_REDIRECTION,
-            pkg = START_PAGE, // ??
+            pkg = ACTION_SUGGESTION,
         )
     }
 
@@ -542,7 +542,8 @@ object SettingsTarget {
 // keys used in `pkg` param
 const val START_PAGE = "startpage"
 const val MARKET_STORE = "marketstore"
-const val WEB_SUGGESTION = "suggestion"
+const val ACTION_SUGGESTION = "action_suggestion"
+const val WEB_SUGGESTION = "web_suggestion"
 const val HEADER = "header"
 const val CONTACT = "contact"
 const val FILES = "files"
