@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-package android.window;
+syntax = "proto2";
 
-parcelable TransitionFilter;
+option java_package = "android.internal.perfetto.protos";
+option java_outer_classname = "Rect";
+
+package perfetto.protos;
+
+message RectProto {
+    optional int32 left = 1;
+    optional int32 top = 2;
+    optional int32 right = 3;
+    optional int32 bottom = 4;
+}

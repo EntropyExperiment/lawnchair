@@ -10,20 +10,21 @@
 
 Compatibility list:
 
-| 📱 Android version | 🥞 Recommended? | 💥 Crash? | 🧑‍💻 QuickSwitch Ready? |
-|--------------------|-----------------|-----------|--------------------------|
-| Android 8.0        | ❌               | ❌         | Not supported            |
-| Android 8.1        | ❌               | ❌         | Not supported            |
-| Android 9          | ❌               | ❌         | Not supported            |
-| Android 10         | ❌               | ❌         | ❌                        |
-| Android 11         | ✅               | ❌         | ❌                        |
-| Android 12.0       | ✅               | ❌         | ❌                        |
-| Android 12.1       | ✅               | ❌         | ❌                        |
-| Android 13         | ✅               | ❌         | ❌                        |
-| Android 14         | ✅               | ❌         | ❌                        |
-| Android 15         | ✅               | ❌         | ❌                        |
-| Android 16         | ✅               | ❌         | ❌                        |
-| Android 17         | ✅               | ❌         | ❌                        |
+| 📱 Android version                        | 🥞 Recommended? | 💥 Crash? | 🧑‍💻 QuickSwitch Ready? |
+|-------------------------------------------|-----------------|-----------|--------------------------|
+| Android 8.0                               | ❌               | ❌         | Not supported            |
+| Android 8.1                               | ❌               | ❌         | Not supported            |
+| Android 9                                 | ❌               | ❌         | Not supported            |
+| Android 10                                | ❌               | ❌         | ❌                        |
+| Android 11                                | ✅               | ❌         | ❌                        |
+| Android 12.0                              | ✅               | ❌         | ❌                        |
+| Android 12.1                              | ✅               | ❌         | ❌                        |
+| Android 13                                | ✅               | ❌         | ❌                        |
+| Android 14                                | ✅               | ❌         | ❌                        |
+| Android 15                                | ✅               | ❌         | ❌                        |
+| Android 16.0 (Android 16 initial release) | ✅               | ❌         | 💥 Not recommended       |
+| Android 16.1 (Android 16 QPR2)            | ✅               | ❌         | ❌                        |
+| Android 17.0                              | ✅               | ❌         | ❌                        |
 
 #### Features
 * [Lawnchair] Allow user to disable the auto-updater (for Nightly build only)
@@ -106,6 +107,10 @@ Compatibility list:
 * [Launcher] Don't call IProtoLog in launcher-level
 * [Launcher] Don't override device rotation prefs on phone form factor
 * [Launcher] Reimplement icon gesture customisation
+* [QuickSwitch] Reimplement ActivityTaskManager
+* [QuickSwitch] Remove DesktopExperienceFlags
+* [QuickSwitch] Implement Baklava compat
+* [QuickSwitch] Initial QuickSwitch testing with Baklava
 
 ### 🥞 Development 4 Release 1 (Snapshot 10)
 

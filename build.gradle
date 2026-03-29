@@ -497,7 +497,8 @@ ksp {
 
 spotless {
     java {
-        target("compatLib/**/src/**/*.java")
+        // LC-Note: Don't spotless AOSP code in compatlib
+        // target("compatLib/**/src/**/*.java")
         googleJavaFormat().aosp()
         removeUnusedImports()
     }
