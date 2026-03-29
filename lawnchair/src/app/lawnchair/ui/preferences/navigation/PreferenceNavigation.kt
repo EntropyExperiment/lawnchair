@@ -79,9 +79,10 @@ enum class PreferenceDeepLink(val path: String) {
     About("about"),
     AboutLicenses("about-licenses"),
     ExperimentalFeatures("experimental-features"),
-    CreateBackup("create-backup");
+    CreateBackup("create-backup"),
+    ;
 
-    val uri: String get() = "${BASE}://${SETTINGS}/$path"
+    val uri: String get() = "$BASE://$SETTINGS/$path"
 
     companion object {
         const val BASE = "lawnchair"
