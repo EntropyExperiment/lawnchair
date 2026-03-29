@@ -39,7 +39,7 @@ object TextClassifierSearchProvider : SearchProvider {
                     .build()
                 val classification = textClassifier.classifyText(request)
                 if (SENSITIVE_LOGGING) {
-                    Log.d("TextClassifierSearch", "Classification result: $classification")
+                    Log.d("TextClassifierSearchProvider", "Classification result: $classification")
                 }
                 if (classification.actions.isNotEmpty()) {
                     classification.actions.forEach { action ->
@@ -48,7 +48,11 @@ object TextClassifierSearchProvider : SearchProvider {
                                 title = action.title.toString(),
                                 subtitle = action.contentDescription.toString(),
                                 pendingIntent = action.actionIntent,
-                                icon = action.icon,
+                                icon = if (action.shouldShowIcon()) {
+                                    action.icon
+                                } else {
+                                    null
+                                },
                             ),
                         )
                     }

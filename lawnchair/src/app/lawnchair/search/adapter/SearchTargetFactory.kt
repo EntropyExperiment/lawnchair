@@ -377,11 +377,22 @@ class SearchTargetFactory(
             .setSubtitle(action.subtitle)
 
         if (action.icon != null) {
+            /* Icon are returned by the Android's classifier,
+               usually will be the default app of the target intent:
+
+               e.g., 111-111-1111 -> Phone/SMS
+             */
             actionBuilder.setIcon(action.icon)
         } else {
+            /* In some cases like when there's no preferred default app for the intent,
+               the classifier will return a generic fallback icons, and a signal that tells us the
+               icon should not be use:
+
+               e.g., 111-111-1111 -> ic_suggestions
+             */
             actionBuilder.setIcon(
                 Icon.createWithResource(context, R.drawable.ic_suggestions)
-                    .setTint(ColorTokens.TextColorSecondary.resolveColor(context)),
+                    .setTint(ColorTokens.PrimaryButton.resolveColor(context)),
             )
         }
 
