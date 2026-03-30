@@ -1,6 +1,6 @@
 package app.lawnchair.ui.preferences.navigation
 
-const val URI = "lawnchair://settings"
+private const val URI = "lawnchair://settings"
 
 enum class PreferenceDeepLink(val basePath: String) {
     General("$URI/general"),
