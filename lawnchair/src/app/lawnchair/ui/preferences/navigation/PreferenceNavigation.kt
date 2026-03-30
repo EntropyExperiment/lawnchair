@@ -57,39 +57,6 @@ import soup.compose.material.motion.animation.materialSharedAxisXIn
 import soup.compose.material.motion.animation.materialSharedAxisXOut
 import soup.compose.material.motion.animation.rememberSlideDistance
 
-enum class PreferenceDeepLink(val path: String) {
-    General("general"),
-    IconPack("iconpack"),
-    GeneralIconShapeCreator("general-icon-shape-creator"),
-    HomeScreen("home-screen"),
-    HomeScreenGrid("home-screen-grid"),
-    HomeScreenPopupEditor("home-screen-popup-editor"),
-    Dock("dock"),
-    DockSearchProvider("dock-search-provider"),
-    Smartspace("smartspace"),
-    AppDrawer("app-drawer"),
-    AppDrawerHiddenApps("app-drawer-hidden-apps"),
-    AppDrawerFolder("app-drawer-folder"),
-    Search("search"),
-    SearchProvider("search-provider"),
-    Folders("folders"),
-    Gestures("gestures"),
-    Quickstep("quickstep"),
-    BackupAndRestore("backup-restore"),
-    About("about"),
-    AboutLicenses("about-licenses"),
-    ExperimentalFeatures("experimental-features"),
-    CreateBackup("create-backup"),
-    ;
-
-    val uri: String get() = "$BASE://$SETTINGS/$path"
-
-    companion object {
-        const val BASE = "lawnchair"
-        const val SETTINGS = "settings"
-    }
-}
-
 @Composable
 fun PreferenceNavigation(
     navController: NavHostController,
@@ -137,7 +104,7 @@ fun PreferenceNavigation(
 
         composable<General>(
             deepLinks = listOf(
-                navDeepLink<General>(basePath = PreferenceDeepLink.General.uri),
+                navDeepLink<General>(basePath = PreferenceDeepLink.General.basePath),
             ),
         ) { GeneralPreferences() }
         composable<GeneralFontSelection> { backStackEntry ->
@@ -148,7 +115,7 @@ fun PreferenceNavigation(
         }
         composable<GeneralIconPack>(
             deepLinks = listOf(
-                navDeepLink<GeneralIconPack>(basePath = PreferenceDeepLink.IconPack.uri),
+                navDeepLink<GeneralIconPack>(basePath = PreferenceDeepLink.GeneralIconPack.basePath),
             ),
         ) { IconPackPreferences() }
         composable<GeneralIconShape> { backStackEntry ->
@@ -157,52 +124,52 @@ fun PreferenceNavigation(
         }
         composable<GeneralCustomIconShapeCreator>(
             deepLinks = listOf(
-                navDeepLink<GeneralCustomIconShapeCreator>(basePath = PreferenceDeepLink.GeneralIconShapeCreator.uri),
+                navDeepLink<GeneralCustomIconShapeCreator>(basePath = PreferenceDeepLink.GeneralCustomIconShapeCreator.basePath),
             ),
         ) { CustomIconShapePreference() }
 
         composable<HomeScreen>(
             deepLinks = listOf(
-                navDeepLink<HomeScreen>(basePath = PreferenceDeepLink.HomeScreen.uri),
+                navDeepLink<HomeScreen>(basePath = PreferenceDeepLink.HomeScreen.basePath),
             ),
         ) { HomeScreenPreferences() }
         composable<HomeScreenGrid>(
             deepLinks = listOf(
-                navDeepLink<HomeScreenGrid>(basePath = PreferenceDeepLink.HomeScreenGrid.uri),
+                navDeepLink<HomeScreenGrid>(basePath = PreferenceDeepLink.HomeScreenGrid.basePath),
             ),
         ) { HomeScreenGridPreferences() }
         composable<HomeScreenPopupEditor>(
             deepLinks = listOf(
-                navDeepLink<HomeScreenPopupEditor>(basePath = PreferenceDeepLink.HomeScreenPopupEditor.uri),
+                navDeepLink<HomeScreenPopupEditor>(basePath = PreferenceDeepLink.HomeScreenPopupEditor.basePath),
             ),
         ) { LauncherPopupPreference() }
 
         composable<Dock>(
             deepLinks = listOf(
-                navDeepLink<Dock>(basePath = PreferenceDeepLink.Dock.uri),
+                navDeepLink<Dock>(basePath = PreferenceDeepLink.Dock.basePath),
             ),
         ) { DockPreferences() }
         composable<DockSearchProvider>(
             deepLinks = listOf(
-                navDeepLink<DockSearchProvider>(basePath = PreferenceDeepLink.DockSearchProvider.uri),
+                navDeepLink<DockSearchProvider>(basePath = PreferenceDeepLink.DockSearchProvider.basePath),
             ),
         ) { SearchProviderPreferences() }
 
         composable<Smartspace>(
             deepLinks = listOf(
-                navDeepLink<Smartspace>(basePath = PreferenceDeepLink.Smartspace.uri),
+                navDeepLink<Smartspace>(basePath = PreferenceDeepLink.Smartspace.basePath),
             ),
         ) { SmartspacePreferences(fromWidget = false) }
         composable<SmartspaceWidget> { SmartspacePreferences(fromWidget = true) }
 
         composable<AppDrawer>(
             deepLinks = listOf(
-                navDeepLink<AppDrawer>(basePath = PreferenceDeepLink.AppDrawer.uri),
+                navDeepLink<AppDrawer>(basePath = PreferenceDeepLink.AppDrawer.basePath),
             ),
         ) { AppDrawerPreferences() }
         composable<AppDrawerHiddenApps>(
             deepLinks = listOf(
-                navDeepLink<AppDrawerHiddenApps>(basePath = PreferenceDeepLink.AppDrawerHiddenApps.uri),
+                navDeepLink<AppDrawerHiddenApps>(basePath = PreferenceDeepLink.AppDrawerHiddenApps.basePath),
             ),
         ) { HiddenAppsPreferences() }
         composable<AppDrawerAppListToFolder> { backStackEntry ->
@@ -212,13 +179,13 @@ fun PreferenceNavigation(
         }
         composable<AppDrawerFolder>(
             deepLinks = listOf(
-                navDeepLink<AppDrawerFolder>(basePath = PreferenceDeepLink.AppDrawerFolder.uri),
+                navDeepLink<AppDrawerFolder>(basePath = PreferenceDeepLink.AppDrawerFolder.basePath),
             ),
         ) { AppDrawerFoldersPreference() }
 
         composable<Search>(
             deepLinks = listOf(
-                navDeepLink<Search>(basePath = PreferenceDeepLink.Search.uri),
+                navDeepLink<Search>(basePath = PreferenceDeepLink.Search.basePath),
             ),
         ) { backStackEntry ->
             val route: Search = backStackEntry.toRoute()
@@ -226,7 +193,7 @@ fun PreferenceNavigation(
         }
         composable<SearchProviderPreference>(
             deepLinks = listOf(
-                navDeepLink<SearchProviderPreference>(basePath = PreferenceDeepLink.SearchProvider.uri),
+                navDeepLink<SearchProviderPreference>(basePath = PreferenceDeepLink.SearchProviderPreference.basePath),
             ),
         ) { backStackEntry ->
             val route: SearchProviderPreference = backStackEntry.toRoute()
@@ -235,36 +202,36 @@ fun PreferenceNavigation(
 
         composable<Folders>(
             deepLinks = listOf(
-                navDeepLink<Folders>(basePath = PreferenceDeepLink.Folders.uri),
+                navDeepLink<Folders>(basePath = PreferenceDeepLink.Folders.basePath),
             ),
         ) { FolderPreferences() }
 
         composable<Gestures>(
             deepLinks = listOf(
-                navDeepLink<Gestures>(basePath = PreferenceDeepLink.Gestures.uri),
+                navDeepLink<Gestures>(basePath = PreferenceDeepLink.Gestures.basePath),
             ),
         ) { GesturePreferences() }
         composable<GesturesPickApp> { PickAppForGesture() }
 
         composable<Quickstep>(
             deepLinks = listOf(
-                navDeepLink<Quickstep>(basePath = PreferenceDeepLink.Quickstep.uri),
+                navDeepLink<Quickstep>(basePath = PreferenceDeepLink.Quickstep.basePath),
             ),
         ) { QuickstepPreferences() }
         composable<BackupAndRestore>(
             deepLinks = listOf(
-                navDeepLink<BackupAndRestore>(basePath = PreferenceDeepLink.BackupAndRestore.uri),
+                navDeepLink<BackupAndRestore>(basePath = PreferenceDeepLink.BackupAndRestore.basePath),
             ),
         ) { BackupAndRestorePreference() }
 
         composable<About>(
             deepLinks = listOf(
-                navDeepLink<About>(basePath = PreferenceDeepLink.About.uri),
+                navDeepLink<About>(basePath = PreferenceDeepLink.About.basePath),
             ),
         ) { About() }
         composable<AboutLicenses>(
             deepLinks = listOf(
-                navDeepLink<AboutLicenses>(basePath = PreferenceDeepLink.AboutLicenses.uri),
+                navDeepLink<AboutLicenses>(basePath = PreferenceDeepLink.AboutLicenses.basePath),
             ),
         ) { Acknowledgements() }
 
@@ -284,7 +251,7 @@ fun PreferenceNavigation(
 
         composable<ExperimentalFeatures>(
             deepLinks = listOf(
-                navDeepLink<ExperimentalFeatures>(basePath = PreferenceDeepLink.ExperimentalFeatures.uri),
+                navDeepLink<ExperimentalFeatures>(basePath = PreferenceDeepLink.ExperimentalFeatures.basePath),
             ),
         ) { ExperimentalFeaturesPreferences() }
         composable<ColorSelection> { backStackEntry ->
@@ -300,7 +267,7 @@ fun PreferenceNavigation(
 
         composable<CreateBackup>(
             deepLinks = listOf(
-                navDeepLink<CreateBackup>(basePath = PreferenceDeepLink.CreateBackup.uri),
+                navDeepLink<CreateBackup>(basePath = PreferenceDeepLink.CreateBackup.basePath),
             ),
         ) { CreateBackupScreen(viewModel()) }
 
