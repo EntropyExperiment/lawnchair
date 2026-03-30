@@ -4,7 +4,7 @@ private const val URI = "lawnchair://settings"
 
 enum class PreferenceDeepLink(val basePath: String) {
     General("$URI/general"),
-    GeneralIconPack("$URI/iconpack"),
+    GeneralIconPack("$URI/general-iconpack"),
     GeneralCustomIconShapeCreator("$URI/general-icon-shape-creator"),
     HomeScreen("$URI/home-screen"),
     HomeScreenGrid("$URI/home-screen-grid"),
