@@ -33,6 +33,7 @@ import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
+import com.android.launcher3.util.DisplayController
 import com.android.launcher3.util.SafeCloseable
 import com.android.quickstep.RecentsModel
 import javax.inject.Inject
@@ -43,10 +44,13 @@ class PreferenceManager @Inject constructor(
 ) : BasePreferenceManager(context),
     SafeCloseable {
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
+    private val dc get() = DisplayController.INSTANCE.get(context)
     private val mRecentsModel get() = RecentsModel.INSTANCE.get(context)
     private val themeManager = ThemeManager.INSTANCE.get(context)
     private val reloadIcons: () -> Unit = { mRecentsModel.onThemeChanged() }
     private val reloadGrid: () -> Unit = { idp.onPreferencesChanged(context) }
+
+    private val deviceType = dc.info.deviceType
 
     private val recreate = {
         LawnchairLauncher.instance?.recreateIfNotScheduled()
@@ -61,12 +65,32 @@ class PreferenceManager @Inject constructor(
     val shadowBGIcons = BoolPref("pref_shadowBGIcons", true, recreate)
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
 
-    private val isTablet: Boolean
-        get() = context.resources.configuration.smallestScreenWidthDp >= 600 // Medium, WindowManagerProxy.MIN_TABLET_WIDTH
+    private val isPhone: Boolean get() = deviceType == InvariantDeviceProfile.TYPE_PHONE
+    private val isTablet: Boolean get() = deviceType == InvariantDeviceProfile.TYPE_TABLET
+    private val isFoldable: Boolean get() = deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
+    private val isDesktop: Boolean get() = deviceType == InvariantDeviceProfile.TYPE_DESKTOP
 
-    val hotseatColumns = IntPref("pref_hotseatColumns", if (isTablet) 6 else 4, reloadGrid)
-    val workspaceColumns = IntPref("pref_workspaceColumns", if (isTablet) 6 else 4)
-    val workspaceRows = IntPref("pref_workspaceRows", if (isTablet) 5 else 7)
+    val calculatedGridSpec = when {
+        // This grid configuration is perfect for Phone, tested against Pixel 7,
+        // alternative dense configuration can be 5x5x7
+        isPhone -> LayoutConfig(4, 4, 7)
+
+        // This grid configuration is perfect for Tablet, tested against Pixel Tablet
+        isTablet -> LayoutConfig(6, 6, 5)
+
+        // This grid configuration is perfect for Foldable, tested against Pixel 10 Pro Fold
+        isFoldable -> LayoutConfig(6, 4, 6)
+
+        // This grid configuration is not tested against actual device
+        isDesktop -> LayoutConfig(6, 6, 8)
+
+        // This grid configuration is the fallback for all devices type, this shouldn't be possible
+        else -> LayoutConfig(4, 4, 7)
+    }
+
+    val hotseatColumns = IntPref("pref_hotseatColumns", calculatedGridSpec.hotseatColumns, reloadGrid)
+    val workspaceColumns = IntPref("pref_workspaceColumns", calculatedGridSpec.workspaceColumns)
+    val workspaceRows = IntPref("pref_workspaceRows", calculatedGridSpec.workspaceRows)
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
@@ -189,3 +213,32 @@ class PreferenceManager @Inject constructor(
 
 @Composable
 fun preferenceManager() = PreferenceManager.getInstance(LocalContext.current)
+
+/** Grid layout configuration
+ *
+ * @param hotseatColumns The amount of column the dock can contain
+ * @param workspaceColumns The amount of column the home screen can contain
+ * @param workspaceColumns The amount of row the home screen can contain
+ */
+data class LayoutConfig(
+    /**
+     * Hotseat columns refer to the amount of column the dock can contain.
+     *
+     * Hotseat is commonly known as dock.
+     */
+    val hotseatColumns: Int,
+
+    /**
+     * Workspace columns refer to the amount of column the home screen can contain.
+     *
+     * Workspace is commonly known as home screen.
+     */
+    val workspaceColumns: Int,
+
+    /**
+     * Workspace rows refer to the amount of row the home screen can contain.
+     *
+     * Workspace is commonly known as home screen.
+     */
+    val workspaceRows: Int
+)
