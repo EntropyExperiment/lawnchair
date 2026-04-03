@@ -875,8 +875,7 @@ public class DeviceProfile {
                     + space;
         } else if (isQsbInline) {
             hotseatBarSizePx = Math.max(hotseatIconSizePx, getHotseatProfile().getQsbVisualHeight())
-                    + hotseatBarBottomSpacePx
-                    + space;
+                    + hotseatBarBottomSpacePx;
         } else {
             hotseatBarSizePx = hotseatIconSizePx
                     + hotseatQsbSpace
