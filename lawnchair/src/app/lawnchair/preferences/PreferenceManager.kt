@@ -60,9 +60,13 @@ class PreferenceManager @Inject constructor(
     val transparentIconBackground = BoolPref("prefs_transparentIconBackground", false, recreate)
     val shadowBGIcons = BoolPref("pref_shadowBGIcons", true, recreate)
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
-    val hotseatColumns = IntPref("pref_hotseatColumns", 4, reloadGrid)
-    val workspaceColumns = IntPref("pref_workspaceColumns", 4)
-    val workspaceRows = IntPref("pref_workspaceRows", 7)
+
+    private val isTablet: Boolean
+        get() = context.resources.configuration.smallestScreenWidthDp >= 600 // Medium, WindowManagerProxy.MIN_TABLET_WIDTH
+
+    val hotseatColumns = IntPref("pref_hotseatColumns", if (isTablet) 6 else 4, reloadGrid)
+    val workspaceColumns = IntPref("pref_workspaceColumns", if (isTablet) 6 else 4)
+    val workspaceRows = IntPref("pref_workspaceRows", if (isTablet) 5 else 7)
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
