@@ -73,7 +73,7 @@ class PreferenceManager @Inject constructor(
     val calculatedGridSpec = when {
         // This grid configuration is perfect for Phone, tested against Pixel 7,
         // alternative dense configuration can be 5x5x7
-        isPhone -> LayoutConfig(4, 4, 7)
+        isPhone -> LayoutConfig(4, 4, 6)
 
         // This grid configuration is perfect for Tablet, tested against Pixel Tablet
         isTablet -> LayoutConfig(6, 6, 5)
