@@ -240,5 +240,5 @@ data class LayoutConfig(
      *
      * Workspace is commonly known as home screen.
      */
-    val workspaceRows: Int
+    val workspaceRows: Int,
 )
