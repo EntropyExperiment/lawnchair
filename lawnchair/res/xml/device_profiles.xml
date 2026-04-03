@@ -170,7 +170,7 @@
         launcher:allAppsSpecsTwoPanelId="@xml/spec_foldable_all_apps_4x5_unfolded"
         launcher:allAppsStyle="@style/AllAppsStyle4x5Fold"
         launcher:cellStyle="@style/CellStyle4x5Fold"
-        launcher:defaultLayoutId="@xml/default_workspace_splitdisplay_4x5"
+        launcher:defaultLayoutId="@xml/default_workspace_splitdisplay_4x6"
         launcher:deviceCategory="multi_display"
         launcher:devicePaddingId="@xml/paddings_split_4x5"
         launcher:folderSpecsId="@xml/spec_handheld_folder_4x5"
