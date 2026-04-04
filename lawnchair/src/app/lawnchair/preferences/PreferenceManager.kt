@@ -79,8 +79,9 @@ class PreferenceManager @Inject constructor(
         isTablet -> LayoutConfig(6, 6, 5)
 
         // This grid configuration is perfect for Foldable, tested against Pixel 10 Pro Fold
-        // Note: Hotseat column is 4 when folded, unfolded uses numExtendedHotseatIcons (6) from grid XML
-        isFoldable -> LayoutConfig(4, 4, 6)
+        // Note: Hotseat column is 4 when folded, unfolded uses hotseatColumns + 2 or higher number
+        // defined in numExtendedHotseatIcons from device profile
+        isFoldable -> LayoutConfig(4, 4, 6, 6)
 
         // This grid configuration is not tested against actual desktop devices,
         // but tablet configuration works perfectly when displayed via emulator
@@ -91,6 +92,7 @@ class PreferenceManager @Inject constructor(
     }
 
     val hotseatColumns = IntPref("pref_hotseatColumns", calculatedGridSpec.hotseatColumns, reloadGrid)
+    val hotseatColumnsUnfolded = IntPref("pref_hotseatColumnsUnfolded", calculatedGridSpec.hotseatColumnsUnfolded, reloadGrid)
     val workspaceColumns = IntPref("pref_workspaceColumns", calculatedGridSpec.workspaceColumns)
     val workspaceRows = IntPref("pref_workspaceRows", calculatedGridSpec.workspaceRows)
     val workspaceIncreaseMaxGridSize = BoolPref("pref_workspace_increase_max_grid_size", false)
@@ -220,11 +222,13 @@ fun preferenceManager() = PreferenceManager.getInstance(LocalContext.current)
  *
  * @param hotseatColumns The amount of column the dock can contain
  * @param workspaceColumns The amount of column the home screen can contain
- * @param workspaceColumns The amount of row the home screen can contain
+ * @param workspaceRows The amount of row the home screen can contain
+ * @param hotseatColumnsUnfolded The amount of column the dock can contain when unfolded (foldables only)
  */
 data class LayoutConfig(
     /**
      * Hotseat columns refer to the amount of column the dock can contain.
+     * For foldables, this is the folded (closed) state.
      *
      * Hotseat is commonly known as dock.
      */
@@ -243,4 +247,12 @@ data class LayoutConfig(
      * Workspace is commonly known as home screen.
      */
     val workspaceRows: Int,
+
+    /**
+     * Hotseat columns when the foldable is in unfolded (opened) state.
+     * For non-foldable devices, this equals [hotseatColumns].
+     *
+     * Hotseat is commonly known as dock.
+     */
+    val hotseatColumnsUnfolded: Int = hotseatColumns,
 )

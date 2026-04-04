@@ -91,6 +91,11 @@ class DeviceProfileOverrides @Inject constructor(
         val allAppsIconTextSizeFactor: Float,
 
         val enableTaskbarOnPhone: Boolean,
+
+        // Foldable overrides (-1 means don't override)
+        val foldableShownHotseatIcons: Int = -1,
+        val foldableDatabaseHotseatIcons: Int = -1,
+        val foldableDatabaseAllAppsColumns: Int = -1,
     ) {
         constructor(
             prefs: PreferenceManager,
@@ -111,6 +116,19 @@ class DeviceProfileOverrides @Inject constructor(
             },
 
             enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstBlocking(),
+
+            foldableShownHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+                val folded = prefs.hotseatColumns.get()
+                val unfolded = prefs.hotseatColumnsUnfolded.get()
+                folded.coerceAtMost(unfolded)
+            } else -1,
+            foldableDatabaseHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY)
+                prefs.hotseatColumnsUnfolded.get() else -1,
+            foldableDatabaseAllAppsColumns = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+                val folded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
+                val unfolded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
+                folded.coerceAtLeast(unfolded)
+            } else -1,
         )
 
         fun applyUi(idp: InvariantDeviceProfile) {
@@ -119,6 +137,17 @@ class DeviceProfileOverrides @Inject constructor(
             idp.numDatabaseAllAppsColumns = numAllAppsColumns
             idp.numFolderRows[INDEX_DEFAULT] = numFolderRows
             idp.numFolderColumns[INDEX_DEFAULT] = numFolderColumns
+
+            // Foldable overrides for hotseat and allapps columns
+            if (foldableShownHotseatIcons > 0) {
+                idp.numShownHotseatIcons = foldableShownHotseatIcons
+            }
+            if (foldableDatabaseHotseatIcons > 0) {
+                idp.numDatabaseHotseatIcons = foldableDatabaseHotseatIcons
+            }
+            if (foldableDatabaseAllAppsColumns > 0) {
+                idp.numDatabaseAllAppsColumns = foldableDatabaseAllAppsColumns
+            }
 
             // apply icon and text size
             idp.iconSize[INDEX_DEFAULT] *= iconSizeFactor
