@@ -121,14 +121,21 @@ class DeviceProfileOverrides @Inject constructor(
                 val folded = prefs.hotseatColumns.get()
                 val unfolded = prefs.hotseatColumnsUnfolded.get()
                 folded.coerceAtMost(unfolded)
-            } else -1,
-            foldableDatabaseHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY)
-                prefs.hotseatColumnsUnfolded.get() else -1,
+            } else {
+                -1
+            },
+            foldableDatabaseHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+                prefs.hotseatColumnsUnfolded.get()
+            } else {
+                -1
+            },
             foldableDatabaseAllAppsColumns = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 val folded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
                 val unfolded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
                 folded.coerceAtLeast(unfolded)
-            } else -1,
+            } else {
+                -1
+            },
         )
 
         fun applyUi(idp: InvariantDeviceProfile) {
