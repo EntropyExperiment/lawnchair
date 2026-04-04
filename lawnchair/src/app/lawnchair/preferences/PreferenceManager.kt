@@ -81,8 +81,9 @@ class PreferenceManager @Inject constructor(
         // This grid configuration is perfect for Foldable, tested against Pixel 10 Pro Fold
         isFoldable -> LayoutConfig(6, 4, 6)
 
-        // This grid configuration is not tested against actual device
-        isDesktop -> LayoutConfig(6, 6, 8)
+        // This grid configuration is not tested against actual desktop devices,
+        // but tablet configuration works perfectly when displayed via emulator
+        isDesktop -> LayoutConfig(6, 6, 5)
 
         // This grid configuration is the fallback for all devices type, this shouldn't be possible
         else -> LayoutConfig(4, 4, 7)
