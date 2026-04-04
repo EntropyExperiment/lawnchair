@@ -489,7 +489,7 @@ public class InvariantDeviceProfile {
         horizontalMargin = displayOption.horizontalMargin;
 
                 numShownHotseatIcons = deviceType == TYPE_MULTI_DISPLAY 
-                        ? closestProfile.numHotseatIcons : dbGridInfo.getNumHotseatColumns();
+                        ? closestProfile.numDatabaseHotseatIcons : dbGridInfo.getNumHotseatColumns();
         numDatabaseHotseatIcons = deviceType == TYPE_MULTI_DISPLAY
                         ? closestProfile.numDatabaseHotseatIcons : numShownHotseatIcons;
         hotseatBarBottomSpace = displayOption.hotseatBarBottomSpace;
@@ -1268,12 +1268,12 @@ public class InvariantDeviceProfile {
             numAllAppsColumns = a.getInt(
                     R.styleable.GridDisplayOption_numAllAppsColumns, numColumns);
             numDatabaseAllAppsColumns = a.getInt(
-                    R.styleable.GridDisplayOption_numExtendedAllAppsColumns, 2 * numAllAppsColumns);
+                    R.styleable.GridDisplayOption_numExtendedAllAppsColumns, numAllAppsColumns);
 
             numHotseatIcons = a.getInt(
                     R.styleable.GridDisplayOption_numHotseatIcons, numColumns);
             numDatabaseHotseatIcons = a.getInt(
-                    R.styleable.GridDisplayOption_numExtendedHotseatIcons, 2 * numHotseatIcons);
+                    R.styleable.GridDisplayOption_numExtendedHotseatIcons, numHotseatIcons);
 
             inlineNavButtonsEndSpacing =
                     a.getResourceId(R.styleable.GridDisplayOption_inlineNavButtonsEndSpacing,
