@@ -79,7 +79,8 @@ class PreferenceManager @Inject constructor(
         isTablet -> LayoutConfig(6, 6, 5)
 
         // This grid configuration is perfect for Foldable, tested against Pixel 10 Pro Fold
-        isFoldable -> LayoutConfig(6, 4, 6)
+        // Note: Hotseat column is 4 when folded, unfolded uses numExtendedHotseatIcons (6) from grid XML
+        isFoldable -> LayoutConfig(4, 4, 6)
 
         // This grid configuration is not tested against actual desktop devices,
         // but tablet configuration works perfectly when displayed via emulator
