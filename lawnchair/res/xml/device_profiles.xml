@@ -189,7 +189,7 @@
         launcher:numFolderColumns="3"
         launcher:numFolderRows="3"
         launcher:numHotseatIcons="4"
-        launcher:numRows="5"
+        launcher:numRows="6"
         launcher:workspaceCellSpecsId="@xml/spec_handheld_workspace_cell_4x5"
         launcher:workspaceCellSpecsTwoPanelId="@xml/spec_foldable_workspace_cell_4x5_unfolded"
         launcher:workspaceSpecsId="@xml/spec_handheld_workspace_4x5"
