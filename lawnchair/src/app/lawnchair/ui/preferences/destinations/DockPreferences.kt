@@ -161,12 +161,12 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                     valueRange = 3..10,
                 )
             }
-            if (hotseatColumnsAdapter.state.value > hotseatColumnsUnfoldedAdapter.state.value) {
-                Item {
-                    WarningPreference(
-                        text = stringResource(id = R.string.foldable_columns_error),
-                    )
-                }
+            Item(
+                visible = hotseatColumnsAdapter.state.value > hotseatColumnsUnfoldedAdapter.state.value,
+            ) {
+                WarningPreference(
+                    text = stringResource(id = R.string.foldable_columns_error),
+                )
             }
         } else {
             Item {

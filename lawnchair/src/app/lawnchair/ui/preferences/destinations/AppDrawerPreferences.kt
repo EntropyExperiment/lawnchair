@@ -139,12 +139,12 @@ fun AppDrawerPreferences(
                         valueRange = 3..10,
                     )
                 }
-                if (drawerColumnsAdapter.state.value > drawerColumnsUnfoldedAdapter.state.value) {
-                    Item {
-                        WarningPreference(
-                            text = stringResource(id = R.string.foldable_columns_error),
-                        )
-                    }
+                Item(
+                    visible = drawerColumnsAdapter.state.value > drawerColumnsUnfoldedAdapter.state.value,
+                ) {
+                    WarningPreference(
+                        text = stringResource(id = R.string.foldable_columns_error),
+                    )
                 }
             } else {
                 Item {
