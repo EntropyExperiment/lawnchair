@@ -132,8 +132,11 @@ class SearchResultRightLeftIcon(context: Context, attrs: AttributeSet?) :
 
         if (shouldHandleClick(target)) {
             setOnClickListener {
-                target.searchAction?.intent?.let { intent -> handleSearchTargetClick(context, intent) }
-                target.searchAction?.pendingIntent?.let { pendingIntent -> handleSearchTargetClick(context, pendingIntent) }
+                val action = target.searchAction
+                when {
+                    action?.pendingIntent != null -> handleSearchTargetClick(context, action.pendingIntent)
+                    action?.intent != null -> handleSearchTargetClick(context, action.intent)
+                }
             }
         }
     }
