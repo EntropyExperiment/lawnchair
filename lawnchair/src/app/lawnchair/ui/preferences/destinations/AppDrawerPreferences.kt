@@ -67,6 +67,7 @@ fun AppDrawerPreferences(
     val prefs2 = preferenceManager2()
     val context = LocalContext.current
     val resources = context.resources
+    val isFoldable = InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
 
     PreferenceLayout(
         label = stringResource(id = R.string.app_drawer_label),
@@ -119,12 +120,13 @@ fun AppDrawerPreferences(
             }
         }
         PreferenceGroup(heading = stringResource(id = R.string.grid)) {
-            val isFoldable = InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
+            val drawerColumnsAdapter = prefs2.drawerColumns.getAdapter()
+            val drawerColumnsUnfoldedAdapter = prefs2.drawerColumnsUnfolded.getAdapter()
             if (isFoldable) {
                 Item {
                     SliderPreference(
                         label = stringResource(id = R.string.drawer_columns_folded),
-                        adapter = prefs2.drawerColumns.getAdapter(),
+                        adapter = drawerColumnsAdapter,
                         step = 1,
                         valueRange = 3..10,
                     )
@@ -132,12 +134,12 @@ fun AppDrawerPreferences(
                 Item {
                     SliderPreference(
                         label = stringResource(id = R.string.drawer_columns_unfolded),
-                        adapter = prefs2.drawerColumnsUnfolded.getAdapter(),
+                        adapter = drawerColumnsUnfoldedAdapter,
                         step = 1,
                         valueRange = 3..10,
                     )
                 }
-                if (prefs2.drawerColumns.getAdapter().state.value > prefs2.drawerColumnsUnfolded.getAdapter().state.value) {
+                if (drawerColumnsAdapter.state.value > drawerColumnsUnfoldedAdapter.state.value) {
                     Item {
                         WarningPreference(
                             text = stringResource(id = R.string.foldable_columns_error),

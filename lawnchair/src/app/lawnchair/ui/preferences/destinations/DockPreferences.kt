@@ -140,13 +140,15 @@ fun HotseatBackgroundSettings(prefs: PreferenceManager, prefs2: PreferenceManage
 @Composable
 fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
     val isFoldable = InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
+    val hotseatColumnsAdapter = prefs.hotseatColumns.getAdapter()
+    val hotseatColumnsUnfoldedAdapter = prefs.hotseatColumnsUnfolded.getAdapter()
 
     PreferenceGroup(heading = stringResource(id = R.string.grid)) {
         if (isFoldable) {
             Item {
                 SliderPreference(
                     label = stringResource(id = R.string.dock_icons_folded),
-                    adapter = prefs.hotseatColumns.getAdapter(),
+                    adapter = hotseatColumnsAdapter,
                     step = 1,
                     valueRange = 3..10,
                 )
@@ -154,12 +156,12 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
             Item {
                 SliderPreference(
                     label = stringResource(id = R.string.dock_icons_unfolded),
-                    adapter = prefs.hotseatColumnsUnfolded.getAdapter(),
+                    adapter = hotseatColumnsUnfoldedAdapter,
                     step = 1,
                     valueRange = 3..10,
                 )
             }
-            if (prefs.hotseatColumns.getAdapter().state.value > prefs.hotseatColumnsUnfolded.getAdapter().state.value) {
+            if (hotseatColumnsAdapter.state.value > hotseatColumnsUnfoldedAdapter.state.value) {
                 Item {
                     WarningPreference(
                         text = stringResource(id = R.string.foldable_columns_error),
@@ -170,7 +172,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
             Item {
                 SliderPreference(
                     label = stringResource(id = R.string.dock_icons),
-                    adapter = prefs.hotseatColumns.getAdapter(),
+                    adapter = hotseatColumnsAdapter,
                     step = 1,
                     valueRange = 3..10,
                 )
