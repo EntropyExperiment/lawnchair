@@ -12,6 +12,7 @@ retrofit = "3.0.0"
 dagger = "2.59.2"
 libsu = "6.0.0"
 refine = "4.4.0"
+exifinterface = "1.4.2"
 
 guava = "33.5.0-android"
 junitVersion = "4.13.2"
@@ -143,14 +144,15 @@ errorprone-annotations = "com.google.errorprone:error_prone_annotations:2.48.0"
 ktlint = "com.pinterest.ktlint:ktlint-cli:1.8.0"
 composeRules = "io.nlopez.compose.rules:ktlint:0.5.6"
 google-guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 
 # Testing (Merged)
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 mockito-robolectric = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
-mockito-robolectric-bytebuddy = "net.bytebuddy:byte-buddy:1.18.7"
-mockito-robolectric-bytebuddy-agent = "net.bytebuddy:byte-buddy-agent:1.18.7"
+mockito-robolectric-bytebuddy = "net.bytebuddy:byte-buddy:1.18.8"
+mockito-robolectric-bytebuddy-agent = "net.bytebuddy:byte-buddy-agent:1.18.8"
 
 [bundles]
 accompanist = ["accompanist-adaptive", "accompanist-drawablepainter", "accompanist-permissions"]

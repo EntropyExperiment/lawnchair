@@ -2120,7 +2120,7 @@ public class Launcher extends StatefulActivity<LauncherState>
             // state when we return to launcher.
             BubbleTextView btv = (BubbleTextView) v;
             btv.setStayPressed(true);
-            result.add(() -> btv.setStayPressed(false));
+            result.add(btv::clearPressedIconState);
         }
         return result;
     }
