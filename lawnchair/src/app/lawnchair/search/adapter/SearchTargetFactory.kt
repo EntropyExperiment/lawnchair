@@ -373,7 +373,8 @@ class SearchTargetFactory(
     }
 
     fun createTextActionTarget(action: SearchResult.Action.TextAction): SearchTargetCompat {
-        val id = "text_action:${action.title}:${action.subtitle}"
+        val intentId = action.pendingIntent?.creatorPackage ?: ""
+        val id = "text_action:${action.title}:${action.subtitle}:${intentId}:${action.pendingIntent.hashCode()}"
 
         val actionBuilder = SearchActionCompat.Builder(id, action.title)
             .setSubtitle(action.subtitle)
