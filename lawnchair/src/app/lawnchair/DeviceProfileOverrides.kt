@@ -130,8 +130,8 @@ class DeviceProfileOverrides @Inject constructor(
                 -1
             },
             foldableDatabaseAllAppsColumns = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
-                val folded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
-                val unfolded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
+                val folded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
+                val unfolded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
                 folded.coerceAtLeast(unfolded)
             } else {
                 -1
