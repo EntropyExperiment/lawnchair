@@ -66,6 +66,7 @@ class NovaBackupConverter(
         private const val NOVA_COL_SPAN_Y = "spanY"
         private const val NOVA_COL_ICON = "icon"
         private const val NOVA_COL_APP_WIDGET_PROVIDER = "appWidgetProvider"
+        private const val NOVA_SMART_FOLDER_MARKER = "FOLDER%3A-"
     }
 
     private val novaGridRegex = Regex("(\\d+)x(\\d+)")
@@ -246,7 +247,8 @@ class NovaBackupConverter(
                     WHERE $NOVA_COL_ITEM_TYPE != -1
                     AND ($NOVA_COL_CONTAINER = $NOVA_CONTAINER_DESKTOP
                         OR $NOVA_COL_CONTAINER = $NOVA_CONTAINER_HOTSEAT
-                        OR $NOVA_COL_CONTAINER >= 0)
+                        OR $NOVA_COL_CONTAINER >= 0
+                        OR $NOVA_COL_CONTAINER <= -200)
                     GROUP BY $NOVA_COL_ITEM_TYPE""",
                 null,
             ).use { cursor ->
@@ -306,6 +308,8 @@ class NovaBackupConverter(
         profileId: Long,
         importedDeepShortcuts: MutableMap<String, MutableSet<String>>,
     ) {
+        val smartFolderMap = buildSmartFolderMap(src)
+
         src.rawQuery(
             "SELECT * FROM $NOVA_TABLE_FAVORITES WHERE $NOVA_COL_ITEM_TYPE != -1",
             null,
@@ -320,17 +324,28 @@ class NovaBackupConverter(
                 val isDesktop = novaContainer == NOVA_CONTAINER_DESKTOP
                 val isHotseat = novaContainer == NOVA_CONTAINER_HOTSEAT
                 val isFolderChild = novaContainer >= 0
+                val isSmartFolderChild = novaContainer in smartFolderMap
 
-                if (!isDesktop && !isHotseat && !isFolderChild) continue
+                if (!isDesktop && !isHotseat && !isFolderChild && !isSmartFolderChild) continue
+
+                // Detect smart folder headers, and folder rows on desktop whose intent identified as
+                // Nova smart-folder container (FOLDER:-20X)
+                //
+                // X being category ID that are defined in drawer_group table
+                // These are restored as regular Lawnchair folders with null intent.
+                val isSmartFolderHeader = itemType == Favorites.ITEM_TYPE_FOLDER && isDesktop &&
+                    getStringOrNull(cursor, NOVA_COL_INTENT)?.contains(NOVA_SMART_FOLDER_MARKER) == true
 
                 val container = when {
                     isDesktop -> Favorites.CONTAINER_DESKTOP
                     isHotseat -> Favorites.CONTAINER_HOTSEAT
+                    isSmartFolderChild -> smartFolderMap.getValue(novaContainer)
                     else -> novaContainer
                 }
 
                 val title = getStringOrNull(cursor, NOVA_COL_TITLE)
-                val rawIntent = getStringOrNull(cursor, NOVA_COL_INTENT)
+                // Clear NL8 specific intent for Lawnchair
+                val rawIntent = if (isSmartFolderHeader) null else getStringOrNull(cursor, NOVA_COL_INTENT)
                 val importedDeepShortcut = if (itemType == Favorites.ITEM_TYPE_DEEP_SHORTCUT) {
                     parseNovaDeepShortcut(rawIntent)?.also { shortcut ->
                         importedDeepShortcuts.getOrPut(shortcut.packageName) { mutableSetOf() }
@@ -348,7 +363,7 @@ class NovaBackupConverter(
                 val icon = getBlobOrNull(cursor, NOVA_COL_ICON)
                 val appWidgetProvider = getStringOrNull(cursor, NOVA_COL_APP_WIDGET_PROVIDER)
                 val rank = when {
-                    isFolderChild -> calculateFolderRank(screen, cellX, cellY)
+                    isFolderChild || isSmartFolderChild -> calculateFolderRank(screen, cellX, cellY)
                     isHotseat -> screen
                     else -> 0
                 }
@@ -444,6 +459,46 @@ class NovaBackupConverter(
 
     private fun calculateFolderRank(screen: Int, cellX: Int, cellY: Int): Int {
         return (screen * FOLDER_PAGE_RANK_OFFSET) + (cellY * FOLDER_ROW_RANK_OFFSET) + cellX
+    }
+
+    /**
+     * Scans the Nova DB for smart-folder header rows and builds a mapping from the
+     * smart-folder container ID (-20X) to the folder row's _id.
+     *
+     * X being category ID that are defined in drawer_group table
+     */
+    private fun buildSmartFolderMap(src: SQLiteDatabase): Map<Int, Int> {
+        val map = mutableMapOf<Int, Int>()
+        src.rawQuery(
+            """SELECT $NOVA_COL_ID, $NOVA_COL_INTENT FROM $NOVA_TABLE_FAVORITES
+                WHERE $NOVA_COL_ITEM_TYPE = ${Favorites.ITEM_TYPE_FOLDER}
+                AND $NOVA_COL_CONTAINER = $NOVA_CONTAINER_DESKTOP
+                AND $NOVA_COL_INTENT LIKE '%$NOVA_SMART_FOLDER_MARKER%'""",
+            null,
+        ).use { cursor ->
+            while (cursor.moveToNext()) {
+                val folderId = cursor.getInt(0)
+                val intentUri = cursor.getString(1) ?: continue
+                val smartContainerId = extractSmartFolderContainerId(intentUri)
+                if (smartContainerId != null) {
+                    map[smartContainerId] = folderId
+                }
+            }
+        }
+        return map
+    }
+
+    /**
+     * Extracts the smart-folder container ID from a Nova folder intent URI.
+     * `#Intent;component=com.teslacoilsw.launcher/FOLDER%3A-208;end` → -208
+     */
+    private fun extractSmartFolderContainerId(intentUri: String): Int? {
+        val marker = "FOLDER%3A"
+        val idx = intentUri.indexOf(marker)
+        if (idx < 0) return null
+        val afterMarker = intentUri.substring(idx + marker.length)
+        val numStr = afterMarker.takeWhile { it == '-' || it.isDigit() }
+        return numStr.toIntOrNull()
     }
 
     private fun parseNovaDeepShortcut(intentUri: String?): ImportedDeepShortcut? {
