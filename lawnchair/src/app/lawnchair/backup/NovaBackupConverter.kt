@@ -328,14 +328,6 @@ class NovaBackupConverter(
 
                 if (!isDesktop && !isHotseat && !isFolderChild && !isSmartFolderChild) continue
 
-                // Detect smart folder headers, and folder rows on desktop whose intent identified as
-                // Nova smart-folder container (FOLDER:-20X)
-                //
-                // X being category ID that are defined in drawer_group table
-                // These are restored as regular Lawnchair folders with null intent.
-                val isSmartFolderHeader = itemType == Favorites.ITEM_TYPE_FOLDER && isDesktop &&
-                    getStringOrNull(cursor, NOVA_COL_INTENT)?.contains(NOVA_SMART_FOLDER_MARKER) == true
-
                 val container = when {
                     isDesktop -> Favorites.CONTAINER_DESKTOP
                     isHotseat -> Favorites.CONTAINER_HOTSEAT
@@ -344,8 +336,14 @@ class NovaBackupConverter(
                 }
 
                 val title = getStringOrNull(cursor, NOVA_COL_TITLE)
-                // Clear NL8 specific intent for Lawnchair
-                val rawIntent = if (isSmartFolderHeader) null else getStringOrNull(cursor, NOVA_COL_INTENT)
+                /* TODO: Lawnchair folder synchronization support
+                 *        For nova parity:
+                 *           Sync folder contents from allapps to workspace, or workspace to allapps
+                 *        ImplNote:
+                 *           Check folder with intent: #Intent;component=com.teslacoilsw.launcher/FOLDER%3A-20X;end
+                 *           X being category ID that are defined in drawer_group table
+                 */
+                val rawIntent = getStringOrNull(cursor, NOVA_COL_INTENT)
                 val importedDeepShortcut = if (itemType == Favorites.ITEM_TYPE_DEEP_SHORTCUT) {
                     parseNovaDeepShortcut(rawIntent)?.also { shortcut ->
                         importedDeepShortcuts.getOrPut(shortcut.packageName) { mutableSetOf() }
