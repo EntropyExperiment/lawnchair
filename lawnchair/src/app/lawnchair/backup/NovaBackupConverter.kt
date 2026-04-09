@@ -462,8 +462,8 @@ class NovaBackupConverter(
     }
 
     /**
-     * Scans the Nova DB for smart-folder header rows and builds a mapping from the
-     * smart-folder container ID (-20X) to the folder row's _id.
+     * Get smart folder header rows from favorites table and builds a mapping from the smart folder
+     * container ID (-20X) to the folder row's _id.
      *
      * X being category ID that are defined in drawer_group table
      */
@@ -489,8 +489,8 @@ class NovaBackupConverter(
     }
 
     /**
-     * Extracts the smart-folder container ID from a Nova folder intent URI.
-     * `#Intent;component=com.teslacoilsw.launcher/FOLDER%3A-208;end` → -208
+     * Get smart folder container ID from a Nova folder intent URI.
+     * `#Intent;component=com.teslacoilsw.launcher/FOLDER%3A-208;end` -> -208
      */
     private fun extractSmartFolderContainerId(intentUri: String): Int? {
         val marker = "FOLDER%3A"
@@ -514,4 +514,26 @@ class NovaBackupConverter(
         val shortcutId = intent.getStringExtra(ShortcutKey.EXTRA_SHORTCUT_ID) ?: return null
         return ImportedDeepShortcut(packageName, shortcutId)
     }
+
+    /*
+     * Glossary: drawer_group
+     *
+     * The drawer_group table define app drawer tabs (groups) in Nova.
+     * This table is the following category from category_id in drawer_group table:
+     * 1. null (known as: "Apps", for items that belong to main profile)
+     * 2. null (known as: "Work", for items that belong to work profile)
+     * 3. ENTERTAINMENT
+     * 4. FINANCE
+     * 5. FOOD
+     * 6. GAMES
+     * 7. SHOPPING
+     * 8. SOCIAL
+     * 9. TRAVEL
+     *
+     * Note: This table is related to the appgroups table which is a table that already assigns apps
+     *       to these categories.
+     *
+     * Note: Nova assigns items to these categories by crowdsourcing,
+     *       unlike our Flowerpot (v1) Azalea system that needs to be constantly updated manually.
+     */
 }
