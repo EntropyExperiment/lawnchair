@@ -58,8 +58,7 @@ import soup.compose.material.motion.animation.materialSharedAxisXIn
 import soup.compose.material.motion.animation.materialSharedAxisXOut
 import soup.compose.material.motion.animation.rememberSlideDistance
 
-inline fun <reified T> getDeepLink(route: T) where T : PreferenceRoute, T : PreferenceDeepLink =
-    listOf(navDeepLink<T>(basePath = route.deepLink))
+inline fun <reified T> getDeepLink(route: T) where T : PreferenceRoute, T : PreferenceDeepLink = listOf(navDeepLink<T>(basePath = route.deepLink))
 
 @Composable
 fun PreferenceNavigation(
