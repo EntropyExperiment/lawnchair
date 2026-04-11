@@ -391,6 +391,11 @@ class SearchTargetFactory(
                the classifier will return a generic fallback icons, and a signal that tells us the
                icon should not be use:
 
+               e.g., 111-111-1111 -> Placeholder
+
+               We override it with our own placeholder icon as the returned icon is way way too old,
+               and does not fit well within our design.
+
                e.g., 111-111-1111 -> ic_suggestions
              */
             actionBuilder.setIcon(
