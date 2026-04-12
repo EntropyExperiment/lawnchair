@@ -19,7 +19,9 @@ object TextClassifierSearchProvider : SearchProvider {
     private const val SENSITIVE_LOGGING = false
 
     private const val MIN_QUERY_LENGTH = 3
-    private const val CLASSIFICATION_TIMEOUT_MS = 2500L
+
+    /** Note: Most devices can classify text within less than a second, a value higher than that is being generous */
+    private const val CLASSIFICATION_TIMEOUT_MS = 1500L
 
     override val id = "textclassifier"
 
