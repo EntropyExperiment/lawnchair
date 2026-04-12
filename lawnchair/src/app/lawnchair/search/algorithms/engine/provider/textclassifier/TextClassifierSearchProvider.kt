@@ -17,6 +17,8 @@ object TextClassifierSearchProvider : SearchProvider {
     /** Enables detailed logging, **Warning: Contain search query data** */
     const val SENSITIVE_LOGGING = false
 
+    private const val MIN_QUERY_LENGTH = 3
+
     override val id = "textclassifier"
 
     override fun search(
@@ -24,7 +26,7 @@ object TextClassifierSearchProvider : SearchProvider {
         query: String,
     ): Flow<List<SearchResult>> = flow {
         val legacyPrefs = PreferenceManager.INSTANCE.get(context)
-        if (!Utilities.ATLEAST_P || !legacyPrefs.searchResultTextClassifier.get() || query.isBlank()) {
+        if (!Utilities.ATLEAST_P || !legacyPrefs.searchResultTextClassifier.get() || query.length < MIN_QUERY_LENGTH) {
             emit(emptyList())
             return@flow
         }
