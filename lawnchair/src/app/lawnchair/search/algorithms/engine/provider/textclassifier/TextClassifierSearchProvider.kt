@@ -16,7 +16,7 @@ import kotlinx.coroutines.withTimeoutOrNull
 
 object TextClassifierSearchProvider : SearchProvider {
     /** Enables detailed logging, **Warning: Contain search query data** */
-    const val SENSITIVE_LOGGING = false
+    private const val SENSITIVE_LOGGING = false
 
     private const val MIN_QUERY_LENGTH = 3
     private const val CLASSIFICATION_TIMEOUT_MS = 2500L
