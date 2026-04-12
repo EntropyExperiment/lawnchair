@@ -12,12 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 object TextClassifierSearchProvider : SearchProvider {
     /** Enables detailed logging, **Warning: Contain search query data** */
     const val SENSITIVE_LOGGING = false
 
     private const val MIN_QUERY_LENGTH = 3
+    private const val CLASSIFICATION_TIMEOUT_MS = 2500L
 
     override val id = "textclassifier"
 
@@ -39,11 +41,13 @@ object TextClassifierSearchProvider : SearchProvider {
             try {
                 val request = TextClassification.Request.Builder(query, 0, query.length)
                     .build()
-                val classification = textClassifier.classifyText(request)
+                val classification = withTimeoutOrNull(CLASSIFICATION_TIMEOUT_MS) {
+                    textClassifier.classifyText(request)
+                }
                 if (SENSITIVE_LOGGING) {
                     Log.d("TextClassifierSearchProvider", "Classification result: $classification")
                 }
-                if (classification.actions.isNotEmpty()) {
+                if (classification?.actions?.isNotEmpty() == true) {
                     classification.actions.forEach { action ->
                         searchResults.add(
                             SearchResult.Action.TextAction(
