@@ -70,7 +70,7 @@ compose-bom = "androidx.compose:compose-bom:2026.03.01"
 compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
 compose-material-icons = "androidx.compose.material:material-icons-extended:1.7.8"
-compose-material3 = "androidx.compose.material3:material3:1.5.0-alpha16"
+compose-material3 = "androidx.compose.material3:material3:1.5.0-alpha17"
 compose-material3-windowSizeClass = { module = "androidx.compose.material3:material3-window-size-class" }
 compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 compose-ui = { module = "androidx.compose.ui:ui" }
@@ -112,7 +112,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 # KotlinX
 kotlinx-coroutines-android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2"
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
 
 protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
@@ -139,10 +139,10 @@ rikka-annotation-processor = { module = "dev.rikka.tools.refine:annotation-proce
 rikka-refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
 smartspacer-sdk = "com.kieronquinn.smartspacer:sdk-client:1.1.2"
 xdrop-fuzzywuzzy = "me.xdrop:fuzzywuzzy:1.4.0"
-errorprone-annotations = "com.google.errorprone:error_prone_annotations:2.48.0"
+errorprone-annotations = "com.google.errorprone:error_prone_annotations:2.49.0"
 # Dummy to get renovate updates, the version is used in rootProject build.gradle with spotless.
 ktlint = "com.pinterest.ktlint:ktlint-cli:1.8.0"
-composeRules = "io.nlopez.compose.rules:ktlint:0.5.6"
+composeRules = "io.nlopez.compose.rules:ktlint:0.5.7"
 google-guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
 

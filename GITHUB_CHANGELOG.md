@@ -22,6 +22,7 @@ Compatibility list:
 | Android 13                                | ✅               | ❌         | ❌                        |
 | Android 14                                | ✅               | ❌         | ❌                        |
 | Android 15                                | ✅               | ❌         | ❌                        |
+| Android 15 QPR2                           | ✅               | ❌         | 💥 Not recommended       |
 | Android 16.0 (Android 16 initial release) | ✅               | ❌         | 💥 Not recommended       |
 | Android 16.1 (Android 16 QPR2)            | ✅               | ❌         | ❌                        |
 | Android 17.0                              | ✅               | ❌         | ❌                        |
