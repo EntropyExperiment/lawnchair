@@ -280,13 +280,13 @@ public class TaskbarAllAppsSlideInView extends AbstractSlideInView<TaskbarOverla
     protected int getScrimColor(Context context) {
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             // Always use an opaque scrim if there's no sheet.
-            // Lawnchair-TODO-Colour: Check R.color.materialColorSurfaceDim
-            return context.getResources().getColor(R.color.materialColorSurfaceDim);
+            return LawnchairUtilsKt.getAllAppsBaseColor(context);
         } else if (!Flags.allAppsBlur()) {
             // If there's a sheet but no blur, use the old scrim color.
-            return ColorTokens.WidgetsPickerScrim.resolveColor(context);
+            return LawnchairUtilsKt.getAllAppsBackgroundColor(context, 
+                ColorTokens.WidgetsPickerScrim.resolveColor(context));
         }
-        return LawnchairUtilsKt.getAllAppsScrimColor(context);
+        return LawnchairUtilsKt.getAllAppsBaseColor(context);
     }
 
     @Override

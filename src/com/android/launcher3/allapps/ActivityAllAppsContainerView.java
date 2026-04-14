@@ -114,6 +114,7 @@ import app.lawnchair.font.FontManager;
 import app.lawnchair.preferences.PreferenceManager;
 import app.lawnchair.preferences2.PreferenceManager2;
 import app.lawnchair.theme.color.tokens.ColorTokens;
+import app.lawnchair.util.LawnchairUtilsKt;
 import app.lawnchair.ui.StretchRecyclerViewContainer;
 
 /**
@@ -218,7 +219,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         pref2 = PreferenceManager2.getInstance(mActivityContext);
         pref = PreferenceManager.getInstance(mActivityContext);
         
-        mScrimColor = ColorTokens.AllAppsScrimColor.resolveColor(context);
+        mScrimColor = LawnchairUtilsKt.getAllAppsBaseColor(context);
         mHeaderThreshold = getResources().getDimensionPixelSize(
                 R.dimen.dynamic_grid_cell_border_spacing);
         mHeaderProtectionColor = ColorTokens.AllAppsHeaderProtectionColor.resolveColor(context);
@@ -864,22 +865,18 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected int getHeaderColor(float blendRatio) {
-        float opacity = 0.0f;
+        float opacity = mSearchContainer.getAlpha();
         var showHeaderBackground = PreferenceExtensionsKt.firstBlocking(
             pref2.getAppDrawerSearchBarBackground());
         if (showHeaderBackground) {
             opacity = pref.getDrawerOpacity().get();
         }
-        
-        var colorOptions = PreferenceExtensionsKt.firstBlocking(pref2.getAppDrawerBackgroundColor());
-        var color = colorOptions.getColorPreferenceEntry().getLightColor().invoke(mActivityContext);
-        if (color != 0) {
-            mScrimColor = color;
-        }
+
+        mScrimColor = LawnchairUtilsKt.getAllAppsBaseColor(mActivityContext);
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return ColorUtils.setAlphaComponent(
                     ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
-                (int) (opacity * 255));
+                    Math.round(opacity * 255));
         }
         return isBackgroundBlurEnabled()
                 ? ColorUtils.setAlphaComponent(mHeaderProtectionColor, (int) (blendRatio * 255))
@@ -888,18 +885,19 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     private int getBackgroundColor() {
         return mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()
-                ? getBottomSheetBackgroundColor() : mScrimColor;
+                ? getBottomSheetBackgroundColor() : LawnchairUtilsKt.getAllAppsBaseColor(mActivityContext);
     }
 
     int getBottomSheetBackgroundColor() {
+        int defaultColor;
         if (!Flags.allAppsBlur()) {
-            return mBottomSheetBackgroundColorLegacy;
+            defaultColor = mBottomSheetBackgroundColorLegacy;
+        } else if (!mActivityContext.isAllAppsBackgroundBlurEnabled()) {
+            defaultColor = mBottomSheetBackgroundColorBlurFallback;
+        } else {
+            defaultColor = mBottomSheetBackgroundColorOverBlur;
         }
-        if (!mActivityContext.isAllAppsBackgroundBlurEnabled()) {
-            // Don't apply any alpha if the blur is disabled.
-            return mBottomSheetBackgroundColorBlurFallback;
-        }
-        return mBottomSheetBackgroundColorOverBlur;
+        return LawnchairUtilsKt.getAllAppsBackgroundColor(mActivityContext, defaultColor);
     }
 
     boolean isBackgroundBlurEnabled() {

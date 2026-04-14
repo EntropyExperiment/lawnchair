@@ -50,10 +50,12 @@ import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.tokens.ColorTokens
 import com.android.launcher3.BuildConfig
+import com.android.launcher3.Flags
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.util.Executors.MAIN_EXECUTOR
 import com.android.launcher3.util.Themes
+import com.android.systemui.shared.system.BlurUtils
 import com.android.systemui.shared.system.QuickStepContract
 import com.patrykmichalik.opto.core.firstBlocking
 import java.io.ByteArrayOutputStream
@@ -146,7 +148,9 @@ fun supportsRoundedCornersOnWindows(context: Context): Boolean {
 fun overrideAllAppsTextColor(textView: TextView) {
     val context = textView.context
     val opacity = PreferenceManager.getInstance(context).drawerOpacity.get()
-    if (opacity <= 0.3f) {
+    val isBlurred = BlurUtils.supportsBlursOnWindows() && Flags.allAppsBlur()
+    // Don't use alternative text colour on blurred backgrounds since the text will be -- in most cases -- illegible by the blur
+    if (opacity <= 0.3f && !isBlurred) {
         textView.setTextColor(Themes.getAttrColor(context, R.attr.allAppsAlternateTextColor))
     }
 }
@@ -180,17 +184,22 @@ fun getFolderBackgroundAlpha(context: Context): Int {
     return (prefs2.folderBackgroundOpacity.firstBlocking() * 255).toInt()
 }
 
-fun getAllAppsScrimColor(context: Context): Int {
-    val opacity = PreferenceManager.getInstance(context).drawerOpacity.get()
+private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
     val prefs2 = PreferenceManager2.getInstance(context)
-    var scrimColor = ColorTokens.AllAppsScrimColor.resolveColor(context)
     val colorOptions: ColorOption = prefs2.appDrawerBackgroundColor.firstBlocking()
     val color = colorOptions.colorPreferenceEntry.lightColor.invoke(context)
-    if (color != 0) {
-        scrimColor = color
-    }
-    val alpha = (opacity * 255).roundToInt()
-    return ColorUtils.setAlphaComponent(scrimColor, alpha)
+    val baseColor = if (color != 0) color else defaultColor
+    return ColorUtils.setAlphaComponent(baseColor, 255)
+}
+
+fun getAllAppsBaseColor(context: Context): Int {
+    return ColorTokens.AllAppsScrimColor.resolveColor(context)
+}
+
+fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
+    val prefs = PreferenceManager.getInstance(context)
+    val alpha = (prefs.drawerOpacity.get() * 255).roundToInt()
+    return ColorUtils.setAlphaComponent(getAllAppsBaseColor(context, defaultColor), alpha)
 }
 
 fun Context.checkPackagePermission(packageName: String, permissionName: String): Boolean {
