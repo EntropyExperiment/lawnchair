@@ -44,6 +44,7 @@ import app.lawnchair.ui.preferences.components.AppDrawerHapticFeedbackPreference
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
 import app.lawnchair.ui.preferences.components.SuggestionsPreference
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
+import app.lawnchair.ui.preferences.components.controls.RangeSliderPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreferenceWithPreview
@@ -122,35 +123,51 @@ fun AppDrawerPreferences(
         PreferenceGroup(heading = stringResource(id = R.string.grid)) {
             val drawerColumnsAdapter = prefs2.drawerColumns.getAdapter()
             val drawerColumnsUnfoldedAdapter = prefs2.drawerColumnsUnfolded.getAdapter()
+            val useRangedSliderFlag = prefs2.useRangedSliderFlag.getAdapter()
             if (isFoldable) {
-                Item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.drawer_columns_folded),
-                        adapter = drawerColumnsAdapter,
-                        step = 1,
-                        valueRange = 3..10,
-                    )
-                }
-                Item {
-                    SliderPreference(
-                        label = stringResource(id = R.string.drawer_columns_unfolded),
-                        adapter = drawerColumnsUnfoldedAdapter,
-                        step = 1,
-                        valueRange = 3..10,
-                    )
-                }
-                Item(
-                    visible = drawerColumnsAdapter.state.value > drawerColumnsUnfoldedAdapter.state.value,
-                ) {
-                    WarningPreference(
-                        text = stringResource(id = R.string.foldable_columns_error),
-                    )
+                if (useRangedSliderFlag.state.value) {
+                    // TODO: Remove when design is finalisde!
+                    Item {
+                        RangeSliderPreference(
+                            label = stringResource(id = R.string.app_drawer_columns),
+                            lowAdapter = drawerColumnsAdapter,
+                            highAdapter = drawerColumnsUnfoldedAdapter,
+                            step = 1,
+                            valueRange = 3..10,
+                            lowLabel = stringResource(id = R.string.folded_label),
+                            highLabel = stringResource(id = R.string.unfolded_label),
+                        )
+                    }
+                } else {
+                    Item {
+                        SliderPreference(
+                            label = stringResource(id = R.string.drawer_columns_folded),
+                            adapter = drawerColumnsAdapter,
+                            step = 1,
+                            valueRange = 3..10,
+                        )
+                    }
+                    Item {
+                        SliderPreference(
+                            label = stringResource(id = R.string.drawer_columns_unfolded),
+                            adapter = drawerColumnsUnfoldedAdapter,
+                            step = 1,
+                            valueRange = 3..10,
+                        )
+                    }
+                    Item(
+                        visible = drawerColumnsAdapter.state.value > drawerColumnsUnfoldedAdapter.state.value,
+                    ) {
+                        WarningPreference(
+                            text = stringResource(id = R.string.foldable_columns_error),
+                        )
+                    }
                 }
             } else {
                 Item {
                     SliderPreference(
                         label = stringResource(id = R.string.app_drawer_columns),
-                        adapter = prefs2.drawerColumns.getAdapter(),
+                        adapter = drawerColumnsAdapter,
                         step = 1,
                         valueRange = 3..10,
                     )

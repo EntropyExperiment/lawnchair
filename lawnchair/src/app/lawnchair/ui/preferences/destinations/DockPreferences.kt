@@ -42,6 +42,7 @@ import app.lawnchair.ui.preferences.components.WithWallpaper
 import app.lawnchair.ui.preferences.components.clipToBottomPercentage
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
+import app.lawnchair.ui.preferences.components.controls.RangeSliderPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
@@ -142,31 +143,47 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
     val isFoldable = InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
     val hotseatColumnsAdapter = prefs.hotseatColumns.getAdapter()
     val hotseatColumnsUnfoldedAdapter = prefs.hotseatColumnsUnfolded.getAdapter()
+    val useRangedSliderFlag = prefs2.useRangedSliderFlag.getAdapter()
 
     PreferenceGroup(heading = stringResource(id = R.string.grid)) {
         if (isFoldable) {
-            Item {
-                SliderPreference(
-                    label = stringResource(id = R.string.dock_icons_folded),
-                    adapter = hotseatColumnsAdapter,
-                    step = 1,
-                    valueRange = 3..10,
-                )
-            }
-            Item {
-                SliderPreference(
-                    label = stringResource(id = R.string.dock_icons_unfolded),
-                    adapter = hotseatColumnsUnfoldedAdapter,
-                    step = 1,
-                    valueRange = 3..10,
-                )
-            }
-            Item(
-                visible = hotseatColumnsAdapter.state.value > hotseatColumnsUnfoldedAdapter.state.value,
-            ) {
-                WarningPreference(
-                    text = stringResource(id = R.string.foldable_columns_error),
-                )
+            if (useRangedSliderFlag.state.value) {
+                // TODO: Remove when design is finalisde!
+                Item {
+                    RangeSliderPreference(
+                        label = stringResource(id = R.string.app_drawer_columns),
+                        lowAdapter = hotseatColumnsAdapter,
+                        highAdapter = hotseatColumnsUnfoldedAdapter,
+                        step = 1,
+                        valueRange = 3..10,
+                        lowLabel = stringResource(id = R.string.folded_label),
+                        highLabel = stringResource(id = R.string.unfolded_label),
+                    )
+                }
+            } else {
+                Item {
+                    SliderPreference(
+                        label = stringResource(id = R.string.dock_icons_folded),
+                        adapter = hotseatColumnsAdapter,
+                        step = 1,
+                        valueRange = 3..10,
+                    )
+                }
+                Item {
+                    SliderPreference(
+                        label = stringResource(id = R.string.dock_icons_unfolded),
+                        adapter = hotseatColumnsUnfoldedAdapter,
+                        step = 1,
+                        valueRange = 3..10,
+                    )
+                }
+                Item(
+                    visible = hotseatColumnsAdapter.state.value > hotseatColumnsUnfoldedAdapter.state.value,
+                ) {
+                    WarningPreference(
+                        text = stringResource(id = R.string.foldable_columns_error),
+                    )
+                }
             }
         } else {
             Item {

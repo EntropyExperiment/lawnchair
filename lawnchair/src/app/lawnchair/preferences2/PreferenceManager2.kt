@@ -639,6 +639,11 @@ class PreferenceManager2 @Inject constructor(
         onSet = { reloadHelper.reloadGrid() },
     )
 
+    val useRangedSliderFlag = preference(
+        key = booleanPreferencesKey(name = "ranged_slider_flag"),
+        defaultValue = false,
+    )
+
     val folderColumns = idpPreference(
         key = intPreferencesKey(name = "folder_columns"),
         defaultSelector = { numFolderColumns[INDEX_DEFAULT] },
