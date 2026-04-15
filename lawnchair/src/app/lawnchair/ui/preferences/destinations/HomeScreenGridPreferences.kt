@@ -24,9 +24,11 @@ import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.GridOverridesPreview
+import app.lawnchair.ui.preferences.components.controls.InfoPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
 
@@ -47,6 +49,7 @@ fun HomeScreenGridPreferences(
         val columnsAdapter = prefs.workspaceColumns.getAdapter()
         val rowsAdapter = prefs.workspaceRows.getAdapter()
         val increaseMaxGridSize = prefs.workspaceIncreaseMaxGridSize.getAdapter()
+        val isFoldable = InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY
 
         val originalColumns = remember { columnsAdapter.state.value }
         val originalRows = remember { rowsAdapter.state.value }
@@ -77,6 +80,19 @@ fun HomeScreenGridPreferences(
                     step = 1,
                     valueRange = 3..maxGridSize,
                 )
+            }
+        }
+
+        PreferenceGroup {
+            if (isFoldable) {
+                Item {
+                    InfoPreference(
+                        text = stringResource(
+                            id = R.string.foldable_grid_columns_info,
+                            columns.intValue * 2,
+                        ),
+                    )
+                }
             }
         }
 
