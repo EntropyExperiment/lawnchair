@@ -83,8 +83,8 @@ fun HomeScreenGridPreferences(
             }
         }
 
-        PreferenceGroup {
-            if (isFoldable) {
+        if (isFoldable) {
+            PreferenceGroup {
                 Item {
                     InfoPreference(
                         text = stringResource(
