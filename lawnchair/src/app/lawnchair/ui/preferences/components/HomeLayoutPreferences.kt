@@ -96,7 +96,7 @@ fun HomeLayoutSettings(
                         )
                     } else {
                         Text(
-                            text = "Please wait...",
+                            text = stringResource(R.string.please_wait),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyMedium,
                         )
