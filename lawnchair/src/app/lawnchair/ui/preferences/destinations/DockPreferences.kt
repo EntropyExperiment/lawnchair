@@ -151,7 +151,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
                 // TODO: Remove when design is finalisde!
                 Item {
                     RangeSliderPreference(
-                        label = stringResource(id = R.string.app_drawer_columns),
+                        label = stringResource(id = R.string.dock_icons),
                         lowAdapter = hotseatColumnsAdapter,
                         highAdapter = hotseatColumnsUnfoldedAdapter,
                         step = 1,
