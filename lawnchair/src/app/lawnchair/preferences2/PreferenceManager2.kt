@@ -639,6 +639,8 @@ class PreferenceManager2 @Inject constructor(
         onSet = { reloadHelper.reloadGrid() },
     )
 
+    /** TODO: Remove when we can finalise the design for dual state configuration!
+     * To turn it on, go to debug menu and flip ranged_slider_flag to on */
     val useRangedSliderFlag = preference(
         key = booleanPreferencesKey(name = "ranged_slider_flag"),
         defaultValue = false,

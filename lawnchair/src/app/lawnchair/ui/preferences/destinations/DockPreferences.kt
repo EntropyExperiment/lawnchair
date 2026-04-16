@@ -148,7 +148,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
     PreferenceGroup(heading = stringResource(id = R.string.grid)) {
         if (isFoldable) {
             if (useRangedSliderFlag.state.value) {
-                // TODO: Remove when design is finalisde!
+                // TODO: Remove when we can finalise the design for dual state configuration!
                 Item {
                     RangeSliderPreference(
                         label = stringResource(id = R.string.dock_icons),

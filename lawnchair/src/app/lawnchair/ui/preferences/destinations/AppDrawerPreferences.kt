@@ -126,7 +126,7 @@ fun AppDrawerPreferences(
             val useRangedSliderFlag = prefs2.useRangedSliderFlag.getAdapter()
             if (isFoldable) {
                 if (useRangedSliderFlag.state.value) {
-                    // TODO: Remove when design is finalisde!
+                    // TODO: Remove when we can finalise the design for dual state configuration!
                     Item {
                         RangeSliderPreference(
                             label = stringResource(id = R.string.app_drawer_columns),
