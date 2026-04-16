@@ -972,4 +972,6 @@
     <string name="home_screen_all_views_removed_msg">Home screen cleared</string>
     <string name="lawnchair_actions">Actions</string>
     <string name="lawnchair_action_failed">Failed to trigger action</string>
+
+    <string name="please_wait">Please wait…</string>
 </resources>
