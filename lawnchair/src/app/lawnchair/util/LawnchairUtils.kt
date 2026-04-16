@@ -184,6 +184,7 @@ fun getFolderBackgroundAlpha(context: Context): Int {
     return (prefs2.folderBackgroundOpacity.firstBlocking() * 255).toInt()
 }
 
+/** Apply Lawnchair custom allapps colour to the provided colour */
 private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
     val prefs2 = PreferenceManager2.getInstance(context)
     val colorOptions: ColorOption = prefs2.appDrawerBackgroundColor.firstBlocking()
@@ -192,10 +193,12 @@ private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
     return ColorUtils.setAlphaComponent(baseColor, 255)
 }
 
+/** Apply Lawnchair custom allapps colour to the allapps scrim */
 fun getAllAppsBaseColor(context: Context): Int {
-    return ColorTokens.AllAppsScrimColor.resolveColor(context)
+    return getAllAppsBaseColor(context, ColorTokens.AllAppsScrimColor.resolveColor(context))
 }
 
+/** Apply Lawnchair custom allapps opacity and colour to the provided colour */
 fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
     val prefs = PreferenceManager.getInstance(context)
     val alpha = (prefs.drawerOpacity.get() * 255).roundToInt()
