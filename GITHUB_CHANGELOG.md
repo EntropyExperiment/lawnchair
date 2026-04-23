@@ -8,24 +8,7 @@
 > This branch has diverged timeline from the original `16-dev`, meaning you will have to rebase your
 > commit back to this branch if you wish to contribute to this branch.
 
-Compatibility list:
-
-| 📱 Android version                        | 🥞 Recommended? | 💥 Crash? | 🧑‍💻 QuickSwitch Ready? |
-|-------------------------------------------|-----------------|-----------|--------------------------|
-| Android 8.0                               | ❌               | ❌         | Not supported            |
-| Android 8.1                               | ❌               | ❌         | Not supported            |
-| Android 9                                 | ❌               | ❌         | Not supported            |
-| Android 10                                | ❌               | ❌         | ❌                        |
-| Android 11                                | ✅               | ❌         | ❌                        |
-| Android 12.0                              | ✅               | ❌         | ❌                        |
-| Android 12.1                              | ✅               | ❌         | ❌                        |
-| Android 13                                | ✅               | ❌         | ❌                        |
-| Android 14                                | ✅               | ❌         | ❌                        |
-| Android 15                                | ✅               | ❌         | ❌                        |
-| Android 15 QPR2                           | ✅               | ❌         | 💥 Not recommended       |
-| Android 16.0 (Android 16 initial release) | ✅               | ❌         | 💥 Not recommended       |
-| Android 16.1 (Android 16 QPR2)            | ✅               | ❌         | ❌                        |
-| Android 17.0                              | ✅               | ❌         | ❌                        |
+Compatibility list: https://github.com/LawnchairLauncher/lawnchair/issues/6681
 
 #### Features
 * [Lawnchair] Allow user to disable the auto-updater (for Nightly build only)
@@ -47,6 +30,21 @@ Compatibility list:
 * [Lawnchair] Move backup and restore to separate screen (237a0beb)
 * [Lawnchair/Search] Make blurred app search look nicer
 * [Lawnchair/Search] Load image preview faster at less memory usage
+* [Lawnchair/Search] Add Cromite search provider (https://github.com/LawnchairLauncher/lawnchair/pull/6558)
+* [Lawnchair/Preference] Add haptic on Lawnchair settings (https://github.com/LawnchairLauncher/lawnchair/pull/6470)
+* [Launcher] Put widget to default page (https://github.com/LawnchairLauncher/lawnchair/pull/6569)
+* [Lawnchair/Search] Add Vivaldi search provider (https://github.com/LawnchairLauncher/lawnchair/pull/6587)
+* [Lawnchair/Preference] Support deep linking (https://github.com/LawnchairLauncher/lawnchair/pull/6399)
+* [Lawnchair/Gesture] Use reflection to open Quick Settings panel (https://github.com/LawnchairLauncher/lawnchair/pull/6485)
+* [Launcher/Widget] Display Lawnchair at the top of the widget list (https://github.com/LawnchairLauncher/lawnchair/pull/6628)
+* [Lawnchair/Gesture] Port shortcut support for triggering gestures (https://github.com/LawnchairLauncher/lawnchair/pull/6485)
+* [Lawnchair/Preference] Add custom icon for Lawnchair settings (https://github.com/LawnchairLauncher/lawnchair/pull/6630)
+* [Lawnchair/Caddy] Caddy mode without restarting (https://github.com/LawnchairLauncher/lawnchair/pull/6634)
+* [Lawnchair/Caddy] Caddy hold message translatable (https://github.com/LawnchairLauncher/lawnchair/pull/6644)
+* [Lawnchair] Add additional icon shapes (https://github.com/LawnchairLauncher/lawnchair/pull/6651)
+* [Lawnchair/Gesture] Implement two-finger swipe gestures
+* [Lawnchair/Preference] Add intent to apply icon packs externally (https://github.com/LawnchairLauncher/lawnchair/pull/6643)
+* [Lawnchair/Gesture] Add selectable sleep method preference
 
 #### Fixes
 * [Launcher] Limited Android 11 support
@@ -112,6 +110,25 @@ Compatibility list:
 * [QuickSwitch] Remove DesktopExperienceFlags
 * [QuickSwitch] Implement Baklava compat
 * [QuickSwitch] Initial QuickSwitch testing with Baklava
+* [Lawnchair/Search] Trim whitespace in app drawer search query (https://github.com/LawnchairLauncher/lawnchair/pull/6538)
+* [Launcher/Widget] Handle ISE when fetching widget previews for locked profiles (https://github.com/LawnchairLauncher/lawnchair/pull/6531)
+* [Launcher] Apply themed icons to app drawer folder preview items (https://github.com/LawnchairLauncher/lawnchair/pull/6568)
+* [Lawnchair/Caddy] Correct repeated folder name in Caddy layout (https://github.com/LawnchairLauncher/lawnchair/pull/6564)
+* [Lawnchair/AllApps] Apply label size factor to allAppsIconTextSize (https://github.com/LawnchairLauncher/lawnchair/pull/6562)
+* [QuickSwitch] Fix resource not found
+* [Launcher/Folder] Adjust folder height and scrim handling
+* [Launcher/Folder] Restore scrim and workspace scale on folder dismiss
+* [Launcher] Reset icon scale and press state in BTV
+* [Launcher] Clear pressed icon state on focus/launch
+* [Lawnchair/Search] Use EXIF orientation of the metadata to preview the image
+* [Lawnchair/BugReporter] Specify FGS type for logs uploader
+* [Lawnchair/BugReporter] Grant URI explictly for sharing report
+* [Lawnchair/Search] Remove unnecessary URI permission flags from file intent
+* [Lawnchair/Search] Remove fallback image logging
+* [QuickSwitch] Initial QuickSwitch testing with Vanilla Ice Cream QPR2 (https://github.com/LawnchairLauncher/lawnchair/pull/6624)
+* [Launcher/Folder] Reimplement folder label in dock toggle (https://github.com/LawnchairLauncher/lawnchair/pull/6642)
+* [Lawnchair] Extend LawnchairApp with LauncherApplication (https://github.com/LawnchairLauncher/lawnchair/pull/6629)
+* [Lawnchair/Preference] Don't instantly make the announcement item opaque (https://github.com/LawnchairLauncher/lawnchair/pull/6673)
 
 ### 🥞 Development 4 Release 1 (Snapshot 10)
 
