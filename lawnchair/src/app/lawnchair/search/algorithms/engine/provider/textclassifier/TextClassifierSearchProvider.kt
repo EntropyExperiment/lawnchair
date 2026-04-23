@@ -1,14 +1,18 @@
 package app.lawnchair.search.algorithms.engine.provider.textclassifier
 
+import android.app.RemoteAction
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.textclassifier.TextClassification
 import android.view.textclassifier.TextClassificationManager
+import androidx.annotation.RequiresApi
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.search.algorithms.engine.SearchProvider
 import app.lawnchair.search.algorithms.engine.SearchResult
 import com.android.launcher3.Utilities
 import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,7 +28,7 @@ object TextClassifierSearchProvider : SearchProvider {
     private const val MIN_QUERY_LENGTH = 3
 
     /** Note: Most devices can classify text within less than a second, a value higher than that is being generous */
-    private const val CLASSIFICATION_TIMEOUT_MS = 1500L
+    private const val CLASSIFICATION_TIMEOUT_MS = 1000L
 
     override val id = "textclassifier"
 
@@ -48,6 +52,9 @@ object TextClassifierSearchProvider : SearchProvider {
                     .build()
                 val classification = withTimeoutOrNull(CLASSIFICATION_TIMEOUT_MS.milliseconds) {
                     textClassifier.classifyText(request)
+                }
+                if (classification == null) {
+                    Log.w(TAG, "Classification timed out after ${CLASSIFICATION_TIMEOUT_MS}ms")
                 }
                 if (SENSITIVE_LOGGING) {
                     Log.d(TAG, "Classification result: $classification")
