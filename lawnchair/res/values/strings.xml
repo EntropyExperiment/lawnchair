@@ -271,6 +271,7 @@
     -->
     <!-- General strings -->
     <string name="icon_style_label">Icon style</string>
+    <string name="apply_icon_pack_title">Apply icon pack</string>
     <string name="icon_shape_label">Icon shape</string>
     <string name="icon_sizes">Icon size</string>
 
@@ -324,6 +325,16 @@
     <string name="icon_shape_four_sided_cookie">Four-sided cookie</string>
     <string name="icon_shape_seven_sided_cookie">Seven-sided cookie</string>
     <string name="icon_shape_arch">Arch</string>
+    <!-- Additional icon shapes -->
+    <string name="icon_shape_cloudy">Cloudy</string>
+    <string name="icon_shape_flower">Flower</string>
+    <string name="icon_shape_heart">Heart</string>
+    <string name="icon_shape_leaf">Leaf</string>
+    <string name="icon_shape_meow">Meow</string>
+    <string name="icon_shape_pebble">Pebble</string>
+    <string name="icon_shape_roundedhexagon">Rounded Hexagon</string>
+    <string name="icon_shape_stretched">Stretched</string>
+    <string name="icon_shape_vessel">Vessel</string>
 
     <!-- Custom icon shapes -->
     <string name="custom_icon_shape">Custom icon shape</string>
@@ -570,6 +581,8 @@
     <string name="gesture_double_tap">Double tap</string>
     <string name="gesture_swipe_up">Swipe up</string>
     <string name="gesture_swipe_down">Swipe down</string>
+    <string name="gesture_two_finger_swipe_down">Two-finger swipe down</string>
+    <string name="gesture_two_finger_swipe_up">Two-finger swipe up</string>
     <string name="gesture_home_tap">Home button</string>
     <string name="gesture_back_tap">Back button</string>
     <string name="gesture_swipe_left">Swipe left</string>
@@ -602,6 +615,12 @@
 
     <string name="generic_a11y_hint">To %1$s, turn on the Lawnchair accessibility service. Tap \"Open settings\", select \"Lawnchair\" and turn on \"Use Lawnchair.\"</string>
     <string name="generic_a11y_disclaimer">Lawnchair uses Accessibility\'s `performGlobalAction` method to perform this action. This is a sensitive permission that allows monitoring other apps. However, Lawnchair is not configured for that functionality and receives no events.</string>
+
+    <string name="sleep_mode_label">Sleep mode</string>
+    <string name="sleep_mode_auto">Automatic</string>
+    <string name="sleep_mode_root">Root</string>
+    <string name="sleep_mode_accessibility">Accessibility service</string>
+    <string name="sleep_mode_device_admin">Device admin</string>
 
     <!--
 
