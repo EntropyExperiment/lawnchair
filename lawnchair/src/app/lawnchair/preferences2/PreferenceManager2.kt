@@ -31,6 +31,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import app.lawnchair.data.Converters
 import app.lawnchair.font.FontCache
 import app.lawnchair.gestures.config.GestureHandlerConfig
+import app.lawnchair.gestures.handlers.SleepMode
 import app.lawnchair.gestures.type.GestureType
 import app.lawnchair.hotseat.HotseatMode
 import app.lawnchair.icons.CustomAdaptiveIconDrawable
@@ -154,8 +155,10 @@ class PreferenceManager2 @Inject constructor(
         key = stringPreferencesKey(name = "custom_icon_shape"),
         defaultValue = null,
         parse = {
-            IconShape.fromString(value = it, context = context)
-                ?: IconShapeManager.getSystemIconShape(context)
+            IconShape.CustomCornerBased.fromStringOrNull(value = it)
+                ?: IconShape.CustomCornerBased(
+                    IconShapeManager.getSystemIconShape(context).findNearestShape(),
+                )
         },
         save = { it.toString() },
         onSet = { it?.let(iconShape::setBlocking) },
@@ -758,6 +761,13 @@ class PreferenceManager2 @Inject constructor(
         defaultValue = GestureHandlerConfig.Sleep,
     )
 
+    val sleepMode = preference(
+        key = stringPreferencesKey(name = "sleep_mode"),
+        defaultValue = SleepMode.AUTO,
+        parse = { SleepMode.fromString(it) ?: SleepMode.AUTO },
+        save = { it.toString() },
+    )
+
     val swipeUpGestureHandler = serializablePreference<GestureHandlerConfig>(
         key = stringPreferencesKey("swipe_up_gesture_handler"),
         defaultValue = GestureHandlerConfig.OpenAppDrawer,
@@ -766,6 +776,16 @@ class PreferenceManager2 @Inject constructor(
     val swipeDownGestureHandler = serializablePreference<GestureHandlerConfig>(
         key = stringPreferencesKey("swipe_down_gesture_handler"),
         defaultValue = GestureHandlerConfig.OpenNotifications,
+    )
+
+    val twoFingerSwipeUpGestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("two_finger_swipe_up_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val twoFingerSwipeDownGestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("two_finger_swipe_down_gesture_handler"),
+        defaultValue = GestureHandlerConfig.OpenQuickSettings,
     )
 
     val homePressGestureHandler = serializablePreference<GestureHandlerConfig>(
