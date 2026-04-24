@@ -75,7 +75,7 @@ object TextClassifierSearchProvider : SearchProvider {
                 Log.e(TAG, "Classification failed", e)
             }
 
-            searchResults
+            return@withContext searchResults
         }
 
         emit(results)
