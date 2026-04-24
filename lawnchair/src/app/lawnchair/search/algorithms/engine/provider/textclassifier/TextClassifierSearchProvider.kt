@@ -1,12 +1,9 @@
 package app.lawnchair.search.algorithms.engine.provider.textclassifier
 
-import android.app.RemoteAction
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import android.view.textclassifier.TextClassification
 import android.view.textclassifier.TextClassificationManager
-import androidx.annotation.RequiresApi
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.search.algorithms.engine.SearchProvider
 import app.lawnchair.search.algorithms.engine.SearchResult
@@ -71,6 +68,9 @@ object TextClassifierSearchProvider : SearchProvider {
                         )
                     }
                 }
+            } catch (e: CancellationException) {
+                // This is expected to happen when the search is cancelled however in most case this is safe.
+                Log.d(TAG, "Classification cancelled", e)
             } catch (e: Exception) {
                 Log.e(TAG, "Classification failed", e)
             }
