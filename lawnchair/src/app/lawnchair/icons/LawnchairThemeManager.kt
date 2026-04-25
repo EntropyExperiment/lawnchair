@@ -82,6 +82,10 @@ constructor(
         listeners.forEach { it.onThemeChanged() }
     }
 
+    private fun prefs1State(): String = "${prefs1.wrapAdaptiveIcons.get()},${prefs1.transparentIconBackground.get()}," +
+        "${prefs1.shadowBGIcons.get()},${prefs1.coloredBackgroundLightness.get()}," +
+        "${prefs1.forceIconMonochrome.get()}"
+
     private fun parseIconStateV2(oldState: IconState?): IconState {
         val currentAppShape: IconShape = try {
             prefs2.iconShape.firstBlocking()
@@ -97,12 +101,8 @@ constructor(
             IconShape.Circle
         }
 
-        var appShapeKey = currentAppShape.getHashString()
-        var folderShapeKey = currentFolderShape.getHashString()
-
-        val prefSuffix = "${prefs1.wrapAdaptiveIcons.get()},${prefs1.transparentIconBackground.get()},${prefs1.shadowBGIcons.get()},${prefs1.coloredBackgroundLightness.get()},${prefs1.forceIconMonochrome.get()}"
-        appShapeKey += prefSuffix
-        folderShapeKey += prefSuffix
+        val appShapeKey = currentAppShape.getHashString() + prefs1State()
+        val folderShapeKey = currentFolderShape.getHashString() + prefs1State()
 
         val appShape =
             if (oldState != null && oldState.iconMask == appShapeKey) {
