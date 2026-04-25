@@ -16,11 +16,15 @@ import com.android.launcher3.util.DaggerSingletonTracker
 import com.android.launcher3.util.LooperExecutor
 import com.patrykmichalik.opto.core.firstBlocking
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 @LauncherAppSingleton
 class LawnchairThemeManager
@@ -42,10 +46,12 @@ constructor(
 ) {
     override var iconState = parseIconStateV2(null)
 
-    private val prefListener = PreferenceChangeListener { verifyIconState() }
+    private val prefListener = PreferenceChangeListener {
+        uiExecutor.execute { verifyIconState() }
+    }
 
     init {
-        val scope = MainScope()
+        val scope = MainScope() + CoroutineName("LawnchairThemeManager")
         merge(
             prefs2.iconShape.get(),
             prefs2.customIconShape.get(),
