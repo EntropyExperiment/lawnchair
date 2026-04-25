@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import app.lawnchair.icons.shape.IconShape
 import app.lawnchair.icons.shape.PathShapeDelegate
+import app.lawnchair.preferences.PreferenceChangeListener
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.LauncherPrefs
@@ -20,8 +21,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
-
-// Lawnchair-TODO: investigate, wtf? KSP incremental no update this file, y? how? idk!??!?!
 
 @LauncherAppSingleton
 class LawnchairThemeManager
@@ -43,6 +42,8 @@ constructor(
 ) {
     override var iconState = parseIconStateV2(null)
 
+    private val prefListener = PreferenceChangeListener { verifyIconState() }
+
     init {
         val scope = MainScope()
         merge(
@@ -51,14 +52,19 @@ constructor(
         ).onEach { verifyIconState() }
             .launchIn(scope)
 
-        prefs1.wrapAdaptiveIcons.addListener { verifyIconState() }
-        prefs1.transparentIconBackground.addListener { verifyIconState() }
-        prefs1.shadowBGIcons.addListener { verifyIconState() }
-        prefs1.coloredBackgroundLightness.addListener { verifyIconState() }
-        prefs1.forceIconMonochrome.addListener { verifyIconState() }
+        prefs1.wrapAdaptiveIcons.addListener(prefListener)
+        prefs1.transparentIconBackground.addListener(prefListener)
+        prefs1.shadowBGIcons.addListener(prefListener)
+        prefs1.coloredBackgroundLightness.addListener(prefListener)
+        prefs1.forceIconMonochrome.addListener(prefListener)
 
         lifecycle.addCloseable {
             scope.cancel()
+            prefs1.wrapAdaptiveIcons.removeListener(prefListener)
+            prefs1.transparentIconBackground.removeListener(prefListener)
+            prefs1.shadowBGIcons.removeListener(prefListener)
+            prefs1.coloredBackgroundLightness.removeListener(prefListener)
+            prefs1.forceIconMonochrome.removeListener(prefListener)
         }
     }
 
