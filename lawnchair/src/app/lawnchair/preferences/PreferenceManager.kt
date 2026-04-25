@@ -63,9 +63,9 @@ class PreferenceManager @Inject constructor(
     val iconPackPackage = StringPref("pref_iconPackPackage", "", reloadIcons)
     val themedIconPackPackage = StringPref("pref_themedIconPackPackage", "", reloadIcons)
     val allowRotation = BoolPref("pref_allowRotation", false)
-    val wrapAdaptiveIcons = BoolPref("prefs_wrapAdaptive", true, reloadIcons)
-    val transparentIconBackground = BoolPref("prefs_transparentIconBackground", false, reloadIcons)
-    val shadowBGIcons = BoolPref("pref_shadowBGIcons", true, reloadIcons)
+    val wrapAdaptiveIcons = BoolPref("prefs_wrapAdaptive", true)
+    val transparentIconBackground = BoolPref("prefs_transparentIconBackground", false)
+    val shadowBGIcons = BoolPref("pref_shadowBGIcons", true)
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
     val hotseatColumns = IntPref("pref_hotseatColumns", 4, reloadGrid)
     val workspaceColumns = IntPref("pref_workspaceColumns", 4)
@@ -74,7 +74,7 @@ class PreferenceManager @Inject constructor(
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
     val drawerOpacity = FloatPref("pref_drawerOpacity", .4f, recreate)
-    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F, reloadIcons)
+    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F)
     val feedProvider = StringPref("pref_feedProvider", "")
     val ignoreFeedWhitelist = BoolPref("pref_ignoreFeedWhitelist", false)
     val launcherTheme = StringPref("pref_launcherTheme", "system")
@@ -158,7 +158,7 @@ class PreferenceManager @Inject constructor(
         context.getApkVersionComparison().first[0],
     )
 
-    val forceIconMonochrome = BoolPref("pref_forceIconMonochrome", false, reloadIcons)
+    val forceIconMonochrome = BoolPref("pref_forceIconMonochrome", false)
 
     override fun close() {
         TODO("Not yet implemented")
