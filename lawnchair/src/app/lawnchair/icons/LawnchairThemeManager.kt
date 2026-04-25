@@ -17,13 +17,11 @@ import com.android.launcher3.util.LooperExecutor
 import com.patrykmichalik.opto.core.firstBlocking
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 @LauncherAppSingleton
@@ -58,19 +56,18 @@ constructor(
         ).onEach { verifyIconState() }
             .launchIn(scope)
 
-        prefs1.wrapAdaptiveIcons.addListener(prefListener)
-        prefs1.transparentIconBackground.addListener(prefListener)
-        prefs1.shadowBGIcons.addListener(prefListener)
-        prefs1.coloredBackgroundLightness.addListener(prefListener)
-        prefs1.forceIconMonochrome.addListener(prefListener)
+        val statePrefs1 = listOf(
+            prefs1.wrapAdaptiveIcons,
+            prefs1.transparentIconBackground,
+            prefs1.shadowBGIcons,
+            prefs1.coloredBackgroundLightness,
+            prefs1.forceIconMonochrome,
+        )
+        statePrefs1.forEach { it.addListener(prefListener) }
 
         lifecycle.addCloseable {
             scope.cancel()
-            prefs1.wrapAdaptiveIcons.removeListener(prefListener)
-            prefs1.transparentIconBackground.removeListener(prefListener)
-            prefs1.shadowBGIcons.removeListener(prefListener)
-            prefs1.coloredBackgroundLightness.removeListener(prefListener)
-            prefs1.forceIconMonochrome.removeListener(prefListener)
+            statePrefs1.forEach { it.removeListener(prefListener) }
         }
     }
 
@@ -101,8 +98,9 @@ constructor(
             IconShape.Circle
         }
 
-        val appShapeKey = currentAppShape.getHashString() + prefs1State()
-        val folderShapeKey = currentFolderShape.getHashString() + prefs1State()
+        val currentPrefs1State = prefs1State()
+        val appShapeKey = currentAppShape.getHashString() + currentPrefs1State
+        val folderShapeKey = currentFolderShape.getHashString() + currentPrefs1State
 
         val appShape =
             if (oldState != null && oldState.iconMask == appShapeKey) {
