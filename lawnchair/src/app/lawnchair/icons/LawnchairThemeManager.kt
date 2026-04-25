@@ -42,11 +42,19 @@ constructor(
     iconControllerFactory,
     lifecycle,
 ) {
-    override var iconState = parseIconStateV2(null)
+    private val statePrefs1 = listOf(
+        prefs1.wrapAdaptiveIcons,
+        prefs1.transparentIconBackground,
+        prefs1.shadowBGIcons,
+        prefs1.coloredBackgroundLightness,
+        prefs1.forceIconMonochrome,
+    )
 
     private val prefListener = PreferenceChangeListener {
         uiExecutor.execute { verifyIconState() }
     }
+
+    override var iconState = parseIconStateV2(null)
 
     init {
         val scope = MainScope() + CoroutineName("LawnchairThemeManager")
@@ -56,13 +64,6 @@ constructor(
         ).onEach { verifyIconState() }
             .launchIn(scope)
 
-        val statePrefs1 = listOf(
-            prefs1.wrapAdaptiveIcons,
-            prefs1.transparentIconBackground,
-            prefs1.shadowBGIcons,
-            prefs1.coloredBackgroundLightness,
-            prefs1.forceIconMonochrome,
-        )
         statePrefs1.forEach { it.addListener(prefListener) }
 
         lifecycle.addCloseable {
@@ -79,9 +80,7 @@ constructor(
         listeners.forEach { it.onThemeChanged() }
     }
 
-    private fun prefs1State(): String = "${prefs1.wrapAdaptiveIcons.get()},${prefs1.transparentIconBackground.get()}," +
-        "${prefs1.shadowBGIcons.get()},${prefs1.coloredBackgroundLightness.get()}," +
-        "${prefs1.forceIconMonochrome.get()}"
+    private fun prefs1State(): String = statePrefs1.joinToString(",") { it.get().toString() }
 
     private fun parseIconStateV2(oldState: IconState?): IconState {
         val currentAppShape: IconShape = try {
