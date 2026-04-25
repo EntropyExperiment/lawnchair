@@ -4,11 +4,9 @@ import android.content.Context
 import android.util.Log
 import app.lawnchair.icons.shape.IconShape
 import app.lawnchair.icons.shape.PathShapeDelegate
+import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
-import com.android.launcher3.EncryptionType
-import com.android.launcher3.LauncherPrefChangeListener
 import com.android.launcher3.LauncherPrefs
-import com.android.launcher3.LauncherPrefs.Companion.backedUpItem
 import com.android.launcher3.concurrent.annotations.Ui
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -23,6 +21,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
+// Lawnchair-TODO: investigate, wtf? KSP incremental no update this file, y? how? idk!??!?!
+
 @LauncherAppSingleton
 class LawnchairThemeManager
 @Inject
@@ -33,6 +33,7 @@ constructor(
     private val iconControllerFactory: IconControllerFactory,
     private val lifecycle: DaggerSingletonTracker,
     private val prefs2: PreferenceManager2,
+    private val prefs1: PreferenceManager,
 ) : ThemeManager(
     context,
     uiExecutor,
@@ -50,20 +51,13 @@ constructor(
         ).onEach { verifyIconState() }
             .launchIn(scope)
 
-        // Listen for specific Lawnchair SharedPreferences it's easier than trying to make prefs1 work with listener
-        val drawerThemedIcons = backedUpItem("drawer_themed_icons", false, EncryptionType.DEVICE_PROTECTED)
-        val forceMonochrome = backedUpItem("pref_forceIconMonochrome", false, EncryptionType.DEVICE_PROTECTED)
-        val keys = listOf(drawerThemedIcons, forceMonochrome)
-        val keysArray = keys.toTypedArray()
-        val prefKeySet = keys.map { it.sharedPrefKey }
-
-        val prefListener = LauncherPrefChangeListener { key ->
-            if (prefKeySet.contains(key)) verifyIconState()
-        }
-        prefs.addListener(prefListener, *keysArray)
+        prefs1.wrapAdaptiveIcons.addListener { verifyIconState() }
+        prefs1.transparentIconBackground.addListener { verifyIconState() }
+        prefs1.shadowBGIcons.addListener { verifyIconState() }
+        prefs1.coloredBackgroundLightness.addListener { verifyIconState() }
+        prefs1.forceIconMonochrome.addListener { verifyIconState() }
 
         lifecycle.addCloseable {
-            prefs.removeListener(prefListener, *keysArray)
             scope.cancel()
         }
     }
@@ -91,8 +85,12 @@ constructor(
             IconShape.Circle
         }
 
-        val appShapeKey = currentAppShape.getHashString()
-        val folderShapeKey = currentFolderShape.getHashString()
+        var appShapeKey = currentAppShape.getHashString()
+        var folderShapeKey = currentFolderShape.getHashString()
+
+        val prefSuffix = "${prefs1.wrapAdaptiveIcons.get()},${prefs1.transparentIconBackground.get()},${prefs1.shadowBGIcons.get()},${prefs1.coloredBackgroundLightness.get()},${prefs1.forceIconMonochrome.get()}"
+        appShapeKey += prefSuffix
+        folderShapeKey += prefSuffix
 
         val appShape =
             if (oldState != null && oldState.iconMask == appShapeKey) {
