@@ -204,6 +204,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     private final PreferenceManager2 pref2;
     private final PreferenceManager pref;
 
+    // LC-Note: Allapps cache colour
+    private int mCachedBottomSheetBgColor;
+
     public ActivityAllAppsContainerView(Context context) {
         this(context, null);
     }
@@ -347,6 +350,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
 
         mBottomSheetBackgroundColorLegacy = ColorTokens.SurfaceDimColor.resolveColor(getContext());
+
+        // LC-Note: Update our allapps cached colour
+        updateBottomSheetBackgroundColor();
 
         updateBackgroundVisibility(mActivityContext.getDeviceProfile());
         mSearchUiManager.initializeSearch(this);
@@ -890,6 +896,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     int getBottomSheetBackgroundColor() {
+        return mCachedBottomSheetBgColor;
+    }
+
+    // LC-Note: This is getBottomSheetBackgroundColor() in AOSP, but we refactor it to cache our prefs.
+    private void updateBottomSheetBackgroundColor() {
         int defaultColor;
         if (!Flags.allAppsBlur()) {
             defaultColor = mBottomSheetBackgroundColorLegacy;
@@ -898,7 +909,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         } else {
             defaultColor = mBottomSheetBackgroundColorOverBlur;
         }
-        return LawnchairUtilsKt.getAllAppsBackgroundColor(mActivityContext, defaultColor);
+        int newColor = LawnchairUtilsKt.getAllAppsBackgroundColor(mActivityContext, defaultColor);
+        if (mCachedBottomSheetBgColor != newColor) {
+            mCachedBottomSheetBgColor = newColor;
+            invalidate();
+        }
     }
 
     boolean isBackgroundBlurEnabled() {
@@ -1099,6 +1114,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mNavBarScrimPaint.setColor(navBarScrimColor);
             invalidate();
         }
+        // LC-Note: Update our allapps cached colour
+        updateBottomSheetBackgroundColor();
     }
 
     protected void updateBackgroundVisibility(DeviceProfile deviceProfile) {
