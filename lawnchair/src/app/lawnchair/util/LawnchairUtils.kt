@@ -42,8 +42,10 @@ import android.util.Log
 import android.util.Size
 import android.view.View
 import android.widget.TextView
+import androidx.compose.ui.util.lerp
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.createBitmap
+import androidx.core.graphics.luminance
 import androidx.core.os.UserManagerCompat
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
@@ -147,10 +149,8 @@ fun supportsRoundedCornersOnWindows(context: Context): Boolean {
 
 fun overrideAllAppsTextColor(textView: TextView) {
     val context = textView.context
-    val opacity = PreferenceManager.getInstance(context).drawerOpacity.get()
-    val isBlurred = BlurUtils.supportsBlursOnWindows() && Flags.allAppsBlur()
-    // Don't use alternative text colour on blurred backgrounds since the text will be -- in most cases -- illegible by the blur
-    if (opacity <= 0.3f && !isBlurred) {
+    val luminance = getAllAppsBaseColor(context, ColorTokens.AllAppsScrimColor.resolveColor(context)).luminance
+    if (luminance > 0.5f) {
         textView.setTextColor(Themes.getAttrColor(context, R.attr.allAppsAlternateTextColor))
     }
 }
@@ -196,8 +196,19 @@ private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
 /** Apply Lawnchair custom allapps opacity and colour to the provided colour */
 fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
     val prefs = PreferenceManager.getInstance(context)
-    val alpha = (prefs.drawerOpacity.get() * 255).roundToInt()
-    return ColorUtils.setAlphaComponent(getAllAppsBaseColor(context, defaultColor), alpha)
+    val isBlurred = BlurUtils.supportsBlursOnWindows() && Flags.allAppsBlur()
+    val userOpacity = prefs.drawerOpacity.get()
+
+    val actualOpacity = calculateAllAppsBestVisualOpacity(userOpacity, isBlurred)
+    return ColorUtils.setAlphaComponent(getAllAppsBaseColor(context, defaultColor), (actualOpacity * 255).roundToInt())
+}
+
+private fun calculateAllAppsBestVisualOpacity(alpha: Float, isBlurred: Boolean): Float {
+    val allAppsBlurRange = 0.55f..1.0f
+    val allAppsNoBlurRange = 0.15f..0.75f
+    val (min, max) = if (isBlurred) allAppsBlurRange.start to allAppsBlurRange.endInclusive else allAppsNoBlurRange.start to allAppsNoBlurRange.endInclusive
+
+    return lerp(min, max, alpha.coerceIn(0f, 1f))
 }
 
 fun Context.checkPackagePermission(packageName: String, permissionName: String): Boolean {
