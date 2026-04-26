@@ -204,8 +204,8 @@ fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
 }
 
 private fun calculateAllAppsBestVisualOpacity(alpha: Float, isBlurred: Boolean): Float {
-    val allAppsBlurRange = 0.55f..1.0f
-    val allAppsNoBlurRange = 0.15f..0.75f
+    val allAppsBlurRange = 0.4f..1.0f
+    val allAppsNoBlurRange = 0.0f..1.0f
     val (min, max) = if (isBlurred) allAppsBlurRange.start to allAppsBlurRange.endInclusive else allAppsNoBlurRange.start to allAppsNoBlurRange.endInclusive
 
     return lerp(min, max, alpha.coerceIn(0f, 1f))
