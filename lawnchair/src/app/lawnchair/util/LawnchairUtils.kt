@@ -51,12 +51,14 @@ import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.tokens.ColorTokens
+import com.android.launcher3.BaseActivity
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.Flags
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.util.Executors.MAIN_EXECUTOR
 import com.android.launcher3.util.Themes
+import com.android.launcher3.views.ActivityContext
 import com.android.systemui.shared.system.BlurUtils
 import com.android.systemui.shared.system.QuickStepContract
 import com.patrykmichalik.opto.core.firstBlocking
@@ -149,8 +151,10 @@ fun supportsRoundedCornersOnWindows(context: Context): Boolean {
 
 fun overrideAllAppsTextColor(textView: TextView) {
     val context = textView.context
+    val isBlurred = ActivityContext.lookupContext<BaseActivity>(context).isAllAppsBackgroundBlurEnabled
     val luminance = getAllAppsBaseColor(context, ColorTokens.AllAppsScrimColor.resolveColor(context)).luminance
-    if (luminance > 0.5f) {
+    val opacity = calculateAllAppsBestVisualOpacity(PreferenceManager.getInstance(context).drawerOpacity.get(), isBlurred)
+    if ((!isBlurred && (luminance > 0.5f || opacity <= 0.3f)) || (isBlurred && luminance > 0.5f || opacity <= 0.3f)) {
         textView.setTextColor(Themes.getAttrColor(context, R.attr.allAppsAlternateTextColor))
     }
 }
@@ -204,7 +208,7 @@ fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
 }
 
 private fun calculateAllAppsBestVisualOpacity(alpha: Float, isBlurred: Boolean): Float {
-    val allAppsBlurRange = 0.4f..1.0f
+    val allAppsBlurRange = 0.3f..1.0f
     val allAppsNoBlurRange = 0.0f..1.0f
     val (min, max) = if (isBlurred) allAppsBlurRange.start to allAppsBlurRange.endInclusive else allAppsNoBlurRange.start to allAppsNoBlurRange.endInclusive
 
