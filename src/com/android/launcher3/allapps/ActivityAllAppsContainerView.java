@@ -26,6 +26,7 @@ import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCH
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_ALLAPPS_TAP_ON_PERSONAL_TAB;
 import static com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_ALLAPPS_TAP_ON_WORK_TAB;
 import static com.android.launcher3.util.Executors.MAIN_EXECUTOR;
+import static com.android.launcher3.util.Executors.UI_HELPER_EXECUTOR;
 import static com.android.launcher3.util.ScrollableLayoutManager.PREDICTIVE_BACK_MIN_SCALE;
 import static com.android.launcher3.views.RecyclerViewFastScroller.FastScrollerLocation.ALL_APPS_SCROLLER;
 import static com.android.window.flags2.Flags.predictiveBackThreeButtonNav;
@@ -50,6 +51,7 @@ import android.os.UserManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.CrossWindowBlurListeners;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -202,7 +204,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     private int mTabsProtectionAlpha;
     @Nullable private AllAppsTransitionController mAllAppsTransitionController;
 
-    @Nullable private java.util.function.Consumer<Boolean> mCrossWindowBlurListener; // LC-Note: WM needs java consumer, not androidx
+    @Nullable private java.util.function.Consumer<Boolean> mCrossWindowBlurListener;
 
     private final PreferenceManager2 pref2;
     private final PreferenceManager pref;
@@ -365,31 +367,38 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (isSearchBarFloating()) {
-            // Note: for Taskbar this is removed in TaskbarAllAppsController#cleanUpOverlay when the
-            // panel is closed. Can't do so in onDetach because we are also a child of drag layer
-            // so can't remove its views during that dispatch.
             mActivityContext.getDragLayer().addView(mSearchContainer);
             mSearchUiDelegate.onInitializeSearchBar();
         }
         mActivityContext.addOnDeviceProfileChangeListener(this);
-
-        // LC-Note: Update cached colour when blur status changed
-        mCrossWindowBlurListener = enabled -> {
-            if (updateBottomSheetBackgroundColor()) {
-                invalidate();
+        if (Utilities.ATLEAST_S) {
+            mCrossWindowBlurListener = enabled -> {
+                if (updateBottomSheetBackgroundColor()) {
+                    invalidate();
+                }
+            };
+            try {
+                UI_HELPER_EXECUTOR.execute(() ->
+                    CrossWindowBlurListeners.getInstance()
+                        .addListener(MAIN_EXECUTOR, mCrossWindowBlurListener));
+            } catch (Throwable t) {
+                // LC-Ignored
             }
-        };
-        getContext().getSystemService(WindowManager.class).addCrossWindowBlurEnabledListener(mCrossWindowBlurListener);
+        }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mActivityContext.removeOnDeviceProfileChangeListener(this);
-
-        // LC-Note: Update cached colour when blur status changed
         if (mCrossWindowBlurListener != null) {
-            getContext().getSystemService(WindowManager.class).removeCrossWindowBlurEnabledListener(mCrossWindowBlurListener);
+            try {
+                UI_HELPER_EXECUTOR.execute(() ->
+                    CrossWindowBlurListeners.getInstance()
+                        .removeListener(mCrossWindowBlurListener));
+            } catch (Throwable t) {
+                // LC-Ignored
+            }
             mCrossWindowBlurListener = null;
         }
     }
