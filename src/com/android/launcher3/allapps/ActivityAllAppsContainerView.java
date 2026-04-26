@@ -373,7 +373,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         mActivityContext.addOnDeviceProfileChangeListener(this);
         if (Utilities.ATLEAST_S) {
             mCrossWindowBlurListener = enabled -> {
-                if (updateBottomSheetBackgroundColor()) {
+                if (updateBottomSheetBackgroundColor(enabled)) {
                     invalidate();
                 }
             };
@@ -927,10 +927,15 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     // LC-Note: This is getBottomSheetBackgroundColor() in AOSP, but we refactor it to cache our prefs.
     private boolean updateBottomSheetBackgroundColor() {
+        return updateBottomSheetBackgroundColor(mActivityContext.isAllAppsBackgroundBlurEnabled());
+    }
+
+    // LC-Note: For listener to avoid querying stale value.
+    private boolean updateBottomSheetBackgroundColor(boolean blurEnabled) {
         int defaultColor;
         if (!Flags.allAppsBlur()) {
             defaultColor = mBottomSheetBackgroundColorLegacy;
-        } else if (!mActivityContext.isAllAppsBackgroundBlurEnabled()) {
+        } else if (!blurEnabled) {
             defaultColor = mBottomSheetBackgroundColorBlurFallback;
         } else {
             defaultColor = mBottomSheetBackgroundColorOverBlur;
