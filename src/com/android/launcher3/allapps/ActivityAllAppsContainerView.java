@@ -873,7 +873,6 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
         opacity = Math.clamp(opacity, 0f, 1f);
 
-        mScrimColor = ColorTokens.AllAppsScrimColor.resolveColor(mActivityContext);
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return ColorUtils.setAlphaComponent(
                     ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
