@@ -898,15 +898,14 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected int getHeaderColor(float blendRatio) {
-        float opacity = mSearchContainer.getAlpha();
-        var showHeaderBackground = PreferenceExtensionsKt.firstBlocking(
-            pref2.getAppDrawerSearchBarBackground());
-        if (showHeaderBackground) {
-            opacity = pref.getDrawerOpacity().get();
-        }
-        opacity = MathUtils.clamp(opacity, 0f, 1f);
-
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
+            float opacity = mSearchContainer.getAlpha();
+            var showHeaderBackground = PreferenceExtensionsKt.firstBlocking(
+                pref2.getAppDrawerSearchBarBackground());
+            if (showHeaderBackground) {
+                opacity = pref.getDrawerOpacity().get();
+            }
+            opacity = MathUtils.clamp(opacity, 0f, 1f);
             return ColorUtils.setAlphaComponent(
                     ColorUtils.blendARGB(getBackgroundColor(), mHeaderProtectionColor, blendRatio),
                     Math.round(opacity * 255));
