@@ -900,7 +900,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     // LC-Note: This is getBottomSheetBackgroundColor() in AOSP, but we refactor it to cache our prefs.
-    private void updateBottomSheetBackgroundColor() {
+    private boolean updateBottomSheetBackgroundColor() {
         int defaultColor;
         if (!Flags.allAppsBlur()) {
             defaultColor = mBottomSheetBackgroundColorLegacy;
@@ -912,8 +912,9 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         int newColor = LawnchairUtilsKt.getAllAppsBackgroundColor(mActivityContext, defaultColor);
         if (mCachedBottomSheetBgColor != newColor) {
             mCachedBottomSheetBgColor = newColor;
-            invalidate();
+            return true;
         }
+        return false;
     }
 
     boolean isBackgroundBlurEnabled() {
@@ -1109,13 +1110,20 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
         updateBackgroundVisibility(dp);
 
+        boolean needsInvalidate = false;
         int navBarScrimColor = Themes.getNavBarScrimColor(mActivityContext);
         if (mNavBarScrimPaint.getColor() != navBarScrimColor) {
             mNavBarScrimPaint.setColor(navBarScrimColor);
-            invalidate();
+            needsInvalidate = true;
         }
         // LC-Note: Update our allapps cached colour
-        updateBottomSheetBackgroundColor();
+        if (updateBottomSheetBackgroundColor()) {
+            needsInvalidate = true;
+        }
+
+        if (needsInvalidate) {
+            invalidate();
+        }
     }
 
     protected void updateBackgroundVisibility(DeviceProfile deviceProfile) {
