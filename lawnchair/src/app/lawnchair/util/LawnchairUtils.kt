@@ -196,7 +196,7 @@ private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
 /** Apply Lawnchair custom allapps opacity and colour to the provided colour */
 fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
     val prefs = PreferenceManager.getInstance(context)
-    val isBlurred = BlurUtils.supportsBlursOnWindows() && Flags.allAppsBlur()
+    val isBlurred = ActivityContext.lookupContext<BaseActivity>(context).isAllAppsBackgroundBlurEnabled
     val userOpacity = prefs.drawerOpacity.get()
 
     val actualOpacity = calculateAllAppsBestVisualOpacity(userOpacity, isBlurred)
