@@ -57,6 +57,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.view.WindowInsets;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -200,6 +201,8 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     private int mBottomSheetBackgroundColorLegacy;
     private int mTabsProtectionAlpha;
     @Nullable private AllAppsTransitionController mAllAppsTransitionController;
+
+    @Nullable private java.util.function.Consumer<Boolean> mCrossWindowBlurListener; // LC-Note: WM needs java consumer, not androidx
 
     private final PreferenceManager2 pref2;
     private final PreferenceManager pref;
@@ -369,12 +372,26 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             mSearchUiDelegate.onInitializeSearchBar();
         }
         mActivityContext.addOnDeviceProfileChangeListener(this);
+
+        // LC-Note: Update cached colour when blur status changed
+        mCrossWindowBlurListener = enabled -> {
+            if (updateBottomSheetBackgroundColor()) {
+                invalidate();
+            }
+        };
+        getContext().getSystemService(WindowManager.class).addCrossWindowBlurEnabledListener(mCrossWindowBlurListener);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mActivityContext.removeOnDeviceProfileChangeListener(this);
+
+        // LC-Note: Update cached colour when blur status changed
+        if (mCrossWindowBlurListener != null) {
+            getContext().getSystemService(WindowManager.class).removeCrossWindowBlurEnabledListener(mCrossWindowBlurListener);
+            mCrossWindowBlurListener = null;
+        }
     }
 
     public SearchUiManager getSearchUiManager() {
@@ -882,7 +899,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return ColorUtils.setAlphaComponent(
-                    ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
+                    ColorUtils.blendARGB(getBackgroundColor(), mHeaderProtectionColor, blendRatio),
                     Math.round(opacity * 255));
         }
         return isBackgroundBlurEnabled()
