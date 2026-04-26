@@ -219,7 +219,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         pref2 = PreferenceManager2.getInstance(mActivityContext);
         pref = PreferenceManager.getInstance(mActivityContext);
         
-        mScrimColor = LawnchairUtilsKt.getAllAppsBaseColor(context);
+        mScrimColor = ColorTokens.AllAppsScrimColor.resolveColor(context);
         mHeaderThreshold = getResources().getDimensionPixelSize(
                 R.dimen.dynamic_grid_cell_border_spacing);
         mHeaderProtectionColor = ColorTokens.AllAppsHeaderProtectionColor.resolveColor(context);
@@ -872,7 +872,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
             opacity = pref.getDrawerOpacity().get();
         }
 
-        mScrimColor = LawnchairUtilsKt.getAllAppsBaseColor(mActivityContext);
+        mScrimColor = ColorTokens.AllAppsScrimColor.resolveColor(mActivityContext);
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return ColorUtils.setAlphaComponent(
                     ColorUtils.blendARGB(mScrimColor, mHeaderProtectionColor, blendRatio),
@@ -885,7 +885,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     private int getBackgroundColor() {
         return mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()
-                ? getBottomSheetBackgroundColor() : LawnchairUtilsKt.getAllAppsBaseColor(mActivityContext);
+                ? getBottomSheetBackgroundColor() : ColorTokens.AllAppsScrimColor.resolveColor(mActivityContext);
     }
 
     int getBottomSheetBackgroundColor() {

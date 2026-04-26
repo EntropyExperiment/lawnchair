@@ -211,13 +211,13 @@ public class AllAppsState extends LauncherState {
         int backgroundColor;
         if (!launcher.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             // Always use an opaque scrim if there's no sheet.
-            backgroundColor = LawnchairUtilsKt.getAllAppsBaseColor(launcher);
+            backgroundColor = ColorTokens.AllAppsScrimColor.resolveColor(launcher);
         } else if (!Flags.allAppsBlur()) {
             // If there's a sheet but no blur, use the old scrim color.
             backgroundColor = LawnchairUtilsKt.getAllAppsBackgroundColor(launcher, 
                 ColorTokens.WidgetsPickerScrim.resolveColor(launcher));
         } else {
-            backgroundColor = LawnchairUtilsKt.getAllAppsBaseColor(launcher);
+            backgroundColor = ColorTokens.AllAppsScrimColor.resolveColor(launcher);
         }
         return new ScrimColors(backgroundColor, /* foregroundColor */ Color.TRANSPARENT);
     }

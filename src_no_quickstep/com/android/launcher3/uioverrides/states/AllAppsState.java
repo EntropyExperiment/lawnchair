@@ -105,7 +105,7 @@ public class AllAppsState extends LauncherState {
                 /* backgroundColor */ launcher.getDeviceProfile().getDeviceProperties().isTablet()
                 ? LawnchairUtilsKt.getAllAppsBackgroundColor(launcher, 
                         ColorTokens.WidgetsPickerScrim.resolveColor(launcher))
-                : LawnchairUtilsKt.getAllAppsBaseColor(launcher),
+                : ColorTokens.AllAppsScrimColor.resolveColor(launcher),
                 /* foregroundColor */ Color.TRANSPARENT);
     }
 }
