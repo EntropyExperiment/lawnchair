@@ -66,6 +66,7 @@ import androidx.annotation.Px;
 import androidx.annotation.VisibleForTesting;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.ColorUtils;
+import androidx.core.math.MathUtils;
 import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -871,7 +872,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (showHeaderBackground) {
             opacity = pref.getDrawerOpacity().get();
         }
-        opacity = Math.clamp(opacity, 0f, 1f);
+        opacity = MathUtils.clamp(opacity, 0f, 1f);
 
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
             return ColorUtils.setAlphaComponent(
