@@ -892,7 +892,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     private int getBackgroundColor() {
         return mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()
-                ? getBottomSheetBackgroundColor() : ColorTokens.AllAppsScrimColor.resolveColor(mActivityContext);
+                ? getBottomSheetBackgroundColor() : mScrimColor;
     }
 
     int getBottomSheetBackgroundColor() {

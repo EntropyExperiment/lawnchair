@@ -53,13 +53,11 @@ import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.tokens.ColorTokens
 import com.android.launcher3.BaseActivity
 import com.android.launcher3.BuildConfig
-import com.android.launcher3.Flags
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.util.Executors.MAIN_EXECUTOR
 import com.android.launcher3.util.Themes
 import com.android.launcher3.views.ActivityContext
-import com.android.systemui.shared.system.BlurUtils
 import com.android.systemui.shared.system.QuickStepContract
 import com.patrykmichalik.opto.core.firstBlocking
 import java.io.ByteArrayOutputStream
@@ -154,7 +152,7 @@ fun overrideAllAppsTextColor(textView: TextView) {
     val isBlurred = ActivityContext.lookupContext<BaseActivity>(context).isAllAppsBackgroundBlurEnabled
     val luminance = getAllAppsBaseColor(context, ColorTokens.AllAppsScrimColor.resolveColor(context)).luminance
     val opacity = calculateAllAppsBestVisualOpacity(PreferenceManager.getInstance(context).drawerOpacity.get(), isBlurred)
-    if ((!isBlurred && (luminance > 0.5f || opacity <= 0.3f)) || (isBlurred && luminance > 0.5f || opacity <= 0.3f)) {
+    if (luminance > 0.5f || opacity <= 0.3f) {
         textView.setTextColor(Themes.getAttrColor(context, R.attr.allAppsAlternateTextColor))
     }
 }
