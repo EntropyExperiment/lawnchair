@@ -895,6 +895,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 ? getBottomSheetBackgroundColor() : mScrimColor;
     }
 
+    // LC-Note: Hey! We cache this! see updateBottomSheetBackgroundColor() for more details.
     int getBottomSheetBackgroundColor() {
         return mCachedBottomSheetBgColor;
     }
