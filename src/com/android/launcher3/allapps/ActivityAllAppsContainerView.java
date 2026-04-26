@@ -871,6 +871,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (showHeaderBackground) {
             opacity = pref.getDrawerOpacity().get();
         }
+        opacity = Math.clamp(opacity, 0f, 1f);
 
         mScrimColor = ColorTokens.AllAppsScrimColor.resolveColor(mActivityContext);
         if (!mActivityContext.getDeviceProfile().shouldShowAllAppsOnSheet()) {
