@@ -23,7 +23,6 @@ import android.content.Intent
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.util.Pair
 import android.view.Display
 import android.view.View
