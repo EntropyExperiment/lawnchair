@@ -38,6 +38,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -138,7 +139,7 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
         ShapeRoute.APP_SHAPE -> preferenceManager2.iconShape.getAdapter()
         ShapeRoute.FOLDER_SHAPE -> preferenceManager2.folderShape.getAdapter()
     }
-    val customShapeState = when (currentTab) {
+    val customShape by when (currentTab) {
         ShapeRoute.APP_SHAPE -> preferenceManager2.customIconShape.asState()
         ShapeRoute.FOLDER_SHAPE -> preferenceManager2.customFolderShape.asState()
     }
@@ -146,15 +147,17 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
     PreferenceGroup(
         heading = stringResource(id = R.string.custom),
     ) {
-        Item(visible = customShapeState.value != null) {
-            CustomIconShapePreferenceOption(
-                iconShapeAdapter = shapeAdapter,
-                customIconShape = customShapeState.value!!,
-            )
+        customShape?.let { shape ->
+            Item {
+                CustomIconShapePreferenceOption(
+                    iconShapeAdapter = shapeAdapter,
+                    customIconShape = shape,
+                )
+            }
         }
         Item {
             ModifyCustomIconShapePreference(
-                customIconShape = customShapeState.value,
+                customIconShape = customShape,
                 currentTab = currentTab,
             )
         }
