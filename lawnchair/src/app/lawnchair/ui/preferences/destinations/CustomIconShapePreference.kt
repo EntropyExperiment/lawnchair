@@ -63,10 +63,14 @@ import kotlin.toString
 @Composable
 fun CustomIconShapePreference(
     modifier: Modifier = Modifier,
+    currentTab: ShapeRoute = ShapeRoute.APP_SHAPE,
 ) {
     val preferenceManager2 = preferenceManager2()
 
-    val customIconShapeAdapter = preferenceManager2.customIconShape.getAdapter()
+    val customIconShapeAdapter = when (currentTab) {
+        ShapeRoute.APP_SHAPE -> preferenceManager2.customIconShape.getAdapter()
+        ShapeRoute.FOLDER_SHAPE -> preferenceManager2.customFolderShape.getAdapter()
+    }
 
     val appliedIconShape = customIconShapeAdapter.state.value
     val selectedIconShape = remember {
@@ -80,8 +84,13 @@ fun CustomIconShapePreference(
         }
     }
 
+    val label = when (currentTab) {
+        ShapeRoute.APP_SHAPE -> stringResource(id = R.string.custom_icon_shape)
+        ShapeRoute.FOLDER_SHAPE -> stringResource(id = R.string.folder_shape_label)
+    }
+
     PreferenceLayout(
-        label = stringResource(id = R.string.custom_icon_shape),
+        label = label,
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         bottomBar = {
