@@ -149,9 +149,8 @@ fun supportsRoundedCornersOnWindows(context: Context): Boolean {
 
 fun overrideAllAppsTextColor(textView: TextView) {
     val context = textView.context
-    val isBlurred = ActivityContext.lookupContext<BaseActivity>(context).isAllAppsBackgroundBlurEnabled
     val luminance = getAllAppsBaseColor(context, ColorTokens.AllAppsScrimColor.resolveColor(context)).luminance
-    val opacity = calculateAllAppsBestVisualOpacity(PreferenceManager.getInstance(context).drawerOpacity.get(), isBlurred)
+    val opacity = PreferenceManager.getInstance(context).drawerOpacity.get()
     if (luminance > 0.5f || opacity <= 0.3f) {
         textView.setTextColor(Themes.getAttrColor(context, R.attr.allAppsAlternateTextColor))
     }
@@ -198,19 +197,8 @@ private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
 /** Apply Lawnchair custom allapps opacity and colour to the provided colour */
 fun getAllAppsBackgroundColor(context: Context, defaultColor: Int): Int {
     val prefs = PreferenceManager.getInstance(context)
-    val isBlurred = ActivityContext.lookupContext<BaseActivity>(context).isAllAppsBackgroundBlurEnabled
     val userOpacity = prefs.drawerOpacity.get()
-
-    val actualOpacity = calculateAllAppsBestVisualOpacity(userOpacity, isBlurred)
-    return ColorUtils.setAlphaComponent(getAllAppsBaseColor(context, defaultColor), (actualOpacity * 255).roundToInt())
-}
-
-private fun calculateAllAppsBestVisualOpacity(alpha: Float, isBlurred: Boolean): Float {
-    val allAppsBlurRange = 0.3f..1.0f
-    val allAppsNoBlurRange = 0.0f..1.0f
-    val (min, max) = if (isBlurred) allAppsBlurRange.start to allAppsBlurRange.endInclusive else allAppsNoBlurRange.start to allAppsNoBlurRange.endInclusive
-
-    return lerp(min, max, alpha.coerceIn(0f, 1f))
+    return ColorUtils.setAlphaComponent(getAllAppsBaseColor(context, defaultColor), (userOpacity * 255).roundToInt())
 }
 
 fun Context.checkPackagePermission(packageName: String, permissionName: String): Boolean {
