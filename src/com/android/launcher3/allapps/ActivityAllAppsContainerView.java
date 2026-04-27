@@ -372,15 +372,16 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         }
         mActivityContext.addOnDeviceProfileChangeListener(this);
         if (Utilities.ATLEAST_S) {
-            mCrossWindowBlurListener = enabled -> {
+            java.util.function.Consumer<Boolean> listener = enabled -> {
                 if (updateBottomSheetBackgroundColor(enabled)) {
                     invalidate();
                 }
             };
+            mCrossWindowBlurListener = listener;
             try {
                 UI_HELPER_EXECUTOR.execute(() ->
                     CrossWindowBlurListeners.getInstance()
-                        .addListener(MAIN_EXECUTOR, mCrossWindowBlurListener));
+                        .addListener(MAIN_EXECUTOR, listener));
             } catch (Throwable t) {
                 // LC-Ignored
             }
@@ -392,10 +393,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         super.onDetachedFromWindow();
         mActivityContext.removeOnDeviceProfileChangeListener(this);
         if (mCrossWindowBlurListener != null) {
+            java.util.function.Consumer<Boolean> listener = mCrossWindowBlurListener;
             try {
                 UI_HELPER_EXECUTOR.execute(() ->
                     CrossWindowBlurListeners.getInstance()
-                        .removeListener(mCrossWindowBlurListener));
+                        .removeListener(listener));
             } catch (Throwable t) {
                 // LC-Ignored
             }
