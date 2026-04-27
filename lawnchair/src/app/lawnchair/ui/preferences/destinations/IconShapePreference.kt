@@ -266,10 +266,10 @@ private fun ModifyCustomIconShapePreference(
     val created = customIconShape != null
 
     val text = stringResource(
-    when (currentTab) {
+        when (currentTab) {
             ShapeRoute.APP_SHAPE -> if (created) R.string.custom_icon_shape_edit else R.string.custom_icon_shape_create
             else -> if (created) R.string.custom_folder_shape_edit else R.string.custom_folder_shape_create
-        }
+        },
     )
 
     val icon = if (created) Icons.Rounded.Edit else Icons.Rounded.Add
