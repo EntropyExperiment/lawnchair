@@ -378,13 +378,14 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 }
             };
             mCrossWindowBlurListener = listener;
-            try {
-                UI_HELPER_EXECUTOR.execute(() ->
+            UI_HELPER_EXECUTOR.execute(() -> {
+                try {
                     CrossWindowBlurListeners.getInstance()
-                        .addListener(MAIN_EXECUTOR, listener));
-            } catch (Throwable t) {
-                // LC-Ignored
-            }
+                            .addListener(MAIN_EXECUTOR, listener);
+                } catch (Throwable t) {
+                    // LC-Ignored
+                }
+            });
         }
     }
 
@@ -394,13 +395,14 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         mActivityContext.removeOnDeviceProfileChangeListener(this);
         if (mCrossWindowBlurListener != null) {
             java.util.function.Consumer<Boolean> listener = mCrossWindowBlurListener;
-            try {
-                UI_HELPER_EXECUTOR.execute(() ->
+            UI_HELPER_EXECUTOR.execute(() -> {
+                try {
                     CrossWindowBlurListeners.getInstance()
-                        .removeListener(listener));
-            } catch (Throwable t) {
-                // LC-Ignored
-            }
+                            .removeListener(listener);
+                } catch (Throwable t) {
+                    // LC-Ignored
+                }
+            });
             mCrossWindowBlurListener = null;
         }
     }
