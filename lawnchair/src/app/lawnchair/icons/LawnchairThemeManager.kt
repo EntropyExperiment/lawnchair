@@ -95,7 +95,7 @@ constructor(
         val currentFolderShape: IconShape = try {
             prefs2.folderShape.firstBlocking()
         } catch (e: Exception) {
-            Log.d(TAG, "Error getting icon shape", e)
+            Log.d(TAG, "Error getting folder shape", e)
             IconShape.Circle
         }
 

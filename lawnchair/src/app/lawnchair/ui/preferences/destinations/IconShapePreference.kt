@@ -268,7 +268,7 @@ private fun ModifyCustomIconShapePreference(
     val text = stringResource(
         when (currentTab) {
             ShapeRoute.APP_SHAPE -> if (created) R.string.custom_icon_shape_edit else R.string.custom_icon_shape_create
-            else -> if (created) R.string.custom_folder_shape_edit else R.string.custom_folder_shape_create
+            ShapeRoute.FOLDER_SHAPE -> if (created) R.string.custom_folder_shape_edit else R.string.custom_folder_shape_create
         },
     )
 
