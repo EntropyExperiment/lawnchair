@@ -61,6 +61,8 @@ constructor(
         merge(
             prefs2.iconShape.get(),
             prefs2.customIconShape.get(),
+            prefs2.folderShape.get(),
+            prefs2.customFolderShape.get(),
         ).onEach { verifyIconState() }
             .launchIn(scope)
 
@@ -93,30 +95,31 @@ constructor(
         val currentFolderShape: IconShape = try {
             prefs2.folderShape.firstBlocking()
         } catch (e: Exception) {
-            Log.d(TAG, "Error getting icon shape", e)
+            Log.d(TAG, "Error getting folder shape", e)
             IconShape.Circle
         }
 
         val currentPrefs1State = prefs1State()
         val appShapeKey = currentAppShape.getHashString() + currentPrefs1State
         val folderShapeKey = currentFolderShape.getHashString() + currentPrefs1State
+        val combinedKey = "$appShapeKey:$folderShapeKey"
 
         val appShape =
-            if (oldState != null && oldState.iconMask == appShapeKey) {
+            if (oldState != null && (oldState.iconShape as? PathShapeDelegate)?.iconShape == currentAppShape) {
                 oldState.iconShape
             } else {
                 PathShapeDelegate(currentAppShape)
             }
 
         val folderShape =
-            if (oldState != null && oldState.iconMask == folderShapeKey) {
-                oldState.iconShape
+            if (oldState != null && (oldState.folderShape as? PathShapeDelegate)?.iconShape == currentFolderShape) {
+                oldState.folderShape
             } else {
                 PathShapeDelegate(currentFolderShape)
             }
 
         return IconState(
-            iconMask = appShapeKey,
+            iconMask = combinedKey,
             folderRadius = 1f,
             shapeRadius = 1f,
             themeController = iconControllerFactory.createThemeController(),

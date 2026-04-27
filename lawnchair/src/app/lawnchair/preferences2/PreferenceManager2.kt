@@ -164,6 +164,19 @@ class PreferenceManager2 @Inject constructor(
         onSet = { it?.let(iconShape::setBlocking) },
     )
 
+    val customFolderShape = preference(
+        key = stringPreferencesKey(name = "custom_folder_shape"),
+        defaultValue = null,
+        parse = {
+            IconShape.CustomCornerBased.fromStringOrNull(value = it)
+                ?: IconShape.CustomCornerBased(
+                    IconShapeManager.getSystemIconShape(context).findNearestShape(),
+                )
+        },
+        save = { it.toString() },
+        onSet = { it?.let(folderShape::setBlocking) },
+    )
+
     val alwaysReloadIcons = preference(
         key = booleanPreferencesKey(name = "always_reload_icons"),
         defaultValue = context.resources.getBoolean(R.bool.config_default_always_reload_icons),
@@ -421,12 +434,6 @@ class PreferenceManager2 @Inject constructor(
                 LawnchairPreferenceManager.getInstance(context).fontWorkspace.set(newValue = fontCache.uiText)
             }
         },
-    )
-
-    val enableFolderIconShapeCustomization = preference(
-        key = booleanPreferencesKey(name = "enable_folder_icon_shape_customization"),
-        defaultValue = context.resources.getBoolean(R.bool.config_default_enable_folder_icon_shape_customization),
-        onSet = { reloadHelper.reloadIcons() },
     )
 
     val autoShowKeyboardInDrawer = preference(
