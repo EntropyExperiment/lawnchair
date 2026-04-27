@@ -26,6 +26,7 @@ import app.lawnchair.util.isGestureNavContractCompatible
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
+import com.android.launcher3.LauncherAppState
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
@@ -33,6 +34,7 @@ import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
+import com.android.launcher3.util.Executors
 import com.android.launcher3.util.DisplayController
 import com.android.launcher3.util.SafeCloseable
 import com.android.quickstep.RecentsModel
@@ -46,8 +48,13 @@ class PreferenceManager @Inject constructor(
     private val idp get() = InvariantDeviceProfile.INSTANCE.get(context)
     private val dc get() = DisplayController.INSTANCE.get(context)
     private val mRecentsModel get() = RecentsModel.INSTANCE.get(context)
-    private val themeManager = ThemeManager.INSTANCE.get(context)
-    private val reloadIcons: () -> Unit = { mRecentsModel.onThemeChanged() }
+    private val reloadIcons: () -> Unit = {
+        mRecentsModel.onThemeChanged()
+        Executors.MODEL_EXECUTOR.execute {
+            LauncherAppState.INSTANCE.get(context).iconCache.clearMemoryCache()
+            LauncherAppState.INSTANCE.get(context).model.reloadIfActive()
+        }
+    }
     private val reloadGrid: () -> Unit = { idp.onPreferencesChanged(context) }
 
     private val deviceType = dc.info.deviceType
@@ -58,11 +65,11 @@ class PreferenceManager @Inject constructor(
     }
 
     val iconPackPackage = StringPref("pref_iconPackPackage", "", reloadIcons)
-    val themedIconPackPackage = StringPref("pref_themedIconPackPackage", "", recreate)
+    val themedIconPackPackage = StringPref("pref_themedIconPackPackage", "", reloadIcons)
     val allowRotation = BoolPref("pref_allowRotation", false)
-    val wrapAdaptiveIcons = BoolPref("prefs_wrapAdaptive", true, recreate)
-    val transparentIconBackground = BoolPref("prefs_transparentIconBackground", false, recreate)
-    val shadowBGIcons = BoolPref("pref_shadowBGIcons", true, recreate)
+    val wrapAdaptiveIcons = BoolPref("prefs_wrapAdaptive", true)
+    val transparentIconBackground = BoolPref("prefs_transparentIconBackground", false)
+    val shadowBGIcons = BoolPref("pref_shadowBGIcons", true)
     val addIconToHome = BoolPref("pref_add_icon_to_home", true)
 
     private val isPhone: Boolean get() = deviceType == InvariantDeviceProfile.TYPE_PHONE
@@ -99,7 +106,7 @@ class PreferenceManager @Inject constructor(
     val folderRows = IdpIntPref("pref_folderRows", { numFolderRows[INDEX_DEFAULT] }, reloadGrid)
 
     val drawerOpacity = FloatPref("pref_drawerOpacity", .4f, recreate)
-    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F, recreate)
+    val coloredBackgroundLightness = FloatPref("pref_coloredBackgroundLightness", 1F)
     val feedProvider = StringPref("pref_feedProvider", "")
     val ignoreFeedWhitelist = BoolPref("pref_ignoreFeedWhitelist", false)
     val launcherTheme = StringPref("pref_launcherTheme", "system")
@@ -142,9 +149,9 @@ class PreferenceManager @Inject constructor(
     val searchResultSettingsEntry = BoolPref("pref_searchResultSettingsEntry", false, recreate)
     val searchResulRecentSuggestion = BoolPref("pref_searchResultRecentSuggestion", false, recreate)
 
-    val themedIcons = BoolPref("themed_icons", false, recreate)
-    val drawerThemedIcons = BoolPref("drawer_themed_icons", false, recreate)
-    val tintIconPackBackgrounds = BoolPref("tint_icon_pack_backgrounds", false, recreate)
+    val themedIcons = BoolPref("themed_icons", false, reloadIcons)
+    val drawerThemedIcons = BoolPref("drawer_themed_icons", false, reloadIcons)
+    val tintIconPackBackgrounds = BoolPref("tint_icon_pack_backgrounds", false, reloadIcons)
 
     val hotseatQsbCornerRadius = FloatPref("pref_hotseatQsbCornerRadius", 1F, recreate)
     val hotseatQsbAlpha = IntPref("pref_searchHotseatTranparency", 100, recreate)
@@ -183,7 +190,7 @@ class PreferenceManager @Inject constructor(
         context.getApkVersionComparison().first[0],
     )
 
-    val forceIconMonochrome = BoolPref("pref_forceIconMonochrome", false, recreate)
+    val forceIconMonochrome = BoolPref("pref_forceIconMonochrome", false)
 
     override fun close() {
         TODO("Not yet implemented")
