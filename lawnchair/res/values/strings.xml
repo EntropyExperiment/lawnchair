@@ -231,7 +231,7 @@
     <string name="material_expressive_label">Material 3 Expressive</string>
     <string name="material_expressive_description">Enable Material 3 Expressive changes in workspace</string>
 
-    <string name="folder_shape_label">Folder Shape</string>
+    <string name="folder_shape_label">Folder shape</string>
     <string name="folder_label">Folder</string>
     <string name="app_icon_shape_label">App</string>
 

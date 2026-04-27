@@ -86,7 +86,7 @@ fun CustomIconShapePreference(
 
     val label = when (currentTab) {
         ShapeRoute.APP_SHAPE -> stringResource(id = R.string.custom_icon_shape)
-        ShapeRoute.FOLDER_SHAPE -> stringResource(id = R.string.folder_shape_label)
+        ShapeRoute.FOLDER_SHAPE -> stringResource(id = R.string.custom_folder_shape)
     }
 
     PreferenceLayout(
