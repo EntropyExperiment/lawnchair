@@ -73,7 +73,7 @@ fun CustomIconShapePreference(
     }
 
     val appliedIconShape = customIconShapeAdapter.state.value
-    val selectedIconShape = remember {
+    val selectedIconShape = remember(currentTab) {
         mutableStateOf(IconShape.CustomCornerBased(appliedIconShape ?: IconShape.Circle))
     }
 
