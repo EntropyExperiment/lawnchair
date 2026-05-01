@@ -225,7 +225,8 @@ class PreferenceManager @Inject constructor(
 @Composable
 fun preferenceManager() = PreferenceManager.getInstance(LocalContext.current)
 
-/** Grid layout configuration
+/**
+ * Grid layout configuration for a device's workspace.
  *
  * @param hotseatColumns The amount of column the dock can contain
  * @param workspaceColumns The amount of column the home screen can contain
@@ -236,30 +237,22 @@ data class LayoutConfig(
     /**
      * Hotseat columns refer to the amount of column the dock can contain.
      * For foldables, this is the folded (closed) state.
-     *
-     * Hotseat is commonly known as dock.
      */
     val hotseatColumns: Int,
 
     /**
      * Workspace columns refer to the amount of column the home screen can contain.
-     *
-     * Workspace is commonly known as home screen.
      */
     val workspaceColumns: Int,
 
     /**
      * Workspace rows refer to the amount of row the home screen can contain.
-     *
-     * Workspace is commonly known as home screen.
      */
     val workspaceRows: Int,
 
     /**
      * Hotseat columns when the foldable is in unfolded (opened) state.
-     * For non-foldable devices, this equals [hotseatColumns].
-     *
-     * Hotseat is commonly known as dock.
+     * For non-foldable devices, this must be equals to [hotseatColumns].
      */
     val hotseatColumnsUnfolded: Int = hotseatColumns,
 )
