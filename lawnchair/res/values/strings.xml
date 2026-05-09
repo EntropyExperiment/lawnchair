@@ -754,6 +754,8 @@
     <string name="drawer_columns_unfolded">App drawer columns (unfolded)</string>
     <string name="folded_label">Folded</string>
     <string name="unfolded_label">Unfolded</string>
+    <string name="when_folded_label">When folded</string>
+    <string name="when_unfolded_label">When unfolded</string>
     <string name="foldable_columns_error">The number of folded columns must not be greater than the number of unfolded columns, your folded columns will be coerced to match the unfolded columns.</string>
     <string name="foldable_grid_columns_info">When unfolded, columns will be doubled to %d</string>
     <string name="hotseat_bottom_space_label">Bottom padding</string>
