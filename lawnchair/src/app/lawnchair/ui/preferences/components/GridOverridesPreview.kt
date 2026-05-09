@@ -25,9 +25,10 @@ import com.android.launcher3.InvariantDeviceProfile
 fun ColumnScope.GridOverridesPreview(
     modifier: Modifier = Modifier,
     expandToAvailableSpace: Boolean = true,
+    previewOverrides: DeviceProfileOverrides.PreviewOverrides = DeviceProfileOverrides.PreviewOverrides(),
     updateGridOptions: DeviceProfileOverrides.DBGridInfo.() -> DeviceProfileOverrides.DBGridInfo,
 ) {
-    val previewIdp = createPreviewIdp(updateGridOptions)
+    val previewIdp = createPreviewIdp(updateGridOptions, previewOverrides)
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
     val previewAspectRatio = remember(previewIdp, isPortrait) {
         val matchingProfile = previewIdp.supportedProfiles.firstOrNull { profile ->
@@ -85,13 +86,24 @@ fun ColumnScope.GridOverridesPreview(
 
 @Composable
 fun createPreviewIdp(updateGridOptions: DeviceProfileOverrides.DBGridInfo.() -> DeviceProfileOverrides.DBGridInfo): InvariantDeviceProfile {
+    return createPreviewIdp(
+        updateGridOptions = updateGridOptions,
+        previewOverrides = DeviceProfileOverrides.PreviewOverrides(),
+    )
+}
+
+@Composable
+fun createPreviewIdp(
+    updateGridOptions: DeviceProfileOverrides.DBGridInfo.() -> DeviceProfileOverrides.DBGridInfo,
+    previewOverrides: DeviceProfileOverrides.PreviewOverrides = DeviceProfileOverrides.PreviewOverrides(),
+): InvariantDeviceProfile {
     val context = LocalContext.current
     val prefs = preferenceManager()
 
-    val newIdp by remember {
+    val newIdp by remember(previewOverrides) {
         derivedStateOf {
             val options = DeviceProfileOverrides.DBGridInfo(prefs)
-            InvariantDeviceProfile(context, updateGridOptions(options))
+            InvariantDeviceProfile(context, updateGridOptions(options), previewOverrides)
         }
     }
     return newIdp

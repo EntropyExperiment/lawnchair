@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import app.lawnchair.DeviceProfileOverrides
 import app.lawnchair.preferences.asPreferenceAdapter
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
@@ -66,7 +67,7 @@ fun HomeScreenGridPreferences(
         val rows = rememberSaveable { mutableIntStateOf(originalRows) }
         val hotseatColumns = rememberSaveable { mutableIntStateOf(originalHotseatColumns) }
         val hotseatColumnsUnfolded = rememberSaveable {
-            mutableIntStateOf(originalHotseatColumnsUnfolded.coerceAtMost(originalHotseatColumns))
+            mutableIntStateOf(originalHotseatColumnsUnfolded.coerceAtLeast(originalHotseatColumns))
         }
 
         LaunchedEffect(hotseatColumns.intValue) {
@@ -109,13 +110,21 @@ fun HomeScreenGridPreferences(
                         .heightIn(max = previewMaxHeight)
                         .padding(horizontal = 16.dp, vertical = if (isPortrait) 16.dp else 12.dp),
                     expandToAvailableSpace = false,
-                ) {
-                    copy(
-                        numColumns = columns.intValue,
-                        numRows = rows.intValue,
-                        numHotseatColumns = hotseatColumns.intValue,
-                    )
-                }
+                    updateGridOptions = {
+                        copy(
+                            numColumns = columns.intValue,
+                            numRows = rows.intValue,
+                            numHotseatColumns = hotseatColumns.intValue,
+                        )
+                    },
+                    previewOverrides = if (isFoldable) {
+                        DeviceProfileOverrides.PreviewOverrides(
+                            foldableDatabaseHotseatIcons = hotseatColumnsUnfolded.intValue,
+                        )
+                    } else {
+                        DeviceProfileOverrides.PreviewOverrides()
+                    },
+                )
 
                 Column(
                     modifier = Modifier

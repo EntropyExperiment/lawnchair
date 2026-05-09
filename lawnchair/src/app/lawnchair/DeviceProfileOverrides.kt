@@ -59,11 +59,22 @@ class DeviceProfileOverrides @Inject constructor(
     fun getOverrides(
         defaultGrid: InvariantDeviceProfile.GridOption,
         deviceType: Int,
+    ) = getOverrides(
+        defaultGrid = defaultGrid,
+        deviceType = deviceType,
+        previewOverrides = PreviewOverrides(),
+    )
+
+    fun getOverrides(
+        defaultGrid: InvariantDeviceProfile.GridOption,
+        deviceType: Int,
+        previewOverrides: PreviewOverrides,
     ) = Options(
         prefs = prefs,
         prefs2 = preferenceManager2,
         defaultGrid = defaultGrid,
         deviceType = deviceType,
+        previewOverrides = previewOverrides,
     )
 
     fun getTextFactors() = TextFactors(preferenceManager2)
@@ -84,6 +95,11 @@ class DeviceProfileOverrides @Inject constructor(
             numColumns = prefs.workspaceColumns.get(),
         )
     }
+
+    /** Override for any other value that's not a DBGridInfo, extends this value when needed */
+    data class PreviewOverrides(
+        val foldableDatabaseHotseatIcons: Int? = null,
+    )
 
     data class Options(
         val numAllAppsColumns: Int,
@@ -106,6 +122,7 @@ class DeviceProfileOverrides @Inject constructor(
             prefs2: PreferenceManager2,
             defaultGrid: InvariantDeviceProfile.GridOption,
             deviceType: Int,
+            previewOverrides: PreviewOverrides,
         ) : this(
             numAllAppsColumns = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid),
             numFolderRows = prefs.folderRows.get(defaultGrid),
@@ -124,13 +141,13 @@ class DeviceProfileOverrides @Inject constructor(
 
             foldableShownHotseatIcons = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 val folded = prefs.hotseatColumns.get()
-                val unfolded = prefs.hotseatColumnsUnfolded.get()
+                val unfolded = previewOverrides.foldableDatabaseHotseatIcons ?: prefs.hotseatColumnsUnfolded.get()
                 folded.coerceAtMost(unfolded)
             } else {
                 -1
             },
             foldableDatabaseHotseatIcons = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
-                prefs.hotseatColumnsUnfolded.get()
+                previewOverrides.foldableDatabaseHotseatIcons ?: prefs.hotseatColumnsUnfolded.get()
             } else {
                 -1
             },
