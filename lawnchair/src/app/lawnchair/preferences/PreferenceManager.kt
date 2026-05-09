@@ -34,8 +34,8 @@ import com.android.launcher3.graphics.ThemeManager
 import com.android.launcher3.model.DeviceGridState
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.DaggerSingletonObject
-import com.android.launcher3.util.Executors
 import com.android.launcher3.util.DisplayController
+import com.android.launcher3.util.Executors
 import com.android.launcher3.util.SafeCloseable
 import com.android.quickstep.RecentsModel
 import javax.inject.Inject
