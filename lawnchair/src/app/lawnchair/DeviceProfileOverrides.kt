@@ -59,22 +59,13 @@ class DeviceProfileOverrides @Inject constructor(
     fun getOverrides(
         defaultGrid: InvariantDeviceProfile.GridOption,
         deviceType: Int,
-    ) = getOverrides(
-        defaultGrid = defaultGrid,
-        deviceType = deviceType,
-        previewOverrides = PreviewOverrides(),
-    )
-
-    fun getOverrides(
-        defaultGrid: InvariantDeviceProfile.GridOption,
-        deviceType: Int,
-        previewOverrides: PreviewOverrides,
+        previewOverrides: PreviewOverrides? = null,
     ) = Options(
         prefs = prefs,
         prefs2 = preferenceManager2,
         defaultGrid = defaultGrid,
         deviceType = deviceType,
-        previewOverrides = previewOverrides,
+        previewOverrides = previewOverrides ?: PreviewOverrides(),
     )
 
     fun getTextFactors() = TextFactors(preferenceManager2)

@@ -451,11 +451,8 @@ public class InvariantDeviceProfile {
                 && mPrefs.get(ENABLE_TWOLINE_ALLAPPS_TOGGLE);
         mLocale = context.getResources().getConfiguration().locale.toString();
 
-        DeviceProfileOverrides.Options overrideOptions = previewOverrides == null
-                ? DeviceProfileOverrides.INSTANCE.get(context)
-                        .getOverrides(displayOption.grid, displayInfo.getDeviceType())
-                : DeviceProfileOverrides.INSTANCE.get(context)
-                        .getOverrides(displayOption.grid, displayInfo.getDeviceType(), previewOverrides);
+         DeviceProfileOverrides.Options overrideOptions = DeviceProfileOverrides.INSTANCE.get(context)
+                 .getOverrides(displayOption.grid, displayInfo.getDeviceType(), previewOverrides);
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         GridOption closestProfile = displayOption.grid;
         numRows = dbGridInfo.getNumRows();
