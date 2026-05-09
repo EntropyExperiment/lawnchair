@@ -56,10 +56,14 @@ class DeviceProfileOverrides @Inject constructor(
         prefs.hotseatColumns.set(gridInfo.numHotseatColumns)
     }
 
-    fun getOverrides(defaultGrid: InvariantDeviceProfile.GridOption) = Options(
+    fun getOverrides(
+        defaultGrid: InvariantDeviceProfile.GridOption,
+        deviceType: Int,
+    ) = Options(
         prefs = prefs,
         prefs2 = preferenceManager2,
         defaultGrid = defaultGrid,
+        deviceType = deviceType,
     )
 
     fun getTextFactors() = TextFactors(preferenceManager2)
@@ -101,6 +105,7 @@ class DeviceProfileOverrides @Inject constructor(
             prefs: PreferenceManager,
             prefs2: PreferenceManager2,
             defaultGrid: InvariantDeviceProfile.GridOption,
+            deviceType: Int,
         ) : this(
             numAllAppsColumns = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid),
             numFolderRows = prefs.folderRows.get(defaultGrid),
@@ -117,19 +122,19 @@ class DeviceProfileOverrides @Inject constructor(
 
             enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstBlocking(),
 
-            foldableShownHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+            foldableShownHotseatIcons = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 val folded = prefs.hotseatColumns.get()
                 val unfolded = prefs.hotseatColumnsUnfolded.get()
                 folded.coerceAtMost(unfolded)
             } else {
                 -1
             },
-            foldableDatabaseHotseatIcons = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+            foldableDatabaseHotseatIcons = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 prefs.hotseatColumnsUnfolded.get()
             } else {
                 -1
             },
-            foldableDatabaseAllAppsColumns = if (InvariantDeviceProfile.deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
+            foldableDatabaseAllAppsColumns = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 val folded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
                 val unfolded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
                 folded.coerceAtLeast(unfolded)
