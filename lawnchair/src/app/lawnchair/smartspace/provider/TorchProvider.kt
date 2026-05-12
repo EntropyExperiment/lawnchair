@@ -5,10 +5,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
+import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.core.content.getSystemService
 import app.lawnchair.smartspace.model.SmartspaceAction
 import app.lawnchair.smartspace.model.SmartspaceScores
@@ -81,14 +83,31 @@ class TorchProvider(context: Context) :
     class Receiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val cameraManager = context.getSystemService<CameraManager>() ?: return
-            val flashCameraIds = cameraManager.cameraIdList.filter { id ->
-                cameraManager.getCameraCharacteristics(id)
-                    .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+            val flashCameraIds = cameraManager.cameraIdList.mapNotNull { id ->
+                try {
+                    if (cameraManager.getCameraCharacteristics(id)
+                        .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                    ) {
+                        id
+                    } else {
+                        null
+                    }
+                } catch (e: CameraAccessException) {
+                    Log.e(TAG, "Failed to get camera characteristics for camera $id", e)
+                    null
+                }
             }
             if (flashCameraIds.isEmpty()) return
             flashCameraIds.forEach { cameraId ->
-                runCatching { cameraManager.setTorchMode(cameraId, false) }
+                try {
+                    cameraManager.setTorchMode(cameraId, false)
+                } catch (e: CameraAccessException) {
+                    Log.e(TAG, "Failed to turn off torch for camera $cameraId: ${e.message}", e)
+                }
             }
+        }
+        companion object {
+            private const val TAG = "TorchProvider"
         }
     }
 
