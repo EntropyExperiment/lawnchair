@@ -32,24 +32,45 @@ class TorchProvider(context: Context) :
         .map { enabled -> listOfNotNull(if (enabled) getSmartspaceTarget() else null) }
 
     private fun torchFlow(): Flow<Boolean> = callbackFlow {
-        val cameraId = cameraManager?.cameraIdList?.firstOrNull { id ->
-            cameraManager.getCameraCharacteristics(id)
-                .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-        }
-
-        if (cameraId == null || cameraManager == null) {
+        if (cameraManager == null) {
             trySend(false)
             close()
             return@callbackFlow
         }
 
+        // Collect all flash-capable camera IDs
+        val flashCameraIds = cameraManager.cameraIdList
+            .filter { id ->
+                cameraManager.getCameraCharacteristics(id)
+                    .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+            }
+            .toSet()
+
+        if (flashCameraIds.isEmpty()) {
+            trySend(false)
+            close()
+            return@callbackFlow
+        }
+
+        val enabledCameraIds = mutableSetOf<String>()
+
         val callback = object : CameraManager.TorchCallback() {
             override fun onTorchModeChanged(id: String, enabled: Boolean) {
-                if (id == cameraId) trySend(enabled)
+                if (id in flashCameraIds) {
+                    if (enabled) {
+                        enabledCameraIds.add(id)
+                    } else {
+                        enabledCameraIds.remove(id)
+                    }
+                    trySend(enabledCameraIds.intersect(flashCameraIds).isNotEmpty())
+                }
             }
 
             override fun onTorchModeUnavailable(id: String) {
-                if (id == cameraId) trySend(false)
+                if (id in flashCameraIds) {
+                    enabledCameraIds.remove(id)
+                    trySend(enabledCameraIds.intersect(flashCameraIds).isNotEmpty())
+                }
             }
         }
 
@@ -60,11 +81,14 @@ class TorchProvider(context: Context) :
     class Receiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val cameraManager = context.getSystemService<CameraManager>() ?: return
-            val cameraId = cameraManager.cameraIdList.firstOrNull { id ->
+            val flashCameraIds = cameraManager.cameraIdList.filter { id ->
                 cameraManager.getCameraCharacteristics(id)
                     .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-            } ?: return
-            runCatching { cameraManager.setTorchMode(cameraId, false) }
+            }
+            if (flashCameraIds.isEmpty()) return
+            flashCameraIds.forEach { cameraId ->
+                runCatching { cameraManager.setTorchMode(cameraId, false) }
+            }
         }
     }
 
