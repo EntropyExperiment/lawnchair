@@ -195,6 +195,14 @@
                 android:resource="@xml/smartspace_appwidget_info" />
         </receiver>
 
+        <receiver
+            android:name="app.lawnchair.smartspace.provider.TorchProvider$Receiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.action.TOGGLE_TORCH" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="xyz.paphonb.quickstepswitcher.minSdk"
             android:value="${quickstepMinSdk}" />
