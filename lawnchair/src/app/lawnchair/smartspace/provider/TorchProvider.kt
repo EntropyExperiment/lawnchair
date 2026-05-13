@@ -86,7 +86,7 @@ class TorchProvider(context: Context) :
             val flashCameraIds = cameraManager.cameraIdList.mapNotNull { id ->
                 try {
                     if (cameraManager.getCameraCharacteristics(id)
-                        .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                            .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
                     ) {
                         id
                     } else {
