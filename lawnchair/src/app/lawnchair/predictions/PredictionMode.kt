@@ -15,8 +15,8 @@ sealed class PredictionMode(@param:StringRes val nameResourceId: Int) {
     companion object {
         fun fromString(value: String): PredictionMode = when (value) {
             "system" -> SystemPredictor
-            "none" -> NoPredictor
-            else -> LawnchairPredictor
+            "lawnchair" -> LawnchairPredictor
+            else -> NoPredictor
         }
 
         fun values(): List<PredictionMode> = listOf(

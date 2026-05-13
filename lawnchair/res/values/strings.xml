@@ -215,6 +215,11 @@
     <string name="prediction_mode_system">System</string>
     <string name="prediction_mode_lawnchair">Lawnchair</string>
     <string name="prediction_mode_none">None</string>
+    <string name="prediction_weighted_usage_stats_label">Weighted usage stats fallback</string>
+    <string name="prediction_weighted_usage_stats_description">Use usage stats to rank fallback suggestions when Lawnchair predictor needs more apps</string>
+    <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to rank fallback suggestions when Lawnchair predictor needs more apps. Requires usage access to take effect</string>
+    <string name="prediction_record_taps_label">Record predicted hotseat taps</string>
+    <string name="prediction_record_taps_description">Allow predicted hotseat apps to influence Lawnchair predictor rankings</string>
 
     <string name="font_picker_label">Font customization</string>
     <string name="font_picker_description">Some text remains unchanged</string>

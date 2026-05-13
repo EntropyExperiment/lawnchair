@@ -1,5 +1,7 @@
 package app.lawnchair.ui.preferences.destinations
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -20,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.lawnchair.predictions.LawnchairPredictor
 import app.lawnchair.predictions.PredictionMode
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
@@ -161,6 +164,12 @@ fun ExperimentalFeaturesPreferences(
         val enableGncAdapter = prefs.enableGnc.getAdapter()
 
         val predictionModeAdapter = prefs2.predictionMode.getAdapter()
+        val weightedUsageStatsAdapter = prefs2.lawnchairPredictorUseWeightedUsageStats.getAdapter()
+        val recordPredictionTapsAdapter = prefs2.lawnchairPredictorRecordPredictionTaps.getAdapter()
+        val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
+        val hasUsageStatsPermission =
+            context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
+                PackageManager.PERMISSION_GRANTED
 
         PreferenceGroup(
             Modifier,
@@ -172,11 +181,31 @@ fun ExperimentalFeaturesPreferences(
                     entries = PredictionMode.values().map { mode ->
                         ListPreferenceEntry(
                             value = mode,
-                            label = { stringResource(id = mode.nameResourceId) },
+                            label = { stringResource(mode.nameResourceId) },
                             enabled = mode.isAvailable(context),
                         )
                     },
-                    label = stringResource(id = R.string.prediction_mode_label),
+                    label = stringResource(R.string.prediction_mode_label),
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = weightedUsageStatsAdapter,
+                    label = stringResource(R.string.prediction_weighted_usage_stats_label),
+                    description = if (hasUsageStatsPermission) {
+                        stringResource(R.string.prediction_weighted_usage_stats_description)
+                    } else {
+                        stringResource(R.string.prediction_weighted_usage_stats_permission_description)
+                    },
+                    enabled = isLawnchairPredictorSelected,
+                )
+            }
+            Item {
+                SwitchPreference(
+                    adapter = recordPredictionTapsAdapter,
+                    label = stringResource(R.string.prediction_record_taps_label),
+                    description = stringResource(R.string.prediction_record_taps_description),
+                    enabled = isLawnchairPredictorSelected,
                 )
             }
         }

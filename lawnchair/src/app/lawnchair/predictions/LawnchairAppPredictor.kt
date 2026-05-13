@@ -1,16 +1,21 @@
 package app.lawnchair.predictions
 
+import android.Manifest
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
 import android.app.prediction.AppTarget
 import android.app.prediction.AppTargetId
 import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.os.Process
 import android.os.UserHandle
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import app.lawnchair.preferences2.PreferenceManager2
+import com.android.launcher3.AppFilter
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherModel
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT
@@ -45,6 +50,7 @@ import com.patrykmichalik.opto.core.firstBlocking
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.LinkedHashMap
+import java.util.concurrent.TimeUnit
 
 /**
  * Listens to app launching] events from [StatsLogCompatManager.StatsLogConsumer] and send
@@ -151,15 +157,16 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         allAppsStore.pruneUninstalled(pm)
         hotseatStore.pruneUninstalled(pm)
 
-        // TODO: Get random apps and show them as predicted when there's no data by default.
-        // TODO: Merge ranking from Hotseat -> AllApps and vise versa when data for that store isn't available as secondary but rank them lower than primary store.
         val hotseatRanked = hotseatStore.getRanked()
         val allAppsRanked = allAppsStore.getRanked()
-        val hotseatCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked)
+        val fallbackRanked = getFallbackRanked()
+        val allAppsCandidateRanked = mergeRanked(allAppsRanked, hotseatRanked, fallbackRanked)
+        val hotseatCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
+        val widgetCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
         val occupiedHotseatItems = getOccupiedHotseatItems(dataModel)
 
         val allAppsTargets = buildTargets(
-            allAppsRanked,
+            allAppsCandidateRanked,
             idp.numDatabaseAllAppsColumns,
             dismissedApps,
         )
@@ -168,9 +175,8 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             idp.numDatabaseHotseatIcons,
             occupiedHotseatItems,
         )
-        // TODO: What should we add to widget rank? Android Usage API for today?
         val widgetTargets = buildWidgetTargets(
-            hotseatRanked,
+            widgetCandidateRanked,
             NUM_WIDGET_SUGGESTIONS,
             dataModel,
         )
@@ -198,30 +204,156 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         excludedKeys: Set<String> = emptySet(),
     ): List<AppTarget> {
         val launcherApps = context.getSystemService(LauncherApps::class.java)
-        return ranked
-            .take(count * 2)
-            .mapNotNull { key ->
-                val parsedKey = parseStoreKey(key) ?: return@mapNotNull null
+        return buildList(count) {
+            ranked.forEach { key ->
+                if (size == count) return@buildList
+
+                val parsedKey = parseStoreKey(key) ?: return@forEach
                 val componentName = ComponentName(parsedKey.packageName, parsedKey.className)
                 val storeKey = toStoreKey(componentName, parsedKey.user)
-                if (storeKey in excludedKeys) return@mapNotNull null
+                if (storeKey in excludedKeys) return@forEach
 
                 try {
                     launcherApps?.resolveActivity(
                         android.content.Intent().setComponent(componentName),
                         parsedKey.user,
-                    ) ?: return@mapNotNull null
+                    ) ?: return@forEach
                 } catch (_: Exception) {
-                    return@mapNotNull null
+                    return@forEach
                 }
 
-                AppTarget.Builder(
-                    AppTargetId("app:${parsedKey.packageName}"),
-                    parsedKey.packageName,
-                    parsedKey.user,
-                ).setClassName(parsedKey.className).build()
+                add(
+                    AppTarget.Builder(
+                        AppTargetId("app:${parsedKey.packageName}"),
+                        parsedKey.packageName,
+                        parsedKey.user,
+                    ).setClassName(parsedKey.className).build(),
+                )
             }
-            .take(count)
+        }
+    }
+
+    private fun getFallbackRanked(): List<String> {
+        val usageStatsRanked = if (shouldUseWeightedUsageStats()) getUsageStatsRanked() else emptyList()
+        val randomRanked = getRandomRanked()
+        return mergeRanked(usageStatsRanked, randomRanked)
+    }
+
+    private fun shouldUseWeightedUsageStats(): Boolean {
+        if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstBlocking()) return false
+        return context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
+            PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getUsageStatsRanked(): List<String> {
+        val usageStatsManager = context.getSystemService(UsageStatsManager::class.java) ?: return emptyList()
+        val launcherApps = context.getSystemService(LauncherApps::class.java) ?: return emptyList()
+        val appFilter = AppFilter(context)
+        val now = System.currentTimeMillis()
+        val scores = LinkedHashMap<String, Double>()
+
+        try {
+            addUsageStatsWindow(
+                scores = scores,
+                stats = usageStatsManager.queryAndAggregateUsageStats(now - RECENT_USAGE_WINDOW_MS, now),
+                now = now,
+                launchWeight = 12.0,
+                foregroundMinutesWeight = 0.25,
+                recencyWeight = 4.0,
+            )
+            addUsageStatsWindow(
+                scores = scores,
+                stats = usageStatsManager.queryAndAggregateUsageStats(now - DAILY_USAGE_WINDOW_MS, now),
+                now = now,
+                launchWeight = 4.0,
+                foregroundMinutesWeight = 0.1,
+                recencyWeight = 1.5,
+            )
+            addUsageStatsWindow(
+                scores = scores,
+                stats = usageStatsManager.queryAndAggregateUsageStats(now - WEEKLY_USAGE_WINDOW_MS, now),
+                now = now,
+                launchWeight = 1.0,
+                foregroundMinutesWeight = 0.02,
+                recencyWeight = 0.5,
+            )
+        } catch (_: Exception) {
+            return emptyList()
+        }
+
+        if (scores.isEmpty()) return emptyList()
+
+        return scores.entries
+            .sortedByDescending { it.value }
+            .mapNotNull { (packageName, _) -> resolvePackageToStoreKey(packageName, launcherApps, appFilter) }
+    }
+
+    private fun addUsageStatsWindow(
+        scores: MutableMap<String, Double>,
+        stats: Map<String, UsageStats>,
+        now: Long,
+        launchWeight: Double,
+        foregroundMinutesWeight: Double,
+        recencyWeight: Double,
+    ) {
+        stats.values.forEach { stat ->
+            val packageName = stat.packageName
+            if (packageName.isNullOrEmpty() || packageName == context.packageName) return@forEach
+
+            val foregroundMinutes = TimeUnit.MILLISECONDS.toMinutes(stat.totalTimeInForeground).toDouble()
+            val recencyScore = when {
+                stat.lastTimeUsed <= 0L -> 0.0
+                else -> {
+                    val ageHours = (now - stat.lastTimeUsed).coerceAtLeast(0L).toDouble() / RECENCY_HOUR_MS
+                    1.0 / (1.0 + ageHours)
+                }
+            }
+
+            val score =
+                launchWeight +
+                    (foregroundMinutes * foregroundMinutesWeight) +
+                    (recencyScore * recencyWeight)
+            if (score <= 0.0) return@forEach
+
+            scores[packageName] = (scores[packageName] ?: 0.0) + score
+        }
+    }
+
+    private fun getRandomRanked(): List<String> {
+        val launcherApps = context.getSystemService(LauncherApps::class.java) ?: return emptyList()
+        val appFilter = AppFilter(context)
+        return userProfilesInPredictionOrder()
+            .asSequence()
+            .flatMap { user -> launcherApps.getActivityList(null, user).asSequence() }
+            .filter { activityInfo -> appFilter.shouldShowApp(activityInfo.componentName) }
+            .map { activityInfo -> toStoreKey(activityInfo.componentName, activityInfo.user) }
+            .distinct()
+            .toList()
+            .shuffled()
+    }
+
+    private fun resolvePackageToStoreKey(
+        packageName: String,
+        launcherApps: LauncherApps,
+        appFilter: AppFilter,
+    ): String? {
+        userProfilesInPredictionOrder().forEach { user ->
+            val activityInfo = launcherApps.getActivityList(packageName, user)
+                .firstOrNull { info -> appFilter.shouldShowApp(info.componentName) }
+                ?: return@forEach
+            return toStoreKey(activityInfo.componentName, activityInfo.user)
+        }
+        return null
+    }
+
+    private fun userProfilesInPredictionOrder(): List<UserHandle> {
+        val currentUser = Process.myUserHandle()
+        return buildList {
+            if (currentUser in userCache.userProfiles) add(currentUser)
+            userCache.userProfiles.forEach { user ->
+                if (user !in this) add(user)
+            }
+        }
     }
 
     private fun buildWidgetTargets(
@@ -440,6 +572,10 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     companion object {
         private const val DISMISSED_APPS_STORE_NAME = "dismissed_all_apps_predictions"
         private const val NUM_WIDGET_SUGGESTIONS = 20
+        private val RECENT_USAGE_WINDOW_MS = TimeUnit.HOURS.toMillis(6)
+        private val DAILY_USAGE_WINDOW_MS = TimeUnit.DAYS.toMillis(1)
+        private val WEEKLY_USAGE_WINDOW_MS = TimeUnit.DAYS.toMillis(7)
+        private val RECENCY_HOUR_MS = TimeUnit.HOURS.toMillis(1).toDouble()
     }
 
     private fun mergeRanked(vararg rankedLists: List<String>): List<String> = buildList {
