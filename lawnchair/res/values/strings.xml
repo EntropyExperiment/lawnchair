@@ -209,6 +209,13 @@
     <string name="internal_label">Internal</string>
     <string name="internal_description">Internal may be more unstable than other experimental group</string>
 
+    <string name="app_prediction_label">App Prediction</string>
+
+    <string name="prediction_mode_label">Prediction mode</string>
+    <string name="prediction_mode_system">System</string>
+    <string name="prediction_mode_lawnchair">Lawnchair</string>
+    <string name="prediction_mode_none">None</string>
+
     <string name="font_picker_label">Font customization</string>
     <string name="font_picker_description">Some text remains unchanged</string>
 

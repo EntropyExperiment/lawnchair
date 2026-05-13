@@ -20,12 +20,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.lawnchair.predictions.PredictionMode
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
 import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
+import app.lawnchair.ui.preferences.components.controls.ListPreference
+import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
@@ -156,6 +159,27 @@ fun ExperimentalFeaturesPreferences(
 
         val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
         val enableGncAdapter = prefs.enableGnc.getAdapter()
+
+        val predictionModeAdapter = prefs2.predictionMode.getAdapter()
+
+        PreferenceGroup(
+            Modifier,
+            stringResource(R.string.app_prediction_label),
+        ) {
+            Item {
+                ListPreference(
+                    adapter = predictionModeAdapter,
+                    entries = PredictionMode.values().map { mode ->
+                        ListPreferenceEntry(
+                            value = mode,
+                            label = { stringResource(id = mode.nameResourceId) },
+                            enabled = mode.isAvailable(context),
+                        )
+                    },
+                    label = stringResource(id = R.string.prediction_mode_label),
+                )
+            }
+        }
 
         PreferenceGroup(
             Modifier,

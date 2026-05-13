@@ -372,6 +372,18 @@ class PreferenceManager2 @Inject constructor(
         defaultValue = false,
     )
 
+    val predictionMode = preference(
+        key = stringPreferencesKey(name = "prediction_mode"),
+        defaultValue = app.lawnchair.predictions.LawnchairPredictor,
+        parse = { app.lawnchair.predictions.PredictionMode.fromString(it) },
+        save = { it.toString() },
+    )
+
+    val lawnchairPredictorRecordPredictionTaps = preference(
+        key = booleanPreferencesKey(name = "lawnchairpredictor_record_prediction_taps"),
+        defaultValue = false,
+    )
+
     val launcherPopupOrder = preference(
         key = stringPreferencesKey(name = "launcher_popup_order"),
         defaultValue = LauncherOptionsPopup.DEFAULT_ORDER.toOptionOrderString(),
