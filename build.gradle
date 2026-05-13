@@ -352,6 +352,16 @@ android {
             manifest.srcFile "quickstep/AndroidManifest.xml"
         }
     }
+
+    // Lawnchair-TODO: A better way to sync proto file to the IDE preventing missing or outdated result. Please remove if this is the best solution we have right now
+    applicationVariants.configureEach { variant ->
+        def capitalizedVariantName = variant.name.substring(0, 1).toUpperCase() + variant.name.substring(1)
+        def generatedProtoJavaDir = layout.buildDirectory
+            .dir("generated/java/generate${capitalizedVariantName}Proto/java")
+            .get()
+            .asFile
+        variant.addJavaSourceFoldersToModel(generatedProtoJavaDir)
+    }
 }
 
 baselineProfile {
