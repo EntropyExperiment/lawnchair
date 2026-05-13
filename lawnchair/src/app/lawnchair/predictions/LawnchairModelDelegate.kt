@@ -82,6 +82,7 @@ class LawnchairModelDelegate @Inject constructor(
             }
 
             LawnchairPredictor -> updateLawnchairPredictions()
+
             NoPredictor -> clearPredictions()
         }
     }

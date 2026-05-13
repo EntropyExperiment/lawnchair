@@ -1,10 +1,10 @@
 package app.lawnchair.predictions
 
 import android.Manifest
-import android.app.usage.UsageStats
-import android.app.usage.UsageStatsManager
 import android.app.prediction.AppTarget
 import android.app.prediction.AppTargetId
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.SharedPreferences
@@ -303,6 +303,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             val foregroundMinutes = TimeUnit.MILLISECONDS.toMinutes(stat.totalTimeInForeground).toDouble()
             val recencyScore = when {
                 stat.lastTimeUsed <= 0L -> 0.0
+
                 else -> {
                     val ageHours = (now - stat.lastTimeUsed).coerceAtLeast(0L).toDouble() / RECENCY_HOUR_MS
                     1.0 / (1.0 + ageHours)
