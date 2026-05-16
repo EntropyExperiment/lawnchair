@@ -39,7 +39,6 @@ import app.lawnchair.util.FileAccessState
 import app.lawnchair.util.isGestureNavContractCompatible
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
-import com.android.launcher3.util.MSDLPlayerWrapper
 
 @Composable
 fun ExperimentalFeaturesPreferences(
@@ -163,7 +162,7 @@ fun ExperimentalFeaturesPreferences(
             mutableIntStateOf(dismissedAppsStore.getDismissedApps().size)
         }
         val hasUsageStatsPermission =
-            context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
+            context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
                 PackageManager.PERMISSION_GRANTED
 
         DisposableEffect(predictionPrefs) {

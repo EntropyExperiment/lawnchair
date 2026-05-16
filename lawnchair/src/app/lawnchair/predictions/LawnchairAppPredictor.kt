@@ -158,9 +158,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         idp: InvariantDeviceProfile,
     ) {
         val pm = context.packageManager
-        allAppsStore.pruneUninstalled(pm)
-        dismissedAppsStore.pruneUninstalled(pm)
-        hotseatStore.pruneUninstalled(pm)
+        prunePredictionStores(pm)
 
         val hotseatRanked = hotseatStore.getRanked()
         val allAppsRanked = allAppsStore.getRanked()
@@ -168,13 +166,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         val allAppsCandidateRanked = mergeRanked(allAppsRanked, hotseatRanked, fallbackRanked)
         val hotseatCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
         val widgetCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
+        val currentDismissedApps = dismissedApps.toSet()
         val occupiedHotseatItems = getOccupiedHotseatItems(dataModel)
-        val excludedHotseatItems = occupiedHotseatItems + dismissedApps
+        val excludedHotseatItems = occupiedHotseatItems + currentDismissedApps
 
         val allAppsTargets = buildTargets(
             allAppsCandidateRanked,
             idp.numDatabaseAllAppsColumns,
-            dismissedApps,
+            currentDismissedApps,
         )
         val hotseatTargets = buildTargets(
             hotseatCandidateRanked,
@@ -183,7 +182,6 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         )
         val widgetTargets = buildWidgetTargets(
             widgetCandidateRanked,
-            NUM_WIDGET_SUGGESTIONS,
             dataModel,
         )
 
@@ -229,11 +227,12 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
                 }
 
                 add(
-                    AppTarget.Builder(
-                        AppTargetId("app:${parsedKey.packageName}"),
-                        parsedKey.packageName,
-                        parsedKey.user,
-                    ).setClassName(parsedKey.className).build(),
+                    createAppTarget(
+                        prefix = "app",
+                        componentName = componentName,
+                        packageName = parsedKey.packageName,
+                        user = parsedKey.user,
+                    ),
                 )
             }
         }
@@ -365,7 +364,6 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
     private fun buildWidgetTargets(
         ranked: List<String>,
-        count: Int,
         dataModel: BgDataModel,
     ): List<AppTarget> {
         val widgetsByPackageAndUser = LinkedHashMap<String, MutableList<WidgetItem>>()
@@ -375,7 +373,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             widgetsByPackageAndUser.getOrPut(key) { ArrayList() }.add(widgetItem)
         }
 
-        val targets = ArrayList<AppTarget>(count)
+        val targets = ArrayList<AppTarget>(NUM_WIDGET_SUGGESTIONS)
         val addedComponents = HashSet<String>()
         for (rankedKey in ranked) {
             val parsedKey = parseStoreKey(rankedKey) ?: continue
@@ -386,13 +384,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             if (!addedComponents.add(componentKey)) continue
 
             targets.add(
-                AppTarget.Builder(
-                    AppTargetId("widget:${widget.componentName.packageName}"),
-                    widget.componentName.packageName,
-                    widget.user,
-                ).setClassName(widget.componentName.className).build(),
+                createAppTarget(
+                    prefix = "widget",
+                    componentName = widget.componentName,
+                    packageName = widget.componentName.packageName,
+                    user = widget.user,
+                ),
             )
-            if (targets.size == count) break
+            if (targets.size == NUM_WIDGET_SUGGESTIONS) break
         }
         return targets
     }
@@ -410,6 +409,27 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     private fun userToken(user: UserHandle): String = userCache.getSerialNumberForUser(user).toString()
 
     private fun packageUserKey(packageName: String, user: UserHandle): String = "$packageName/${userToken(user)}"
+
+    private fun prunePredictionStores(pm: PackageManager) {
+        allAppsStore.pruneUninstalled(pm)
+        dismissedAppsStore.pruneUninstalled(pm)
+        hotseatStore.pruneUninstalled(pm)
+        dismissedApps = loadDismissedApps()
+    }
+
+    private fun createAppTarget(
+        prefix: String,
+        componentName: ComponentName,
+        packageName: String,
+        user: UserHandle,
+    ): AppTarget {
+        val storeKey = toStoreKey(componentName, user)
+        return AppTarget.Builder(
+            AppTargetId("$prefix:$storeKey"),
+            packageName,
+            user,
+        ).setClassName(componentName.className).build()
+    }
 
     private fun recordDismissEvent(event: EventEnum, resolvedEvent: ResolvedEvent): Boolean {
         val componentName = resolvedEvent.componentName ?: return false
@@ -480,7 +500,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     private fun resolveUserToken(token: String): UserHandle? {
         token.toLongOrNull()?.let { serialNumber ->
             val user = userCache.getUserForSerialNumber(serialNumber)
-            if (userToken(user) == token) return user
+            if (user != null && userToken(user) == token) return user
         }
 
         return userCache.userProfiles.firstOrNull { profile -> profile.hashCode().toString() == token }
