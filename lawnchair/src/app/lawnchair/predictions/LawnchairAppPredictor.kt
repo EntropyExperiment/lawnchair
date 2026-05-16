@@ -13,7 +13,6 @@ import android.content.pm.PackageManager
 import android.os.Process
 import android.os.UserHandle
 import androidx.annotation.WorkerThread
-import androidx.core.content.edit
 import app.lawnchair.preferences2.PreferenceManager2
 import com.android.launcher3.AppFilter
 import com.android.launcher3.InvariantDeviceProfile
@@ -400,7 +399,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             .toSet()
     }
 
-    private fun toStoreKey(componentName: ComponentName, user: UserHandle): String = "${componentName.packageName}/${componentName.className}/${userToken(user)}"
+    private fun toStoreKey(componentName: ComponentName, user: UserHandle): String = PredictionAppKey.create(componentName, userToken(user))
 
     private fun userToken(user: UserHandle): String = userCache.getSerialNumberForUser(user).toString()
 
@@ -467,15 +466,9 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     }
 
     private fun parseStoreKey(key: String): ParsedStoreKey? {
-        val slash = key.indexOf('/')
-        if (slash < 0) return null
-        val packageName = key.substring(0, slash)
-        val rest = key.substring(slash + 1)
-        val classNameEnd = rest.lastIndexOf('/')
-        if (classNameEnd < 0) return null
-        val className = rest.substring(0, classNameEnd)
-        val user = resolveUserToken(rest.substring(classNameEnd + 1)) ?: Process.myUserHandle()
-        return ParsedStoreKey(packageName, className, user)
+        val parts = PredictionAppKey.parse(key) ?: return null
+        val user = resolveUserToken(parts.userToken) ?: Process.myUserHandle()
+        return ParsedStoreKey(parts.packageName, parts.className, user)
     }
 
     private fun resolveUserToken(token: String): UserHandle? {
