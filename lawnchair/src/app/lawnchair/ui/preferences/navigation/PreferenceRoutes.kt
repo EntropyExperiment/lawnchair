@@ -103,9 +103,12 @@ data object ExperimentalFeatures : PreferenceRootRoute, PreferenceDeepLink {
 }
 
 @Serializable
-data object DismissedPredictionApps : PreferenceRoute, PreferenceDeepLink {
-    override val deepLink = "$URI/dismissed-prediction-apps"
+data object Predictions : PreferenceRoute, PreferenceDeepLink {
+    override val deepLink = "$URI/predictions"
 }
+
+@Serializable
+data object DismissedPredictionApps : PreferenceRoute
 
 @Serializable
 data object DebugMenu : PreferenceRootRoute

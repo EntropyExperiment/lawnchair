@@ -1,39 +1,25 @@
 package app.lawnchair.ui.preferences.destinations
 
-import android.Manifest
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.lawnchair.predictions.AppUsageStore
-import app.lawnchair.predictions.DismissedPredictionAppsStore
-import app.lawnchair.predictions.LawnchairPredictor
-import app.lawnchair.predictions.PredictionMode
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
-import app.lawnchair.ui.preferences.components.NavigationActionPreference
 import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
-import app.lawnchair.ui.preferences.components.controls.ListPreference
-import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
-import app.lawnchair.ui.preferences.navigation.DismissedPredictionApps
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
 import app.lawnchair.util.isGestureNavContractCompatible
@@ -148,82 +134,6 @@ fun ExperimentalFeaturesPreferences(
 
         val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
         val enableGncAdapter = prefs.enableGnc.getAdapter()
-
-        val predictionModeAdapter = prefs2.predictionMode.getAdapter()
-        val weightedUsageStatsAdapter = prefs2.lawnchairPredictorUseWeightedUsageStats.getAdapter()
-        val recordPredictionTapsAdapter = prefs2.lawnchairPredictorRecordPredictionTaps.getAdapter()
-        val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
-        val predictionPrefs = remember { AppUsageStore.getPrefs(context) }
-        val dismissedAppsStore = remember {
-            DismissedPredictionAppsStore(predictionPrefs, DismissedPredictionAppsStore.DISMISS_STORE_NAME)
-        }
-
-        var dismissedPredictionAppsCount by remember {
-            mutableIntStateOf(dismissedAppsStore.getDismissedApps().size)
-        }
-        val hasUsageStatsPermission =
-            context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
-                PackageManager.PERMISSION_GRANTED
-
-        DisposableEffect(predictionPrefs) {
-            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                if (key == DismissedPredictionAppsStore.DISMISS_STORE_NAME) {
-                    dismissedPredictionAppsCount = dismissedAppsStore.getDismissedApps().size
-                }
-            }
-            predictionPrefs.registerOnSharedPreferenceChangeListener(listener)
-            onDispose { predictionPrefs.unregisterOnSharedPreferenceChangeListener(listener) }
-        }
-
-        PreferenceGroup(
-            Modifier,
-            stringResource(R.string.app_prediction_label),
-        ) {
-            Item {
-                ListPreference(
-                    adapter = predictionModeAdapter,
-                    entries = PredictionMode.values().map { mode ->
-                        ListPreferenceEntry(
-                            value = mode,
-                            label = { stringResource(mode.nameResourceId) },
-                            enabled = mode.isAvailable(context),
-                        )
-                    },
-                    label = stringResource(R.string.prediction_mode_label),
-                )
-            }
-            Item {
-                SwitchPreference(
-                    adapter = weightedUsageStatsAdapter,
-                    label = stringResource(R.string.prediction_weighted_usage_stats_label),
-                    description = if (hasUsageStatsPermission) {
-                        stringResource(R.string.prediction_weighted_usage_stats_description)
-                    } else {
-                        stringResource(R.string.prediction_weighted_usage_stats_permission_description)
-                    },
-                    enabled = isLawnchairPredictorSelected,
-                )
-            }
-            Item {
-                SwitchPreference(
-                    adapter = recordPredictionTapsAdapter,
-                    label = stringResource(R.string.prediction_record_taps_label),
-                    description = stringResource(R.string.prediction_record_taps_description),
-                    enabled = isLawnchairPredictorSelected,
-                )
-            }
-            Item {
-                NavigationActionPreference(
-                    label = stringResource(R.string.dismissed_prediction_apps_label),
-                    destination = DismissedPredictionApps,
-                    subtitle = LocalResources.current.getQuantityString(
-                        R.plurals.apps_count,
-                        dismissedPredictionAppsCount,
-                        dismissedPredictionAppsCount,
-                    ),
-                )
-            }
-        }
 
         PreferenceGroup(
             Modifier,

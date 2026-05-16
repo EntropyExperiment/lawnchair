@@ -466,17 +466,6 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
                 true
             }
 
-            resolvedEvent.location.startsWith("predictions/hotseat") -> {
-                /* Launches from the predicted hotseat are not recorded by default to avoid
-                 * a feedback loop that can freeze dock predictions. See
-                 * [PreferenceManager2.lawnchairPredictorRecordPredictionTaps].
-                 */
-                if (prefs2.lawnchairPredictorRecordPredictionTaps.firstBlocking()) {
-                    hotseatStore.record(key)
-                }
-                true
-            }
-
             else -> false
         }
     }

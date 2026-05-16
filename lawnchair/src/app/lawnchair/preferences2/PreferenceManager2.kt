@@ -37,8 +37,6 @@ import app.lawnchair.hotseat.HotseatMode
 import app.lawnchair.icons.CustomAdaptiveIconDrawable
 import app.lawnchair.icons.shape.IconShape
 import app.lawnchair.icons.shape.IconShapeManager
-import app.lawnchair.predictions.LawnchairPredictor
-import app.lawnchair.predictions.NoPredictor
 import app.lawnchair.predictions.PredictionMode
 import app.lawnchair.preferences.PreferenceManager as LawnchairPreferenceManager
 import app.lawnchair.qsb.providers.QsbSearchProvider
@@ -375,6 +373,11 @@ class PreferenceManager2 @Inject constructor(
         defaultValue = false,
     )
 
+    val enableGlobalPrediction = preference(
+        key = booleanPreferencesKey(name = "enable_global_prediction"),
+        defaultValue = true,
+    )
+
     val predictionMode = preference(
         key = stringPreferencesKey(name = "prediction_mode"),
         defaultValue = PredictionMode.fromString(context.getString(R.string.config_default_prediction_mode)),
@@ -384,11 +387,6 @@ class PreferenceManager2 @Inject constructor(
 
     val lawnchairPredictorUseWeightedUsageStats = preference(
         key = booleanPreferencesKey(name = "lawnchairpredictor_use_weighted_usage_stats"),
-        defaultValue = false,
-    )
-
-    val lawnchairPredictorRecordPredictionTaps = preference(
-        key = booleanPreferencesKey(name = "lawnchairpredictor_record_prediction_taps"),
         defaultValue = false,
     )
 

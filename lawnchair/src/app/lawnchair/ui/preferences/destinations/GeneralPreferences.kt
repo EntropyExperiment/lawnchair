@@ -31,6 +31,7 @@ import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.ColorStyle
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
+import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.LocalPreferenceInteractor
 import app.lawnchair.ui.preferences.components.FontPreference
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
@@ -40,6 +41,7 @@ import app.lawnchair.ui.preferences.components.colorpreference.ColorContrastWarn
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
+import app.lawnchair.ui.preferences.components.controls.NavigationSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
@@ -50,16 +52,17 @@ import app.lawnchair.ui.preferences.components.notificationDotsEnabled
 import app.lawnchair.ui.preferences.components.notificationServiceEnabled
 import app.lawnchair.ui.preferences.navigation.GeneralIconPack
 import app.lawnchair.ui.preferences.navigation.GeneralIconShape
+import app.lawnchair.ui.preferences.navigation.Predictions
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
-import com.patrykmichalik.opto.core.firstBlocking
 
 @Composable
 fun GeneralPreferences() {
     val context = LocalContext.current
     val prefs = preferenceManager()
     val prefs2 = preferenceManager2()
+    val navController = LocalNavController.current
     val iconPacks by LocalPreferenceInteractor.current.iconPacks.collectAsStateWithLifecycle()
     val themedIconsAdapter = prefs.themedIcons.getAdapter()
     val drawerThemedIconsAdapter = prefs.drawerThemedIcons.getAdapter()
@@ -142,6 +145,18 @@ fun GeneralPreferences() {
                         label = stringResource(R.string.fontBodyMedium),
                     )
                 }
+            }
+        }
+        val enableGlobalPrediction = prefs2.enableGlobalPrediction.getAdapter()
+        PreferenceGroup {
+            Item {
+                NavigationSwitchPreference(
+                    checked = enableGlobalPrediction.state.value,
+                    onCheckedChange = enableGlobalPrediction::onChange,
+                    label = stringResource(R.string.predictions_label),
+                    description = stringResource(R.string.predictions_description), // In future this can be extended to include folder naming suggestions.
+                    onClick = { navController.navigate(Predictions) },
+                )
             }
         }
         val wrapAdaptiveIcons = prefs.wrapAdaptiveIcons.getAdapter()

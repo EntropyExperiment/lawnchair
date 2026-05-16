@@ -45,6 +45,7 @@ import app.lawnchair.ui.preferences.destinations.IconPackPreferences
 import app.lawnchair.ui.preferences.destinations.IconPickerPreference
 import app.lawnchair.ui.preferences.destinations.LauncherPopupPreference
 import app.lawnchair.ui.preferences.destinations.PickAppForGesture
+import app.lawnchair.ui.preferences.destinations.PredictionsPreferences
 import app.lawnchair.ui.preferences.destinations.PreferencesDashboard
 import app.lawnchair.ui.preferences.destinations.QuickstepPreferences
 import app.lawnchair.ui.preferences.destinations.SearchPreferences
@@ -218,9 +219,10 @@ fun PreferenceNavigation(
         composable<ExperimentalFeatures>(
             deepLinks = getDeepLink(ExperimentalFeatures),
         ) { ExperimentalFeaturesPreferences() }
-        composable<DismissedPredictionApps>(
-            deepLinks = getDeepLink(DismissedPredictionApps),
-        ) { DismissedPredictionAppsPreferences() }
+        composable<Predictions>(
+            deepLinks = getDeepLink(Predictions),
+        ) { PredictionsPreferences() }
+        composable<DismissedPredictionApps> { DismissedPredictionAppsPreferences() }
         composable<ColorSelection> { backStackEntry ->
             val screen: ColorSelection = backStackEntry.toRoute()
             val modelList = ColorPreferenceModelList.INSTANCE.get(LocalContext.current)

@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
@@ -87,7 +88,12 @@ class LawnchairModelDelegate @Inject constructor(
         }
     }
 
-    private fun currentPredictionMode(): PredictionMode = prefs2.predictionMode.firstBlocking()
+    private fun currentPredictionMode(): PredictionMode {
+        if (!prefs2.enableGlobalPrediction.firstBlocking()) {
+            return NoPredictor
+        }
+        return prefs2.predictionMode.firstBlocking()
+    }
 
     private fun destroyPredictors() {
         mAllPredictionAppsState.destroyPredictor()
@@ -139,7 +145,10 @@ class LawnchairModelDelegate @Inject constructor(
                 CoroutineName("LawnchairModelDelegate.predictionModeObserver"),
         )
         prefObserverScope = observerScope
-        prefs2.predictionMode.get()
+        prefs2.enableGlobalPrediction.get()
+            .combine(prefs2.predictionMode.get()) { enabled, mode ->
+                if (enabled) mode else NoPredictor
+            }
             .distinctUntilChanged()
             .drop(1) // Skip
             .onEach { MODEL_EXECUTOR.execute { recreatePredictors() } }

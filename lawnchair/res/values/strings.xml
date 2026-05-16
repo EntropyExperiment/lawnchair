@@ -201,6 +201,9 @@
     <string name="app_info_drop_target_label">App info</string>
     <string name="debug_restart_launcher">Restart Lawnchair</string>
     <string name="experimental_features_label">Experimental features</string>
+    <string name="predictions_label">Predictions</string>
+    <string name="predictions_description">App predictions</string>
+    <string name="app_predictions_label">App predictions</string>
 
     <!-- Experimental features -->
     <string name="workspace_label">Workspace</string>
@@ -209,17 +212,13 @@
     <string name="internal_label">Internal</string>
     <string name="internal_description">Internal may be more unstable than other experimental group</string>
 
-    <string name="app_prediction_label">App Prediction</string>
-
     <string name="prediction_mode_label">Prediction mode</string>
     <string name="prediction_mode_system">System</string>
     <string name="prediction_mode_lawnchair">Lawnchair</string>
     <string name="prediction_mode_none">None</string>
-    <string name="prediction_weighted_usage_stats_label">Weighted usage stats fallback</string>
-    <string name="prediction_weighted_usage_stats_description">Use usage stats to rank fallback suggestions when Lawnchair predictor needs more apps</string>
-    <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to rank fallback suggestions when Lawnchair predictor needs more apps. Requires usage access to take effect</string>
-    <string name="prediction_record_taps_label">Record predicted hotseat taps</string>
-    <string name="prediction_record_taps_description">Allow predicted hotseat apps to influence Lawnchair predictor rankings</string>
+    <string name="prediction_weighted_usage_stats_label">Weighted usage stats</string>
+    <string name="prediction_weighted_usage_stats_description">Use usage stats to influence ranking suggestions</string>
+    <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to influence ranking suggestions. Requires usage access to enable</string>
     <string name="dismissed_prediction_apps_label">Dismissed prediction apps</string>
     <string name="dismissed_prediction_apps_label_with_count">Dismissed prediction apps (%1$d)</string>
 
