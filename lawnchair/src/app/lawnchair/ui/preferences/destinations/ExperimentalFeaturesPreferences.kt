@@ -48,7 +48,6 @@ fun ExperimentalFeaturesPreferences(
     val prefs = preferenceManager()
     val prefs2 = preferenceManager2()
 
-    val mMSDLPlayerWrapper = MSDLPlayerWrapper.INSTANCE.get(LocalContext.current)
     PreferenceLayout(
         label = stringResource(id = R.string.experimental_features_label),
         backArrowVisible = !LocalIsExpandedScreen.current,
@@ -61,12 +60,6 @@ fun ExperimentalFeaturesPreferences(
         val wallpaperAccessState by fileAccessManager.wallpaperAccessState.collectAsStateWithLifecycle()
         val hasPermission = wallpaperAccessState != FileAccessState.Denied
         var showPermissionDialog by remember { mutableStateOf(false) }
-
-        val folderIconShapeAdapter = prefs2.folderShape.getAdapter()
-        val folderIconShapeSubtitle = iconShapeEntries(context)
-            .firstOrNull { it.value == folderIconShapeAdapter.state.value }
-            ?.label?.invoke()
-            ?: stringResource(id = R.string.custom)
 
         PreferenceGroup(
             Modifier,
@@ -162,17 +155,21 @@ fun ExperimentalFeaturesPreferences(
         val recordPredictionTapsAdapter = prefs2.lawnchairPredictorRecordPredictionTaps.getAdapter()
         val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
         val predictionPrefs = remember { AppUsageStore.getPrefs(context) }
+        val dismissedAppsStore = remember {
+            DismissedPredictionAppsStore(predictionPrefs, DismissedPredictionAppsStore.DISMISS_STORE_NAME)
+        }
+
         var dismissedPredictionAppsCount by remember {
-            mutableIntStateOf(DismissedPredictionAppsStore.getDismissedApps(context).size)
+            mutableIntStateOf(dismissedAppsStore.getDismissedApps().size)
         }
         val hasUsageStatsPermission =
             context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
                 PackageManager.PERMISSION_GRANTED
 
-        DisposableEffect(predictionPrefs, context) {
+        DisposableEffect(predictionPrefs) {
             val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == DismissedPredictionAppsStore.DISMISS_STORE_NAME) {
-                    dismissedPredictionAppsCount = DismissedPredictionAppsStore.getDismissedApps(context).size
+                    dismissedPredictionAppsCount = dismissedAppsStore.getDismissedApps().size
                 }
             }
             predictionPrefs.registerOnSharedPreferenceChangeListener(listener)

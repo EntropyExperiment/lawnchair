@@ -62,6 +62,11 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     private val usagePrefs: SharedPreferences = AppUsageStore.getPrefs(context)
     private val userCache = UserCache.INSTANCE.get(context)
 
+    private val dismissedAppsStore = DismissedPredictionAppsStore(
+        prefs = usagePrefs,
+        storeName = DismissedPredictionAppsStore.DISMISS_STORE_NAME,
+    )
+
     private val hotseatStore = AppUsageStore(
         prefs = usagePrefs,
         storeName = AppUsageStore.HOTSEAT_STORE_NAME,
@@ -154,6 +159,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     ) {
         val pm = context.packageManager
         allAppsStore.pruneUninstalled(pm)
+        dismissedAppsStore.pruneUninstalled(pm)
         hotseatStore.pruneUninstalled(pm)
 
         val hotseatRanked = hotseatStore.getRanked()
@@ -418,7 +424,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             else -> false
         }
         if (changed) {
-            saveDismissedApps()
+            saveDismissedApps(dismissedApps)
         }
         return changed
     }
@@ -480,10 +486,10 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         return userCache.userProfiles.firstOrNull { profile -> profile.hashCode().toString() == token }
     }
 
-    private fun loadDismissedApps(): MutableSet<String> = DismissedPredictionAppsStore.getDismissedApps(context).toMutableSet()
+    private fun loadDismissedApps(): MutableSet<String> = dismissedAppsStore.getDismissedApps().toMutableSet()
 
-    private fun saveDismissedApps() {
-        DismissedPredictionAppsStore.setDismissedApps(context, dismissedApps)
+    private fun saveDismissedApps(dismissedApps: Set<String>) {
+        dismissedAppsStore.setDismissedApps(dismissedApps)
     }
 
     private fun isLaunchEvent(event: EventEnum): Boolean = event == LAUNCHER_APP_LAUNCH_TAP ||

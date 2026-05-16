@@ -43,8 +43,11 @@ fun DismissedPredictionAppsPreferences(
 ) {
     val context = LocalContext.current
     val storePrefs = remember { AppUsageStore.getPrefs(context) }
+    val dismissedAppsStore = remember {
+        DismissedPredictionAppsStore(storePrefs, DismissedPredictionAppsStore.DISMISS_STORE_NAME)
+    }
     var dismissedApps by remember {
-        mutableStateOf(DismissedPredictionAppsStore.getDismissedApps(context))
+        mutableStateOf(dismissedAppsStore.getDismissedApps())
     }
     val pageTitle =
         if (dismissedApps.isEmpty()) {
@@ -55,10 +58,10 @@ fun DismissedPredictionAppsPreferences(
     val apps by appsState(comparator = dismissedPredictionAppsComparator(context, dismissedApps))
     val state = rememberLazyListState()
 
-    DisposableEffect(storePrefs, context) {
+    DisposableEffect(storePrefs) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == DismissedPredictionAppsStore.DISMISS_STORE_NAME) {
-                dismissedApps = DismissedPredictionAppsStore.getDismissedApps(context)
+                dismissedApps = dismissedAppsStore.getDismissedApps()
             }
         }
         storePrefs.registerOnSharedPreferenceChangeListener(listener)
@@ -70,7 +73,7 @@ fun DismissedPredictionAppsPreferences(
         actions = {
             if (dismissedApps.isNotEmpty()) {
                 ResetDismissedAppsAction(onReset = {
-                    DismissedPredictionAppsStore.setDismissedApps(context, emptySet())
+                    dismissedAppsStore.setDismissedApps(emptySet())
                 })
             }
         },
@@ -86,13 +89,12 @@ fun DismissedPredictionAppsPreferences(
                             componentName = app.key.componentName,
                             user = app.key.user,
                         )
-                        val newSet = dismissedApps.toMutableSet()
-                        if (dismissedApps.contains(key)) {
-                            newSet.remove(key)
+                        val newSet = if (!dismissedApps.contains(key)) {
+                            dismissedApps + key
                         } else {
-                            newSet.add(key)
+                            dismissedApps - key
                         }
-                        DismissedPredictionAppsStore.setDismissedApps(context, newSet)
+                        dismissedAppsStore.setDismissedApps(newSet)
                     }
                     preferenceGroupItems(
                         items = apps,
