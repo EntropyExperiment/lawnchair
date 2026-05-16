@@ -164,6 +164,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         val hotseatCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
         val widgetCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
         val occupiedHotseatItems = getOccupiedHotseatItems(dataModel)
+        val excludedHotseatItems = occupiedHotseatItems + dismissedApps
 
         val allAppsTargets = buildTargets(
             allAppsCandidateRanked,
@@ -173,7 +174,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         val hotseatTargets = buildTargets(
             hotseatCandidateRanked,
             idp.numDatabaseHotseatIcons,
-            occupiedHotseatItems,
+            excludedHotseatItems,
         )
         val widgetTargets = buildWidgetTargets(
             widgetCandidateRanked,
