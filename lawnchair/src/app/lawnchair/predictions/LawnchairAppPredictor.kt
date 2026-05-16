@@ -487,10 +487,11 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         return userCache.userProfiles.firstOrNull { profile -> profile.hashCode().toString() == token }
     }
 
-    private fun loadDismissedApps(): MutableSet<String> = (usagePrefs.getStringSet(DISMISSED_APPS_STORE_NAME, emptySet()) ?: emptySet()).toMutableSet()
+    private fun loadDismissedApps(): MutableSet<String> =
+        DismissedPredictionAppsStore.getDismissedApps(context).toMutableSet()
 
     private fun saveDismissedApps() {
-        usagePrefs.edit { putStringSet(DISMISSED_APPS_STORE_NAME, dismissedApps.toSet()) }
+        DismissedPredictionAppsStore.setDismissedApps(context, dismissedApps)
     }
 
     private fun isLaunchEvent(event: EventEnum): Boolean = event == LAUNCHER_APP_LAUNCH_TAP ||
@@ -572,7 +573,6 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     }
 
     companion object {
-        private const val DISMISSED_APPS_STORE_NAME = "dismissed_all_apps_predictions"
         private const val NUM_WIDGET_SUGGESTIONS = 20
         private val RECENT_USAGE_WINDOW_MS = TimeUnit.HOURS.toMillis(6)
         private val DAILY_USAGE_WINDOW_MS = TimeUnit.DAYS.toMillis(1)
