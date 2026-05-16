@@ -8,7 +8,7 @@ import app.lawnchair.util.isPackageInstalled
 import com.android.launcher3.pm.UserCache
 
 object DismissedPredictionAppsStore {
-    const val STORE_NAME = "dismissed_all_apps_predictions"
+    const val STORE_NAME = "dismissed_apps_predictions"
 
     fun getDismissedApps(context: Context): Set<String> {
         val prefs = AppUsageStore.getPrefs(context)
