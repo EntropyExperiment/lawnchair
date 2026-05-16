@@ -1,6 +1,7 @@
 package app.lawnchair.ui.preferences.destinations
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,7 +13,9 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -24,6 +27,8 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.lawnchair.predictions.LawnchairPredictor
 import app.lawnchair.predictions.PredictionMode
+import app.lawnchair.predictions.AppUsageStore
+import app.lawnchair.predictions.DismissedPredictionAppsStore
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
 import app.lawnchair.preferences2.preferenceManager2
@@ -37,6 +42,7 @@ import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.navigation.DismissedPredictionApps
 import app.lawnchair.ui.preferences.navigation.GeneralIconShape
 import app.lawnchair.util.FileAccessManager
 import app.lawnchair.util.FileAccessState
@@ -46,6 +52,7 @@ import com.android.launcher3.Utilities
 import com.android.launcher3.util.MSDLPlayerWrapper
 import com.android.systemui.shared.system.BlurUtils
 import com.google.android.msdl.data.model.MSDLToken
+import androidx.compose.ui.platform.LocalResources
 
 @Composable
 fun ExperimentalFeaturesPreferences(
@@ -167,9 +174,23 @@ fun ExperimentalFeaturesPreferences(
         val weightedUsageStatsAdapter = prefs2.lawnchairPredictorUseWeightedUsageStats.getAdapter()
         val recordPredictionTapsAdapter = prefs2.lawnchairPredictorRecordPredictionTaps.getAdapter()
         val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
+        val predictionPrefs = remember { AppUsageStore.getPrefs(context) }
+        var dismissedPredictionAppsCount by remember {
+            mutableIntStateOf(DismissedPredictionAppsStore.getDismissedApps(context).size)
+        }
         val hasUsageStatsPermission =
             context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
                 PackageManager.PERMISSION_GRANTED
+
+        DisposableEffect(predictionPrefs, context) {
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == DismissedPredictionAppsStore.STORE_NAME) {
+                    dismissedPredictionAppsCount = DismissedPredictionAppsStore.getDismissedApps(context).size
+                }
+            }
+            predictionPrefs.registerOnSharedPreferenceChangeListener(listener)
+            onDispose { predictionPrefs.unregisterOnSharedPreferenceChangeListener(listener) }
+        }
 
         PreferenceGroup(
             Modifier,
@@ -206,6 +227,17 @@ fun ExperimentalFeaturesPreferences(
                     label = stringResource(R.string.prediction_record_taps_label),
                     description = stringResource(R.string.prediction_record_taps_description),
                     enabled = isLawnchairPredictorSelected,
+                )
+            }
+            Item {
+                NavigationActionPreference(
+                    label = stringResource(R.string.dismissed_prediction_apps_label),
+                    destination = DismissedPredictionApps,
+                    subtitle = LocalResources.current.getQuantityString(
+                        R.plurals.apps_count,
+                        dismissedPredictionAppsCount,
+                        dismissedPredictionAppsCount,
+                    ),
                 )
             }
         }

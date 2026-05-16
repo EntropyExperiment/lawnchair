@@ -220,6 +220,8 @@
     <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to rank fallback suggestions when Lawnchair predictor needs more apps. Requires usage access to take effect</string>
     <string name="prediction_record_taps_label">Record predicted hotseat taps</string>
     <string name="prediction_record_taps_description">Allow predicted hotseat apps to influence Lawnchair predictor rankings</string>
+    <string name="dismissed_prediction_apps_label">Dismissed prediction apps</string>
+    <string name="dismissed_prediction_apps_label_with_count">Dismissed prediction apps (%1$d)</string>
 
     <string name="font_picker_label">Font customization</string>
     <string name="font_picker_description">Some text remains unchanged</string>
