@@ -480,8 +480,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         return userCache.userProfiles.firstOrNull { profile -> profile.hashCode().toString() == token }
     }
 
-    private fun loadDismissedApps(): MutableSet<String> =
-        DismissedPredictionAppsStore.getDismissedApps(context).toMutableSet()
+    private fun loadDismissedApps(): MutableSet<String> = DismissedPredictionAppsStore.getDismissedApps(context).toMutableSet()
 
     private fun saveDismissedApps() {
         DismissedPredictionAppsStore.setDismissedApps(context, dismissedApps)

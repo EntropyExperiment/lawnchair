@@ -32,4 +32,3 @@ object DismissedPredictionAppsStore {
         return PredictionAppKey.create(componentName, userSerial)
     }
 }
-

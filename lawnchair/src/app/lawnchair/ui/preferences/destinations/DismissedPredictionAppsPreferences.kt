@@ -161,9 +161,10 @@ private fun dismissedPredictionAppsComparator(context: Context, dismissedApps: S
                 componentName = it.key.componentName,
                 user = it.key.user,
             ) in dismissedApps
-        ) 0 else 1
+        ) {
+            0
+        } else {
+            1
+        }
     }.then(appComparator)
 }
-
-
-
