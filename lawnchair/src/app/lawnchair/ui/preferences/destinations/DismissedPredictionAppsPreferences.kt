@@ -42,7 +42,7 @@ fun DismissedPredictionAppsPreferences(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val prefs = remember { AppUsageStore.getPrefs(context) }
+    val storePrefs = remember { AppUsageStore.getPrefs(context) }
     var dismissedApps by remember {
         mutableStateOf(DismissedPredictionAppsStore.getDismissedApps(context))
     }
@@ -55,14 +55,14 @@ fun DismissedPredictionAppsPreferences(
     val apps by appsState(comparator = dismissedPredictionAppsComparator(context, dismissedApps))
     val state = rememberLazyListState()
 
-    DisposableEffect(prefs, context) {
+    DisposableEffect(storePrefs, context) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == DismissedPredictionAppsStore.STORE_NAME) {
                 dismissedApps = DismissedPredictionAppsStore.getDismissedApps(context)
             }
         }
-        prefs.registerOnSharedPreferenceChangeListener(listener)
-        onDispose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
+        storePrefs.registerOnSharedPreferenceChangeListener(listener)
+        onDispose { storePrefs.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
     PreferenceScaffold(
