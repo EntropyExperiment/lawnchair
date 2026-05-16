@@ -57,7 +57,7 @@ fun DismissedPredictionAppsPreferences(
 
     DisposableEffect(storePrefs, context) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == DismissedPredictionAppsStore.STORE_NAME) {
+            if (key == DismissedPredictionAppsStore.DISMISS_STORE_NAME) {
                 dismissedApps = DismissedPredictionAppsStore.getDismissedApps(context)
             }
         }

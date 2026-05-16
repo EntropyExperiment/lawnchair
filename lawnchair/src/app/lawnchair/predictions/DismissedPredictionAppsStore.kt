@@ -8,23 +8,23 @@ import app.lawnchair.util.isPackageInstalled
 import com.android.launcher3.pm.UserCache
 
 object DismissedPredictionAppsStore {
-    const val STORE_NAME = "dismissed_apps_predictions"
+    const val DISMISS_STORE_NAME = "dismissed_apps_predictions"
 
     fun getDismissedApps(context: Context): Set<String> {
         val prefs = AppUsageStore.getPrefs(context)
-        val storedApps = prefs.getStringSet(STORE_NAME, emptySet()).orEmpty()
+        val storedApps = prefs.getStringSet(DISMISS_STORE_NAME, emptySet()).orEmpty()
         val prunedApps = storedApps.filterTo(mutableSetOf()) { key ->
             key.isNotEmpty() && context.packageManager.isPackageInstalled(PredictionAppKey.packageName(key))
         }
         if (prunedApps.size != storedApps.size) {
-            prefs.edit { putStringSet(STORE_NAME, prunedApps) }
+            prefs.edit { putStringSet(DISMISS_STORE_NAME, prunedApps) }
         }
         return prunedApps
     }
 
     fun setDismissedApps(context: Context, dismissedApps: Set<String>) {
         val normalizedApps = dismissedApps.filterTo(mutableSetOf()) { it.isNotEmpty() }
-        AppUsageStore.getPrefs(context).edit { putStringSet(STORE_NAME, normalizedApps) }
+        AppUsageStore.getPrefs(context).edit { putStringSet(DISMISS_STORE_NAME, normalizedApps) }
     }
 
     fun toStoreKey(context: Context, componentName: ComponentName, user: UserHandle): String {
