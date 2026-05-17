@@ -441,6 +441,7 @@ dependencies {
     implementation libs.androidx.datastore.preferences
 
     implementation platform(libs.compose.bom)
+    implementation libs.compose.animation.graphics
     implementation libs.compose.ui
     implementation libs.compose.ui.util
     implementation libs.compose.ui.graphics
