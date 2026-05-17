@@ -17,9 +17,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
-import kotlin.time.Duration.Companion.milliseconds
 
 /** Playback handler for Animated Vector Drawable (AVD)
  *
