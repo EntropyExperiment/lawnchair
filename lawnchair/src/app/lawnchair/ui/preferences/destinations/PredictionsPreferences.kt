@@ -60,7 +60,7 @@ private fun AppPredictionsFeature(
     val context = LocalContext.current
     val resources = LocalResources.current
     val prefs2 = preferenceManager2()
-    val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+    val appOps = context.getSystemService(AppOpsManager::class.java)
 
     val enableGlobalPredictionAdapter = prefs2.enableGlobalPrediction.getAdapter()
     val predictionModeAdapter = prefs2.predictionMode.getAdapter()

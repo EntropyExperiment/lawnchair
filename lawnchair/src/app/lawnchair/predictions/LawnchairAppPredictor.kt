@@ -247,7 +247,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
     private fun shouldUseWeightedUsageStats(): Boolean {
         if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstBlocking()) return false
-        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val appOps = context.getSystemService(AppOpsManager::class.java)
         return appOps.checkOpNoThrow(
             AppOpsManager.OPSTR_GET_USAGE_STATS,
             Process.myUid(),
