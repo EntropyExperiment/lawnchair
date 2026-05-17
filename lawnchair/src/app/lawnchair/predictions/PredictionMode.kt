@@ -34,7 +34,7 @@ object SystemPredictor : PredictionMode(R.string.prediction_mode_system) {
     override fun isAvailable(context: Context): Boolean {
         if (context.getSystemService(AppPredictionManager::class.java) == null) return false
         return context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
-            PackageManager.PERMISSION_GRANTED // It needs to be granted through ADB only, not through special app appops.
+            PackageManager.PERMISSION_GRANTED // Intended, it needs to be granted through ADB only, not through special app appops.
     }
 }
 
