@@ -1,6 +1,5 @@
 package app.lawnchair.predictions
 
-import android.Manifest
 import android.app.AppOpsManager
 import android.app.prediction.AppTarget
 import android.app.prediction.AppTargetId
@@ -19,7 +18,19 @@ import com.android.launcher3.AppFilter
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherModel
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT
-import com.android.launcher3.logger.LauncherAtom
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.ALL_APPS_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.FOLDER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.HOTSEAT
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.PREDICTED_HOTSEAT_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.PREDICTION_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.SEARCH_RESULT_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.TASK_BAR_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.TASK_SWITCHER_CONTAINER
+import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.WORKSPACE
+import com.android.launcher3.logger.LauncherAtom.FolderContainer
+import com.android.launcher3.logger.LauncherAtom.ItemInfo
+import com.android.launcher3.logger.LauncherAtom.ItemInfo.ItemCase.APPLICATION
+import com.android.launcher3.logger.LauncherAtom.ItemInfo.ItemCase.TASK
 import com.android.launcher3.logging.StatsLogManager.EventEnum
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_APP_LAUNCH_DRAGDROP
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_APP_LAUNCH_TAP
@@ -44,12 +55,14 @@ import com.android.launcher3.model.WidgetsPredictionUpdateTask
 import com.android.launcher3.pm.UserCache
 import com.android.launcher3.util.Executors.MODEL_EXECUTOR
 import com.android.launcher3.util.UserIconInfo
+import com.android.launcher3.util.UserIconInfo.TYPE_CLONED
+import com.android.launcher3.util.UserIconInfo.TYPE_PRIVATE
+import com.android.launcher3.util.UserIconInfo.TYPE_WORK
 import com.android.quickstep.logging.StatsLogCompatManager
-import com.android.systemui.shared.system.SysUiStatsLog
+import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_CLONED
+import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_PRIVATE
+import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_WORK
 import com.patrykmichalik.opto.core.firstBlocking
-import java.util.ArrayList
-import java.util.HashSet
-import java.util.LinkedHashMap
 import java.util.concurrent.TimeUnit
 
 /**
@@ -114,12 +127,12 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     }
 
     @WorkerThread
-    override fun consume(event: EventEnum?, atomInfo: LauncherAtom.ItemInfo?) {
+    override fun consume(event: EventEnum?, atomInfo: ItemInfo?) {
         MODEL_EXECUTOR.execute { handleEvent(event, atomInfo) }
     }
 
     @WorkerThread
-    private fun handleEvent(event: EventEnum?, atomInfo: LauncherAtom.ItemInfo?) {
+    private fun handleEvent(event: EventEnum?, atomInfo: ItemInfo?) {
         val resolvedEvent = atomInfo?.let {
             ResolvedEvent(
                 location = resolveLocation(it),
@@ -240,7 +253,8 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     }
 
     private fun getFallbackRanked(): List<String> {
-        val usageStatsRanked = if (shouldUseWeightedUsageStats()) getUsageStatsRanked() else emptyList()
+        val usageStatsRanked =
+            if (shouldUseWeightedUsageStats()) getUsageStatsRanked() else emptyList()
         val randomRanked = getRandomRanked()
         return mergeRanked(usageStatsRanked, randomRanked)
     }
@@ -256,7 +270,8 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     }
 
     private fun getUsageStatsRanked(): List<String> {
-        val usageStatsManager = context.getSystemService(UsageStatsManager::class.java) ?: return emptyList()
+        val usageStatsManager =
+            context.getSystemService(UsageStatsManager::class.java) ?: return emptyList()
         val launcherApps = context.getSystemService(LauncherApps::class.java) ?: return emptyList()
         val appFilter = AppFilter(context)
         val now = System.currentTimeMillis()
@@ -265,7 +280,10 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         try {
             addUsageStatsWindow(
                 scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(now - RECENT_USAGE_WINDOW_MS, now),
+                stats = usageStatsManager.queryAndAggregateUsageStats(
+                    now - RECENT_USAGE_WINDOW_MS,
+                    now,
+                ),
                 now = now,
                 launchWeight = 12.0,
                 foregroundMinutesWeight = 0.25,
@@ -273,7 +291,10 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             )
             addUsageStatsWindow(
                 scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(now - DAILY_USAGE_WINDOW_MS, now),
+                stats = usageStatsManager.queryAndAggregateUsageStats(
+                    now - DAILY_USAGE_WINDOW_MS,
+                    now,
+                ),
                 now = now,
                 launchWeight = 4.0,
                 foregroundMinutesWeight = 0.1,
@@ -281,7 +302,10 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             )
             addUsageStatsWindow(
                 scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(now - WEEKLY_USAGE_WINDOW_MS, now),
+                stats = usageStatsManager.queryAndAggregateUsageStats(
+                    now - WEEKLY_USAGE_WINDOW_MS,
+                    now,
+                ),
                 now = now,
                 launchWeight = 1.0,
                 foregroundMinutesWeight = 0.02,
@@ -295,7 +319,13 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
         return scores.entries
             .sortedByDescending { it.value }
-            .mapNotNull { (packageName, _) -> resolvePackageToStoreKey(packageName, launcherApps, appFilter) }
+            .mapNotNull { (packageName, _) ->
+                resolvePackageToStoreKey(
+                    packageName,
+                    launcherApps,
+                    appFilter,
+                )
+            }
     }
 
     private fun addUsageStatsWindow(
@@ -310,12 +340,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             val packageName = stat.packageName
             if (packageName.isNullOrEmpty() || packageName == context.packageName) return@forEach
 
-            val foregroundMinutes = TimeUnit.MILLISECONDS.toMinutes(stat.totalTimeInForeground).toDouble()
+            val foregroundMinutes =
+                TimeUnit.MILLISECONDS.toMinutes(stat.totalTimeInForeground).toDouble()
             val recencyScore = when {
                 stat.lastTimeUsed <= 0L -> 0.0
 
                 else -> {
-                    val ageHours = (now - stat.lastTimeUsed).coerceAtLeast(0L).toDouble() / RECENCY_HOUR_MS
+                    val ageHours =
+                        (now - stat.lastTimeUsed).coerceAtLeast(0L).toDouble() / RECENCY_HOUR_MS
                     1.0 / (1.0 + ageHours)
                 }
             }
@@ -384,7 +416,8 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             val parsedKey = parseStoreKey(rankedKey) ?: continue
             val packageName = parsedKey.packageName
             val userToken = userToken(parsedKey.user)
-            val widget = widgetsByPackageAndUser["$packageName/$userToken"]?.firstOrNull() ?: continue
+            val widget =
+                widgetsByPackageAndUser["$packageName/$userToken"]?.firstOrNull() ?: continue
             val componentKey = toStoreKey(widget.componentName, widget.user)
             if (!addedComponents.add(componentKey)) continue
 
@@ -405,7 +438,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         val itemsSnapshot = synchronized(dataModel) { dataModel.itemsIdMap.copy() }
         return itemsSnapshot
             .filter { it.container == CONTAINER_HOTSEAT }
-            .mapNotNull { item -> item.targetComponent?.let { component -> toStoreKey(component, item.user) } }
+            .mapNotNull { item ->
+                item.targetComponent?.let { component ->
+                    toStoreKey(
+                        component,
+                        item.user,
+                    )
+                }
+            }
             .toSet()
     }
 
@@ -482,7 +522,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         val hotseatState = activeHotseatState ?: return null
         val widgetsState = activeWidgetsState ?: return null
         val idp = activeIdp ?: return null
-        return ActivePredictionState(model, dataModel, allAppsState, hotseatState, widgetsState, idp)
+        return ActivePredictionState(
+            model,
+            dataModel,
+            allAppsState,
+            hotseatState,
+            widgetsState,
+            idp,
+        )
     }
 
     private fun parseStoreKey(key: String): ParsedStoreKey? {
@@ -497,7 +544,9 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             if (user != null && userToken(user) == token) return user
         }
 
-        return userCache.userProfiles.firstOrNull { profile -> profile.hashCode().toString() == token }
+        return userCache.userProfiles.firstOrNull { profile ->
+            profile.hashCode().toString() == token
+        }
     }
 
     private fun loadDismissedApps(): MutableSet<String> = dismissedAppsStore.getDismissedApps().toMutableSet()
@@ -524,14 +573,14 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         event == LAUNCHER_SYSTEM_SHORTCUT_DONT_SUGGEST_APP_TAP ||
         event == LAUNCHER_DISMISS_PREDICTION_UNDO
 
-    private fun resolveComponentName(atomInfo: LauncherAtom.ItemInfo): ComponentName? {
+    private fun resolveComponentName(atomInfo: ItemInfo): ComponentName? {
         return when (atomInfo.itemCase) {
-            LauncherAtom.ItemInfo.ItemCase.APPLICATION -> {
+            APPLICATION -> {
                 val cn = atomInfo.application.componentName
                 if (cn.isNullOrEmpty()) null else ComponentName.unflattenFromString(cn)
             }
 
-            LauncherAtom.ItemInfo.ItemCase.TASK -> {
+            TASK -> {
                 val cn = atomInfo.task.componentName
                 if (cn.isNullOrEmpty()) null else ComponentName.unflattenFromString(cn)
             }
@@ -540,11 +589,11 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         }
     }
 
-    private fun resolveUser(atomInfo: LauncherAtom.ItemInfo): UserHandle {
+    private fun resolveUser(atomInfo: ItemInfo): UserHandle {
         val userType = when (atomInfo.userType) {
-            SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_WORK -> UserIconInfo.TYPE_WORK
-            SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_CLONED -> UserIconInfo.TYPE_CLONED
-            SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_PRIVATE -> UserIconInfo.TYPE_PRIVATE
+            LAUNCHER_UICHANGED__USER_TYPE__TYPE_WORK -> TYPE_WORK
+            LAUNCHER_UICHANGED__USER_TYPE__TYPE_CLONED -> TYPE_CLONED
+            LAUNCHER_UICHANGED__USER_TYPE__TYPE_PRIVATE -> TYPE_PRIVATE
             else -> UserIconInfo.TYPE_MAIN
         }
 
@@ -552,33 +601,33 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
             ?: Process.myUserHandle()
     }
 
-    private fun resolveLocation(atomInfo: LauncherAtom.ItemInfo): String {
+    private fun resolveLocation(atomInfo: ItemInfo): String {
         if (!atomInfo.hasContainerInfo()) return ""
         return when (atomInfo.containerInfo.containerCase) {
-            LauncherAtom.ContainerInfo.ContainerCase.WORKSPACE -> "workspace"
+            WORKSPACE -> "workspace"
 
-            LauncherAtom.ContainerInfo.ContainerCase.HOTSEAT -> "hotseat"
+            HOTSEAT -> "hotseat"
 
-            LauncherAtom.ContainerInfo.ContainerCase.FOLDER -> {
+            FOLDER -> {
                 val parent = atomInfo.containerInfo.folder.parentContainerCase
                 when (parent) {
-                    LauncherAtom.FolderContainer.ParentContainerCase.WORKSPACE -> "folder/workspace"
-                    LauncherAtom.FolderContainer.ParentContainerCase.HOTSEAT -> "folder/hotseat"
+                    FolderContainer.ParentContainerCase.WORKSPACE -> "folder/workspace"
+                    FolderContainer.ParentContainerCase.HOTSEAT -> "folder/hotseat"
                     else -> "folder"
                 }
             }
 
-            LauncherAtom.ContainerInfo.ContainerCase.ALL_APPS_CONTAINER -> "all-apps"
+            ALL_APPS_CONTAINER -> "all-apps"
 
-            LauncherAtom.ContainerInfo.ContainerCase.PREDICTION_CONTAINER -> "predictions"
+            PREDICTION_CONTAINER -> "predictions"
 
-            LauncherAtom.ContainerInfo.ContainerCase.PREDICTED_HOTSEAT_CONTAINER -> "predictions/hotseat"
+            PREDICTED_HOTSEAT_CONTAINER -> "predictions/hotseat"
 
-            LauncherAtom.ContainerInfo.ContainerCase.TASK_SWITCHER_CONTAINER -> "task-switcher"
+            TASK_SWITCHER_CONTAINER -> "task-switcher"
 
-            LauncherAtom.ContainerInfo.ContainerCase.TASK_BAR_CONTAINER -> "taskbar"
+            TASK_BAR_CONTAINER -> "taskbar"
 
-            LauncherAtom.ContainerInfo.ContainerCase.SEARCH_RESULT_CONTAINER -> "search-results"
+            SEARCH_RESULT_CONTAINER -> "search-results"
 
             else -> ""
         }
