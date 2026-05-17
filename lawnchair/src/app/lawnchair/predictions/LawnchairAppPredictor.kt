@@ -1,6 +1,7 @@
 package app.lawnchair.predictions
 
 import android.Manifest
+import android.app.AppOpsManager
 import android.app.prediction.AppTarget
 import android.app.prediction.AppTargetId
 import android.app.usage.UsageStats
@@ -246,8 +247,12 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
     private fun shouldUseWeightedUsageStats(): Boolean {
         if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstBlocking()) return false
-        return context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
-            PackageManager.PERMISSION_GRANTED
+        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        return appOps.checkOpNoThrow(
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
+            Process.myUid(),
+            context.packageName,
+        ) == AppOpsManager.MODE_ALLOWED
     }
 
     private fun getUsageStatsRanked(): List<String> {

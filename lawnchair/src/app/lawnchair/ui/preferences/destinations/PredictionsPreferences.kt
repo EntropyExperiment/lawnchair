@@ -1,9 +1,11 @@
 package app.lawnchair.ui.preferences.destinations
 
 import android.Manifest
+import android.app.AppOpsManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.os.Process
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -58,14 +60,17 @@ private fun AppPredictionsFeature(
     val context = LocalContext.current
     val resources = LocalResources.current
     val prefs2 = preferenceManager2()
+    val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
 
     val enableGlobalPredictionAdapter = prefs2.enableGlobalPrediction.getAdapter()
     val predictionModeAdapter = prefs2.predictionMode.getAdapter()
     val weightedUsageStatsAdapter = prefs2.lawnchairPredictorUseWeightedUsageStats.getAdapter()
     val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
-    val hasUsageStatsPermission =
-        context.checkSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) ==
-            PackageManager.PERMISSION_GRANTED
+    val hasUsageStatsPermission = appOps.checkOpNoThrow(
+        AppOpsManager.OPSTR_GET_USAGE_STATS,
+        Process.myUid(),
+        context.packageName,
+    ) == AppOpsManager.MODE_ALLOWED
     val predictionModeEntries = rememberPredictionModeEntries(context)
     val dismissedPredictionAppsCount = rememberDismissedPredictionAppsCount()
     val weightedUsageStatsDescription = stringResource(
@@ -149,4 +154,3 @@ private fun rememberDismissedPredictionAppsCount(): Int {
 
     return dismissedPredictionAppsCount
 }
-
