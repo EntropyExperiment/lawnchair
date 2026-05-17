@@ -4,8 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -13,20 +11,16 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import app.lawnchair.predictions.AppUsageStore
 import app.lawnchair.predictions.DismissedPredictionAppsStore
 import app.lawnchair.predictions.LawnchairPredictor
-import app.lawnchair.predictions.NoPredictor
 import app.lawnchair.predictions.PredictionMode
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
-import app.lawnchair.ui.preferences.components.AnimatedVectorPreview
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
@@ -92,7 +86,6 @@ private fun AppPredictionsFeature(
         label = stringResource(R.string.predictions_label),
         modifier = modifier,
     ) {
-        AppPredictionsPreview(predictionMode = predictionModeAdapter.state.value)
         PreferenceGroup {
             Item {
                 ListPreference(
@@ -157,30 +150,3 @@ private fun rememberDismissedPredictionAppsCount(): Int {
     return dismissedPredictionAppsCount
 }
 
-@Composable
-private fun AppPredictionsPreview(
-    predictionMode: PredictionMode,
-    modifier: Modifier = Modifier,
-) {
-    val bottomPadding = 78.dp // eyeballing workarounds
-    val scaleFactor = 1.7f // eyeballing workarounds
-
-    PreferenceGroup(
-        heading = stringResource(id = R.string.app_predictions_label),
-        modifier = modifier,
-    ) {
-        Item {
-            AnimatedVectorPreview(
-                animatedVectorResId = R.drawable.predictions_preview,
-                isPlaying = predictionMode != NoPredictor,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .graphicsLayer(
-                        scaleX = scaleFactor,
-                        scaleY = scaleFactor,
-                    )
-                    .padding(bottom = bottomPadding),
-            )
-        }
-    }
-}
