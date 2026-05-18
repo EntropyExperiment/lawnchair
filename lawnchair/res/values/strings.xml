@@ -202,6 +202,7 @@
     <string name="debug_restart_launcher">Restart Lawnchair</string>
     <string name="experimental_features_label">Experimental features</string>
     <string name="predictions_label">Predictions</string>
+    <string name="global_predictions_label">Prediction Features</string>
     <string name="predictions_description">App predictions</string>
     <string name="app_predictions_label">App predictions</string>
 

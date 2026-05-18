@@ -42,7 +42,6 @@ import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.AppDrawerHapticFeedbackPreference
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
-import app.lawnchair.ui.preferences.components.SuggestionsPreference
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
@@ -88,7 +87,6 @@ fun AppDrawerPreferences(
                 )
             }
             Item { SearchBarPreference(SearchRoute.DRAWER_SEARCH, showLabel = false) }
-            SuggestionsPreference()
             AppDrawerHapticFeedbackPreference()
         }
         PreferenceGroup(heading = stringResource(R.string.style)) {

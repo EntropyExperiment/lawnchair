@@ -1,10 +1,8 @@
 package app.lawnchair.ui.preferences.destinations
 
-import android.Manifest
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.os.Process
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -19,16 +17,22 @@ import androidx.compose.ui.res.stringResource
 import app.lawnchair.predictions.AppUsageStore
 import app.lawnchair.predictions.DismissedPredictionAppsStore
 import app.lawnchair.predictions.LawnchairPredictor
+import app.lawnchair.predictions.NoPredictor
 import app.lawnchair.predictions.PredictionMode
+import app.lawnchair.predictions.SystemPredictor
+import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.preferences.getAdapter
+import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
+import app.lawnchair.ui.preferences.components.SystemSuggestionsPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroupScope
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.DismissedPredictionApps
 import com.android.launcher3.R
@@ -42,37 +46,36 @@ fun PredictionsPreferences(
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
-        PredictionsFeatures()
+        val context = LocalContext.current
+        val prefs2 = preferenceManager2()
+        val enableGlobalPredictionAdapter = prefs2.enableGlobalPrediction.getAdapter()
+
+        MainSwitchPreference(
+            adapter = enableGlobalPredictionAdapter,
+            label = stringResource(R.string.global_predictions_label),
+        ) {
+            AppPredictionsFeature(context, prefs2)
+        }
     }
 }
 
 @Composable
-private fun PredictionsFeatures(
-    modifier: Modifier = Modifier,
-) {
-    AppPredictionsFeature(modifier = modifier)
-}
-
-@Composable
 private fun AppPredictionsFeature(
-    modifier: Modifier = Modifier,
+    context: Context,
+    prefs2: PreferenceManager2,
 ) {
-    val context = LocalContext.current
     val resources = LocalResources.current
-    val prefs2 = preferenceManager2()
     val appOps = context.getSystemService(AppOpsManager::class.java)
 
-    val enableGlobalPredictionAdapter = prefs2.enableGlobalPrediction.getAdapter()
     val predictionModeAdapter = prefs2.predictionMode.getAdapter()
     val weightedUsageStatsAdapter = prefs2.lawnchairPredictorUseWeightedUsageStats.getAdapter()
-    val isLawnchairPredictorSelected = predictionModeAdapter.state.value == LawnchairPredictor
     val hasUsageStatsPermission = appOps.checkOpNoThrow(
         AppOpsManager.OPSTR_GET_USAGE_STATS,
         Process.myUid(),
         context.packageName,
     ) == AppOpsManager.MODE_ALLOWED
     val predictionModeEntries = rememberPredictionModeEntries(context)
-    val dismissedPredictionAppsCount = rememberDismissedPredictionAppsCount()
+    val dismissedPredictionAppsCount = rememberDismissedPredictionAppsCount(context)
     val weightedUsageStatsDescription = stringResource(
         if (hasUsageStatsPermission) {
             R.string.prediction_weighted_usage_stats_description
@@ -86,35 +89,52 @@ private fun AppPredictionsFeature(
         dismissedPredictionAppsCount,
     )
 
-    MainSwitchPreference(
-        adapter = enableGlobalPredictionAdapter,
-        label = stringResource(R.string.predictions_label),
-        modifier = modifier,
+    PreferenceGroup(
+        heading = stringResource(R.string.app_predictions_label),
     ) {
-        PreferenceGroup {
-            Item {
-                ListPreference(
-                    adapter = predictionModeAdapter,
-                    entries = predictionModeEntries,
-                    label = stringResource(R.string.prediction_mode_label),
-                )
-            }
-            Item(visible = isLawnchairPredictorSelected) {
-                SwitchPreference(
-                    adapter = weightedUsageStatsAdapter,
-                    label = stringResource(R.string.prediction_weighted_usage_stats_label),
-                    description = weightedUsageStatsDescription,
-                    enabled = isLawnchairPredictorSelected && hasUsageStatsPermission,
-                )
-            }
-            Item(visible = isLawnchairPredictorSelected) {
-                NavigationActionPreference(
-                    label = stringResource(R.string.dismissed_prediction_apps_label),
-                    destination = DismissedPredictionApps,
-                    subtitle = dismissedPredictionAppsSubtitle,
-                )
-            }
+        Item {
+            ListPreference(
+                adapter = predictionModeAdapter,
+                entries = predictionModeEntries,
+                label = stringResource(R.string.prediction_mode_label),
+            )
         }
+        when (predictionModeAdapter.state.value) {
+            SystemPredictor -> SystemSuggestionsPreference()
+
+            LawnchairPredictor -> LawnchairPredictionSettings(
+                weightedUsageStatsAdapter = weightedUsageStatsAdapter,
+                weightedUsageStatsDescription = weightedUsageStatsDescription,
+                hasUsageStatsPermission = hasUsageStatsPermission,
+                dismissedPredictionAppsSubtitle = dismissedPredictionAppsSubtitle,
+            )
+
+            NoPredictor -> Unit
+        }
+    }
+}
+
+@Composable
+private fun PreferenceGroupScope.LawnchairPredictionSettings(
+    weightedUsageStatsAdapter: PreferenceAdapter<Boolean>,
+    weightedUsageStatsDescription: String,
+    hasUsageStatsPermission: Boolean,
+    dismissedPredictionAppsSubtitle: String,
+) {
+    Item {
+        SwitchPreference(
+            adapter = weightedUsageStatsAdapter,
+            label = stringResource(R.string.prediction_weighted_usage_stats_label),
+            description = weightedUsageStatsDescription,
+            enabled = hasUsageStatsPermission,
+        )
+    }
+    Item {
+        NavigationActionPreference(
+            label = stringResource(R.string.dismissed_prediction_apps_label),
+            destination = DismissedPredictionApps,
+            subtitle = dismissedPredictionAppsSubtitle,
+        )
     }
 }
 
@@ -132,11 +152,13 @@ private fun rememberPredictionModeEntries(context: Context): List<ListPreference
 }
 
 @Composable
-private fun rememberDismissedPredictionAppsCount(): Int {
-    val context = LocalContext.current
+private fun rememberDismissedPredictionAppsCount(context: Context): Int {
     val predictionPrefs = remember { AppUsageStore.getPrefs(context) }
     val dismissedAppsStore = remember {
-        DismissedPredictionAppsStore(predictionPrefs, DismissedPredictionAppsStore.DISMISS_STORE_NAME)
+        DismissedPredictionAppsStore(
+            predictionPrefs,
+            DismissedPredictionAppsStore.DISMISS_STORE_NAME,
+        )
     }
     var dismissedPredictionAppsCount by remember {
         mutableIntStateOf(dismissedAppsStore.getDismissedApps().size)
