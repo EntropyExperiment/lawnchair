@@ -87,20 +87,24 @@ class TorchProvider(context: Context) :
                 onClick = Runnable {
                     val cameraManager = cameraManager ?: return@Runnable
                     try {
-                        val flashCameraIds = cameraManager.cameraIdList.filter { id ->
-                            cameraManager
-                                .getCameraCharacteristics(id)
-                                .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-                        }
-                        flashCameraIds.forEach { cameraId ->
+                        cameraManager.cameraIdList.forEach { cameraId ->
                             try {
-                                cameraManager.setTorchMode(cameraId, false)
+                                val hasFlash = cameraManager
+                                    .getCameraCharacteristics(cameraId)
+                                    .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                                if (hasFlash) {
+                                    cameraManager.setTorchMode(cameraId, false)
+                                }
                             } catch (e: CameraAccessException) {
-                                Log.e(TAG, "Failed to turn off torch for camera $cameraId: ${e.message}", e)
+                                Log.e(
+                                    TAG,
+                                    "Failed to turn off torch for camera $cameraId: ${e.message}",
+                                    e,
+                                )
                             }
                         }
                     } catch (e: CameraAccessException) {
-                        Log.e(TAG, "Failed to list camera IDs or get characteristics", e)
+                        Log.e(TAG, "Failed to access camera list", e)
                     }
                 },
             ),
