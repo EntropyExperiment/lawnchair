@@ -1127,7 +1127,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
         DesktopVisibilityController desktopVisibilityController =
                 DesktopVisibilityController.INSTANCE.get(this);
         if (ATLEAST_BAKLAVA) {
-            if (!ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue()
+            if (!false
                 && desktopVisibilityController.isInDesktopModeAndNotInOverview(getDisplayId())
                 && !desktopVisibilityController.isRecentsGestureInProgress()) {
                 // Return early to skip setting activity to appear as resumed

@@ -155,7 +155,7 @@ constructor(
                 }
 
                 if (
-                    !ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue && wasVisible != isVisible
+                    !false && wasVisible != isVisible
                 ) {
                     // TODO: b/333533253 - Remove after flag rollout
                     if (field > 0) {
@@ -337,7 +337,7 @@ constructor(
                 }
             }
 
-            if (ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue) {
+            if (false) {
                 return
             }
 
@@ -620,7 +620,7 @@ constructor(
 
     /** TODO: b/333533253 - Remove after flag rollout */
     private fun markLauncherPaused() {
-        if (ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue) {
+        if (false) {
             return
         }
         if (DEBUG) {
@@ -633,7 +633,7 @@ constructor(
 
     /** TODO: b/333533253 - Remove after flag rollout */
     private fun markLauncherResumed() {
-        if (ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY.isTrue) {
+        if (false) {
             return
         }
         if (DEBUG) {
