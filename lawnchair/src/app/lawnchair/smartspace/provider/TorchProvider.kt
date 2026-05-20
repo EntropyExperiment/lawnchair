@@ -1,9 +1,6 @@
 package app.lawnchair.smartspace.provider
 
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Icon
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
@@ -15,7 +12,6 @@ import androidx.core.content.getSystemService
 import app.lawnchair.smartspace.model.SmartspaceAction
 import app.lawnchair.smartspace.model.SmartspaceScores
 import app.lawnchair.smartspace.model.SmartspaceTarget
-import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -80,48 +76,7 @@ class TorchProvider(context: Context) :
         awaitClose { cameraManager.unregisterTorchCallback(callback) }
     }
 
-    class Receiver : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val cameraManager = context.getSystemService<CameraManager>() ?: return
-            val flashCameraIds = cameraManager.cameraIdList.mapNotNull { id ->
-                try {
-                    if (cameraManager.getCameraCharacteristics(id)
-                            .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
-                    ) {
-                        id
-                    } else {
-                        null
-                    }
-                } catch (e: CameraAccessException) {
-                    Log.e(TAG, "Failed to get camera characteristics for camera $id", e)
-                    null
-                }
-            }
-            if (flashCameraIds.isEmpty()) return
-            flashCameraIds.forEach { cameraId ->
-                try {
-                    cameraManager.setTorchMode(cameraId, false)
-                } catch (e: CameraAccessException) {
-                    Log.e(TAG, "Failed to turn off torch for camera $cameraId: ${e.message}", e)
-                }
-            }
-        }
-        companion object {
-            private const val TAG = "TorchProvider"
-        }
-    }
-
     private fun getSmartspaceTarget(): SmartspaceTarget {
-        val intent = Intent(TOGGLE_TORCH).apply {
-            setPackage(context.packageName)
-        }
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
-
         return SmartspaceTarget(
             id = "torchStatus",
             headerAction = SmartspaceAction(
@@ -129,7 +84,25 @@ class TorchProvider(context: Context) :
                 icon = Icon.createWithResource(context, R.drawable.ic_flashlight_off),
                 title = context.getString(R.string.torch_status_on),
                 subtitle = context.getString(R.string.torch_action_off),
-                pendingIntent = pendingIntent,
+                onClick = Runnable {
+                    val cameraManager = cameraManager ?: return@Runnable
+                    try {
+                        val flashCameraIds = cameraManager.cameraIdList.filter { id ->
+                            cameraManager
+                                .getCameraCharacteristics(id)
+                                .get(CameraCharacteristics.FLASH_INFO_AVAILABLE) == true
+                        }
+                        flashCameraIds.forEach { cameraId ->
+                            try {
+                                cameraManager.setTorchMode(cameraId, false)
+                            } catch (e: CameraAccessException) {
+                                Log.e(TAG, "Failed to turn off torch for camera $cameraId: ${e.message}", e)
+                            }
+                        }
+                    } catch (e: CameraAccessException) {
+                        Log.e(TAG, "Failed to list camera IDs or get characteristics", e)
+                    }
+                },
             ),
             score = SmartspaceScores.SCORE_FLASHLIGHT,
             featureType = SmartspaceTarget.FeatureType.FEATURE_FLASHLIGHT,
@@ -137,6 +110,6 @@ class TorchProvider(context: Context) :
     }
 
     companion object {
-        const val TOGGLE_TORCH = "${BuildConfig.APPLICATION_ID}.action.TOGGLE_TORCH"
+        private const val TAG = "TorchProvider"
     }
 }
