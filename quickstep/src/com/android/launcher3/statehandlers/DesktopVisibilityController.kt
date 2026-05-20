@@ -22,7 +22,6 @@ import android.util.Log
 import android.util.Slog
 import android.util.SparseArray
 import android.view.Display.DEFAULT_DISPLAY
-import android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY
 import androidx.core.util.forEach
 import com.android.internal.util.LatencyTracker
 import com.android.launcher3.LauncherState
