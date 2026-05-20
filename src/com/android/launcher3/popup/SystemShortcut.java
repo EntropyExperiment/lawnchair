@@ -134,9 +134,13 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
         SystemShortcut<T> getShortcut(T context, ItemInfo itemInfo, @NonNull View originalView);
     }
 
-    public static final Factory<ActivityContext> WIDGETS = (context, itemInfo, originalView) -> {
+    private static boolean isHomeLocked(ActivityContext context) {
         PreferenceManager2 prefs = PreferenceManager2.getInstance(context.asContext());
-        if (PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen())) {
+        return PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen());
+    }
+
+    public static final Factory<ActivityContext> WIDGETS = (context, itemInfo, originalView) -> {
+        if (isHomeLocked(context)) {
             return null;
         }
 
@@ -260,8 +264,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
     }
 
     public static final Factory<ActivityContext> REMOVE = (context, itemInfo, originalView) -> {
-        PreferenceManager2 prefs = PreferenceManager2.getInstance(context.asContext());
-        if (PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen())) {
+        if (isHomeLocked(context)) {
             return null;
         }
         return new RemoveApp<>(context, itemInfo, originalView);
@@ -286,8 +289,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
     public static final Factory<ActivityContext> PRIVATE_PROFILE_INSTALL =
             (context, itemInfo, originalView) -> {
-                PreferenceManager2 prefs = PreferenceManager2.getInstance(context.asContext());
-                if (PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen())) {
+                if (isHomeLocked(context)) {
                     return null;
                 }
                 if (originalView == null) {
@@ -396,8 +398,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
     public static final Factory<ActivityContext> DONT_SUGGEST_APP =
             (activity, itemInfo, originalView) -> {
-                PreferenceManager2 prefs = PreferenceManager2.getInstance(activity.asContext());
-                if (PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen())) {
+                if (isHomeLocked(activity)) {
                     return null;
                 }
                 if (!itemInfo.isPredictedItem()) {
@@ -431,8 +432,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
     public static final Factory<ActivityContext> UNINSTALL_APP =
             (activityContext, itemInfo, originalView) -> {
-                PreferenceManager2 prefs = PreferenceManager2.getInstance(activityContext.asContext());;
-                if (PreferenceExtensionsKt.firstBlocking(prefs.getLockHomeScreen())) {
+                if (isHomeLocked(activityContext)) {
                     return null;
                 }
                 if (originalView == null) {
