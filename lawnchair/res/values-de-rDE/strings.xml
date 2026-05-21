@@ -55,7 +55,7 @@
     <string name="changes_dialog_commit_info">von %1$s • %2$s • %3$s</string>
     <!-- Time ago strings -->
     <string name="time_just_now">gerade eben</string>
-    <string name="time_minutes_ago">%dMin.</string>
+    <string name="time_minutes_ago">%dMin</string>
     <string name="time_hours_ago">%dStd.</string>
     <string name="time_days_ago">%dT.</string>
     <string name="time_weeks_ago">%dW.</string>
@@ -176,8 +176,8 @@
     <string name="show_deck_layout_description">Eine Layout-Option anzeigen, um die App-Übersicht auszublenden und neue Apps automatisch zum Startbildschirm hinzuzufügen</string>
     <string name="material_expressive_label">Material 3 Expressive</string>
     <string name="material_expressive_description">Material 3 Expressive-Änderungen im Arbeitsprofil aktivieren</string>
-    <string name="experimental_folder_shape_modify_label">Anpassbare Ordner-Form</string>
-    <string name="folder_shape_label">Ordner</string>
+    <string name="folder_shape_label">Ordnerform</string>
+    <string name="folder_label">Ordner</string>
     <string name="app_icon_shape_label">App</string>
     <string name="gesturenavcontract_label">API für GestureNavContract verwenden</string>
     <string name="gesturenavcontract_description">Greift auf erweiterte Animationen bei der Gesten-Navigation in Android zu. Nicht alle Geräte unterstützen dies und bei der Verwendung kann es zu Animationsfehlern kommen.</string>
@@ -268,6 +268,9 @@
     <string name="custom_icon_shape">Eigene Symbolform</string>
     <string name="custom_icon_shape_create">Eigene Symbolform erstellen</string>
     <string name="custom_icon_shape_edit">Eigene Symbolform bearbeiten</string>
+    <string name="custom_folder_shape">Eigene Ordnerform</string>
+    <string name="custom_folder_shape_create">Eigene Ordnerform erstellen</string>
+    <string name="custom_folder_shape_edit">Eigene Ordnerform bearbeiten</string>
     <string name="custom_icon_shape_corner">Form der Ecken</string>
     <string name="custom_icon_shape_corner_round">Runde Ecken</string>
     <string name="custom_icon_shape_corner_squircle">Quadreis-Symbol-Ecken</string>
@@ -486,11 +489,11 @@
     <string name="recents_screen_a11y_hint">den Anwendungsverlauf öffnen</string>
     <string name="generic_a11y_hint">Um %1$s, aktiviere die Bedienungshilfe für Lawnchair. Tippe auf \"Einstellungen öffnen\", wähle \"Lawnchair\" aus und aktiviere \"Lawnchair verwenden\".</string>
     <string name="generic_a11y_disclaimer">Lawnchair verwendet die \"performGlobalAction\"-Bedienungshilfe, um diese Aktion auszuführen. Dies ist eine sensible Berechtigung, die die Überwachung anderer Apps erlaubt. Lawnchair ist jedoch nicht für diese Funktionalität konfiguriert und empfängt keine Ereignisse.</string>
-    <string name="sleep_mode_label">Sleep mode</string>
-    <string name="sleep_mode_auto">Automatic</string>
+    <string name="sleep_mode_label">Ruhemodus</string>
+    <string name="sleep_mode_auto">Automatisch</string>
     <string name="sleep_mode_root">Root</string>
-    <string name="sleep_mode_accessibility">Accessibility service</string>
-    <string name="sleep_mode_device_admin">Device admin</string>
+    <string name="sleep_mode_accessibility">Bedienungshilfeeinstellung</string>
+    <string name="sleep_mode_device_admin">Geräteadmin</string>
     <!--
 
     Bug reporting
@@ -752,5 +755,5 @@
     <string name="home_screen_all_views_removed_msg">Startbildschirm geleert</string>
     <string name="lawnchair_actions">Aktionen</string>
     <string name="lawnchair_action_failed">Aktion fehlgeschlagen</string>
-    <string name="please_wait">Please wait…</string>
+    <string name="please_wait">Bitte warten…</string>
 </resources>
