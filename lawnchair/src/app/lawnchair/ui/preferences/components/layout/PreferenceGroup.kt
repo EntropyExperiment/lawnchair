@@ -16,6 +16,7 @@
 
 package app.lawnchair.ui.preferences.components.layout
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
@@ -43,11 +44,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.lawnchair.ui.preferences.components.AnimatedVectorPreview
 import app.lawnchair.ui.theme.preferenceGroupColor
 
 /**
@@ -104,6 +107,51 @@ fun PreferenceGroup(
             }
         }
         PreferenceGroupDescription(description = description, showDescription = showDescription)
+    }
+}
+
+/**
+ * [PreferenceGroup] to be use in conjuncture with [AnimatedVectorPreview].
+ *
+ * This layout is basically a PreferenceGroup ([animatedVectorResId]) + PreferenceGroup ([content])
+ *
+ *
+ */
+@Composable
+fun PreferenceGroupWithAnimation(
+    @DrawableRes animatedVectorResId: Int,
+    modifier: Modifier = Modifier,
+    heading: String? = null,
+    description: String? = null,
+    showDescription: Boolean = true,
+    itemSpacing: Dp = 4.dp,
+    isPlaying: Boolean = true,
+    bottomPadding: Dp = 0.dp,
+    scaleFactor: Float = 0f,
+    content: @Composable PreferenceGroupScope.() -> Unit,
+) {
+    Column(modifier = modifier) {
+        PreferenceGroup(
+            heading = heading,
+            description = description,
+            showDescription = showDescription,
+            itemSpacing = itemSpacing,
+        ) {
+            Item {
+                AnimatedVectorPreview(
+                    animatedVectorResId = animatedVectorResId,
+                    isPlaying = isPlaying,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .graphicsLayer(
+                            scaleX = scaleFactor,
+                            scaleY = scaleFactor,
+                        )
+                        .padding(bottom = bottomPadding),
+                )
+            }
+        }
+        PreferenceGroup { content.invoke(this) }
     }
 }
 
