@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import app.lawnchair.predictions.AppUsageStore
 import app.lawnchair.predictions.DismissedPredictionAppsStore
 import app.lawnchair.predictions.LawnchairPredictor
@@ -32,8 +31,8 @@ import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupScope
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupWithAnimation
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.DismissedPredictionApps
 import com.android.launcher3.R
@@ -90,34 +89,29 @@ private fun AppPredictionsFeature(
         dismissedPredictionAppsCount,
     )
 
-    PreferenceGroupWithAnimation(
-        animatedVectorResId = R.drawable.predictions_preview,
+    PreferenceGroup(
         heading = stringResource(R.string.app_predictions_label),
-        isPlaying = predictionModeAdapter.state.value != NoPredictor,
-        bottomPadding = 78.dp, // eyeballing workarounds
-        scaleFactor = 1.7f,
-        content = {
-            Item {
-                ListPreference(
-                    adapter = predictionModeAdapter,
-                    entries = predictionModeEntries,
-                    label = stringResource(R.string.prediction_mode_label),
-                )
-            }
-            when (predictionModeAdapter.state.value) {
-                SystemPredictor -> SystemSuggestionsPreference()
+    ) {
+        Item {
+            ListPreference(
+                adapter = predictionModeAdapter,
+                entries = predictionModeEntries,
+                label = stringResource(R.string.prediction_mode_label),
+            )
+        }
+        when (predictionModeAdapter.state.value) {
+            SystemPredictor -> SystemSuggestionsPreference()
 
-                LawnchairPredictor -> LawnchairPredictionSettings(
-                    weightedUsageStatsAdapter = weightedUsageStatsAdapter,
-                    weightedUsageStatsDescription = weightedUsageStatsDescription,
-                    hasUsageStatsPermission = hasUsageStatsPermission,
-                    dismissedPredictionAppsSubtitle = dismissedPredictionAppsSubtitle,
-                )
+            LawnchairPredictor -> LawnchairPredictionSettings(
+                weightedUsageStatsAdapter = weightedUsageStatsAdapter,
+                weightedUsageStatsDescription = weightedUsageStatsDescription,
+                hasUsageStatsPermission = hasUsageStatsPermission,
+                dismissedPredictionAppsSubtitle = dismissedPredictionAppsSubtitle,
+            )
 
-                NoPredictor -> Unit
-            }
-        }, // eyeballing workarounds
-    )
+            NoPredictor -> Unit
+        }
+    }
 }
 
 @Composable
