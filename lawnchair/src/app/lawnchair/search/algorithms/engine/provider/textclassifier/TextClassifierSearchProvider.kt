@@ -69,8 +69,7 @@ object TextClassifierSearchProvider : SearchProvider {
                     }
                 }
             } catch (e: CancellationException) {
-                // This is expected to happen when the search is cancelled however in most case this is safe.
-                Log.d(TAG, "Classification cancelled", e)
+                throw e
             } catch (e: Exception) {
                 Log.e(TAG, "Classification failed", e)
             }
