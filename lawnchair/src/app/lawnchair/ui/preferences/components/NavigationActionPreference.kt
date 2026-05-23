@@ -39,13 +39,16 @@ fun NavigationActionPreference(
     val navController = if (destination != null) LocalNavController.current else null
 
     NewPreferenceTemplate(
-        modifier = modifier.addIfNotNull(destination) { dest ->
-            clickable {
+        onClick = if (destination != null) {
+            {
                 navController?.navigate(
-                    route = dest,
+                    route = destination,
                 )
             }
+        } else {
+            null
         },
+        modifier = modifier,
         title = { Text(text = label) },
         description = { subtitle?.let { Text(text = it) } },
         endWidget = endWidget,

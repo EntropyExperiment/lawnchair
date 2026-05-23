@@ -46,8 +46,8 @@ fun PreferenceCategory(
     description: String? = null,
 ) {
     NewPreferenceTemplate(
+        onClick = onNavigate,
         modifier = modifier
-            .clickable { onNavigate() }
             .background(
                 if (isSelected) MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp) else Color.Transparent,
             ),

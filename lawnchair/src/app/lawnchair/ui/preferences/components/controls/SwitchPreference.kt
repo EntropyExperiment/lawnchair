@@ -98,17 +98,14 @@ fun SwitchPreference(
     }
 
     NewPreferenceTemplate(
-        modifier = modifier.clickable(
-            enabled = enabled,
-            indication = ripple(),
-            interactionSource = interactionSource,
-        ) {
+        onClick = {
             if (onClick != null) {
                 onClick()
             } else {
                 wrappedOnCheckedChange(!checked)
             }
         },
+        modifier = modifier,
         contentModifier = Modifier,
         title = { Text(text = label) },
         description = { description?.let { Text(text = it) } },
@@ -148,6 +145,7 @@ fun SwitchPreference(
             }
         },
         enabled = enabled,
+        interactionSource = interactionSource,
     )
 }
 

@@ -101,17 +101,14 @@ fun TwoTargetSwitchPreference(
     }
 
     NewPreferenceTemplate(
-        modifier = modifier.clickable(
-            enabled = enabled,
-            indication = ripple(),
-            interactionSource = interactionSource,
-        ) {
+        onClick = {
             if (onClick != null) {
                 onClick()
             } else {
                 wrappedOnCheckedChange(!checked)
             }
         },
+        modifier = modifier,
         contentModifier = Modifier,
         title = { Text(text = label) },
         description = { description?.let { Text(text = it) } },
@@ -151,6 +148,7 @@ fun TwoTargetSwitchPreference(
             }
         },
         enabled = enabled,
+        interactionSource = interactionSource,
     )
 }
 

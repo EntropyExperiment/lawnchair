@@ -136,7 +136,9 @@ fun NewPreferenceTemplate(
     colors: ListItemColors = ListItemDefaults.segmentedColors(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ),
+    interactionSource: MutableInteractionSource? = null,
 ) {
+    val localInteractionSource = interactionSource ?: remember { MutableInteractionSource() }
     Column(modifier) {
         SegmentedListItem(
 //            selected = TODO(),
@@ -163,7 +165,7 @@ fun NewPreferenceTemplate(
             colors = colors,
             elevation = ListItemDefaults.elevation(),
             contentPadding = ListItemDefaults.ContentPadding,
-            interactionSource = remember { MutableInteractionSource() },
+            interactionSource = localInteractionSource,
         ) {
             CompositionLocalProvider(
                 LocalContentColor provides MaterialTheme.colorScheme.onSurface,

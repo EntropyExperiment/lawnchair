@@ -109,7 +109,7 @@ private fun ListItem(
         NewPreferenceTemplate(
             title = { Text(text = title) },
             enabled = enabled,
-            modifier = Modifier.clickable(enabled = enabled, onClick = onClick),
+            onClick = if (enabled) onClick else null,
             description = { if (description != null) Text(text = description) },
             startWidget = {
                 RadioButton(
@@ -161,10 +161,7 @@ private fun Options(
         NewPreferenceTemplate(
             title = { Text(stringResource(id = R.string.app_label)) },
             enabled = appEnabled,
-            modifier = Modifier.clickable(
-                enabled = appEnabled,
-                onClick = onAppClick,
-            ),
+            onClick = if (appEnabled) onAppClick else null,
             startWidget = {
                 RadioButton(
                     selected = appSelected,
@@ -186,7 +183,7 @@ private fun Options(
         )
         NewPreferenceTemplate(
             title = { Text(text = stringResource(id = R.string.website_label)) },
-            modifier = Modifier.clickable(onClick = onWebsiteClick),
+            onClick = onWebsiteClick,
             startWidget = {
                 RadioButton(
                     selected = !appSelected,

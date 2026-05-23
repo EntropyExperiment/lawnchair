@@ -82,49 +82,54 @@ fun <T> ListPreference(
         ?.label?.invoke()
 
     NewPreferenceTemplate(
-        title = { Text(text = label) },
-        description = { currentDescription?.let { Text(text = it) } },
-        enabled = enabled,
-        endWidget = endWidget,
-        modifier = modifier.clickable(enabled) {
-            bottomSheetHandler.show {
-                ModalBottomSheetContent(
-                    title = { Text(label) },
-                    buttons = {
-                        OutlinedButton(
-                            onClick = { bottomSheetHandler.hide() },
-                            shapes = ButtonDefaults.shapes(),
-                        ) {
-                            Text(text = stringResource(id = AndroidR.string.cancel))
-                        }
-                    },
-                ) {
-                    LazyColumn {
-                        itemsIndexed(entries) { index, item ->
-                            if (index > 0) {
-                                PreferenceDivider(startIndent = 40.dp)
+        onClick = if (enabled) {
+            {
+                bottomSheetHandler.show {
+                    ModalBottomSheetContent(
+                        title = { Text(label) },
+                        buttons = {
+                            OutlinedButton(
+                                onClick = { bottomSheetHandler.hide() },
+                                shapes = ButtonDefaults.shapes(),
+                            ) {
+                                Text(text = stringResource(id = AndroidR.string.cancel))
                             }
-                            PreferenceTemplate(
-                                enabled = item.enabled,
-                                title = { Text(item.label()) },
-                                modifier = Modifier.clickable(item.enabled) {
-                                    onValueChange(item.value)
-                                    bottomSheetHandler.hide()
-                                },
-                                startWidget = {
-                                    RadioButton(
-                                        selected = item.value == value,
-                                        onClick = null,
-                                        enabled = item.enabled,
-                                    )
-                                },
-                                endWidget = item.endWidget,
-                            )
+                        },
+                    ) {
+                        LazyColumn {
+                            itemsIndexed(entries) { index, item ->
+                                if (index > 0) {
+                                    PreferenceDivider(startIndent = 40.dp)
+                                }
+                                PreferenceTemplate(
+                                    enabled = item.enabled,
+                                    title = { Text(item.label()) },
+                                    modifier = Modifier.clickable(item.enabled) {
+                                        onValueChange(item.value)
+                                        bottomSheetHandler.hide()
+                                    },
+                                    startWidget = {
+                                        RadioButton(
+                                            selected = item.value == value,
+                                            onClick = null,
+                                            enabled = item.enabled,
+                                        )
+                                    },
+                                    endWidget = item.endWidget,
+                                )
+                            }
                         }
                     }
                 }
             }
-        }.addIf(endWidget != null) { padding(end = 16.dp) },
+        } else {
+            null
+        },
+        title = { Text(text = label) },
+        description = { currentDescription?.let { Text(text = it) } },
+        enabled = enabled,
+        endWidget = endWidget,
+        modifier = modifier.addIf(endWidget != null) { padding(end = 16.dp) },
     )
 }
 

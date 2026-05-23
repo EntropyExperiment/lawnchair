@@ -47,22 +47,22 @@ fun ClickablePreference(
 ) {
     val bottomSheetHandler = bottomSheetHandler
     NewPreferenceTemplate(
-        title = { Text(text = label) },
-        modifier = modifier
-            .clickable {
-                if (confirmationText != null) {
-                    bottomSheetHandler.show {
-                        PreferenceClickConfirmation(
-                            title = label,
-                            text = confirmationText,
-                            onDismissRequest = { bottomSheetHandler.hide() },
-                            onConfirm = onClick,
-                        )
-                    }
-                } else {
-                    onClick()
+        onClick = {
+            if (confirmationText != null) {
+                bottomSheetHandler.show {
+                    PreferenceClickConfirmation(
+                        title = label,
+                        text = confirmationText,
+                        onDismissRequest = { bottomSheetHandler.hide() },
+                        onConfirm = onClick,
+                    )
                 }
-            },
+            } else {
+                onClick()
+            }
+        },
+        modifier = modifier,
+        title = { Text(text = label) },
         description = { subtitle?.let { Text(text = it) } },
     )
 }

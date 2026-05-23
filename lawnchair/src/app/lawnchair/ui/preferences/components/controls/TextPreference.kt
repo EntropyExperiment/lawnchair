@@ -58,10 +58,8 @@ fun TextPreference(
 ) {
     val bottomSheetHandler = bottomSheetHandler
     NewPreferenceTemplate(
-        title = { Text(text = label) },
-        description = { description(value)?.let { Text(text = it) } },
-        modifier = modifier
-            .clickable(enabled) {
+        onClick = if (enabled) {
+            {
                 bottomSheetHandler.show {
                     TextPreferenceDialog(
                         title = label,
@@ -70,7 +68,13 @@ fun TextPreference(
                         onConfirm = onChange,
                     )
                 }
-            },
+            }
+        } else {
+            null
+        },
+        title = { Text(text = label) },
+        description = { description(value)?.let { Text(text = it) } },
+        modifier = modifier,
         enabled = enabled,
     )
 }
