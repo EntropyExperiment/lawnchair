@@ -30,23 +30,23 @@
 -dontwarn androidx.renderscript.Type
 
 # Common rules.
--keep class android.window.** { *; }
--keep class android.view.** { *; }
--keep class com.android.systemui.** { *; }
--keep class com.android.wm.shell.** { *; }
+-keep,allowshrinking,allowoptimization class android.window.** { *; }
+-keep,allowshrinking,allowoptimization class android.view.** { *; }
+-keep,allowshrinking,allowoptimization class com.android.systemui.** { *; }
+-keep,allowshrinking,allowoptimization class com.android.wm.shell.** { *; }
 
 -keepclassmembers class * implements android.os.Parcelable {
   public static final ** CREATOR;
 }
 
 # Lawnchair specific rules.
--keep class app.lawnchair.LawnchairProto$* { *; }
--keep class app.lawnchair.LawnchairApp { *; }
--keep class app.lawnchair.LawnchairLauncher { *; }
--keep class app.lawnchair.compatlib.** { *; }
--keep class android.view.** { *; }
+-keep,allowshrinking,allowoptimization class app.lawnchair.LawnchairProto$* { *; }
+-keep,allowshrinking,allowoptimization class app.lawnchair.LawnchairApp { *; }
+-keep,allowshrinking,allowoptimization class app.lawnchair.LawnchairLauncher { *; }
+-keep,allowshrinking,allowoptimization class app.lawnchair.compatlib.** { *; }
+-keep,allowshrinking,allowoptimization class android.view.** { *; }
 
--keep class com.google.protobuf.Timestamp { *; }
+-keep,allowshrinking,allowoptimization class com.google.protobuf.Timestamp { *; }
 
 # TODO: Remove this after the change in https://github.com/ChickenHook/RestrictionBypass/pull/9 has been released.
--keep class org.chickenhook.restrictionbypass.** { *; }
+-keep,allowshrinking,allowoptimization class org.chickenhook.restrictionbypass.** { *; }
