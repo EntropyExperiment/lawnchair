@@ -27,10 +27,10 @@ import app.lawnchair.ui.ModalBottomSheetContent
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
+import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.util.LocalBottomSheetHandler
 import com.android.launcher3.R
 

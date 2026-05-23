@@ -114,11 +114,11 @@ fun TwoTargetSwitchPreference(
         description = { description?.let { Text(text = it) } },
         endWidget = {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (onClick != null) {
                     VerticalDivider(
-                        modifier = Modifier.height(32.dp)
+                        modifier = Modifier.height(32.dp),
                     )
                 }
                 Switch(
@@ -164,7 +164,7 @@ private fun TwoTargetSwitchPreferencePreview(
                 onCheckedChange = {},
                 label = "Label",
                 description = "Description",
-                onClick = {  },
+                onClick = { },
             )
         }
     }

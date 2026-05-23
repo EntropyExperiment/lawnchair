@@ -113,7 +113,7 @@ fun MainSwitchPreference(
 
     Column(
         modifier
-            .padding(horizontal = contentPadding)
+            .padding(horizontal = contentPadding),
     ) {
         SegmentedListItem(
             onClick = { onCheckedChange(!checked) },
@@ -128,30 +128,32 @@ fun MainSwitchPreference(
             modifier = Modifier,
             enabled = enabled,
             leadingContent = { Text(text = label, style = MaterialTheme.typography.titleMedium) },
-            trailingContent = { Switch(
-                modifier = Modifier
-                    .padding(top = contentPadding, bottom = contentPadding, start = contentPadding)
-                    .height(24.dp),
-                checked = checked,
-                onCheckedChange = onCheckedChange,
-                enabled = enabled,
-                interactionSource = interactionSource,
-                thumbContent = {
-                    if (checked) {
-                        Icon(
-                            imageVector = Icons.Filled.Check,
-                            contentDescription = null,
-                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null,
-                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                        )
-                    }
-                },
-            ) },
+            trailingContent = {
+                Switch(
+                    modifier = Modifier
+                        .padding(top = contentPadding, bottom = contentPadding, start = contentPadding)
+                        .height(24.dp),
+                    checked = checked,
+                    onCheckedChange = onCheckedChange,
+                    enabled = enabled,
+                    interactionSource = interactionSource,
+                    thumbContent = {
+                        if (checked) {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                contentDescription = null,
+                                modifier = Modifier.size(SwitchDefaults.IconSize),
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = null,
+                                modifier = Modifier.size(SwitchDefaults.IconSize),
+                            )
+                        }
+                    },
+                )
+            },
             colors = ListItemDefaults.colors(
                 containerColor = if (checked && enabled) {
                     MaterialTheme.colorScheme.primaryContainer
@@ -165,7 +167,6 @@ fun MainSwitchPreference(
             contentPadding = ListItemDefaults.ContentPadding,
             interactionSource = remember { MutableInteractionSource() },
         ) {
-
         }
     }
 }

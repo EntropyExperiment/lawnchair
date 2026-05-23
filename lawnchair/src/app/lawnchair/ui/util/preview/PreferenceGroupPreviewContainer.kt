@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 
-
 @Composable
 fun PreferenceGroupPreviewContainer(
     modifier: Modifier = Modifier,
@@ -34,4 +33,3 @@ fun NewPreferenceGroupPreviewContainer(
         )
     }
 }
-

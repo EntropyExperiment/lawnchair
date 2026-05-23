@@ -363,8 +363,6 @@ private fun GenericAccessSetting(
     }
 }
 
-
-
 /**
  * A dialog that requests file access permission.
  *

@@ -136,7 +136,7 @@ private fun SliderPreference(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp)
+                    .padding(top = 8.dp),
             ) {
                 Text(
                     text = label,

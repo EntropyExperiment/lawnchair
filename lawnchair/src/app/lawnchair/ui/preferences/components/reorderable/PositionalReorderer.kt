@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.OverflowMenu
 import app.lawnchair.ui.OverflowMenuScope
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
 import app.lawnchair.ui.preferences.components.layout.PreferenceLazyColumn
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate

@@ -53,34 +53,34 @@ fun <T> SwatchGrid(
         modifier = modifier,
     ) {
         Column(modifier = contentModifier) {
-                for (rowNo in 1..rowCount) {
-                    val firstIndex = (rowNo - 1) * columnCount
-                    val lastIndex = firstIndex + columnCount - 1
-                    val indices = firstIndex..lastIndex
+            for (rowNo in 1..rowCount) {
+                val firstIndex = (rowNo - 1) * columnCount
+                val lastIndex = firstIndex + columnCount - 1
+                val indices = firstIndex..lastIndex
 
-                    Row {
-                        entries.slice(indices).forEachIndexed { index, colorOption ->
-                            Box(
-                                modifier = Modifier.weight(1f),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                ColorSwatch(
-                                    entry = colorOption,
-                                    onClick = { onSwatchClick(colorOption.value) },
-                                    modifier = Modifier.widthIn(0.dp, SwatchGridDefaults.SwatchMaxWidth),
-                                    selected = isSwatchSelected(colorOption.value),
-                                )
-                            }
-                            if (index != columnCount - 1) {
-                                Spacer(modifier = Modifier.width(gutter))
-                            }
+                Row {
+                    entries.slice(indices).forEachIndexed { index, colorOption ->
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            ColorSwatch(
+                                entry = colorOption,
+                                onClick = { onSwatchClick(colorOption.value) },
+                                modifier = Modifier.widthIn(0.dp, SwatchGridDefaults.SwatchMaxWidth),
+                                selected = isSwatchSelected(colorOption.value),
+                            )
+                        }
+                        if (index != columnCount - 1) {
+                            Spacer(modifier = Modifier.width(gutter))
                         }
                     }
-                    if (rowNo != rowCount) {
-                        Spacer(modifier = Modifier.height(gutter))
-                    }
+                }
+                if (rowNo != rowCount) {
+                    Spacer(modifier = Modifier.height(gutter))
                 }
             }
+        }
     }
 }
 
