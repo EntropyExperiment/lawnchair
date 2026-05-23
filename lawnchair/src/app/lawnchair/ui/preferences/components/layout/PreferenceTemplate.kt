@@ -38,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -120,7 +119,7 @@ fun PreferenceTemplate(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Suppress("ktlint:compose:modifier-not-used-at-root")
 @Composable
-fun NewPreferenceTemplate(
+fun PreferenceTemplate(
     title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     contentModifier: Modifier = Modifier,

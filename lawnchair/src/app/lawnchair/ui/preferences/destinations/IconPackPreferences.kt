@@ -73,7 +73,7 @@ import app.lawnchair.ui.preferences.components.invariantDeviceProfile
 import app.lawnchair.ui.preferences.components.layout.Chip
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.NestedScrollStretch
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.theme.preferenceGroupColor
 import app.lawnchair.util.Constants
@@ -222,7 +222,7 @@ fun IconPackPreferences(
                                     true,
                                 )
                             }
-                            NewPreferenceGroup {
+                            PreferenceGroup {
                                 ListPreference(
                                     enabled = themedIconsAvailable,
                                     label = stringResource(id = R.string.themed_icon_title),

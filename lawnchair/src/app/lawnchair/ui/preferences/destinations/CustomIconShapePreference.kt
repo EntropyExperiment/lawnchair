@@ -48,10 +48,10 @@ import app.lawnchair.ui.ModalBottomSheetContent
 import app.lawnchair.ui.preferences.components.controls.getSteps
 import app.lawnchair.ui.preferences.components.controls.snapSliderValue
 import app.lawnchair.ui.preferences.components.layout.BottomSpacer
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
 import app.lawnchair.util.copyToClipboard
 import app.lawnchair.util.getClipboardContent
@@ -147,7 +147,7 @@ private fun IconShapeCornerPreferenceGroup(
     modifier: Modifier = Modifier,
     onSelectedIconShapeChange: (IconShape.CustomCornerBased) -> Unit,
 ) {
-    NewPreferenceGroup(
+    PreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.color_sliders),
     ) {
@@ -206,7 +206,7 @@ private fun IconShapeClipboardPreferenceGroup(
 ) {
     val context = LocalContext.current
     val importErrorMessage = stringResource(id = R.string.icon_shape_clipboard_import_error)
-    NewPreferenceGroup(
+    PreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.clipboard),
     ) {
@@ -243,7 +243,7 @@ private fun ClipboardButton(
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         modifier = modifier,
         onClick = onClick,
         title = { Text(text = label) },
@@ -303,7 +303,7 @@ private fun CornerSlider(
     val step = 0.1f
     val valueRange = 0f..1f
 
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         modifier = modifier,
         title = {
             Row(
@@ -365,7 +365,7 @@ private fun CornerSlider(
                                             PreferenceDivider(startIndent = 40.dp)
                                         }
                                         val selected = cornerShape::class.java == option::class.java
-                                        NewPreferenceTemplate(
+                                        PreferenceTemplate(
                                             title = {
                                                 Text(
                                                     text = option.getLabel(),

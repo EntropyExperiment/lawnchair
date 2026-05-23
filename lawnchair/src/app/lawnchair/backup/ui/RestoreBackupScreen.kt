@@ -48,7 +48,7 @@ import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.DummyLauncherBox
 import app.lawnchair.ui.preferences.components.controls.FlagSwitchPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.RestoreBackup
 import app.lawnchair.util.BackHandler
@@ -176,7 +176,7 @@ fun ColumnScope.RestoreBackupOptions(
         }
     }
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.what_to_restore),
     ) {

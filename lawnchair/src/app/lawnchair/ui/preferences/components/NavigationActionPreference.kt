@@ -16,16 +16,14 @@
 
 package app.lawnchair.ui.preferences.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.lawnchair.ui.preferences.LocalNavController
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.PreferenceRoute
 import app.lawnchair.ui.theme.LawnchairTheme
-import app.lawnchair.ui.util.addIfNotNull
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
+import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
 @Composable
@@ -38,7 +36,7 @@ fun NavigationActionPreference(
 ) {
     val navController = if (destination != null) LocalNavController.current else null
 
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = if (destination != null) {
             {
                 navController?.navigate(
@@ -59,7 +57,7 @@ fun NavigationActionPreference(
 @Composable
 private fun SliderPreferencePreview() {
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             NavigationActionPreference(
                 label = "Label",
                 modifier = Modifier,

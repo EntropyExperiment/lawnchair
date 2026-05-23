@@ -9,7 +9,7 @@ import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.GestureHandlerPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
 
@@ -23,7 +23,7 @@ fun GesturePreferences(
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             GestureHandlerPreference(
                 adapter = prefs.doubleTapGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_double_tap),
@@ -53,7 +53,7 @@ fun GesturePreferences(
                 label = stringResource(id = R.string.gesture_back_tap),
             )
         }
-        NewPreferenceGroup(heading = stringResource(id = R.string.sleep_mode_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.sleep_mode_label)) {
             ListPreference(
                 adapter = prefs.sleepMode.getAdapter(),
                 entries = SleepMode.entries(),

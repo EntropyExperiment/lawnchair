@@ -39,7 +39,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.dividerColor
@@ -172,7 +172,7 @@ fun ContactsSearchProvider(
         modifier = modifier,
         enabled = contactsPermissionState.status.isGranted,
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             SliderPreference(
                 label = stringResource(R.string.max_people_result_count_title),
                 adapter = prefs2.maxPeopleResultCount.getAdapter(),
@@ -222,7 +222,7 @@ fun GenericSearchProviderPreference(
         label = stringResource(getProviderName(provider)),
         modifier = modifier,
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             SliderPreference(
                 label = stringResource(
                     when (provider) {
@@ -230,7 +230,7 @@ fun GenericSearchProviderPreference(
                         SearchProviderId.HISTORY -> R.string.max_recent_result_count_title
                         SearchProviderId.SETTINGS -> R.string.max_settings_entry_result_count_title
                         SearchProviderId.WEB -> R.string.max_suggestion_result_count_title
-                        else -> return@NewPreferenceGroup
+                        else -> return@PreferenceGroup
                     },
                 ),
                 adapter = prefs2.let {
@@ -239,7 +239,7 @@ fun GenericSearchProviderPreference(
                         SearchProviderId.HISTORY -> it.maxRecentResultCount
                         SearchProviderId.SETTINGS -> it.maxSettingsEntryResultCount
                         SearchProviderId.WEB -> it.maxWebSuggestionResultCount
-                        else -> return@NewPreferenceGroup
+                        else -> return@PreferenceGroup
                     }.getAdapter()
                 },
                 valueRange = 2..10,

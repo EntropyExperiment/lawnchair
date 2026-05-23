@@ -29,7 +29,7 @@ import app.lawnchair.ui.preferences.components.colorpreference.ColorPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.GeneralIconShape
 import com.android.launcher3.R
@@ -51,7 +51,7 @@ fun FolderPreferences(
             .firstOrNull { it.value == folderIconShapeAdapter.state.value }
             ?.label?.invoke()
             ?: stringResource(id = R.string.custom)
-        NewPreferenceGroup(heading = stringResource(id = R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             NavigationActionPreference(
                 label = stringResource(id = R.string.folder_shape_label),
                 destination = GeneralIconShape(ShapeRoute.FOLDER_SHAPE),
@@ -76,7 +76,7 @@ fun FolderPreferences(
                 showAsPercentage = true,
             )
         }
-        NewPreferenceGroup(heading = stringResource(id = R.string.grid)) {
+        PreferenceGroup(heading = stringResource(id = R.string.grid)) {
             SliderPreference(
                 label = stringResource(id = R.string.max_folder_columns),
                 adapter = prefs2.folderColumns.getAdapter(),
@@ -92,7 +92,7 @@ fun FolderPreferences(
         }
 
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreenFolder.getAdapter()
-        NewPreferenceGroup(heading = stringResource(id = R.string.icons)) {
+        PreferenceGroup(heading = stringResource(id = R.string.icons)) {
             SwitchPreference(
                 adapter = homeScreenLabelsAdapter,
                 label = stringResource(id = R.string.show_labels),

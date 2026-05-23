@@ -1,7 +1,6 @@
 package app.lawnchair.ui.preferences.destinations
 
 import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,9 +42,9 @@ import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.LoadingScreen
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.components.reorderable.ReorderableDragHandle
 import app.lawnchair.ui.preferences.components.reorderable.ReorderablePreferenceGroup
 import app.lawnchair.ui.preferences.navigation.AppDrawerAppListToFolder
@@ -62,7 +60,7 @@ fun AppDrawerFolderPreferenceItem(
 ) {
     val navController = LocalNavController.current
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         modifier = modifier,
     ) {
         ClickablePreference(
@@ -150,7 +148,7 @@ fun AppDrawerFoldersPreference(
             label = stringResource(id = R.string.app_drawer_folder),
             backArrowVisible = true,
         ) {
-            NewPreferenceGroup(
+            PreferenceGroup(
                 heading = stringResource(R.string.settings),
             ) {
                 SwitchPreference(
@@ -159,8 +157,8 @@ fun AppDrawerFoldersPreference(
                     description = stringResource(id = R.string.apps_in_folder_description),
                 )
             }
-            NewPreferenceGroup(heading = stringResource(R.string.folders_label)) {
-                NewPreferenceTemplate(
+            PreferenceGroup(heading = stringResource(R.string.folders_label)) {
+                PreferenceTemplate(
                     title = {},
                     description = {
                         Text(
@@ -325,7 +323,7 @@ fun FolderItem(
     dragIndicator: @Composable () -> Unit,
 ) {
     val resources = LocalContext.current.resources
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         title = {
             Text(
                 text = folderInfo.title.toString(),

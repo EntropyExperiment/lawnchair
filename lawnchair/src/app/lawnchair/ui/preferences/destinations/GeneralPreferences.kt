@@ -44,7 +44,7 @@ import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.notificationDotsEnabled
 import app.lawnchair.ui.preferences.components.notificationServiceEnabled
@@ -53,7 +53,6 @@ import app.lawnchair.ui.preferences.navigation.GeneralIconShape
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
-import com.patrykmichalik.opto.core.firstBlocking
 
 @Composable
 fun GeneralPreferences() {
@@ -90,7 +89,7 @@ fun GeneralPreferences() {
         backArrowVisible = !LocalIsExpandedScreen.current,
         label = stringResource(id = R.string.general_label),
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             SwitchPreference(
                 adapter = prefs.allowRotation.getAdapter(),
                 label = stringResource(id = R.string.home_screen_rotation_label),
@@ -98,7 +97,7 @@ fun GeneralPreferences() {
             )
         }
         if (BuildConfig.APPLICATION_ID.contains("nightly")) {
-            NewPreferenceGroup(heading = stringResource(id = R.string.updater)) {
+            PreferenceGroup(heading = stringResource(id = R.string.updater)) {
                 SwitchPreference(
                     adapter = prefs2.autoUpdaterNightly.getAdapter(),
                     label = stringResource(id = R.string.auto_updater_label),
@@ -107,7 +106,7 @@ fun GeneralPreferences() {
             }
         }
         ExpandAndShrink(visible = prefs2.enableFontSelection.asState().value) {
-            NewPreferenceGroup(heading = stringResource(id = R.string.font_label)) {
+            PreferenceGroup(heading = stringResource(id = R.string.font_label)) {
                 FontPreference(
                     fontPref = prefs.fontWorkspace,
                     label = stringResource(R.string.fontWorkspace),
@@ -132,7 +131,7 @@ fun GeneralPreferences() {
         }
         val wrapAdaptiveIcons = prefs.wrapAdaptiveIcons.getAdapter()
 
-        NewPreferenceGroup(
+        PreferenceGroup(
             modifier = Modifier,
             heading = stringResource(id = R.string.icons),
             description = stringResource(id = (R.string.adaptive_icon_background_description)),
@@ -182,7 +181,7 @@ fun GeneralPreferences() {
         val showColorStyle = !(Utilities.ATLEAST_S && accentColorAdapter.state.value == ColorOption.SystemAccent) ||
             !Utilities.ATLEAST_S
 
-        NewPreferenceGroup(heading = stringResource(id = R.string.colors)) {
+        PreferenceGroup(heading = stringResource(id = R.string.colors)) {
             ThemePreference()
             ColorPreference(preference = prefs2.accentColor)
             ExpandAndShrink(visible = showColorStyle) {
@@ -197,7 +196,7 @@ fun GeneralPreferences() {
         val dotColor = prefs2.notificationDotColor.asState().value
         val dotTextColor = prefs2.notificationDotTextColor.asState().value
 
-        NewPreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
+        PreferenceGroup(heading = stringResource(id = R.string.notification_dots)) {
             NotificationDotsPreference(enabled = notificationEnabled, serviceEnabled = serviceEnabled)
             val canDisplayNotificationDot = notificationEnabled && serviceEnabled
             ExpandAndShrink(visible = canDisplayNotificationDot) {

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.TwoTabPreferenceLayout
 import app.lawnchair.ui.preferences.components.search.DockSearchPreference
 import app.lawnchair.ui.preferences.components.search.DrawerSearchPreference
@@ -44,7 +44,7 @@ fun SearchBarPreference(
     }
 
     if (showLabel) {
-        NewPreferenceGroup(
+        PreferenceGroup(
             heading = stringResource(id = R.string.search_bar_label),
         ) {
             preference()

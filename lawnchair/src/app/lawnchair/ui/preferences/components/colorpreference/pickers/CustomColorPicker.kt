@@ -64,7 +64,7 @@ import app.lawnchair.ui.preferences.components.colorpreference.intColorToHsvColo
 import app.lawnchair.ui.preferences.components.layout.Chip
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.util.requireSystemService
 import com.android.launcher3.R
 import kotlinx.coroutines.launch
@@ -97,7 +97,7 @@ fun CustomColorPicker(
     Column(
         modifier = modifier,
     ) {
-        NewPreferenceGroup(
+        PreferenceGroup(
             heading = stringResource(id = R.string.hex),
             modifier = Modifier.padding(top = 8.dp),
         ) {
@@ -137,7 +137,7 @@ fun CustomColorPicker(
         val scrollToPage =
             { page: Int -> scope.launch { pagerState.animateScrollToPage(page) } }
 
-        NewPreferenceGroup(
+        PreferenceGroup(
             heading = stringResource(id = R.string.color_sliders),
             modifier = Modifier.padding(top = 8.dp),
         ) {

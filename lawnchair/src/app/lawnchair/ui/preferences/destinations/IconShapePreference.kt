@@ -58,9 +58,8 @@ import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
-import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.TwoTabPreferenceLayout
 import app.lawnchair.ui.preferences.navigation.GeneralCustomIconShapeCreator
 import com.android.launcher3.R
@@ -144,7 +143,7 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
         ShapeRoute.FOLDER_SHAPE -> preferenceManager2.customFolderShape.asState()
     }
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.custom),
     ) {
         customShape?.let { shape ->
@@ -158,11 +157,11 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
             currentTab = currentTab,
         )
     }
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.presets),
     ) {
         entries.forEach { item ->
-            NewPreferenceTemplate(
+            PreferenceTemplate(
                 enabled = item.enabled,
                 title = { Text(item.label()) },
                 modifier = Modifier.clickable(item.enabled) {
@@ -189,7 +188,7 @@ private fun CustomIconShapePreferenceOption(
     customIconShape: IconShape,
     modifier: Modifier = Modifier,
 ) {
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         title = { Text(stringResource(id = R.string.custom)) },
         modifier = modifier.clickable {
             iconShapeAdapter.onChange(newValue = customIconShape)

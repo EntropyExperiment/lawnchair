@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.theme.isSelectedThemeDark
 import com.android.launcher3.R
 
@@ -48,7 +48,7 @@ fun <T> SwatchGrid(
     val rowCount = (entries.size - 1) / columnCount + 1
     val gutter = SwatchGridDefaults.GutterSize
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.swatches),
         modifier = modifier,
     ) {

@@ -51,7 +51,7 @@ import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.theme.isSelectedThemeDark
 import com.android.launcher3.R
@@ -86,7 +86,7 @@ fun SmartspacePreferences(
                 if (modeIsLawnchair) {
                     SmartspacePreview()
                 }
-                NewPreferenceGroup {
+                PreferenceGroup {
                     SmartspaceProviderPreference(
                         adapter = smartspaceModeAdapter,
                     )
@@ -121,7 +121,7 @@ private fun LawnchairSmartspaceSettings(
     Column(
         modifier = modifier,
     ) {
-        NewPreferenceGroup(
+        PreferenceGroup(
             heading = stringResource(id = R.string.what_to_show),
             modifier = Modifier.padding(top = 8.dp),
         ) {
@@ -174,7 +174,7 @@ fun SmartspacePreview(
     val context = LocalContext.current
     val themedContext = remember(themeRes) { ContextThemeWrapper(context, themeRes) }
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.preview_label),
         modifier = modifier,
     ) {
@@ -212,7 +212,7 @@ fun SmartspaceDateAndTimePreferences(
     val calendarHasMinimumContent = !showDateAdapter.state.value || !showTimeAdapter.state.value
     val calendar = calendarAdapter.state.value
 
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.smartspace_date_and_time),
         modifier = modifier.padding(top = 8.dp),
     ) {
@@ -288,7 +288,7 @@ fun SmartspacerSettings(
     val prefs2 = preferenceManager2()
 
     Column(modifier) {
-        NewPreferenceGroup(
+        PreferenceGroup(
             heading = stringResource(id = R.string.smartspacer_settings),
         ) {
             SliderPreference(

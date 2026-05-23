@@ -18,7 +18,6 @@ package app.lawnchair.ui.preferences.components.controls
 
 import android.R as AndroidR
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -33,13 +32,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.ui.ModalBottomSheetContent
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.addIf
 import app.lawnchair.ui.util.bottomSheetHandler
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
+import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
 @Composable
@@ -81,7 +79,7 @@ fun <T> ListPreference(
         .firstOrNull { it.value == value }
         ?.label?.invoke()
 
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = if (enabled) {
             {
                 bottomSheetHandler.show {
@@ -149,7 +147,7 @@ private fun ListPreferencePreview() {
         ListPreferenceEntry(value = "option3", label = { "Option 3" }, enabled = false),
     )
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             ListPreference(
                 entries = entries,
                 value = "option1",

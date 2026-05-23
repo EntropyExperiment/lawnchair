@@ -16,7 +16,6 @@
 
 package app.lawnchair.ui.preferences.components.controls
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Button
@@ -29,11 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.ModalBottomSheetContent
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.bottomSheetHandler
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
@@ -46,7 +43,7 @@ fun ClickablePreference(
     onClick: () -> Unit,
 ) {
     val bottomSheetHandler = bottomSheetHandler
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = {
             if (confirmationText != null) {
                 bottomSheetHandler.show {
@@ -105,7 +102,7 @@ fun PreferenceClickConfirmation(
 @Composable
 private fun ClickablePreferencePreview() {
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             ClickablePreference(
                 label = "Label",
                 subtitle = "Subtitle",

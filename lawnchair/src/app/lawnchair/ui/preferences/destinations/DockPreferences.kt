@@ -47,7 +47,7 @@ import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.createPreviewIdp
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
@@ -66,7 +66,7 @@ fun DockPreferences(modifier: Modifier = Modifier) {
 
         MainSwitchPreference(adapter = prefs2.isHotseatEnabled.getAdapter(), label = stringResource(id = R.string.show_hotseat_title)) {
             DockPreferencesPreview()
-            NewPreferenceGroup(heading = stringResource(id = R.string.style)) {
+            PreferenceGroup(heading = stringResource(id = R.string.style)) {
                 SwitchPreference(
                     adapter = hotseatBgAdapter,
                     label = stringResource(id = R.string.hotseat_background),
@@ -79,7 +79,7 @@ fun DockPreferences(modifier: Modifier = Modifier) {
             }
             SearchBarPreference(SearchRoute.DOCK_SEARCH)
             GridSettings(prefs, prefs2)
-            NewPreferenceGroup(heading = stringResource(id = R.string.icons)) {
+            PreferenceGroup(heading = stringResource(id = R.string.icons)) {
                 SwitchPreference(
                     adapter = prefs2.enableLabelInDock.getAdapter(),
                     label = stringResource(id = R.string.show_labels),
@@ -133,7 +133,7 @@ fun HotseatBackgroundSettings(prefs: PreferenceManager, prefs2: PreferenceManage
 
 @Composable
 fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
-    NewPreferenceGroup(heading = stringResource(id = R.string.grid)) {
+    PreferenceGroup(heading = stringResource(id = R.string.grid)) {
         SliderPreference(
             label = stringResource(id = R.string.dock_icons),
             adapter = prefs.hotseatColumns.getAdapter(),

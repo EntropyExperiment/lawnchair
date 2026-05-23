@@ -44,11 +44,9 @@ import app.lawnchair.ui.preferences.components.DummyLauncherBox
 import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
 import app.lawnchair.ui.preferences.components.WallpaperPreview
 import app.lawnchair.ui.preferences.components.WithWallpaper
-import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.FlagSwitchPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
-import app.lawnchair.ui.preferences.navigation.AppDrawerFolder
 import app.lawnchair.util.BackHandler
 import app.lawnchair.util.FileAccessState
 import app.lawnchair.util.hasFlag
@@ -155,7 +153,7 @@ fun CreateBackupScreen(
             }
         }
 
-        NewPreferenceGroup(heading = stringResource(id = R.string.what_to_backup)) {
+        PreferenceGroup(heading = stringResource(id = R.string.what_to_backup)) {
             FlagSwitchPreference(
                 flags = contents,
                 setFlags = viewModel::setBackupContents,

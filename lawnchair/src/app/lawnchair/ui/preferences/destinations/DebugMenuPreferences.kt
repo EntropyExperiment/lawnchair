@@ -21,7 +21,7 @@ import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.TextPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.data.liveinfo.liveInformationManager
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
@@ -57,7 +57,7 @@ fun DebugMenuPreferences(
         modifier = modifier,
     ) {
         MainSwitchPreference(adapter = enableDebug, label = "Show debug menu") {
-            NewPreferenceGroup {
+            PreferenceGroup {
                 ClickablePreference(
                     label = "Feature flags (Views)",
                     onClick = {
@@ -99,7 +99,7 @@ fun DebugMenuPreferences(
                 )
             }
 
-            NewPreferenceGroup(heading = "Debug flags") {
+            PreferenceGroup(heading = "Debug flags") {
                 flags2.forEach {
                     SwitchPreference(
                         adapter = it.getAdapter(),
@@ -127,7 +127,7 @@ fun DebugMenuPreferences(
             }
 
             val hasOpenedSettings = prefs.hasOpenedSettings.getAdapter()
-            NewPreferenceGroup(heading = "Smartspace Onboarding") {
+            PreferenceGroup(heading = "Smartspace Onboarding") {
                 ClickablePreference(
                     label = "Reset All Apps Bounce",
                     subtitle = "Reset it in Feature Flags page",
@@ -141,7 +141,7 @@ fun DebugMenuPreferences(
             }
 
             val apmSupport = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
-            NewPreferenceGroup(heading = "Supported features") {
+            PreferenceGroup(heading = "Supported features") {
                 ClickablePreference(
                     label = "Window blurs",
                     subtitle = BlurUtils.supportsBlursOnWindows().toString(),

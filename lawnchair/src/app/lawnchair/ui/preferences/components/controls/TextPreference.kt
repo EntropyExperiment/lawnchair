@@ -1,6 +1,5 @@
 package app.lawnchair.ui.preferences.components.controls
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredWidth
@@ -20,11 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.ui.ModalBottomSheetContent
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.bottomSheetHandler
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
@@ -57,7 +54,7 @@ fun TextPreference(
     description: (String) -> String? = { it },
 ) {
     val bottomSheetHandler = bottomSheetHandler
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = if (enabled) {
             {
                 bottomSheetHandler.show {
@@ -125,7 +122,7 @@ fun TextPreferenceDialog(
 @Composable
 private fun TextPreferencePreview() {
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             TextPreference(
                 value = "Value",
                 onChange = {},

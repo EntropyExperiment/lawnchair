@@ -18,7 +18,6 @@ package app.lawnchair.ui.preferences.components.controls
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -31,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.android.launcher3.R
@@ -45,7 +44,7 @@ fun PreferenceCategory(
     isSelected: Boolean = false,
     description: String? = null,
 ) {
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = onNavigate,
         modifier = modifier
             .background(

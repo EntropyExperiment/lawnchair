@@ -30,7 +30,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.destinations.DockPreferencesPreview
 import app.lawnchair.ui.preferences.navigation.DockSearchProvider
@@ -54,7 +54,7 @@ fun DockSearchPreference(
         val isLawnchairHotseat = hotseatModeAdapter.state.value == LawnchairHotseat
         if (hotseatEnabled) {
             Column {
-                NewPreferenceGroup {
+                PreferenceGroup {
                     HotseatModePreference(
                         adapter = hotseatModeAdapter,
                     )
@@ -67,7 +67,7 @@ fun DockSearchPreference(
                 ExpandAndShrink(visible = isLawnchairHotseat) {
                     Column {
                         val hotseatQsbProviderAdapter by preferenceManager2().hotseatQsbProvider.getAdapter()
-                        NewPreferenceGroup(
+                        PreferenceGroup(
                             heading = stringResource(R.string.search_bar_settings),
                         ) {
                             NavigationActionPreference(
@@ -80,7 +80,7 @@ fun DockSearchPreference(
                                 ),
                             )
                         }
-                        NewPreferenceGroup(
+                        PreferenceGroup(
                             heading = stringResource(R.string.style),
                         ) {
                             SwitchPreference(

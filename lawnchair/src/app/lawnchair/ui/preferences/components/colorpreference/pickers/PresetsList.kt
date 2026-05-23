@@ -1,6 +1,5 @@
 package app.lawnchair.ui.preferences.components.colorpreference.pickers
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.RadioButton
@@ -12,8 +11,8 @@ import androidx.compose.ui.unit.dp
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.ui.preferences.components.colorpreference.ColorDot
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import com.android.launcher3.R
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -24,12 +23,12 @@ fun PresetsList(
     isPresetSelected: (ColorOption) -> Boolean,
     modifier: Modifier = Modifier,
 ) {
-    NewPreferenceGroup(
+    PreferenceGroup(
         heading = stringResource(id = R.string.dynamic),
         modifier = modifier.padding(top = 12.dp),
     ) {
         dynamicEntries.forEach { entry ->
-            NewPreferenceTemplate(
+            PreferenceTemplate(
                 title = { Text(text = entry.label()) },
                 onClick = { onPresetClick(entry.value) },
                 startWidget = {

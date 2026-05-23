@@ -7,7 +7,7 @@ import app.lawnchair.backup.ui.restoreBackupOpener
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.CreateBackup
 import com.android.launcher3.R
@@ -21,7 +21,7 @@ fun BackupAndRestorePreference(
         backArrowVisible = !LocalIsExpandedScreen.current,
         modifier = modifier,
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             NavigationActionPreference(
                 label = stringResource(R.string.create_backup),
                 subtitle = stringResource(R.string.create_backup_description),

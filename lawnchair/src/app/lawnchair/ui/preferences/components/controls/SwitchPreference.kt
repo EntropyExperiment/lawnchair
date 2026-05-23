@@ -16,26 +16,19 @@
 
 package app.lawnchair.ui.preferences.components.controls
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,11 +38,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
-import app.lawnchair.ui.theme.dividerColor
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.android.launcher3.util.MSDLPlayerWrapper
@@ -97,7 +87,7 @@ fun SwitchPreference(
         onCheckedChange(newValue)
     }
 
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         onClick = {
             if (onClick != null) {
                 onClick()
@@ -155,7 +145,7 @@ private fun SwitchPreferencePreview(
     @PreviewParameter(SwitchPreferencePreviewParameterProvider::class) checked: Boolean,
 ) {
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             SwitchPreference(
                 checked = checked,
                 onCheckedChange = {},

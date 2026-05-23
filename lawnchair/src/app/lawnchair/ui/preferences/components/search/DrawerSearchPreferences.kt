@@ -22,7 +22,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.TwoTargetSwitchPreference
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.navigation.SearchProviderPreference
 import app.lawnchair.util.FileAccessManager
 import com.android.launcher3.R
@@ -46,7 +46,7 @@ fun DrawerSearchPreference(
         label = stringResource(id = R.string.show_app_search_bar),
         modifier = modifier,
     ) {
-        NewPreferenceGroup(heading = stringResource(R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(R.string.general_label)) {
             if (hiddenApps.isNotEmpty()) {
                 HiddenAppsInSearchPreference()
             }
@@ -66,7 +66,7 @@ fun DrawerSearchPreference(
 
         val searchAlgorithm = preferenceManager2().searchAlgorithm.getAdapter().state.value
         val navController = LocalNavController.current
-        NewPreferenceGroup(heading = stringResource(id = R.string.show_search_result_types)) {
+        PreferenceGroup(heading = stringResource(id = R.string.show_search_result_types)) {
             if (searchAlgorithm != LawnchairSearchAlgorithm.ASI_SEARCH) {
                 val canDisable = searchAlgorithm != LawnchairSearchAlgorithm.APP_SEARCH
                 val adapter = prefs.searchResultApps.getAdapter()

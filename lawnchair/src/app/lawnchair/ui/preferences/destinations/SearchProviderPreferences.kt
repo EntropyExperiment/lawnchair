@@ -1,6 +1,5 @@
 package app.lawnchair.ui.preferences.destinations
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -27,10 +26,10 @@ import app.lawnchair.ui.ModalBottomSheetContent
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
 import com.android.launcher3.R
 
@@ -47,7 +46,7 @@ fun SearchProviderPreferences(
         label = stringResource(R.string.search_provider),
         modifier = modifier,
     ) {
-        NewPreferenceGroup {
+        PreferenceGroup {
             QsbSearchProvider.values().forEach { qsbSearchProvider ->
                 val appInstalled = qsbSearchProvider.isDownloaded(context)
                 val selected = adapter.state.value == qsbSearchProvider
@@ -106,7 +105,7 @@ private fun ListItem(
     Column(
         modifier = modifier,
     ) {
-        NewPreferenceTemplate(
+        PreferenceTemplate(
             title = { Text(text = title) },
             enabled = enabled,
             onClick = if (enabled) onClick else null,
@@ -158,7 +157,7 @@ private fun Options(
         modifier = modifier,
         startIndent = 40.dp,
     ) {
-        NewPreferenceTemplate(
+        PreferenceTemplate(
             title = { Text(stringResource(id = R.string.app_label)) },
             enabled = appEnabled,
             onClick = if (appEnabled) onAppClick else null,
@@ -181,7 +180,7 @@ private fun Options(
                 }
             },
         )
-        NewPreferenceTemplate(
+        PreferenceTemplate(
             title = { Text(text = stringResource(id = R.string.website_label)) },
             onClick = onWebsiteClick,
             startWidget = {

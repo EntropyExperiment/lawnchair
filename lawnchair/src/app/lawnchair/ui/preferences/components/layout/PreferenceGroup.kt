@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun NewPreferenceGroup(
+fun PreferenceGroup(
     modifier: Modifier = Modifier,
     heading: String? = null,
     description: String? = null,

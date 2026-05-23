@@ -48,7 +48,7 @@ import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreferenceWithPreview
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.AppDrawerHiddenApps
 import com.android.launcher3.R
@@ -79,7 +79,7 @@ fun AppDrawerPreferences(
             }
         }
         val hiddenApps = prefs2.hiddenApps.getAdapter().state.value
-        NewPreferenceGroup(heading = stringResource(id = R.string.general_label)) {
+        PreferenceGroup(heading = stringResource(id = R.string.general_label)) {
             NavigationActionPreference(
                 label = stringResource(id = R.string.hidden_apps_label),
                 destination = AppDrawerHiddenApps,
@@ -89,7 +89,7 @@ fun AppDrawerPreferences(
             SuggestionsPreference()
             AppDrawerHapticFeedbackPreference()
         }
-        NewPreferenceGroup(heading = stringResource(R.string.style)) {
+        PreferenceGroup(heading = stringResource(R.string.style)) {
             ColorPreference(preference = prefs2.appDrawerBackgroundColor)
             SliderPreference(
                 label = stringResource(id = R.string.background_opacity),
@@ -108,7 +108,7 @@ fun AppDrawerPreferences(
                 adapter = prefs2.appDrawerSearchBarBackground.getAdapter(),
             )
         }
-        NewPreferenceGroup(heading = stringResource(id = R.string.grid)) {
+        PreferenceGroup(heading = stringResource(id = R.string.grid)) {
             SliderPreference(
                 label = stringResource(id = R.string.app_drawer_columns),
                 adapter = prefs2.drawerColumns.getAdapter(),
@@ -131,7 +131,7 @@ fun AppDrawerPreferences(
             )
         }
         val showDrawerLabels = prefs2.showIconLabelsInDrawer.getAdapter()
-        NewPreferenceGroup(heading = stringResource(id = R.string.icons)) {
+        PreferenceGroup(heading = stringResource(id = R.string.icons)) {
             SliderPreference(
                 label = stringResource(id = R.string.icon_sizes),
                 adapter = prefs2.drawerIconSizeFactor.getAdapter(),
@@ -163,7 +163,7 @@ fun AppDrawerPreferences(
                 )
             }
         }
-        NewPreferenceGroup(heading = stringResource(id = R.string.advanced)) {
+        PreferenceGroup(heading = stringResource(id = R.string.advanced)) {
             SwitchPreference(
                 label = stringResource(id = R.string.pref_all_apps_remember_position_title),
                 description = stringResource(id = R.string.pref_all_apps_remember_position_description),

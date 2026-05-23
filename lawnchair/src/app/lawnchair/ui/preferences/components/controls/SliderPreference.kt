@@ -42,10 +42,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.preferences.rememberTransformAdapter
-import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
-import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.android.launcher3.R
@@ -129,7 +127,7 @@ private fun SliderPreference(
         onDispose { }
     }
 
-    NewPreferenceTemplate(
+    PreferenceTemplate(
         title = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -209,7 +207,7 @@ private fun SliderPreferencePreview(
     @PreviewParameter(SliderPreferencePreviewParameterProvider::class) sliderValue: Float,
 ) {
     LawnchairTheme {
-        NewPreferenceGroupPreviewContainer {
+        PreferenceGroupPreviewContainer {
             SliderPreference(
                 label = "Label",
                 value = sliderValue,
