@@ -47,6 +47,3 @@
 -keep,allowshrinking,allowoptimization class android.view.** { *; }
 
 -keep,allowshrinking,allowoptimization class com.google.protobuf.Timestamp { *; }
-
-# TODO: Remove this after the change in https://github.com/ChickenHook/RestrictionBypass/pull/9 has been released.
--keep,allowshrinking,allowoptimization class org.chickenhook.restrictionbypass.** { *; }
