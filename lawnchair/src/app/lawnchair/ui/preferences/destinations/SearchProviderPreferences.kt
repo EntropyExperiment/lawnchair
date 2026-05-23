@@ -28,9 +28,9 @@ import app.lawnchair.ui.preferences.components.layout.ClickableIcon
 import app.lawnchair.ui.preferences.components.layout.DividerColumn
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.util.LocalBottomSheetHandler
 import com.android.launcher3.R
 
@@ -47,45 +47,43 @@ fun SearchProviderPreferences(
         label = stringResource(R.string.search_provider),
         modifier = modifier,
     ) {
-        PreferenceGroup {
+        NewPreferenceGroup {
             QsbSearchProvider.values().forEach { qsbSearchProvider ->
-                Item {
-                    val appInstalled = qsbSearchProvider.isDownloaded(context)
-                    val selected = adapter.state.value == qsbSearchProvider
-                    val hasAppAndWebsite = qsbSearchProvider.type == QsbSearchProviderType.APP_AND_WEBSITE
-                    val showDownloadButton = qsbSearchProvider.type == QsbSearchProviderType.APP && !appInstalled
-                    Column {
-                        val title = stringResource(id = qsbSearchProvider.name)
-                        ListItem(
-                            title = title,
-                            showDownloadButton = showDownloadButton,
-                            enabled = qsbSearchProvider.type != QsbSearchProviderType.APP || appInstalled,
-                            selected = selected,
-                            onClick = { adapter.onChange(newValue = qsbSearchProvider) },
-                            onDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
-                            onSponsorDisclaimerClick = {
-                                bottomSheetHandler.show {
-                                    SponsorDisclaimer(title) {
-                                        bottomSheetHandler.hide()
-                                    }
+                val appInstalled = qsbSearchProvider.isDownloaded(context)
+                val selected = adapter.state.value == qsbSearchProvider
+                val hasAppAndWebsite = qsbSearchProvider.type == QsbSearchProviderType.APP_AND_WEBSITE
+                val showDownloadButton = qsbSearchProvider.type == QsbSearchProviderType.APP && !appInstalled
+                Column {
+                    val title = stringResource(id = qsbSearchProvider.name)
+                    ListItem(
+                        title = title,
+                        showDownloadButton = showDownloadButton,
+                        enabled = qsbSearchProvider.type != QsbSearchProviderType.APP || appInstalled,
+                        selected = selected,
+                        onClick = { adapter.onChange(newValue = qsbSearchProvider) },
+                        onDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
+                        onSponsorDisclaimerClick = {
+                            bottomSheetHandler.show {
+                                SponsorDisclaimer(title) {
+                                    bottomSheetHandler.hide()
                                 }
-                            }.takeIf { qsbSearchProvider.sponsored },
-                            description = if (showDownloadButton) {
-                                stringResource(id = R.string.qsb_search_provider_app_required)
-                            } else {
-                                null
-                            },
+                            }
+                        }.takeIf { qsbSearchProvider.sponsored },
+                        description = if (showDownloadButton) {
+                            stringResource(id = R.string.qsb_search_provider_app_required)
+                        } else {
+                            null
+                        },
+                    )
+                    ExpandAndShrink(visible = selected && hasAppAndWebsite) {
+                        Options(
+                            appEnabled = appInstalled,
+                            appSelected = !forceWebsiteAdapter.state.value && appInstalled,
+                            onAppClick = { forceWebsiteAdapter.onChange(newValue = false) },
+                            onAppDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
+                            onWebsiteClick = { forceWebsiteAdapter.onChange(newValue = true) },
+                            showAppDownloadButton = !appInstalled,
                         )
-                        ExpandAndShrink(visible = selected && hasAppAndWebsite) {
-                            Options(
-                                appEnabled = appInstalled,
-                                appSelected = !forceWebsiteAdapter.state.value && appInstalled,
-                                onAppClick = { forceWebsiteAdapter.onChange(newValue = false) },
-                                onAppDownloadClick = { qsbSearchProvider.launchOnAppMarket(context = context) },
-                                onWebsiteClick = { forceWebsiteAdapter.onChange(newValue = true) },
-                                showAppDownloadButton = !appInstalled,
-                            )
-                        }
                     }
                 }
             }
@@ -108,10 +106,8 @@ private fun ListItem(
     Column(
         modifier = modifier,
     ) {
-        PreferenceTemplate(
+        NewPreferenceTemplate(
             title = { Text(text = title) },
-            verticalPadding = if (showDownloadButton) 12.dp else 16.dp,
-            horizontalPadding = 0.dp,
             enabled = enabled,
             modifier = Modifier.clickable(enabled = enabled, onClick = onClick),
             description = { if (description != null) Text(text = description) },
@@ -162,11 +158,9 @@ private fun Options(
         modifier = modifier,
         startIndent = 40.dp,
     ) {
-        PreferenceTemplate(
+        NewPreferenceTemplate(
             title = { Text(stringResource(id = R.string.app_label)) },
             enabled = appEnabled,
-            verticalPadding = if (!appEnabled) 4.dp else 16.dp,
-            horizontalPadding = 0.dp,
             modifier = Modifier.clickable(
                 enabled = appEnabled,
                 onClick = onAppClick,
@@ -190,10 +184,9 @@ private fun Options(
                 }
             },
         )
-        PreferenceTemplate(
+        NewPreferenceTemplate(
             title = { Text(text = stringResource(id = R.string.website_label)) },
             modifier = Modifier.clickable(onClick = onWebsiteClick),
-            horizontalPadding = 0.dp,
             startWidget = {
                 RadioButton(
                     selected = !appSelected,

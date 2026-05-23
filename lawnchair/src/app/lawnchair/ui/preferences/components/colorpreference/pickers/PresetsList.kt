@@ -2,6 +2,7 @@ package app.lawnchair.ui.preferences.components.colorpreference.pickers
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,10 +12,11 @@ import androidx.compose.ui.unit.dp
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.ui.preferences.components.colorpreference.ColorDot
 import app.lawnchair.ui.preferences.components.colorpreference.ColorPreferenceEntry
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import com.android.launcher3.R
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun PresetsList(
     dynamicEntries: List<ColorPreferenceEntry<ColorOption>>,
@@ -22,28 +24,25 @@ fun PresetsList(
     isPresetSelected: (ColorOption) -> Boolean,
     modifier: Modifier = Modifier,
 ) {
-    PreferenceGroup(
+    NewPreferenceGroup(
         heading = stringResource(id = R.string.dynamic),
         modifier = modifier.padding(top = 12.dp),
     ) {
         dynamicEntries.forEach { entry ->
-            Item(key = entry) {
-                PreferenceTemplate(
-                    title = { Text(text = entry.label()) },
-                    verticalPadding = 12.dp,
-                    modifier = Modifier.clickable { onPresetClick(entry.value) },
-                    startWidget = {
-                        RadioButton(
-                            selected = isPresetSelected(entry.value),
-                            onClick = null,
-                        )
-                        ColorDot(
-                            entry = entry,
-                            modifier = Modifier.padding(start = 16.dp),
-                        )
-                    },
-                )
-            }
+            NewPreferenceTemplate(
+                title = { Text(text = entry.label()) },
+                onClick = { onPresetClick(entry.value) },
+                startWidget = {
+                    RadioButton(
+                        selected = isPresetSelected(entry.value),
+                        onClick = null,
+                    )
+                    ColorDot(
+                        entry = entry,
+                        modifier = Modifier.padding(start = 16.dp),
+                    )
+                },
+            )
         }
     }
 }

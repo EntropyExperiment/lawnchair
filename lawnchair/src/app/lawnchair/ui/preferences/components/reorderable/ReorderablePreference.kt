@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.HapticFeedbackConstantsCompat
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupHeading
 import app.lawnchair.ui.theme.preferenceGroupColor
 import com.android.launcher3.R
@@ -143,14 +143,12 @@ fun <T> ReorderablePreferenceGroup(
         }
 
         ExpandAndShrink(visible = localItems != defaultList) {
-            PreferenceGroup {
-                Item {
-                    ClickablePreference(label = stringResource(id = R.string.action_reset)) {
-                        val resetList = defaultList
-                        onOrderChange(resetList)
-                        if (onSettle != null) {
-                            onSettle(resetList)
-                        }
+            NewPreferenceGroup {
+                ClickablePreference(label = stringResource(id = R.string.action_reset)) {
+                    val resetList = defaultList
+                    onOrderChange(resetList)
+                    if (onSettle != null) {
+                        onSettle(resetList)
                     }
                 }
             }

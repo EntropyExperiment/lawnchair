@@ -44,9 +44,9 @@ import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.LoadingScreen
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.reorderable.ReorderableDragHandle
 import app.lawnchair.ui.preferences.components.reorderable.ReorderablePreferenceGroup
 import app.lawnchair.ui.preferences.navigation.AppDrawerAppListToFolder
@@ -62,18 +62,16 @@ fun AppDrawerFolderPreferenceItem(
 ) {
     val navController = LocalNavController.current
 
-    PreferenceGroup(
+    NewPreferenceGroup(
         modifier = modifier,
     ) {
-        Item {
-            ClickablePreference(
-                label = stringResource(R.string.app_drawer_folder),
-                modifier = Modifier,
-                onClick = {
-                    navController.navigate(route = AppDrawerFolder)
-                },
-            )
-        }
+        ClickablePreference(
+            label = stringResource(R.string.app_drawer_folder),
+            modifier = Modifier,
+            onClick = {
+                navController.navigate(route = AppDrawerFolder)
+            },
+        )
     }
 }
 
@@ -152,47 +150,43 @@ fun AppDrawerFoldersPreference(
             label = stringResource(id = R.string.app_drawer_folder),
             backArrowVisible = true,
         ) {
-            PreferenceGroup(
+            NewPreferenceGroup(
                 heading = stringResource(R.string.settings),
             ) {
-                Item {
-                    SwitchPreference(
-                        adapter = prefs.folderApps.getAdapter(),
-                        label = stringResource(id = R.string.apps_in_folder_label),
-                        description = stringResource(id = R.string.apps_in_folder_description),
-                    )
-                }
+                SwitchPreference(
+                    adapter = prefs.folderApps.getAdapter(),
+                    label = stringResource(id = R.string.apps_in_folder_label),
+                    description = stringResource(id = R.string.apps_in_folder_description),
+                )
             }
-            PreferenceGroup(heading = stringResource(R.string.folders_label)) {
-                Item {
-                    PreferenceTemplate(
-                        title = {},
-                        description = {
-                            Text(
-                                text = stringResource(R.string.add_folder),
-                                color = MaterialTheme.colorScheme.onSurface,
+            NewPreferenceGroup(heading = stringResource(R.string.folders_label)) {
+                NewPreferenceTemplate(
+                    title = {},
+                    description = {
+                        Text(
+                            text = stringResource(R.string.add_folder),
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    },
+                    onClick = {
+                        bottomSheetHandler.show {
+                            FolderEditSheet(
+                                FolderInfo().apply {
+                                    title = stringResource(R.string.my_folder_label)
+                                },
+                                onRename = onCreateFolder,
+                                onNavigate = {},
+                                onDismiss = {
+                                    bottomSheetHandler.hide()
+                                },
+                                hideAppPicker = true,
                             )
-                        },
-                        modifier = Modifier.clickable {
-                            bottomSheetHandler.show {
-                                FolderEditSheet(
-                                    FolderInfo().apply {
-                                        title = stringResource(R.string.my_folder_label)
-                                    },
-                                    onRename = onCreateFolder,
-                                    onNavigate = {},
-                                    onDismiss = {
-                                        bottomSheetHandler.hide()
-                                    },
-                                    hideAppPicker = true,
-                                )
-                            }
-                        },
-                        startWidget = {
-                            Icon(Icons.Rounded.Add, contentDescription = null)
-                        },
-                    )
-                }
+                        }
+                    },
+                    startWidget = {
+                        Icon(Icons.Rounded.Add, contentDescription = null)
+                    },
+                )
             }
             ReorderablePreferenceGroup(
                 label = null,
@@ -331,7 +325,7 @@ fun FolderItem(
     dragIndicator: @Composable () -> Unit,
 ) {
     val resources = LocalContext.current.resources
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         title = {
             Text(
                 text = folderInfo.title.toString(),
@@ -357,11 +351,9 @@ fun FolderItem(
                 }
             }
         },
-        modifier = modifier.clickable(
-            interactionSource = interactionSource,
-            indication = ripple(),
-        ) {
+        onClick = {
             onItemClick(folderInfo)
         },
+        modifier = modifier,
     )
 }

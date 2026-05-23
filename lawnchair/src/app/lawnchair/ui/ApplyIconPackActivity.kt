@@ -45,8 +45,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.icons.CustomAdaptiveIconDrawable
 import app.lawnchair.preferences.PreferenceManager
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.iconPackIntents
 import app.lawnchair.ui.theme.EdgeToEdge
 import app.lawnchair.ui.theme.LawnchairTheme
@@ -132,19 +132,17 @@ private fun ApplyIconPackSheet(
         ModalBottomSheetContent(
             title = { Text(text = stringResource(id = R.string.apply_icon_pack_title)) },
             content = {
-                PreferenceGroup {
-                    Item {
-                        PreferenceTemplate(
-                            title = { Text(text = packName) },
-                            startWidget = {
-                                Image(
-                                    painter = rememberDrawablePainter(drawable = packIcon),
-                                    contentDescription = packName,
-                                    modifier = Modifier.size(36.dp),
-                                )
-                            },
-                        )
-                    }
+                NewPreferenceGroup {
+                    NewPreferenceTemplate(
+                        title = { Text(text = packName) },
+                        startWidget = {
+                            Image(
+                                painter = rememberDrawablePainter(drawable = packIcon),
+                                contentDescription = packName,
+                                modifier = Modifier.size(36.dp),
+                            )
+                        },
+                    )
                 }
             },
             buttons = {

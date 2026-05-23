@@ -41,7 +41,7 @@ import app.lawnchair.ui.preferences.PreferenceActivity
 import app.lawnchair.ui.preferences.components.AppGesturePreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ClickableIcon
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.navigation.SelectIcon
 import app.lawnchair.ui.util.addIfNotNull
 import app.lawnchair.util.navigationBarsOrDisplayCutoutPadding
@@ -176,37 +176,33 @@ fun CustomizeAppDialog(
         launchSelectIcon = openIconPicker,
         modifier = modifier,
     ) {
-        PreferenceGroup(
+        NewPreferenceGroup(
             description = componentKey.componentName.flattenToString(),
             showDescription = showComponentNames,
         ) {
             val stringKey = componentKey.toString()
-            Item {
-                SwitchPreference(
-                    checked = hiddenApps.contains(stringKey),
-                    label = stringResource(id = R.string.hide_from_drawer),
-                    onCheckedChange = { newValue ->
-                        val newSet = hiddenApps.toMutableSet()
-                        if (newValue) newSet.add(stringKey) else newSet.remove(stringKey)
-                        adapter.onChange(newSet)
-                    },
-                )
-            }
+            SwitchPreference(
+                checked = hiddenApps.contains(stringKey),
+                label = stringResource(id = R.string.hide_from_drawer),
+                onCheckedChange = { newValue ->
+                    val newSet = hiddenApps.toMutableSet()
+                    if (newValue) newSet.add(stringKey) else newSet.remove(stringKey)
+                    adapter.onChange(newSet)
+                },
+            )
         }
 
         if (preferenceManager2.iconSwipeGestures.asState().value && context.launcher.stateManager.state != LauncherState.ALL_APPS) {
-            PreferenceGroup(heading = stringResource(R.string.gestures_label)) {
+            NewPreferenceGroup(heading = stringResource(R.string.gestures_label)) {
                 listOf(
                     GestureType.SWIPE_LEFT,
                     GestureType.SWIPE_RIGHT,
                 ).map { gestureType ->
-                    Item {
-                        AppGesturePreference(
-                            componentKey,
-                            gestureType,
-                            stringResource(id = gestureType.labelResId),
-                        )
-                    }
+                    AppGesturePreference(
+                        componentKey,
+                        gestureType,
+                        stringResource(id = gestureType.labelResId),
+                    )
                 }
             }
         }

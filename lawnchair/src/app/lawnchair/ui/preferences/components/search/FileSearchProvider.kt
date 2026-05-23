@@ -5,9 +5,8 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,29 +14,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -51,10 +46,11 @@ import app.lawnchair.ui.preferences.components.PermissionDialog
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
+import app.lawnchair.ui.preferences.components.controls.TwoTargetSwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroupScope
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
+import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.theme.dividerColor
 import app.lawnchair.ui.util.isPlayStoreFlavor
 import app.lawnchair.util.FileAccessManager
@@ -62,11 +58,13 @@ import app.lawnchair.util.FileAccessState
 import app.lawnchair.util.openAppPermissionSettings
 import app.lawnchair.util.requestManageAllFilesAccessPermission
 import com.android.launcher3.R
+import com.android.launcher3.util.MSDLPlayerWrapper
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.google.android.msdl.data.model.MSDLToken
 
 class FileSearchProviderViewModel(
     application: Application,
@@ -110,7 +108,7 @@ fun FileSearchProvider(
         enabled = hasAnyPermissions,
         modifier = modifier,
     )
-    PreferenceGroup(
+    NewPreferenceGroup(
         heading = stringResource(R.string.search_pref_files_search_on),
     ) {
         val allFilesAccessState by viewModel.allFilesAccessState.collectAsStateWithLifecycle()
@@ -158,22 +156,20 @@ fun FileSearchProvider(
     }
 
     ExpandAndShrink(hasAnyPermissions) {
-        PreferenceGroup {
-            Item {
-                SliderPreference(
-                    label = stringResource(id = R.string.max_file_result_count_title),
-                    adapter = prefs2.maxFileResultCount.getAdapter(),
-                    step = 1,
-                    valueRange = 3..10,
-                )
-            }
+        NewPreferenceGroup {
+            SliderPreference(
+                label = stringResource(id = R.string.max_file_result_count_title),
+                adapter = prefs2.maxFileResultCount.getAdapter(),
+                step = 1,
+                valueRange = 3..10,
+            )
         }
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
-private fun PreferenceGroupScope.ManageExternalStorageSetting(
+private fun ManageExternalStorageSetting(
     accessState: FileAccessState,
     adapter: PreferenceAdapter<Boolean>,
     onPermissionRequest: () -> Unit,
@@ -182,35 +178,31 @@ private fun PreferenceGroupScope.ManageExternalStorageSetting(
     var showPermissionDialog by remember { mutableStateOf(false) }
 
     if (accessState == FileAccessState.Full) {
-        Item {
-            SwitchPreference(
-                adapter = adapter,
-                label = stringResource(R.string.search_pref_result_all_files_title),
-                modifier = modifier,
-            )
-        }
+        SwitchPreference(
+            adapter = adapter,
+            label = stringResource(R.string.search_pref_result_all_files_title),
+            modifier = modifier,
+        )
     } else {
-        Item {
-            TwoTargetSwitchPreference(
-                label = stringResource(R.string.search_pref_result_all_files_title),
-                description = stringResource(R.string.permissions_needed),
-                checked = false,
-                onCheckedChange = {
-                    if (accessState == FileAccessState.Denied) {
-                        showPermissionDialog = true
-                    } else {
-                        adapter.onChange(it)
-                    }
-                },
-                onClick = {
-                    if (accessState == FileAccessState.Denied) {
-                        showPermissionDialog = true
-                    }
-                },
-                switchEnabled = !isPlayStoreFlavor() && (accessState != FileAccessState.Denied),
-                modifier = modifier,
-            )
-        }
+        TwoTargetSwitchPreference(
+            label = stringResource(R.string.search_pref_result_all_files_title),
+            description = stringResource(R.string.permissions_needed),
+            checked = false,
+            onCheckedChange = {
+                if (accessState == FileAccessState.Denied) {
+                    showPermissionDialog = true
+                } else {
+                    adapter.onChange(it)
+                }
+            },
+            onClick = {
+                if (accessState == FileAccessState.Denied) {
+                    showPermissionDialog = true
+                }
+            },
+            switchEnabled = !isPlayStoreFlavor() && (accessState != FileAccessState.Denied),
+            modifier = modifier,
+        )
     }
 
     if (showPermissionDialog) {
@@ -224,7 +216,7 @@ private fun PreferenceGroupScope.ManageExternalStorageSetting(
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun PreferenceGroupScope.VisualMediaSetting(
+private fun VisualMediaSetting(
     accessState: FileAccessState,
     adapter: PreferenceAdapter<Boolean>,
     onPermissionRequest: () -> Unit,
@@ -244,37 +236,33 @@ private fun PreferenceGroupScope.VisualMediaSetting(
     var showPartialAccessDialog by remember { mutableStateOf(false) }
 
     if (alwaysEnabled || accessState == FileAccessState.Full) {
-        Item {
-            SwitchPreference(
-                checked = alwaysEnabled || adapter.state.value,
-                onCheckedChange = adapter::onChange,
-                label = stringResource(R.string.search_pref_result_visual_media_title),
-                enabled = !alwaysEnabled,
-            )
-        }
+        SwitchPreference(
+            checked = alwaysEnabled || adapter.state.value,
+            onCheckedChange = adapter::onChange,
+            label = stringResource(R.string.search_pref_result_visual_media_title),
+            enabled = !alwaysEnabled,
+        )
     } else {
-        Item {
-            TwoTargetSwitchPreference(
-                label = stringResource(R.string.search_pref_result_visual_media_title),
-                description = stringResource(R.string.permissions_needed),
-                checked = (adapter.state.value && accessState != FileAccessState.Denied),
-                onCheckedChange = {
-                    if (accessState == FileAccessState.Denied) {
-                        showPermissionDialog = true
-                    } else {
-                        adapter.onChange(it)
-                    }
-                },
-                onClick = {
-                    if (accessState == FileAccessState.Denied) {
-                        showPermissionDialog = true
-                    } else if (accessState == FileAccessState.Partial) {
-                        showPartialAccessDialog = true
-                    }
-                },
-                switchEnabled = accessState != FileAccessState.Denied,
-            )
-        }
+        TwoTargetSwitchPreference(
+            label = stringResource(R.string.search_pref_result_visual_media_title),
+            description = stringResource(R.string.permissions_needed),
+            checked = (adapter.state.value && accessState != FileAccessState.Denied),
+            onCheckedChange = {
+                if (accessState == FileAccessState.Denied) {
+                    showPermissionDialog = true
+                } else {
+                    adapter.onChange(it)
+                }
+            },
+            onClick = {
+                if (accessState == FileAccessState.Denied) {
+                    showPermissionDialog = true
+                } else if (accessState == FileAccessState.Partial) {
+                    showPartialAccessDialog = true
+                }
+            },
+            switchEnabled = accessState != FileAccessState.Denied,
+        )
     }
 
     if (showPermissionDialog) {
@@ -326,7 +314,7 @@ private fun PreferenceGroupScope.VisualMediaSetting(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun PreferenceGroupScope.GenericAccessSetting(
+private fun GenericAccessSetting(
     adapter: PreferenceAdapter<Boolean>,
     requiredPermission: String,
     switchEnabled: (PermissionState) -> Boolean,
@@ -344,27 +332,23 @@ private fun PreferenceGroupScope.GenericAccessSetting(
     val context = LocalContext.current
 
     if (!alwaysEnabled && !switchEnabled(permission)) {
-        Item {
-            TwoTargetSwitchPreference(
-                label = label,
-                description = stringResource(R.string.permissions_needed),
-                switchEnabled = false,
-                checked = false,
-                onCheckedChange = {},
-                onClick = {
-                    showPermissionDialog = true
-                },
-            )
-        }
+        TwoTargetSwitchPreference(
+            label = label,
+            description = stringResource(R.string.permissions_needed),
+            switchEnabled = false,
+            checked = false,
+            onCheckedChange = {},
+            onClick = {
+                showPermissionDialog = true
+            },
+        )
     } else {
-        Item {
-            SwitchPreference(
-                label = label,
-                checked = alwaysEnabled || adapter.state.value,
-                onCheckedChange = adapter::onChange,
-                enabled = !alwaysEnabled,
-            )
-        }
+        SwitchPreference(
+            label = label,
+            checked = alwaysEnabled || adapter.state.value,
+            onCheckedChange = adapter::onChange,
+            enabled = !alwaysEnabled,
+        )
     }
 
     if (showPermissionDialog) {
@@ -379,76 +363,7 @@ private fun PreferenceGroupScope.GenericAccessSetting(
     }
 }
 
-@Composable
-internal fun TwoTargetSwitchPreference(
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    label: String,
-    modifier: Modifier = Modifier,
-    description: String? = null,
-    enabled: Boolean = true,
-    switchEnabled: Boolean = enabled,
-    onClick: (() -> Unit)? = null,
-) {
-    val interactionSource = remember { MutableInteractionSource() }
 
-    PreferenceTemplate(
-        modifier = modifier.clickable(
-            enabled = enabled,
-            indication = ripple(),
-            interactionSource = interactionSource,
-        ) {
-            if (onClick != null) {
-                onClick()
-            } else {
-                onCheckedChange(!checked)
-            }
-        },
-        contentModifier = Modifier
-            .fillMaxHeight()
-            .padding(vertical = 16.dp)
-            .padding(start = 16.dp),
-        title = { Text(text = label) },
-        description = { description?.let { Text(text = it) } },
-        endWidget = {
-            if (onClick != null) {
-                Spacer(
-                    modifier = Modifier
-                        .height(32.dp)
-                        .width(1.dp)
-                        .fillMaxHeight()
-                        .background(dividerColor()),
-                )
-            }
-            Switch(
-                modifier = Modifier
-                    .padding(all = 16.dp)
-                    .height(24.dp),
-                checked = checked,
-                onCheckedChange = onCheckedChange,
-                enabled = switchEnabled,
-                interactionSource = interactionSource,
-                thumbContent = {
-                    if (checked) {
-                        Icon(
-                            imageVector = Icons.Filled.Check,
-                            contentDescription = null,
-                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = null,
-                            modifier = Modifier.size(SwitchDefaults.IconSize),
-                        )
-                    }
-                },
-            )
-        },
-        enabled = enabled,
-        applyPaddings = false,
-    )
-}
 
 /**
  * A dialog that requests file access permission.
@@ -519,5 +434,29 @@ private fun FileAccessPermissionDialog(
             onDismiss = onDismiss,
             onGoToSettings = { context.openAppPermissionSettings() },
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TwoTargetSwitchPreferencePreview() {
+    LawnchairTheme {
+        Column {
+            var checked1 by remember { mutableStateOf(false) }
+            TwoTargetSwitchPreference(
+                checked = checked1,
+                onCheckedChange = { checked1 = it },
+                label = "Search files",
+                description = "Simple switch",
+            )
+            var checked2 by remember { mutableStateOf(true) }
+            TwoTargetSwitchPreference(
+                checked = checked2,
+                onCheckedChange = { checked2 = it },
+                label = "Search files with onClick",
+                description = "Has a divider and separate click target",
+                onClick = { /* Handle click */ },
+            )
+        }
     }
 }

@@ -29,7 +29,8 @@ import app.lawnchair.ui.preferences.components.WallpaperAccessPermissionDialog
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.controls.WarningPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.GeneralIconShape
 import app.lawnchair.util.FileAccessManager
@@ -68,57 +69,44 @@ fun ExperimentalFeaturesPreferences(
             ?.label?.invoke()
             ?: stringResource(id = R.string.custom)
 
-        PreferenceGroup(
-            Modifier,
-            stringResource(R.string.workspace_label),
+        NewPreferenceGroup(
+            modifier = Modifier,
+            heading = stringResource(R.string.workspace_label),
         ) {
-            Item {
-                SwitchPreference(
-                    adapter = prefs2.enableFontSelection.getAdapter(),
-                    label = stringResource(id = R.string.font_picker_label),
-                    description = stringResource(id = R.string.font_picker_description),
-                )
-            }
-            Item {
-                SwitchPreference(
-                    adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
-                    label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
-                    description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
-                )
-            }
-            Item {
-                SwitchPreference(
-                    adapter = prefs2.iconSwipeGestures.getAdapter(),
-                    label = stringResource(R.string.icon_swipe_gestures),
-                    description = stringResource(R.string.icon_swipe_gestures_description),
-                )
-            }
-            Item {
-                SwitchPreference(
-                    adapter = prefs2.showDeckLayout.getAdapter(),
-                    label = stringResource(R.string.show_deck_layout),
-                    description = stringResource(R.string.show_deck_layout_description),
-                )
-            }
-            Item {
-                SwitchPreference(
-                    checked = hasPermission && enableWallpaperBlur.state.value,
-                    onCheckedChange = {
-                        if (!hasPermission) {
-                            showPermissionDialog = true
-                        } else {
-                            enableWallpaperBlur.onChange(it)
-                        }
-                    },
-                    label = stringResource(id = R.string.wallpaper_blur),
-                )
-            }
+            SwitchPreference(
+                adapter = prefs2.enableFontSelection.getAdapter(),
+                label = stringResource(id = R.string.font_picker_label),
+                description = stringResource(id = R.string.font_picker_description),
+            )
+            SwitchPreference(
+                adapter = prefs.workspaceIncreaseMaxGridSize.getAdapter(),
+                label = stringResource(id = R.string.workspace_increase_max_grid_size_label),
+                description = stringResource(id = R.string.workspace_increase_max_grid_size_description),
+            )
+            SwitchPreference(
+                adapter = prefs2.iconSwipeGestures.getAdapter(),
+                label = stringResource(R.string.icon_swipe_gestures),
+                description = stringResource(R.string.icon_swipe_gestures_description),
+            )
+            SwitchPreference(
+                adapter = prefs2.showDeckLayout.getAdapter(),
+                label = stringResource(R.string.show_deck_layout),
+                description = stringResource(R.string.show_deck_layout_description),
+            )
+            SwitchPreference(
+                checked = hasPermission && enableWallpaperBlur.state.value,
+                onCheckedChange = {
+                    if (!hasPermission) {
+                        showPermissionDialog = true
+                    } else {
+                        enableWallpaperBlur.onChange(it)
+                    }
+                },
+                label = stringResource(id = R.string.wallpaper_blur),
+            )
 
             val canBlur = hasPermission && enableWallpaperBlur.state.value
-            Item(
-                "wallpaper_background_blur",
-                canBlur,
-            ) {
+            ExpandAndShrink(visible = canBlur) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur),
                     adapter = prefs.wallpaperBlur.getAdapter(),
@@ -127,10 +115,7 @@ fun ExperimentalFeaturesPreferences(
                     showUnit = "%",
                 )
             }
-            Item(
-                "wallpaper_background_blur",
-                canBlur,
-            ) {
+            ExpandAndShrink(visible = canBlur) {
                 SliderPreference(
                     label = stringResource(id = R.string.wallpaper_background_blur_factor),
                     adapter = prefs.wallpaperBlurFactorThreshold.getAdapter(),
@@ -157,37 +142,27 @@ fun ExperimentalFeaturesPreferences(
         val alwaysReloadIconsAdapter = prefs2.alwaysReloadIcons.getAdapter()
         val enableGncAdapter = prefs.enableGnc.getAdapter()
 
-        PreferenceGroup(
-            Modifier,
-            stringResource(R.string.internal_label),
-            stringResource(R.string.internal_description),
+        NewPreferenceGroup(
+            modifier = Modifier,
+            heading = stringResource(R.string.internal_label),
+            description = stringResource(R.string.internal_description),
         ) {
-            Item {
-                SwitchPreference(
-                    adapter = alwaysReloadIconsAdapter,
-                    label = stringResource(id = R.string.always_reload_icons_label),
-                    description = stringResource(id = R.string.always_reload_icons_description),
-                )
-            }
-            Item(
-                "always_reload_icons_warning",
-                alwaysReloadIconsAdapter.state.value,
-            ) {
+            SwitchPreference(
+                adapter = alwaysReloadIconsAdapter,
+                label = stringResource(id = R.string.always_reload_icons_label),
+                description = stringResource(id = R.string.always_reload_icons_description),
+            )
+            ExpandAndShrink(visible = alwaysReloadIconsAdapter.state.value) {
                 WarningPreference(stringResource(R.string.always_reload_icons_warning))
             }
 
-            Item {
-                SwitchPreference(
-                    adapter = enableGncAdapter,
-                    label = stringResource(id = R.string.gesturenavcontract_label),
-                    description = stringResource(id = R.string.gesturenavcontract_description),
-                    enabled = Utilities.ATLEAST_Q,
-                )
-            }
-            Item(
-                "gesturenavcontract_warning",
-                enableGncAdapter.state.value && !isGestureNavContractCompatible,
-            ) {
+            SwitchPreference(
+                adapter = enableGncAdapter,
+                label = stringResource(id = R.string.gesturenavcontract_label),
+                description = stringResource(id = R.string.gesturenavcontract_description),
+                enabled = Utilities.ATLEAST_Q,
+            )
+            ExpandAndShrink(visible = enableGncAdapter.state.value && !isGestureNavContractCompatible) {
                 WarningPreference(stringResource(R.string.gesturenavcontract_warning_incompatibility))
             }
         }

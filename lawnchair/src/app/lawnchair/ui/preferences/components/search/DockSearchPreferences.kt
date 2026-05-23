@@ -30,7 +30,7 @@ import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.destinations.DockPreferencesPreview
 import app.lawnchair.ui.preferences.navigation.DockSearchProvider
@@ -54,12 +54,10 @@ fun DockSearchPreference(
         val isLawnchairHotseat = hotseatModeAdapter.state.value == LawnchairHotseat
         if (hotseatEnabled) {
             Column {
-                PreferenceGroup {
-                    Item {
-                        HotseatModePreference(
-                            adapter = hotseatModeAdapter,
-                        )
-                    }
+                NewPreferenceGroup {
+                    HotseatModePreference(
+                        adapter = hotseatModeAdapter,
+                    )
                 }
                 ExpandAndShrink(visible = hotseatModeAdapter.state.value != DisabledHotseat) {
                     Column {
@@ -69,59 +67,49 @@ fun DockSearchPreference(
                 ExpandAndShrink(visible = isLawnchairHotseat) {
                     Column {
                         val hotseatQsbProviderAdapter by preferenceManager2().hotseatQsbProvider.getAdapter()
-                        PreferenceGroup(
+                        NewPreferenceGroup(
                             heading = stringResource(R.string.search_bar_settings),
                         ) {
-                            Item {
-                                NavigationActionPreference(
-                                    label = stringResource(R.string.search_provider),
-                                    destination = DockSearchProvider,
-                                    subtitle = stringResource(
-                                        id = QsbSearchProvider.values()
-                                            .first { it == hotseatQsbProviderAdapter }
-                                            .name,
-                                    ),
-                                )
-                            }
+                            NavigationActionPreference(
+                                label = stringResource(R.string.search_provider),
+                                destination = DockSearchProvider,
+                                subtitle = stringResource(
+                                    id = QsbSearchProvider.values()
+                                        .first { it == hotseatQsbProviderAdapter }
+                                        .name,
+                                ),
+                            )
                         }
-                        PreferenceGroup(
+                        NewPreferenceGroup(
                             heading = stringResource(R.string.style),
                         ) {
-                            Item {
-                                SwitchPreference(
-                                    adapter = themeQsbAdapter,
-                                    label = stringResource(id = R.string.apply_accent_color_label),
-                                )
-                            }
-                            Item {
-                                SliderPreference(
-                                    label = stringResource(id = R.string.corner_radius_label),
-                                    adapter = qsbCornerAdapter,
-                                    step = 0.05F,
-                                    valueRange = 0F..1F,
-                                    showAsPercentage = true,
-                                )
-                            }
-                            Item {
-                                SliderPreference(
-                                    label = stringResource(id = R.string.qsb_hotseat_background_transparency),
-                                    adapter = qsbAlphaAdapter,
-                                    step = 5,
-                                    valueRange = 0..100,
-                                    showUnit = "%",
-                                )
-                            }
-                            Item {
-                                SliderPreference(
-                                    label = stringResource(id = R.string.qsb_hotseat_stroke_width),
-                                    adapter = qsbHotseatStrokeWidth,
-                                    step = 1f,
-                                    valueRange = 0f..10f,
-                                    showUnit = "vw",
-                                )
-                            }
+                            SwitchPreference(
+                                adapter = themeQsbAdapter,
+                                label = stringResource(id = R.string.apply_accent_color_label),
+                            )
+                            SliderPreference(
+                                label = stringResource(id = R.string.corner_radius_label),
+                                adapter = qsbCornerAdapter,
+                                step = 0.05F,
+                                valueRange = 0F..1F,
+                                showAsPercentage = true,
+                            )
+                            SliderPreference(
+                                label = stringResource(id = R.string.qsb_hotseat_background_transparency),
+                                adapter = qsbAlphaAdapter,
+                                step = 5,
+                                valueRange = 0..100,
+                                showUnit = "%",
+                            )
+                            SliderPreference(
+                                label = stringResource(id = R.string.qsb_hotseat_stroke_width),
+                                adapter = qsbHotseatStrokeWidth,
+                                step = 1f,
+                                valueRange = 0f..10f,
+                                showUnit = "vw",
+                            )
                             if (qsbHotseatStrokeWidth.state.value > 0f) {
-                                Item { ColorPreference(preference = prefs2.strokeColorStyle) }
+                                ColorPreference(preference = prefs2.strokeColorStyle)
                             }
                         }
                     }

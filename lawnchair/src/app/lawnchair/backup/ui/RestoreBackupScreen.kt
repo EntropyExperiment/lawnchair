@@ -48,7 +48,7 @@ import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.DummyLauncherBox
 import app.lawnchair.ui.preferences.components.controls.FlagSwitchPreference
-import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.RestoreBackup
 import app.lawnchair.util.BackHandler
@@ -176,28 +176,24 @@ fun ColumnScope.RestoreBackupOptions(
         }
     }
 
-    PreferenceGroup(
+    NewPreferenceGroup(
         modifier = modifier,
         heading = stringResource(id = R.string.what_to_restore),
     ) {
-        Item {
-            FlagSwitchPreference(
-                flags = contents,
-                setFlags = viewModel::setBackupContents,
-                mask = LawnchairBackup.INCLUDE_LAYOUT_AND_SETTINGS,
-                label = stringResource(id = R.string.backup_content_layout_and_settings),
-                enabled = backupContents.hasFlag(LawnchairBackup.INCLUDE_LAYOUT_AND_SETTINGS),
-            )
-        }
-        Item {
-            FlagSwitchPreference(
-                flags = contents,
-                setFlags = viewModel::setBackupContents,
-                mask = LawnchairBackup.INCLUDE_WALLPAPER,
-                label = stringResource(id = R.string.backup_content_wallpaper),
-                enabled = backupContents.hasFlag(LawnchairBackup.INCLUDE_WALLPAPER),
-            )
-        }
+        FlagSwitchPreference(
+            flags = contents,
+            setFlags = viewModel::setBackupContents,
+            mask = LawnchairBackup.INCLUDE_LAYOUT_AND_SETTINGS,
+            label = stringResource(id = R.string.backup_content_layout_and_settings),
+            enabled = backupContents.hasFlag(LawnchairBackup.INCLUDE_LAYOUT_AND_SETTINGS),
+        )
+        FlagSwitchPreference(
+            flags = contents,
+            setFlags = viewModel::setBackupContents,
+            mask = LawnchairBackup.INCLUDE_WALLPAPER,
+            label = stringResource(id = R.string.backup_content_wallpaper),
+            enabled = backupContents.hasFlag(LawnchairBackup.INCLUDE_WALLPAPER),
+        )
     }
     Box(
         modifier = Modifier
