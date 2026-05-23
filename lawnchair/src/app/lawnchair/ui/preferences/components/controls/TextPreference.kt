@@ -20,9 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.ui.ModalBottomSheetContent
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.bottomSheetHandler
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
@@ -55,7 +57,7 @@ fun TextPreference(
     description: (String) -> String? = { it },
 ) {
     val bottomSheetHandler = bottomSheetHandler
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         title = { Text(text = label) },
         description = { description(value)?.let { Text(text = it) } },
         modifier = modifier
@@ -119,14 +121,12 @@ fun TextPreferenceDialog(
 @Composable
 private fun TextPreferencePreview() {
     LawnchairTheme {
-        PreferenceGroupPreviewContainer {
-            Item {
-                TextPreference(
-                    value = "Value",
-                    onChange = {},
-                    label = "Label",
-                )
-            }
+        NewPreferenceGroupPreviewContainer {
+            TextPreference(
+                value = "Value",
+                onChange = {},
+                label = "Label",
+            )
         }
     }
 }

@@ -7,8 +7,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
@@ -17,7 +19,7 @@ fun WarningPreference(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         modifier = modifier,
         title = {},
         description = {
@@ -40,12 +42,10 @@ fun WarningPreference(
 @Composable
 private fun WarningPreferencePreview() {
     LawnchairTheme {
-        PreferenceGroupPreviewContainer {
-            Item {
-                WarningPreference(
-                    text = "Text",
-                )
-            }
+        NewPreferenceGroupPreviewContainer {
+            WarningPreference(
+                text = "Text",
+            )
         }
     }
 }

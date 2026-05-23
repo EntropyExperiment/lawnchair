@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroupItemPosition
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.preferenceGroupItemShape
@@ -53,14 +54,13 @@ fun PreferenceCategory(
 ) {
     val shape = preferenceGroupItemShape(PreferenceGroupItemPosition(isFirst, isLast))
 
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         modifier = modifier
             .clip(shape)
             .clickable { onNavigate() }
             .background(
                 if (isSelected) MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp) else Color.Transparent,
             ),
-        verticalPadding = 14.dp,
         title = {
             Text(
                 text = label,

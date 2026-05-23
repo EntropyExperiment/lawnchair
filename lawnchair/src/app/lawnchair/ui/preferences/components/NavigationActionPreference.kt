@@ -21,9 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import app.lawnchair.ui.preferences.LocalNavController
-import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.PreferenceRoute
-import app.lawnchair.ui.util.addIf
+import app.lawnchair.ui.theme.LawnchairTheme
+import app.lawnchair.ui.util.addIfNotNull
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
+import app.lawnchair.ui.util.preview.PreviewLawnchair
 
 @Composable
 fun NavigationActionPreference(
@@ -33,21 +36,34 @@ fun NavigationActionPreference(
     subtitle: String? = null,
     endWidget: (@Composable () -> Unit)? = null,
 ) {
-    val navController = LocalNavController.current
+    val navController = if (destination != null) LocalNavController.current else null
 
-    PreferenceTemplate(
-        modifier = modifier.addIf(destination != null) {
+    NewPreferenceTemplate(
+        modifier = modifier.addIfNotNull(destination) { dest ->
             clickable {
-                // LC-Note: We probably shouldn't do this, but IDE/Kotlin won't stop complaining even if there's addIf condition
-                destination?.let {
-                    navController.navigate(
-                        route = it,
-                    )
-                }
+                navController?.navigate(
+                    route = dest,
+                )
             }
         },
         title = { Text(text = label) },
         description = { subtitle?.let { Text(text = it) } },
         endWidget = endWidget,
     )
+}
+
+@PreviewLawnchair
+@Composable
+private fun SliderPreferencePreview() {
+    LawnchairTheme {
+        NewPreferenceGroupPreviewContainer {
+            NavigationActionPreference(
+                label = "Label",
+                modifier = Modifier,
+                destination = null,
+                subtitle = "Subtitle",
+                endWidget = { Text("End") },
+            )
+        }
+    }
 }

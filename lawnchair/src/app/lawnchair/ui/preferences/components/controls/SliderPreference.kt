@@ -42,8 +42,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.preferences.rememberTransformAdapter
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.android.launcher3.R
@@ -127,15 +129,14 @@ private fun SliderPreference(
         onDispose { }
     }
 
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         title = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(top = 8.dp)
             ) {
                 Text(
                     text = label,
@@ -174,12 +175,11 @@ private fun SliderPreference(
                 steps = getSteps(valueRange, step),
                 modifier = Modifier
                     .padding(top = 2.dp, bottom = 12.dp)
-                    .padding(horizontal = 14.dp)
                     .height(24.dp),
             )
         },
         modifier = modifier,
-        applyPaddings = false,
+        onClick = null,
     )
 }
 
@@ -209,17 +209,15 @@ private fun SliderPreferencePreview(
     @PreviewParameter(SliderPreferencePreviewParameterProvider::class) sliderValue: Float,
 ) {
     LawnchairTheme {
-        PreferenceGroupPreviewContainer {
-            Item {
-                SliderPreference(
-                    label = "Label",
-                    value = sliderValue,
-                    onValueChangeFinished = {},
-                    valueRange = 0f..1f,
-                    step = 0.1f,
-                    showAsPercentage = true,
-                )
-            }
+        NewPreferenceGroupPreviewContainer {
+            SliderPreference(
+                label = "Label",
+                value = sliderValue,
+                onValueChangeFinished = {},
+                valueRange = 0f..1f,
+                step = 0.1f,
+                showAsPercentage = true,
+            )
         }
     }
 }

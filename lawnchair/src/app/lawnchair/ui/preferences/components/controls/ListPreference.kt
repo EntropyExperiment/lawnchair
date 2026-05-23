@@ -33,10 +33,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.preferences.PreferenceAdapter
 import app.lawnchair.ui.ModalBottomSheetContent
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.addIf
 import app.lawnchair.ui.util.bottomSheetHandler
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
+import app.lawnchair.ui.util.preview.PreviewLawnchair
 
 @Composable
 fun <T> ListPreference(
@@ -77,16 +81,11 @@ fun <T> ListPreference(
         .firstOrNull { it.value == value }
         ?.label?.invoke()
 
-    PreferenceTemplate(
-        contentModifier = Modifier
-            .fillMaxHeight()
-            .padding(vertical = 16.dp)
-            .padding(start = 16.dp),
+    NewPreferenceTemplate(
         title = { Text(text = label) },
         description = { currentDescription?.let { Text(text = it) } },
         enabled = enabled,
         endWidget = endWidget,
-        applyPaddings = false,
         modifier = modifier.clickable(enabled) {
             bottomSheetHandler.show {
                 ModalBottomSheetContent(
@@ -135,3 +134,24 @@ class ListPreferenceEntry<T>(
     val endWidget: (@Composable () -> Unit)? = null,
     val label: @Composable () -> String,
 )
+
+@PreviewLawnchair
+@Composable
+private fun ListPreferencePreview() {
+    val entries = listOf(
+        ListPreferenceEntry(value = "option1", label = { "Option 1" }),
+        ListPreferenceEntry(value = "option2", label = { "Option 2" }),
+        ListPreferenceEntry(value = "option3", label = { "Option 3" }, enabled = false),
+    )
+    LawnchairTheme {
+        NewPreferenceGroupPreviewContainer {
+            ListPreference(
+                entries = entries,
+                value = "option1",
+                onValueChange = {},
+                label = "List Preference",
+                description = "Description",
+            )
+        }
+    }
+}

@@ -29,9 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.lawnchair.ui.ModalBottomSheetContent
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.bottomSheetHandler
+import app.lawnchair.ui.util.preview.NewPreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
@@ -44,7 +46,7 @@ fun ClickablePreference(
     onClick: () -> Unit,
 ) {
     val bottomSheetHandler = bottomSheetHandler
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         title = { Text(text = label) },
         modifier = modifier
             .clickable {
@@ -103,14 +105,12 @@ fun PreferenceClickConfirmation(
 @Composable
 private fun ClickablePreferencePreview() {
     LawnchairTheme {
-        PreferenceGroupPreviewContainer {
-            Item {
-                ClickablePreference(
-                    label = "Label",
-                    subtitle = "Subtitle",
-                    onClick = {},
-                )
-            }
+        NewPreferenceGroupPreviewContainer {
+            ClickablePreference(
+                label = "Label",
+                subtitle = "Subtitle",
+                onClick = {},
+            )
         }
     }
 }
