@@ -2,11 +2,7 @@
 
 # Optimization options.
 -allowaccessmodification
--dontoptimize
--dontpreverify
 -dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--verbose
 -keepattributes InnerClasses, *Annotation*, Signature, SourceFile, LineNumberTable
 
 
@@ -33,17 +29,12 @@
 -dontwarn androidx.renderscript.ScriptIntrinsicBlur
 -dontwarn androidx.renderscript.Type
 
-
 # Common rules.
--keep class com.android.** { *; }
 -keep class android.window.** { *; }
--keepclasseswithmembernames class * {
-    native <methods>;
-}
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
+-keep class android.view.** { *; }
+-keep class com.android.systemui.** { *; }
+-keep class com.android.wm.shell.** { *; }
+
 -keepclassmembers class * implements android.os.Parcelable {
   public static final ** CREATOR;
 }
@@ -53,7 +44,6 @@
 -keep class app.lawnchair.LawnchairApp { *; }
 -keep class app.lawnchair.LawnchairLauncher { *; }
 -keep class app.lawnchair.compatlib.** { *; }
--keep class android.view.** { *; }
 
 -keep class com.google.protobuf.Timestamp { *; }
 
