@@ -178,7 +178,9 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
                 },
                 onClick = if (item.enabled) {
                     { shapeAdapter.onChange(newValue = item.value) }
-                } else null,
+                } else {
+                    null
+                },
             )
         }
     }

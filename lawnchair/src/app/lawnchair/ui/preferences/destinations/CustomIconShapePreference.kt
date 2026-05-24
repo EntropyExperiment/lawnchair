@@ -313,7 +313,7 @@ private fun CornerSlider(
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(text = label)
                 CompositionLocalProvider(
@@ -340,7 +340,7 @@ private fun CornerSlider(
                     modifier = Modifier
                         .height(24.dp)
                         .weight(1f)
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = 8.dp),
                 )
             }
         },

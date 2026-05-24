@@ -74,7 +74,7 @@ fun WarningPreference(
                 pressedShape = MaterialTheme.shapes.large,
                 focusedShape = MaterialTheme.shapes.large,
                 hoveredShape = MaterialTheme.shapes.large,
-                draggedShape = MaterialTheme.shapes.large
+                draggedShape = MaterialTheme.shapes.large,
             )
         } else {
             ListItemDefaults.segmentedShapes(index = 0, count = 1)
@@ -101,7 +101,7 @@ private fun WarningPreferenceStandalonePreview() {
     LawnchairTheme {
         WarningPreference(
             text = "Text",
-            standalone = true
+            standalone = true,
         )
     }
 }

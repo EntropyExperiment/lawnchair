@@ -45,6 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import app.lawnchair.preferences2.asState
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
@@ -53,7 +54,6 @@ import app.lawnchair.ui.preferences.data.liveinfo.model.Announcement
 import app.lawnchair.ui.util.addIf
 import com.android.launcher3.R
 import kotlinx.coroutines.launch
-import androidx.core.net.toUri
 
 @Composable
 fun AnnouncementPreference() {

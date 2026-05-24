@@ -80,7 +80,7 @@ fun NewPreferenceTemplate(
         onLongClick,
         onLongClickLabel,
         colors,
-        interactionSource
+        interactionSource,
     )
 }
 
