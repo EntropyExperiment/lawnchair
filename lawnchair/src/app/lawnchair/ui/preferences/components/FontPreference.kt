@@ -27,7 +27,7 @@ fun FontPreference(
                 fontFamily = font.composeFontFamily,
             )
         },
-        modifier = modifier
-            .clickable { navController.navigate(route = GeneralFontSelection(fontPref.key)) },
+        modifier = modifier,
+        onClick = { navController.navigate(route = GeneralFontSelection(fontPref.key)) },
     )
 }
