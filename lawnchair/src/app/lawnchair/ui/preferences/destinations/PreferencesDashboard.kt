@@ -330,6 +330,7 @@ fun PreferencesDebugWarning(
         // Don't move to strings.xml, no need to translate this warning
         text = "You are using a development build, which may contain bugs and broken features. Use at your own risk!",
         modifier = modifier.padding(horizontal = 16.dp),
+        standalone = true,
         colors = ListItemDefaults.segmentedColors(
             containerColor = MaterialTheme.colorScheme.errorContainer,
         ),

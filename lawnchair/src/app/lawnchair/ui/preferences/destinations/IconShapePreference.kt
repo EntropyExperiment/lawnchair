@@ -184,6 +184,7 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun CustomIconShapePreferenceOption(
     iconShapeAdapter: PreferenceAdapter<IconShape>,

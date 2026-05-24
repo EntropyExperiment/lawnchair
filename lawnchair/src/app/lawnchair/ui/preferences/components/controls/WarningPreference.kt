@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,28 @@ fun WarningPreference(
     iconTint: Color = MaterialTheme.colorScheme.error,
     textColor: Color = MaterialTheme.colorScheme.error,
 ) {
+    WarningPreference(
+        text = text,
+        modifier = modifier,
+        standalone = false,
+        colors = colors,
+        iconTint = iconTint,
+        textColor = textColor,
+    )
+}
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun WarningPreference(
+    text: String,
+    modifier: Modifier = Modifier,
+    standalone: Boolean = true,
+    colors: ListItemColors = ListItemDefaults.segmentedColors(
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+    ),
+    iconTint: Color = MaterialTheme.colorScheme.error,
+    textColor: Color = MaterialTheme.colorScheme.error,
+) {
     NewPreferenceTemplate(
         modifier = modifier,
         title = {},
@@ -44,6 +67,18 @@ fun WarningPreference(
                 contentDescription = null,
             )
         },
+        shapes = if (standalone) {
+            ListItemShapes(
+                shape = MaterialTheme.shapes.large,
+                selectedShape = MaterialTheme.shapes.large,
+                pressedShape = MaterialTheme.shapes.large,
+                focusedShape = MaterialTheme.shapes.large,
+                hoveredShape = MaterialTheme.shapes.large,
+                draggedShape = MaterialTheme.shapes.large
+            )
+        } else {
+            ListItemDefaults.segmentedShapes(index = 0, count = 1)
+        },
         colors = colors,
     )
 }
@@ -57,5 +92,16 @@ private fun WarningPreferencePreview() {
                 text = "Text",
             )
         }
+    }
+}
+
+@PreviewLawnchair
+@Composable
+private fun WarningPreferenceStandalonePreview() {
+    LawnchairTheme {
+        WarningPreference(
+            text = "Text",
+            standalone = true
+        )
     }
 }

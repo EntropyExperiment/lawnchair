@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -139,14 +138,13 @@ private fun QuickSwitchIgnoredWarning(
     modifier: Modifier = Modifier,
 ) {
     LawnchairTheme {
-        PreferenceGroupPreviewContainer {
-            WarningPreference(
-                text = stringResource(id = R.string.quickswitch_ignored_warning),
-                modifier = modifier.padding(horizontal = 16.dp),
-                colors = ListItemDefaults.segmentedColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                ),
-            )
-        }
+        WarningPreference(
+            text = stringResource(id = R.string.quickswitch_ignored_warning),
+            modifier = modifier.padding(horizontal = 16.dp),
+            standalone = true,
+            colors = ListItemDefaults.segmentedColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+            ),
+        )
     }
 }

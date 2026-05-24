@@ -143,6 +143,7 @@ private fun ListItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun Options(
     appEnabled: Boolean,
