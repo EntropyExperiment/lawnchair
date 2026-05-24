@@ -1,6 +1,8 @@
 package app.lawnchair.ui.preferences.destinations
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -23,6 +25,8 @@ import app.lawnchair.ui.preferences.components.controls.WarningPreference
 import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.theme.LawnchairTheme
+import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import app.lawnchair.util.isOnePlusStock
 import com.android.launcher3.R
@@ -128,18 +132,21 @@ fun QuickstepPreferences(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @PreviewLawnchair
 @Composable
 private fun QuickSwitchIgnoredWarning(
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier.padding(horizontal = 16.dp),
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.errorContainer,
-    ) {
-        WarningPreference(
-            text = stringResource(id = R.string.quickswitch_ignored_warning),
-        )
+    LawnchairTheme {
+        PreferenceGroupPreviewContainer {
+            WarningPreference(
+                text = stringResource(id = R.string.quickswitch_ignored_warning),
+                modifier = modifier.padding(horizontal = 16.dp),
+                colors = ListItemDefaults.segmentedColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                ),
+            )
+        }
     }
 }

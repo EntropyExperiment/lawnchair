@@ -39,6 +39,7 @@ import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Surface
@@ -320,20 +321,19 @@ fun RowScope.PreferencesOverflowMenu(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun PreferencesDebugWarning(
     modifier: Modifier = Modifier,
 ) {
-    Surface(
+    WarningPreference(
+        // Don't move to strings.xml, no need to translate this warning
+        text = "You are using a development build, which may contain bugs and broken features. Use at your own risk!",
         modifier = modifier.padding(horizontal = 16.dp),
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.errorContainer,
-    ) {
-        WarningPreference(
-            // Don't move to strings.xml, no need to translate this warning
-            text = "You are using a development build, which may contain bugs and broken features. Use at your own risk!",
-        )
-    }
+        colors = ListItemDefaults.segmentedColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer,
+        ),
+    )
 }
 
 @Composable
