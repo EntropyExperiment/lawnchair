@@ -46,7 +46,8 @@ fun OverlayHandlerPreference(
     PreferenceTemplate(
         title = { Text(text = label) },
         description = { Text(text = stringResource(currentConfig.labelRes)) },
-        modifier = modifier.clickable {
+        modifier = modifier,
+        onClick = {
             bottomSheetHandler.show {
                 ModalBottomSheetContent(
                     title = { Text(label) },
