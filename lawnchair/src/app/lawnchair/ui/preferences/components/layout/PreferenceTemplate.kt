@@ -143,11 +143,12 @@ fun NewPreferenceTemplate(
         startWidget,
         endWidget,
         overlineContent,
-        onClick = onClick,
-        onLongClick = onLongClick,
-        onLongClickLabel = onLongClickLabel,
-        colors = colors,
-        interactionSource = interactionSource,
+        shapes,
+        onClick,
+        onLongClick,
+        onLongClickLabel,
+        colors,
+        interactionSource
     )
 }
 
