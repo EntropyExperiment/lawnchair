@@ -55,7 +55,7 @@ fun PreferenceGroup(
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .clip(MaterialTheme.shapes.extraLarge),
+                .clip(MaterialTheme.shapes.large),
             verticalArrangement = Arrangement.spacedBy(itemSpacing),
         ) {
             content()
