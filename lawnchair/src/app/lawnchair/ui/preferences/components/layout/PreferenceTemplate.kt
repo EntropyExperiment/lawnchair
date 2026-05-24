@@ -111,6 +111,44 @@ fun PreferenceTemplate(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun NewPreferenceTemplate(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+    description: @Composable () -> Unit = {},
+    startWidget: (@Composable () -> Unit)? = null,
+    endWidget: (@Composable () -> Unit)? = null,
+    overlineContent: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null,
+    onLongClickLabel: String? = null,
+    colors: ListItemColors = ListItemDefaults.segmentedColors(
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+    ),
+    interactionSource: MutableInteractionSource? = null,
+) {
+    PreferenceTemplate(
+        title,
+        modifier,
+        contentModifier,
+        enabled,
+        verticalAlignment,
+        description,
+        startWidget,
+        endWidget,
+        overlineContent,
+        onClick,
+        onLongClick,
+        onLongClickLabel,
+        colors,
+        interactionSource,
+    )
+}
+
 /***
  * A template used to create most preference-related components in the Preference UI.
  *
@@ -129,6 +167,7 @@ fun PreferenceTemplate(
     startWidget: (@Composable () -> Unit)? = null,
     endWidget: (@Composable () -> Unit)? = null,
     overlineContent: (@Composable () -> Unit)? = null,
+//    shapes: ListItemShapes = ListItemDefaults.segmentedShapes(index = 0, count = 1),
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
     onLongClickLabel: String? = null,
