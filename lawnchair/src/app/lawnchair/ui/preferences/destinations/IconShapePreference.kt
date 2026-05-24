@@ -164,9 +164,10 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
             PreferenceTemplate(
                 enabled = item.enabled,
                 title = { Text(item.label()) },
-                modifier = Modifier.clickable(item.enabled) {
-                    shapeAdapter.onChange(newValue = item.value)
-                },
+                modifier = Modifier,
+                onClick = if (item.enabled) {
+                    { shapeAdapter.onChange(newValue = item.value) }
+                } else null,
                 startWidget = {
                     RadioButton(
                         selected = item.value == shapeAdapter.state.value,
@@ -190,7 +191,8 @@ private fun CustomIconShapePreferenceOption(
 ) {
     PreferenceTemplate(
         title = { Text(stringResource(id = R.string.custom)) },
-        modifier = modifier.clickable {
+        modifier = modifier,
+        onClick = {
             iconShapeAdapter.onChange(newValue = customIconShape)
         },
         startWidget = {

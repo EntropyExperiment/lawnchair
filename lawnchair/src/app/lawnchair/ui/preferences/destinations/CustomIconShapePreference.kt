@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.lawnchair.icons.shape.IconCornerShape
@@ -48,10 +49,12 @@ import app.lawnchair.ui.ModalBottomSheetContent
 import app.lawnchair.ui.preferences.components.controls.getSteps
 import app.lawnchair.ui.preferences.components.controls.snapSliderValue
 import app.lawnchair.ui.preferences.components.layout.BottomSpacer
+import app.lawnchair.ui.preferences.components.layout.NewPreferenceTemplate
 import app.lawnchair.ui.preferences.components.layout.PreferenceDivider
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
+import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.LocalBottomSheetHandler
 import app.lawnchair.util.copyToClipboard
 import app.lawnchair.util.getClipboardContent
@@ -303,15 +306,13 @@ private fun CornerSlider(
     val step = 0.1f
     val valueRange = 0f..1f
 
-    PreferenceTemplate(
+    NewPreferenceTemplate(
         modifier = modifier,
         title = {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = label)
                 CompositionLocalProvider(
@@ -327,7 +328,7 @@ private fun CornerSlider(
         },
         description = {
             Row(
-                modifier = Modifier.padding(top = 8.dp),
+                modifier = Modifier.padding(top = 2.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Slider(
@@ -338,7 +339,7 @@ private fun CornerSlider(
                     modifier = Modifier
                         .height(24.dp)
                         .weight(1f)
-                        .padding(horizontal = 3.dp),
+                        .padding(bottom = 8.dp)
                 )
             }
         },
@@ -346,6 +347,7 @@ private fun CornerSlider(
             Row(
                 modifier = Modifier
                     .clip(shape = MaterialTheme.shapes.small)
+                    .padding(top = 2.dp)
                     .clickable {
                         bottomSheetHandler.show {
                             ModalBottomSheetContent(
@@ -388,9 +390,7 @@ private fun CornerSlider(
                         }
                     }
                     .padding(
-                        start = 8.dp,
-                        top = 4.dp,
-                        bottom = 4.dp,
+                        vertical = 4.dp,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -406,6 +406,20 @@ private fun CornerSlider(
             }
         },
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CornerSliderPreview() {
+    LawnchairTheme {
+        CornerSlider(
+            label = "Top Left",
+            value = 0.5f,
+            onValueChange = {},
+            cornerShape = IconCornerShape.Squircle,
+            onCornerShapeChange = {},
+        )
+    }
 }
 
 @Composable
