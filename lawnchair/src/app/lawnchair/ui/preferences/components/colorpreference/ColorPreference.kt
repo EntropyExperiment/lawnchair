@@ -16,7 +16,6 @@
 
 package app.lawnchair.ui.preferences.components.colorpreference
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,6 +28,9 @@ import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.preferences.navigation.ColorSelection as ColorSelectionRoute
+import app.lawnchair.ui.theme.LawnchairTheme
+import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
+import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.patrykmichalik.opto.domain.Preference
 
 /**
@@ -45,14 +47,44 @@ fun ColorPreference(
     val model = modelList[preference.key.name]
     val adapter: PreferenceAdapter<ColorOption> = model.prefObject.getAdapter()
     val navController = LocalNavController.current
+    ColorPreference(
+        label = stringResource(id = model.labelRes),
+        selectedColor = adapter.state.value,
+        onClick = { navController.navigate(route = ColorSelectionRoute(model.prefObject.key.name)) },
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ColorPreference(
+    label: String,
+    selectedColor: ColorOption,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     PreferenceTemplate(
-        title = { Text(text = stringResource(id = model.labelRes)) },
+        title = { Text(text = label) },
         endWidget = {
-            ColorDot(adapter.state.value.colorPreferenceEntry)
+            ColorDot(selectedColor.colorPreferenceEntry)
         },
         description = {
-            Text(text = adapter.state.value.colorPreferenceEntry.label())
+            Text(text = selectedColor.colorPreferenceEntry.label())
         },
-        modifier = modifier.clickable { navController.navigate(route = ColorSelectionRoute(model.prefObject.key.name)) },
+        onClick = onClick,
+        modifier = modifier,
     )
+}
+
+@PreviewLawnchair
+@Composable
+private fun ColorPreferencePreview() {
+    LawnchairTheme {
+        PreferenceGroupPreviewContainer {
+            ColorPreference(
+                label = "Accent Color",
+                selectedColor = ColorOption.LawnchairBlue,
+                onClick = {},
+            )
+        }
+    }
 }
