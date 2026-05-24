@@ -90,6 +90,7 @@ fun SearchProviderPreferences(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ListItem(
     title: String,
@@ -108,7 +109,6 @@ private fun ListItem(
         PreferenceTemplate(
             title = { Text(text = title) },
             enabled = enabled,
-            onClick = if (enabled) onClick else null,
             description = { if (description != null) Text(text = description) },
             startWidget = {
                 RadioButton(
@@ -138,6 +138,7 @@ private fun ListItem(
                     }
                 }
             },
+            onClick = if (enabled) onClick else null,
         )
     }
 }
@@ -160,7 +161,6 @@ private fun Options(
         PreferenceTemplate(
             title = { Text(stringResource(id = R.string.app_label)) },
             enabled = appEnabled,
-            onClick = if (appEnabled) onAppClick else null,
             startWidget = {
                 RadioButton(
                     selected = appSelected,
@@ -179,10 +179,10 @@ private fun Options(
                     )
                 }
             },
+            onClick = if (appEnabled) onAppClick else null,
         )
         PreferenceTemplate(
             title = { Text(text = stringResource(id = R.string.website_label)) },
-            onClick = onWebsiteClick,
             startWidget = {
                 RadioButton(
                     selected = !appSelected,
@@ -190,6 +190,7 @@ private fun Options(
                     modifier = Modifier.padding(start = 56.dp),
                 )
             },
+            onClick = onWebsiteClick,
         )
     }
 }

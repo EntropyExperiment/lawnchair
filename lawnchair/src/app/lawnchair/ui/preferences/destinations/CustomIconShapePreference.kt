@@ -237,6 +237,7 @@ private fun IconShapeClipboardPreferenceGroup(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ClipboardButton(
     label: String,
@@ -247,9 +248,9 @@ private fun ClipboardButton(
     onClick: () -> Unit,
 ) {
     PreferenceTemplate(
-        modifier = modifier,
-        onClick = onClick,
         title = { Text(text = label) },
+        modifier = modifier,
+        enabled = enabled,
         description = { description?.let { Text(text = it) } },
         startWidget = {
             val tint = LocalContentColor.current
@@ -261,7 +262,7 @@ private fun ClipboardButton(
                 tint = tint.copy(alpha = alpha),
             )
         },
-        enabled = enabled,
+        onClick = onClick,
     )
 }
 
@@ -373,15 +374,15 @@ private fun CornerSlider(
                                                     text = option.getLabel(),
                                                 )
                                             },
-                                            onClick = {
-                                                bottomSheetHandler.hide()
-                                                onCornerShapeChange(option)
-                                            },
                                             startWidget = {
                                                 RadioButton(
                                                     selected = selected,
                                                     onClick = null,
                                                 )
+                                            },
+                                            onClick = {
+                                                bottomSheetHandler.hide()
+                                                onCornerShapeChange(option)
                                             },
                                         )
                                     }

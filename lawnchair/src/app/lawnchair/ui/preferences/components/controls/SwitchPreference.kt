@@ -88,16 +88,9 @@ fun SwitchPreference(
     }
 
     PreferenceTemplate(
-        onClick = {
-            if (onClick != null) {
-                onClick()
-            } else {
-                wrappedOnCheckedChange(!checked)
-            }
-        },
-        modifier = modifier,
-        contentModifier = Modifier,
         title = { Text(text = label) },
+        modifier = modifier,
+        enabled = enabled,
         description = { description?.let { Text(text = it) } },
         endWidget = {
             Row(
@@ -134,7 +127,13 @@ fun SwitchPreference(
                 )
             }
         },
-        enabled = enabled,
+        onClick = {
+            if (onClick != null) {
+                onClick()
+            } else {
+                wrappedOnCheckedChange(!checked)
+            }
+        },
         interactionSource = interactionSource,
     )
 }

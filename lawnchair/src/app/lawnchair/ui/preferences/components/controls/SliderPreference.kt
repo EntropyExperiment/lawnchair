@@ -159,6 +159,7 @@ private fun SliderPreference(
                 }
             }
         },
+        modifier = modifier,
         description = {
             Slider(
                 value = sliderValue,
@@ -174,8 +175,6 @@ private fun SliderPreference(
                     .height(24.dp),
             )
         },
-        modifier = modifier,
-        onClick = null,
     )
 }
 

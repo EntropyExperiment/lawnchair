@@ -44,6 +44,7 @@ fun TextPreference(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun TextPreference(
     value: String,
@@ -55,6 +56,10 @@ fun TextPreference(
 ) {
     val bottomSheetHandler = bottomSheetHandler
     PreferenceTemplate(
+        title = { Text(text = label) },
+        modifier = modifier,
+        enabled = enabled,
+        description = { description(value)?.let { Text(text = it) } },
         onClick = if (enabled) {
             {
                 bottomSheetHandler.show {
@@ -69,10 +74,6 @@ fun TextPreference(
         } else {
             null
         },
-        title = { Text(text = label) },
-        description = { description(value)?.let { Text(text = it) } },
-        modifier = modifier,
-        enabled = enabled,
     )
 }
 

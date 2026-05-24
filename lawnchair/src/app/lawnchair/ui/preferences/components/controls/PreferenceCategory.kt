@@ -20,6 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,6 +36,7 @@ import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 import com.android.launcher3.R
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun PreferenceCategory(
     label: String,
@@ -45,17 +47,16 @@ fun PreferenceCategory(
     description: String? = null,
 ) {
     PreferenceTemplate(
-        onClick = onNavigate,
-        modifier = modifier
-            .background(
-                if (isSelected) MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp) else Color.Transparent,
-            ),
         title = {
             Text(
                 text = label,
                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
             )
         },
+        modifier = modifier
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp) else Color.Transparent,
+            ),
         description = {
             if (description != null) {
                 Text(text = description)
@@ -74,6 +75,7 @@ fun PreferenceCategory(
                 )
             }
         },
+        onClick = onNavigate,
     )
 }
 

@@ -66,8 +66,8 @@ fun GestureHandlerPreference(
 
     PreferenceTemplate(
         title = { Text(text = label) },
-        description = { Text(text = currentConfig.getLabel(context)) },
         modifier = modifier,
+        description = { Text(text = currentConfig.getLabel(context)) },
         onClick = {
             bottomSheetHandler.show {
                 ModalBottomSheetContent(

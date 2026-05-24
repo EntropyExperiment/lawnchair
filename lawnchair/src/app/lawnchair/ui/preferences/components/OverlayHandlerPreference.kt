@@ -4,6 +4,7 @@ import android.R as AndroidR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ val overlayOptions = listOf(
     FullScreenOverlayMode.FADE_IN,
 )
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun OverlayHandlerPreference(
     adapter: PreferenceAdapter<FullScreenOverlayMode>,
@@ -45,8 +47,8 @@ fun OverlayHandlerPreference(
 
     PreferenceTemplate(
         title = { Text(text = label) },
-        description = { Text(text = stringResource(currentConfig.labelRes)) },
         modifier = modifier,
+        description = { Text(text = stringResource(currentConfig.labelRes)) },
         onClick = {
             bottomSheetHandler.show {
                 ModalBottomSheetContent(

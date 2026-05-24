@@ -106,6 +106,7 @@ fun AppDrawerFoldersPreference(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppDrawerFoldersPreference(
     folders: List<FolderInfo>,
@@ -166,6 +167,9 @@ fun AppDrawerFoldersPreference(
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                     },
+                    startWidget = {
+                        Icon(Icons.Rounded.Add, contentDescription = null)
+                    },
                     onClick = {
                         bottomSheetHandler.show {
                             FolderEditSheet(
@@ -180,9 +184,6 @@ fun AppDrawerFoldersPreference(
                                 hideAppPicker = true,
                             )
                         }
-                    },
-                    startWidget = {
-                        Icon(Icons.Rounded.Add, contentDescription = null)
                     },
                 )
             }
@@ -329,6 +330,7 @@ fun FolderItem(
                 text = folderInfo.title.toString(),
             )
         },
+        modifier = modifier,
         description = {
             Text(
                 text = resources.getQuantityString(R.plurals.apps_count, folderInfo.getContents().size, folderInfo.getContents().size),
@@ -352,6 +354,5 @@ fun FolderItem(
         onClick = {
             onItemClick(folderInfo)
         },
-        modifier = modifier,
     )
 }

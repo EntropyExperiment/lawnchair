@@ -80,6 +80,11 @@ fun <T> ListPreference(
         ?.label?.invoke()
 
     PreferenceTemplate(
+        title = { Text(text = label) },
+        modifier = modifier.addIf(endWidget != null) { padding(end = 16.dp) },
+        enabled = enabled,
+        description = { currentDescription?.let { Text(text = it) } },
+        endWidget = endWidget,
         onClick = if (enabled) {
             {
                 bottomSheetHandler.show {
@@ -123,11 +128,6 @@ fun <T> ListPreference(
         } else {
             null
         },
-        title = { Text(text = label) },
-        description = { currentDescription?.let { Text(text = it) } },
-        enabled = enabled,
-        endWidget = endWidget,
-        modifier = modifier.addIf(endWidget != null) { padding(end = 16.dp) },
     )
 }
 

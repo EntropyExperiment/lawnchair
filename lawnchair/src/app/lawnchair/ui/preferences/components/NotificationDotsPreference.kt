@@ -21,9 +21,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,6 +51,7 @@ import com.android.launcher3.util.SettingsCache.NOTIFICATION_BADGING_URI
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NotificationDotsPreference(
     enabled: Boolean,
@@ -68,6 +69,7 @@ fun NotificationDotsPreference(
 
     PreferenceTemplate(
         title = { Text(text = stringResource(id = R.string.notification_dots)) },
+        modifier = modifier,
         description = { Text(text = stringResource(id = summary)) },
         endWidget = if (showWarning) {
             {
@@ -83,7 +85,6 @@ fun NotificationDotsPreference(
         } else {
             null
         },
-        modifier = modifier,
         onClick = {
             if (showWarning) {
                 showPermissionDialog = true

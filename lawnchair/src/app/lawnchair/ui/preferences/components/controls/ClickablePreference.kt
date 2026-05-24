@@ -34,6 +34,7 @@ import app.lawnchair.ui.util.bottomSheetHandler
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ClickablePreference(
     label: String,
@@ -44,6 +45,9 @@ fun ClickablePreference(
 ) {
     val bottomSheetHandler = bottomSheetHandler
     PreferenceTemplate(
+        title = { Text(text = label) },
+        modifier = modifier,
+        description = { subtitle?.let { Text(text = it) } },
         onClick = {
             if (confirmationText != null) {
                 bottomSheetHandler.show {
@@ -58,9 +62,6 @@ fun ClickablePreference(
                 onClick()
             }
         },
-        modifier = modifier,
-        title = { Text(text = label) },
-        description = { subtitle?.let { Text(text = it) } },
     )
 }
 

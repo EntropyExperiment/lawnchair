@@ -30,7 +30,6 @@ fun PresetsList(
         dynamicEntries.forEach { entry ->
             PreferenceTemplate(
                 title = { Text(text = entry.label()) },
-                onClick = { onPresetClick(entry.value) },
                 startWidget = {
                     RadioButton(
                         selected = isPresetSelected(entry.value),
@@ -41,6 +40,7 @@ fun PresetsList(
                         modifier = Modifier.padding(start = 16.dp),
                     )
                 },
+                onClick = { onPresetClick(entry.value) },
             )
         }
     }

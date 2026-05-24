@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
@@ -129,6 +130,7 @@ fun ShapePreference(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ShapeTabContent(currentTab: ShapeRoute) {
     val context = LocalContext.current
@@ -162,12 +164,8 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
     ) {
         entries.forEach { item ->
             PreferenceTemplate(
-                enabled = item.enabled,
                 title = { Text(item.label()) },
-                modifier = Modifier,
-                onClick = if (item.enabled) {
-                    { shapeAdapter.onChange(newValue = item.value) }
-                } else null,
+                enabled = item.enabled,
                 startWidget = {
                     RadioButton(
                         selected = item.value == shapeAdapter.state.value,
@@ -178,6 +176,9 @@ private fun ShapeTabContent(currentTab: ShapeRoute) {
                 endWidget = {
                     IconShapePreview(iconShape = item.value)
                 },
+                onClick = if (item.enabled) {
+                    { shapeAdapter.onChange(newValue = item.value) }
+                } else null,
             )
         }
     }
@@ -192,9 +193,6 @@ private fun CustomIconShapePreferenceOption(
     PreferenceTemplate(
         title = { Text(stringResource(id = R.string.custom)) },
         modifier = modifier,
-        onClick = {
-            iconShapeAdapter.onChange(newValue = customIconShape)
-        },
         startWidget = {
             RadioButton(
                 selected = IconShape.isCustomShape(iconShapeAdapter.state.value),
@@ -203,6 +201,9 @@ private fun CustomIconShapePreferenceOption(
         },
         endWidget = {
             IconShapePreview(iconShape = customIconShape)
+        },
+        onClick = {
+            iconShapeAdapter.onChange(newValue = customIconShape)
         },
     )
 }

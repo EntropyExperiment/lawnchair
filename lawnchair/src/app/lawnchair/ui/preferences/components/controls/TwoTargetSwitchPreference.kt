@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -71,6 +72,7 @@ fun TwoTargetSwitchPreference(
 /**
  * A Preference that provides a two-state toggleable option with two click targets.
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun TwoTargetSwitchPreference(
     checked: Boolean,
@@ -91,16 +93,9 @@ fun TwoTargetSwitchPreference(
     }
 
     PreferenceTemplate(
-        onClick = {
-            if (onClick != null) {
-                onClick()
-            } else {
-                wrappedOnCheckedChange(!checked)
-            }
-        },
-        modifier = modifier,
-        contentModifier = Modifier,
         title = { Text(text = label) },
+        modifier = modifier,
+        enabled = enabled,
         description = { description?.let { Text(text = it) } },
         endWidget = {
             Row(
@@ -137,7 +132,13 @@ fun TwoTargetSwitchPreference(
                 )
             }
         },
-        enabled = enabled,
+        onClick = {
+            if (onClick != null) {
+                onClick()
+            } else {
+                wrappedOnCheckedChange(!checked)
+            }
+        },
         interactionSource = interactionSource,
     )
 }

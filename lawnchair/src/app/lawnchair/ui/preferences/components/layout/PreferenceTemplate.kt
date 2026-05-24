@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -123,6 +124,7 @@ fun NewPreferenceTemplate(
     startWidget: (@Composable () -> Unit)? = null,
     endWidget: (@Composable () -> Unit)? = null,
     overlineContent: (@Composable () -> Unit)? = null,
+    shapes: ListItemShapes = ListItemDefaults.segmentedShapes(index = 0, count = 1),
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
     onLongClickLabel: String? = null,
@@ -141,11 +143,11 @@ fun NewPreferenceTemplate(
         startWidget,
         endWidget,
         overlineContent,
-        onClick,
-        onLongClick,
-        onLongClickLabel,
-        colors,
-        interactionSource,
+        onClick = onClick,
+        onLongClick = onLongClick,
+        onLongClickLabel = onLongClickLabel,
+        colors = colors,
+        interactionSource = interactionSource,
     )
 }
 
@@ -167,7 +169,7 @@ fun PreferenceTemplate(
     startWidget: (@Composable () -> Unit)? = null,
     endWidget: (@Composable () -> Unit)? = null,
     overlineContent: (@Composable () -> Unit)? = null,
-//    shapes: ListItemShapes = ListItemDefaults.segmentedShapes(index = 0, count = 1),
+    shapes: ListItemShapes = ListItemDefaults.segmentedShapes(index = 0, count = 1),
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
     onLongClickLabel: String? = null,
@@ -183,7 +185,7 @@ fun PreferenceTemplate(
             onClick = { onClick?.invoke() },
             // Since we don't know the position of the list, we assume it's in a middle position,
             // then we clip or round the column make the list round instead.
-            shapes = ListItemDefaults.segmentedShapes(index = 0, count = 1),
+            shapes = shapes,
             modifier = contentModifier,
             enabled = enabled,
             leadingContent = startWidget,

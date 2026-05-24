@@ -16,6 +16,7 @@
 
 package app.lawnchair.ui.preferences.components
 
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import app.lawnchair.ui.theme.LawnchairTheme
 import app.lawnchair.ui.util.preview.PreferenceGroupPreviewContainer
 import app.lawnchair.ui.util.preview.PreviewLawnchair
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NavigationActionPreference(
     label: String,
@@ -37,6 +39,10 @@ fun NavigationActionPreference(
     val navController = if (destination != null) LocalNavController.current else null
 
     PreferenceTemplate(
+        title = { Text(text = label) },
+        modifier = modifier,
+        description = { subtitle?.let { Text(text = it) } },
+        endWidget = endWidget,
         onClick = if (destination != null) {
             {
                 navController?.navigate(
@@ -46,10 +52,6 @@ fun NavigationActionPreference(
         } else {
             null
         },
-        modifier = modifier,
-        title = { Text(text = label) },
-        description = { subtitle?.let { Text(text = it) } },
-        endWidget = endWidget,
     )
 }
 
