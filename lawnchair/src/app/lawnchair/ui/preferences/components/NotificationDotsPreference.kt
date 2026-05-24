@@ -83,17 +83,17 @@ fun NotificationDotsPreference(
         } else {
             null
         },
-        modifier = modifier
-            .clickable {
-                if (showWarning) {
-                    showPermissionDialog = true
-                } else {
-                    val extras = bundleOf(EXTRA_FRAGMENT_HIGHLIGHT_KEY to "notification_badging")
-                    val intent = Intent("android.settings.NOTIFICATION_SETTINGS")
-                        .putExtra(EXTRA_FRAGMENT_ARGS, extras)
-                    context.startActivity(intent)
-                }
-            },
+        modifier = modifier,
+        onClick = {
+            if (showWarning) {
+                showPermissionDialog = true
+            } else {
+                val extras = bundleOf(EXTRA_FRAGMENT_HIGHLIGHT_KEY to "notification_badging")
+                val intent = Intent("android.settings.NOTIFICATION_SETTINGS")
+                    .putExtra(EXTRA_FRAGMENT_ARGS, extras)
+                context.startActivity(intent)
+            }
+        },
     )
 
     if (showPermissionDialog) {
