@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material.icons.rounded.NewReleases
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -52,6 +53,7 @@ import app.lawnchair.ui.preferences.data.liveinfo.model.Announcement
 import app.lawnchair.ui.util.addIf
 import com.android.launcher3.R
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @Composable
 fun AnnouncementPreference() {
@@ -127,6 +129,7 @@ private fun AnnouncementItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun AnnouncementItemContent(
     text: String,
@@ -205,6 +208,7 @@ fun calculateAlpha(progress: Float): Float {
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun AnnouncementPreferenceItemContent(
     text: String,
@@ -216,17 +220,16 @@ private fun AnnouncementPreferenceItemContent(
     val hasLink = !url.isNullOrBlank()
 
     PreferenceTemplate(
-        modifier = modifier
-            .fillMaxWidth()
-            .addIf(hasLink) {
-                clickable {
-                    val webpage = Uri.parse(url)
-                    val intent = Intent(Intent.ACTION_VIEW, webpage)
-                    if (intent.resolveActivity(context.packageManager) != null) {
-                        context.startActivity(intent)
-                    }
+        modifier = modifier.fillMaxWidth(),
+        onClick = {
+            if (hasLink) {
+                val webpage = url.toUri()
+                val intent = Intent(Intent.ACTION_VIEW, webpage)
+                if (intent.resolveActivity(context.packageManager) != null) {
+                    context.startActivity(intent)
                 }
-            },
+            }
+        },
         title = {},
         description = {
             Text(

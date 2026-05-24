@@ -108,6 +108,7 @@ fun GestureHandlerPreference(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppGesturePreference(
     cmp: ComponentKey,
@@ -139,9 +140,8 @@ fun AppGesturePreference(
         PreferenceTemplate(
             title = { Text(text = label) },
             description = { Text(text = currentConfig.getLabel(context)) },
-            modifier = Modifier
-                .clickable { isExpanded = !isExpanded }
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { isExpanded = !isExpanded },
         )
 
         AnimatedVisibility(visible = isExpanded) {
@@ -160,7 +160,8 @@ fun AppGesturePreference(
                         val selected = currentConfig::class.java == option.configClass
                         PreferenceTemplate(
                             title = { Text(option.getLabel(context)) },
-                            modifier = Modifier.clickable {
+                            modifier = Modifier,
+                            onClick = {
                                 onSelect(option)
                             },
                             startWidget = {

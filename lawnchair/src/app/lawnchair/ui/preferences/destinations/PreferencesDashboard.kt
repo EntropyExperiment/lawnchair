@@ -337,6 +337,7 @@ fun PreferencesDebugWarning(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun PreferencesSetDefaultLauncherWarning(
     modifier: Modifier = Modifier,
@@ -348,7 +349,8 @@ fun PreferencesSetDefaultLauncherWarning(
         color = MaterialTheme.colorScheme.surfaceVariant,
     ) {
         PreferenceTemplate(
-            modifier = Modifier.clickable {
+            modifier = Modifier,
+            onClick = {
                 Intent(Settings.ACTION_HOME_SETTINGS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .let { context.startActivity(it) }

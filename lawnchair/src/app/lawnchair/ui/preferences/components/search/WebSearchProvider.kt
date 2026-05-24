@@ -144,7 +144,8 @@ fun SearchPopupPreference(
     }
 
     PreferenceTemplate(
-        modifier = modifier.clickable {
+        modifier = modifier,
+        onClick = {
             showPopup = true
         },
         contentModifier = Modifier
@@ -153,6 +154,5 @@ fun SearchPopupPreference(
             .padding(start = 16.dp),
         title = { Text(text = title) },
         description = { Text(initialValue) },
-        applyPaddings = false,
     )
 }

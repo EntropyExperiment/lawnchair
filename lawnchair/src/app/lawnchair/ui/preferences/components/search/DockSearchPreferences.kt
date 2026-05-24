@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.TipsAndUpdates
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ import app.lawnchair.ui.preferences.destinations.DockPreferencesPreview
 import app.lawnchair.ui.preferences.navigation.DockSearchProvider
 import com.android.launcher3.R
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DockSearchPreference(
     modifier: Modifier = Modifier,
@@ -117,11 +119,10 @@ fun DockSearchPreference(
             }
         } else {
             PreferenceTemplate(
-                modifier = Modifier
-                    .clickable {
-                        isHotseatEnabled.onChange(true)
-                    }
-                    .padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onClick = {
+                    isHotseatEnabled.onChange(true)
+                },
                 title = {},
                 description = {
                     Text(

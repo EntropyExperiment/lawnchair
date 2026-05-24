@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -75,6 +76,7 @@ fun getProviderName(provider: SearchProviderId): Int {
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SearchProviderPreferenceItem(
     adapter: PreferenceAdapter<Boolean>,
@@ -85,7 +87,8 @@ fun SearchProviderPreferenceItem(
     description: String? = null,
 ) {
     PreferenceTemplate(
-        modifier = modifier.clickable(onClick = onClick),
+        modifier = modifier,
+        onClick = onClick,
         contentModifier = Modifier
             .fillMaxHeight()
             .padding(vertical = 16.dp)
@@ -124,7 +127,6 @@ fun SearchProviderPreferenceItem(
                 },
             )
         },
-        applyPaddings = false,
     )
 }
 

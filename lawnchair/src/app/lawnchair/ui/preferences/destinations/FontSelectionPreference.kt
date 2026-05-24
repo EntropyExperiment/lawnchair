@@ -64,6 +64,7 @@ private enum class ContentType {
     FONT,
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun FontSelection(
     fontPref: BasePreferenceManager.FontPref,
@@ -150,7 +151,8 @@ fun FontSelection(
                         cutBottom = customFonts.isNotEmpty(),
                     ) {
                         PreferenceTemplate(
-                            modifier = Modifier.clickable {
+                            modifier = Modifier,
+                            onClick = {
                                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                                 intent.type = "*/*"
@@ -259,8 +261,6 @@ private fun FontSelectionItem(
 
             else -> null
         },
-        applyPaddings = false,
-        verticalPadding = 0.dp,
     )
 }
 

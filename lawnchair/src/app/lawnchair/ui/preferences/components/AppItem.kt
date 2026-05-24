@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -125,6 +126,7 @@ fun AppItemPlaceholder(
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun AppItemLayout(
     icon: @Composable () -> Unit,
@@ -144,6 +146,5 @@ private fun AppItemLayout(
             icon()
         },
         endWidget = endWidget,
-        verticalPadding = 12.dp,
     )
 }

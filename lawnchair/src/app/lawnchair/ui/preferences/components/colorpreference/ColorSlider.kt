@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -32,6 +33,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import com.android.launcher3.R
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun RgbColorSlider(
     label: String,
@@ -95,10 +97,10 @@ fun RgbColorSlider(
                 )
             }
         },
-        applyPaddings = false,
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HsbColorSlider(
     type: HsbSliderType,
@@ -191,7 +193,6 @@ fun HsbColorSlider(
                 )
             }
         },
-        applyPaddings = false,
         modifier = modifier,
     )
 }
