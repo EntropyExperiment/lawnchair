@@ -22,7 +22,10 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +57,7 @@ import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.theme.isSelectedThemeDark
+import app.lawnchair.ui.theme.preferenceGroupColor
 import com.android.launcher3.R
 import com.kieronquinn.app.smartspacer.sdk.SmartspacerConstants
 
@@ -178,20 +182,25 @@ fun SmartspacePreview(
         heading = stringResource(id = R.string.preview_label),
         modifier = modifier,
     ) {
-        CompositionLocalProvider(LocalContext provides themedContext) {
-            AndroidView(
-                factory = {
-                    val view = SmartspaceViewContainer(it, previewMode = true)
-                    val height = it.resources
-                        .getDimensionPixelSize(R.dimen.enhanced_smartspace_height)
-                    view.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, height)
-                    view
-                },
-                modifier = Modifier.padding(
-                    top = 8.dp,
-                    bottom = 16.dp,
-                ),
-            )
+        Surface(
+            color = preferenceGroupColor(),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            CompositionLocalProvider(LocalContext provides themedContext) {
+                AndroidView(
+                    factory = {
+                        val view = SmartspaceViewContainer(it, previewMode = true)
+                        val height = it.resources
+                            .getDimensionPixelSize(R.dimen.enhanced_smartspace_height)
+                        view.layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, height)
+                        view
+                    },
+                    modifier = Modifier.padding(
+                        top = 8.dp,
+                        bottom = 16.dp,
+                    ),
+                )
+            }
         }
         LaunchedEffect(key1 = null) {
             SmartspaceProvider.INSTANCE.get(context).startSetup(context as Activity)
