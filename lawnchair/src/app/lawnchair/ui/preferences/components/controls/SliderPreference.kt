@@ -132,9 +132,7 @@ private fun SliderPreference(
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = label,
@@ -172,7 +170,7 @@ private fun SliderPreference(
                 valueRange = valueRange,
                 steps = getSteps(valueRange, step),
                 modifier = Modifier
-                    .padding(top = 2.dp, bottom = 12.dp)
+                    .padding(top = 2.dp, bottom = 8.dp)
                     .height(24.dp),
             )
         },

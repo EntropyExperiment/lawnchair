@@ -55,7 +55,7 @@ fun PreferenceTemplate(
     enabled: Boolean = true,
     applyPaddings: Boolean = true,
     horizontalPadding: Dp = 16.dp,
-    verticalPadding: Dp = 16.dp,
+    verticalPadding: Dp = 10.dp,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     description: @Composable () -> Unit = {},
     startWidget: (@Composable () -> Unit)? = null,
@@ -75,7 +75,7 @@ fun PreferenceTemplate(
             startWidget?.let {
                 startWidget()
                 if (applyPaddings) {
-                    Spacer(modifier = Modifier.requiredWidth(16.dp))
+                    Spacer(modifier = Modifier.requiredWidth(12.dp))
                 }
             }
             Row(
@@ -103,7 +103,7 @@ fun PreferenceTemplate(
             }
             endWidget?.let {
                 if (applyPaddings) {
-                    Spacer(modifier = Modifier.requiredWidth(16.dp))
+                    Spacer(modifier = Modifier.requiredWidth(12.dp))
                 }
                 endWidget()
             }
