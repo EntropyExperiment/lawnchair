@@ -934,7 +934,14 @@
     <string name="search_pref_result_web_title">Web suggestions</string>
     <string name="search_pref_result_history_title">Search history</string>
     <string name="all_apps_search_result_calculator">Calculator</string>
-    <string name="search_pref_result_textclassifier">Entity extraction</string>
+    <string name="search_pref_result_textclassifier_title">Entity extraction</string>
+    <string name="search_pref_result_textclassifier_description">Suggest actions from your search query on-device</string>
+    <string name="search_pref_result_textclassifier_email">Email</string>
+    <string name="search_pref_result_textclassifier_phone">Phone</string>
+    <string name="search_pref_result_textclassifier_address">Address</string>
+    <string name="search_pref_result_textclassifier_url">URL</string>
+    <string name="search_pref_result_textclassifier_date">Date and time</string>
+    <string name="search_pref_result_textclassifier_flight">Flight number</string>
 
     <string name="search_empty_state_title">Start searching</string>
     <string name="search_empty_state_no_history_subtitle">Find apps, contacts, and more. Your recent searches will appear here.</string>

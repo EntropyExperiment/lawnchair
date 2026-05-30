@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.textclassifier.TextClassification
 import android.view.textclassifier.TextClassificationManager
+import android.view.textclassifier.TextClassifier
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.search.algorithms.engine.SearchProvider
 import app.lawnchair.search.algorithms.engine.SearchResult
@@ -50,6 +51,10 @@ object TextClassifierSearchProvider : SearchProvider {
                 val classification = withTimeoutOrNull(CLASSIFICATION_TIMEOUT_MS.milliseconds) {
                     textClassifier.classifyText(request)
                 }
+                val entityType = classification?.topEntityTypeOrNull()
+                if (entityType != null && !isTypeEnabled(legacyPrefs, entityType)) {
+                    return@withContext emptyList()
+                }
                 if (classification == null) {
                     Log.w(TAG, "Classification timed out after ${CLASSIFICATION_TIMEOUT_MS}ms")
                 }
@@ -62,6 +67,7 @@ object TextClassifierSearchProvider : SearchProvider {
                             SearchResult.Action.TextAction(
                                 title = action.title.toString(),
                                 subtitle = action.contentDescription.toString(),
+                                entityType = entityType,
                                 pendingIntent = action.actionIntent,
                                 icon = if (action.shouldShowIcon()) action.icon else null,
                             ),
@@ -78,5 +84,25 @@ object TextClassifierSearchProvider : SearchProvider {
         }
 
         emit(results)
+    }
+
+    private fun isTypeEnabled(prefs: PreferenceManager, type: String): Boolean {
+        return when (type) {
+            TextClassifier.TYPE_EMAIL -> prefs.searchResultTextClassifierEmail.get()
+            TextClassifier.TYPE_PHONE -> prefs.searchResultTextClassifierPhone.get()
+            TextClassifier.TYPE_ADDRESS -> prefs.searchResultTextClassifierAddress.get()
+            TextClassifier.TYPE_URL -> prefs.searchResultTextClassifierUrl.get()
+            TextClassifier.TYPE_DATE, TextClassifier.TYPE_DATE_TIME -> prefs.searchResultTextClassifierDate.get()
+            TextClassifier.TYPE_FLIGHT_NUMBER -> prefs.searchResultTextClassifierFlight.get()
+            else -> true // There's no way you can be type OTP or others, right?
+        }
+    }
+
+    private fun TextClassification.topEntityTypeOrNull(): String? {
+        if (entityCount <= 0) {
+            return null
+        }
+
+        return getEntity(0).takeIf { it.isNotBlank() }
     }
 }

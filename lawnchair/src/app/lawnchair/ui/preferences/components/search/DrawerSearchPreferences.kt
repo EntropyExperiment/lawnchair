@@ -239,9 +239,13 @@ private fun PreferenceGroupScope.LocalSearchSettings(
     Item(
         Utilities.ATLEAST_P,
     ) {
-        SwitchPreference(
+        SearchProviderPreferenceItem(
             adapter = prefs.searchResultTextClassifier.getAdapter(),
-            label = stringResource(R.string.search_pref_result_textclassifier),
+            label = stringResource(R.string.search_pref_result_textclassifier_title),
+            description = stringResource(R.string.search_pref_result_textclassifier_description),
+            onClick = {
+                navController.navigate(SearchProviderPreference(SearchProviderId.TEXT_CLASSIFIER))
+            },
         )
     }
 }

@@ -41,6 +41,7 @@ sealed interface SearchResult {
         data class TextAction(
             val title: String,
             val subtitle: String,
+            val entityType: String? = null,
             val pendingIntent: PendingIntent? = null,
             val icon: Icon? = null,
         ) : Action
