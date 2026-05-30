@@ -52,7 +52,7 @@ object TextClassifierSearchProvider : SearchProvider {
                     textClassifier.classifyText(request)
                 }
                 val entityType = classification?.topEntityTypeOrNull()
-                if (entityType != null && !isTypeEnabled(legacyPrefs, entityType)) {
+                if ((entityType != null) && !isTypeEnabled(legacyPrefs, entityType)) {
                     return@withContext emptyList()
                 }
                 if (classification == null) {
