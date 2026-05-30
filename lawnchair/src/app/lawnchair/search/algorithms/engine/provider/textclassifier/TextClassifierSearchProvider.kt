@@ -89,11 +89,17 @@ object TextClassifierSearchProvider : SearchProvider {
     private fun isTypeEnabled(prefs: PreferenceManager, type: String): Boolean {
         return when (type) {
             TextClassifier.TYPE_EMAIL -> prefs.searchResultTextClassifierEmail.get()
+
             TextClassifier.TYPE_PHONE -> prefs.searchResultTextClassifierPhone.get()
+
             TextClassifier.TYPE_ADDRESS -> prefs.searchResultTextClassifierAddress.get()
+
             TextClassifier.TYPE_URL -> prefs.searchResultTextClassifierUrl.get()
+
             TextClassifier.TYPE_DATE, TextClassifier.TYPE_DATE_TIME -> prefs.searchResultTextClassifierDate.get()
+
             TextClassifier.TYPE_FLIGHT_NUMBER -> prefs.searchResultTextClassifierFlight.get()
+
             // There's no way you can be type OTP or others, right? Normally you wouldn't see those
             // types of entity ranked in the predictions.
             else -> true
