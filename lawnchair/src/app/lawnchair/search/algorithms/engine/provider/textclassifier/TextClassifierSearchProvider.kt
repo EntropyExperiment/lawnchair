@@ -94,7 +94,9 @@ object TextClassifierSearchProvider : SearchProvider {
             TextClassifier.TYPE_URL -> prefs.searchResultTextClassifierUrl.get()
             TextClassifier.TYPE_DATE, TextClassifier.TYPE_DATE_TIME -> prefs.searchResultTextClassifierDate.get()
             TextClassifier.TYPE_FLIGHT_NUMBER -> prefs.searchResultTextClassifierFlight.get()
-            else -> true // There's no way you can be type OTP or others, right?
+            // There's no way you can be type OTP or others, right? Normally you wouldn't see those
+            // types of entity ranked in the predictions.
+            else -> true
         }
     }
 
