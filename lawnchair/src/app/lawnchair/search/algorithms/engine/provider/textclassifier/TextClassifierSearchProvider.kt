@@ -90,17 +90,25 @@ object TextClassifierSearchProvider : SearchProvider {
         return when (type) {
             // SDK 28
             TextClassifier.TYPE_EMAIL -> prefs.searchResultTextClassifierEmail.get()
+
             // SDK 26
             TextClassifier.TYPE_PHONE -> prefs.searchResultTextClassifierPhone.get()
+
             TextClassifier.TYPE_ADDRESS -> prefs.searchResultTextClassifierAddress.get()
+
             TextClassifier.TYPE_URL -> prefs.searchResultTextClassifierUrl.get()
+
             // SDK 28
             TextClassifier.TYPE_DATE, TextClassifier.TYPE_DATE_TIME -> prefs.searchResultTextClassifierDate.get()
+
             TextClassifier.TYPE_FLIGHT_NUMBER -> prefs.searchResultTextClassifierFlight.get()
+
             // SDK 36
             TextClassifier.TYPE_OTP -> prefs.searchResultTextClassifierOtp.get()
+
             // SDK 28
             TextClassifier.TYPE_OTHER -> prefs.searchResultTextClassifierOthers.get()
+
             // Note: TYPE_SMS_WEB_OTP and TYPE_SMS_RETRIEVER_OTP are not included because Lawnchair
             // prioritised frameworks jar which at the time of writing stuck at 36.0 meaning we
             // can't use them because they're from 37 and 36.1...

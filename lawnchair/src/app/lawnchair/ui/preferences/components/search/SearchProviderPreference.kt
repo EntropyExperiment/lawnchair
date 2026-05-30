@@ -219,7 +219,7 @@ fun TextClassifierSearchProviderSettings(
     ) {
         PreferenceGroup {
             Item(
-                visible = Utilities.ATLEAST_O
+                visible = Utilities.ATLEAST_O,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierEmail.getAdapter(),
@@ -227,7 +227,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_P
+                visible = Utilities.ATLEAST_P,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierPhone.getAdapter(),
@@ -235,7 +235,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_O
+                visible = Utilities.ATLEAST_O,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierAddress.getAdapter(),
@@ -243,7 +243,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_O
+                visible = Utilities.ATLEAST_O,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierUrl.getAdapter(),
@@ -251,7 +251,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_P
+                visible = Utilities.ATLEAST_P,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierDate.getAdapter(),
@@ -259,7 +259,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_P
+                visible = Utilities.ATLEAST_P,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierFlight.getAdapter(),
@@ -267,7 +267,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_CINNAMON_BUN
+                visible = Utilities.ATLEAST_CINNAMON_BUN,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierOtp.getAdapter(),
@@ -275,7 +275,7 @@ fun TextClassifierSearchProviderSettings(
                 )
             }
             Item(
-                visible = Utilities.ATLEAST_O
+                visible = Utilities.ATLEAST_O,
             ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierOthers.getAdapter(),
