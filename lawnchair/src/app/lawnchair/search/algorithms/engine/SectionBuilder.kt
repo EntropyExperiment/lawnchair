@@ -110,7 +110,7 @@ data object WebSuggestionsSectionBuilder : SectionBuilder {
 
         val targets = mutableListOf<SearchTargetCompat>()
         val suggestionsHeader =
-            factory.createHeaderTarget(context.getString(R.string.all_apps_search_result_suggestions))
+            factory.createHeaderTarget(context.getString(R.string.all_apps_search_result_web_suggestions))
         targets.add(suggestionsHeader)
         targets.addAll(
             webSuggestions.map {

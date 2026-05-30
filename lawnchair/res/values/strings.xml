@@ -869,7 +869,7 @@
     <string name="all_apps_search_bar_hint">Search apps</string>
     <string name="all_apps_no_search_results">No apps found matching \"<xliff:g example="Android" id="query">%1$s</xliff:g>\"</string>
 
-    <string name="all_apps_search_result_action_suggestions">Suggested action</string>
+    <string name="all_apps_search_result_action_suggestions">Suggested</string>
     <string name="all_apps_search_result_web_suggestions">From the web</string>
     <string name="all_apps_search_result_contacts_from_device">Contacts from device</string>
     <string name="all_apps_search_result_files">Files from device</string>
