@@ -88,21 +88,23 @@ object TextClassifierSearchProvider : SearchProvider {
 
     private fun isTypeEnabled(prefs: PreferenceManager, type: String): Boolean {
         return when (type) {
+            // SDK 28
             TextClassifier.TYPE_EMAIL -> prefs.searchResultTextClassifierEmail.get()
-
+            // SDK 26
             TextClassifier.TYPE_PHONE -> prefs.searchResultTextClassifierPhone.get()
-
             TextClassifier.TYPE_ADDRESS -> prefs.searchResultTextClassifierAddress.get()
-
             TextClassifier.TYPE_URL -> prefs.searchResultTextClassifierUrl.get()
-
+            // SDK 28
             TextClassifier.TYPE_DATE, TextClassifier.TYPE_DATE_TIME -> prefs.searchResultTextClassifierDate.get()
-
             TextClassifier.TYPE_FLIGHT_NUMBER -> prefs.searchResultTextClassifierFlight.get()
-
-            // There's no way you can be type OTP or others, right? Normally you wouldn't see those
-            // types of entity ranked in the predictions.
-            else -> true
+            // SDK 36
+            TextClassifier.TYPE_OTP -> prefs.searchResultTextClassifierOtp.get()
+            // SDK 28
+            TextClassifier.TYPE_OTHER -> prefs.searchResultTextClassifierOthers.get()
+            // Note: TYPE_SMS_WEB_OTP and TYPE_SMS_RETRIEVER_OTP are not included because Lawnchair
+            // prioritised frameworks jar which at the time of writing stuck at 36.0 meaning we
+            // can't use them because they're from 37 and 36.1...
+            else -> true // TYPE_UNKNOWN
         }
     }
 

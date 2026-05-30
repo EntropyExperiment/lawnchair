@@ -45,6 +45,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import app.lawnchair.ui.theme.dividerColor
 import app.lawnchair.util.openAppPermissionSettings
 import com.android.launcher3.R
+import com.android.launcher3.Utilities
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -217,40 +218,68 @@ fun TextClassifierSearchProviderSettings(
         modifier = modifier,
     ) {
         PreferenceGroup {
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_O
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierEmail.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_email),
                 )
             }
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_P
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierPhone.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_phone),
                 )
             }
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_O
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierAddress.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_address),
                 )
             }
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_O
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierUrl.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_url),
                 )
             }
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_P
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierDate.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_date),
                 )
             }
-            Item {
+            Item(
+                visible = Utilities.ATLEAST_P
+            ) {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierFlight.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_flight),
+                )
+            }
+            Item(
+                visible = Utilities.ATLEAST_CINNAMON_BUN
+            ) {
+                SwitchPreference(
+                    adapter = prefs.searchResultTextClassifierOtp.getAdapter(),
+                    label = stringResource(id = R.string.search_pref_result_textclassifier_otp),
+                )
+            }
+            Item(
+                visible = Utilities.ATLEAST_O
+            ) {
+                SwitchPreference(
+                    adapter = prefs.searchResultTextClassifierOthers.getAdapter(),
+                    label = stringResource(id = R.string.search_pref_result_textclassifier_others),
                 )
             }
         }
