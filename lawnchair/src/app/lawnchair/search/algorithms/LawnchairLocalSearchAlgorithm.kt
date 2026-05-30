@@ -18,6 +18,7 @@ import app.lawnchair.search.algorithms.engine.SearchResult
 import app.lawnchair.search.algorithms.engine.SearchSettingsSectionBuilder
 import app.lawnchair.search.algorithms.engine.SectionBuilder
 import app.lawnchair.search.algorithms.engine.SettingsSectionBuilder
+import app.lawnchair.search.algorithms.engine.TextClassifierSectionBuilder
 import app.lawnchair.search.algorithms.engine.WebSuggestionsSectionBuilder
 import app.lawnchair.search.algorithms.engine.provider.CalculatorSearchProvider
 import app.lawnchair.search.algorithms.engine.provider.ContactsSearchProvider
@@ -170,6 +171,7 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
     private val sectionBuilders: List<SectionBuilder> = listOf(
         AppsAndShortcutsSectionBuilder,
         CalculationSectionBuilder,
+        TextClassifierSectionBuilder,
         WebSuggestionsSectionBuilder,
         ContactsSectionBuilder,
         FilesSectionBuilder,

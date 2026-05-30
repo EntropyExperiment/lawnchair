@@ -161,17 +161,8 @@ data object ActionsSectionBuilder : SectionBuilder {
     ): List<SearchTargetCompat> {
         val marketSearch = results.filterIsInstance<SearchResult.Action.MarketSearch>()
         val webSearch = results.filterIsInstance<SearchResult.Action.WebSearch>()
-        val textActions = results.filterIsInstance<SearchResult.Action.TextAction>()
 
         val targets = mutableListOf<SearchTargetCompat>()
-
-        if (textActions.isNotEmpty()) {
-            targets.addAll(
-                textActions.map { action ->
-                    factory.createTextActionTarget(action)
-                },
-            )
-        }
 
         if (marketSearch.isNotEmpty()) {
             factory.createMarketSearchTarget(marketSearch.first().query)?.let {
@@ -189,6 +180,29 @@ data object ActionsSectionBuilder : SectionBuilder {
                 targets.add(it)
             }
         }
+        targets.add(factory.createHeaderTarget(SPACE))
+        return targets
+    }
+}
+
+data object TextClassifierSectionBuilder : SectionBuilder {
+    override fun build(
+        context: Context,
+        factory: SearchTargetFactory,
+        results: List<SearchResult>,
+    ): List<SearchTargetCompat> {
+        val textActions = results.filterIsInstance<SearchResult.Action.TextAction>()
+        if (textActions.isEmpty()) {
+            return emptyList()
+        }
+
+        val targets = mutableListOf<SearchTargetCompat>()
+        targets.add(factory.createHeaderTarget(context.getString(R.string.all_apps_search_result_action_suggestions)))
+        targets.addAll(
+            textActions.map { action ->
+                factory.createTextActionTarget(action)
+            },
+        )
         targets.add(factory.createHeaderTarget(SPACE))
         return targets
     }
