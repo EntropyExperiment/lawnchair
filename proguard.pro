@@ -3,6 +3,7 @@
 # Optimization options.
 -allowaccessmodification
 -dontusemixedcaseclassnames
+-allowaccessmodification
 -keepattributes InnerClasses, *Annotation*, Signature, SourceFile, LineNumberTable
 
 
@@ -28,6 +29,9 @@
 -dontwarn androidx.renderscript.ScriptC
 -dontwarn androidx.renderscript.ScriptIntrinsicBlur
 -dontwarn androidx.renderscript.Type
+
+# Remove some Kotlin overhead
+-processkotlinnullchecks remove
 
 # Common rules.
 -keep,allowshrinking,allowoptimization class android.window.** { *; }
