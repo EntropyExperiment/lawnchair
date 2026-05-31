@@ -213,6 +213,10 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
                 input.setHint("")
                 hint.text = ""
             }
+
+            if (::appsView.isInitialized) {
+                appsView.mSearchRecyclerView.invalidate()
+            }
         }
 
         input.addTextChangedListener(
