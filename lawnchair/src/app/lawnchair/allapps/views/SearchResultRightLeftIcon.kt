@@ -83,7 +83,7 @@ class SearchResultRightLeftIcon(context: Context, attrs: AttributeSet?) :
     }
 
     override val isQuickLaunch: Boolean
-        get() = avatar.isQuickLaunch || hasFlag(flags, SearchResultView.FLAG_QUICK_LAUNCH)
+        get() = hasFlag(flags, SearchResultView.FLAG_QUICK_LAUNCH)
 
     override val titleText: CharSequence? get() = title.text
 
