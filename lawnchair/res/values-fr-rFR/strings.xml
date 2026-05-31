@@ -116,6 +116,7 @@
     <string name="apps_in_folder_description">Les applis assignées à un dossier sont exclues des listes d\'applis</string>
     <string name="folders_filter_duplicates">Afficher seulement les applis uniques</string>
     <string name="my_folder_label">Mon dossier</string>
+    <string name="sort_active_items_action">Sort active items</string>
     <!-- A11y description -->
     <string name="accessibility_service_description">Pour effectuer certaines actions (telles que verrouiller votre téléphone) en un seul geste, Lawnchair a besoin des droits d\'accessibilité.\n\nBien que le privilège soit accordé de force à tous les services d\'accessibilité, Lawnchair n\'observe pas les actions de l\'utilisateur et ignore tous les événements envoyés par le système.\n\nAfin de verrouiller votre téléphone ou ouvrir l\'écran Récents, Lawnchair utilise le service d\'accessibilité performGlobalAction.</string>
     <string name="x_with_y_count">%1$s (%2$d)</string>
@@ -176,7 +177,7 @@
     <string name="show_deck_layout_description">Affichez une option de disposition permettant de masquer le tiroir des applis et d\'ajouter automatiquement les nouvelles applis à l\'écran d\'accueil</string>
     <string name="material_expressive_label">Material 3 Expressive</string>
     <string name="material_expressive_description">Activez les modifications Material 3 Expressive dans l\'espace de travail</string>
-    <string name="folder_shape_label">Folder shape</string>
+    <string name="folder_shape_label">Forme de dossier</string>
     <string name="folder_label">Dossier</string>
     <string name="app_icon_shape_label">Application</string>
     <string name="gesturenavcontract_label">Utiliser l\'API GestureNavContract</string>
@@ -268,9 +269,9 @@
     <string name="custom_icon_shape">Forme d\'icône personnalisée</string>
     <string name="custom_icon_shape_create">Créer une forme d\'icône personnalisée</string>
     <string name="custom_icon_shape_edit">Modifier la forme d\'icône personnalisée</string>
-    <string name="custom_folder_shape">Custom folder shape</string>
-    <string name="custom_folder_shape_create">Create custom folder shape</string>
-    <string name="custom_folder_shape_edit">Edit custom folder shape</string>
+    <string name="custom_folder_shape">Forme de dossier personnalisée</string>
+    <string name="custom_folder_shape_create">Créer une forme de dossier personnalisée</string>
+    <string name="custom_folder_shape_edit">Modifier la forme de dossier personnalisée</string>
     <string name="custom_icon_shape_corner">Type d\'angle</string>
     <string name="custom_icon_shape_corner_round">Arrondi</string>
     <string name="custom_icon_shape_corner_squircle">Lisse</string>
@@ -381,8 +382,12 @@
     <!-- Available targets -->
     <string name="smartspace_weather">Météo</string>
     <string name="smartspace_battery_status">État de la batterie</string>
+    <string name="smartspace_torch">Flashlight status</string>
     <string name="smartspace_now_playing">En écoute</string>
     <string name="smartspace_onboarding">Configuration</string>
+    <!-- Torch strings -->
+    <string name="torch_status_on">Flashlight on</string>
+    <string name="torch_action_off">Tap to turn off</string>
     <!-- Onboarding strings -->
     <string name="onboarding_open_settings_title">Configurez votre Lawnchair</string>
     <string name="onboarding_open_settings_subtitle">Appui long sur l\'écran d\'accueil pour ouvrir les paramètres</string>
@@ -489,11 +494,11 @@
     <string name="recents_screen_a11y_hint">ouvrir l\'écran Récents</string>
     <string name="generic_a11y_hint">Pour %1$s, activez le service d\'accessibilité Lawnchair. Appuyez sur « Ouvrir les paramètres », sélectionnez « Lawnchair » puis activez « Utiliser Lawnchair. »</string>
     <string name="generic_a11y_disclaimer">Lawnchair utilise la méthode d\'accessibilité `performGlobalAction`. Il s\'agit d\'une autorisation sensible qui permet de suivre le comportement des autres applis, mais Lawnchair n\'est pas configuré de manière à utiliser ces fonctionnalités et ne reçoit donc aucun événement.</string>
-    <string name="sleep_mode_label">Sleep mode</string>
-    <string name="sleep_mode_auto">Automatic</string>
+    <string name="sleep_mode_label">Mode Veille</string>
+    <string name="sleep_mode_auto">Automatique</string>
     <string name="sleep_mode_root">Root</string>
-    <string name="sleep_mode_accessibility">Accessibility service</string>
-    <string name="sleep_mode_device_admin">Device admin</string>
+    <string name="sleep_mode_accessibility">Service d\'accessibilité</string>
+    <string name="sleep_mode_device_admin">Administration de l\'appareil</string>
     <!--
 
     Bug reporting
@@ -542,6 +547,14 @@
     <string name="home_screen_lock_description">Empêcher les changements d\'agencement de l\'écran d\'accueil</string>
     <string name="set_default_home_page">Définir comme page par défaut</string>
     <string name="default_home_page_set">Page par défaut mise à jour</string>
+    <string name="move_page_left">Move page left</string>
+    <string name="move_page_right">Move page right</string>
+    <string name="page_order_updated">Page order updated</string>
+    <string name="edit_mode_page_strip_default">Par défaut</string>
+    <string name="edit_mode_page_strip_page">Page %1$d</string>
+    <string name="edit_mode_page_strip_set_home">Set as home page</string>
+    <string name="edit_mode_page_strip_home_selected">Default home page</string>
+    <string name="edit_mode_page_strip_tip">Drag pages to reorder. Tap the home icon to set your default page.</string>
     <string name="popup_menu">Menu pop-up</string>
     <string name="popup_menu_items">Éléments du menu pop-up</string>
     <string name="edit_menu_items">Modifier les éléments du menu pop-up</string>
