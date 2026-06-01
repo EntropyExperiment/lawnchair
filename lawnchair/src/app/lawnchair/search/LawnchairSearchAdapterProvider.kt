@@ -41,7 +41,12 @@ class LawnchairSearchAdapterProvider(
     private var quickLaunchItem: SearchResultView? = null
         set(value) {
             field = value
-            appsView.searchUiManager.setFocusedResultTitle(field?.titleText, field?.titleText, true)
+            appsView.searchUiManager.setFocusedResultTitle(
+                field?.titleText,
+                field?.titleText,
+                field != null,
+            )
+            appsView.mSearchRecyclerView.invalidate()
         }
 
     override fun isViewSupported(viewType: Int): Boolean = layoutIdMap.contains(viewType)
@@ -90,6 +95,11 @@ class LawnchairSearchAdapterProvider(
     override fun launchHighlightedItem(): Boolean = quickLaunchItem?.launch() ?: false
 
     override fun getHighlightedItem() = quickLaunchItem as View?
+
+    override fun clearHighlightedItem() {
+        super.clearHighlightedItem()
+        quickLaunchItem = null
+    }
 
     override fun getDecorator() = decorator
 
