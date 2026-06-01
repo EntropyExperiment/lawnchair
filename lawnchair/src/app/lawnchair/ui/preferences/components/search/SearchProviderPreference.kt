@@ -266,9 +266,7 @@ fun TextClassifierSearchProviderSettings(
                     label = stringResource(id = R.string.search_pref_result_textclassifier_flight),
                 )
             }
-            Item(
-                visible = Utilities.ATLEAST_CINNAMON_BUN,
-            ) {
+            Item {
                 SwitchPreference(
                     adapter = prefs.searchResultTextClassifierOtp.getAdapter(),
                     label = stringResource(id = R.string.search_pref_result_textclassifier_otp),
