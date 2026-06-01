@@ -69,7 +69,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
-import android.view.ViewParent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
@@ -735,14 +734,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
 
         int action = event.getActionMasked();
         if (action == MotionEvent.ACTION_DOWN) {
-            mShouldHandleIconSwipeTouch = isIconSwipeTouchEnabled();
-            if (mShouldHandleIconSwipeTouch && mGestureListener != null
-                    && mGestureListener.hasHorizontalGestureConfigured()) {
-                ViewParent parent = getParent();
-                if (parent != null) {
-                    parent.requestDisallowInterceptTouchEvent(true);
-                }
-            }
+            mShouldHandleIconSwipeTouch = hasConfiguredIconSwipeGesture();
         }
 
         if (!mShouldHandleIconSwipeTouch || mGestureListener == null) {
@@ -773,10 +765,18 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     }
 
     /** Lawnchair: Check if icon swipe feature is enabled, and has a gesture configured for it */
-    private boolean isIconSwipeTouchEnabled() {
+    public boolean hasConfiguredIconSwipeGesture() {
         return mGestureListener != null
                 && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures())
                 && mGestureListener.hasAnyGestureConfigured();
+    }
+
+    /** Lawnchair: Check if icon swipe feature is enabled, 
+     * and has a horizontal gesture configured for it */
+    public boolean hasConfiguredHorizontalIconSwipeGesture() {
+        return mGestureListener != null
+                && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures())
+                && mGestureListener.hasHorizontalGestureConfigured();
     }
 
     /** Lawnchair: Get supported swipe target which are within workspace or within folder */
