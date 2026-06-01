@@ -75,7 +75,7 @@ class SearchItemBackground(
         if (child is SearchResultIcon) {
             val density = child.resources.displayMetrics.density
             val iconSize = child.iconSize.toFloat()
-            val desiredWidth = iconSize + 24.dpToPx(resources) * density
+            val desiredWidth = iconSize + 48f * density
             val cellWidth = child.width.toFloat()
             if (desiredWidth < cellWidth) {
                 val inset = (cellWidth - desiredWidth) / 2
