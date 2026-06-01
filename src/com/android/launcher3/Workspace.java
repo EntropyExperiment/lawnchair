@@ -1185,52 +1185,12 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // pE-TODO(Reimpl): Check Icon Swipe Gesture
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            View touchedView = findViewAtPosition(ev.getX(), ev.getY());
-            Boolean iconSwipeGestures = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getIconSwipeGestures());
-
-            if (iconSwipeGestures && touchedView instanceof ShortcutAndWidgetContainer container) {
-                container.onTouchEvent(ev);
-                return false;
-            }
-        }
-        
         if (isTrackpadMultiFingerSwipe(ev)) {
             return false;
         }
         return super.onInterceptTouchEvent(ev);
     }
 
-    private View findViewAtPosition(float x, float y) {
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof CellLayout) {
-                CellLayout cellLayout = (CellLayout) child;
-                View foundView = findViewInCellLayout(cellLayout, x - child.getLeft(), y - child.getTop());
-                if (foundView != null) {
-                    return foundView;
-                }
-            }
-        }
-        return null;
-    }
-
-    private View findViewInCellLayout(CellLayout cellLayout, float x, float y) {
-        final int count = cellLayout.getChildCount();
-        for (int i = count - 1; i >= 0; i--) {
-            View child = cellLayout.getChildAt(i);
-            if (child.getVisibility() == VISIBLE && isPointInsideView(x, y, child)) {
-                return child;
-            }
-        }
-        return null;
-    }
-
-    private boolean isPointInsideView(float x, float y, View view) {
-        return x >= view.getLeft() && x <= view.getRight() &&
-                y >= view.getTop() && y <= view.getBottom();
-    }
 
     /**
      * Needed here because launcher has a fullscreen exclusion rect and doesn't pilfer the pointers.

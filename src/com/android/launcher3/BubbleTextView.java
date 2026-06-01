@@ -69,6 +69,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
+import android.view.ViewParent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
@@ -254,6 +255,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
 
     private final PreferenceManager2 pref2;
     private IconGestureListener mGestureListener;
+    private boolean mShouldHandleIconSwipeTouch; // Lawnchair: Icon swipe gesture feature
 
     public BubbleTextView(Context context) {
         this(context, null, 0);
@@ -379,6 +381,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         setTranslationY(0);
         setMaxLines(1);
         setVisibility(VISIBLE);
+
+        // Lawnchair: Icon swipe gesture feature
+        mGestureListener = null;
+        mShouldHandleIconSwipeTouch = false;
     }
 
     private void cancelDotScaleAnim() {
@@ -498,6 +504,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
 
     protected void setItemInfo(ItemInfoWithIcon itemInfo) {
         setTag(itemInfo);
+        // Lawnchair: Icon swipe gesture feature
+        mGestureListener = shouldSupportIconSwipeGestures()
+                ? new IconGestureListener(getContext(), pref2, itemInfo.getComponentKey())
+                : null;
     }
 
     @VisibleForTesting
@@ -687,6 +697,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
                 && shouldIgnoreTouchDown(event.getX(), event.getY())) {
             return false;
         }
+        // Lawnchair: Icon swipe gesture feature
+        if (handleIconSwipeTouchEvent(event)) {
+            return true;
+        }
         if (isLongClickable()) {
             super.onTouchEvent(event);
             mLongPressHelper.onTouchEvent(event);
@@ -709,6 +723,65 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
                 || x < getPaddingLeft()
                 || y > getHeight() - getPaddingBottom()
                 || x > getWidth() - getPaddingRight();
+    }
+
+    /** Lawnchair: Handle icon swipe gesture feature, self-explanatory. 
+     * Only do horizontal gesture at the moment
+     * @param event The type of MotionEvent to handle */
+    private boolean handleIconSwipeTouchEvent(MotionEvent event) {
+        if (!shouldSupportIconSwipeGestures()) {
+            return false;
+        }
+
+        int action = event.getActionMasked();
+        if (action == MotionEvent.ACTION_DOWN) {
+            mShouldHandleIconSwipeTouch = isIconSwipeTouchEnabled();
+            if (mShouldHandleIconSwipeTouch && mGestureListener != null
+                    && mGestureListener.hasHorizontalGestureConfigured()) {
+                ViewParent parent = getParent();
+                if (parent != null) {
+                    parent.requestDisallowInterceptTouchEvent(true);
+                }
+            }
+        }
+
+        if (!mShouldHandleIconSwipeTouch || mGestureListener == null) {
+            if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                mShouldHandleIconSwipeTouch = false;
+            }
+            return false;
+        }
+
+        boolean handled = mGestureListener.onTouchEvent(event);
+        if (handled) {
+            cancelLongPress();
+            MotionEvent cancelEvent = MotionEvent.obtain(event);
+            cancelEvent.setAction(MotionEvent.ACTION_CANCEL);
+            super.onTouchEvent(cancelEvent);
+            mLongPressHelper.onTouchEvent(cancelEvent);
+            cancelEvent.recycle();
+            setPressed(false);
+            refreshDrawableState();
+            mShouldHandleIconSwipeTouch = false;
+            return true;
+        }
+
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+            mShouldHandleIconSwipeTouch = false;
+        }
+        return false;
+    }
+
+    /** Lawnchair: Check if icon swipe feature is enabled, and has a gesture configured for it */
+    private boolean isIconSwipeTouchEnabled() {
+        return mGestureListener != null
+                && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures())
+                && mGestureListener.hasAnyGestureConfigured();
+    }
+
+    /** Lawnchair: Get supported swipe target which are within workspace or within folder */
+    private boolean shouldSupportIconSwipeGestures() {
+        return mDisplay == DISPLAY_WORKSPACE || mDisplay == DISPLAY_FOLDER;
     }
 
     void setStayPressed(boolean stayPressed) {
