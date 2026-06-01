@@ -764,10 +764,16 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         return false;
     }
 
+    /** Lawnchair: Check eligibility for icon swipe gesture to be greenlit */
+    private boolean isIconSwipeGestureEnabledForCurrentState() {
+        return !(mActivity instanceof Launcher launcher && launcher.isInState(LauncherState.EDIT_MODE))
+            && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures());
+    }
+
     /** Lawnchair: Check if icon swipe feature is enabled, and has a gesture configured for it */
     public boolean hasConfiguredIconSwipeGesture() {
         return mGestureListener != null
-                && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures())
+                && isIconSwipeGestureEnabledForCurrentState()
                 && mGestureListener.hasAnyGestureConfigured();
     }
 
@@ -775,7 +781,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
      * and has a horizontal gesture configured for it */
     public boolean hasConfiguredHorizontalIconSwipeGesture() {
         return mGestureListener != null
-                && PreferenceExtensionsKt.firstBlocking(pref2.getIconSwipeGestures())
+                && isIconSwipeGestureEnabledForCurrentState()
                 && mGestureListener.hasHorizontalGestureConfigured();
     }
 
