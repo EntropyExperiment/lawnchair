@@ -62,7 +62,7 @@
     <dimen name="search_result_radius">4dp</dimen>
     <dimen name="search_result_row_height">92dp</dimen>
     <dimen name="search_result_row_medium_height">76dp</dimen>
-    <dimen name="search_result_small_row_height">60dp</dimen>
+    <dimen name="search_result_small_row_height">64dp</dimen>
     <dimen name="search_result_files_row_height">100dp</dimen>
     <dimen name="search_result_text_height">52dp</dimen>
     <dimen name="search_result_subtitle_padding_start">4dp</dimen>
