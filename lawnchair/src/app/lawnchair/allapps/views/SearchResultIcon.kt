@@ -64,23 +64,25 @@ class SearchResultIcon(context: Context, attrs: AttributeSet?) :
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
-        if (width > 0) {
-            if (defaultPaddingLeft == -1) {
-                defaultPaddingLeft = paddingLeft
-                defaultPaddingRight = paddingRight
+        if (defaultPaddingLeft == -1) {
+            defaultPaddingLeft = paddingLeft
+            defaultPaddingRight = paddingRight
+        }
+        val isLayoutHorizontal = compoundDrawablesRelative[0] != null || compoundDrawablesRelative[2] != null
+        if (isLayoutHorizontal) {
+            if (paddingLeft != defaultPaddingLeft || paddingRight != defaultPaddingRight) {
+                setPadding(defaultPaddingLeft, paddingTop, defaultPaddingRight, paddingBottom)
             }
-            val isLayoutHorizontal = compoundDrawablesRelative[0] != null || compoundDrawablesRelative[2] != null
-            if (!isLayoutHorizontal) {
-                val desiredWidth = iconSize + 48.dpToPx(resources)
-                if (desiredWidth < width) {
-                    val inset = ((width - desiredWidth) / 2).toInt()
-                    if (paddingLeft != inset || paddingRight != inset) {
-                        setPadding(inset, paddingTop, inset, paddingBottom)
-                    }
-                } else {
-                    if (paddingLeft != defaultPaddingLeft || paddingRight != defaultPaddingRight) {
-                        setPadding(defaultPaddingLeft, paddingTop, defaultPaddingRight, paddingBottom)
-                    }
+        } else if (width > 0) {
+            val desiredWidth = iconSize + 48.dpToPx(resources)
+            if (desiredWidth < width) {
+                val inset = ((width - desiredWidth) / 2).toInt()
+                if (paddingLeft != inset || paddingRight != inset) {
+                    setPadding(inset, paddingTop, inset, paddingBottom)
+                }
+            } else {
+                if (paddingLeft != defaultPaddingLeft || paddingRight != defaultPaddingRight) {
+                    setPadding(defaultPaddingLeft, paddingTop, defaultPaddingRight, paddingBottom)
                 }
             }
         }
