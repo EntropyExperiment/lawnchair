@@ -223,13 +223,6 @@ fun HomeScreenPreferences(
         val homeScreenLabelsAdapter = prefs2.showIconLabelsOnHomeScreen.getAdapter()
         PreferenceGroup(heading = stringResource(id = R.string.icons)) {
             Item {
-                SwitchPreference(
-                    adapter = prefs2.iconSwipeGestures.getAdapter(),
-                    label = stringResource(R.string.icon_swipe_gestures),
-                    description = stringResource(R.string.icon_swipe_gestures_description),
-                )
-            }
-            Item {
                 SliderPreference(
                     label = stringResource(id = R.string.icon_sizes),
                     adapter = prefs2.homeIconSizeFactor.getAdapter(),
