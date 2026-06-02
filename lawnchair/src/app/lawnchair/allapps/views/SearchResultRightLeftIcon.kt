@@ -77,8 +77,8 @@ class SearchResultRightLeftIcon(context: Context, attrs: AttributeSet?) :
             LayoutParams.MATCH_PARENT,
             heightRes,
         )
-        layoutParams.leftMargin = grid.allAppsPadding.left
-        layoutParams.rightMargin = grid.allAppsPadding.right
+        layoutParams.leftMargin = 0
+        layoutParams.rightMargin = 0
         this.layoutParams = layoutParams
     }
 
