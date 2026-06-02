@@ -73,16 +73,15 @@ class SearchItemBackground(
         var bottom = child.bottom.toFloat() - searchDecorationPadding
 
         if (child is SearchResultIcon) {
-            val density = child.resources.displayMetrics.density
             val iconSize = child.iconSize.toFloat()
-            val desiredWidth = iconSize + 48f * density
+            val desiredWidth = iconSize + 48.dpToPx(resources)
             val cellWidth = child.width.toFloat()
             if (desiredWidth < cellWidth) {
                 val inset = (cellWidth - desiredWidth) / 2
                 left += inset
                 right -= inset
             }
-            val insetVertical = 6f * density
+            val insetVertical = 6.dpToPx(resources)
             top += insetVertical
             bottom -= insetVertical
         }
