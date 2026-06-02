@@ -81,9 +81,11 @@ class SearchItemBackground(
                 left += inset
                 right -= inset
             }
-            val insetVertical = 6.dpToPx(resources)
-            top += insetVertical
-            bottom -= insetVertical
+            val isTwoLine = child.lineCount > 1
+            val insetTop = 6.dpToPx(resources)
+            val insetBottom = if (isTwoLine) 6.dpToPx(resources) else 0.dpToPx(resources)
+            top += insetTop
+            bottom -= insetBottom
         }
 
         tmpRect.set(left, top, right, bottom)
