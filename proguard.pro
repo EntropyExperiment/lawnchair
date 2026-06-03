@@ -24,6 +24,5 @@
 -keep,allowshrinking,allowoptimization class app.lawnchair.LawnchairApp { *; }
 -keep,allowshrinking,allowoptimization class app.lawnchair.LawnchairLauncher { *; }
 -keep,allowshrinking,allowoptimization class app.lawnchair.compatlib.** { *; }
--keep,allowshrinking,allowoptimization class android.view.** { *; }
 
 -keep,allowshrinking,allowoptimization class com.google.protobuf.Timestamp { *; }
