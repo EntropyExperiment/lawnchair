@@ -6,30 +6,6 @@
 -allowaccessmodification
 -keepattributes InnerClasses, *Annotation*, Signature, SourceFile, LineNumberTable
 
-
-# This is generated automatically by the Android Gradle plugin.
--dontwarn android.appwidget.AppWidgetHost$AppWidgetHostListener
--dontwarn android.util.StatsEvent$Builder
--dontwarn android.util.StatsEvent
--dontwarn androidx.window.extensions.**
--dontwarn androidx.window.sidecar.**
--dontwarn com.android.org.conscrypt.TrustManagerImpl
--dontwarn com.android.wm.shell.**
--dontwarn com.skydoves.balloon.**
--dontwarn dalvik.system.CloseGuard
--dontwarn lineageos.providers.LineageSettings$System
--dontwarn androidx.compose.runtime.PrimitiveSnapshotStateKt
--dontwarn androidx.renderscript.Allocation
--dontwarn androidx.renderscript.BaseObj
--dontwarn androidx.renderscript.Element
--dontwarn androidx.renderscript.FieldPacker
--dontwarn androidx.renderscript.RSRuntimeException
--dontwarn androidx.renderscript.RenderScript
--dontwarn androidx.renderscript.Script$LaunchOptions
--dontwarn androidx.renderscript.ScriptC
--dontwarn androidx.renderscript.ScriptIntrinsicBlur
--dontwarn androidx.renderscript.Type
-
 # Remove some Kotlin overhead
 -processkotlinnullchecks remove
 
