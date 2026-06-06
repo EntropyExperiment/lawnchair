@@ -76,14 +76,14 @@ class LawnchairSearchAdapterProvider(
 
         if (viewType != SEARCH_RESULT_ICON) {
             val layoutParams = ViewGroup.MarginLayoutParams(view.layoutParams)
-            layoutParams.leftMargin = leftMargin
-            layoutParams.rightMargin = rightMargin
+            layoutParams.leftMargin = 0
+            layoutParams.rightMargin = 0
             view.layoutParams = layoutParams
         }
         if (viewType == SEARCH_TEXT_HEADER) {
             val layoutParams: ViewGroup.MarginLayoutParams = ViewGroup.MarginLayoutParams(0, 0)
-            layoutParams.leftMargin = leftMargin
-            layoutParams.rightMargin = rightMargin
+            layoutParams.leftMargin = 0
+            layoutParams.rightMargin = 0
             view.layoutParams = layoutParams
         }
 
