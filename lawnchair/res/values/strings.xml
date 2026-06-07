@@ -202,7 +202,7 @@
     <string name="debug_restart_launcher">Restart Lawnchair</string>
     <string name="experimental_features_label">Experimental features</string>
     <string name="predictions_label">Predictions</string>
-    <string name="global_predictions_label">Prediction Features</string>
+    <string name="global_predictions_label">Show prediction features</string>
     <string name="predictions_description">App predictions</string>
     <string name="app_predictions_label">App predictions</string>
 
@@ -213,15 +213,15 @@
     <string name="internal_label">Internal</string>
     <string name="internal_description">Internal may be more unstable than other experimental group</string>
 
-    <string name="prediction_mode_label">Prediction mode</string>
+    <string name="prediction_mode_label">Predictions source</string>
     <string name="prediction_mode_system">System</string>
     <string name="prediction_mode_lawnchair">Lawnchair</string>
     <string name="prediction_mode_none">None</string>
     <string name="prediction_weighted_usage_stats_label">Weighted usage stats</string>
     <string name="prediction_weighted_usage_stats_description">Use usage stats to influence ranking suggestions</string>
     <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to influence ranking suggestions. Requires usage access to enable</string>
-    <string name="dismissed_prediction_apps_label">Dismissed prediction apps</string>
-    <string name="dismissed_prediction_apps_label_with_count">Dismissed prediction apps (%1$d)</string>
+    <string name="dismissed_prediction_apps_label">Dismissed apps</string>
+    <string name="dismissed_prediction_apps_label_with_count">Dismissed apps (%1$d)</string>
 
     <string name="font_picker_label">Font customization</string>
     <string name="font_picker_description">Some text remains unchanged</string>

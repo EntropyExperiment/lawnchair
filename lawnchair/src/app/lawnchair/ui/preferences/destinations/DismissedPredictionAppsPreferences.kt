@@ -49,12 +49,13 @@ fun DismissedPredictionAppsPreferences(
     var dismissedApps by remember {
         mutableStateOf(dismissedAppsStore.getDismissedApps())
     }
-    val pageTitle =
+    val pageTitle = stringResource(
         if (dismissedApps.isEmpty()) {
-            stringResource(id = R.string.dismissed_prediction_apps_label)
+            R.string.dismissed_prediction_apps_label
         } else {
-            stringResource(id = R.string.dismissed_prediction_apps_label_with_count, dismissedApps.size)
+             R.string.dismissed_prediction_apps_label_with_count, dismissedApps.size
         }
+    )
     val apps by appsState(comparator = dismissedPredictionAppsComparator(context, dismissedApps))
     val state = rememberLazyListState()
 
