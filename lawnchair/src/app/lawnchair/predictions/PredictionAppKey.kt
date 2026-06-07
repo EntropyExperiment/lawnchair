@@ -18,16 +18,8 @@ object PredictionAppKey {
     fun packageName(key: String): String = key.substringBefore(DELIMITER)
 
     fun parse(key: String): TargetInfo? {
-        val packageNameEnd = key.indexOf(DELIMITER)
-        val userTokenStart = key.lastIndexOf(DELIMITER)
-        if (packageNameEnd <= 0 || userTokenStart <= packageNameEnd + 1 || userTokenStart >= key.lastIndex) {
-            return null
-        }
-
-        return TargetInfo(
-            packageName = key.substring(0, packageNameEnd),
-            className = key.substring(packageNameEnd + 1, userTokenStart),
-            userToken = key.substring(userTokenStart + 1),
-        )
+        val parts = key.split(DELIMITER)
+        if (parts.size != 3 || parts.any { it.isEmpty() }) return null
+        return TargetInfo(parts[0], parts[1], parts[2])
     }
 }
