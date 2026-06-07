@@ -219,6 +219,8 @@
     <string name="prediction_mode_none">None</string>
     <string name="prediction_weighted_usage_stats_label">Weighted usage stats</string>
     <string name="prediction_weighted_usage_stats_description">Use usage stats to influence ranking suggestions</string>
+    <string name="prediction_weighted_usage_stats_label">Use system predictions</string>
+    <string name="prediction_weighted_usage_stats_description">Learns from your system usage habits to provide better app suggestions</string>
     <string name="prediction_weighted_usage_stats_permission_description">Use usage stats to influence ranking suggestions. Requires usage access to enable</string>
     <string name="dismissed_prediction_apps_label">Dismissed apps</string>
     <string name="dismissed_prediction_apps_label_with_count">Dismissed apps (%1$d)</string>
