@@ -196,7 +196,8 @@ public class PreviewBackground extends DelegatedCellDrawing {
         int folderColor = colorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         TypedArray ta = context.getTheme().obtainStyledAttributes(R.styleable.FolderIconPreview);
-        mDotColor = ColorTokens.FolderDotColor.resolveColor(context);
+        ColorOption dotColorOption = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getNotificationDotColor());
+        mDotColor = dotColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
         mStrokeColor = ColorTokens.FolderIconBorderColor.resolveColor(context);
         if (folderColor != 0) {
             mBgColor = folderColor;
