@@ -1,8 +1,12 @@
 package app.lawnchair.ui.preferences.destinations
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AppOpsManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Process
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,7 +30,7 @@ import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.NavigationActionPreference
-import app.lawnchair.ui.preferences.components.SystemSuggestionsPreference
+import app.lawnchair.ui.preferences.components.controls.ClickablePreference
 import app.lawnchair.ui.preferences.components.controls.ListPreference
 import app.lawnchair.ui.preferences.components.controls.ListPreferenceEntry
 import app.lawnchair.ui.preferences.components.controls.MainSwitchPreference
@@ -175,4 +179,25 @@ private fun rememberDismissedPredictionAppsCount(context: Context): Int {
     }
 
     return dismissedPredictionAppsCount
+}
+
+@SuppressLint("WrongConstant")
+@Composable
+fun PreferenceGroupScope.SystemSuggestionsPreference() {
+    val context = LocalContext.current
+    val intent = Intent("android.settings.ACTION_CONTENT_SUGGESTIONS_SETTINGS")
+    val hasPkgUsagePermission = context.checkCallingOrSelfPermission(Manifest.permission.PACKAGE_USAGE_STATS) == PackageManager.PERMISSION_GRANTED
+    val canResolveToSuggestionPreference = context.packageManager.resolveActivity(intent, 0) != null
+    val suggestionSettingsAvailable = hasPkgUsagePermission && canResolveToSuggestionPreference
+
+    if (suggestionSettingsAvailable) {
+        Item {
+            ClickablePreference(
+                label = stringResource(id = R.string.suggestion_pref_screen_title),
+                onClick = {
+                    context.startActivity(intent)
+                },
+            )
+        }
+    }
 }
