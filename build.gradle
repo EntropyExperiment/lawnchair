@@ -161,13 +161,6 @@ android {
         buildConfigField "int", "QUICKSTEP_MAX_SDK", quickstepMaxSdk
     }
 
-    applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach {
-            def channel = variant.productFlavors.last().name
-            outputFileName = "Lawnchair.${variant.versionName}.$channel.${variant.buildType.name}.apk"
-        }
-    }
-
     androidResources {
         generateLocaleConfig true
     }
@@ -198,10 +191,13 @@ android {
     ]
 
     // Load all proguard configs from AOSP
-    def proguardFilesFromAosp = allprojects
-        .collect { it.file("proguard.flags") }
-        .findAll { it.exists() }
-        .toArray()
+    def proguardFilesFromAosp = allprojects.collect { proj ->
+        [
+            'proguard.flags',
+            'proguard_flags.flags',
+            'proguard_plugins.flags'
+        ].collect { proj.file(it) }
+    }.flatten().findAll { it.exists() }.toArray()
 
     def releaseSigning
     try {
@@ -220,16 +216,6 @@ android {
     buildTypes {
         all {
             signingConfig releaseSigning
-
-            applicationVariants.configureEach { variant ->
-                variant.outputs.configureEach {
-                    def channel = variant.productFlavors.last().name
-                    // Override signingConfig to debug if the "nightly" flavor is selected
-                    if (channel.any { it == "nightly" }) {
-                        signingConfig = signingConfigs.debug
-                    }
-                }
-            }
             pseudoLocalesEnabled true
         }
 
@@ -359,6 +345,15 @@ android {
             .get()
             .asFile
         variant.addJavaSourceFoldersToModel(generatedProtoJavaDir)
+    }
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        def channel = variant.productFlavors.last().second
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("Lawnchair.${output.versionName.get()}.$channel.${variant.buildType}.apk")
+        }
     }
 }
 
