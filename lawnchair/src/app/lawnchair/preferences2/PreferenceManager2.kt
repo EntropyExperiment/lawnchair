@@ -386,7 +386,7 @@ class PreferenceManager2 @Inject constructor(
     )
 
     val lawnchairPredictorUseWeightedUsageStats = preference(
-        key = booleanPreferencesKey(name = "lawnchairpredictor_use_weighted_usage_stats"),
+        key = booleanPreferencesKey(name = "lawnchair_prediction_use_weighted_usage"),
         defaultValue = false,
     )
 
