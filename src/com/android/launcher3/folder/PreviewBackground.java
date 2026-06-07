@@ -20,6 +20,7 @@ import static com.android.app.animation.Interpolators.ACCELERATE_DECELERATE;
 import static com.android.app.animation.Interpolators.EMPHASIZED_DECELERATE;
 import static com.android.launcher3.folder.ClippedFolderIconLayoutRule.ICON_OVERLAP_FACTOR;
 import static com.android.launcher3.icons.GraphicsUtils.setColorAlphaBound;
+import static com.android.launcher3.icons.IconNormalizer.ICON_VISIBLE_AREA_FACTOR;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -206,10 +207,18 @@ public class PreviewBackground extends DelegatedCellDrawing {
         ta.recycle();
 
         DeviceProfile grid = activity.getDeviceProfile();
-        previewSize = grid.folderIconSizePx;
+        // Lawnchair: Find the correct icon size depending on which parent owned them
+        if (invalidateDelegate instanceof FolderIcon && ((FolderIcon) invalidateDelegate).isInAppDrawer()) {
+            int allAppsIconSize = grid.getAllAppsProfile().getIconSizePx();
+            previewSize = Math.round(allAppsIconSize * ICON_VISIBLE_AREA_FACTOR);
+            basePreviewOffsetX = (availableSpaceX - previewSize) / 2;
+            basePreviewOffsetY = topPadding + (allAppsIconSize - previewSize) / 2;
+        } else {
+            previewSize = grid.folderIconSizePx;
 
-        basePreviewOffsetX = (availableSpaceX - previewSize) / 2;
-        basePreviewOffsetY = topPadding + grid.folderIconOffsetYPx;
+            basePreviewOffsetX = (availableSpaceX - previewSize) / 2;
+            basePreviewOffsetY = topPadding + grid.folderIconOffsetYPx;
+        }
 
         // Stroke width is 1dp
         mStrokeWidth = context.getResources().getDisplayMetrics().density;
