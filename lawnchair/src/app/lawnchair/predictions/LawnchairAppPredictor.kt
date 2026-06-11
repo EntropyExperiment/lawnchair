@@ -1,36 +1,12 @@
 package app.lawnchair.predictions
 
-import android.app.AppOpsManager
-import android.app.prediction.AppTarget
-import android.app.prediction.AppTargetId
-import android.app.usage.UsageStats
-import android.app.usage.UsageStatsManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.SharedPreferences
-import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
-import android.os.Process
-import android.os.UserHandle
 import androidx.annotation.WorkerThread
-import app.lawnchair.preferences2.PreferenceManager2
-import com.android.launcher3.AppFilter
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.LauncherModel
-import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.ALL_APPS_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.FOLDER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.HOTSEAT
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.PREDICTED_HOTSEAT_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.PREDICTION_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.SEARCH_RESULT_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.TASK_BAR_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.TASK_SWITCHER_CONTAINER
-import com.android.launcher3.logger.LauncherAtom.ContainerInfo.ContainerCase.WORKSPACE
-import com.android.launcher3.logger.LauncherAtom.FolderContainer
 import com.android.launcher3.logger.LauncherAtom.ItemInfo
-import com.android.launcher3.logger.LauncherAtom.ItemInfo.ItemCase.APPLICATION
-import com.android.launcher3.logger.LauncherAtom.ItemInfo.ItemCase.TASK
 import com.android.launcher3.logging.StatsLogManager.EventEnum
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_APP_LAUNCH_DRAGDROP
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_APP_LAUNCH_TAP
@@ -50,46 +26,32 @@ import com.android.launcher3.logging.StatsLogManager.LauncherEvent.LAUNCHER_WIDG
 import com.android.launcher3.model.BgDataModel
 import com.android.launcher3.model.PredictionUpdateTask
 import com.android.launcher3.model.PredictorState
-import com.android.launcher3.model.WidgetItem
 import com.android.launcher3.model.WidgetsPredictionUpdateTask
 import com.android.launcher3.pm.UserCache
 import com.android.launcher3.util.Executors.MODEL_EXECUTOR
-import com.android.launcher3.util.UserIconInfo
-import com.android.launcher3.util.UserIconInfo.TYPE_CLONED
-import com.android.launcher3.util.UserIconInfo.TYPE_PRIVATE
-import com.android.launcher3.util.UserIconInfo.TYPE_WORK
 import com.android.quickstep.logging.StatsLogCompatManager
-import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_CLONED
-import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_PRIVATE
-import com.android.systemui.shared.system.SysUiStatsLog.LAUNCHER_UICHANGED__USER_TYPE__TYPE_WORK
-import com.patrykmichalik.opto.core.firstBlocking
-import java.util.concurrent.TimeUnit
 
 /**
- * Listens to app launching] events from [StatsLogCompatManager.StatsLogConsumer] and send
- * them to [AppUsageStore] depending on where the app is launched from.
+ * Listens to app launching events from [StatsLogCompatManager.StatsLogConsumer] and send
+ * them to [LawnchairPredictionStore] depending on where the app is launched from.
  *
  * Call [register] to start receiving events, and [unregister] when the ModelDelegate is destroyed.
+ *
+ * Delegates event resolution to [PredictionEventResolver], usage-stats ranking
+ * to [UsageStatsRanker], and target compilation to [LawnchairPredictionEngine].
  */
 class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManager.StatsLogConsumer {
 
-    private val usagePrefs: SharedPreferences = AppUsageStore.getPrefs(context)
     private val userCache = UserCache.INSTANCE.get(context)
+    private val predictionManager = LawnchairPredictionManager.getInstance(context)
+    private val hotseatStore = predictionManager.hotseatStore
+    private val allAppsStore = predictionManager.allAppsStore
+    private val dismissedAppsStore = predictionManager.dismissedAppsStore
 
-    private val dismissedAppsStore = DismissedPredictionAppsStore(
-        prefs = usagePrefs,
-        storeName = DismissedPredictionAppsStore.DISMISS_STORE_NAME,
-    )
+    private val eventResolver = PredictionEventResolver(userCache)
+    private val usageStatsRanker = UsageStatsRanker(context)
+    private val predictionEngine = LawnchairPredictionEngine(context, usageStatsRanker)
 
-    private val hotseatStore = AppUsageStore(
-        prefs = usagePrefs,
-        storeName = AppUsageStore.HOTSEAT_STORE_NAME,
-    )
-    private val allAppsStore = AppUsageStore(
-        prefs = usagePrefs,
-        storeName = AppUsageStore.ALL_APPS_STORE_NAME,
-    )
-    private val prefs2: PreferenceManager2 by lazy { PreferenceManager2.getInstance(context) }
     private var dismissedApps: MutableSet<String> = loadDismissedApps()
 
     private var activeModel: LauncherModel? = null
@@ -133,13 +95,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
     @WorkerThread
     private fun handleEvent(event: EventEnum?, atomInfo: ItemInfo?) {
-        val resolvedEvent = atomInfo?.let {
-            ResolvedEvent(
-                location = resolveLocation(it),
-                componentName = resolveComponentName(it),
-                user = resolveUser(it),
-            )
-        }
+        val resolvedEvent = eventResolver.resolve(atomInfo)
 
         val didRecord = when {
             event == null || resolvedEvent == null -> false
@@ -176,25 +132,25 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
 
         val hotseatRanked = hotseatStore.getRanked()
         val allAppsRanked = allAppsStore.getRanked()
-        val fallbackRanked = getFallbackRanked()
-        val allAppsCandidateRanked = mergeRanked(allAppsRanked, hotseatRanked, fallbackRanked)
-        val hotseatCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
-        val widgetCandidateRanked = mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
+        val fallbackRanked = predictionEngine.getFallbackRanked()
+        val allAppsCandidateRanked = predictionEngine.mergeRanked(allAppsRanked, hotseatRanked, fallbackRanked)
+        val hotseatCandidateRanked = predictionEngine.mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
+        val widgetCandidateRanked = predictionEngine.mergeRanked(hotseatRanked, allAppsRanked, fallbackRanked)
         val currentDismissedApps = dismissedApps.toSet()
-        val occupiedHotseatItems = getOccupiedHotseatItems(dataModel)
+        val occupiedHotseatItems = predictionEngine.getOccupiedHotseatItems(dataModel)
         val excludedHotseatItems = occupiedHotseatItems + currentDismissedApps
 
-        val allAppsTargets = buildTargets(
+        val allAppsTargets = predictionEngine.compileAppTargets(
             allAppsCandidateRanked,
             idp.numDatabaseAllAppsColumns,
             currentDismissedApps,
         )
-        val hotseatTargets = buildTargets(
+        val hotseatTargets = predictionEngine.compileAppTargets(
             hotseatCandidateRanked,
             idp.numDatabaseHotseatIcons,
             excludedHotseatItems,
         )
-        val widgetTargets = buildWidgetTargets(
+        val widgetTargets = predictionEngine.compileWidgetTargets(
             widgetCandidateRanked,
             dataModel,
         )
@@ -216,269 +172,12 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         model.enqueueModelUpdateTask(WidgetsPredictionUpdateTask(widgetsState, emptyList()))
     }
 
-    private fun buildTargets(
-        ranked: List<String>,
-        count: Int,
-        excludedKeys: Set<String> = emptySet(),
-    ): List<AppTarget> {
-        val launcherApps = context.getSystemService(LauncherApps::class.java)
-        return buildList(count) {
-            ranked.forEach { key ->
-                if (size == count) return@buildList
-
-                val parsedKey = parseStoreKey(key) ?: return@forEach
-                val componentName = ComponentName(parsedKey.packageName, parsedKey.className)
-                val storeKey = toStoreKey(componentName, parsedKey.user)
-                if (storeKey in excludedKeys) return@forEach
-
-                try {
-                    launcherApps?.resolveActivity(
-                        android.content.Intent().setComponent(componentName),
-                        parsedKey.user,
-                    ) ?: return@forEach
-                } catch (_: Exception) {
-                    return@forEach
-                }
-
-                add(
-                    createAppTarget(
-                        prefix = "app",
-                        componentName = componentName,
-                        packageName = parsedKey.packageName,
-                        user = parsedKey.user,
-                    ),
-                )
-            }
-        }
-    }
-
-    private fun getFallbackRanked(): List<String> {
-        val usageStatsRanked =
-            if (shouldUseWeightedUsageStats()) getUsageStatsRanked() else emptyList()
-        val randomRanked = getRandomRanked()
-        return mergeRanked(usageStatsRanked, randomRanked)
-    }
-
-    private fun shouldUseWeightedUsageStats(): Boolean {
-        if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstBlocking()) return false
-        val appOps = context.getSystemService(AppOpsManager::class.java)
-        return appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            context.packageName,
-        ) == AppOpsManager.MODE_ALLOWED
-    }
-
-    private fun getUsageStatsRanked(): List<String> {
-        val usageStatsManager =
-            context.getSystemService(UsageStatsManager::class.java) ?: return emptyList()
-        val launcherApps = context.getSystemService(LauncherApps::class.java) ?: return emptyList()
-        val appFilter = AppFilter(context)
-        val now = System.currentTimeMillis()
-        val scores = LinkedHashMap<String, Double>()
-
-        try {
-            addUsageStatsWindow(
-                scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(
-                    now - RECENT_USAGE_WINDOW_MS,
-                    now,
-                ),
-                now = now,
-                launchWeight = 12.0,
-                foregroundMinutesWeight = 0.25,
-                recencyWeight = 4.0,
-            )
-            addUsageStatsWindow(
-                scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(
-                    now - DAILY_USAGE_WINDOW_MS,
-                    now,
-                ),
-                now = now,
-                launchWeight = 4.0,
-                foregroundMinutesWeight = 0.1,
-                recencyWeight = 1.5,
-            )
-            addUsageStatsWindow(
-                scores = scores,
-                stats = usageStatsManager.queryAndAggregateUsageStats(
-                    now - WEEKLY_USAGE_WINDOW_MS,
-                    now,
-                ),
-                now = now,
-                launchWeight = 1.0,
-                foregroundMinutesWeight = 0.02,
-                recencyWeight = 0.5,
-            )
-        } catch (_: Exception) {
-            return emptyList()
-        }
-
-        if (scores.isEmpty()) return emptyList()
-
-        return scores.entries
-            .sortedByDescending { it.value }
-            .mapNotNull { (packageName, _) ->
-                resolvePackageToStoreKey(
-                    packageName,
-                    launcherApps,
-                    appFilter,
-                )
-            }
-    }
-
-    private fun addUsageStatsWindow(
-        scores: MutableMap<String, Double>,
-        stats: Map<String, UsageStats>,
-        now: Long,
-        launchWeight: Double,
-        foregroundMinutesWeight: Double,
-        recencyWeight: Double,
-    ) {
-        stats.values.forEach { stat ->
-            val packageName = stat.packageName
-            if (packageName.isNullOrEmpty() || packageName == context.packageName) return@forEach
-
-            val foregroundMinutes =
-                TimeUnit.MILLISECONDS.toMinutes(stat.totalTimeInForeground).toDouble()
-            val recencyScore = when {
-                stat.lastTimeUsed <= 0L -> 0.0
-
-                else -> {
-                    val ageHours =
-                        (now - stat.lastTimeUsed).coerceAtLeast(0L).toDouble() / RECENCY_HOUR_MS
-                    1.0 / (1.0 + ageHours)
-                }
-            }
-
-            val score =
-                launchWeight +
-                    (foregroundMinutes * foregroundMinutesWeight) +
-                    (recencyScore * recencyWeight)
-            if (score <= 0.0) return@forEach
-
-            scores[packageName] = (scores[packageName] ?: 0.0) + score
-        }
-    }
-
-    private fun getRandomRanked(): List<String> {
-        val launcherApps = context.getSystemService(LauncherApps::class.java) ?: return emptyList()
-        val appFilter = AppFilter(context)
-        return userProfilesInPredictionOrder()
-            .asSequence()
-            .flatMap { user -> launcherApps.getActivityList(null, user).asSequence() }
-            .filter { activityInfo -> appFilter.shouldShowApp(activityInfo.componentName) }
-            .map { activityInfo -> toStoreKey(activityInfo.componentName, activityInfo.user) }
-            .distinct()
-            .toList()
-            .shuffled()
-    }
-
-    private fun resolvePackageToStoreKey(
-        packageName: String,
-        launcherApps: LauncherApps,
-        appFilter: AppFilter,
-    ): String? {
-        userProfilesInPredictionOrder().forEach { user ->
-            val activityInfo = launcherApps.getActivityList(packageName, user)
-                .firstOrNull { info -> appFilter.shouldShowApp(info.componentName) }
-                ?: return@forEach
-            return toStoreKey(activityInfo.componentName, activityInfo.user)
-        }
-        return null
-    }
-
-    private fun userProfilesInPredictionOrder(): List<UserHandle> {
-        val currentUser = Process.myUserHandle()
-        return buildList {
-            if (currentUser in userCache.userProfiles) add(currentUser)
-            userCache.userProfiles.forEach { user ->
-                if (user !in this) add(user)
-            }
-        }
-    }
-
-    private fun buildWidgetTargets(
-        ranked: List<String>,
-        dataModel: BgDataModel,
-    ): List<AppTarget> {
-        val widgetsByPackageAndUser = LinkedHashMap<String, MutableList<WidgetItem>>()
-        dataModel.widgetsModel.widgetsByComponentKeyForPicker.values.forEach { widgetItem ->
-            if (widgetItem.widgetInfo == null) return@forEach
-            val key = packageUserKey(widgetItem.componentName.packageName, widgetItem.user)
-            widgetsByPackageAndUser.getOrPut(key) { ArrayList() }.add(widgetItem)
-        }
-
-        val targets = ArrayList<AppTarget>(NUM_WIDGET_SUGGESTIONS)
-        val addedComponents = HashSet<String>()
-        for (rankedKey in ranked) {
-            val parsedKey = parseStoreKey(rankedKey) ?: continue
-            val packageName = parsedKey.packageName
-            val userToken = userToken(parsedKey.user)
-            val widget =
-                widgetsByPackageAndUser["$packageName/$userToken"]?.firstOrNull() ?: continue
-            val componentKey = toStoreKey(widget.componentName, widget.user)
-            if (!addedComponents.add(componentKey)) continue
-
-            targets.add(
-                createAppTarget(
-                    prefix = "widget",
-                    componentName = widget.componentName,
-                    packageName = widget.componentName.packageName,
-                    user = widget.user,
-                ),
-            )
-            if (targets.size == NUM_WIDGET_SUGGESTIONS) break
-        }
-        return targets
-    }
-
-    private fun getOccupiedHotseatItems(dataModel: BgDataModel): Set<String> {
-        val itemsSnapshot = synchronized(dataModel) { dataModel.itemsIdMap.copy() }
-        return itemsSnapshot
-            .filter { it.container == CONTAINER_HOTSEAT }
-            .mapNotNull { item ->
-                item.targetComponent?.let { component ->
-                    toStoreKey(
-                        component,
-                        item.user,
-                    )
-                }
-            }
-            .toSet()
-    }
-
-    private fun toStoreKey(componentName: ComponentName, user: UserHandle): String = PredictionAppKey.create(componentName, userToken(user))
-
-    private fun userToken(user: UserHandle): String = userCache.getSerialNumberForUser(user).toString()
-
-    private fun packageUserKey(packageName: String, user: UserHandle): String = "$packageName/${userToken(user)}"
-
-    private fun prunePredictionStores(pm: PackageManager) {
-        allAppsStore.pruneUninstalled(pm)
-        dismissedAppsStore.pruneUninstalled(pm)
-        hotseatStore.pruneUninstalled(pm)
-        dismissedApps = loadDismissedApps()
-    }
-
-    private fun createAppTarget(
-        prefix: String,
-        componentName: ComponentName,
-        packageName: String,
-        user: UserHandle,
-    ): AppTarget {
-        val storeKey = toStoreKey(componentName, user)
-        return AppTarget.Builder(
-            AppTargetId("$prefix:$storeKey"),
-            packageName,
-            user,
-        ).setClassName(componentName.className).build()
-    }
-
-    private fun recordDismissEvent(event: EventEnum, resolvedEvent: ResolvedEvent): Boolean {
+    private fun recordDismissEvent(
+        event: EventEnum,
+        resolvedEvent: PredictionEventResolver.ResolvedEvent,
+    ): Boolean {
         val componentName = resolvedEvent.componentName ?: return false
-        val key = toStoreKey(componentName, resolvedEvent.user)
+        val key = predictionEngine.toStoreKey(componentName, resolvedEvent.user)
         val changed = when (event) {
             LAUNCHER_ITEM_DROPPED_ON_DONT_SUGGEST,
             LAUNCHER_SYSTEM_SHORTCUT_DONT_SUGGEST_APP_TAP,
@@ -494,20 +193,22 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         return changed
     }
 
-    private fun recordLaunchEvent(resolvedEvent: ResolvedEvent): Boolean {
+    private fun recordLaunchEvent(
+        resolvedEvent: PredictionEventResolver.ResolvedEvent,
+    ): Boolean {
         val componentName = resolvedEvent.componentName ?: return false
-        val key = toStoreKey(componentName, resolvedEvent.user)
+        val key = predictionEngine.toStoreKey(componentName, resolvedEvent.user)
         return when {
             resolvedEvent.location.startsWith("workspace") ||
                 resolvedEvent.location.startsWith("hotseat") ||
                 resolvedEvent.location.startsWith("folder") -> {
-                hotseatStore.record(key)
+                hotseatStore.add(key)
                 true
             }
 
             resolvedEvent.location.startsWith("all-apps") ||
                 resolvedEvent.location == "predictions" -> {
-                allAppsStore.record(key)
+                allAppsStore.add(key)
                 true
             }
 
@@ -532,27 +233,17 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         )
     }
 
-    private fun parseStoreKey(key: String): ParsedStoreKey? {
-        val parts = PredictionAppKey.parse(key) ?: return null
-        val user = resolveUserToken(parts.userToken) ?: Process.myUserHandle()
-        return ParsedStoreKey(parts.packageName, parts.className, user)
+    private fun prunePredictionStores(pm: PackageManager) {
+        allAppsStore.pruneUninstalled(pm)
+        dismissedAppsStore.pruneUninstalled(pm)
+        hotseatStore.pruneUninstalled(pm)
+        dismissedApps = loadDismissedApps()
     }
 
-    private fun resolveUserToken(token: String): UserHandle? {
-        token.toLongOrNull()?.let { serialNumber ->
-            val user = userCache.getUserForSerialNumber(serialNumber)
-            if (user != null && userToken(user) == token) return user
-        }
-
-        return userCache.userProfiles.firstOrNull { profile ->
-            profile.hashCode().toString() == token
-        }
-    }
-
-    private fun loadDismissedApps(): MutableSet<String> = dismissedAppsStore.getDismissedApps().toMutableSet()
+    private fun loadDismissedApps(): MutableSet<String> = dismissedAppsStore.getEntries().toMutableSet()
 
     private fun saveDismissedApps(dismissedApps: Set<String>) {
-        dismissedAppsStore.setDismissedApps(dismissedApps)
+        dismissedAppsStore.setEntries(dismissedApps)
     }
 
     private fun isLaunchEvent(event: EventEnum): Boolean = event == LAUNCHER_APP_LAUNCH_TAP ||
@@ -572,94 +263,6 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     private fun isDismissEvent(event: EventEnum): Boolean = event == LAUNCHER_ITEM_DROPPED_ON_DONT_SUGGEST ||
         event == LAUNCHER_SYSTEM_SHORTCUT_DONT_SUGGEST_APP_TAP ||
         event == LAUNCHER_DISMISS_PREDICTION_UNDO
-
-    private fun resolveComponentName(atomInfo: ItemInfo): ComponentName? {
-        return when (atomInfo.itemCase) {
-            APPLICATION -> {
-                val cn = atomInfo.application.componentName
-                if (cn.isNullOrEmpty()) null else ComponentName.unflattenFromString(cn)
-            }
-
-            TASK -> {
-                val cn = atomInfo.task.componentName
-                if (cn.isNullOrEmpty()) null else ComponentName.unflattenFromString(cn)
-            }
-
-            else -> null
-        }
-    }
-
-    private fun resolveUser(atomInfo: ItemInfo): UserHandle {
-        val userType = when (atomInfo.userType) {
-            LAUNCHER_UICHANGED__USER_TYPE__TYPE_WORK -> TYPE_WORK
-            LAUNCHER_UICHANGED__USER_TYPE__TYPE_CLONED -> TYPE_CLONED
-            LAUNCHER_UICHANGED__USER_TYPE__TYPE_PRIVATE -> TYPE_PRIVATE
-            else -> UserIconInfo.TYPE_MAIN
-        }
-
-        return userCache.userProfiles.firstOrNull { userCache.getUserInfo(it).type == userType }
-            ?: Process.myUserHandle()
-    }
-
-    private fun resolveLocation(atomInfo: ItemInfo): String {
-        if (!atomInfo.hasContainerInfo()) return ""
-        return when (atomInfo.containerInfo.containerCase) {
-            WORKSPACE -> "workspace"
-
-            HOTSEAT -> "hotseat"
-
-            FOLDER -> {
-                val parent = atomInfo.containerInfo.folder.parentContainerCase
-                when (parent) {
-                    FolderContainer.ParentContainerCase.WORKSPACE -> "folder/workspace"
-                    FolderContainer.ParentContainerCase.HOTSEAT -> "folder/hotseat"
-                    else -> "folder"
-                }
-            }
-
-            ALL_APPS_CONTAINER -> "all-apps"
-
-            PREDICTION_CONTAINER -> "predictions"
-
-            PREDICTED_HOTSEAT_CONTAINER -> "predictions/hotseat"
-
-            TASK_SWITCHER_CONTAINER -> "task-switcher"
-
-            TASK_BAR_CONTAINER -> "taskbar"
-
-            SEARCH_RESULT_CONTAINER -> "search-results"
-
-            else -> ""
-        }
-    }
-
-    companion object {
-        private const val NUM_WIDGET_SUGGESTIONS = 20
-        private val RECENT_USAGE_WINDOW_MS = TimeUnit.HOURS.toMillis(6)
-        private val DAILY_USAGE_WINDOW_MS = TimeUnit.DAYS.toMillis(1)
-        private val WEEKLY_USAGE_WINDOW_MS = TimeUnit.DAYS.toMillis(7)
-        private val RECENCY_HOUR_MS = TimeUnit.HOURS.toMillis(1).toDouble()
-    }
-
-    private fun mergeRanked(vararg rankedLists: List<String>): List<String> = buildList {
-        rankedLists.forEach { ranked ->
-            ranked.forEach { key ->
-                if (key !in this) add(key)
-            }
-        }
-    }
-
-    private data class ParsedStoreKey(
-        val packageName: String,
-        val className: String,
-        val user: UserHandle,
-    )
-
-    private data class ResolvedEvent(
-        val location: String,
-        val componentName: ComponentName?,
-        val user: UserHandle,
-    )
 
     private data class ActivePredictionState(
         val model: LauncherModel,

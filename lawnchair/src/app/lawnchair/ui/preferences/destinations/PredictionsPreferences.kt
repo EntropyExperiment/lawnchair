@@ -5,21 +5,17 @@ import android.annotation.SuppressLint
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Process
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
-import app.lawnchair.predictions.AppUsageStore
-import app.lawnchair.predictions.DismissedPredictionAppsStore
+import app.lawnchair.predictions.LawnchairPredictionManager
 import app.lawnchair.predictions.LawnchairPredictor
 import app.lawnchair.predictions.NoPredictor
 import app.lawnchair.predictions.PredictionMode
@@ -157,25 +153,11 @@ private fun rememberPredictionModeEntries(context: Context): List<ListPreference
 
 @Composable
 private fun rememberDismissedPredictionAppsCount(context: Context): Int {
-    val predictionPrefs = remember { AppUsageStore.getPrefs(context) }
     val dismissedAppsStore = remember {
-        DismissedPredictionAppsStore(
-            predictionPrefs,
-            DismissedPredictionAppsStore.DISMISS_STORE_NAME,
-        )
+        LawnchairPredictionManager.getInstance(context).dismissedAppsStore
     }
-    var dismissedPredictionAppsCount by remember {
-        mutableIntStateOf(dismissedAppsStore.getDismissedApps().size)
-    }
-
-    DisposableEffect(predictionPrefs) {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == DismissedPredictionAppsStore.DISMISS_STORE_NAME) {
-                dismissedPredictionAppsCount = dismissedAppsStore.getDismissedApps().size
-            }
-        }
-        predictionPrefs.registerOnSharedPreferenceChangeListener(listener)
-        onDispose { predictionPrefs.unregisterOnSharedPreferenceChangeListener(listener) }
+    val dismissedPredictionAppsCount by remember {
+        mutableIntStateOf(dismissedAppsStore.getEntries().size)
     }
 
     return dismissedPredictionAppsCount
