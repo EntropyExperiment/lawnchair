@@ -271,6 +271,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
     private FolderIcon mDragOverFolderIcon = null;
     private boolean mCreateUserFolderOnDrop = false;
     private boolean mAddToExistingFolderOnDrop = false;
+    private boolean mDisallowPagedViewInterceptForIconSwipe = false;
 
     // Variables relating to touch disambiguation (scrolling workspace vs. scrolling a widget)
     private float mXDown;
@@ -1185,52 +1186,91 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        // pE-TODO(Reimpl): Check Icon Swipe Gesture
-        if (ev.getAction() == MotionEvent.ACTION_UP) {
-            View touchedView = findViewAtPosition(ev.getX(), ev.getY());
-            Boolean iconSwipeGestures = PreferenceExtensionsKt.firstBlocking(mPreferenceManager2.getIconSwipeGestures());
-
-            if (iconSwipeGestures && touchedView instanceof ShortcutAndWidgetContainer container) {
-                container.onTouchEvent(ev);
-                return false;
-            }
-        }
-        
+        if (shouldSkipPagedViewInterceptionForIconSwipe(ev)) {
+            return false;
+        } // Lawnchair: Icon swipe gesture feature
         if (isTrackpadMultiFingerSwipe(ev)) {
             return false;
         }
         return super.onInterceptTouchEvent(ev);
     }
 
-    private View findViewAtPosition(float x, float y) {
-        for (int i = 0; i < getChildCount(); i++) {
-            View child = getChildAt(i);
-            if (child instanceof CellLayout) {
-                CellLayout cellLayout = (CellLayout) child;
-                View foundView = findViewInCellLayout(cellLayout, x - child.getLeft(), y - child.getTop());
-                if (foundView != null) {
-                    return foundView;
+    // Lawnchair: Icon swipe gesture feature
+    private boolean shouldSkipPagedViewInterceptionForIconSwipe(MotionEvent ev) {
+        switch (ev.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                mDisallowPagedViewInterceptForIconSwipe = isTouchOnIconWithHorizontalSwipeGesture(
+                        ev.getX(), ev.getY());
+                if (mDisallowPagedViewInterceptForIconSwipe) {
+                    resetTouchState();
+                    return true;
                 }
+                return false;
+
+            case MotionEvent.ACTION_MOVE:
+                return mDisallowPagedViewInterceptForIconSwipe;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                boolean shouldSkip = mDisallowPagedViewInterceptForIconSwipe;
+                mDisallowPagedViewInterceptForIconSwipe = false;
+                if (shouldSkip) {
+                    resetTouchState();
+                }
+                return shouldSkip;
+
+            default:
+                return false;
+        }
+    }
+
+    // Lawnchair: Icon swipe gesture feature
+    private boolean isTouchOnIconWithHorizontalSwipeGesture(float x, float y) {
+        BubbleTextView touchedIcon = findIconAtPosition(x, y);
+        return touchedIcon != null && touchedIcon.hasConfiguredHorizontalIconSwipeGesture();
+    }
+
+    // Lawnchair: Icon swipe gesture feature
+    private BubbleTextView findIconAtPosition(float x, float y) {
+        for (int i = getChildCount() - 1; i >= 0; i--) {
+            View child = getChildAt(i);
+            if (!(child instanceof CellLayout cellLayout)) {
+                continue;
+            }
+            float localX = x - child.getLeft();
+            float localY = y - child.getTop();
+            if (!Utilities.pointInView(cellLayout, localX, localY, 0)) {
+                continue;
+            }
+            BubbleTextView foundView = findIconInCellLayout(cellLayout, localX, localY);
+            if (foundView != null) {
+                return foundView;
             }
         }
         return null;
     }
 
-    private View findViewInCellLayout(CellLayout cellLayout, float x, float y) {
-        final int count = cellLayout.getChildCount();
-        for (int i = count - 1; i >= 0; i--) {
-            View child = cellLayout.getChildAt(i);
-            if (child.getVisibility() == VISIBLE && isPointInsideView(x, y, child)) {
-                return child;
+    // Lawnchair: Icon swipe gesture feature
+    private BubbleTextView findIconInCellLayout(CellLayout cellLayout, float x, float y) {
+        ShortcutAndWidgetContainer container = cellLayout.getShortcutsAndWidgets();
+        float containerX = x - container.getLeft();
+        float containerY = y - container.getTop();
+        for (int i = container.getChildCount() - 1; i >= 0; i--) {
+            View child = container.getChildAt(i);
+            if (!(child instanceof BubbleTextView bubbleTextView)
+                    || child.getVisibility() != VISIBLE) {
+                continue;
+            }
+            if (Utilities.pointInView(child,
+                    containerX - child.getLeft(),
+                    containerY - child.getTop(),
+                    0)) {
+                return bubbleTextView;
             }
         }
         return null;
     }
 
-    private boolean isPointInsideView(float x, float y, View view) {
-        return x >= view.getLeft() && x <= view.getRight() &&
-                y >= view.getTop() && y <= view.getBottom();
-    }
 
     /**
      * Needed here because launcher has a fullscreen exclusion rect and doesn't pilfer the pointers.
