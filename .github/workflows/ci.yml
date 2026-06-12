@@ -43,7 +43,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           cache-encryption-key: Da25KUVSE5jbGds2zXmfXw==
-          cache-disabled: true
       - name: Write sign info
         if: github.repository_owner == 'LawnchairLauncher'
         run: |
