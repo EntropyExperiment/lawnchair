@@ -142,7 +142,7 @@ jobs:
 
   nightly-release:
     runs-on: ubuntu-latest
-    if: env.PUBLISH_NIGHTLY == 'true' && github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && endsWith(github.ref, '-dev')
+    if: env.PUBLISH_NIGHTLY == 'true' && github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && (endsWith(github.ref, '-dev')
     needs: final-status
     permissions:
       contents: write
