@@ -98,7 +98,7 @@ class AboutViewModel(
                 name = "Amogh Lele",
                 role = Role.Development,
                 photoUrl = "https://avatars.githubusercontent.com/u/31761843",
-                socialUrl = "https://www.linkedin.com/in/amogh-lele/",
+                socialUrl = "https://github.com/sphericalkat",
             ),
             TeamMember(
                 name = "Antonio J. Roa Valverde",
@@ -235,7 +235,7 @@ class AboutViewModel(
                 name = "Daniel Souza",
                 role = Role.Support,
                 photoUrl = "https://avatars.githubusercontent.com/u/32078304",
-                socialUrl = "https://github.com/DanGLES3",
+                socialUrl = "https://github.com/DanGLVK",
             ),
             TeamMember(
                 name = "Giuseppe Longobardo",
@@ -247,7 +247,7 @@ class AboutViewModel(
                 name = "Rik Koedoot",
                 role = Role.SupportAndPr,
                 photoUrl = "https://avatars.githubusercontent.com/u/29402532",
-                socialUrl = "https://x.com/rikkoedoot",
+                socialUrl = "https://github.com/RikKoedoot",
             ),
         )
     }
