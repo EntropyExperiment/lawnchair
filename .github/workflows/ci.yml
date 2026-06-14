@@ -142,11 +142,17 @@ jobs:
 
   nightly-release:
     runs-on: ubuntu-latest
-    if: env.PUBLISH_NIGHTLY == 'true' && github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && endsWith(github.ref, '-dev')
+    if: github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && endsWith(github.ref, '-dev')
     needs: final-status
     permissions:
       contents: write
     steps:
+      - name: Prepublishing check
+        run: |
+          if [ "${{ env.PUBLISH_NIGHTLY }}" != "true" ]; then
+            echo "🛑 Publishing is disabled in env."
+            exit 1
+          fi
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v8
         with:
