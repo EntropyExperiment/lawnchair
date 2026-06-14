@@ -23,6 +23,7 @@ on:
 jobs:
   build-release-apk:
     runs-on: ubuntu-latest
+    if: !endsWith(github.ref, '-dev')
     permissions:
       id-token: write
       attestations: write
