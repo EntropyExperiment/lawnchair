@@ -130,6 +130,8 @@ jobs:
       - check-style
     runs-on: ubuntu-slim
     if: always()
+    outputs:
+      publish_nightly: ${{ steps.publishing-status.outputs.publish_nightly }}
     steps:
       - name: Check
         run: |
@@ -139,20 +141,16 @@ jobs:
             exit 1
           fi
           echo "All required jobs completed successfully."
+      - id: publishing-status
+        run: echo "publish_nightly=${{ env.PUBLISH_NIGHTLY }}" >> "$GITHUB_OUTPUT"
 
   nightly-release:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && endsWith(github.ref, '-dev')
     needs: final-status
+    if: needs.final-status.outputs.publish_nightly == 'true' && github.repository_owner == 'LawnchairLauncher' && github.event_name == 'push' && startsWith(github.ref, 'refs/heads/') && endsWith(github.ref, '-dev')
     permissions:
       contents: write
     steps:
-      - name: Prepublishing check
-        run: |
-          if [ "${{ env.PUBLISH_NIGHTLY }}" != "true" ]; then
-            echo "🛑 Publishing is disabled in env."
-            exit 1
-          fi
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v8
         with:
