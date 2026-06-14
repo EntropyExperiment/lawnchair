@@ -98,7 +98,7 @@ class AboutViewModel(
                 name = "Amogh Lele",
                 role = Role.Development,
                 photoUrl = "https://avatars.githubusercontent.com/u/31761843",
-                socialUrl = "https://x.com/Spherical_Kat",
+                socialUrl = "https://github.com/sphericalkat",
             ),
             TeamMember(
                 name = "Antonio J. Roa Valverde",
