@@ -173,6 +173,7 @@ Compatibility list: https://github.com/LawnchairLauncher/lawnchair/issues/6681
 * [Lawnchair/About] Update dead link in About attribution (https://github.com/LawnchairLauncher/lawnchair/pull/6880)
 * [Lawnchair] Downsample carousel thumbnails and scope image loads to view (https://github.com/LawnchairLauncher/lawnchair/pull/6883)
 * [Launcher3] Restore workspace alpha on swipe-to-home reveal cancellation (https://github.com/LawnchairLauncher/lawnchair/pull/6793)
+* [Lawnchair/QSB] Launch Startpage app from dock search bar (https://github.com/LawnchairLauncher/lawnchair/pull/6886)
 
 ### 🥞 Development 4 Release 1 (Snapshot 10)
 
