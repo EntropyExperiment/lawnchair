@@ -27,7 +27,6 @@ import android.os.Build
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.util.requireSystemService
@@ -36,6 +35,7 @@ import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class SleepGestureHandler(context: Context) : GestureHandler(context) {
 
