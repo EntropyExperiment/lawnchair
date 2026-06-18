@@ -24,10 +24,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -48,6 +47,7 @@ import com.android.launcher3.R
 import com.android.systemui.shared.system.BlurUtils
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 internal val LocalBottomSheetHandler = staticCompositionLocalOf { BottomSheetHandler() }
 
 val bottomSheetHandler: BottomSheetHandler
@@ -87,9 +87,11 @@ fun ProvideBottomSheetHandler(
                     }
                 }
             },
-        ) {
-            onDismiss = it
-        }
+            onDismiss = {
+                onDismiss = it
+            },
+            sheetState = bottomSheetState,
+        )
     }
 
     CompositionLocalProvider(LocalBottomSheetHandler provides bottomSheetHandler) {
@@ -132,25 +134,16 @@ fun ProvideBottomSheetHandler(
                     )
                 }
 
-                ModalBottomSheet(
-                    sheetState = bottomSheetState,
-                    onDismissRequest = {
-                        showBottomSheet = false
-                    },
-                    contentWindowInsets = {
-                        windowInsets
-                    },
-                    scrimColor = if (supportsBlur) Color.Transparent else BottomSheetDefaults.ScrimColor,
-                ) {
-                    bottomSheetContent.content()
-                }
+                bottomSheetContent.content()
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 class BottomSheetHandler(
     val show: (@Composable () -> Unit) -> Unit = {},
     val hide: () -> Unit = {},
     val onDismiss: (() -> Unit) -> Unit = {},
+    val sheetState: SheetState? = null,
 )

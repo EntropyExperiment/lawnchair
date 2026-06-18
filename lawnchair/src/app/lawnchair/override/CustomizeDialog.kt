@@ -2,6 +2,9 @@ package app.lawnchair.override
 
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,17 +16,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import com.android.systemui.shared.system.BlurUtils
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -128,6 +141,7 @@ fun CustomizeDialog(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomizeAppDialog(
     icon: Drawable,
@@ -168,43 +182,67 @@ fun CustomizeAppDialog(
             }
         }
     }
-    CustomizeDialog(
-        icon = icon,
-        title = title,
-        onTitleChange = { title = it },
-        defaultTitle = defaultTitle,
-        launchSelectIcon = openIconPicker,
+
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val animatedFraction by animateFloatAsState(
+        targetValue = if (
+            bottomSheetState.targetValue == SheetValue.PartiallyExpanded ||
+            bottomSheetState.targetValue == SheetValue.Expanded
+        ) {
+            1f
+        } else {
+            0f
+        },
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "BottomSheetBlurFraction",
+    )
+    val scrimAlpha = .32f * animatedFraction
+
+    ModalBottomSheet(
+        onDismissRequest = onClose,
+        sheetState = bottomSheetState,
+        containerColor = MaterialTheme.colorScheme.surface,
+        scrimColor = MaterialTheme.colorScheme.onSurface.copy(alpha = scrimAlpha),
+        contentWindowInsets = { WindowInsets(0.dp) },
         modifier = modifier,
     ) {
-        PreferenceGroup(
-            description = componentKey.componentName.flattenToString(),
-            showDescription = showComponentNames,
+        CustomizeDialog(
+            icon = icon,
+            title = title,
+            onTitleChange = { title = it },
+            defaultTitle = defaultTitle,
+            launchSelectIcon = openIconPicker,
         ) {
-            val stringKey = componentKey.toString()
-            Item {
-                SwitchPreference(
-                    checked = hiddenApps.contains(stringKey),
-                    label = stringResource(id = R.string.hide_from_drawer),
-                    onCheckedChange = { newValue ->
-                        val newSet = hiddenApps.toMutableSet()
-                        if (newValue) newSet.add(stringKey) else newSet.remove(stringKey)
-                        adapter.onChange(newSet)
-                    },
-                )
+            PreferenceGroup(
+                description = componentKey.componentName.flattenToString(),
+                showDescription = showComponentNames,
+            ) {
+                val stringKey = componentKey.toString()
+                Item {
+                    SwitchPreference(
+                        checked = hiddenApps.contains(stringKey),
+                        label = stringResource(id = R.string.hide_from_drawer),
+                        onCheckedChange = { newValue ->
+                            val newSet = hiddenApps.toMutableSet()
+                            if (newValue) newSet.add(stringKey) else newSet.remove(stringKey)
+                            adapter.onChange(newSet)
+                        },
+                    )
+                }
             }
-        }
-        if (context.launcher.stateManager.state != LauncherState.ALL_APPS) {
-            PreferenceGroup(heading = stringResource(R.string.gestures_label)) {
-                listOf(
-                    GestureType.SWIPE_LEFT,
-                    GestureType.SWIPE_RIGHT,
-                ).map { gestureType ->
-                    Item {
-                        AppGesturePreference(
-                            componentKey,
-                            gestureType,
-                            stringResource(id = gestureType.labelResId),
-                        )
+            if (context.launcher.stateManager.state != LauncherState.ALL_APPS) {
+                PreferenceGroup(heading = stringResource(R.string.gestures_label)) {
+                    listOf(
+                        GestureType.SWIPE_LEFT,
+                        GestureType.SWIPE_RIGHT,
+                    ).map { gestureType ->
+                        Item {
+                            AppGesturePreference(
+                                componentKey,
+                                gestureType,
+                                stringResource(id = gestureType.labelResId),
+                            )
+                        }
                     }
                 }
             }

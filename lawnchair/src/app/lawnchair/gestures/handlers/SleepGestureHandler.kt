@@ -24,6 +24,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.util.requireSystemService
@@ -89,6 +93,7 @@ class SleepMethodPieAccessibility(context: Context) : SleepGestureHandler.SleepM
 class SleepMethodDeviceAdmin(context: Context) : SleepGestureHandler.SleepMethod(context) {
     override suspend fun isSupported() = true
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override suspend fun sleep(launcher: LawnchairLauncher) {
         val devicePolicyManager: DevicePolicyManager = context.requireSystemService()
         if (!devicePolicyManager.isAdminActive(ComponentName(context, SleepDeviceAdmin::class.java))) {
@@ -102,11 +107,22 @@ class SleepMethodDeviceAdmin(context: Context) : SleepGestureHandler.SleepMethod
                     launcher.getString(R.string.dt2s_admin_hint),
                 )
             ComposeBottomSheet.show(launcher) {
+                val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+                val coroutineScope = rememberCoroutineScope()
+                val closeSheet = {
+                    coroutineScope.launch { sheetState.hide() }.invokeOnCompletion {
+                        close(true)
+                    }
+                    Unit
+                }
                 ServiceWarningDialog(
                     title = R.string.dt2s_admin_hint_title,
                     action = R.string.dt2s_admin_hint,
                     settingsIntent = intent,
-                ) { close(true) }
+                    sheetState = sheetState,
+                    onDismissRequest = { close(false) },
+                    handleClose = closeSheet,
+                )
             }
             return
         }

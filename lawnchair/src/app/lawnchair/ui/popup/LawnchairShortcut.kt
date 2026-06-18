@@ -15,8 +15,6 @@ import android.os.UserHandle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.ui.unit.dp
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.override.CustomizeAppDialog
 import app.lawnchair.preferences2.PreferenceManager2
@@ -134,7 +132,6 @@ class LawnchairShortcut {
                 AbstractFloatingView.closeAllOpenViews(launcher)
                 ComposeBottomSheet.show(
                     context = launcher,
-                    contentPaddings = PaddingValues(bottom = 64.dp),
                 ) {
                     CustomizeAppDialog(
                         icon = icon,

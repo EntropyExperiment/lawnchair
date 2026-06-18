@@ -12,8 +12,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,17 +30,29 @@ import com.android.launcher3.R
 
 object GestureWithAccessibilityHandler {
 
+    @OptIn(ExperimentalMaterial3Api::class)
     fun onTrigger(launcher: LawnchairLauncher, stringAction: Int, action: Int) {
         val app = launcher.lawnchairApp
         if (!app.isAccessibilityServiceBound()) {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             ComposeBottomSheet.show(launcher) {
+                val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+                val coroutineScope = rememberCoroutineScope()
+                val closeSheet = {
+                    coroutineScope.launch { sheetState.hide() }.invokeOnCompletion {
+                        close(true)
+                    }
+                    Unit
+                }
                 ServiceWarningDialog(
                     title = R.string.d2ts_recents_a11y_hint_title,
                     action = stringAction,
                     settingsIntent = intent,
-                ) { close(true) }
+                    sheetState = sheetState,
+                    onDismissRequest = { close(false) },
+                    handleClose = closeSheet,
+                )
             }
             return
         }
@@ -43,17 +60,21 @@ object GestureWithAccessibilityHandler {
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ServiceWarningDialog(
     title: Int,
     action: Int,
     settingsIntent: Intent,
+    onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     handleClose: () -> Unit,
 ) {
     val context = LocalContext.current
     ModalBottomSheetContent(
+        onDismissRequest = onDismissRequest,
+        sheetState = sheetState,
         modifier = modifier.padding(top = 16.dp),
         title = { Text(text = stringResource(id = title)) },
         text = {

@@ -30,7 +30,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -116,7 +115,7 @@ class ApplyIconPackActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ApplyIconPackSheet(
     packName: String,
@@ -124,44 +123,40 @@ private fun ApplyIconPackSheet(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    ModalBottomSheet(
+    ModalBottomSheetContent(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        containerColor = MaterialTheme.colorScheme.surface,
-    ) {
-        ModalBottomSheetContent(
-            title = { Text(text = stringResource(id = R.string.apply_icon_pack_title)) },
-            content = {
-                PreferenceGroup {
-                    Item {
-                        PreferenceTemplate(
-                            title = { Text(text = packName) },
-                            startWidget = {
-                                Image(
-                                    painter = rememberDrawablePainter(drawable = packIcon),
-                                    contentDescription = packName,
-                                    modifier = Modifier.size(36.dp),
-                                )
-                            },
-                        )
-                    }
+        title = { Text(text = stringResource(id = R.string.apply_icon_pack_title)) },
+        content = {
+            PreferenceGroup {
+                Item {
+                    PreferenceTemplate(
+                        title = { Text(text = packName) },
+                        startWidget = {
+                            Image(
+                                painter = rememberDrawablePainter(drawable = packIcon),
+                                contentDescription = packName,
+                                modifier = Modifier.size(36.dp),
+                            )
+                        },
+                    )
                 }
-            },
-            buttons = {
-                OutlinedButton(
-                    onClick = onDismiss,
-                    shapes = ButtonDefaults.shapes(),
-                ) {
-                    Text(text = stringResource(id = android.R.string.cancel))
-                }
-                Spacer(modifier = Modifier.requiredWidth(8.dp))
-                Button(
-                    onClick = onConfirm,
-                    shapes = ButtonDefaults.shapes(),
-                ) {
-                    Text(text = stringResource(id = R.string.action_apply))
-                }
-            },
-        )
-    }
+            }
+        },
+        buttons = {
+            OutlinedButton(
+                onClick = onDismiss,
+                shapes = ButtonDefaults.shapes(),
+            ) {
+                Text(text = stringResource(id = android.R.string.cancel))
+            }
+            Spacer(modifier = Modifier.requiredWidth(8.dp))
+            Button(
+                onClick = onConfirm,
+                shapes = ButtonDefaults.shapes(),
+            ) {
+                Text(text = stringResource(id = R.string.action_apply))
+            }
+        },
+    )
 }

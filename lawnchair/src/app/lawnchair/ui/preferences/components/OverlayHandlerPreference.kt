@@ -4,6 +4,7 @@ import android.R as AndroidR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ val overlayOptions = listOf(
     FullScreenOverlayMode.FADE_IN,
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OverlayHandlerPreference(
     adapter: PreferenceAdapter<FullScreenOverlayMode>,
