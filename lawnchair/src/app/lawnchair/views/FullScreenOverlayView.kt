@@ -19,8 +19,8 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
 import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.theme.color.tokens.ColorTokens
 import app.lawnchair.preferences2.firstCached
+import app.lawnchair.theme.color.tokens.ColorTokens
 import app.lawnchair.views.overlay.FullScreenOverlayMode
 
 class FullScreenOverlayView @JvmOverloads constructor(

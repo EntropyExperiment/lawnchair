@@ -7,7 +7,6 @@ import app.lawnchair.gestures.config.GestureHandlerConfig
 import app.lawnchair.gestures.type.GestureType
 import app.lawnchair.launcher
 import app.lawnchair.preferences2.PreferenceManager2
-
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.VibratorWrapper
 import kotlinx.coroutines.launch

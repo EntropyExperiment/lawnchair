@@ -9,6 +9,7 @@ import android.os.Looper
 import android.os.PatternMatcher
 import androidx.core.graphics.ColorUtils
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.theme.color.AndroidColor
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.ColorStyle
@@ -23,7 +24,6 @@ import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
 import com.android.systemui.monet.Style
-import app.lawnchair.preferences2.firstCached
 import com.patrykmichalik.opto.core.onEach
 import dev.kdrag0n.colorkt.Color
 import dev.kdrag0n.colorkt.conversion.ConversionGraph.convert

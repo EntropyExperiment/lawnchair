@@ -3,8 +3,8 @@ package app.lawnchair.preferences2
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.lawnchair.util.subscribeBlocking
-import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.core.PreferenceImpl
+import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.domain.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.distinctUntilChanged

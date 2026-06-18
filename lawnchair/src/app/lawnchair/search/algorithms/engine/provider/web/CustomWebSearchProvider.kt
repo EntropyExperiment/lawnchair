@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import app.lawnchair.preferences2.PreferenceManager2
-import com.android.launcher3.R
 import app.lawnchair.preferences2.firstCached
+import com.android.launcher3.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

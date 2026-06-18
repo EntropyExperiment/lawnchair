@@ -50,6 +50,7 @@ import androidx.core.graphics.luminance
 import androidx.core.os.UserManagerCompat
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.theme.color.ColorOption
 import app.lawnchair.theme.color.tokens.ColorTokens
 import com.android.launcher3.BaseActivity
@@ -60,7 +61,6 @@ import com.android.launcher3.util.Executors.MAIN_EXECUTOR
 import com.android.launcher3.util.Themes
 import com.android.launcher3.views.ActivityContext
 import com.android.systemui.shared.system.QuickStepContract
-import app.lawnchair.preferences2.firstCached
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Locale

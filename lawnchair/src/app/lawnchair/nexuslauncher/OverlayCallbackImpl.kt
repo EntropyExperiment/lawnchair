@@ -7,6 +7,7 @@ import android.os.Bundle
 import app.lawnchair.FeedBridge
 import app.lawnchair.LawnchairLauncher
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.Launcher
 import com.android.launcher3.LauncherPrefs
 import com.android.systemui.plugins.shared.LauncherOverlayManager
@@ -17,7 +18,6 @@ import com.google.android.libraries.launcherclient.LauncherClient
 import com.google.android.libraries.launcherclient.LauncherClientCallbacks
 import com.google.android.libraries.launcherclient.LauncherClientService
 import com.google.android.libraries.launcherclient.StaticInteger
-import app.lawnchair.preferences2.firstCached
 
 /**
  * Implements [LauncherOverlay] and passes all the corresponding events to [LauncherClient],

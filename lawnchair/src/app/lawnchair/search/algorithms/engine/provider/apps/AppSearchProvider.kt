@@ -2,12 +2,12 @@ package app.lawnchair.search.algorithms.engine.provider.apps
 
 import android.content.Context
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.search.algorithms.engine.SearchResult
 import app.lawnchair.search.algorithms.filterHiddenApps
 import com.android.launcher3.model.AllAppsList
 import com.android.launcher3.model.data.AppInfo
 import com.android.launcher3.search.StringMatcherUtility
-import app.lawnchair.preferences2.firstCached
 import java.util.Locale
 
 object AppSearchProvider {

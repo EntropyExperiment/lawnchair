@@ -2,11 +2,11 @@ package app.lawnchair.search.algorithms.engine
 
 import android.content.Context
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.search.adapter.SPACE
 import app.lawnchair.search.adapter.SearchTargetCompat
 import app.lawnchair.search.adapter.SearchTargetFactory
 import com.android.launcher3.R
-import app.lawnchair.preferences2.firstCached
 
 sealed interface SectionBuilder {
     /**

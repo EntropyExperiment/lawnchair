@@ -28,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import app.lawnchair.launcher
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.preferences2.subscribeBlocking
 import app.lawnchair.qsb.AssistantIconView
 import app.lawnchair.qsb.LawnQsbLayout.Companion.getLensIntent
@@ -54,7 +55,6 @@ import com.android.launcher3.allapps.search.AllAppsSearchBarController
 import com.android.launcher3.search.SearchCallback
 import com.android.launcher3.util.Themes
 import com.android.systemui.shared.system.BlurUtils
-import app.lawnchair.preferences2.firstCached
 import java.util.Locale
 import kotlin.math.max
 import kotlinx.coroutines.launch
