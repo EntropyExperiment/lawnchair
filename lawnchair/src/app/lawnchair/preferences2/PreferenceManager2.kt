@@ -756,11 +756,6 @@ class PreferenceManager2 @Inject constructor(
         onSet = { reloadHelper.reloadGrid() },
     )
 
-    val iconSwipeGestures = preference(
-        key = booleanPreferencesKey(name = "icon_swipe_gestures"),
-        defaultValue = false,
-    )
-
     val doubleTapGestureHandler = serializablePreference<GestureHandlerConfig>(
         key = stringPreferencesKey("double_tap_gesture_handler"),
         defaultValue = GestureHandlerConfig.Sleep,
