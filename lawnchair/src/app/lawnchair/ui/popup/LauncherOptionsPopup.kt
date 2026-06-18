@@ -5,13 +5,13 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import app.lawnchair.preferences2.PreferenceManager2.Companion.getInstance
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.Launcher
 import com.android.launcher3.R
 import com.android.launcher3.Utilities
 import com.android.launcher3.logging.StatsLogManager.LauncherEvent
 import com.android.launcher3.popup.SystemShortcut
 import com.android.launcher3.views.OptionsPopupView.OptionItem
-import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.core.setBlocking
 
 object LauncherOptionsPopup {
@@ -32,7 +32,7 @@ object LauncherOptionsPopup {
     ) {
         val prefs2 = getInstance(launcher)
 
-        val currentOrder = prefs2.launcherPopupOrder.firstBlocking()
+        val currentOrder = prefs2.launcherPopupOrder.firstCached(prefs2)
         val currentOptions = currentOrder.toLauncherOptions()
 
         // check for missing items in current options; if so, add them
@@ -61,9 +61,9 @@ object LauncherOptionsPopup {
         onStartHomeSettings: (View) -> Boolean,
     ): ArrayList<OptionItem> {
         val prefs2 = getInstance(launcher!!)
-        val lockHomeScreen = prefs2.lockHomeScreen.firstBlocking()
+        val lockHomeScreen = prefs2.lockHomeScreen.firstCached(prefs2)
         val optionOrder = prefs2
-            .launcherPopupOrder.firstBlocking().toLauncherOptions()
+            .launcherPopupOrder.firstCached(prefs2).toLauncherOptions()
 
         val wallpaperResString =
             if (Utilities.existsStyleWallpapers(launcher)) R.string.styles_wallpaper_button_text else R.string.wallpapers
@@ -220,17 +220,17 @@ object LauncherOptionsPopup {
     ) {
         val prefs2 = getInstance(launcher)
 
-        val lockHomeScreenButtonOnPopUp = prefs2.lockHomeScreenButtonOnPopUp.firstBlocking()
-        val editHomeScreenButtonOnPopUp = prefs2.editHomeScreenButtonOnPopUp.firstBlocking()
-        val showSystemSettingsEntryOnPopUp = prefs2.showSystemSettingsEntryOnPopUp.firstBlocking()
+        val lockHomeScreenButtonOnPopUp = prefs2.lockHomeScreenButtonOnPopUp.firstCached(prefs2)
+        val editHomeScreenButtonOnPopUp = prefs2.editHomeScreenButtonOnPopUp.firstCached(prefs2)
+        val showSystemSettingsEntryOnPopUp = prefs2.showSystemSettingsEntryOnPopUp.firstCached(prefs2)
 
         val optionOrder = prefs2.launcherPopupOrder
-        val legacyPopupOptionsMigrated = prefs2.legacyPopupOptionsMigrated.firstBlocking()
+        val legacyPopupOptionsMigrated = prefs2.legacyPopupOptionsMigrated.firstCached(prefs2)
 
         if (!legacyPopupOptionsMigrated) {
             prefs2.legacyPopupOptionsMigrated.setBlocking(true)
 
-            val options = optionOrder.firstBlocking().toLauncherOptions()
+            val options = optionOrder.firstCached(prefs2).toLauncherOptions()
 
             options.forEachIndexed { index, item ->
                 if (item.identifier == "lock") {

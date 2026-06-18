@@ -41,6 +41,19 @@ class IdpPreference(
 
 fun IdpPreference.firstBlocking(gridOption: InvariantDeviceProfile.GridOption) = runBlocking { get(gridOption = gridOption).first() }
 
+fun IdpPreference.firstCached(
+    gridOption: InvariantDeviceProfile.GridOption,
+    prefs2: PreferenceManager2,
+): Int {
+    val cached = prefs2.getCachedPreferences()
+    val value = cached[key]
+    return if (value == null || value == -1) {
+        defaultSelector(gridOption)
+    } else {
+        value
+    }
+}
+
 @Composable
 fun IdpPreference.state(
     gridOption: InvariantDeviceProfile.GridOption,

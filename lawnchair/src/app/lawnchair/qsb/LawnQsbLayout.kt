@@ -39,7 +39,7 @@ import com.android.launcher3.R
 import com.android.launcher3.qsb.QsbContainerView
 import com.android.launcher3.util.Themes
 import com.android.launcher3.views.ActivityContext
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
@@ -105,7 +105,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         setOnClickListener {
             val launcher = context.launcher
             launcher.lifecycleScope.launch {
-                if (preferenceManager2.matchHotseatQsbStyle.firstBlocking()) {
+                if (preferenceManager2.matchHotseatQsbStyle.firstCached(preferenceManager2)) {
                     launcher.appsView.searchUiManager.editText?.showKeyboard()
                     launcher.animateToAllApps()
                 } else {
@@ -237,7 +237,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             context: Context,
             preferenceManager: PreferenceManager2,
         ): QsbSearchProvider {
-            val provider = preferenceManager.hotseatQsbProvider.firstBlocking()
+            val provider = preferenceManager.hotseatQsbProvider.firstCached(preferenceManager)
 
             return if (provider == AppSearch ||
                 resolveIntent(context, provider.createSearchIntent()) ||

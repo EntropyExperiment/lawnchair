@@ -32,7 +32,7 @@ import com.android.launcher3.LauncherAppState
 import com.android.launcher3.R
 import com.android.launcher3.allapps.BaseAllAppsAdapter
 import com.android.launcher3.search.SearchCallback
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -101,7 +101,7 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
         } else {
             currentJob = coroutineScope.launch {
                 val prefs2 = PreferenceManager2.getInstance(context)
-                val maxHistory = prefs2.maxRecentResultCount.firstBlocking()
+                val maxHistory = prefs2.maxRecentResultCount.firstCached(prefs2)
 
                 val historyResults = historySearchProvider.getRecentKeywords(context, maxHistory)
 
@@ -136,7 +136,7 @@ class LawnchairLocalSearchAlgorithm(context: Context) : LawnchairSearchAlgorithm
         val prefs2 = PreferenceManager2.getInstance(context)
 
         if (prefs.searchResultStartPageSuggestion.get()) {
-            val provider = prefs2.webSuggestionProvider.firstBlocking()
+            val provider = prefs2.webSuggestionProvider.firstCached(prefs2)
             val webProvider = provider.configure(context)
 
             val providerName = if (webProvider is CustomWebSearchProvider) {

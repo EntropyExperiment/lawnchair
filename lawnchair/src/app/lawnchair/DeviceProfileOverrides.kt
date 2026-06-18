@@ -3,7 +3,7 @@ package app.lawnchair
 import android.content.Context
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.preferences2.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.InvariantDeviceProfile.INDEX_LANDSCAPE
@@ -14,7 +14,6 @@ import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
-import com.patrykmichalik.opto.core.firstBlocking
 import javax.inject.Inject
 
 @LauncherAppSingleton
@@ -97,20 +96,20 @@ class DeviceProfileOverrides @Inject constructor(
             prefs2: PreferenceManager2,
             defaultGrid: InvariantDeviceProfile.GridOption,
         ) : this(
-            numAllAppsColumns = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid),
+            numAllAppsColumns = prefs2.drawerColumns.firstCached(gridOption = defaultGrid, prefs2 = prefs2),
             numFolderRows = prefs.folderRows.get(defaultGrid),
-            numFolderColumns = prefs2.folderColumns.firstBlocking(gridOption = defaultGrid),
+            numFolderColumns = prefs2.folderColumns.firstCached(gridOption = defaultGrid, prefs2 = prefs2),
 
-            iconSizeFactor = prefs2.homeIconSizeFactor.firstBlocking(),
-            allAppsIconSizeFactor = prefs2.drawerIconSizeFactor.firstBlocking(),
+            iconSizeFactor = prefs2.homeIconSizeFactor.firstCached(prefs2),
+            allAppsIconSizeFactor = prefs2.drawerIconSizeFactor.firstCached(prefs2),
             allAppsIconTextSizeFactor =
-            if (prefs2.showIconLabelsInDrawer.firstBlocking()) {
-                prefs2.drawerIconLabelSizeFactor.firstBlocking()
+            if (prefs2.showIconLabelsInDrawer.firstCached(prefs2)) {
+                prefs2.drawerIconLabelSizeFactor.firstCached(prefs2)
             } else {
                 0f
             },
 
-            enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstBlocking(),
+            enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstCached(prefs2),
         )
 
         fun applyUi(idp: InvariantDeviceProfile) {
@@ -146,12 +145,12 @@ class DeviceProfileOverrides @Inject constructor(
         constructor(
             prefs2: PreferenceManager2,
         ) : this(
-            enableIconText = prefs2.showIconLabelsOnHomeScreen.firstBlocking(),
-            iconTextSizeFactor = prefs2.homeIconLabelSizeFactor.firstBlocking(),
-            enableIconTextFolder = prefs2.showIconLabelsOnHomeScreenFolder.firstBlocking(),
-            iconFolderTextSizeFactor = prefs2.homeIconLabelFolderSizeFactor.firstBlocking(),
-            enableAllAppsIconText = prefs2.showIconLabelsInDrawer.firstBlocking(),
-            allAppsIconTextSizeFactor = prefs2.drawerIconLabelSizeFactor.firstBlocking(),
+            enableIconText = prefs2.showIconLabelsOnHomeScreen.firstCached(prefs2),
+            iconTextSizeFactor = prefs2.homeIconLabelSizeFactor.firstCached(prefs2),
+            enableIconTextFolder = prefs2.showIconLabelsOnHomeScreenFolder.firstCached(prefs2),
+            iconFolderTextSizeFactor = prefs2.homeIconLabelFolderSizeFactor.firstCached(prefs2),
+            enableAllAppsIconText = prefs2.showIconLabelsInDrawer.firstCached(prefs2),
+            allAppsIconTextSizeFactor = prefs2.drawerIconLabelSizeFactor.firstCached(prefs2),
         )
 
         constructor(

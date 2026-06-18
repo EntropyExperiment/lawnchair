@@ -81,7 +81,7 @@ import com.android.launcher3.widget.RoundedCornerEnforcement
 import com.android.systemui.plugins.shared.LauncherOverlayManager
 import com.android.systemui.shared.system.QuickStepContract
 import com.kieronquinn.app.smartspacer.sdk.client.SmartspacerClient
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import com.patrykmichalik.opto.core.onEach
 import dev.kdrag0n.monet.theme.ColorScheme
 import java.util.stream.Stream
@@ -324,7 +324,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     override fun showDefaultOptions(x: Float, y: Float) {
-        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstBlocking()
+        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstCached(preferenceManager2)
 
         if (showWallpaperCarousel) {
             show<LawnchairLauncher>(
@@ -494,7 +494,7 @@ class LawnchairLauncher : QuickstepLauncher() {
      */
     private fun reloadIconsIfNeeded() {
         if (
-            preferenceManager2.alwaysReloadIcons.firstBlocking()
+            preferenceManager2.alwaysReloadIcons.firstCached(preferenceManager2)
         ) {
             LauncherAppState.getInstance(this).model.reloadIfActive()
         }

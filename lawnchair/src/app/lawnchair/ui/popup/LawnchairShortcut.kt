@@ -34,7 +34,7 @@ import com.android.launcher3.util.ApplicationInfoWrapper
 import com.android.launcher3.util.ComponentKey
 import com.android.launcher3.util.PackageManagerHelper
 import com.android.launcher3.views.ActivityContext
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import java.net.URISyntaxException
 
 class LawnchairShortcut {
@@ -43,7 +43,8 @@ class LawnchairShortcut {
 
         val CUSTOMIZE =
             SystemShortcut.Factory { activity: LawnchairLauncher, itemInfo, originalView ->
-                if (PreferenceManager2.getInstance(activity).lockHomeScreen.firstBlocking()) {
+                val prefs2 = PreferenceManager2.getInstance(activity)
+                if (prefs2.lockHomeScreen.firstCached(prefs2)) {
                     null
                 } else {
                     getAppInfo(activity, itemInfo)?.let { Customize(activity, it, itemInfo, originalView) }
@@ -59,7 +60,8 @@ class LawnchairShortcut {
 
         val UNINSTALL =
             SystemShortcut.Factory { activity: ActivityContext, itemInfo: ItemInfo, view: View ->
-                if (PreferenceManager2.INSTANCE.get(activity.asContext()).lockHomeScreen.firstBlocking()) {
+                val prefs2 = PreferenceManager2.INSTANCE.get(activity.asContext())
+                if (prefs2.lockHomeScreen.firstCached(prefs2)) {
                     return@Factory null
                 }
                 if (itemInfo.targetComponent == null) {

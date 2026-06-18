@@ -8,7 +8,7 @@ import app.lawnchair.preferences2.PreferenceManager2
 import app.lawnchair.search.algorithms.data.SettingInfo
 import app.lawnchair.search.algorithms.engine.SearchProvider
 import app.lawnchair.search.algorithms.engine.SearchResult
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import java.lang.reflect.Modifier
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +33,7 @@ object SettingsSearchProvider : SearchProvider {
             return@flow
         }
 
-        val maxResults = prefs2.maxSettingsEntryResultCount.firstBlocking()
+        val maxResults = prefs2.maxSettingsEntryResultCount.firstCached(prefs2)
         val settingsInfoList = findSettingsByNameAndAction(query, maxResults)
 
         val searchResults = settingsInfoList.map { settingInfo ->

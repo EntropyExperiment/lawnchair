@@ -88,7 +88,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
+import app.lawnchair.preferences2.PreferenceCacheExtensionsKt;
 import app.lawnchair.DeviceProfileOverrides;
 import app.lawnchair.LawnchairApp;
 import app.lawnchair.LawnchairAppKt;
@@ -351,8 +351,8 @@ public class DeviceProfile {
         mTextFactors = DeviceProfileOverrides.INSTANCE.get(context).getTextFactors();
 
         preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
-        allAppsCellHeightMultiplier = PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getDrawerCellHeightFactor());
+        allAppsCellHeightMultiplier = PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getDrawerCellHeightFactor(), preferenceManager2);
         this.inv = inv;
 
         mDeviceProperties = DeviceProperties.Factory.createDeviceProperties(
@@ -378,7 +378,7 @@ public class DeviceProfile {
         mIsScalableGrid = inv.isScalable && !isVerticalBarLayout() && !isMultiWindowMode;
         // Determine device posture.
         mInfo = info;
-        boolean isTaskBarEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableTaskbarOnPhone());
+        boolean isTaskBarEnabled = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getEnableTaskbarOnPhone(), preferenceManager2);
         boolean taskbarOrBubbleBarOnPhones = enableTinyTaskbar()
                 || (enableBubbleBar() && enableBubbleBarOnPhones());
         isTaskbarPresent = isTaskBarEnabled && (mDeviceProperties.isTablet() || (taskbarOrBubbleBarOnPhones && isGestureMode))
@@ -395,8 +395,8 @@ public class DeviceProfile {
 
         workspacePageIndicatorHeight = res.getDimensionPixelSize(
                 R.dimen.workspace_page_indicator_height);
-        workspacePageIndicatorHeight *= PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getPageIndicatorHeightFactor());
+        workspacePageIndicatorHeight *= PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getPageIndicatorHeightFactor(), preferenceManager2);
         mWorkspacePageIndicatorOverlapWorkspace =
                 res.getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
 
@@ -493,7 +493,7 @@ public class DeviceProfile {
 
         workspaceCellPaddingXPx = res.getDimensionPixelSize(R.dimen.dynamic_grid_cell_padding_x);
 
-        HotseatMode hotseatMode = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getHotseatMode());
+        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode(), preferenceManager2);
         boolean isQsbEnable = hotseatMode.getLayoutResourceId() != R.layout.empty_view;
 
         numShownHotseatIcons = displayOptionSpec.numShownHotseatIcons;
@@ -695,8 +695,8 @@ public class DeviceProfile {
         dimensionOverrideProvider.accept(this);
 
         // Check if notification dots should show the notification count
-        boolean showNotificationCount = PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getShowNotificationCount());
+        boolean showNotificationCount = PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getShowNotificationCount(), preferenceManager2);
 
         // Load the default font to use on notification dots
         Typeface typeface = null;
@@ -705,12 +705,12 @@ public class DeviceProfile {
         }
 
         // Load dot color
-        ColorOption dotColorOption = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getNotificationDotColor());
+        ColorOption dotColorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getNotificationDotColor(), preferenceManager2);
         int dotColor = dotColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         // Load counter color
-        ColorOption counterColorOption = PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getNotificationDotTextColor());
+        ColorOption counterColorOption = PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getNotificationDotTextColor(), preferenceManager2);
         int countColor = counterColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         // This is done last, after iconSizePx is calculated above.
@@ -858,7 +858,7 @@ public class DeviceProfile {
     /** Updates hotseatCellHeightPx and hotseatBarSizePx */
     private void updateHotseatSizes(int hotseatIconSizePx) {
         int iconTextHeight = Utilities.calculateTextHeight(iconTextSizePx);
-        boolean isLabelInDock = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getEnableLabelInDock());
+        boolean isLabelInDock = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getEnableLabelInDock(), preferenceManager2);
         // Ensure there is enough space for folder icons, which have a slightly larger radius.
         hotseatCellHeightPx = getIconSizeWithOverlap(hotseatIconSizePx * 2) - hotseatIconSizePx / 2;
         hotseatCellHeightPx += isLabelInDock ? iconTextHeight : 0;
@@ -866,8 +866,8 @@ public class DeviceProfile {
         
         int space = Math.abs(hotseatCellHeightPx / 2) - 16;
 
-        hotseatBarBottomSpacePx *= PreferenceExtensionsKt
-            .firstBlocking(preferenceManager2.getHotseatBottomFactor());
+        hotseatBarBottomSpacePx *= PreferenceCacheExtensionsKt
+            .firstCached(preferenceManager2.getHotseatBottomFactor(), preferenceManager2);
 
         if (isVerticalBarLayout()) {
             hotseatBarSizePx = hotseatIconSizePx + getHotseatProfile().getBarEdgePaddingPx()
@@ -884,7 +884,7 @@ public class DeviceProfile {
                     + hotseatBarBottomSpacePx
                     + space;
         }
-        var isHotseatEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.isHotseatEnabled());
+        var isHotseatEnabled = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.isHotseatEnabled(), preferenceManager2);
         if (!isHotseatEnabled) {
             hotseatBarSizePx = 0;
         }
@@ -1386,8 +1386,8 @@ public class DeviceProfile {
                     Math.max(0, desiredWorkspaceHorizontalMarginPx + cellLayoutHorizontalPadding
                             - (getAllAppsProfile().getBorderSpacePx().x / 2));
         }
-        var allAppLeftRightMarginMultiplier = PreferenceExtensionsKt
-                .firstBlocking(preferenceManager2.getDrawerLeftRightMarginFactor());
+        var allAppLeftRightMarginMultiplier = PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getDrawerLeftRightMarginFactor(), preferenceManager2);
         var marginMultiplier = allAppLeftRightMarginMultiplier * (!getDeviceProperties().isTablet() ? 100 : 2);
         allAppsLeftRightMargin = (int) (allAppsLeftRightMargin * marginMultiplier);
 

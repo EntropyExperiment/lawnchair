@@ -22,7 +22,7 @@ import app.lawnchair.util.isHidden
 import app.lawnchair.util.isRegularFile
 import app.lawnchair.util.mimeType2Extension
 import app.lawnchair.util.videoFileTypes
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -54,7 +54,7 @@ object FileSearchProvider : SearchProvider {
         }
 
         val prefs2 = PreferenceManager2.getInstance(context)
-        val maxResults = prefs2.maxFileResultCount.firstBlocking()
+        val maxResults = prefs2.maxFileResultCount.firstCached(prefs2)
 
         // check for permissions:
         val fileAccessManager = FileAccessManager.getInstance(context)

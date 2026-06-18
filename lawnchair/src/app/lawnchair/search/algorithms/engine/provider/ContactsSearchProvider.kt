@@ -11,7 +11,7 @@ import app.lawnchair.search.algorithms.data.ContactInfo
 import app.lawnchair.search.algorithms.engine.SearchPermission
 import app.lawnchair.search.algorithms.engine.SearchProvider
 import app.lawnchair.search.algorithms.engine.SearchResult
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +37,7 @@ object ContactsSearchProvider : SearchProvider, SearchPermission {
             return@flow
         }
 
-        val maxResults = prefs2.maxPeopleResultCount.firstBlocking()
+        val maxResults = prefs2.maxPeopleResultCount.firstCached(prefs2)
 
         // Call the newly encapsulated, private function.
         val contactInfoList = findContactsByName(context, query, maxResults)

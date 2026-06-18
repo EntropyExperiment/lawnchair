@@ -76,7 +76,7 @@ import app.lawnchair.util.isDefaultLauncher
 import app.lawnchair.util.restartLauncher
 import com.android.launcher3.BuildConfig
 import com.android.launcher3.R
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 
 @Composable
 fun PreferencesDashboard(
@@ -140,7 +140,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            val isSmartspaceEnabled = prefs2.enableSmartspace.firstBlocking()
+            val isSmartspaceEnabled = prefs2.enableSmartspace.firstCached(prefs2)
             Item {
                 PreferenceCategory(
                     label = stringResource(id = R.string.smartspace_widget),

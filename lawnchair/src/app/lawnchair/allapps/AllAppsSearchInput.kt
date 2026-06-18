@@ -54,7 +54,7 @@ import com.android.launcher3.allapps.search.AllAppsSearchBarController
 import com.android.launcher3.search.SearchCallback
 import com.android.launcher3.util.Themes
 import com.android.systemui.shared.system.BlurUtils
-import com.patrykmichalik.opto.core.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import java.util.Locale
 import kotlin.math.max
 import kotlinx.coroutines.launch
@@ -127,7 +127,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
         micIcon = ViewCompat.requireViewById(this, R.id.mic_btn)
         lensIcon = ViewCompat.requireViewById(this, R.id.lens_btn)
 
-        val shouldShowIcons = prefs2.matchHotseatQsbStyle.firstBlocking()
+        val shouldShowIcons = prefs2.matchHotseatQsbStyle.firstCached(prefs2)
 
         val searchProvider = getSearchProvider(context, prefs2)
         val isGoogle = searchProvider == Google || searchProvider == GoogleGo || searchProvider == PixelSearch
@@ -190,7 +190,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
         val currentPaddingRight = initialPaddingRight
         input.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                if (prefs2.searchAlgorithm.firstBlocking() != LawnchairSearchAlgorithm.APP_SEARCH) {
+                if (prefs2.searchAlgorithm.firstCached(prefs2) != LawnchairSearchAlgorithm.APP_SEARCH) {
                     input.setHint(R.string.all_apps_device_search_hint)
                 } else {
                     input.setHint(R.string.all_apps_search_bar_hint)
@@ -246,7 +246,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
             },
         )
 
-        val hide = prefs2.hideAppDrawerSearchBar.firstBlocking()
+        val hide = prefs2.hideAppDrawerSearchBar.firstCached(prefs2)
         if (hide) {
             isInvisible = true
             layoutParams.height = 0
