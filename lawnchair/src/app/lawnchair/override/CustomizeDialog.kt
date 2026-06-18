@@ -183,7 +183,7 @@ fun CustomizeAppDialog(
         }
     }
 
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val animatedFraction by animateFloatAsState(
         targetValue = if (
             bottomSheetState.targetValue == SheetValue.PartiallyExpanded ||
