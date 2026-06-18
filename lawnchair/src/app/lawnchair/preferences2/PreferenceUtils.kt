@@ -8,7 +8,7 @@ import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.domain.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.dropWhile
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -23,11 +23,12 @@ fun <C, S> PreferenceImpl<C, S>.subscribeBlocking(
     scope: CoroutineScope,
     block: (C) -> Unit,
 ) {
-    block(firstCached(prefs2))
+    val initial = firstCached(prefs2)
+    block(initial)
     get()
-        .onEach { block(it) }
-        .drop(1)
         .distinctUntilChanged()
+        .dropWhile { it == initial }
+        .onEach { block(it) }
         .launchIn(scope = scope)
 }
 

@@ -22,10 +22,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-@Deprecated(
-    "Use firstCached() instead for non-blocking reads",
-    ReplaceWith("firstCached(prefs2)", "app.lawnchair.preferences2.firstCached"),
-)
+@Deprecated("Use firstCached() instead for non-blocking reads")
 fun <T> Flow<T>.firstBlocking() = runBlocking { first() }
 
 @Composable
