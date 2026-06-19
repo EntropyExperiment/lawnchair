@@ -42,6 +42,7 @@ import app.lawnchair.gestures.ui.LawnchairShortcutActivity
 import app.lawnchair.nexuslauncher.OverlayCallbackImpl
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.root.RootHelperManager
 import app.lawnchair.root.RootNotAvailableException
 import app.lawnchair.theme.ThemeProvider
@@ -85,7 +86,6 @@ import com.android.launcher3.widget.RoundedCornerEnforcement
 import com.android.systemui.plugins.shared.LauncherOverlayManager
 import com.android.systemui.shared.system.QuickStepContract
 import com.kieronquinn.app.smartspacer.sdk.client.SmartspacerClient
-import com.patrykmichalik.opto.core.firstBlocking
 import com.patrykmichalik.opto.core.onEach
 import dev.kdrag0n.monet.theme.ColorScheme
 import java.util.stream.Stream
@@ -328,7 +328,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     override fun showDefaultOptions(x: Float, y: Float) {
-        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstBlocking()
+        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstCached()
 
         if (showWallpaperCarousel) {
             show<LawnchairLauncher>(
@@ -523,7 +523,7 @@ class LawnchairLauncher : QuickstepLauncher() {
      */
     private fun reloadIconsIfNeeded() {
         if (
-            preferenceManager2.alwaysReloadIcons.firstBlocking()
+            preferenceManager2.alwaysReloadIcons.firstCached()
         ) {
             LauncherAppState.getInstance(this).model.reloadIfActive()
         }
