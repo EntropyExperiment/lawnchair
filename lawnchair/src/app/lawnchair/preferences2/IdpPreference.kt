@@ -1,5 +1,6 @@
 package app.lawnchair.preferences2
 
+import androidx.annotation.Discouraged
 import androidx.compose.runtime.Composable
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -41,6 +42,7 @@ class IdpPreference(
     }
 }
 
+@Discouraged("This is a blocking read, use firstCached() for non-blocking reads")
 fun IdpPreference.firstBlocking(gridOption: InvariantDeviceProfile.GridOption) = runBlocking { get(gridOption = gridOption).first() }
 
 @JvmOverloads
