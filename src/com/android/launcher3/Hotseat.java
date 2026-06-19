@@ -128,8 +128,8 @@ public class Hotseat extends CellLayout implements Insettable {
 
         preferenceManager2 = PreferenceManager2.getInstance(context);
         preferenceManager = PreferenceManager.getInstance(context);
-        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode(), preferenceManager2);
-        var hotseatEnabled = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.isHotseatEnabled(), preferenceManager2);
+        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode());
+        var hotseatEnabled = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.isHotseatEnabled());
 
         if (!hotseatEnabled) {
             hotseatMode = DisabledHotseat.INSTANCE;
@@ -170,7 +170,7 @@ public class Hotseat extends CellLayout implements Insettable {
     private void setUpBackground() {
         if(!preferenceManager.getHotseatBG().get()) return;
 
-        var bgColor = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatBackgroundColor(), preferenceManager2);
+        var bgColor = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatBackgroundColor());
         var transparency = preferenceManager.getHotseatBGAlpha().get();
         var alphaValue = (transparency * 255) / 100;
         var baseColor = bgColor.getColorPreferenceEntry().getLightColor().invoke(getContext());

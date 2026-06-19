@@ -1423,7 +1423,7 @@ public abstract class PagedView<T extends View & PageIndicator> extends ViewGrou
                     // move to the left and fling to the right will register as a fling to the right.
 
                     boolean infiniteScroll = prefs.getInfiniteScrolling().get();
-                    boolean enableFeed = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableFeed(), prefs2);
+                    boolean enableFeed = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableFeed());
 
                     if (((isSignificantMove && !isDeltaLeft && !isFling) ||
                             (isFling && !isVelocityLeft)) && mCurrentPage > 0) {

@@ -113,7 +113,7 @@ public class SessionCommitReceiver extends BroadcastReceiver {
         if (Flags.privateSpaceRestrictItemDrag() 
             && user != null) {
             PreferenceManager2 prefs2 = PreferenceManager2.getInstance(context);
-            if (PreferenceCacheExtensionsKt.firstCached(prefs2.getLockHomeScreen(), prefs2)
+            if (PreferenceCacheExtensionsKt.firstCached(prefs2.getLockHomeScreen())
                 && UserCache.getInstance(context).getUserInfo(user).isPrivate()) {
                 return false;
             }

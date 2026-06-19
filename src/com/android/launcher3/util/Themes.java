@@ -68,7 +68,7 @@ public class Themes {
 
     public static int getActivityThemeRes(Context context, int wallpaperColorHints) {
         PreferenceManager2 prefs2 = PreferenceManager2.getInstance(context);
-        ColorMode colorMode = PreferenceCacheExtensionsKt.firstCached(prefs2.getWorkspaceTextColor(), prefs2);
+        ColorMode colorMode = PreferenceCacheExtensionsKt.firstCached(prefs2.getWorkspaceTextColor());
         boolean supportsDarkText = (wallpaperColorHints & HINT_SUPPORTS_DARK_TEXT) != 0;
         boolean isMainColorDark = (wallpaperColorHints & HINT_SUPPORTS_DARK_THEME) != 0;
 

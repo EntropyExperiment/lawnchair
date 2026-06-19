@@ -58,7 +58,7 @@ class IconShapeManager @Inject constructor(
         @JvmStatic
         fun getWindowTransitionRadius(context: Context): Float {
             val prefs = PreferenceManager2.getInstance(context)
-            return prefs.iconShape.firstCached(prefs).windowTransitionRadius
+            return prefs.iconShape.firstCached().windowTransitionRadius
         }
     }
 }

@@ -774,7 +774,7 @@ public class CellLayout extends ViewGroup {
         // Hotseat icons - modified by lawnchair
         if (child instanceof BubbleTextView bubbleChild) {
             boolean enableLabel = mContainerType == HOTSEAT
-                    ? PreferenceCacheExtensionsKt.firstCached(pref.getEnableLabelInDock(), pref)
+                    ? PreferenceCacheExtensionsKt.firstCached(pref.getEnableLabelInDock())
                     : true;
             bubbleChild.setTextVisibility(enableLabel);
         }
@@ -1926,7 +1926,7 @@ public class CellLayout extends ViewGroup {
 
     public boolean isOccupied(int x, int y) {
         if (x >= 0 && x < mCountX && y >= 0 && y < mCountY) {
-            return mOccupied.cells[x][y] && !PreferenceCacheExtensionsKt.firstCached(pref.getAllowWidgetOverlap(), pref);
+            return mOccupied.cells[x][y] && !PreferenceCacheExtensionsKt.firstCached(pref.getAllowWidgetOverlap());
         }
         if (BuildConfigs.IS_STUDIO_BUILD) {
             throw new RuntimeException("Position exceeds the bound of this CellLayout");
@@ -2009,7 +2009,7 @@ public class CellLayout extends ViewGroup {
     }
 
     public boolean isRegionVacant(int x, int y, int spanX, int spanY) {
-        return mOccupied.isRegionVacant(x, y, spanX, spanY) || PreferenceCacheExtensionsKt.firstCached(pref.getAllowWidgetOverlap(), pref);
+        return mOccupied.isRegionVacant(x, y, spanX, spanY) || PreferenceCacheExtensionsKt.firstCached(pref.getAllowWidgetOverlap());
     }
 
     public void setSpaceBetweenCellLayoutsPx(@Px int spaceBetweenCellLayoutsPx) {

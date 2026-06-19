@@ -14,10 +14,10 @@ object AppSearchProvider {
 
     fun search(context: Context, query: String, allApps: AllAppsList): List<SearchResult.App> {
         val prefs = PreferenceManager2.getInstance(context)
-        val hiddenApps = prefs.hiddenApps.firstCached(prefs)
-        val hiddenAppsInSearch = prefs.hiddenAppsInSearch.firstCached(prefs)
-        val maxAppResults = prefs.maxAppSearchResultCount.firstCached(prefs)
-        val enableFuzzySearch = prefs.enableFuzzySearch.firstCached(prefs)
+        val hiddenApps = prefs.hiddenApps.firstCached()
+        val hiddenAppsInSearch = prefs.hiddenAppsInSearch.firstCached()
+        val maxAppResults = prefs.maxAppSearchResultCount.firstCached()
+        val enableFuzzySearch = prefs.enableFuzzySearch.firstCached()
 
         val appResults = if (enableFuzzySearch) {
             fuzzySearch(allApps.data, query, maxAppResults, hiddenApps, hiddenAppsInSearch)

@@ -61,7 +61,7 @@ public class LauncherRootView extends InsettableFrameLayout {
         pref = PreferenceManager.getInstance(context);
         PreferenceManager2 prefs2 = PreferenceManager2.getInstance(context);
         
-        mEnableTaskbarOnPhone = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableTaskbarOnPhone(), prefs2);
+        mEnableTaskbarOnPhone = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableTaskbarOnPhone());
 
         FileAccessManager fileAccessManager = FileAccessManager.getInstance(context);
         FileAccessState wallpaperAccessState = fileAccessManager.getWallpaperAccessState().getValue();

@@ -132,7 +132,7 @@ data object HistorySectionBuilder : SectionBuilder {
         results: List<SearchResult>,
     ): List<SearchTargetCompat> {
         val prefs = PreferenceManager2.getInstance(context)
-        val webSuggestion = prefs.webSuggestionProvider.firstCached(prefs)
+        val webSuggestion = prefs.webSuggestionProvider.firstCached()
 
         val history = results.filterIsInstance<SearchResult.History>()
         if (history.isEmpty()) {

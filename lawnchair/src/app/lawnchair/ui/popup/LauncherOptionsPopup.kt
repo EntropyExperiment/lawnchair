@@ -32,7 +32,7 @@ object LauncherOptionsPopup {
     ) {
         val prefs2 = getInstance(launcher)
 
-        val currentOrder = prefs2.launcherPopupOrder.firstCached(prefs2)
+        val currentOrder = prefs2.launcherPopupOrder.firstCached()
         val currentOptions = currentOrder.toLauncherOptions()
 
         // check for missing items in current options; if so, add them
@@ -61,9 +61,9 @@ object LauncherOptionsPopup {
         onStartHomeSettings: (View) -> Boolean,
     ): ArrayList<OptionItem> {
         val prefs2 = getInstance(launcher!!)
-        val lockHomeScreen = prefs2.lockHomeScreen.firstCached(prefs2)
+        val lockHomeScreen = prefs2.lockHomeScreen.firstCached()
         val optionOrder = prefs2
-            .launcherPopupOrder.firstCached(prefs2).toLauncherOptions()
+            .launcherPopupOrder.firstCached().toLauncherOptions()
 
         val wallpaperResString =
             if (Utilities.existsStyleWallpapers(launcher)) R.string.styles_wallpaper_button_text else R.string.wallpapers
@@ -220,17 +220,17 @@ object LauncherOptionsPopup {
     ) {
         val prefs2 = getInstance(launcher)
 
-        val lockHomeScreenButtonOnPopUp = prefs2.lockHomeScreenButtonOnPopUp.firstCached(prefs2)
-        val editHomeScreenButtonOnPopUp = prefs2.editHomeScreenButtonOnPopUp.firstCached(prefs2)
-        val showSystemSettingsEntryOnPopUp = prefs2.showSystemSettingsEntryOnPopUp.firstCached(prefs2)
+        val lockHomeScreenButtonOnPopUp = prefs2.lockHomeScreenButtonOnPopUp.firstCached()
+        val editHomeScreenButtonOnPopUp = prefs2.editHomeScreenButtonOnPopUp.firstCached()
+        val showSystemSettingsEntryOnPopUp = prefs2.showSystemSettingsEntryOnPopUp.firstCached()
 
         val optionOrder = prefs2.launcherPopupOrder
-        val legacyPopupOptionsMigrated = prefs2.legacyPopupOptionsMigrated.firstCached(prefs2)
+        val legacyPopupOptionsMigrated = prefs2.legacyPopupOptionsMigrated.firstCached()
 
         if (!legacyPopupOptionsMigrated) {
             prefs2.legacyPopupOptionsMigrated.setBlocking(true)
 
-            val options = optionOrder.firstCached(prefs2).toLauncherOptions()
+            val options = optionOrder.firstCached().toLauncherOptions()
 
             options.forEachIndexed { index, item ->
                 if (item.identifier == "lock") {

@@ -48,9 +48,9 @@ object CustomWebSearchProvider : WebSearchProvider {
 
     override fun configure(context: Context): WebSearchProvider {
         val prefs = PreferenceManager2.getInstance(context)
-        searchUrlTemplate = prefs.webSuggestionProviderUrl.firstCached(prefs)
-        suggestionsUrlTemplate = prefs.webSuggestionProviderSuggestionsUrl.firstCached(prefs)
-        displayName = prefs.webSuggestionProviderName.firstCached(prefs)
+        searchUrlTemplate = prefs.webSuggestionProviderUrl.firstCached()
+        suggestionsUrlTemplate = prefs.webSuggestionProviderSuggestionsUrl.firstCached()
+        displayName = prefs.webSuggestionProviderName.firstCached()
         return this
     }
 

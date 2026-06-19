@@ -76,7 +76,7 @@ public class DepthController extends BaseDepthController implements StateHandler
         super(launcher);
         var prefs = PreferenceManager2.getInstance(launcher);
         var pref = prefs.getWallpaperDepthEffect();
-        mEnableDepth = PreferenceCacheExtensionsKt.firstCached(pref, prefs);
+        mEnableDepth = PreferenceCacheExtensionsKt.firstCached(pref);
     }
 
     private void onLauncherDraw() {

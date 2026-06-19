@@ -237,7 +237,7 @@ sealed class LawnchairSearchAlgorithm(
 
         fun create(context: Context): LawnchairSearchAlgorithm {
             val prefs = PreferenceManager2.getInstance(context)
-            val searchAlgorithm = prefs.searchAlgorithm.firstCached(prefs)
+            val searchAlgorithm = prefs.searchAlgorithm.firstCached()
 
             return when {
                 searchAlgorithm == ASI_SEARCH && isASISearchEnabled(context) -> LawnchairASISearchAlgorithm(

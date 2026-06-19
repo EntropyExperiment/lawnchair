@@ -37,7 +37,7 @@ object ContactsSearchProvider : SearchProvider, SearchPermission {
             return@flow
         }
 
-        val maxResults = prefs2.maxPeopleResultCount.firstCached(prefs2)
+        val maxResults = prefs2.maxPeopleResultCount.firstCached()
 
         // Call the newly encapsulated, private function.
         val contactInfoList = findContactsByName(context, query, maxResults)

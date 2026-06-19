@@ -136,7 +136,7 @@ public abstract class SystemShortcut<T extends ActivityContext> extends ItemInfo
 
     private static boolean isHomeLocked(ActivityContext context) {
         PreferenceManager2 prefs = PreferenceManager2.getInstance(context.asContext());
-        return PreferenceCacheExtensionsKt.firstCached(prefs.getLockHomeScreen(), prefs);
+        return PreferenceCacheExtensionsKt.firstCached(prefs.getLockHomeScreen());
     }
 
     public static final Factory<ActivityContext> WIDGETS = (context, itemInfo, originalView) -> {

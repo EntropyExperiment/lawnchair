@@ -125,7 +125,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private boolean canRemove(ItemInfo item) {
-        boolean isDeckLayoutFirst = PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout(), pref2);
+        boolean isDeckLayoutFirst = PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout());
         return isDeckLayoutFirst ? isCanDrop(item) : item.id != ItemInfo.NO_ID;
     }
 
@@ -169,7 +169,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         // because we already remove the drag view from the folder (if the drag originated from
         // a folder) in Folder.beginDrag()
         CharSequence announcement = getContext().getString(R.string.item_removed);
-        if (!PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout(), pref2)) {
+        if (!PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout())) {
             mDropTargetHandler.onAccessibilityDelete(view, item, announcement);
         }
     }

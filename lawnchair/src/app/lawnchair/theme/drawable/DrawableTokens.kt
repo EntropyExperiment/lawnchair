@@ -159,7 +159,7 @@ object DrawableTokens {
 
         // Get custom color from preferences
         val prefs2 = PreferenceManager2.getInstance(context)
-        val colorOption = prefs2.workProfileTabBackgroundColor.firstCached(prefs2)
+        val colorOption = prefs2.workProfileTabBackgroundColor.firstCached()
         val customColor = colorOption.colorPreferenceEntry.lightColor.invoke(context)
 
         val selectedColor = if (customColor != 0) {

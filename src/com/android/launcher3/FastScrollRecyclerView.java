@@ -99,7 +99,7 @@ public abstract class FastScrollRecyclerView extends RecyclerView  {
      * Saved the scroll position
      */
     public void saveScrollPosition() {
-        savedScrollPosition = PreferenceCacheExtensionsKt.firstCached(pref2.getRememberPosition(), pref2)
+        savedScrollPosition = PreferenceCacheExtensionsKt.firstCached(pref2.getRememberPosition())
                 ? computeVerticalScrollOffset()
                 : 0;
     }

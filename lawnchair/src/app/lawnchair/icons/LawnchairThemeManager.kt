@@ -86,14 +86,14 @@ constructor(
 
     private fun parseIconStateV2(oldState: IconState?): IconState {
         val currentAppShape: IconShape = try {
-            prefs2.iconShape.firstCached(prefs2)
+            prefs2.iconShape.firstCached()
         } catch (e: Exception) {
             Log.d(TAG, "Error getting icon shape", e)
             IconShape.Circle
         }
 
         val currentFolderShape: IconShape = try {
-            prefs2.folderShape.firstCached(prefs2)
+            prefs2.folderShape.firstCached()
         } catch (e: Exception) {
             Log.d(TAG, "Error getting folder shape", e)
             IconShape.Circle

@@ -400,7 +400,7 @@ public class GridSizeMigrationDBController {
             @NonNull final List<DbEntry> sortedItemsToPlace, List<Integer> idsInUse, Context context) {
         PreferenceManager2 prefs2 = PreferenceManager2.INSTANCE.get(context);
         
-        boolean smartspaceEnabled = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableSmartspace(), prefs2);
+        boolean smartspaceEnabled = PreferenceCacheExtensionsKt.firstCached(prefs2.getEnableSmartspace());
         
         final GridOccupancy occupied = new GridOccupancy(trgX, trgY);
         final Point trg = new Point(trgX, trgY);

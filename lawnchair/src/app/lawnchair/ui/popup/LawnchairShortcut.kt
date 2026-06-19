@@ -44,7 +44,7 @@ class LawnchairShortcut {
         val CUSTOMIZE =
             SystemShortcut.Factory { activity: LawnchairLauncher, itemInfo, originalView ->
                 val prefs2 = PreferenceManager2.getInstance(activity)
-                if (prefs2.lockHomeScreen.firstCached(prefs2)) {
+                if (prefs2.lockHomeScreen.firstCached()) {
                     null
                 } else {
                     getAppInfo(activity, itemInfo)?.let { Customize(activity, it, itemInfo, originalView) }
@@ -61,7 +61,7 @@ class LawnchairShortcut {
         val UNINSTALL =
             SystemShortcut.Factory { activity: ActivityContext, itemInfo: ItemInfo, view: View ->
                 val prefs2 = PreferenceManager2.INSTANCE.get(activity.asContext())
-                if (prefs2.lockHomeScreen.firstCached(prefs2)) {
+                if (prefs2.lockHomeScreen.firstCached()) {
                     return@Factory null
                 }
                 if (itemInfo.targetComponent == null) {

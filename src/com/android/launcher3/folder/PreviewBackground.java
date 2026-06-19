@@ -192,11 +192,11 @@ public class PreviewBackground extends DelegatedCellDrawing {
         PreferenceManager2 preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
 
         // Load folder color
-        ColorOption colorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getFolderColor(), preferenceManager2);
+        ColorOption colorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getFolderColor());
         int folderColor = colorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         TypedArray ta = context.getTheme().obtainStyledAttributes(R.styleable.FolderIconPreview);
-        ColorOption dotColorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getNotificationDotColor(), preferenceManager2);
+        ColorOption dotColorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getNotificationDotColor());
         mDotColor = dotColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
         mStrokeColor = ColorTokens.FolderIconBorderColor.resolveColor(context);
         if (folderColor != 0) {

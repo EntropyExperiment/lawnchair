@@ -178,18 +178,18 @@ val View?.pendingIntent get() = this?.getTag(pendingIntentTagId) as? PendingInte
 
 fun getFolderPreviewAlpha(context: Context): Int {
     val prefs2 = PreferenceManager2.getInstance(context)
-    return (prefs2.folderPreviewBackgroundOpacity.firstCached(prefs2) * 255).toInt()
+    return (prefs2.folderPreviewBackgroundOpacity.firstCached() * 255).toInt()
 }
 
 fun getFolderBackgroundAlpha(context: Context): Int {
     val prefs2 = PreferenceManager2.getInstance(context)
-    return (prefs2.folderBackgroundOpacity.firstCached(prefs2) * 255).toInt()
+    return (prefs2.folderBackgroundOpacity.firstCached() * 255).toInt()
 }
 
 /** Apply Lawnchair custom allapps colour to the provided colour */
 private fun getAllAppsBaseColor(context: Context, defaultColor: Int): Int {
     val prefs2 = PreferenceManager2.getInstance(context)
-    val colorOptions: ColorOption = prefs2.appDrawerBackgroundColor.firstCached(prefs2)
+    val colorOptions: ColorOption = prefs2.appDrawerBackgroundColor.firstCached()
     val color = colorOptions.colorPreferenceEntry.lightColor.invoke(context)
     val baseColor = if (color != 0) color else defaultColor
     return ColorUtils.setAlphaComponent(baseColor, 255)

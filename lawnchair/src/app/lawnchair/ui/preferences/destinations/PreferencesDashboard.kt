@@ -140,7 +140,7 @@ fun PreferencesDashboard(
                 )
             }
 
-            val isSmartspaceEnabled = prefs2.enableSmartspace.firstCached(prefs2)
+            val isSmartspaceEnabled = prefs2.enableSmartspace.firstCached()
             Item {
                 PreferenceCategory(
                     label = stringResource(id = R.string.smartspace_widget),

@@ -220,8 +220,8 @@ public class AppWidgetResizeFrame extends AbstractFloatingView implements View.O
 
     public static void showForWidget(LauncherAppWidgetHostView widget, CellLayout cellLayout) {
         PreferenceManager2 pref2 = PreferenceManager2.getInstance(widget.getContext());
-        boolean force = PreferenceCacheExtensionsKt.firstCached(pref2.getForceWidgetResize(), pref2);
-        boolean unlimited = PreferenceCacheExtensionsKt.firstCached(pref2.getWidgetUnlimitedSize(), pref2);
+        boolean force = PreferenceCacheExtensionsKt.firstCached(pref2.getForceWidgetResize());
+        boolean unlimited = PreferenceCacheExtensionsKt.firstCached(pref2.getWidgetUnlimitedSize());
 
         // If widget is not added to view hierarchy, we cannot show resize frame at correct location
         if (widget.getParent() == null) {

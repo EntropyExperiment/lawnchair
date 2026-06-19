@@ -54,7 +54,7 @@ object FileSearchProvider : SearchProvider {
         }
 
         val prefs2 = PreferenceManager2.getInstance(context)
-        val maxResults = prefs2.maxFileResultCount.firstCached(prefs2)
+        val maxResults = prefs2.maxFileResultCount.firstCached()
 
         // check for permissions:
         val fileAccessManager = FileAccessManager.getInstance(context)

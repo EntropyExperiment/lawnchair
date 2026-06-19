@@ -105,7 +105,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         setOnClickListener {
             val launcher = context.launcher
             launcher.lifecycleScope.launch {
-                if (preferenceManager2.matchHotseatQsbStyle.firstCached(preferenceManager2)) {
+                if (preferenceManager2.matchHotseatQsbStyle.firstCached()) {
                     launcher.appsView.searchUiManager.editText?.showKeyboard()
                     launcher.animateToAllApps()
                 } else {
@@ -237,7 +237,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             context: Context,
             preferenceManager: PreferenceManager2,
         ): QsbSearchProvider {
-            val provider = preferenceManager.hotseatQsbProvider.firstCached(preferenceManager)
+            val provider = preferenceManager.hotseatQsbProvider.firstCached()
 
             return if (provider == AppSearch ||
                 resolveIntent(context, provider.createSearchIntent()) ||

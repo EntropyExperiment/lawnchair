@@ -261,7 +261,7 @@ public class DatabaseHelper extends NoLocaleSQLiteHelper implements
             }
             case 30: {
                 PreferenceManager2 prefs = PreferenceManager2.INSTANCE.get(mContext);
-                if (PreferenceCacheExtensionsKt.firstCached(prefs.getEnableSmartspace(), prefs)) {
+                if (PreferenceCacheExtensionsKt.firstCached(prefs.getEnableSmartspace())) {
                     // Clean up first row in screen 0 as it might contain junk data.
                     Log.d(TAG, "Cleaning up first row");
                     db.delete(Favorites.TABLE_NAME,

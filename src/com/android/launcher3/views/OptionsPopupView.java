@@ -274,7 +274,7 @@ public class OptionsPopupView<T extends Context & ActivityContext> extends Arrow
     private static boolean toggleHomeScreenLock(View v) {
         Context context = v.getContext();
         PreferenceManager2 preferenceManager2 = PreferenceManager2.getInstance(context);
-        boolean oldValue = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getLockHomeScreen(), preferenceManager2);
+        boolean oldValue = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getLockHomeScreen());
         com.patrykmichalik.opto.core.PreferenceExtensionsKt.setBlocking(preferenceManager2.getLockHomeScreen(), !oldValue);
         return true;
     }

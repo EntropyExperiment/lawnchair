@@ -167,7 +167,7 @@ public class TaskbarView extends FrameLayout implements FolderIcon.FolderIconPar
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         PreferenceManager2 preferenceManager2 = PreferenceManager2.getInstance(context);
-        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode(), preferenceManager2);
+        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode());
         mActivityContext = ActivityContext.lookupContext(context);
         mIconLayoutBounds = mActivityContext.getTransientTaskbarBounds();
         Resources resources = getResources();

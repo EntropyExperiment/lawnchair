@@ -33,7 +33,7 @@ object SettingsSearchProvider : SearchProvider {
             return@flow
         }
 
-        val maxResults = prefs2.maxSettingsEntryResultCount.firstCached(prefs2)
+        val maxResults = prefs2.maxSettingsEntryResultCount.firstCached()
         val settingsInfoList = findSettingsByNameAndAction(query, maxResults)
 
         val searchResults = settingsInfoList.map { settingInfo ->

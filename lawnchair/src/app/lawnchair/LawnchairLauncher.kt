@@ -324,7 +324,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     }
 
     override fun showDefaultOptions(x: Float, y: Float) {
-        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstCached(preferenceManager2)
+        val showWallpaperCarousel = "+carousel" in preferenceManager2.launcherPopupOrder.firstCached()
 
         if (showWallpaperCarousel) {
             show<LawnchairLauncher>(
@@ -494,7 +494,7 @@ class LawnchairLauncher : QuickstepLauncher() {
      */
     private fun reloadIconsIfNeeded() {
         if (
-            preferenceManager2.alwaysReloadIcons.firstCached(preferenceManager2)
+            preferenceManager2.alwaysReloadIcons.firstCached()
         ) {
             LauncherAppState.getInstance(this).model.reloadIfActive()
         }

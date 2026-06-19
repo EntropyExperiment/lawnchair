@@ -262,7 +262,7 @@ public class BubbleView extends ConstraintLayout {
             mAppIcon.setVisibility(GONE);
         }
         mDotColor = bubble.getDotColor();
-        ColorOption dotColorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getNotificationDotColor(), preferenceManager2);
+        ColorOption dotColorOption = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getNotificationDotColor());
         int dotColor = dotColorOption.getColorPreferenceEntry().getLightColor().invoke(getContext());
         ColorOption counterColorOption = PreferenceCacheExtensionsKt
                 .firstCached(preferenceManager2.getNotificationDotTextColor(), preferenceManager2);

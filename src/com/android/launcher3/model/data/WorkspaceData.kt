@@ -48,7 +48,7 @@ sealed class WorkspaceData : Iterable<ItemInfo> {
     // LC-Note: Add context to replace QSB_ON_FIRST_SCREEN config
     fun collectWorkspaceScreens(context: Context): IntArray {
         val prefs2 = PreferenceManager2.INSTANCE.get(context)
-        val smartspaceEnabled = prefs2.enableSmartspace.firstCached(prefs2)
+        val smartspaceEnabled = prefs2.enableSmartspace.firstCached()
 
         val screenSet = IntSet()
         forEach { if (it.container == CONTAINER_DESKTOP) screenSet.add(it.screenId) }

@@ -196,7 +196,7 @@ fun Activity.showFullScreenOverlay(
     onOverlayReady: () -> Unit,
 ) {
     val pref2 = PreferenceManager2.getInstance(this)
-    val animationMode = pref2.closingAppOverlay.firstCached(pref2)
+    val animationMode = pref2.closingAppOverlay.firstCached()
     val overlayView = FullScreenOverlayView(this)
     val targetRootView = rootView ?: window.decorView.findViewById<ViewGroup>(android.R.id.content)
 

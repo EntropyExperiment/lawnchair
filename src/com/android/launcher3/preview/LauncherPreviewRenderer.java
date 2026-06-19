@@ -345,7 +345,7 @@ public class LauncherPreviewRenderer extends BaseContext
         populateHotseatPredictions(itemIdMap);
 
         // Add first page QSB
-        if (PreferenceCacheExtensionsKt.firstCached(mPreferenceManager2.getEnableSmartspace(), mPreferenceManager2)) {
+        if (PreferenceCacheExtensionsKt.firstCached(mPreferenceManager2.getEnableSmartspace())) {
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
             if (firstScreen != null) {
                 View qsb = mHomeElementInflater.inflate(mWorkspaceSearchContainer, firstScreen, false);

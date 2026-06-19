@@ -41,8 +41,8 @@ class ThemeProvider @Inject constructor(
     private val wallpaperManager = WallpaperManagerCompat.INSTANCE.get(context)
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
-    private var accentColor: ColorOption = preferenceManager2.accentColor.firstCached(preferenceManager2)
-    private var colorStyle: ColorStyle = preferenceManager2.colorStyle.firstCached(preferenceManager2)
+    private var accentColor: ColorOption = preferenceManager2.accentColor.firstCached()
+    private var colorStyle: ColorStyle = preferenceManager2.colorStyle.firstCached()
 
     private val colorSchemeMap = HashMap<Pair<Int, Style>, ColorScheme>()
     private val listeners = mutableListOf<ColorSchemeChangeListener>()

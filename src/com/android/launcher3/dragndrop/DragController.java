@@ -558,7 +558,7 @@ public abstract class DragController<T extends ActivityContext>
                     dropTarget.onDrop(mDragObject, mOptions);
                 }
                 accepted = true;
-                if (PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout(), pref2) && dropTarget instanceof DeleteDropTarget &&
+                if (PreferenceCacheExtensionsKt.firstCached(pref2.getDeckLayout()) && dropTarget instanceof DeleteDropTarget &&
                         isNeedCancelDrag(mDragObject.dragInfo)) {
                     cancelDrag();
                 }

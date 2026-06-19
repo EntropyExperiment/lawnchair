@@ -394,7 +394,7 @@ public class HotseatPredictionController implements DragController.DragListener,
     public SystemShortcut<QuickstepLauncher> getShortcut(QuickstepLauncher activity,
             ItemInfo itemInfo, View originalView) {
         PreferenceManager2 prefs = PreferenceManager2.getInstance(activity);
-        if (PreferenceCacheExtensionsKt.firstCached(prefs.getLockHomeScreen(), prefs)) {
+        if (PreferenceCacheExtensionsKt.firstCached(prefs.getLockHomeScreen())) {
             return null;
         }
         if (itemInfo.container != LauncherSettings.Favorites.CONTAINER_HOTSEAT_PREDICTION) {

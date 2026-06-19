@@ -507,7 +507,7 @@ class GridSizeMigrationLogic {
         val prefs2 = PreferenceManager2.INSTANCE.get(context)
 
         val next: Point =
-            if (screenId == 0 && prefs2.enableSmartspace.firstCached(prefs2)) {
+            if (screenId == 0 && prefs2.enableSmartspace.firstCached()) {
                 Point(0, 1 /* smartspace */)
             } else {
                 Point(0, 0)

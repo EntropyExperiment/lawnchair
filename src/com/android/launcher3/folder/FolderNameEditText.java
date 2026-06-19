@@ -139,7 +139,7 @@ public class FolderNameEditText extends ExtendedEditText {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (PreferenceCacheExtensionsKt.firstCached(mPreferenceManager2.getLockHomeScreen(), mPreferenceManager2)) return true;
+        if (PreferenceCacheExtensionsKt.firstCached(mPreferenceManager2.getLockHomeScreen())) return true;
         return super.onTouchEvent(event);
     }
 }

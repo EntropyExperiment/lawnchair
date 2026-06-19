@@ -283,7 +283,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
      *   onFinishInflate -> onPostCreate
      */
     protected void initContent() {
-        showFastScroller = PreferenceCacheExtensionsKt.firstCached(pref2.getShowScrollbar(), pref2);
+        showFastScroller = PreferenceCacheExtensionsKt.firstCached(pref2.getShowScrollbar());
 
         mMainAdapterProvider = mSearchUiDelegate.createMainAdapterProvider();
 
@@ -543,7 +543,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
      */
     public void reset(boolean animate, boolean exitSearch) {
         // Scroll Main and Work RV to top. Search RV is done in `resetSearch`.
-        if (!PreferenceCacheExtensionsKt.firstCached(pref2.getRememberPosition(), pref2)) {
+        if (!PreferenceCacheExtensionsKt.firstCached(pref2.getRememberPosition())) {
             for (int i = 0; i < mAH.size(); i++) {
                 if (i != SEARCH && mAH.get(i).mRecyclerView != null) {
                     mAH.get(i).mRecyclerView.scrollToTop();
@@ -817,7 +817,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     void setupHeader() {
         mAdditionalHeaderRows.forEach(row -> mHeader.onPluginDisconnected(row));
 
-        var hideHeader = PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar(), pref2);
+        var hideHeader = PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar());
         mHeader.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
         boolean tabsHidden = !mUsingTabs;
         mHeader.setup(
@@ -870,7 +870,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
     }
 
     protected void updateHeaderScroll(int scrolledOffset) {
-        if (PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar(), pref2))
+        if (PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar()))
             return;
         
         // Check if tab container background should be shown
@@ -1034,7 +1034,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     private void alignParentTop(View v, boolean includeTabsMargin) {
         if (!(v.getLayoutParams() instanceof RelativeLayout.LayoutParams)
-                || PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar(), pref2)) {
+                || PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar())) {
             return;
         }
 
@@ -1049,7 +1049,7 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     private void removeCustomRules(View v) {
         if (!(v.getLayoutParams() instanceof RelativeLayout.LayoutParams)
-                || PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar(), pref2)) {
+                || PreferenceCacheExtensionsKt.firstCached(pref2.getHideAppDrawerSearchBar())) {
             return;
         }
 
