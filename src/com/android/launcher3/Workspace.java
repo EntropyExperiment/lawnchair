@@ -668,7 +668,7 @@ public class Workspace<T extends View & PageIndicator> extends PagedView<T>
         }
         if (mFirstPagePinnedItem == null) {
             SmartspaceMode smartspaceMode = PreferenceCacheExtensionsKt
-                .firstCached(mPreferenceManager2.getSmartspaceMode(), mPreferenceManager2);
+                .firstCached(mPreferenceManager2.getSmartspaceMode());
             if (!smartspaceMode.isAvailable(this.mLauncher)) {
                 // The current smartspace mode is not available,
                 // setting the smartspace mode to one that is always available

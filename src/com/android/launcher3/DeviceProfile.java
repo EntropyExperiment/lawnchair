@@ -338,6 +338,10 @@ public class DeviceProfile {
 
     private final TextFactors mTextFactors;
     private float allAppsCellHeightMultiplier;
+    private float workspacePaddingHorizontalFactor;
+    private float workspacePaddingVerticalFactor;
+    private float widgetPaddingFactor;
+    private float drawerPaddingTopFactor;
     private PreferenceManager2 preferenceManager2 = null;
 
     /** TODO: Once we fully migrate to staged split, remove "isMultiWindowMode" */
@@ -352,7 +356,17 @@ public class DeviceProfile {
 
         preferenceManager2 = PreferenceManager2.INSTANCE.get(context);
         allAppsCellHeightMultiplier = PreferenceCacheExtensionsKt
-                .firstCached(preferenceManager2.getDrawerCellHeightFactor(), preferenceManager2);
+                .firstCached(preferenceManager2.getDrawerCellHeightFactor());
+        // Lawnchair: clamp the user padding factors to their slider ranges so a restored or
+        // manually edited preference can't feed out-of-range values into the layout math.
+        workspacePaddingHorizontalFactor = Utilities.boundToRange(PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getWorkspacePaddingHorizontalFactor()), 0f, 2f);
+        workspacePaddingVerticalFactor = Utilities.boundToRange(PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getWorkspacePaddingVerticalFactor()), 0f, 2f);
+        widgetPaddingFactor = Utilities.boundToRange(PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getWidgetPaddingFactor()), 0f, 2f);
+        drawerPaddingTopFactor = Utilities.boundToRange(PreferenceCacheExtensionsKt
+                .firstCached(preferenceManager2.getDrawerPaddingTopFactor()), 1f, 2f);
         this.inv = inv;
 
         mDeviceProperties = DeviceProperties.Factory.createDeviceProperties(
@@ -396,7 +410,7 @@ public class DeviceProfile {
         workspacePageIndicatorHeight = res.getDimensionPixelSize(
                 R.dimen.workspace_page_indicator_height);
         workspacePageIndicatorHeight *= PreferenceCacheExtensionsKt
-                .firstCached(preferenceManager2.getPageIndicatorHeightFactor(), preferenceManager2);
+                .firstCached(preferenceManager2.getPageIndicatorHeightFactor());
         mWorkspacePageIndicatorOverlapWorkspace =
                 res.getDimensionPixelSize(R.dimen.workspace_page_indicator_overlap_workspace);
 
@@ -636,6 +650,11 @@ public class DeviceProfile {
         }
 
         desiredWorkspaceHorizontalMarginPx = getHorizontalMarginPx(inv, res);
+        // Lawnchair: scale the horizontal workspace margin at the source so the cell layout
+        // width calculation uses the scaled value too. Otherwise cells keep their original
+        // width and get centered, leaving a visible side gap even at factor 0.
+        desiredWorkspaceHorizontalMarginPx =
+                Math.round(desiredWorkspaceHorizontalMarginPx * workspacePaddingHorizontalFactor);
         desiredWorkspaceHorizontalMarginOriginalPx = desiredWorkspaceHorizontalMarginPx;
 
         splitPlaceholderInset = res.getDimensionPixelSize(R.dimen.split_placeholder_inset);
@@ -684,6 +703,9 @@ public class DeviceProfile {
             allAppsShiftRange =
                     res.getDimensionPixelSize(R.dimen.all_apps_starting_vertical_translate);
         }
+        // Lawnchair: extra user-configurable app drawer top padding. The factor is additive
+        // and slider-ranged 100%-200% (default 100%), so subtract 1f to keep 100% as no change.
+        allAppsPadding.top += Math.round(iconSizePx * (drawerPaddingTopFactor - 1f));
         allAppsOpenDuration = res.getInteger(R.integer.config_allAppsOpenDuration);
         allAppsCloseDuration = res.getInteger(R.integer.config_allAppsCloseDuration);
 
@@ -696,7 +718,7 @@ public class DeviceProfile {
 
         // Check if notification dots should show the notification count
         boolean showNotificationCount = PreferenceCacheExtensionsKt
-                .firstCached(preferenceManager2.getShowNotificationCount(), preferenceManager2);
+                .firstCached(preferenceManager2.getShowNotificationCount());
 
         // Load the default font to use on notification dots
         Typeface typeface = null;
@@ -710,7 +732,7 @@ public class DeviceProfile {
 
         // Load counter color
         ColorOption counterColorOption = PreferenceCacheExtensionsKt
-                .firstCached(preferenceManager2.getNotificationDotTextColor(), preferenceManager2);
+                .firstCached(preferenceManager2.getNotificationDotTextColor());
         int countColor = counterColorOption.getColorPreferenceEntry().getLightColor().invoke(context);
 
         // This is done last, after iconSizePx is calculated above.
@@ -867,7 +889,7 @@ public class DeviceProfile {
         int space = Math.abs(hotseatCellHeightPx / 2) - 16;
 
         hotseatBarBottomSpacePx *= PreferenceCacheExtensionsKt
-            .firstCached(preferenceManager2.getHotseatBottomFactor(), preferenceManager2);
+            .firstCached(preferenceManager2.getHotseatBottomFactor());
 
         if (isVerticalBarLayout()) {
             hotseatBarSizePx = hotseatIconSizePx + getHotseatProfile().getBarEdgePaddingPx()
@@ -1350,6 +1372,11 @@ public class DeviceProfile {
         } else {
             widgetPadding.setEmpty();
         }
+        // Lawnchair: scale widget padding by user factor (0 = remove, 1 = default).
+        widgetPadding.left = Math.round(widgetPadding.left * widgetPaddingFactor);
+        widgetPadding.right = Math.round(widgetPadding.right * widgetPaddingFactor);
+        widgetPadding.top = Math.round(widgetPadding.top * widgetPaddingFactor);
+        widgetPadding.bottom = Math.round(widgetPadding.bottom * widgetPaddingFactor);
     }
 
     /**
@@ -1387,7 +1414,7 @@ public class DeviceProfile {
                             - (getAllAppsProfile().getBorderSpacePx().x / 2));
         }
         var allAppLeftRightMarginMultiplier = PreferenceCacheExtensionsKt
-                .firstCached(preferenceManager2.getDrawerLeftRightMarginFactor(), preferenceManager2);
+                .firstCached(preferenceManager2.getDrawerLeftRightMarginFactor());
         var marginMultiplier = allAppLeftRightMarginMultiplier * (!getDeviceProperties().isTablet() ? 100 : 2);
         allAppsLeftRightMargin = (int) (allAppsLeftRightMargin * marginMultiplier);
 
@@ -1718,6 +1745,16 @@ public class DeviceProfile {
                 paddingLeft = isSeascape() ? desiredWorkspaceHorizontalMarginPx : 0;
                 paddingRight = isSeascape() ? 0 : desiredWorkspaceHorizontalMarginPx;
             }
+
+            // Lawnchair: scale vertical workspace padding by user factor.
+            // (Horizontal is applied at the source margin so the cells fill the freed space.)
+            // The dock (hotseatBarSizePx) reservation in the bottom padding must be preserved,
+            // otherwise reducing the factor pulls the last row into the dock and clips it.
+            paddingTop = Math.round(paddingTop * workspacePaddingVerticalFactor);
+            int bottomHotseatReserve = Math.min(hotseatBarSizePx, paddingBottom);
+            paddingBottom = bottomHotseatReserve
+                    + Math.round((paddingBottom - bottomHotseatReserve) * workspacePaddingVerticalFactor);
+
             padding.set(paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
         insetPadding(workspacePadding, cellLayoutPaddingPx);
