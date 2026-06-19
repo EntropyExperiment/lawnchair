@@ -9,12 +9,12 @@ import android.content.pm.LauncherApps
 import android.os.Process
 import android.os.UserHandle
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.AppFilter
 import com.android.launcher3.LauncherSettings.Favorites.CONTAINER_HOTSEAT
 import com.android.launcher3.model.BgDataModel
 import com.android.launcher3.model.WidgetItem
 import com.android.launcher3.pm.UserCache
-import com.patrykmichalik.opto.core.firstBlocking
 
 /**
  * Compiles ranked store keys into [AppTarget] lists for all-apps and widget
@@ -155,7 +155,7 @@ class LawnchairPredictionEngine(
     }
 
     private fun shouldUseWeightedUsageStats(): Boolean {
-        if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstBlocking()) return false
+        if (!prefs2.lawnchairPredictorUseWeightedUsageStats.firstCached()) return false
         val appOps = context.getSystemService(AppOpsManager::class.java)
         return appOps.checkOpNoThrow(
             AppOpsManager.OPSTR_GET_USAGE_STATS,

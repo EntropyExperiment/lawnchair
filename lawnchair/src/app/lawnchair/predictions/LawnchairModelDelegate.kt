@@ -3,13 +3,13 @@ package app.lawnchair.predictions
 import android.content.Context
 import androidx.annotation.WorkerThread
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.dagger.ApplicationContext
 import com.android.launcher3.model.PredictedItemFactory
 import com.android.launcher3.model.QuickstepModelDelegate
 import com.android.launcher3.pm.UserCache
 import com.android.launcher3.util.Executors.MODEL_EXECUTOR
-import com.patrykmichalik.opto.core.firstBlocking
 import javax.inject.Inject
 import javax.inject.Named
 import kotlinx.coroutines.CoroutineName
@@ -89,10 +89,10 @@ class LawnchairModelDelegate @Inject constructor(
     }
 
     private fun currentPredictionMode(): PredictionMode {
-        if (!prefs2.enableGlobalPrediction.firstBlocking()) {
+        if (!prefs2.enableGlobalPrediction.firstCached()) {
             return NoPredictor
         }
-        return prefs2.predictionMode.firstBlocking()
+        return prefs2.predictionMode.firstCached()
     }
 
     private fun destroyPredictors() {
