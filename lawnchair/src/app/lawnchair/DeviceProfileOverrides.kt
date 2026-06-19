@@ -3,7 +3,7 @@ package app.lawnchair
 import android.content.Context
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
-import app.lawnchair.preferences2.firstBlocking
+import app.lawnchair.preferences2.firstCached
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.InvariantDeviceProfile.INDEX_DEFAULT
 import com.android.launcher3.InvariantDeviceProfile.INDEX_LANDSCAPE
@@ -14,7 +14,6 @@ import com.android.launcher3.dagger.LauncherAppComponent
 import com.android.launcher3.dagger.LauncherAppSingleton
 import com.android.launcher3.util.DaggerSingletonObject
 import com.android.launcher3.util.SafeCloseable
-import com.patrykmichalik.opto.core.firstBlocking
 import javax.inject.Inject
 
 @LauncherAppSingleton
@@ -115,20 +114,20 @@ class DeviceProfileOverrides @Inject constructor(
             deviceType: Int,
             previewOverrides: PreviewOverrides,
         ) : this(
-            numAllAppsColumns = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid),
+            numAllAppsColumns = prefs2.drawerColumns.firstCached(gridOption = defaultGrid),
             numFolderRows = prefs.folderRows.get(defaultGrid),
-            numFolderColumns = prefs2.folderColumns.firstBlocking(gridOption = defaultGrid),
+            numFolderColumns = prefs2.folderColumns.firstCached(gridOption = defaultGrid),
 
-            iconSizeFactor = prefs2.homeIconSizeFactor.firstBlocking(),
-            allAppsIconSizeFactor = prefs2.drawerIconSizeFactor.firstBlocking(),
+            iconSizeFactor = prefs2.homeIconSizeFactor.firstCached(),
+            allAppsIconSizeFactor = prefs2.drawerIconSizeFactor.firstCached(),
             allAppsIconTextSizeFactor =
-            if (prefs2.showIconLabelsInDrawer.firstBlocking()) {
-                prefs2.drawerIconLabelSizeFactor.firstBlocking()
+            if (prefs2.showIconLabelsInDrawer.firstCached()) {
+                prefs2.drawerIconLabelSizeFactor.firstCached()
             } else {
                 0f
             },
 
-            enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstBlocking(),
+            enableTaskbarOnPhone = prefs2.enableTaskbarOnPhone.firstCached(),
 
             foldableShownHotseatIcons = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
                 val folded = prefs.hotseatColumns.get()
@@ -143,8 +142,8 @@ class DeviceProfileOverrides @Inject constructor(
                 -1
             },
             foldableDatabaseAllAppsColumns = if (deviceType == InvariantDeviceProfile.TYPE_MULTI_DISPLAY) {
-                val folded = prefs2.drawerColumns.firstBlocking(gridOption = defaultGrid)
-                val unfolded = prefs2.drawerColumnsUnfolded.firstBlocking(gridOption = defaultGrid)
+                val folded = prefs2.drawerColumns.firstCached(gridOption = defaultGrid)
+                val unfolded = prefs2.drawerColumnsUnfolded.firstCached(gridOption = defaultGrid)
                 folded.coerceAtLeast(unfolded)
             } else {
                 -1
@@ -195,12 +194,12 @@ class DeviceProfileOverrides @Inject constructor(
         constructor(
             prefs2: PreferenceManager2,
         ) : this(
-            enableIconText = prefs2.showIconLabelsOnHomeScreen.firstBlocking(),
-            iconTextSizeFactor = prefs2.homeIconLabelSizeFactor.firstBlocking(),
-            enableIconTextFolder = prefs2.showIconLabelsOnHomeScreenFolder.firstBlocking(),
-            iconFolderTextSizeFactor = prefs2.homeIconLabelFolderSizeFactor.firstBlocking(),
-            enableAllAppsIconText = prefs2.showIconLabelsInDrawer.firstBlocking(),
-            allAppsIconTextSizeFactor = prefs2.drawerIconLabelSizeFactor.firstBlocking(),
+            enableIconText = prefs2.showIconLabelsOnHomeScreen.firstCached(),
+            iconTextSizeFactor = prefs2.homeIconLabelSizeFactor.firstCached(),
+            enableIconTextFolder = prefs2.showIconLabelsOnHomeScreenFolder.firstCached(),
+            iconFolderTextSizeFactor = prefs2.homeIconLabelFolderSizeFactor.firstCached(),
+            enableAllAppsIconText = prefs2.showIconLabelsInDrawer.firstCached(),
+            allAppsIconTextSizeFactor = prefs2.drawerIconLabelSizeFactor.firstCached(),
         )
 
         constructor(

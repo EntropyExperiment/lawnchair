@@ -28,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import app.lawnchair.launcher
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.preferences2.subscribeBlocking
 import app.lawnchair.qsb.AssistantIconView
 import app.lawnchair.qsb.LawnQsbLayout.Companion.getLensIntent
@@ -54,7 +55,6 @@ import com.android.launcher3.allapps.search.AllAppsSearchBarController
 import com.android.launcher3.search.SearchCallback
 import com.android.launcher3.util.Themes
 import com.android.systemui.shared.system.BlurUtils
-import com.patrykmichalik.opto.core.firstBlocking
 import java.util.Locale
 import kotlin.math.max
 import kotlinx.coroutines.launch
@@ -127,7 +127,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
         micIcon = ViewCompat.requireViewById(this, R.id.mic_btn)
         lensIcon = ViewCompat.requireViewById(this, R.id.lens_btn)
 
-        val shouldShowIcons = prefs2.matchHotseatQsbStyle.firstBlocking()
+        val shouldShowIcons = prefs2.matchHotseatQsbStyle.firstCached()
 
         val searchProvider = getSearchProvider(context, prefs2)
         val isGoogle = searchProvider == Google || searchProvider == GoogleGo || searchProvider == PixelSearch
@@ -149,7 +149,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
             }
         }
 
-        prefs2.themedHotseatQsb.subscribeBlocking(scope = viewAttachedScope) { themed ->
+        prefs2.themedHotseatQsb.subscribeBlocking(prefs2 = prefs2, scope = viewAttachedScope) { themed ->
             with(searchIcon) {
                 isVisible = true
 
@@ -190,7 +190,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
         val currentPaddingRight = initialPaddingRight
         input.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                if (prefs2.searchAlgorithm.firstBlocking() != LawnchairSearchAlgorithm.APP_SEARCH) {
+                if (prefs2.searchAlgorithm.firstCached() != LawnchairSearchAlgorithm.APP_SEARCH) {
                     input.setHint(R.string.all_apps_device_search_hint)
                 } else {
                     input.setHint(R.string.all_apps_search_bar_hint)
@@ -246,7 +246,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
             },
         )
 
-        val hide = prefs2.hideAppDrawerSearchBar.firstBlocking()
+        val hide = prefs2.hideAppDrawerSearchBar.firstCached()
         if (hide) {
             isInvisible = true
             layoutParams.height = 0
