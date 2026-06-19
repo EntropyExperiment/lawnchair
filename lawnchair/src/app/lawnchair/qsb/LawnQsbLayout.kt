@@ -71,7 +71,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         preferenceManager2 = PreferenceManager2.getInstance(context)
 
         val attachedScope = viewAttachedScope
-        preferenceManager2.strokeColorStyle.subscribeBlocking(scope = attachedScope) {
+        preferenceManager2.strokeColorStyle.subscribeBlocking(prefs2 = preferenceManager2, scope = attachedScope) {
             strokeColor = it
             setUpBackground()
         }
@@ -82,7 +82,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         val isGoogle = searchProvider == Google || searchProvider == GoogleGo || searchProvider == PixelSearch
         val supportsLens = searchProvider == Google || searchProvider == PixelSearch
 
-        preferenceManager2.themedHotseatQsb.subscribeBlocking(scope = attachedScope) { themed ->
+        preferenceManager2.themedHotseatQsb.subscribeBlocking(prefs2 = preferenceManager2, scope = attachedScope) { themed ->
             setUpBackground(themed)
 
             val iconRes = if (themed) searchProvider.themedIcon else searchProvider.icon

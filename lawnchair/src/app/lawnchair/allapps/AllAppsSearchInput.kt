@@ -149,7 +149,7 @@ class AllAppsSearchInput(context: Context, attrs: AttributeSet?) :
             }
         }
 
-        prefs2.themedHotseatQsb.subscribeBlocking(scope = viewAttachedScope) { themed ->
+        prefs2.themedHotseatQsb.subscribeBlocking(prefs2 = prefs2, scope = viewAttachedScope) { themed ->
             with(searchIcon) {
                 isVisible = true
 
