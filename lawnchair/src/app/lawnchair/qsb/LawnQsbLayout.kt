@@ -23,6 +23,7 @@ import app.lawnchair.launcher
 import app.lawnchair.launcherNullable
 import app.lawnchair.preferences.PreferenceManager
 import app.lawnchair.preferences2.PreferenceManager2
+import app.lawnchair.preferences2.firstCached
 import app.lawnchair.preferences2.subscribeBlocking
 import app.lawnchair.qsb.providers.AppSearch
 import app.lawnchair.qsb.providers.Google
@@ -39,7 +40,6 @@ import com.android.launcher3.R
 import com.android.launcher3.qsb.QsbContainerView
 import com.android.launcher3.util.Themes
 import com.android.launcher3.views.ActivityContext
-import com.patrykmichalik.opto.core.firstBlocking
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
@@ -71,7 +71,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         preferenceManager2 = PreferenceManager2.getInstance(context)
 
         val attachedScope = viewAttachedScope
-        preferenceManager2.strokeColorStyle.subscribeBlocking(scope = attachedScope) {
+        preferenceManager2.strokeColorStyle.subscribeBlocking(prefs2 = preferenceManager2, scope = attachedScope) {
             strokeColor = it
             setUpBackground()
         }
@@ -82,7 +82,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         val isGoogle = searchProvider == Google || searchProvider == GoogleGo || searchProvider == PixelSearch
         val supportsLens = searchProvider == Google || searchProvider == PixelSearch
 
-        preferenceManager2.themedHotseatQsb.subscribeBlocking(scope = attachedScope) { themed ->
+        preferenceManager2.themedHotseatQsb.subscribeBlocking(prefs2 = preferenceManager2, scope = attachedScope) { themed ->
             setUpBackground(themed)
 
             val iconRes = if (themed) searchProvider.themedIcon else searchProvider.icon
@@ -105,7 +105,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         setOnClickListener {
             val launcher = context.launcher
             launcher.lifecycleScope.launch {
-                if (preferenceManager2.matchHotseatQsbStyle.firstBlocking()) {
+                if (preferenceManager2.matchHotseatQsbStyle.firstCached()) {
                     launcher.appsView.searchUiManager.editText?.showKeyboard()
                     launcher.animateToAllApps()
                 } else {
@@ -237,7 +237,7 @@ class LawnQsbLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             context: Context,
             preferenceManager: PreferenceManager2,
         ): QsbSearchProvider {
-            val provider = preferenceManager.hotseatQsbProvider.firstBlocking()
+            val provider = preferenceManager.hotseatQsbProvider.firstCached()
 
             return if (provider == AppSearch ||
                 resolveIntent(context, provider.createSearchIntent()) ||
