@@ -444,6 +444,8 @@ class FontCache @Inject constructor(
         }
 
         companion object {
+            private val extractionLock = Any()
+
             private fun createTypeface(context: Context, resId: Int, axes: Map<String, Float>): Typeface? {
                 if (axes.isEmpty()) {
                     return ResourcesCompat.getFont(context, resId)
@@ -453,12 +455,14 @@ class FontCache @Inject constructor(
                     // in the APK, so openRawResourceFd() throws and the variation settings would
                     // be silently dropped, leaving the font at its default (non-expressive) axes.
                     val cacheFile = File(context.cacheDir, "font_res_$resId.ttf")
-                    if (!cacheFile.exists() || cacheFile.length() == 0L) {
-                        val tmpFile = File(context.cacheDir, "${cacheFile.name}.tmp")
-                        context.resources.openRawResource(resId).use { input ->
-                            tmpFile.outputStream().use { output -> input.copyTo(output) }
+                    synchronized(extractionLock) {
+                        if (!cacheFile.exists() || cacheFile.length() == 0L) {
+                            val tmpFile = File(context.cacheDir, "${cacheFile.name}.tmp")
+                            context.resources.openRawResource(resId).use { input ->
+                                tmpFile.outputStream().use { output -> input.copyTo(output) }
+                            }
+                            tmpFile.renameTo(cacheFile)
                         }
-                        tmpFile.renameTo(cacheFile)
                     }
                     Typeface.Builder(cacheFile)
                         .setFontVariationSettings(FontAxes.mapToString(axes))
