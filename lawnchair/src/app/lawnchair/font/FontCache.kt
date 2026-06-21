@@ -120,6 +120,18 @@ class FontCache @Inject constructor(
         ),
     )
 
+    /**
+     * A Google Sans Flex [ResourceFont] with the given variation [axes]. Used to back the AOSP
+     * Material 3 Expressive `variable-*` font family names, mirroring
+     * [app.lawnchair.ui.theme.GoogleSansFlex].
+     */
+    fun googleSansFlexVariable(axes: Map<String, Float>): ResourceFont = ResourceFont(
+        context,
+        R.font.googlesansflex_variable,
+        "Google Sans Flex",
+        axes,
+    )
+
     suspend fun getTypeface(font: Font): Typeface? {
         return loadFontAsync(font).await()?.typeface
     }
@@ -437,11 +449,20 @@ class FontCache @Inject constructor(
                     return ResourcesCompat.getFont(context, resId)
                 }
                 return try {
-                    context.resources.openRawResourceFd(resId).use { pfd ->
-                        Typeface.Builder(pfd.fileDescriptor)
-                            .setFontVariationSettings(FontAxes.mapToString(axes))
-                            .build()
+                    // Our locally stored Google Sans Flex font is stored compressed (DEFLATED)
+                    // in the APK, so openRawResourceFd() throws and the variation settings would
+                    // be silently dropped, leaving the font at its default (non-expressive) axes.
+                    val cacheFile = File(context.cacheDir, "font_res_$resId.ttf")
+                    if (!cacheFile.exists() || cacheFile.length() == 0L) {
+                        val tmpFile = File(context.cacheDir, "${cacheFile.name}.tmp")
+                        context.resources.openRawResource(resId).use { input ->
+                            tmpFile.outputStream().use { output -> input.copyTo(output) }
+                        }
+                        tmpFile.renameTo(cacheFile)
                     }
+                    Typeface.Builder(cacheFile)
+                        .setFontVariationSettings(FontAxes.mapToString(axes))
+                        .build()
                 } catch (e: Exception) {
                     ResourcesCompat.getFont(context, resId)
                 }
