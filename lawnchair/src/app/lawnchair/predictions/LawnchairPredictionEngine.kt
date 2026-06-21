@@ -217,7 +217,7 @@ class LawnchairPredictionEngine(
 
     private fun parseStoreKey(key: String): ParsedStoreKey? {
         val parts = PredictionAppKey.parse(key) ?: return null
-        val user = resolveUserToken(parts.userToken) ?: Process.myUserHandle()
+        val user = resolveUserToken(parts.userToken) ?: return null
         return ParsedStoreKey(parts.packageName, parts.className, user)
     }
 

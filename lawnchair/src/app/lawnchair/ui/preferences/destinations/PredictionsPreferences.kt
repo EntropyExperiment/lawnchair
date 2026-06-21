@@ -8,9 +8,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Process
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.flow.collect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
@@ -156,8 +159,14 @@ private fun rememberDismissedPredictionAppsCount(context: Context): Int {
     val dismissedAppsStore = remember {
         LawnchairPredictionManager.getInstance(context).dismissedAppsStore
     }
-    val dismissedPredictionAppsCount by remember {
+    var dismissedPredictionAppsCount by remember {
         mutableIntStateOf(dismissedAppsStore.getEntries().size)
+    }
+
+    LaunchedEffect(dismissedAppsStore) {
+        dismissedAppsStore.preference.get().collect {
+            dismissedPredictionAppsCount = dismissedAppsStore.getEntries().size
+        }
     }
 
     return dismissedPredictionAppsCount
