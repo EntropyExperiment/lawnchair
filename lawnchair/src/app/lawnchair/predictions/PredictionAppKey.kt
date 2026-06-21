@@ -13,8 +13,6 @@ object PredictionAppKey {
 
     fun create(componentName: ComponentName, userToken: String): String = "${componentName.packageName}$DELIMITER${componentName.className}$DELIMITER$userToken"
 
-    fun create(componentName: ComponentName, userSerial: Long): String = create(componentName, userSerial.toString())
-
     fun packageName(key: String): String = key.substringBefore(DELIMITER)
 
     fun parse(key: String): TargetInfo? {

@@ -161,5 +161,5 @@ private fun dismissedPredictionAppsComparator(context: Context, dismissedApps: S
 
 private fun toDismissStoreKey(context: Context, componentName: ComponentName, user: UserHandle): String {
     val userSerial = UserCache.INSTANCE.get(context).getSerialNumberForUser(user)
-    return PredictionAppKey.create(componentName, userSerial)
+    return PredictionAppKey.create(componentName, userSerial.toString())
 }
