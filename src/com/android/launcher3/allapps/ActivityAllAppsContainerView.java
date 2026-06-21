@@ -92,6 +92,7 @@ import com.android.launcher3.keyboard.ViewGroupFocusHelper;
 import com.android.launcher3.model.StringCache;
 import com.android.launcher3.model.data.ItemInfo;
 import com.android.launcher3.pm.UserCache;
+import com.android.launcher3.util.UserIconInfo;
 import com.android.launcher3.recyclerview.AllAppsRecyclerViewPool;
 import com.android.launcher3.util.ItemInfoMatcher;
 import com.android.launcher3.util.Preconditions;
@@ -143,8 +144,13 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
 
     protected final T mActivityContext;
     protected final List<AdapterHolder> mAH;
-    protected final Predicate<ItemInfo> mPersonalMatcher = ItemInfoMatcher.ofUser(
-            Process.myUserHandle());
+    protected final Predicate<ItemInfo> mPersonalMatcher = info -> {
+        if (info == null) {
+            return false;
+        }
+        UserIconInfo userIconInfo = UserCache.getInstance(getContext()).getUserInfo(info.user);
+        return userIconInfo.isMain() || userIconInfo.isCloned();
+    };
     protected WorkProfileManager mWorkManager;
     protected final PrivateProfileManager mPrivateProfileManager;
     protected final Point mFastScrollerOffset = new Point();
