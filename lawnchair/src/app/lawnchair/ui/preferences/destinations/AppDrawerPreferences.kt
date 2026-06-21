@@ -50,6 +50,7 @@ import app.lawnchair.ui.preferences.components.layout.ExpandAndShrink
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.navigation.AppDrawerHiddenApps
+import app.lawnchair.ui.preferences.navigation.Predictions
 import com.android.launcher3.R
 
 object AppDrawerRoutes {
@@ -87,6 +88,13 @@ fun AppDrawerPreferences(
                 )
             }
             Item { SearchBarPreference(SearchRoute.DRAWER_SEARCH, showLabel = false) }
+            Item {
+                NavigationActionPreference(
+                    label = stringResource(R.string.predictions_label),
+                    subtitle = stringResource(R.string.app_predictions_description),
+                    destination = Predictions,
+                )
+            }
             AppDrawerHapticFeedbackPreference()
         }
         PreferenceGroup(heading = stringResource(R.string.style)) {
