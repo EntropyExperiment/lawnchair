@@ -11,12 +11,9 @@ import com.patrykmichalik.opto.core.PreferenceManager
 import javax.inject.Inject
 
 /**
- * Central [PreferenceManager] for prediction-related data, backed by
- * Preference DataStore. Exposes three [LawnchairPredictionStore] instances
- * for hotseat usage, all-apps usage, and dismissed apps.
+ * [PreferenceManager] for prediction-related data.
  *
- * Follows the same pattern as
- * [app.lawnchair.ui.preferences.data.liveinfo.LiveInformationManager].
+ * Exposes three [LawnchairPredictionStore] instances for hotseat, allapps usage, and dismissed apps.
  */
 @LauncherAppSingleton
 class LawnchairPredictionManager @Inject constructor(
@@ -39,7 +36,7 @@ class LawnchairPredictionManager @Inject constructor(
 
     override val preferencesDataStore = context.predictionDataStore
 
-    /** Ordered store tracking hotseat app launches (most-recent-first). */
+    /** Ordered store tracking hotseat app launches (most recent). */
     val hotseatStore = LawnchairPredictionStore(
         preference = preference(
             key = stringPreferencesKey("hotseat_usage"),
@@ -50,7 +47,7 @@ class LawnchairPredictionManager @Inject constructor(
         isOrdered = true,
     )
 
-    /** Ordered store tracking all-apps app launches (most-recent-first). */
+    /** Ordered store tracking allapps app launches (most recent). */
     val allAppsStore = LawnchairPredictionStore(
         preference = preference(
             key = stringPreferencesKey("all_apps_usage"),

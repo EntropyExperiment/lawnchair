@@ -113,7 +113,7 @@ class LawnchairPredictionEngine(
 
     /**
      * Returns a fallback ranking by merging weighted usage stats (if enabled
-     * and permitted) with a randomized activity list.
+     * and permitted) with a randomised activity list.
      */
     fun getFallbackRanked(): List<String> {
         val usageStatsRanked =

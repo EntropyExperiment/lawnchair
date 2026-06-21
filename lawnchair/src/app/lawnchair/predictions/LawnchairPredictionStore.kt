@@ -7,9 +7,7 @@ import com.patrykmichalik.opto.core.setBlocking
 import com.patrykmichalik.opto.domain.Preference
 
 /**
- * Unified prediction store that supports both ordered (usage tracking) and
- * unordered (dismissed apps) modes. Backed by an opto [Preference] for
- * DataStore persistence.
+ * Prediction store that supports both ordered (usage tracking) and unordered (dismissed apps) modes.
  *
  * @param preference The opto preference used for DataStore read/write.
  * @param isOrdered When `true`, entries are recorded in insertion order
