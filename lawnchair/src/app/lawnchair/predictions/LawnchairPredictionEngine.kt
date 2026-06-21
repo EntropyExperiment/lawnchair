@@ -127,9 +127,13 @@ class LawnchairPredictionEngine(
      * duplicates (first occurrence wins).
      */
     fun mergeRanked(vararg rankedLists: List<String>): List<String> = buildList {
+        val seen = LinkedHashSet<String>()
         rankedLists.forEach { ranked ->
             ranked.forEach { key ->
-                if (key !in this) add(key)
+                if (key !in seen) {
+                    seen.add(key)
+                    add(key)
+                }
             }
         }
     }

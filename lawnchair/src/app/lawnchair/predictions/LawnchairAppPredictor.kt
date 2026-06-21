@@ -1,6 +1,5 @@
 package app.lawnchair.predictions
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.annotation.WorkerThread
@@ -30,6 +29,9 @@ import com.android.launcher3.model.WidgetsPredictionUpdateTask
 import com.android.launcher3.pm.UserCache
 import com.android.launcher3.util.Executors.MODEL_EXECUTOR
 import com.android.quickstep.logging.StatsLogCompatManager
+import kotlin.time.Duration.Companion.hours
+
+private val PRUNE_INTERVAL = 1.hours
 
 /**
  * Listens to app launching events from [StatsLogCompatManager.StatsLogConsumer] and send
@@ -53,6 +55,7 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
     private val predictionEngine = LawnchairPredictionEngine(context, usageStatsRanker)
 
     private var dismissedApps: MutableSet<String> = loadDismissedApps()
+    private var lastPruneTime = 0L
 
     private var activeModel: LauncherModel? = null
     private var activeDataModel: BgDataModel? = null
@@ -128,7 +131,13 @@ class LawnchairAppPredictor(private val context: Context) : StatsLogCompatManage
         idp: InvariantDeviceProfile,
     ) {
         val pm = context.packageManager
-        prunePredictionStores(pm)
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastPruneTime > PRUNE_INTERVAL.inWholeMilliseconds) {
+            prunePredictionStores(pm)
+            lastPruneTime = currentTime
+        } else {
+            dismissedApps = loadDismissedApps()
+        }
 
         val hotseatRanked = hotseatStore.getRanked()
         val allAppsRanked = allAppsStore.getRanked()

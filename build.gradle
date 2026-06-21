@@ -346,7 +346,7 @@ androidComponents {
         }
 
         // Lawnchair-TODO: A better way to sync proto file to the IDE preventing missing or outdated result. Please remove if this is the best solution we have right now
-        def capitalizedVariantName = variant.name.substring(0, 1).toUpperCase() + variant.name.substring(1)
+        def capitalizedVariantName = variant.name.substring(0, 1).toUpperCase(java.util.Locale.ROOT) + variant.name.substring(1)
         def generatedProtoJavaDir = layout.buildDirectory
             .dir("generated/java/generate${capitalizedVariantName}Proto/java")
             .get()
