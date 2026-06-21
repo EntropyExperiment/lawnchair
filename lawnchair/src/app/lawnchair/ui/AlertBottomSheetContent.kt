@@ -18,13 +18,24 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogWindowProvider
 import app.lawnchair.ui.preferences.components.layout.BottomSpacer
 import app.lawnchair.ui.util.bottomSheetHandler
+import com.android.launcher3.R
+import com.android.launcher3.Utilities
+import com.android.systemui.shared.system.BlurUtils
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,8 +49,19 @@ fun ModalBottomSheetContent(
     content: @Composable (() -> Unit)? = null,
 ) {
     val handler = bottomSheetHandler
-    val finalOnDismissRequest = onDismissRequest ?: { handler.hide() }
-    val bottomSheetState = sheetState ?: handler.sheetState ?: rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val coroutineScope = rememberCoroutineScope()
+    val finalOnDismissRequest = onDismissRequest ?: if (sheetState != null) {
+        {
+            coroutineScope.launch { sheetState.hide() }
+            Unit
+        }
+    } else {
+        { handler.hide() }
+    }
+    val bottomSheetState = sheetState ?: handler.sheetState ?: rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded),
+    )
     val animatedFraction by animateFloatAsState(
         targetValue = if (
             bottomSheetState.targetValue == SheetValue.PartiallyExpanded ||

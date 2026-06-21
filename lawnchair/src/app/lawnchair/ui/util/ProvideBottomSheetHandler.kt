@@ -28,7 +28,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -66,7 +66,8 @@ fun ProvideBottomSheetHandler(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var onDismiss by remember { mutableStateOf({}) }
-    val bottomSheetState = rememberModalBottomSheetState(
+    val bottomSheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
         confirmValueChange = {
             if (it == SheetValue.Hidden) onDismiss()
             true
