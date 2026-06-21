@@ -148,8 +148,11 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
         if (info == null) {
             return false;
         }
+        if (Process.myUserHandle().equals(info.user)) {
+            return true;
+        }
         UserIconInfo userIconInfo = UserCache.getInstance(getContext()).getUserInfo(info.user);
-        return userIconInfo.isMain() || userIconInfo.isCloned();
+        return userIconInfo.isCloned();
     }; // Lawnchair: Show app from clone profile
     protected WorkProfileManager mWorkManager;
     protected final PrivateProfileManager mPrivateProfileManager;
