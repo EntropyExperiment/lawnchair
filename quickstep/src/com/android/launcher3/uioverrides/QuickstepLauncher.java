@@ -1052,7 +1052,7 @@ public class QuickstepLauncher extends Launcher implements RecentsViewContainer,
             return false;
         }
 
-        getOnBackAnimationCallback().onBackInvoked();
+        if (Utilities.ATLEAST_U) getOnBackAnimationCallback().onBackInvoked();
         return true;
     }
 
