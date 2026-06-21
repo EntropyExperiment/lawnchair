@@ -414,8 +414,8 @@ object FilesTarget {
     ): Icon {
         val fileInfo = info as? FileInfo
         return if (fileInfo?.isImageType == true) {
-            val bitmap = createFilePreviewFallbackBitmap(context, fileInfo.iconRes)
-            decodeThumbnailIcon(fileInfo.path) ?: Icon.createWithBitmap(bitmap)
+            decodeThumbnailIcon(fileInfo.path)
+                ?: Icon.createWithBitmap(createFilePreviewFallbackBitmap(context, fileInfo.iconRes))
         } else {
             val bitmap = createFilePreviewFallbackBitmap(
                 context,
