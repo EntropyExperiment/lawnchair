@@ -125,7 +125,7 @@ fun AppDrawerPreferences(
             if (isFoldable) {
                 Item {
                     SliderPreference(
-                        label = stringResource(id = R.string.drawer_columns_folded),
+                        label = stringResource(id = R.string.state_folded, stringResource(id = R.string.app_drawer_columns)),
                         adapter = drawerColumnsAdapter,
                         step = 1,
                         valueRange = 3..10,
@@ -133,7 +133,7 @@ fun AppDrawerPreferences(
                 }
                 Item {
                     SliderPreference(
-                        label = stringResource(id = R.string.drawer_columns_unfolded),
+                        label = stringResource(id = R.string.state_unfolded, stringResource(id = R.string.app_drawer_columns)),
                         adapter = drawerColumnsUnfoldedAdapter,
                         step = 1,
                         valueRange = 3..10,

@@ -1,9 +1,12 @@
 package app.lawnchair.ui.preferences.destinations
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -13,8 +16,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -29,11 +36,13 @@ import app.lawnchair.DeviceProfileOverrides
 import app.lawnchair.preferences.asPreferenceAdapter
 import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences.preferenceManager
+import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.LocalNavController
 import app.lawnchair.ui.preferences.components.GridOverridesPreview
 import app.lawnchair.ui.preferences.components.controls.SliderPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
+import app.lawnchair.ui.preferences.components.layout.PreferenceTemplate
 import com.android.launcher3.InvariantDeviceProfile
 import com.android.launcher3.R
 
@@ -42,6 +51,7 @@ import com.android.launcher3.R
 fun HomeScreenGridPreferences(
     modifier: Modifier = Modifier,
 ) {
+    val isExpandedScreen = LocalIsExpandedScreen.current
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
     PreferenceLayout(
         label = stringResource(id = R.string.home_screen_grid),
@@ -137,41 +147,55 @@ fun HomeScreenGridPreferences(
                             .verticalScroll(controlsScrollState),
                     ) {
                         if (isFoldable) {
-                            PreferenceGroup(heading = stringResource(id = R.string.when_folded_label)) {
-                                Item {
-                                    SliderPreference(
-                                        label = stringResource(id = R.string.columns),
-                                        adapter = columns.asPreferenceAdapter(),
-                                        step = 1,
-                                        valueRange = 3..maxGridSize,
-                                    )
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                maxItemsInEachRow = if (isExpandedScreen) Int.MAX_VALUE else 1,
+                            ) {
+                                PreferenceGroup(heading = stringResource(id = R.string.when_folded_label)) {
+                                    Item {
+                                        SliderPreference(
+                                            label = stringResource(id = R.string.columns),
+                                            adapter = columns.asPreferenceAdapter(),
+                                            step = 1,
+                                            valueRange = 3..maxGridSize,
+                                        )
+                                    }
+                                    Item {
+                                        SliderPreference(
+                                            label = stringResource(id = R.string.rows),
+                                            adapter = rows.asPreferenceAdapter(),
+                                            step = 1,
+                                            valueRange = 3..maxGridSize,
+                                        )
+                                    }
+                                    Item {
+                                        SliderPreference(
+                                            label = stringResource(id = R.string.dock_icons),
+                                            adapter = hotseatColumns.asPreferenceAdapter(),
+                                            step = 1,
+                                            valueRange = 3..maxGridSize,
+                                        )
+                                    }
                                 }
-                                Item {
-                                    SliderPreference(
-                                        label = stringResource(id = R.string.rows),
-                                        adapter = rows.asPreferenceAdapter(),
-                                        step = 1,
-                                        valueRange = 3..maxGridSize,
-                                    )
-                                }
-                                Item {
-                                    SliderPreference(
-                                        label = stringResource(id = R.string.dock_icons),
-                                        adapter = hotseatColumns.asPreferenceAdapter(),
-                                        step = 1,
-                                        valueRange = 3..maxGridSize,
-                                    )
-                                }
-                            }
 
-                            PreferenceGroup(heading = stringResource(id = R.string.when_unfolded_label)) {
-                                Item {
-                                    SliderPreference(
-                                        label = stringResource(id = R.string.dock_icons),
-                                        adapter = hotseatColumnsUnfolded.asPreferenceAdapter(),
-                                        step = 1,
-                                        valueRange = hotseatColumns.intValue..maxGridSize,
-                                    )
+                                PreferenceGroup(
+                                    heading = stringResource(id = R.string.when_unfolded_label),
+                                ) {
+                                    Item {
+                                        SliderPreference(
+                                            label = stringResource(id = R.string.dock_icons),
+                                            adapter = hotseatColumnsUnfolded.asPreferenceAdapter(),
+                                            step = 1,
+                                            valueRange = hotseatColumns.intValue..maxGridSize,
+                                        )
+                                    }
+                                    Item {
+                                        FakeExpandedGridPreference(
+                                            columns = columns.intValue * 2,
+                                            rows = rows.intValue,
+                                            description = stringResource(id = R.string.unfolded_grid_description),
+                                        )
+                                    }
                                 }
                             }
                         } else {
@@ -243,4 +267,47 @@ fun HomeScreenGridPreferences(
             }
         }
     }
+}
+
+@Composable
+private fun FakeExpandedGridPreference(
+    columns: Int,
+    rows: Int,
+    description: String,
+    modifier: Modifier = Modifier,
+) {
+    PreferenceTemplate(
+        title = {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+                    .padding(horizontal = 16.dp),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.grid),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                )
+                CompositionLocalProvider(
+                    LocalContentColor provides MaterialTheme.colorScheme.onSurface,
+                    LocalTextStyle provides MaterialTheme.typography.bodyLarge,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.x_by_y, columns, rows),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        },
+        description = {
+            Text(description)
+        },
+        modifier = modifier,
+        applyPaddings = false,
+        enabled = false,
+    )
 }

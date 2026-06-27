@@ -147,7 +147,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
         if (isFoldable) {
             Item {
                 SliderPreference(
-                    label = stringResource(id = R.string.dock_icons_folded),
+                    label = stringResource(id = R.string.state_folded, stringResource(id = R.string.dock_icons)),
                     adapter = hotseatColumnsAdapter,
                     step = 1,
                     valueRange = 3..10,
@@ -155,7 +155,7 @@ fun GridSettings(prefs: PreferenceManager, prefs2: PreferenceManager2) {
             }
             Item {
                 SliderPreference(
-                    label = stringResource(id = R.string.dock_icons_unfolded),
+                    label = stringResource(id = R.string.state_unfolded, stringResource(id = R.string.dock_icons)),
                     adapter = hotseatColumnsUnfoldedAdapter,
                     step = 1,
                     valueRange = 3..10,
