@@ -772,7 +772,7 @@
     <string name="when_folded_label">When folded</string>
     <string name="when_unfolded_label">When unfolded</string>
     <string name="unfolded_grid_description">Lawnchair pairs two pages together to fill the larger display</string>
-    <string name="foldable_columns_error">Folded columns must be less than or equal to unfolded columns. Excess columns will be automatically adjusted.</string>
+    <string name="foldable_columns_error">The folded value must be less than or equal to the unfolded value. It will be automatically adjusted if needed.</string>
     <string name="hotseat_bottom_space_label">Bottom padding</string>
     <string name="page_indicator_height">Page indicator height</string>
 
