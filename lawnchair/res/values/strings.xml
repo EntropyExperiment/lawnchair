@@ -204,7 +204,7 @@
     <string name="experimental_features_label">Experimental features</string>
     <string name="predictions_label">Predictions</string>
     <string name="global_predictions_label">Show prediction features</string>
-    <string name="app_predictions_description">Show list of app that may be relevant to you.</string>
+    <string name="app_predictions_description">Show a list of apps that may be relevant to you.</string>
     <string name="app_predictions_label">App predictions</string>
 
     <!-- Experimental features -->
