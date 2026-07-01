@@ -61,18 +61,16 @@ class LawnchairWindowManagerProxy @Inject constructor() : WindowManagerProxy(Uti
     }
 
     override fun getRealBounds(displayInfoContext: Context, info: CachedDisplayInfo): WindowBounds {
-        val windowMetrics = if (Utilities.ATLEAST_R) {
-            displayInfoContext.getSystemService(WindowManager::class.java)?.maximumWindowMetrics
-        } else {
-            null
+        if (Utilities.ATLEAST_R) {
+            val windowMetrics = displayInfoContext.getSystemService(WindowManager::class.java)?.maximumWindowMetrics
+            if (windowMetrics != null) {
+                val insets = Rect()
+                normalizeWindowInsets(displayInfoContext, windowMetrics.windowInsets, insets)
+                return WindowBounds(windowMetrics.bounds, insets, info.rotation)
+            }
         }
-        return if (windowMetrics != null) {
-            val insets = Rect()
-            normalizeWindowInsets(displayInfoContext, windowMetrics.windowInsets, insets)
-            WindowBounds(windowMetrics.bounds, insets, info.rotation)
-        } else {
-            WindowBounds(Rect(), Rect(), info.rotation)
-        }
+        return estimateWindowBounds(displayInfoContext, info).getOrNull(info.rotation)
+            ?: estimateWindowBounds(displayInfoContext, info).first()
     }
 
     override fun normalizeWindowInsets(context: Context, oldInsets: WindowInsets, outInsets: Rect): WindowInsets {
