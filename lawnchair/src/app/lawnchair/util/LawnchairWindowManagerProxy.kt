@@ -69,8 +69,10 @@ class LawnchairWindowManagerProxy @Inject constructor() : WindowManagerProxy(Uti
                 return WindowBounds(windowMetrics.bounds, insets, info.rotation)
             }
         }
-        return estimateWindowBounds(displayInfoContext, info).getOrNull(info.rotation)
-            ?: estimateWindowBounds(displayInfoContext, info).first()
+
+        val estimateWindowBounds = estimateWindowBounds(displayInfoContext, info)
+        return estimateWindowBounds.getOrNull(info.rotation)
+            ?: estimateWindowBounds.first()
     }
 
     override fun normalizeWindowInsets(context: Context, oldInsets: WindowInsets, outInsets: Rect): WindowInsets {
