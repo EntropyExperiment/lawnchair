@@ -57,6 +57,20 @@ Compatibility list: https://github.com/LawnchairLauncher/lawnchair/issues/6681
 * [Lawnchair/Build] Support non-cellular enabled device (https://github.com/LawnchairLauncher/lawnchair/pull/6833)
 * [Lawnchair] Open in store shortcut (https://github.com/LawnchairLauncher/lawnchair/pull/6585)
 * [Lawnchair] Promote Icon Swipe Gesture to stable (https://github.com/LawnchairLauncher/lawnchair/pull/6821)
+* [Lawnchair] Workspace padding (vertical, horizontal) control, allapps padding (vertical, top) control, and show widget resizing handle bar when force resizing is enabled (https://github.com/LawnchairLauncher/lawnchair/pull/6872)
+* [Lawnchair/Preference] Cache PreferenceManager2 in memory (https://github.com/LawnchairLauncher/lawnchair/pull/6897)
+* [Lawnchair] Transparent icon backgrounds for adaptive icons (https://github.com/LawnchairLauncher/lawnchair/pull/6890)
+* [Lawnchair] Show cloned app from clone profile (https://github.com/LawnchairLauncher/lawnchair/pull/6909)
+* [Lawnchair/QSB] Migrate QSB to Compose (https://github.com/LawnchairLauncher/lawnchair/pull/6887)
+* [Lawnchair/Search] Use custom background colour for search result icon (https://github.com/LawnchairLauncher/lawnchair/pull/6908)
+* [Lawnchair] Improve Lawnchair grid specifications (https://github.com/LawnchairLauncher/lawnchair/pull/6583)
+* [Lawnchair/Search] Add EU version of Startpage as Search Engine (https://github.com/LawnchairLauncher/lawnchair/pull/6652)
+* [Lawnchair] Vertical icon swipe gesture (https://github.com/LawnchairLauncher/lawnchair/pull/6958)
+* [Lawnchair] Animate icon swipe gestures (https://github.com/LawnchairLauncher/lawnchair/pull/6964)
+* [Lawnchair] Lawnchair Night icon for Lawnchair Nightly (https://github.com/LawnchairLauncher/lawnchair/pull/6972)
+* [Lawnchair] Update Google Fonts listing to 11072026 (https://github.com/LawnchairLauncher/lawnchair/pull/6980)
+* [Lawnchair] Add option to have two-row dock (https://github.com/LawnchairLauncher/lawnchair/pull/6979)
+* [Lawnchair/Preference] Hide app from allapps no reload (https://github.com/LawnchairLauncher/lawnchair/pull/6983)
 
 #### Fixes
 * [Launcher] Limited Android 11 support
@@ -174,6 +188,19 @@ Compatibility list: https://github.com/LawnchairLauncher/lawnchair/issues/6681
 * [Lawnchair] Downsample carousel thumbnails and scope image loads to view (https://github.com/LawnchairLauncher/lawnchair/pull/6883)
 * [Launcher3] Restore workspace alpha on swipe-to-home reveal cancellation (https://github.com/LawnchairLauncher/lawnchair/pull/6793)
 * [Lawnchair/QSB] Launch Startpage app from dock search bar (https://github.com/LawnchairLauncher/lawnchair/pull/6886)
+* [Launcher3/Allapps] Double tap gesture quickly show and dismissed the page on trigger (https://github.com/LawnchairLauncher/lawnchair/pull/6905)
+* [Launcher3/Launcher] Don't run onBackInvoked() on less than Android 14
+* [Lawnchair] Font not updated to expressive variant
+* [Launcher] Preserve item position and widget sizes on grid resize (https://github.com/LawnchairLauncher/lawnchair/pull/6873)
+* [Launcher] Align home screen icons based on text size (https://github.com/LawnchairLauncher/lawnchair/pull/6921)
+* [Launcher3] General code lifecycle bugs (https://github.com/LawnchairLauncher/lawnchair/pull/6882)
+* [Launcher3] Don't crash from missing taskbar size for Android 8.X and 9 (https://github.com/LawnchairLauncher/lawnchair/pull/6927)
+* [Lawnchair] Empty bound for Android 11 and older (https://github.com/LawnchairLauncher/lawnchair/pull/6937)
+* [Launcher3] Icon Uri crash for Android 14 and older
+* [Lawnchair/QSB] Compose QSB does not relinquish space when it's disabled (https://github.com/LawnchairLauncher/lawnchair/pull/6960)
+* [Launcher] Guard wallpaper hint with API check to prevent crash on Android 12.0 and older (https://github.com/LawnchairLauncher/lawnchair/pull/6976)
+* [Launcher] Limited Android 8.0 and 8.1, and Android 9 support (https://github.com/LawnchairLauncher/lawnchair/pull/6978)
+* 
 
 ### 🥞 Development 4 Release 1 (Snapshot 10)
 
