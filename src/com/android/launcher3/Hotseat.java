@@ -62,7 +62,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import com.hoko.blur.HokoBlur;
-import com.patrykmichalik.opto.core.PreferenceExtensionsKt;
+import app.lawnchair.preferences2.PreferenceCacheExtensionsKt;
 import app.lawnchair.hotseat.DisabledHotseat;
 import app.lawnchair.hotseat.HotseatMode;
 import app.lawnchair.hotseat.LawnchairHotseat;
@@ -128,8 +128,8 @@ public class Hotseat extends CellLayout implements Insettable {
 
         preferenceManager2 = PreferenceManager2.getInstance(context);
         preferenceManager = PreferenceManager.getInstance(context);
-        HotseatMode hotseatMode = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getHotseatMode());
-        var hotseatEnabled = PreferenceExtensionsKt.firstBlocking(preferenceManager2.isHotseatEnabled());
+        HotseatMode hotseatMode = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatMode());
+        var hotseatEnabled = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.isHotseatEnabled());
 
         if (!hotseatEnabled) {
             hotseatMode = DisabledHotseat.INSTANCE;
@@ -139,7 +139,7 @@ public class Hotseat extends CellLayout implements Insettable {
             // The current hotseat mode is not available,
             // setting the hotseat mode to one that is always available
             hotseatMode = LawnchairHotseat.INSTANCE;
-            PreferenceExtensionsKt.setBlocking(preferenceManager2.getHotseatMode(), hotseatMode);
+            com.patrykmichalik.opto.core.PreferenceExtensionsKt.setBlocking(preferenceManager2.getHotseatMode(), hotseatMode);
         }
         int layoutId = hotseatMode.getLayoutResourceId();
 
@@ -170,7 +170,7 @@ public class Hotseat extends CellLayout implements Insettable {
     private void setUpBackground() {
         if(!preferenceManager.getHotseatBG().get()) return;
 
-        var bgColor = PreferenceExtensionsKt.firstBlocking(preferenceManager2.getHotseatBackgroundColor());
+        var bgColor = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatBackgroundColor());
         var transparency = preferenceManager.getHotseatBGAlpha().get();
         var alphaValue = (transparency * 255) / 100;
         var baseColor = bgColor.getColorPreferenceEntry().getLightColor().invoke(getContext());
@@ -200,14 +200,24 @@ public class Hotseat extends CellLayout implements Insettable {
      * Returns orientation specific cell X given invariant order in the hotseat
      */
     public int getCellXFromOrder(int rank) {
-        return mHasVerticalHotseat ? 0 : rank;
+        if (mHasVerticalHotseat) {
+            return 0;
+        }
+        DeviceProfile dp = mActivity.getDeviceProfile();
+        int numColumns = dp.numShownHotseatIcons;
+        return rank % numColumns;
     }
 
     /**
      * Returns orientation specific cell Y given invariant order in the hotseat
      */
     public int getCellYFromOrder(int rank) {
-        return mHasVerticalHotseat ? (getCountY() - (rank + 1)) : 0;
+        if (mHasVerticalHotseat) {
+            return getCountY() - (rank + 1);
+        }
+        DeviceProfile dp = mActivity.getDeviceProfile();
+        int numColumns = dp.numShownHotseatIcons;
+        return rank / numColumns;
     }
 
     boolean isHasVerticalHotseat() {
@@ -245,7 +255,7 @@ public class Hotseat extends CellLayout implements Insettable {
         if (hasVerticalHotseat) {
             setGridSize(1, dp.numShownHotseatIcons);
         } else {
-            setGridSize(dp.numShownHotseatIcons, 1);
+            setGridSize(dp.numShownHotseatIcons, dp.numHotseatRows);
         }
     }
 
