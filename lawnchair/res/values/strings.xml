@@ -495,6 +495,9 @@
     <string name="onboarding_welcome">Welcome to Lawnchair!</string>
     <string name="onboarding_swipe_up">Swipe up to open the app drawer</string>
 
+    <string name="onboarding_greeting">Hello</string>
+    <string name="action_next">Next</string>
+
     <!-- Smartspacer strings -->
     <string name="maximum_number_of_targets">Maximum number of targets</string>
     <string name="open_smartspacer_settings">Open Smartspacer settings</string>

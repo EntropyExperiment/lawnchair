@@ -108,6 +108,9 @@ data object DebugMenu : PreferenceRootRoute
 @Serializable
 data object FeatureFlags : PreferenceRoute
 
+@Serializable
+data object Onboarding : PreferenceRoute
+
 // General section routes
 @Serializable
 data class GeneralFontSelection(val prefKey: String) : PreferenceRoute

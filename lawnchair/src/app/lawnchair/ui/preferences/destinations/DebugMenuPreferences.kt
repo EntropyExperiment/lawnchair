@@ -26,6 +26,7 @@ import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import app.lawnchair.ui.preferences.data.liveinfo.liveInformationManager
 import app.lawnchair.ui.preferences.data.liveinfo.model.LiveInformation
 import app.lawnchair.ui.preferences.navigation.FeatureFlags
+import app.lawnchair.ui.preferences.navigation.Onboarding
 import com.android.launcher3.settings.SettingsActivity
 import com.android.launcher3.settings.SettingsActivity.DEVELOPER_OPTIONS_KEY
 import com.android.launcher3.settings.SettingsActivity.EXTRA_FRAGMENT_HIGHLIGHT_KEY
@@ -82,6 +83,12 @@ fun DebugMenuPreferences(
                     label = "Feature flags (Compose)",
                     onClick = {
                         navController.navigate(FeatureFlags)
+                    },
+                )
+                ClickablePreference(
+                    label = "Test onboarding",
+                    onClick = {
+                        navController.navigate(Onboarding)
                     },
                 )
                 ClickablePreference(
