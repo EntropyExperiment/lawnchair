@@ -146,7 +146,7 @@ public class PredictedAppIcon extends DoubleShadowBubbleTextView {
         compensateTextStyle();
     }
 
-    /** LC-Note: Normalise text size for predicted app container
+    /** LC-Note: Compensate text size for predicted app container
      * <p> 
      * Because the text size and padding are exactly compensated for app icon and not the predicted 
      * container, the text will be small and sitting too close to the container. 
